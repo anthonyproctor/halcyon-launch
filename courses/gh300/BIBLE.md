@@ -65,7 +65,7 @@ Sub-skills, tagged for decisions and quiz items:
 - **Tomasz Nowak** and the **Kraków team:** early adopters, eight hours ahead; they hit the agent-mode versus coding-agent confusion first.
 - **Nora Kim:** compliance; wants evidence for the SOC 2 and HIPAA auditors.
 - **Devin Ruiz:** the engineer who over-trusts suggestions; his unreviewed Copilot code ships a bug in chapter 3.
-- New: **Marisol Vega**, a junior engineer in her first month, who learns faster with Copilot and asks the questions everyone else is embarrassed to ask.
+- New: **Renata Vega**, a junior engineer in her first month, who learns faster with Copilot and asks the questions everyone else is embarrassed to ask.
 
 ## Chapter plan
 | # | Title | Story | Codes | Notes |
@@ -76,7 +76,7 @@ Sub-skills, tagged for decisions and quiz items:
 | 4 | **House Rules** | Priya writes the team's instructions: repo-wide `copilot-instructions.md`, path-specific instructions with `applyTo`, reusable prompt files, review standards for Copilot code review. | F3, P1, P2 | Props: the actual instruction files. Drill/exercise: given a folder layout, which instructions apply. Chat participants, slash commands, and context variables. |
 | 5 | **Fences** | Ken finds patient-adjacent config files being read as context; Nora wants evidence. Content exclusions, the public code filter, code referencing, audit log events. | S1, S2, F4, D1 | Data flow: prompt building, proxy filters, post-processing, retention. Troubleshooting exclusions that "don't work." Props: Ken's exclusion config, an audit log excerpt. |
 | 6 | **Command Line** | The infra team lives in terminals. Theo becomes the Copilot CLI champion: install, sessions, scripts, file management. Org settings and seat management through the REST API. | F2, F4, V1 | Props: a CLI session transcript. Exercise: match commands to outcomes. |
-| 7 | **The Retro** | Quarter-end: adoption numbers, a legacy module modernized, Marisol's first big PR, the board asks if it was worth it. Priya presents honestly, including what didn't work. | V1, V2, P1, R1 | Productivity claims versus evidence; modernizing legacy code; sample data; a final scene where Priya realizes she led without needing permission. |
+| 7 | **The Retro** | Quarter-end: adoption numbers, a legacy module modernized, Renata's first big PR, the board asks if it was worth it. Priya presents honestly, including what didn't work. | V1, V2, P1, R1 | Productivity claims versus evidence; modernizing legacy code; sample data; a final scene where Priya realizes she led without needing permission. |
 
 Weighting check: Features (F) appears in 6 of 7 chapters and takes at least 30% of all decisions and quiz items; Responsible (R) about 18%; S, P, D, V about 12 to 13% each.
 

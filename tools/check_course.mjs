@@ -10,7 +10,7 @@ new Function('window',fs.readFileSync(root+'meta.js','utf8'))(window);
 for(const f of (files.length?files:fs.readdirSync(root+'full').filter(x=>/^ch\d+\.js$/.test(x)).map(x=>root+'full/'+x))) new Function('window',fs.readFileSync(f,'utf8'))(window);
 const data=window.HALCYON_DATA[id];const meta=data.meta;
 const TASKS=new Set(Object.keys(meta.TASKNAMES));const DOMS=new Set(meta.DOMS);
-const domOf=t=>course.taskDomain[t[0]];
+const TD=course.taskDomain;const domOf=t=>TD[t]||TD[t.split(".")[0]]||TD[t[0]];
 const FLAGS=new Set(course.flags||[]);const WHO=new Set([...(course.speakers||[]),"man","woman"]);
 const NOPT=course.options||4;
 let bad=0;const err=m=>{console.log("  ERROR "+m);bad++};
@@ -23,7 +23,7 @@ for(const c of data.full){
   console.log(`${id} ch${c.num} ${c.title}`);
   for(const k of ["num","part","title","weeks","tasks","opening","lesson","scenes","quiz","closing","episode"]) if(c[k]===undefined)err("missing "+k);
   (c.tasks||[]).forEach(t=>{if(!TASKS.has(t))err("bad task "+t)});
-  if((c.scenes||[]).length!==12)err(`scenes=${(c.scenes||[]).length} (want 12)`);
+  const NSC=course.scenes||12;if((c.scenes||[]).length!==NSC)err(`scenes=${(c.scenes||[]).length} (want ${NSC})`);
   let lb=0,sb=0;const G={};FLAGS.forEach(x=>G[x]=true);
   const st={flags:{},score:20,m:{trust:50,conf:50,health:50}},stHi={flags:{},score:36,m:{trust:50,conf:50,health:50}};
   let prose=[...c.opening];const domCount={};
@@ -38,13 +38,13 @@ for(const c of data.full){
     const r=lenCheck(sc.id,sc.opts.map(o=>o.t),b);if(r.longest)lb++;if(r.shortest)sb++;
     try{prose.push(...sc.text(st,{},G),...sc.text(st,{},{}))}catch(e){err(`${sc.id} text() threw ${e.message}`)}
   });
-  if(lb>4)err(`best answer longest in ${lb}/12`); if(lb<1)err(`best answer never longest`); if(sb<2)err(`best answer shortest in only ${sb}/12`);if(sb>4)err(`best answer shortest in ${sb}/12 (reverse tell)`);
+  if(lb>4)err(`best answer longest in ${lb}/${(c.scenes||[]).length}`); if(lb<1)err(`best answer never longest`); if(sb<2)err(`best answer shortest in only ${sb}/${(c.scenes||[]).length}`);if(sb>4)err(`best answer shortest in ${sb}/12 (reverse tell)`);
   const q=c.quiz||[];if(q.length!==15)err(`quiz=${q.length} (want 15)`);
-  const pos=[0,0,0,0];let ql=0,qs=0;const lv={RE:0,AP:0,AN:0};const qd={};
+  const pos=new Array(NOPT).fill(0);let ql=0,qs=0;const lv={RE:0,AP:0,AN:0};const qd={};
   q.forEach((x,i)=>{if(x.opts.length!==NOPT||x.a<0||x.a>=NOPT)err(`quiz ${i}`);pos[x.a]++;if(!TASKS.has(x.task))err(`quiz ${i} task ${x.task}`);else if(domOf(x.task)!==x.domain)err(`quiz ${i} domain`);
-    if(course.levels&&!lv.hasOwnProperty(x.level))err(`quiz ${i} level`);else lv[x.level]++;qd[x.domain]=(qd[x.domain]||0)+1;
+    if(course.levels){if(!lv.hasOwnProperty(x.level))err(`quiz ${i} level`);else lv[x.level]++}qd[x.domain]=(qd[x.domain]||0)+1;
     const r=lenCheck(`quiz ${i}`,x.opts,x.a);if(r.longest)ql++;if(r.shortest)qs++;prose.push(x.q,...x.opts,x.why)});
-  if(Math.max(...pos)>6)err(`quiz answer positions ${pos}`); if(ql>5)err(`quiz right answer longest in ${ql}/15`);if(qs>6)err(`quiz right answer shortest in ${qs}/15`);
+  if(Math.max(...pos)>Math.ceil(15/NOPT)+2||Math.min(...pos)<Math.floor(15/NOPT)-2)err(`quiz answer positions ${pos}`); if(ql>5)err(`quiz right answer longest in ${ql}/15`);if(qs>6)err(`quiz right answer shortest in ${qs}/15`);
   const offDom=Object.keys(qd).filter(d=>!domCount[d]).reduce((a,d)=>a+qd[d],0);if(meta.DOMS.some(d=>!domCount[d])&&offDom<2)err(`spaced review: only ${offDom} quiz items from domains not in this chapter`);
   (c.drills||[]).forEach((d,i)=>{if(!d.fields||!d.fields.every(f=>typeof f.answer==="number"))err(`drill ${i} fields`);if(!(c.scenes||[]).some(s=>s.id===d.after))err(`drill ${i} after`);prose.push(...d.setup,...d.solution)});
   if(c.exercise){const e=c.exercise;if(!(c.scenes||[]).some(s=>s.id===e.after))err("exercise after");e.items.forEach((it,i)=>{if(it.answer<0||it.answer>=it.choices.length)err(`exercise ${i}`);prose.push(it.prompt,it.why)})}
