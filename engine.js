@@ -126,8 +126,8 @@ let MS=null,mockTimer=null;
 const MOCK_LIMIT=240*60;
 function mockQuestions(){const all=[];(window.HALCYON_MOCK||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part[0]+i})));return all}
 function freshMock(mode){const qs=mockQuestions();const seed=Date.now()%100000;const ord=order("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
-function persistMock(){store.set("c"+MOCK_KEY,MS);store.set("cur",MOCK_KEY);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(MOCK_KEY,copy),600)}}
-function openMock(){store.set("lastplace",{t:"mock"});TRACK="mock";store.set("track","mock");MS=store.get("c"+MOCK_KEY,null);render();top()}
+function persistMock(){if(MS&&MS.order&&!MS.submitted)store.set("lastplace",{t:"mock"});store.set("c"+MOCK_KEY,MS);store.set("cur",MOCK_KEY);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(MOCK_KEY,copy),600)}}
+function openMock(){TRACK="mock";store.set("track","mock");MS=store.get("c"+MOCK_KEY,null);render();top()}
 function fmtTime(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return `${h}:${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`}
 function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode!=="exam")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT){mockSubmit()}},1000)}
 function mockRender(){
@@ -342,17 +342,33 @@ function lastPlaceLabel(){const lp=store.get("lastplace",null);if(!lp)return nul
 function navSync(){const map={home:"homelink",dash:"proglink",practice:"proglink",cast:"castlink"};["homelink","proglink","castlink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
-  if(lp&&!inPlace){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
+  if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
   if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="dash"||TRACK==="practice")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
 
 /* ===== home and rail ===== */
 function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
 function renderHome(){setTimeout(navSync,0);
-  TRACK=null;CH=null;$("railgame").hidden=true;
-  const cards=Object.values(TRACKS).map(t=>{let sub="";if(t.id!=="mock"){const L=t.list();const done=L.filter(c=>chapterProgress(t.id,c)==="done"||/\d+\/\d+/.test(chapterProgress(t.id,c))).length;sub=L.length?`${done} of ${L.length} chapters done`:"coming soon"}else{const m=store.get("c"+MOCK_KEY,null);sub=m&&m.order?(m.submitted?"last attempt finished":"in progress"):"not started"}
-    return `<div class="card track"><h3>${t.name}</h3><p>${t.blurb}</p><p class="prog">${sub}</p><button class="btn" data-t="${t.id}" type="button">${t.id==="mock"?"Open the mock exam":"Open"}</button></div>`}).join("");
-  $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Pick your path</h1><div class="story"><p>Same company, same people. The refresher is a fast review. The full course teaches the PMP from scratch through Sam's story. The mock exam tests you like the real thing.</p></div><div class="tracks">${cards}</div><div class="bar"><button class="btn ghost" id="todash2" type="button">My progress and study plan</button></div>`;$("todash2").onclick=()=>renderDash();
-  $("page").querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const t=b.dataset.t;if(t==="mock")return openMock();const L=TRACKS[t].list();if(!L.length)return;const last=store.get("lastch."+t,L[0].num);openChapter(t,L.find(c=>c.num===last)?last:L[0].num)});
+  TRACK=null;CH=null;$("railgame").hidden=true;$("mockcard").hidden=true;
+  const lp=lastPlaceLabel();const m=mastery();const plan=studyPlan(m);const H=(store.get("c901",null)||{list:[]}).list;const last=H.slice(-1)[0];
+  const tile=(tr,c)=>{const st=load(tr,c.num);const lab=chapterProgress(tr,c);const state=lab==="done"||/\d+\/\d+/.test(lab)?"done":lab==="in progress"?"prog":"new";
+    const sc=st&&st.score!==undefined&&Object.keys(st.picks||{}).length?`${st.score}/${c.scenes.length*3}`:"";
+    return `<button class="ctile ${state}" type="button" data-open="${tr}:${c.num}"><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${state==="done"?"Done"+(sc?" · "+sc:""):state==="prog"?"In progress":"Start"}</span></button>`};
+  const full=TRACKS.full.list(),ref=TRACKS.ref.list();
+  const fullDone=full.filter(c=>chapterProgress("full",c)==="done").length;
+  $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Welcome back</h1>
+   ${lp?`<button class="hero" type="button" id="resume"><span class="prog">Pick up where you left off</span><b>${esc(lp[0])}</b><span class="go">Continue ›</span></button>`:`<button class="hero" type="button" id="resume"><span class="prog">New here?</span><b>Start the Full Course: Chapter 1, The Promotion</b><span class="go">Begin ›</span></button>`}
+   ${plan[0]?`<div class="nextstep"><span class="prog">Ruth's next step for you</span><p><b>${esc(plan[0][0])}.</b> ${esc(plan[0][1])}</p><button class="btn small" type="button" id="planbtn">${plan[0][2].task?"Practice now":plan[0][2].mock?"Open mock exam":"Go"}</button> <button class="linkbtn" type="button" id="seeplan">See the full study plan</button></div>`:""}
+   <h2>Full Course <span class="prog">${fullDone} of ${full.length} chapters done · about 15 to 20 hours</span></h2>
+   <div class="ctiles">${full.map(c=>tile("full",c)).join("")}</div>
+   <h2>Refresher <span class="prog">6 chapters · about 2.5 hours, a fast review</span></h2>
+   <div class="ctiles">${ref.map(c=>tile("ref",c)).join("")}</div>
+   <h2>Mock exam</h2><div class="card mockhome"><p>180 questions in 240 minutes, weighted like the real exam. ${last?`Last attempt: <b>${last.right} of ${last.total}</b> (${Math.round(last.right/last.total*100)}%) on ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}.`:"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the mock exam</button></div>
+   <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the 26-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>Cast</b><span class="prog">Meet everyone, hear them talk</span></button></div>`;
+  const pg=$("page");
+  $("resume").onclick=()=>lp?lp[1]():openChapter("full",1);
+  pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
+  $("mockbtn").onclick=()=>openMock();$("qprog").onclick=()=>{renderDash();top()};$("qcast").onclick=()=>{renderCast();top()};
+  if($("planbtn")){const a=plan[0][2];$("planbtn").onclick=()=>{if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)};$("seeplan").onclick=()=>{renderDash();top()}}
 }
 function openChapter(tr,n){store.set("lastplace",{t:tr,n});TRACK=tr;store.set("track",tr);store.set("lastch."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
 function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this chapter will be cleared.`))return;const st=TRACK==="ref"?freshRef():freshFull();if(n===CH.num){S=st;save();render();top()}else{persist(TRACK,n,st);renderRail()}}
