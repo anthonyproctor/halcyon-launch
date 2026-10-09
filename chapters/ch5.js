@@ -195,6 +195,6 @@
   c5s10:["SOIV3jKjQTE","Planning Solutions Implementation: Part 9, Hypercare","PMsquare","4:20"]
  },
  deeper:["LcZvGRTJnLo","The Complete Project Management Body of Knowledge in One Video (PMBOK Guide 8th Edition)","David McLachlan","1:15:03"],
- episode:{src:"audio/ch5-go-live.mp3",len:"20 minutes"},
+ episode:{src:"audio/ch5-go-live.mp3",len:"17 minutes"},
  next:"Closeout"
 });
