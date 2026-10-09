@@ -24,12 +24,20 @@
    "story": {
     "src": "audio/story/full-ch03.mp3",
     "min": 10.9
+   },
+   "study": {
+    "src": "audio/full-ch03.mp3",
+    "min": 25.1
    }
   },
   "4": {
    "story": {
     "src": "audio/story/full-ch04.mp3",
     "min": 10.4
+   },
+   "study": {
+    "src": "audio/full-ch04.tmp.mp3",
+    "min": 7.0
    }
   },
   "5": {
