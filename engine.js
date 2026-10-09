@@ -271,7 +271,7 @@ function renderPractice(){setTimeout(navSync,0);
 const NAR={car:store.get("car",false),audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
 NAR.audio.preload="auto";
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
-async function narTimings(key){if(key in NAR.timings)return NAR.timings[key];NAR.timings[key]=null;try{const r=await fetch(`audio/pages/${key}/timings.json`,{cache:"force-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]}
+async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];try{const r=await fetch(`audio/pages/${key}/timings.json`,{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
 function narPageId(){
   if(TRACK==="ref"){if(S.step<0)return["open",".story p"];if(S.step>=CH.scenes.length)return["end",".story p"];const i=S.step,p=S.picks[i];return p===undefined?["s"+i,".story p, .choice span:not(.k)"]:[`o${i}_${p}`,".outcome .story p"]}
   const st=steps(CH)[Math.min(S.pos,steps(CH).length-1)];
@@ -372,7 +372,7 @@ function navSync(){const map={home:"homelink",dash:"proglink",practice:"proglink
 
 /* ===== audiobook ===== */
 let BOOK=null;
-async function bookManifest(){if(BOOK)return BOOK;try{const r=await fetch("audio/audiobook.json",{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
+async function bookManifest(){if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;try{const r=await fetch("audio/audiobook.json",{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
 function bookPlay(ed,n){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=M.src;NAR.audio.playbackRate=NAR.rate;
   const pos=store.get(`bookpos.${ed}.${n}`,0);NAR.audio.addEventListener("loadedmetadata",()=>{if(pos>5&&pos<(NAR.audio.duration-5))NAR.audio.currentTime=pos},{once:true});
   NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight();narMedia()}).catch(()=>{});narUI();if(TRACK==="book")renderBook()}
