@@ -92,6 +92,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .taskcell{display:flex;flex-direction:column;gap:3px;text-align:left;font:inherit;font-size:13px;background:var(--page);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer}
 .taskcell .tc{font-family:var(--mono);font-size:12px;color:var(--accent)}.taskcell .tn{font-weight:500;min-height:2.6em}
 .mbar{display:block;height:6px;background:var(--soft);border-radius:3px;overflow:hidden;margin:2px 0}.mbar span{display:block;height:100%}
+#narbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--page);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(0,0,0,.08);padding:0 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.nartrack{height:3px;background:var(--soft);margin:0 -16px 8px}.nartrack span{display:block;height:100%;width:0;background:var(--accent)}
+.narrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;max-width:1060px;margin:0 auto}
+.narrow select{font:inherit;font-size:13px;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:5px;padding:2px 4px}
+body.withbar{padding-bottom:84px}
+.w{border-radius:3px;transition:background-color .12s}
+.w.hl{background:var(--accent-soft);box-shadow:0 0 0 2px var(--accent-soft)}
 .stepnav{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
 .sdot{width:16px;height:8px;border-radius:4px;border:none;background:var(--soft);padding:0;cursor:pointer}
 .sdot.seen{background:var(--accent-soft)} .sdot.now{background:var(--accent)} .sdot[disabled]{cursor:default}
