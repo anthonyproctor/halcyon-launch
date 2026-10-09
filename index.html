@@ -156,6 +156,17 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 .xray>.prog{font-size:12px;margin-right:4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
 .xp{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:13px;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:3px 10px 3px 3px;cursor:pointer}
 .xp:hover{border-color:var(--accent)}.xp .av span{font-size:13px}
+.prop{border:1px solid var(--line);border-radius:10px;margin:14px 0;font-family:var(--ui);font-size:15px;background:var(--page);overflow:hidden;max-width:64ch}
+.prop .ph{display:flex;justify-content:space-between;gap:8px;padding:9px 12px;background:var(--soft);font-size:14px}
+.prop .pm{display:flex;flex-wrap:wrap;gap:4px 14px;padding:6px 12px 0;color:var(--muted);font-size:13px}.prop .pb{padding:8px 12px 12px;line-height:1.5}
+.pchat{display:flex;gap:10px;padding:10px 12px;border-left:4px solid #6b4a8a}.pchat .pm,.pchat .pb{padding:0}.pav{flex:none;width:34px;height:34px;border-radius:7px;background:#6b4a8a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.ptext{border:none;background:none;max-width:420px}.ptext .pm{padding:0 0 4px}.bubble{display:inline-block;background:#2f7de1;color:#fff;border-radius:18px 18px 18px 4px;padding:9px 14px;line-height:1.45}
+.pdoc{border-left:4px solid var(--accent)}.pdoc .pb{font-family:var(--story);font-size:16.5px}
+.pchart svg{display:block;width:100%;height:auto;padding:6px 10px;color:var(--ink)}.pchart path{fill:none;stroke-width:3.5}.lpv{stroke:#2d6b7a}.lev{stroke:#c9952f}.lac{stroke:#c0473b;stroke-dasharray:8 6}
+.legend{display:flex;flex-wrap:wrap;gap:12px;padding:0 12px 8px;font-size:12.5px;color:var(--muted)}.legend span::before{content:"";display:inline-block;width:14px;height:3px;margin-right:5px;vertical-align:middle}.kpv::before{background:#2d6b7a}.kev::before{background:#c9952f}.kac::before{background:#c0473b}
+.bars{padding:8px 12px;display:grid;gap:6px}.barrow{display:grid;grid-template-columns:minmax(80px,30%) 1fr auto;gap:8px;align-items:center;font-size:13.5px}.bt{height:10px;background:var(--soft);border-radius:5px;overflow:hidden}.bt span{display:block;height:100%;background:var(--accent)}
+.ruthtake{margin:10px 0}.ruthtake summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:14px}
+.storyt{margin-right:6px}.ambvol{width:70px;margin-right:8px}
 .stepnav{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
 .sdot{width:16px;height:8px;border-radius:4px;border:none;background:var(--soft);padding:0;cursor:pointer}
 .sdot.seen{background:var(--accent-soft)} .sdot.now{background:var(--accent)} .sdot[disabled]{cursor:default}
@@ -207,7 +218,7 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 <body>
 <header class="tophead"><nav class="topnav" id="usercard" hidden aria-label="Main">
   <div class="navl"><button class="navbtn" id="homelink" type="button">Home</button><button class="navbtn" id="proglink" type="button">Progress</button><button class="navbtn" id="listenlink" type="button">Listen</button><button class="navbtn" id="castlink" type="button">Cast</button><button class="navbtn cont" id="contlink" type="button" hidden></button></div>
-  <div class="navr"><span id="username" class="prog"></span><a id="adminlink" class="navbtn" href="/admin" hidden>Admin</a><button class="navbtn" id="signout" type="button">Sign out</button></div>
+  <div class="navr"><label class="chk prog storyt" for="ambtoggle" title="Background sound that matches each scene"><input type="checkbox" id="ambtoggle"> Ambience</label><input type="range" id="ambvol" min="0.05" max="0.6" step="0.05" aria-label="Ambience volume" class="ambvol"><label class="chk prog storyt" for="storytoggle" title="Hide scores and lessons until after the story"><input type="checkbox" id="storytoggle"> Story mode</label><span id="username" class="prog"></span><a id="adminlink" class="navbtn" href="/admin" hidden>Admin</a><button class="navbtn" id="signout" type="button">Sign out</button></div>
 </nav></header>
 <div class="wrap">
   <main class="page" id="page" aria-live="polite"></main>

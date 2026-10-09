@@ -76,7 +76,7 @@
      why:`Hiding costs in other buckets corrupts your data and is a transparency problem. Record costs where they belong.`}
    ]},
   {id:`f5s3`, domain:`Process`, task:`R9`, title:`Ninety percent done`,
-   text:(s,all,G)=>[`Sam asks each lead how far along they are. The integration team says ninety percent. The data team says eighty five. The infrastructure team says ninety, though the cluster passed burn-in four days ago.`,`Priya, quietly, at his desk afterward: <span class="said" data-who="Priya">"We've been ninety percent done for three weeks."</span>`],
+   text:(s,all,G)=>[`Sam asks each lead how far along they are. The integration team says ninety percent. The data team says eighty five. The infrastructure team says ninety, though the cluster passed burn-in four days ago.`,`Priya, quietly, at his desk afterward: <span class="said" data-who="Priya">"We've been ninety percent done for three weeks."</span>`,...(G.paddedestimates?[`And the week of buffer Sam slipped into the plan back in week two is already spent. Nobody can say where it went, because nobody knew it was there.`]:[])],
    opts:[
     {t:`Average the leads' percentages and report that as overall progress.`,s:0,d:{trust:0,conf:-1,health:-3},
      after:`The average is eighty seven percent. The project is nowhere near eighty seven percent done.`,
@@ -188,7 +188,7 @@
      why:`Once a change is approved, update the baseline so performance reports stay meaningful.`}
    ]},
   {id:`f5s10`, domain:`People`, task:`P4`, title:`Douglas Reyes`,
-   text:(s,all,G)=>[`Tuesday. The boardroom on the top floor has a view of the mountains nobody looks at. Douglas Reyes, the audit committee chair, ran finance at a hospital system for twenty years. He waits until Sam finishes, then asks the only question that matters.`,`<span class="said" data-who="Douglas">"Why should we believe this forecast when we didn't believe the last one?"</span>`],
+   text:(s,all,G)=>[`Tuesday. The boardroom on the top floor has a view of the mountains nobody looks at. Douglas Reyes, the audit committee chair, ran finance at a hospital system for twenty years. He waits until Sam finishes, then asks the only question that matters.`,`Sam puts one chart on the screen.`,`<prop type="chart" kind="evm" title="Cascade earned value, weeks 1 to 6 ($ thousands)" pv="150,320,500,670,840,1000" ev="140,290,430,570,710,850" ac="160,330,510,680,850,1000"></prop>`,`<span class="said" data-who="Douglas">"Why should we believe this forecast when we didn't believe the last one?"</span>`],
    opts:[
     {t:`Say the new numbers come from a better process and ask for his trust.`,s:1,d:{trust:0,conf:1,health:0},
      after:`Reyes nods politely. He wanted to see the process, not hear about it.`,

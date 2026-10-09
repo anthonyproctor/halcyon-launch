@@ -109,3 +109,27 @@ Scoring: s is 3 best, 1 partial, 0 miss. Exactly one best per scene, at least on
 
 ## Validation
 Run `node tools/check_full.mjs full/chNN.js` from the repo root; it must exit 0. Run the AI detector on a dump of your prose and keep every chunk under 30 percent.
+
+## Consequences v2: more choices that bite later (added 2026-10-09)
+Each new flag is SET on one clearly wrong option (s:0 or s:1) in its chapter and READ in later chapters, where it changes a sentence, a character's reaction, or an outcome line (never the canonical plot). Read it with `(s.flags.X||G.X)` in the setting chapter and `G.X` in later ones.
+| flag | set in | meaning | read in |
+|---|---|---|---|
+| `paddedestimates` | ch2 | padded every estimate instead of three-point estimating | ch5, ch8 |
+| `noteamcharter` | ch3 | skipped the team charter / working agreements | ch6 |
+| `hidfromochoa` | ch4 | didn't tell Ochoa about the cluster failure promptly | ch7, ch9 |
+| `sidelineddevin` | ch6 | took Devin off the work instead of coaching him | ch13, ch15 |
+| `overrodepo` | ch7 | overrode Maria (product owner) on backlog priority | ch9, ch12 |
+| `squeezedlabelforge` | ch8 | played hardball with LabelForge instead of negotiating on interests | ch10 |
+| `forcedrollout` | ch9 | pushed the rollout over the nurses' objections without change management | ch10, ch15 |
+| `nolessons` | ch10 | skipped lessons learned | ch13 |
+| `nobusinesscase` | ch11 | approved phase two without a business case | ch12, ch14 |
+| `overloadedpriya` | ch13 | piled both projects onto Priya | ch15 |
+
+## Story props (added 2026-10-09)
+Where the story has an artifact, render it as a prop instead of describing it: a paragraph string that starts with `<prop ` is rendered as-is. Formats:
+- Email: `<prop type="email" from="Elena Vasquez" to="Sam Okafor" time="6:12 AM" subject="Cascade">body text, may include <br></prop>`
+- Chat (Slack): `<prop type="chat" from="Theo" time="11:48 PM">message text</prop>`
+- Text message: `<prop type="text" from="Ray Mendez" time="9:02 PM">message</prop>`
+- Document or memo: `<prop type="doc" title="Project charter">short body, may include <br></prop>`
+- Chart: `<prop type="chart" kind="evm" title="Cascade earned value, week 6" pv="..." ev="..." ac="..."></prop>` (numbers as comma lists for weeks) or `kind="bars"` with `labels` and `values`.
+Use 1 to 3 props per chapter where the story naturally has an artifact. Keep them short. The narrator reads the prop text, so it must read naturally aloud. No dashes.

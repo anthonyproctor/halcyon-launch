@@ -11,8 +11,10 @@
     `Sam had spent nine years in the Air Force keeping F-16s ready to fly, the last four as a crew chief who answered to a flight chief named Ray Mendez. Ray had one rule he said so often it got painted on a toolbox: the jet doesn't care how you feel. You did the inspection anyway. You signed the forms honestly anyway. You told the pilot the truth about the aircraft even when the truth meant nobody flew that day.`,
     `Twelve years later Sam ran the data centers for Halcyon AI, a six hundred person company in a renovated warehouse in LoDo that built AI agents to draft clinical documentation for doctors and nurses. His racks were boring, which was the point. He liked boring. Boring meant nobody was paging him at two in the morning.`,
     `The email was from Elena Vasquez, the CEO. Subject line: "Need you at 8:30." No body. Elena only skipped the body when something was on fire.`,
+    `<prop type="email" from="Elena Vasquez" to="Sam Okafor" time="6:12 AM" subject="Need you at 8:30"></prop>`,
     `Halcyon had one deal that mattered more than all the others combined. Cascade Valley Health, eleven hospitals across Colorado and Wyoming, had signed a contract to put Halcyon's agents into its clinical documentation workflow. Go-live was fourteen weeks out. The date was in the contract, written by the sales team and signed before anyone in engineering had estimated a single task. Grant Mercer, the Chief Revenue Officer, had rung a brass bell in the office when it closed. People had cheered. Sam had been in the server room and missed it.`,
     `On Friday afternoon the project manager running Cascade had quit. Two lines in an email, a badge left on the desk, and a shared drive with forty folders that nobody else understood.`,
+    `<prop type="email" from="Cascade project manager" to="Elena Vasquez" time="Friday, 4:51 PM" subject="Resignation">Elena, I'm resigning effective today. Everything is on the shared drive.</prop>`,
     `Dana capped her pen. <span class="said" data-who="Dana">"Go,"</span> she said. <span class="said" data-who="Dana">"And eat something that isn't a granola bar."</span> He took the granola bar anyway.`
   ],
   lesson: {

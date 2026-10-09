@@ -114,8 +114,8 @@
     {t:`Pair Devin with Priya so her pace rubs off on him a little.`,s:1,d:{trust:-1,conf:0,health:1},
      after:`Priya, who has enough to carry already, now carries Devin too.`,
      why:`Pairing can help, but it puts your problem on someone else without understanding what's going on with Devin.`},
-    {t:`Start a formal performance plan with HR to document the misses.`,s:0,d:{trust:-4,conf:0,health:-1},
-     after:`Devin updates his resume that night.`,
+    {t:`Start a formal performance plan with HR to document the misses.`,s:0,d:{trust:-4,conf:0,health:-1},flag:`sidelineddevin`,
+     after:`Devin updates his resume that night. Until the plan's first review, Sam moves him off the integration work, and the team learns what that means.`,
      why:`Formal steps come after coaching has been tried, not before a single conversation.`},
     {t:`Raise the missed commitments at the retro so the team can address them.`,s:0,d:{trust:-5,conf:0,health:-1},
      after:`The retro becomes a trial. Devin stops talking in retros.`,
@@ -154,7 +154,7 @@
      why:`Blocking work to avoid the risk of a new approver makes the impediment worse.`}
    ]},
   {id:`f6s8`, domain:`People`, task:`P3`, title:`Code review wars`,
-   text:(s,all,G)=>[`With Theo leaving and Devin waking up, standups get loud. Devin wants every change performance tested. Kraków thinks Denver reviews their code harder than its own. Priya wants one rule everyone follows.`,`Nobody is wrong. Everybody is annoyed.`],
+   text:(s,all,G)=>[`With Theo leaving and Devin waking up, standups get loud. Devin wants every change performance tested. Kraków thinks Denver reviews their code harder than its own. Priya wants one rule everyone follows.`,...(G.noteamcharter?[`There's no team charter to point to. Back in week two Sam skipped writing one, and now every argument starts from zero.`]:[]),`Nobody is wrong. Everybody is annoyed.`],
    opts:[
     {t:`Set the review standard himself so everyone stops arguing about it.`,s:1,d:{trust:-1,conf:0,health:2},
      after:`The arguments stop. So does the team's interest in the rule.`,
@@ -264,10 +264,12 @@
   `Theo's going away party ended at nine. He hugged Priya, shook Devin's hand, and gave Tomasz's team on the screen a salute that made them laugh. He stopped at Sam's desk on the way out.`,
   `<span class="said" data-who="Theo">"For what it's worth,"</span> Theo said, <span class="said" data-who="Theo">"this was the first time anyone made me teach it instead of do it. I should have been doing that for two years."</span>`,
   `<span class="said" data-who="Sam">"So should I,"</span> Sam said, and meant it.`,
-  `On Monday the on call rotation went live with four names on it. Priya's was first. Devin had added a line to the team charter, in his own words: "Nobody is the only one."`,
+  `On Monday the on call rotation went live with four names on it. Priya's was first. Devin had added a line to ${G.noteamcharter?"the working agreements they had finally written down":"the team charter"}, in his own words.`,
+  `<prop type="doc" title="Team working agreements, line 9">Nobody is the only one. If you're the only person who can do something, teach it to someone this sprint.</prop>`,
   (s.score>=27?`The dashboard by the kitchen showed velocity back above where it had been before the burn-in. Lena noticed. She bought donuts, which for Lena was a speech.`:`Velocity was still below where it had been before the burn-in. But the standups were louder now, in the useful way, and Sam decided that counted for something.`),
-  `At 4:12 that afternoon Ochoa's email arrived. Cascade wanted a live demo of the documentation agents for clinicians in two weeks. Real nurses, real workflows, test data.`,
-  `The last line was the one Sam read three times. <span class="said" data-who="Ochoa">"Maria Santos will run it from our side. She ran an ICU for eleven years before she ran informatics. Bring your best."</span>`
+  `At 4:12 that afternoon Ochoa's email arrived.`,
+  `<prop type="email" from="Dr. Raymond Ochoa" to="Sam Okafor" time="4:12 PM" subject="Live demo for clinicians">Sam,<br><br>Cascade would like a live demo of the documentation agents for our clinicians in two weeks. Real nurses, real workflows, test data.<br><br><span class="said" data-who="Ochoa">Maria Santos will run it from our side. She ran an ICU for eleven years before she ran informatics. Bring your best.</span><br><br>Raymond</prop>`,
+  `The last line was the one Sam read three times.`
  ],
  episode:{src:`audio/full-ch06.mp3`, len:`about 35 minutes`},
  next:`The Demo`

@@ -44,7 +44,7 @@
  },
  scenes:[
  {id:`f8s1`, domain:`Process`, task:`R5`, title:`The full invoice`,
-  text:(s,all,G)=>[`Section 7.2 says that for each week a batch is late, the price drops by one and a half percent, up to ten percent. The first batch was three weeks late. LabelForge billed the full $186,000 anyway.`,`Grant says pay it and move on, Cascade is happy. Lena says don't pay a cent until they redo the third batch.`],
+  text:(s,all,G)=>[`Joan slides the contract across, tabbed in yellow.`,`<prop type="doc" title="LabelForge master services agreement, section 7.2">Late delivery. For each full week a batch is delivered after its scheduled date, the price for that batch drops by one and a half percent, up to a maximum of ten percent of the contract price.</prop>`,`The first batch was three weeks late. LabelForge billed the full $186,000 anyway.`,`Grant says pay it and move on, Cascade is happy. Lena says don't pay a cent until they redo the third batch.`],
   opts:[
    {t:`Pay the undisputed amount, document the delay, and raise the rest under the contract.`,s:3,best:true,d:{trust:2,conf:3,health:2},
     after:`Joan pays the undisputed portion on time and sends a written notice citing 7.2 with the delivery dates attached. LabelForge's account manager calls within the hour, which Joan says is the fastest she's ever seen them move.`,
@@ -84,7 +84,7 @@
    {t:`Accept the five percent and the apology, since the vendor is already losing money on it.`,s:1,d:{trust:0,conf:0,health:0},
     after:`It's fair but leaves Halcyon with bad labels going into wave two.`,
     why:`Reasonable, but it settles the money and ignores Halcyon's real interest, which is label quality for the next phase.`},
-   {t:`Insist on the full ten percent the contract allows and end the call if they won't agree.`,s:0,d:{trust:0,conf:-1,health:-2},
+   {t:`Insist on the full ten percent the contract allows and end the call if they won't agree.`,s:0,d:{trust:0,conf:-1,health:-2},flag:`squeezedlabelforge`,
     after:`LabelForge agrees, then assigns its weakest annotators to the remaining work. You get what you pay for.`,
     why:`Hard bargaining can win the clause and damage the relationship you still depend on. Win-lose outcomes tend to cost you later.`},
    {t:`Tell them Halcyon will consider it and get back to them after talking with Elena and Grant.`,s:0,d:{trust:0,conf:-1,health:-1},
@@ -92,7 +92,7 @@
     why:`If you have the authority and a good deal is on the table, close it. Deferring without a reason just loses momentum.`}
   ]},
  {id:`f8s4`, domain:`Business Environment`, task:`B3`, title:`Cascade's change`,
-  text:(s,all,G)=>[`Cascade formally asks to move discharge instructions from phase two into the current contract, for the second wave. Ochoa's note is friendly and firm.`,`Grant replies-all before Sam is out of his first meeting: <span class="said" data-who="Grant">"Absolutely doable!!!"</span>`],
+  text:(s,all,G)=>[`Cascade formally asks to move discharge instructions from phase two into the current contract, for the second wave. Ochoa's note is friendly and firm.`,`Grant replies to everyone before Sam is out of his first meeting.`,`<prop type="email" from="Grant Mercer" to="Dr. Raymond Ochoa; Sam Okafor; Elena Vasquez" time="8:07 AM" subject="Re: Discharge instructions in wave two"><span class="said" data-who="Grant">Absolutely doable!!!</span></prop>`,...(G.paddedestimates?[`Sam opens the estimates to size it and stops. Every number in the plan carries padding he added back in week two, and nobody can tell how much is real work and how much is cushion. The impact analysis will take twice as long.`]:[])],
   opts:[
    {t:`Log it as a change request, analyze the impact, and take it to the change control board.`,s:3,best:true,d:{trust:2,conf:3,health:4},
     after:`Sam sends a short note to everyone on the thread: received, logged as CR-014, impact analysis by Friday, decision at the next board meeting. Grant calls him, annoyed. Ochoa replies, <span class="said" data-who="Ochoa">"Perfect, that's how we'd do it."</span>`,
@@ -267,8 +267,8 @@
  closing:(s,all,G)=>[
   `Joan stayed late on Friday to file the LabelForge amendment. Sam found her putting it in the gray cabinet behind a yellow tab.`,
   `<span class="said" data-who="Joan">"You did fine,"</span> she said, which from Joan was a standing ovation. <span class="said" data-who="Joan">"Most PMs either fold or go to war. You traded."</span>`,
-  `He drove home past Union Station with the go/no-go criteria printed on the seat beside him. Eight lines. Eight facts that would decide whether three hospitals turned on software that wrote notes about real patients.`,
-  `Dana was grading lab reports at the kitchen table. She looked at the page over her glasses. <span class="said" data-who="Dana">"This is the first time you've brought work home that looks like a checklist,"</span> she said. <span class="said" data-who="Dana">"That's how I know you're scared."</span>`,
+  `He drove home past Union Station with the go/no-go criteria printed on the seat beside him. Eight lines on one page. Together they'd decide whether three hospitals turned on software that wrote notes about real patients.`,
+  `Dana was grading lab reports at the kitchen table. She looked at the page over her glasses. <span class="said" data-who="Dana">"You never bring home work that looks like a checklist,"</span> she said. <span class="said" data-who="Dana">"That's how I know you're scared."</span>`,
   `She wasn't wrong. On Monday, Maria called from Cheyenne. The nurses there had read about the agents in a union newsletter, and they had questions. Denise Harmon, the nurse manager, had a list. <span class="said" data-who="Maria">"You should come up,"</span> Maria said. <span class="said" data-who="Maria">"Bring coffee. A lot of it."</span>`
  ],
  episode:{src:`audio/full-ch08.mp3`, len:`about 35 minutes`},
