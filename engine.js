@@ -4,28 +4,42 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const store={get(k,d){try{const v=localStorage.getItem("halcyon."+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("halcyon."+k,JSON.stringify(v))}catch(e){}}};
 const clamp=v=>Math.max(0,Math.min(100,v));
-const DOMS=["People","Process","Business Environment"];
+let DOMS=["People","Process","Business Environment"];
 const METERS=[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Delivery health"]];
 const RUTH_LEADS={3:["That's the move.","Good. That's what I'd want from a flight director.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best answer.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have stopped you there.","Let's talk about that one."]};
-const TASKNAMES={P1:"Develop a common vision",P2:"Manage conflicts",P3:"Lead the project team",P4:"Engage stakeholders",P5:"Align stakeholder expectations",P6:"Manage stakeholder expectations",P7:"Help ensure knowledge transfer",P8:"Plan and manage communication",R1:"Integrated plan and plan delivery",R2:"Develop and manage scope",R3:"Value-based delivery",R4:"Plan and manage resources",R5:"Plan and manage procurement",R6:"Plan and manage finance",R7:"Plan and optimize quality",R8:"Plan and manage schedule",R9:"Evaluate project status",R10:"Manage project closure",B1:"Project governance",B2:"Project compliance",B3:"Manage and control changes",B4:"Remove impediments, manage issues",B5:"Plan and manage risk",B6:"Continuous improvement",B7:"Support organizational change",B8:"External business environment"};
-const BASE_CAST=[["Sam Okafor","You. Infrastructure ops manager, former Air Force maintenance NCO."],["Ruth Calder","Board member, retired NASA flight director. Your mentor."],["Elena Vasquez","CEO and founder."],["Grant Mercer","Chief Revenue Officer. Closed the Cascade deal."],["Lena Cho","CTO. Brilliant, hates conflict."],["Theo Lindqvist","ML platform lead. Everything runs through him."],["Dr. Raymond Ochoa","CIO, Cascade Valley Health."]];
-const FULL_CAST_EXTRA=[["Dana Okafor","Sam's wife. High school chemistry teacher. Notices when he isn't sleeping."],["Priya Shah","Junior engineer. Shadows Theo."]];
+let TASKNAMES={P1:"Develop a common vision",P2:"Manage conflicts",P3:"Lead the project team",P4:"Engage stakeholders",P5:"Align stakeholder expectations",P6:"Manage stakeholder expectations",P7:"Help ensure knowledge transfer",P8:"Plan and manage communication",R1:"Integrated plan and plan delivery",R2:"Develop and manage scope",R3:"Value-based delivery",R4:"Plan and manage resources",R5:"Plan and manage procurement",R6:"Plan and manage finance",R7:"Plan and optimize quality",R8:"Plan and manage schedule",R9:"Evaluate project status",R10:"Manage project closure",B1:"Project governance",B2:"Project compliance",B3:"Manage and control changes",B4:"Remove impediments, manage issues",B5:"Plan and manage risk",B6:"Continuous improvement",B7:"Support organizational change",B8:"External business environment"};
+let BASE_CAST=[["Sam Okafor","You. Infrastructure ops manager, former Air Force maintenance NCO."],["Ruth Calder","Board member, retired NASA flight director. Your mentor."],["Elena Vasquez","CEO and founder."],["Grant Mercer","Chief Revenue Officer. Closed the Cascade deal."],["Lena Cho","CTO. Brilliant, hates conflict."],["Theo Lindqvist","ML platform lead. Everything runs through him."],["Dr. Raymond Ochoa","CIO, Cascade Valley Health."]];
+let FULL_CAST_EXTRA=[["Dana Okafor","Sam's wife. High school chemistry teacher. Notices when he isn't sleeping."],["Priya Shah","Junior engineer. Shadows Theo."]];
 
 const TRACKS={
-  ref:{id:"ref",name:"Refresher",blurb:"6 chapters, about 2.5 hours. Ten decisions per chapter with Ruth's debriefs. Best for a quick review.",list:()=> (window.HALCYON||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>n},
-  full:{id:"full",name:"Full Course",blurb:"15 chapters, about 15 to 20 hours. Lessons, decisions, math drills, exercises, and a quiz every chapter. Learn the PMP from the ground up.",list:()=> (window.HALCYON_FULL||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>100+n},
+  ref:{id:"ref",name:"Refresher",blurb:"6 chapters, about 2.5 hours. Ten decisions per chapter with Ruth's debriefs. Best for a quick review.",list:()=> (DATA().ref||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>n},
+  full:{id:"full",name:"Full Course",blurb:"15 chapters, about 15 to 20 hours. Lessons, decisions, math drills, exercises, and a quiz every chapter. Learn the PMP from the ground up.",list:()=> (DATA().full||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>100+n},
   mock:{id:"mock",name:"Mock Exam",blurb:"180 questions in 240 minutes with two breaks, weighted like the real exam. Practice mode gives feedback as you go.",key:()=>900}
 };
-const MOCK_KEY=900;
+let MOCK_KEY=900;const PMP_META={DOMS,TASKNAMES,BASE_CAST,FULL_CAST_EXTRA};
+/* ===== courses ===== */
+const COURSES=window.HALCYON_COURSES||[{id:"pmp",title:"PMP",base:0,root:"",status:"live",taskDomain:{P:"People",R:"Process",B:"Business Environment"}}];
+let COURSE=COURSES[0];
+function courseById(id){return COURSES.find(c=>c.id===id)}
+function courseOfKey(k){return COURSES.filter(c=>k>=c.base).sort((a,b)=>b.base-a.base)[0]||COURSES[0]}
+function DATA(){if(COURSE.id==="pmp")return{ref:window.HALCYON,full:window.HALCYON_FULL,mock:window.HALCYON_MOCK,cast:window.HALCYON_CAST};return (window.HALCYON_DATA||{})[COURSE.id]||{}}
+function R(p){return /^(https?:|\/)/.test(p)?p:COURSE.root+p}
+function taskDomain(t){return (COURSE.taskDomain||{})[t[0]]||DOMS[0]}
+function loadScripts(list){return Promise.all(list.map(src=>new Promise(ok=>{if(document.querySelector(`script[data-c="${src}"]`))return ok();const el=document.createElement("script");el.src=src;el.dataset.c=src;el.onload=ok;el.onerror=ok;document.head.appendChild(el)})))}
+async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")return false;if(c.scripts&&!c._loaded){await loadScripts(c.scripts.map(x=>c.root+x));c._loaded=true}
+  const changed=COURSE.id!==c.id;COURSE=c;store.set("course",id);
+  const meta=c.id==="pmp"?PMP_META:(((window.HALCYON_DATA||{})[id]||{}).meta||{});
+  DOMS=meta.DOMS||PMP_META.DOMS;TASKNAMES=meta.TASKNAMES||{};BASE_CAST=meta.BASE_CAST||[];FULL_CAST_EXTRA=meta.FULL_CAST_EXTRA||[];MOCK_KEY=c.base+900;
+  if(changed){BOOK=null;NAR.timings={};try{NAR.audio.pause()}catch(e){}NAR.page=null;NAR.listening=false;buildOrders()}return true}
 
 /* ===== state ===== */
 let TRACK=null,CH=null,S=null,SYNC=null,syncTimer=null;
-function freshRef(){return{step:-1,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:{People:[0,0],Process:[0,0],"Business Environment":[0,0]}}}
-function freshFull(){return{pos:0,max:0,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:{People:[0,0],Process:[0,0],"Business Environment":[0,0]},drills:{},ex:null,quiz:null}}
-function keyOf(tr,n){return TRACKS[tr].key(n)}
+function freshRef(){return{step:-1,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:Object.fromEntries(DOMS.map(d=>[d,[0,0]]))}}
+function freshFull(){return{pos:0,max:0,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:Object.fromEntries(DOMS.map(d=>[d,[0,0]])),drills:{},ex:null,quiz:null}}
+function keyOf(tr,n){return COURSE.base+TRACKS[tr].key(n)}
 function load(tr,n){return store.get("c"+keyOf(tr,n),null)}
 function persist(tr,n,st){store.set("c"+keyOf(tr,n),st);if(SYNC){const k=keyOf(tr,n),copy=JSON.parse(JSON.stringify(st));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(k,copy),400)}}
-function save(){if(TRACK==="mock"){persistMock();return}persist(TRACK,CH.num,S);store.set("cur",keyOf(TRACK,CH.num));store.set("lastplace",{t:TRACK,n:CH.num})}
+function save(){if(TRACK==="mock"){persistMock();return}persist(TRACK,CH.num,S);store.set("cur",keyOf(TRACK,CH.num));store.set("lastplace."+COURSE.id,{t:TRACK,n:CH.num})}
 function chapters(){return TRACKS[TRACK].list()}
 function globalFlags(){const G={};if(TRACK!=="full")return G;chapters().forEach(c=>{if(c.num<CH.num){const st=load("full",c.num);if(st)Object.assign(G,st.flags||{})}});if(S&&S.flags)Object.assign(G,S.flags);return G}
 function allStates(){const o={};chapters().forEach(c=>{o[c.num]=c.num===CH.num?S:load(TRACK,c.num)});return o}
@@ -33,9 +47,9 @@ function allStates(){const o={};chapters().forEach(c=>{o[c.num]=c.num===CH.num?S
 /* ===== shared render helpers ===== */
 function order(id,n){return window.HalcyonOrder.get(id,n)}
 function buildOrders(){const groups=[];
-  (window.HALCYON||[]).forEach(c=>groups.push({key:"ref"+c.num+"dec",items:c.scenes.map(sc=>({id:sc.id,n:sc.opts.length,correct:sc.opts.findIndex(o=>o.best)}))}));
-  (window.HALCYON_FULL||[]).forEach(c=>{groups.push({key:"full"+c.num+"dec",items:c.scenes.map(sc=>({id:sc.id,n:sc.opts.length,correct:sc.opts.findIndex(o=>o.best)}))});groups.push({key:"full"+c.num+"quiz",items:c.quiz.map((q,qi)=>({id:"q"+c.num+"_"+qi,n:4,correct:q.a}))})});
-  const mq=[];(window.HALCYON_MOCK||[]).forEach(p=>p.questions.forEach((q,i)=>mq.push({id:"mq"+p.part.slice(0,3)+i,n:4,correct:q.a})));groups.push({key:"mockbank",items:mq});
+  (DATA().ref||[]).forEach(c=>groups.push({key:"ref"+c.num+"dec",items:c.scenes.map(sc=>({id:sc.id,n:sc.opts.length,correct:sc.opts.findIndex(o=>o.best)}))}));
+  (DATA().full||[]).forEach(c=>{groups.push({key:"full"+c.num+"dec",items:c.scenes.map(sc=>({id:sc.id,n:sc.opts.length,correct:sc.opts.findIndex(o=>o.best)}))});groups.push({key:"full"+c.num+"quiz",items:c.quiz.map((q,qi)=>({id:"q"+c.num+"_"+qi,n:4,correct:q.a}))})});
+  const mq=[];(DATA().mock||[]).forEach(p=>p.questions.forEach((q,i)=>mq.push({id:"mq"+p.part.slice(0,3)+i,n:4,correct:q.a})));groups.push({key:"mockbank",items:mq});
   window.HalcyonOrder.build(groups)}
 buildOrders();
 function propHTML(p){const m=p.match(/^<prop\s+([^>]*)>([\s\S]*)<\/prop>$/);if(!m)return `<p>${p}</p>`;const a={};m[1].replace(/(\w+)="([^"]*)"/g,(_,k,v)=>a[k]=v);const body=m[2];
@@ -53,7 +67,7 @@ function propHTML(p){const m=p.match(/^<prop\s+([^>]*)>([\s\S]*)<\/prop>$/);if(!
 function paras(arr){return `<div class="story">${arr.map(p=>/^<prop\s/.test(p)?propHTML(p):`<p>${p}</p>`).join("")}</div>`}
 function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${esc(v[1])}</b><span class="prog">${esc(v[2])} · ${esc(v[3])}</span></div><div class="vframe"><button type="button" data-vid="${esc(v[0])}" aria-label="Play video: ${esc(v[1])}" style="background-image:url('https://i.ytimg.com/vi/${esc(v[0])}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
 function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
-function episodeCard(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Whole chapter as one audio file · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">For the car or the gym. In the app, use the Listen button at the bottom of the screen instead.</p><audio controls preload="metadata" src="${esc(c.episode.src)}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
+function episodeCard(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Whole chapter as one audio file · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">For the car or the gym. In the app, use the Listen button at the bottom of the screen instead.</p><audio controls preload="metadata" src="${esc(R(c.episode.src))}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
 function top(){window.scrollTo({top:0,behavior:"smooth"})}
 function applyPick(st,sc,i,j){const o=sc.opts[j];st.picks[i]=j;st.score+=o.s;for(const k in (o.d||{}))st.m[k]=clamp(st.m[k]+o.d[k]);st.dom[sc.domain][0]+=o.s;st.dom[sc.domain][1]+=3;if(o.flag)st.flags[o.flag]=true;if(TRACK==="ref"&&CH.num===1&&i===0&&j===1)st.flags.allhands=true}
 function sceneHTML(sc,i,n,picked,stateForText){
@@ -146,19 +160,19 @@ function fullRender(){
 
 /* ===== mock exam ===== */
 let MS=null,mockTimer=null;
-const MOCK_LIMIT=240*60;
-function mockQuestions(){const all=[];(window.HALCYON_MOCK||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part.slice(0,3)+i})));return all}
+function MOCK_LIMIT(){return (COURSE.mockMinutes||240)*60}
+function mockQuestions(){const all=[];(DATA().mock||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part.slice(0,3)+i})));return all}
 function freshMock(mode){const qs=mockQuestions();const seed=Date.now()%100000;const ord=order("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
-function persistMock(){if(MS&&MS.order&&!MS.submitted)store.set("lastplace",{t:"mock"});store.set("c"+MOCK_KEY,MS);store.set("cur",MOCK_KEY);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(MOCK_KEY,copy),600)}}
+function persistMock(){if(MS&&MS.order&&!MS.submitted)store.set("lastplace."+COURSE.id,{t:"mock"});store.set("c"+MOCK_KEY,MS);store.set("cur",MOCK_KEY);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(MOCK_KEY,copy),600)}}
 function openMock(){TRACK="mock";store.set("track","mock");MS=store.get("c"+MOCK_KEY,null);render();top()}
 function fmtTime(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return `${h}:${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`}
-function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode!=="exam")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT){mockSubmit()}},1000)}
+function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode!=="exam")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT()-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT()){mockSubmit()}},1000)}
 function mockRender(){
   const qs=mockQuestions();const byId={};qs.forEach(q=>byId[q.id]=q);
   if(!qs.length){$("page").innerHTML=`<h1>Mock exam</h1><p>The question bank is still being written. Check back soon.</p>`;return}
   if(!MS){
-    $("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>PMP practice exam</h1><div class="story"><p>${qs.length} questions weighted like the July 2026 exam: People 33 percent, Process 41 percent, Business Environment 26 percent, with most questions agile or hybrid. All questions are single answer; the real exam also has multi-select, matching, and hotspot items.</p></div>
-    <div class="grid2"><div class="card"><h3>Exam mode</h3><p>240 minutes, timer runs, two optional 10 minute breaks after questions 60 and 120, results and explanations at the end.</p><button class="btn" id="exam" type="button">Start exam mode</button></div><div class="card"><h3>Practice mode</h3><p>No timer. See the answer and Ruth's explanation after each question.</p><button class="btn ghost" id="practice" type="button">Start practice mode</button></div></div>`;
+    $("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${qs.length} questions. ${COURSE.mockBlurb||""}</p></div>
+    <div class="grid2"><div class="card"><h3>Exam mode</h3><p>${Math.round(MOCK_LIMIT()/60)} minutes, the timer runs${(COURSE.mockBreaks||[]).length?`, optional breaks after questions ${COURSE.mockBreaks.join(" and ")}`:""}, results and explanations at the end.</p><button class="btn" id="exam" type="button">Start exam mode</button></div><div class="card"><h3>Practice mode</h3><p>No timer. See the answer and Ruth's explanation after each question.</p><button class="btn ghost" id="practice" type="button">Start practice mode</button></div></div>`;
     $("exam").onclick=()=>{MS=freshMock("exam");persistMock();render()};$("practice").onclick=()=>{MS=freshMock("practice");persistMock();render()};return}
   if(MS.submitted)return mockResults(byId);
   if(MS.onBreak!==null){$("page").innerHTML=`<h1>Break</h1><div class="story"><p>You've finished question ${MS.onBreak}. Take up to 10 minutes. The exam timer is paused. On the real exam you can't go back to earlier questions after a break.</p></div><div class="bar"><button class="btn" id="resume" type="button">Resume the exam</button></div>`;$("resume").onclick=()=>{MS.breaksTaken.push(MS.onBreak);MS.onBreak=null;persistMock();render()};return}
@@ -173,14 +187,14 @@ function mockRender(){
   $("page").querySelectorAll("input[name=mq]").forEach(r=>r.onchange=()=>{MS.ans[q.id]=+r.value;persistMock();if(MS.mode==="practice")render()});
   $("flagq").onchange=e=>{MS.flagged[q.id]=e.target.checked;persistMock()};
   $("prev").onclick=()=>{MS.cur=Math.max(0,i-1);persistMock();render()};
-  $("nextq").onclick=()=>{if(i+1>=MS.order.length){if(confirm(`Submit the exam? ${MS.order.length-Object.keys(MS.ans).length} unanswered.`))mockSubmit();return}MS.cur=i+1;if(MS.mode==="exam"&&(i+1===60||i+1===120)&&!MS.breaksTaken.includes(i+1))MS.onBreak=i+1;persistMock();render();top()};
+  $("nextq").onclick=()=>{if(i+1>=MS.order.length){if(confirm(`Submit the exam? ${MS.order.length-Object.keys(MS.ans).length} unanswered.`))mockSubmit();return}MS.cur=i+1;if(MS.mode==="exam"&&(COURSE.mockBreaks||[]).includes(i+1)&&!MS.breaksTaken.includes(i+1))MS.onBreak=i+1;persistMock();render();top()};
   $("page").querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{MS.cur=+b.dataset.q;persistMock();render()});
   $("submitnow").onclick=()=>{if(confirm(`Submit now? ${MS.order.length-Object.keys(MS.ans).length} unanswered.`))mockSubmit()};
   mockTick();
 }
 function mockSubmit(){clearInterval(mockTimer);MS.submitted=true;MS.finishedAt=new Date().toISOString();persistMock();
   const byId={};mockQuestions().forEach(q=>byId[q.id]=q);const byTask={};let right=0,ans=0;MS.order.forEach(id=>{const q=byId[id];if(!q)return;if(MS.ans[id]===undefined)return;ans++;byTask[q.task]=byTask[q.task]||[0,0];byTask[q.task][1]++;if(MS.ans[id]===q.a){right++;byTask[q.task][0]++}});
-  const H=store.get("c901",null)||{list:[]};H.list.push({at:MS.finishedAt,mode:MS.mode,right,answered:ans,total:MS.order.length,byTask,secs:MS.elapsed});store.set("c901",H);if(SYNC)SYNC(901,H);
+  const H=store.get("c"+(COURSE.base+901),null)||{list:[]};H.list.push({at:MS.finishedAt,mode:MS.mode,right,answered:ans,total:MS.order.length,byTask,secs:MS.elapsed});store.set("c"+(COURSE.base+901),H);if(SYNC)SYNC(COURSE.base+901,H);
   render();top()}
 function mockResults(byId){
   const qs=MS.order.map(id=>byId[id]).filter(Boolean);const right=qs.filter(q=>MS.ans[q.id]===q.a).length;
@@ -198,41 +212,41 @@ function mockResults(byId){
 
 
 /* ===== progress dashboard, practice sets, study plan ===== */
-const ALL26=Object.keys(TASKNAMES);
+function ALLT(){return Object.keys(TASKNAMES)}
 function mastery(){
-  const m={};ALL26.forEach(t=>m[t]={got:0,max:0,n:0});
+  const m={};ALLT().forEach(t=>m[t]={got:0,max:0,n:0});
   const add=(t,g,mx)=>{if(!m[t])return;m[t].got+=g;m[t].max+=mx;m[t].n++};
   TRACKS.full.list().forEach(c=>{const st=c.num===(CH&&TRACK==="full"?CH.num:-1)?S:load("full",c.num);if(!st)return;
     c.scenes.forEach((sc,i)=>{const p=(st.picks||{})[i];if(p!==undefined)add(sc.task,sc.opts[p].s,3)});
     if(st.quiz)c.quiz.forEach((q,qi)=>{if(st.quiz.v[qi]>=0)add(q.task,st.quiz.v[qi]===q.a?3:0,3)})});
-  const H=store.get("c901",null);(H&&H.list||[]).forEach(a=>Object.entries(a.byTask||{}).forEach(([t,[g,n]])=>{if(m[t]){m[t].got+=g*3;m[t].max+=n*3;m[t].n+=n}}));
-  const P=store.get("c902",null);Object.entries((P&&P.tasks)||{}).forEach(([t,[g,n]])=>{if(m[t]){m[t].got+=g*3;m[t].max+=n*3;m[t].n+=n}});
+  const H=store.get("c"+(COURSE.base+901),null);(H&&H.list||[]).forEach(a=>Object.entries(a.byTask||{}).forEach(([t,[g,n]])=>{if(m[t]){m[t].got+=g*3;m[t].max+=n*3;m[t].n+=n}}));
+  const P=store.get("c"+(COURSE.base+902),null);Object.entries((P&&P.tasks)||{}).forEach(([t,[g,n]])=>{if(m[t]){m[t].got+=g*3;m[t].max+=n*3;m[t].n+=n}});
   return m;
 }
 const pctOf=x=>x.max?Math.round(x.got/x.max*100):null;
 function taughtIn(t){const out=[];TRACKS.full.list().forEach(c=>{const sc=c.scenes.map((x,i)=>[x,i]).filter(([x])=>x.task===t);if((c.tasks||[]).includes(t)||sc.length)out.push({c,scenes:sc.map(([,i])=>i)})});return out}
 function videosFor(t){const v=[];taughtIn(t).forEach(({c})=>{if(c.lesson&&c.lesson.video&&c.lesson.video[0])v.push([c.lesson.video,c])});return v}
-function weakTasks(m,k){return ALL26.filter(t=>m[t].n>=2).map(t=>[t,pctOf(m[t])]).sort((a,b)=>a[1]-b[1]).slice(0,k)}
+function weakTasks(m,k){return ALLT().filter(t=>m[t].n>=2).map(t=>[t,pctOf(m[t])]).sort((a,b)=>a[1]-b[1]).slice(0,k)}
 function studyPlan(m){
   const weak=weakTasks(m,3).filter(([,p])=>p<80),plan=[];
   const nextCh=TRACKS.full.list().find(c=>{const st=load("full",c.num);return !st||(st.pos||0)<steps(c).length-1});
   if(nextCh)plan.push(["Keep the story moving",`Full Course chapter ${nextCh.num}, ${nextCh.title}. Read Ruth's whiteboard and play the decisions.`,{open:nextCh.num}]);
   weak.forEach(([t,p])=>{const where=taughtIn(t)[0];plan.push([`Shore up ${t} ${TASKNAMES[t]} (${p}%)`,where?`Re-read the chapter ${where.c.num} lesson, then do 10 practice questions on this task.`:`Do 10 practice questions on this task.`,{task:t}])});
-  const H=store.get("c901",null);if(!H||!H.list.length){if(TRACKS.full.list().filter(c=>{const st=load("full",c.num);return st&&(st.pos||0)>=steps(c).length-1}).length>=5)plan.push(["Take a mock exam","You've finished five chapters. A full timed mock now shows where you really stand.",{mock:1}])}
+  const H=store.get("c"+(COURSE.base+901),null);if(!H||!H.list.length){if(TRACKS.full.list().filter(c=>{const st=load("full",c.num);return st&&(st.pos||0)>=steps(c).length-1}).length>=5)plan.push(["Take a mock exam","You've finished five chapters. A full timed mock now shows where you really stand.",{mock:1}])}
   else plan.push(["Mixed practice","Do 10 mixed practice questions to keep everything warm.",{task:"mixed"}]);
   if(!plan.length)plan.push(["Start here","Open the Full Course and play chapter 1.",{open:1}]);
   return plan.slice(0,5);
 }
 function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK="dash";$("railgame").hidden=true;$("mockcard").hidden=true;
-  const m=mastery(),H=(store.get("c901",null)||{list:[]}).list;
+  const m=mastery(),H=(store.get("c"+(COURSE.base+901),null)||{list:[]}).list;
   const fullL=TRACKS.full.list(),refL=TRACKS.ref.list();
   const rows=(tr,L)=>L.map(c=>{const st=load(tr,c.num);if(!st)return `<tr><td>${c.num}</td><td>${c.title}</td><td class="prog" colspan="3">not started</td></tr>`;const n=c.scenes.length,dec=`${st.score}/${n*3}`;
     const quiz=tr==="full"&&st.quiz?`${st.quiz.right}/${c.quiz.length}`:"·";const drills=tr==="full"&&(c.drills||[]).length?`${Object.values(st.drills||{}).filter(x=>x.ok.every(Boolean)).length}/${c.drills.length}`:"·";
     return `<tr><td>${c.num}</td><td><button class="linkbtn" data-open="${tr}:${c.num}">${c.title}</button></td><td class="num">${dec}</td><td class="num">${quiz}</td><td class="num">${drills}</td></tr>`}).join("");
   const last=H.filter(a=>a.mode==="exam").slice(-1)[0];
   const ready=last?Math.round(last.right/last.total*100):null;
-  const domPct=d=>{const ts=ALL26.filter(t=>t[0]===({People:"P",Process:"R","Business Environment":"B"})[d]);const g=ts.reduce((a,t)=>a+m[t].got,0),x=ts.reduce((a,t)=>a+m[t].max,0);return x?Math.round(g/x*100):null};
+  const domPct=d=>{const ts=ALLT().filter(t=>taskDomain(t)===d);const g=ts.reduce((a,t)=>a+m[t].got,0),x=ts.reduce((a,t)=>a+m[t].max,0);return x?Math.round(g/x*100):null};
   const plan=studyPlan(m),weak=weakTasks(m,5);
   $("page").innerHTML=`<div class="kicker">My progress</div><h1>Scoreboard</h1>
    <div class="end-grid"><div class="card"><h3>Readiness</h3><div class="big">${ready!==null?ready+"%":"·"}</div><p class="prog">${last?`Last timed mock, ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}`:"Take a timed mock to see this"}</p></div>${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${domPct(d)!==null?domPct(d)+"%":"·"}</div></div>`).join("")}</div>
@@ -242,7 +256,7 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
      <p class="prog">Taught in: ${ti.map(({c,scenes})=>`<button class="linkbtn" data-lesson="${c.num}">Ch ${c.num} lesson</button>${scenes.map(i=>` · <button class="linkbtn" data-scene="${c.num}:${i}">decision ${i+1}</button>`).join("")}`).join(" | ")||"the mock exam only"}</p>
      ${vids.slice(0,2).map(([v,c])=>`<p class="prog">Video: <a href="https://www.youtube.com/watch?v=${esc(v[0])}" target="_blank" rel="noopener">${esc(v[1])}</a> (${esc(v[2])}, ${esc(v[3])})</p>`).join("")}
      <button class="btn small" data-task="${t}" type="button">10 practice questions</button></div>`}).join(""):`<div class="story"><p>Play a few chapters and quizzes first. This fills in once there's enough to judge.</p></div>`}
-   <h2>All 26 exam tasks</h2><div class="taskgrid">${ALL26.map(t=>{const p=pctOf(m[t]);return `<button class="taskcell" data-task="${t}" type="button" title="${TASKNAMES[t]}"><span class="tc">${t}</span><span class="tn">${TASKNAMES[t]}</span><span class="mbar"><span style="width:${p||0}%;background:${p===null?"var(--soft)":p>=75?"var(--good)":p>=50?"var(--mid)":"var(--bad)"}"></span></span><span class="prog">${p===null?"no data":p+"% · "+m[t].n+" items"}</span></button>`}).join("")}</div>
+   <h2>All ${ALLT().length} exam tasks</h2><div class="taskgrid">${ALLT().map(t=>{const p=pctOf(m[t]);return `<button class="taskcell" data-task="${t}" type="button" title="${TASKNAMES[t]}"><span class="tc">${t}</span><span class="tn">${TASKNAMES[t]}</span><span class="mbar"><span style="width:${p||0}%;background:${p===null?"var(--soft)":p>=75?"var(--good)":p>=50?"var(--mid)":"var(--bad)"}"></span></span><span class="prog">${p===null?"no data":p+"% · "+m[t].n+" items"}</span></button>`}).join("")}</div>
    <h2>Full Course</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("full",fullL)}</table></div>
    <h2>Refresher</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("ref",refL)}</table></div>
    <h2>Mock exams</h2>${H.length?`<div class="tablewrap"><table><tr><th>Date</th><th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td><td>${a.mode}</td><td class="num">${a.right}/${a.total} (${Math.round(a.right/a.total*100)}%)</td><td class="num">${a.mode==="exam"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No mock exams yet.</p>`}`;
@@ -262,7 +276,7 @@ function renderPractice(){setTimeout(navSync,0);
    <form id="prform" novalidate>${qs.map((x,qi)=>{const ord=order(x.pid.startsWith("m")?"mq"+x.pid.slice(1):x.pid.replace(/^f(\d+)q(\d+)$/,"q$1_$2"),4);return `<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${v?(oi===x.a?"qright":v[qi]===oi?"qwrong":""):""}"><input type="radio" name="p${qi}" value="${oi}" ${v?"disabled":""} ${v&&v[qi]===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`).join("")}${v?`<p class="qwhy"><b>${v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} · ${x.src}</span></p>`:""}</fieldset>`}).join("")}${v?"":`<button class="btn" type="submit">Check my answers</button>`}</form>
    ${v?`<div class="callout"><b>${v.filter((x,i)=>x===qs[i].a).length} of ${qs.length} correct.</b></div><div class="bar"><button class="btn" id="again" type="button">Another set</button><button class="btn ghost" id="todash" type="button">Back to progress</button></div>`:""}`;
   const f=$("prform");if(f)f.onsubmit=e=>{e.preventDefault();PR.v=qs.map((_,qi)=>{const c=document.querySelector(`input[name=p${qi}]:checked`);return c?+c.value:-1});
-    const P=store.get("c902",null)||{tasks:{}};qs.forEach((x,qi)=>{if(PR.v[qi]<0)return;P.tasks[x.task]=P.tasks[x.task]||[0,0];P.tasks[x.task][1]++;if(PR.v[qi]===x.a)P.tasks[x.task][0]++});store.set("c902",P);if(SYNC)SYNC(902,P);renderPractice();top()};
+    const P=store.get("c"+(COURSE.base+902),null)||{tasks:{}};qs.forEach((x,qi)=>{if(PR.v[qi]<0)return;P.tasks[x.task]=P.tasks[x.task]||[0,0];P.tasks[x.task][1]++;if(PR.v[qi]===x.a)P.tasks[x.task][0]++});store.set("c"+(COURSE.base+902),P);if(SYNC)SYNC(COURSE.base+902,P);renderPractice();top()};
   const a=$("again");if(a)a.onclick=()=>startPractice(task);const d=$("todash");if(d)d.onclick=()=>renderDash();
 }
 
@@ -271,7 +285,7 @@ function renderPractice(){setTimeout(navSync,0);
 const NAR={car:false,audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
 NAR.audio.preload="auto";
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
-async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];try{const r=await fetch(`audio/pages/${key}/timings.json`,{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
+async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];try{const r=await fetch(R(`audio/pages/${key}/timings.json`),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
 function narPageId(){
   if(TRACK==="ref"){if(S.step<0)return["open",".story p"];if(S.step>=CH.scenes.length)return["end",".story p"];const i=S.step,p=S.picks[i];return p===undefined?["s"+i,".story p, .choice span:not(.k)"]:[`o${i}_${p}`,".outcome .story p"]}
   const st=steps(CH)[Math.min(S.pos,steps(CH).length-1)];
@@ -297,7 +311,7 @@ async function narAttach(){
   if(NAR.page==="book"&&!NAR.audio.paused){narUI();return}
   const key0=narKey();
   if(NAR.car&&key0&&CH.episode){ // car mode: one continuous track per chapter, page changes don't interrupt it
-    NAR.key=key0;NAR.page="car";const src=new URL(CH.episode.src,location.href).href;
+    NAR.key=key0;NAR.page="car";const src=new URL(R(CH.episode.src),location.href).href;
     if(NAR.audio.src!==src){NAR.audio.pause();NAR.audio.src=src;NAR.audio.playbackRate=NAR.rate;const pos=store.get("carpos."+key0,0);NAR.audio.addEventListener("loadedmetadata",()=>{if(pos>5)NAR.audio.currentTime=pos},{once:true});if(NAR.listening)NAR.audio.play().then(narUI).catch(()=>{})}
     $("page").querySelectorAll(".episode").forEach(e=>e.hidden=true);narUI();return}
   NAR.audio.pause();cancelAnimationFrame(NAR.raf);NAR.cur=-1;
@@ -306,10 +320,10 @@ async function narAttach(){
   const T=await narTimings(key);if(!T||!pid||!T[pid]){NAR.page=null;narUI();return}
   if(NAR.key!==key||NAR.page!==pid)return;
   $("page").querySelectorAll(".episode").forEach(e=>e.hidden=true);NAR.words=wrapWords(sel);NAR.map=alignWords(T[pid].w,NAR.words);
-  NAR.audio.src=`audio/pages/${key}/${pid}.mp3`;NAR.audio.playbackRate=NAR.rate;narUI();
+  NAR.audio.src=R(`audio/pages/${key}/${pid}.mp3`);NAR.audio.playbackRate=NAR.rate;narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
 }
-NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${ed}.${n}`,true);store.set(`bookpos.${ed}.${n}`,0);const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
+NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${COURSE.id}.${ed}.${n}`,true);store.set(`bookpos.${COURSE.id}.${ed}.${n}`,0);const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
   if(!NAR.auto)return;const pid=NAR.page||"";
   if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>b.click(),700)}
   else if(pid[0]==="o"){const b=$("next");if(b)setTimeout(()=>b.click(),900)}
@@ -322,12 +336,12 @@ function narInit(){
   $("narplay").onclick=()=>{if(NAR.audio.paused){NAR.listening=true;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{narUI();narHighlight()})}else{NAR.listening=false;NAR.audio.pause();narUI()}};
   $("narrate").onchange=e=>{NAR.rate=+e.target.value;NAR.audio.playbackRate=NAR.rate;store.set("rate",NAR.rate)};
   $("narauto").onchange=e=>{NAR.auto=e.target.checked;store.set("auto2",NAR.auto)};
-  $("gohf").onclick=async()=>{if(TRACK==="full"||TRACK==="ref")save();const n=TRACK==="full"&&CH?CH.num:1;const B=await bookManifest();const ed=store.get("bookEd","story");const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);renderBook();top();if(have.length)bookPlay(ed,have.includes(n)?n:(have.find(k=>k>=n)||have[have.length-1]))};
+  $("gohf").onclick=async()=>{if(TRACK==="full"||TRACK==="ref")save();const n=TRACK==="full"&&CH?CH.num:1;const B=await bookManifest();const ed=store.get("bookEd."+COURSE.id,"story");const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);renderBook();top();if(have.length)bookPlay(ed,have.includes(n)?n:(have.find(k=>k>=n)||have[have.length-1]))};
   NAR.audio.addEventListener("pause",narUI);
 }
 narInit();window.__nar=NAR;
 /* lock screen and car controls */
-function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:"The Halcyon Launch",album:NAR.book.ed==="story"?"Hands-free, story only":"Hands-free, story + lessons",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
+function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:NAR.book.ed==="story"?"Hands-free, story only":"Hands-free, story + lessons",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
 if("mediaSession" in navigator){try{
   navigator.mediaSession.setActionHandler("play",()=>{NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight()})});
   navigator.mediaSession.setActionHandler("pause",()=>{NAR.listening=false;NAR.audio.pause();narUI()});
@@ -341,10 +355,10 @@ if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceW
 
 
 /* ===== cast wiki ===== */
-function castList(){return window.HALCYON_CAST||[]}
+function castList(){return DATA().cast||[]}
 function storyReach(){let done=0;TRACKS.full.list().forEach(c=>{const st=c.num===(TRACK==="full"&&CH?CH.num:-1)?S:load("full",c.num);if(st&&(st.pos||0)>=steps(c).length-1)done=Math.max(done,c.num)});return done}
 function avatar(c,size){const ini=c.name.split(" ").map(w=>w[0]).slice(0,2).join("");let h=0;for(const ch of c.id)h=(h*31+ch.charCodeAt(0))>>>0;const hue=h%360;
-  return `<span class="av" style="width:${size}px;height:${size}px;--avh:${hue}"><img src="cast/${c.id}.jpg" alt="" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='cast/${c.id}.svg'}else this.remove()"><span>${esc(ini)}</span></span>`}
+  return `<span class="av" style="width:${size}px;height:${size}px;--avh:${hue}"><img src="${R("cast/"+c.id+".jpg")}" alt="" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${R("cast/"+c.id+".svg")}'}else this.remove()"><span>${esc(ini)}</span></span>`}
 function renderCast(id){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK="cast";$("railgame").hidden=true;$("mockcard").hidden=true;const L=castList();const reach=store.get("spoilers",false)?99:storyReach();
   if(!L.length){$("page").innerHTML=`<h1>Cast</h1><p class="prog">The cast guide is on its way.</p>`;return}
@@ -357,13 +371,13 @@ function renderCast(id){setTimeout(ambSync,0);setTimeout(navSync,0);
     ${c.quote&&c.quote.unlock<=reach+1?`<blockquote class="castquote">${c.quote.text}</blockquote>`:""}
     ${c.sections.map(sec=>sec.unlock<=Math.max(1,reach)||(sec.unlock===1)?`<section class="lesson"><h2>${esc(sec.title)}</h2>${paras(sec.body)}</section>`:`<section class="locked"><h2>${esc(sec.title)}</h2><p class="prog">Unlocks after chapter ${sec.unlock}.</p></section>`).join("")}
     ${(c.ties||[]).filter(t=>t.unlock<=Math.max(1,reach)).length?`<h2>Connections</h2><ul class="ties">${c.ties.filter(t=>t.unlock<=Math.max(1,reach)).map(t=>`<li><button class="linkbtn" data-c="${t.id}" type="button">${esc((byId[t.id]||{}).name||t.id)}</button>: ${esc(t.text)}</li>`).join("")}</ul>`:""}`;
-  if(window.__castAudio)window.__castAudio.pause();const h=$("hear");if(h){const a=new Audio(`cast/voice/${c.id}.mp3`);window.__castAudio=a;a.onended=()=>h.textContent=`▶ Hear ${c.name.split(" ")[0]}`;a.onerror=()=>h.remove();h.onclick=()=>{if(a.paused){a.play().catch(()=>{});h.textContent="❚❚ Pause"}else{a.pause();h.textContent=`▶ Hear ${c.name.split(" ")[0]}`}}}
+  if(window.__castAudio)window.__castAudio.pause();const h=$("hear");if(h){const a=new Audio(R(`cast/voice/${c.id}.mp3`));window.__castAudio=a;a.onended=()=>h.textContent=`▶ Hear ${c.name.split(" ")[0]}`;a.onerror=()=>h.remove();h.onclick=()=>{if(a.paused){a.play().catch(()=>{});h.textContent="❚❚ Pause"}else{a.pause();h.textContent=`▶ Hear ${c.name.split(" ")[0]}`}}}
   $("castback").onclick=()=>{if(window.__castAudio)window.__castAudio.pause();renderCast();top()};$("page").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{renderCast(b.dataset.c);top()});
 }
 
 
-function lastPlaceLabel(){const lp=store.get("lastplace",null);if(!lp)return null;if(lp.t==="mock")return["Mock exam",()=>openMock()];const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
-function navSync(){const map={home:"homelink",dash:"proglink",practice:"proglink",cast:"castlink",book:"listenlink"};["homelink","proglink","castlink","listenlink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return["Mock exam",()=>openMock()];const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
+function navSync(){const map={home:"homelink",library:"liblink",dash:"proglink",practice:"proglink",cast:"castlink",book:"listenlink"};["liblink","homelink","proglink","castlink","listenlink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
@@ -372,28 +386,28 @@ function navSync(){const map={home:"homelink",dash:"proglink",practice:"proglink
 
 /* ===== audiobook ===== */
 let BOOK=null;
-async function bookManifest(){if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;try{const r=await fetch("audio/audiobook.json",{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
-function bookPlay(ed,n){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=M.src;NAR.audio.playbackRate=NAR.rate;
-  const pos=store.get(`bookpos.${ed}.${n}`,0);NAR.audio.addEventListener("loadedmetadata",()=>{if(pos>5&&pos<(NAR.audio.duration-5))NAR.audio.currentTime=pos},{once:true});
+async function bookManifest(){if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;try{const r=await fetch(R("audio/audiobook.json"),{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
+function bookPlay(ed,n){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=R(M.src);NAR.audio.playbackRate=NAR.rate;
+  const pos=store.get(`bookpos.${COURSE.id}.${ed}.${n}`,0);NAR.audio.addEventListener("loadedmetadata",()=>{if(pos>5&&pos<(NAR.audio.duration-5))NAR.audio.currentTime=pos},{once:true});
   NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight();narMedia()}).catch(()=>{});narUI();if(TRACK==="book")renderBook()}
 async function renderBook(){setTimeout(ambSync,0);
   TRACK="book";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;const B=await bookManifest();if(TRACK!=="book")return;
-  const ed=store.get("bookEd","story");const full=TRACKS.full.list();
-  const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
+  const ed=store.get("bookEd."+COURSE.id,"story");const full=TRACKS.full.list();
+  const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${COURSE.id}.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
     return `<button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>`};
   $("page").innerHTML=`<div class="kicker">Hands-free</div><h1>Listen hands-free</h1><p class="lead">No tapping needed. It plays the story on the right-answer path, chapter after chapter, and keeps going with your phone locked. Pause or skip with your car or lock-screen controls.</p>
    <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. Sam makes the right calls and you hear what happens. About 10 to 13 minutes a chapter.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus Ruth's lesson, and each decision read aloud with a pause, then the answer and why. About 25 minutes.</span></button></div>
    <p class="prog">Plays chapter to chapter on its own and remembers where you stopped. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
    <h2>Full Course</h2><div class="brows">${full.map(row).join("")}</div>`;
-  $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd",b.dataset.ed);renderBook()});
+  $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd."+COURSE.id,b.dataset.ed);renderBook()});
   $("page").querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{const n=+b.dataset.b;if(NAR.page==="book"&&NAR.book&&NAR.book.n===n&&NAR.book.ed===ed){if(NAR.audio.paused){NAR.audio.play();narHighlight()}else NAR.audio.pause();setTimeout(renderBook,50);return}bookPlay(ed,n)});
 }
 
 
 /* ===== chapter art + "In this scene" cast strip ===== */
-const REF_ART={1:1,2:4,3:6,4:7,5:9,6:10};
-function chapterArt(){if(!CH)return "";const n=TRACK==="full"?CH.num:REF_ART[CH.num];if(!n)return "";const nn=String(n).padStart(2,"0");
-  return `<div class="chart"><img src="art/full-ch${nn}.jpg" alt="" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='art/full-ch${nn}.svg'}else this.parentNode.remove()"></div>`}
+function REF_ART(){return COURSE.refArt||{}}
+function chapterArt(){if(!CH)return "";const n=TRACK==="full"?CH.num:REF_ART()[CH.num];if(!n)return "";const nn=String(n).padStart(2,"0");
+  return `<div class="chart"><img src="${R("art/full-ch"+nn+".jpg")}" alt="" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${R("art/full-ch"+nn+".svg")}'}else this.parentNode.remove()"></div>`}
 function castStrip(){
   const pg=$("page");if(!pg||!(TRACK==="full"||TRACK==="ref")||!castList().length)return;const old=pg.querySelector(".xray");if(old)old.remove();
   const scope=[...pg.querySelectorAll(".outcome").length?pg.querySelectorAll(".story p, .outcome .story p"):pg.querySelectorAll(".story p, .lesson .story p, .choice span")];
@@ -429,41 +443,40 @@ function ambUI(){const t=$("ambtoggle");if(t)t.checked=AMB.on;const v=$("ambvol"
 function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
 function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK=null;CH=null;$("railgame").hidden=true;$("mockcard").hidden=true;
-  const lp=lastPlaceLabel();const m=mastery();const plan=studyPlan(m);const H=(store.get("c901",null)||{list:[]}).list;const last=H.slice(-1)[0];
+  const lp=lastPlaceLabel();const m=mastery();const plan=studyPlan(m);const H=(store.get("c"+(COURSE.base+901),null)||{list:[]}).list;const last=H.slice(-1)[0];
   const tile=(tr,c)=>{const st=load(tr,c.num);const lab=chapterProgress(tr,c);const state=lab==="done"||/\d+\/\d+/.test(lab)?"done":lab==="in progress"?"prog":"new";
     const sc=st&&st.score!==undefined&&Object.keys(st.picks||{}).length?`${st.score}/${c.scenes.length*3}`:"";
     return `<button class="ctile ${state}" type="button" data-open="${tr}:${c.num}"><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${state==="done"?"Done"+(sc?" · "+sc:""):state==="prog"?"In progress":"Start"}</span></button>`};
   const full=TRACKS.full.list(),ref=TRACKS.ref.list();
   const fullDone=full.filter(c=>chapterProgress("full",c)==="done").length;
-  $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Welcome back</h1>
-   ${lp?`<button class="hero" type="button" id="resume"><span class="prog">Pick up where you left off</span><b>${esc(lp[0])}</b><span class="go">Continue ›</span></button>`:`<button class="hero" type="button" id="resume"><span class="prog">New here?</span><b>Start the Full Course: Chapter 1, The Promotion</b><span class="go">Begin ›</span></button>`}
+  $("page").innerHTML=`<div class="kicker"><button class="linkbtn" type="button" id="tolib">Library</button> › ${esc(COURSE.title)}</div><h1>${esc(COURSE.full_title||COURSE.title)}</h1>
+   ${lp?`<button class="hero" type="button" id="resume"><span class="prog">Pick up where you left off</span><b>${esc(lp[0])}</b><span class="go">Continue ›</span></button>`:`<button class="hero" type="button" id="resume"><span class="prog">New here?</span><b>Start the ${esc(COURSE.fullName||"Full Course")}: Chapter 1${TRACKS.full.list()[0]?", "+esc(TRACKS.full.list()[0].title):""}</b><span class="go">Begin ›</span></button>`}
    <button class="handsfree" type="button" id="hfree"><span>🎧</span><span><b>Listen hands-free</b><span class="prog">Starts at your current chapter. No tapping while you drive.</span></span></button>
    ${plan[0]?`<div class="nextstep"><span class="prog">Ruth's next step for you</span><p><b>${esc(plan[0][0])}.</b> ${esc(plan[0][1])}</p><button class="btn small" type="button" id="planbtn">${plan[0][2].task?"Practice now":plan[0][2].mock?"Open mock exam":"Go"}</button> <button class="linkbtn" type="button" id="seeplan">See the full study plan</button></div>`:""}
-   <h2>Full Course <span class="prog">${fullDone} of ${full.length} chapters done · about 15 to 20 hours</span></h2>
+   <h2>${esc(COURSE.fullName||"Full Course")} <span class="prog">${fullDone} of ${full.length} chapters done${COURSE.fullHours?" · "+COURSE.fullHours:""}</span></h2>
    <div class="ctiles">${full.map(c=>tile("full",c)).join("")}</div>
-   <h2>Refresher <span class="prog">6 chapters · about 2.5 hours, a fast review</span></h2>
-   <div class="ctiles">${ref.map(c=>tile("ref",c)).join("")}</div>
-   <h2>Mock exam</h2><div class="card mockhome"><p>180 questions in 240 minutes, weighted like the real exam. ${last?`Last attempt: <b>${last.right} of ${last.total}</b> (${Math.round(last.right/last.total*100)}%) on ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}.`:"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the mock exam</button></div>
-   <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the 26-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>Cast</b><span class="prog">Meet everyone, hear them talk</span></button></div>`;
+   ${ref.length?`<h2>Refresher <span class="prog">${ref.length} chapters · a fast review</span></h2><div class="ctiles">${ref.map(c=>tile("ref",c)).join("")}</div>`:""}
+   <h2>Mock exam</h2><div class="card mockhome"><p>${COURSE.mockShort||"A full practice exam."} ${last?`Last attempt: <b>${last.right} of ${last.total}</b> (${Math.round(last.right/last.total*100)}%) on ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}.`:"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the mock exam</button></div>
+   <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the ${ALLT().length}-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>Cast</b><span class="prog">Meet everyone, hear them talk</span></button></div>`;
   const pg=$("page");
   $("resume").onclick=()=>lp?lp[1]():openChapter("full",1);
-  $("hfree").onclick=async()=>{const B=await bookManifest();const lpv=store.get("lastplace",null);const ed=store.get("bookEd","story");let n=lpv&&lpv.t==="full"?lpv.n:1;const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);if(!have.length)return renderBook();if(!have.includes(n))n=have.find(k=>k>=n)||have[have.length-1];renderBook();bookPlay(ed,n)};
+  $("hfree").onclick=async()=>{const B=await bookManifest();const lpv=store.get("lastplace."+COURSE.id,null);const ed=store.get("bookEd."+COURSE.id,"story");let n=lpv&&lpv.t==="full"?lpv.n:1;const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);if(!have.length)return renderBook();if(!have.includes(n))n=have.find(k=>k>=n)||have[have.length-1];renderBook();bookPlay(ed,n)};
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
-  $("mockbtn").onclick=()=>openMock();$("qprog").onclick=()=>{renderDash();top()};$("qcast").onclick=()=>{renderCast();top()};
+  $("tolib").onclick=()=>renderLibrary();$("mockbtn").onclick=()=>openMock();$("qprog").onclick=()=>{renderDash();top()};$("qcast").onclick=()=>{renderCast();top()};
   if($("planbtn")){const a=plan[0][2];$("planbtn").onclick=()=>{if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)};$("seeplan").onclick=()=>{renderDash();top()}}
 }
-function openChapter(tr,n){store.set("lastplace",{t:tr,n});TRACK=tr;store.set("track",tr);store.set("lastch."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
+function openChapter(tr,n){store.set("lastplace."+COURSE.id,{t:tr,n});TRACK=tr;store.set("track",tr);store.set("lastch."+COURSE.id+"."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
 function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this chapter will be cleared.`))return;const st=TRACK==="ref"?freshRef():freshFull();if(n===CH.num){S=st;save();render();top()}else{persist(TRACK,n,st);renderRail()}}
 function renderRail(){
-  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","book"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
+  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","book","library"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
   $("trackname").textContent=TRACK?TRACKS[TRACK].name:"";
-  if(TRACK==="mock"){$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Mock exam</h3><p class="big" id="mocktime">${MS.mode==="exam"?fmtTime(MOCK_LIMIT-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Mock exam</h3><p class="prog">Pick a mode to start.</p>`;return}
+  if(TRACK==="mock"){$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Mock exam</h3><p class="big" id="mocktime">${MS.mode==="exam"?fmtTime(MOCK_LIMIT()-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Mock exam</h3><p class="prog">Pick a mode to start.</p>`;return}
   $("mockcard").hidden=true;if(!TRACK)return;
   $("meters").innerHTML=METERS.map(([k,l])=>{const v=S.m[k];const col=v>=60?"var(--good)":v>=40?"var(--mid)":"var(--bad)";return `<div class="meter"><div class="row"><span>${l}</span><span class="num">${v}</span></div><div class="track" role="img" aria-label="${l} ${v} of 100"><span style="width:${v}%;background:${col}"></span></div></div>`}).join("");
   const n=CH.scenes.length,dn=Object.keys(S.picks).length;
   $("prog").textContent=`Chapter ${CH.num} · ${dn} of ${n} decisions · Score ${S.score}/${n*3}`;
   $("dots").innerHTML=CH.scenes.map((sc,i)=>{const p=S.picks[i];return `<span class="dot ${p!==undefined?"s"+sc.opts[p].s:""}" title="Decision ${i+1}"></span>`}).join("");
-  const tot={People:[0,0],Process:[0,0],"Business Environment":[0,0]};chapters().forEach(c=>{const st=c.num===CH.num?S:load(TRACK,c.num);if(st)DOMS.forEach(d=>{tot[d][0]+=st.dom[d][0];tot[d][1]+=st.dom[d][1]})});
+  const tot=Object.fromEntries(DOMS.map(d=>[d,[0,0]]));chapters().forEach(c=>{const st=c.num===CH.num?S:load(TRACK,c.num);if(st)DOMS.forEach(d=>{tot[d][0]+=st.dom[d][0];tot[d][1]+=st.dom[d][1]})});
   const fmtd=([g,t])=>t?`${Math.round(g/t*100)}%`:"·";
   $("domains").innerHTML=DOMS.map(d=>`<div class="dom-row"><span>${d}</span><span class="prog">${fmtd(S.dom[d])} · ${fmtd(tot[d])}</span></div>`).join("");
   $("chapters").innerHTML=chapters().map(c=>{const lab=chapterProgress(TRACK,c);const started=!!load(TRACK,c.num)||c.num===CH.num&&(Object.keys(S.picks).length||(S.pos||0)>0||S.step>=0);return `<div class="chaprow"><button class="chap${c.num===CH.num?" cur":""}" data-n="${c.num}" type="button"><span class="n">${c.num}</span><span>${c.title}</span><span class="prog">${lab}</span></button>${started?`<button class="linkbtn reset" data-r="${c.num}" type="button" aria-label="Reset chapter ${c.num}">Reset</button>`:""}</div>`}).join("");
@@ -473,7 +486,7 @@ function renderRail(){
   $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
 }
 function render(){_render();castStrip();narAttach();navSync();ambSync()}
-function _render(){if(TRACK==="book")return renderBook();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="book")return renderBook();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
@@ -487,13 +500,19 @@ function renderAuth(mode,invite){
   $("authform").onsubmit=async e=>{e.preventDefault();$("autherr").innerHTML="";const b={email:$("a-email").value,password:$("a-pw").value};if(signup){b.name=$("a-name").value;b.token=invite}
     const r=await api("/api/auth?action="+(signup?"signup":"login"),{method:"POST",body:JSON.stringify(b)});if(!r.ok){$("autherr").innerHTML=`<div class="err">${esc(r.error||"That didn't work. Try again.")}</div>`;return}if(signup)history.replaceState(null,"","/");boot()};
 }
-function resumeFrom(cur){if(cur>=900)return openMock();if(cur>100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-100))return openChapter("full",cur-100)}else if(cur>=1){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
+function renderLibrary(){setTimeout(ambSync,0);TRACK="library";CH=null;$("railgame").hidden=true;$("mockcard").hidden=true;setTimeout(navSync,0);
+  const card=c=>{const live=c.status==="live";let pr="";if(live){const lp=store.get("lastplace."+c.id,null);pr=lp?"In progress":"Not started"}
+    return `<button class="libcard ${live?"live":"soon"}" type="button" data-course="${c.id}" ${live?"":"disabled"}><span class="libart" aria-hidden="true">${({pmp:"🚀",cphims:"🏥",asep:"🛰️",gh300:"🤖",pilot:"✈️"})[c.id]||"📘"}</span><span class="libtxt"><span class="prog">${esc(c.exam||"")}</span><b>${esc(c.full_title||c.title)}</b><span class="libstory">${esc(c.story||"")}</span><span class="libstate">${live?esc(pr):"In production"}</span></span></button>`};
+  $("page").innerHTML=`<div class="kicker">Library</div><h1>Your courses</h1><div class="story"><p>Each course is a story you play through, with lessons, quizzes and a practice exam. Pick one to open it.</p></div><div class="libgrid">${COURSES.map(card).join("")}</div>`;
+  $("page").querySelectorAll("[data-course]").forEach(b=>b.onclick=async()=>{if(await useCourse(b.dataset.course)){renderHome();renderRail();top()}})}
+function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!==COURSE.id){useCourse(c.id).then(()=>resumeFrom(cur));return}cur=(cur||0)-COURSE.base;if(cur>=900)return openMock();if(cur>100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-100))return openChapter("full",cur-100)}else if(cur>=1){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
 async function boot(){
   if($("ambtoggle")){ambUI();$("ambtoggle").onchange=e=>{AMB.on=e.target.checked;store.set("amb",AMB.on);AMB.cur=null;AMB.lastSting="";ambSync()};$("ambvol").oninput=e=>{AMB.vol=+e.target.value;store.set("ambvol",AMB.vol);AMB.els[AMB.i].volume=AMB.vol}}
   if($("storytoggle")){$("storytoggle").checked=STORY();$("storytoggle").onchange=e=>setStoryMode(e.target.checked)}
   if($("listenlink"))$("listenlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderBook();top()};
   if($("castlink"))$("castlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderCast();top()};
   $("proglink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderDash();top()};
+  if($("liblink"))$("liblink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderLibrary();top()};
   $("homelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderHome();renderRail()};
   if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;$("username").textContent="";resumeFrom(store.get("cur",0));return}
   let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
