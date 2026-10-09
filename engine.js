@@ -35,7 +35,7 @@ function order(id,n){let h=0;for(const ch of id)h=(h*31+ch.charCodeAt(0))>>>0;co
 function paras(arr){return `<div class="story">${arr.map(p=>`<p>${p}</p>`).join("")}</div>`}
 function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${esc(v[1])}</b><span class="prog">${esc(v[2])} · ${esc(v[3])}</span></div><div class="vframe"><button type="button" data-vid="${esc(v[0])}" aria-label="Play video: ${esc(v[1])}" style="background-image:url('https://i.ytimg.com/vi/${esc(v[0])}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
 function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
-function episodeCard(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Listen instead · Chapter ${c.num} audio episode · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">The chapter read aloud. It pauses at each decision so you can pick, then gives the answer and Ruth's debrief.</p><audio controls preload="metadata" src="${esc(c.episode.src)}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
+function episodeCard(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Whole chapter as one audio file · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">For the car or the gym. In the app, use the Listen button at the bottom of the screen instead.</p><audio controls preload="metadata" src="${esc(c.episode.src)}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
 function top(){window.scrollTo({top:0,behavior:"smooth"})}
 function applyPick(st,sc,i,j){const o=sc.opts[j];st.picks[i]=j;st.score+=o.s;for(const k in (o.d||{}))st.m[k]=clamp(st.m[k]+o.d[k]);st.dom[sc.domain][0]+=o.s;st.dom[sc.domain][1]+=3;if(o.flag)st.flags[o.flag]=true;if(TRACK==="ref"&&CH.num===1&&i===0&&j===1)st.flags.allhands=true}
 function sceneHTML(sc,i,n,picked,stateForText){
@@ -240,6 +240,58 @@ function renderPractice(){
   const a=$("again");if(a)a.onclick=()=>startPractice(task);const d=$("todash");if(d)d.onclick=()=>renderDash();
 }
 
+
+/* ===== page narration: sticky player, per-page clips, word highlight ===== */
+const NAR={audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto",true),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
+NAR.audio.preload="auto";
+function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
+async function narTimings(key){if(key in NAR.timings)return NAR.timings[key];NAR.timings[key]=null;try{const r=await fetch(`audio/pages/${key}/timings.json`,{cache:"force-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]}
+function narPageId(){
+  if(TRACK==="ref"){if(S.step<0)return["open",".story p"];if(S.step>=CH.scenes.length)return["end",".story p"];const i=S.step,p=S.picks[i];return p===undefined?["s"+i,".story p, .choice span:not(.k)"]:[`o${i}_${p}`,".outcome .story p"]}
+  const st=steps(CH)[Math.min(S.pos,steps(CH).length-1)];
+  if(st.k==="open")return["open",".story p"];if(st.k==="lesson")return["lesson",".lesson h2, .lesson .story p, .lesson .examtip"];if(st.k==="end")return["end",".story p"];
+  if(st.k==="scene"){const p=S.picks[st.i];return p===undefined?["s"+st.i,".story p, .choice span:not(.k)"]:[`o${st.i}_${p}`,".outcome .story p"]}
+  return[null,null];
+}
+const norm=w=>w.toLowerCase().normalize("NFD").replace(/[^a-z0-9]/g,"");
+function wrapWords(sel){const els=[...$("page").querySelectorAll(sel)];const words=[];
+  els.forEach(el=>{const tw=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];while(tw.nextNode())nodes.push(tw.currentNode);
+    nodes.forEach(nd=>{if(!nd.nodeValue.trim())return;const frag=document.createDocumentFragment();nd.nodeValue.split(/(\s+)/).forEach(part=>{if(!part)return;if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part));return}const sp=document.createElement("span");sp.className="w";sp.textContent=part;frag.appendChild(sp);words.push(sp)});nd.parentNode.replaceChild(frag,nd)})});
+  return words}
+function alignWords(tw,dom){const map=[];let j=0;const dn=dom.map(d=>norm(d.textContent));
+  tw.forEach(([t])=>{const n=norm(t);if(!n||/^[A-D]$/.test(t)){map.push(null);return}const win=n.length<=2?3:12;let hit=null;for(let k=j;k<Math.min(dom.length,j+win);k++){if(dn[k]&&(dn[k]===n||dn[k].startsWith(n)||n.startsWith(dn[k]))){hit=k;break}}if(hit!==null){map.push(hit);j=hit+1}else map.push(null)});return map}
+function narHighlight(){const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
+  let lo=0,hi=W.length-1,idx=-1;while(lo<=hi){const mid=(lo+hi)>>1;if(W[mid][1]<=t){idx=mid;lo=mid+1}else hi=mid-1}
+  const di=idx>=0?NAR.map[idx]:null;if(di!==NAR.cur){if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");if(di!=null&&NAR.words[di]){const w=NAR.words[di];w.classList.add("hl");const r=w.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-110)w.scrollIntoView({block:"center",behavior:"smooth"})}NAR.cur=di}
+  const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";
+  if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight)}
+function narUI(){const b=$("narbar");if(!b)return;const has=!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
+  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent={open:"Opening",lesson:"Ruth's whiteboard",end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome");}
+async function narAttach(){
+  NAR.audio.pause();cancelAnimationFrame(NAR.raf);NAR.cur=-1;
+  const key=narKey();NAR.key=key;if(!key){NAR.page=null;narUI();return}
+  const [pid,sel]=narPageId();NAR.page=pid;
+  const T=await narTimings(key);if(!T||!pid||!T[pid]){NAR.page=null;narUI();return}
+  if(NAR.key!==key||NAR.page!==pid)return;
+  NAR.words=wrapWords(sel);NAR.map=alignWords(T[pid].w,NAR.words);
+  NAR.audio.src=`audio/pages/${key}/${pid}.mp3`;NAR.audio.playbackRate=NAR.rate;narUI();
+  if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
+}
+NAR.audio.addEventListener("ended",()=>{cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
+  if(!NAR.auto)return;const pid=NAR.page||"";
+  if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>b.click(),700)}
+  else if(pid[0]==="o"){const b=$("next");if(b)setTimeout(()=>b.click(),900)}
+  else NAR.listening=pid[0]==="s"?NAR.listening:false;});
+function narInit(){
+  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<div class="nartrack"><span id="narprog"></span></div><div class="narrow"><button class="btn" id="narplay" type="button">▶ Listen</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto"><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label></div>`;
+  document.body.appendChild(bar);
+  $("narplay").onclick=()=>{if(NAR.audio.paused){NAR.listening=true;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{narUI();narHighlight()})}else{NAR.listening=false;NAR.audio.pause();narUI()}};
+  $("narrate").onchange=e=>{NAR.rate=+e.target.value;NAR.audio.playbackRate=NAR.rate;store.set("rate",NAR.rate)};
+  $("narauto").onchange=e=>{NAR.auto=e.target.checked;store.set("auto",NAR.auto)};
+  NAR.audio.addEventListener("pause",narUI);
+}
+narInit();window.__nar=NAR;
+
 /* ===== home and rail ===== */
 function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
 function renderHome(){
@@ -269,10 +321,11 @@ function renderRail(){
   const cast=[...BASE_CAST,...(TRACK==="full"?FULL_CAST_EXTRA:[])];chapters().filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));
   $("cast").innerHTML=[...seen].map(([n,d])=>`<dt>${n}</dt><dd>${d}</dd>`).join("");
 }
-function render(){if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function render(){_render();narAttach()}
+function _render(){if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
-const ONLINE=location.protocol.startsWith("http");
+const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
 async function api(path,opts={}){const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
 function clearLocal(){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){
