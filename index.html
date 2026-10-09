@@ -85,6 +85,10 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .auth .err{color:var(--bad);background:var(--bad-soft);border-radius:6px;padding:8px 11px;font-size:14px;margin-bottom:12px}
 .userbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;font-size:13.5px}
 .linkbtn{font:inherit;font-size:13.5px;background:none;border:none;color:var(--accent);cursor:pointer;padding:0;text-decoration:underline}
+.chaprow{display:flex;align-items:center;gap:8px;border-bottom:1px dashed var(--line)}
+.chaprow:last-child{border-bottom:none}
+.chaprow .chap{border-bottom:none;flex:1;min-width:0}
+.chaprow .reset{font-size:12px;color:var(--muted)}
 .chap{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:6px;align-items:center;width:100%;font:inherit;font-size:14px;text-align:left;background:none;border:none;border-bottom:1px dashed var(--line);padding:6px 0;color:var(--ink);cursor:pointer}
 .chap:last-child{border-bottom:none}
 .chap .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
@@ -168,14 +172,14 @@ function episodeCard(){if(!CH.episode)return "";return `<div class="episode"><di
 function renderRail(){
   $("meters").innerHTML=METERS.map(([k,l])=>{const v=S.m[k];const col=v>=60?"var(--good)":v>=40?"var(--mid)":"var(--bad)";return `<div class="meter"><div class="row"><span>${l}</span><span class="num">${v}</span></div><div class="track" role="img" aria-label="${l} ${v} of 100"><span style="width:${v}%;background:${col}"></span></div></div>`}).join("");
   const n=CH.scenes.length,dn=Object.keys(S.picks).length;
-  $("prog").textContent=`Chapter ${CH.num} · Decision ${Math.min(dn+(S.step>=0&&S.step<n&&S.picks[S.step]===undefined?1:0),n)} of ${n} · Score ${S.score}/${n*3}`;
+  $("prog").textContent=S.step<0&&!dn?`Chapter ${CH.num} · Not started`:`Chapter ${CH.num} · Decision ${Math.max(1,Math.min(dn+(S.step>=0&&S.step<n&&S.picks[S.step]===undefined?1:0),n))} of ${n} · Score ${S.score}/${n*3}`;
   $("dots").innerHTML=CH.scenes.map((sc,i)=>{const p=S.picks[i];const cls=p!==undefined?"s"+sc.opts[p].s:(i===S.step?"now":"");return `<span class="dot ${cls}" title="Decision ${i+1}"></span>`}).join("");
   const tot={People:[0,0],Process:[0,0],"Business Environment":[0,0]};
   CHAPTERS.forEach(c=>{const st=stateOf(c.num);if(st)DOMS.forEach(d=>{tot[d][0]+=st.dom[d][0];tot[d][1]+=st.dom[d][1]})});
   const fmtd=([g,t])=>t?`${Math.round(g/t*100)}%`:"·";
   $("domains").innerHTML=DOMS.map(d=>`<div class="dom-row"><span>${d}</span><span class="prog">${fmtd(S.dom[d])} · ${fmtd(tot[d])}</span></div>`).join("");
-  $("chapters").innerHTML=CHAPTERS.map(c=>{const st=stateOf(c.num);const lab=done(c.num)?`${st.score}/${c.scenes.length*3}`:(st&&st.step>=0?"in progress":"");return `<button class="chap${c.num===CH.num?" cur":""}" data-n="${c.num}" type="button"><span class="n">${c.num}</span><span>${c.title}</span><span class="prog">${lab}</span></button>`}).join("");
-  $("chapters").querySelectorAll(".chap").forEach(b=>b.onclick=()=>switchTo(+b.dataset.n));
+  $("chapters").innerHTML=CHAPTERS.map(c=>{const st=stateOf(c.num);const lab=done(c.num)?`${st.score}/${c.scenes.length*3}`:(st&&st.step>=0?"in progress":"");const started=st&&(st.step>=0||Object.keys(st.picks||{}).length);return `<div class="chaprow"><button class="chap${c.num===CH.num?" cur":""}" data-n="${c.num}" type="button"><span class="n">${c.num}</span><span>${c.title}</span><span class="prog">${lab}</span></button>${started?`<button class="linkbtn reset" data-r="${c.num}" type="button" aria-label="Reset chapter ${c.num}">Reset</button>`:""}</div>`}).join("");
+  $("chapters").querySelectorAll(".chap").forEach(b=>b.onclick=()=>switchTo(+b.dataset.n));$("chapters").querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>resetChapter(+b.dataset.r));
   const cast=[...BASE_CAST];CHAPTERS.filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));
   const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));$("cast").innerHTML=[...seen].map(([n,d])=>`<dt>${n}</dt><dd>${d}</dd>`).join("");
 }
@@ -192,19 +196,20 @@ function renderScene(i){
   h+=`</div>`;
   if(picked!==undefined){
     const o=sc.opts[picked],best=sc.opts.find(x=>x.best),lead=RUTH_LEADS[o.s][i%3];
-    h+=`<div class="outcome"><span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>${paras([o.after])}<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${sc.task}</span></div></div>${videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">${i+1<CH.scenes.length?"Next":"Finish the chapter"}</button></div></div>`;
+    h+=`<div class="outcome"><span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>${paras([o.after])}<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${sc.task}</span></div></div>${videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">${i+1<CH.scenes.length?"Next":"Finish the chapter"}</button><button class="btn ghost" id="redo" type="button">Redo this decision</button></div></div>`;
   }
   $("page").innerHTML=h;wireVideos();
   if(picked===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>choose(i,+b.dataset.j));
-  else $("next").onclick=()=>{S.step=i+1;save();render();window.scrollTo({top:0,behavior:"smooth"})};
+  else{$("next").onclick=()=>{S.step=i+1;save();render();window.scrollTo({top:0,behavior:"smooth"})};$("redo").onclick=()=>redo(i)}
 }
+function applyPick(st,i,j){const sc=CH.scenes[i],o=sc.opts[j];st.picks[i]=j;st.score+=o.s;for(const k in (o.d||{}))st.m[k]=clamp(st.m[k]+o.d[k]);st.dom[sc.domain][0]+=o.s;st.dom[sc.domain][1]+=3;if(o.flag)st.flags[o.flag]=true;if(CH.num===1&&i===0&&j===1)st.flags.allhands=true}
+function rebuild(picks,step){const st=fresh();Object.keys(picks).map(Number).sort((a,b)=>a-b).forEach(i=>applyPick(st,i,picks[i]));st.step=step;return st}
+function redo(i){const picks={...S.picks};delete picks[i];S=rebuild(picks,i);save();render();window.scrollTo({top:0,behavior:"smooth"})}
+function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your decisions and score for this chapter will be cleared.`))return;
+  if(n===CH.num){S=fresh();save();render();window.scrollTo({top:0})}
+  else{const st=fresh();store.set("c"+n,st);if(SYNC)SYNC(n,st);renderRail()}}
 function choose(i,j){
-  const sc=CH.scenes[i],o=sc.opts[j];
-  S.picks[i]=j;S.score+=o.s;
-  for(const k in (o.d||{}))S.m[k]=clamp(S.m[k]+o.d[k]);
-  S.dom[sc.domain][0]+=o.s;S.dom[sc.domain][1]+=3;
-  if(o.flag)S.flags[o.flag]=true;
-  if(CH.num===1&&i===0&&j===1)S.flags.allhands=true;
+  applyPick(S,i,j);
   save();render();
   const out=document.querySelector(".outcome");if(out)out.scrollIntoView({behavior:"smooth",block:"start"});
 }
