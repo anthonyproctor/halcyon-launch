@@ -245,7 +245,7 @@ function renderPractice(){
 
 
 /* ===== page narration: sticky player, per-page clips, word highlight ===== */
-const NAR={audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
+const NAR={car:store.get("car",false),audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
 NAR.audio.preload="auto";
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
 async function narTimings(key){if(key in NAR.timings)return NAR.timings[key];NAR.timings[key]=null;try{const r=await fetch(`audio/pages/${key}/timings.json`,{cache:"force-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]}
@@ -263,14 +263,19 @@ function wrapWords(sel){const els=[...$("page").querySelectorAll(sel)];const wor
   return words}
 function alignWords(tw,dom){const map=[];let j=0;const dn=dom.map(d=>norm(d.textContent));
   tw.forEach(([t])=>{const n=norm(t);if(!n||/^[A-D]$/.test(t)){map.push(null);return}const win=n.length<=2?3:12;let hit=null;for(let k=j;k<Math.min(dom.length,j+win);k++){if(dn[k]&&(dn[k]===n||dn[k].startsWith(n)||n.startsWith(dn[k]))){hit=k;break}}if(hit!==null){map.push(hit);j=hit+1}else map.push(null)});return map}
-function narHighlight(){const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
+function narHighlight(){if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
   let lo=0,hi=W.length-1,idx=-1;while(lo<=hi){const mid=(lo+hi)>>1;if(W[mid][1]<=t){idx=mid;lo=mid+1}else hi=mid-1}
   const di=idx>=0?NAR.map[idx]:null;if(di!==NAR.cur){if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");if(di!=null&&NAR.words[di]){const w=NAR.words[di];w.classList.add("hl");const r=w.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-110)w.scrollIntoView({block:"center",behavior:"smooth"})}NAR.cur=di}
   const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";
   if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight)}
-function narUI(){const b=$("narbar");if(!b)return;const has=!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
-  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent={open:"Opening",lesson:"Ruth's whiteboard",end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome");}
+function narUI(){const b=$("narbar");if(!b)return;const has=NAR.page==="car"||!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
+  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent=NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:"Ruth's whiteboard",end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
 async function narAttach(){
+  const key0=narKey();
+  if(NAR.car&&key0&&CH.episode){ // car mode: one continuous track per chapter, page changes don't interrupt it
+    NAR.key=key0;NAR.page="car";const src=new URL(CH.episode.src,location.href).href;
+    if(NAR.audio.src!==src){NAR.audio.pause();NAR.audio.src=src;NAR.audio.playbackRate=NAR.rate;const pos=store.get("carpos."+key0,0);NAR.audio.addEventListener("loadedmetadata",()=>{if(pos>5)NAR.audio.currentTime=pos},{once:true});if(NAR.listening)NAR.audio.play().then(narUI).catch(()=>{})}
+    $("page").querySelectorAll(".episode").forEach(e=>e.hidden=true);narUI();return}
   NAR.audio.pause();cancelAnimationFrame(NAR.raf);NAR.cur=-1;
   const key=narKey();NAR.key=key;if(!key){NAR.page=null;narUI();return}
   const [pid,sel]=narPageId();NAR.page=pid;
@@ -280,17 +285,20 @@ async function narAttach(){
   NAR.audio.src=`audio/pages/${key}/${pid}.mp3`;NAR.audio.playbackRate=NAR.rate;narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
 }
-NAR.audio.addEventListener("ended",()=>{cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
+NAR.audio.addEventListener("ended",()=>{if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
   if(!NAR.auto)return;const pid=NAR.page||"";
   if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>b.click(),700)}
   else if(pid[0]==="o"){const b=$("next");if(b)setTimeout(()=>b.click(),900)}
   else NAR.listening=pid[0]==="s"?NAR.listening:false;});
+function foldInit(){document.querySelectorAll("details.fold").forEach(d=>{const k="fold."+d.id;const v=store.get(k,null);if(v!==null)d.open=v;d.addEventListener("toggle",()=>store.set(k,d.open))})}
+foldInit();
 function narInit(){
-  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<div class="nartrack"><span id="narprog"></span></div><div class="narrow"><button class="btn" id="narplay" type="button">▶ Listen</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto"><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label></div>`;
+  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<div class="nartrack"><span id="narprog"></span></div><div class="narrow"><button class="btn" id="narplay" type="button">▶ Listen</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto"><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label><label class="chk prog" for="narcar"><input type="checkbox" id="narcar" ${NAR.car?"checked":""}> Car mode</label></div>`;
   document.body.appendChild(bar);
   $("narplay").onclick=()=>{if(NAR.audio.paused){NAR.listening=true;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{narUI();narHighlight()})}else{NAR.listening=false;NAR.audio.pause();narUI()}};
   $("narrate").onchange=e=>{NAR.rate=+e.target.value;NAR.audio.playbackRate=NAR.rate;store.set("rate",NAR.rate)};
   $("narauto").onchange=e=>{NAR.auto=e.target.checked;store.set("auto2",NAR.auto)};
+  $("narcar").onchange=e=>{NAR.car=e.target.checked;store.set("car",NAR.car);const was=!NAR.audio.paused;NAR.audio.pause();NAR.audio.removeAttribute("src");NAR.listening=was;narAttach()};
   NAR.audio.addEventListener("pause",narUI);
 }
 narInit();window.__nar=NAR;
@@ -331,7 +339,7 @@ function renderRail(){
   const fmtd=([g,t])=>t?`${Math.round(g/t*100)}%`:"·";
   $("domains").innerHTML=DOMS.map(d=>`<div class="dom-row"><span>${d}</span><span class="prog">${fmtd(S.dom[d])} · ${fmtd(tot[d])}</span></div>`).join("");
   $("chapters").innerHTML=chapters().map(c=>{const lab=chapterProgress(TRACK,c);const started=!!load(TRACK,c.num)||c.num===CH.num&&(Object.keys(S.picks).length||(S.pos||0)>0||S.step>=0);return `<div class="chaprow"><button class="chap${c.num===CH.num?" cur":""}" data-n="${c.num}" type="button"><span class="n">${c.num}</span><span>${c.title}</span><span class="prog">${lab}</span></button>${started?`<button class="linkbtn reset" data-r="${c.num}" type="button" aria-label="Reset chapter ${c.num}">Reset</button>`:""}</div>`}).join("");
-  $("chapters").querySelectorAll(".chap").forEach(b=>b.onclick=()=>{save();openChapter(TRACK,+b.dataset.n)});
+  $("chapters").querySelectorAll(".chap").forEach(b=>b.onclick=()=>{save();openChapter(TRACK,+b.dataset.n)});if($("chnote"))$("chnote").textContent=`Ch ${CH.num}: ${CH.title}`;
   $("chapters").querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>resetChapter(+b.dataset.r));
   const cast=[...BASE_CAST,...(TRACK==="full"?FULL_CAST_EXTRA:[])];chapters().filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));
   $("cast").innerHTML=[...seen].map(([n,d])=>`<dt>${n}</dt><dd>${d}</dd>`).join("");

@@ -115,6 +115,13 @@ body.withbar{padding-bottom:84px}
 .topbar{font-size:13.5px}
 @media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}.rail{order:1!important;position:static}.page{padding:20px 16px 24px}
  #narbar .narrow{gap:8px}#narlabel{display:none}#narplay{padding:8px 14px}}
+.fold summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:8px;justify-content:space-between}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary h3{margin:0}
+.fold summary::after{content:"+";font-family:var(--mono);color:var(--muted);font-size:16px;margin-left:auto}
+.fold[open] summary::after{content:"\2212"}
+.fold[open] summary{margin-bottom:10px}
+.foldnote{font-size:12px}.fold[open] .foldnote{display:none}
 .stepnav{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
 .sdot{width:16px;height:8px;border-radius:4px;border:none;background:var(--soft);padding:0;cursor:pointer}
 .sdot.seen{background:var(--accent-soft)} .sdot.now{background:var(--accent)} .sdot[disabled]{cursor:default}
@@ -177,19 +184,19 @@ body.withbar{padding-bottom:84px}
       <div class="prog" id="prog"></div>
       <div class="dots" id="dots"></div>
     </div>
-    <div class="card">
-      <h3>Exam areas</h3>
+    <details class="card fold" id="fold-areas" open>
+      <summary><h3>Exam areas</h3></summary>
       <div id="domains"></div>
       <p class="prog" style="margin:8px 0 0">This chapter, then all chapters. Decisions and quizzes count.</p>
-    </div>
-    <div class="card">
-      <h3 id="trackname">Chapters</h3>
+    </details>
+    <details class="card fold" id="fold-chapters" open>
+      <summary><h3 id="trackname">Chapters</h3><span class="prog foldnote" id="chnote"></span></summary>
       <div id="chapters"></div>
-    </div>
-    <div class="card">
-      <h3>Cast</h3>
+    </details>
+    <details class="card fold" id="fold-cast">
+      <summary><h3>Cast</h3><span class="prog foldnote">tap to open</span></summary>
       <dl class="cast" style="margin:0" id="cast"></dl>
-    </div>
+    </details>
     </div>
   </aside>
 </div>
