@@ -3,14 +3,14 @@
  num:4, title:"The Demo",
  opening:[
   "Week eight. Theo's desk had been empty for nine days, and for the first time in two months nothing was waiting on him.",
-  "Priya Shah ran the platform work now. She kept the runbook open on a second monitor and updated it every time something surprised her, which at first was daily and now was weekly. The offshore team in Kraków had stopped apologizing for asking questions. Lena had started saying <span class=\"said\">\"I disagree\"</span> out loud in meetings, which surprised everyone, Lena most of all.",
+  "Priya Shah ran the platform work now. She kept the runbook open on a second monitor and updated it every time something surprised her, which at first was daily and now was weekly. The offshore team in Kraków had stopped apologizing for asking questions. Lena had started saying <span class=\"said\" data-who=\"Lena\">\"I disagree\"</span> out loud in meetings, which surprised everyone, Lena most of all.",
   "Cascade had sent a product owner. Maria Santos was a nurse for fourteen years before she ran nursing informatics for all eleven hospitals. She didn't care how the agents worked. She cared whether a tired night shift nurse could trust what they wrote.",
   "On Thursday, for the first time, real clinicians would use the agents on real workflows in a test environment. Six nurses and a hospitalist from the Laramie hospital. Ochoa would watch from the back of the room.",
   "Sam had stood on flight lines before an inspection. This felt the same. Everything looked fine, and that was exactly what worried him."
  ],
  scenes:[
  {id:"c4s1", domain:"Process", task:"Prepare the sprint review",
-  text:s=>["Tuesday. The team wants to rehearse. Grant has a different idea. He wants a polished slide deck and a scripted walkthrough using the three patient scenarios that always work. <span class=\"said\">\"First impressions,\"</span> he says. <span class=\"said\">\"We control the story.\"</span>","Maria asked for something else: her nurses using the agents on cases they choose."],
+  text:s=>["Tuesday. The team wants to rehearse. Grant has a different idea. He wants a polished slide deck and a scripted walkthrough using the three patient scenarios that always work. <span class=\"said\" data-who=\"Grant\">\"First impressions,\"</span> he says. <span class=\"said\" data-who=\"Grant\">\"We control the story.\"</span>","Maria asked for something else: her nurses using the agents on cases they choose."],
   opts:[
    {t:"Build the scripted walkthrough with Grant so the first impression lands well.",s:0,d:{trust:-3,conf:2,health:-3},
     after:"The scripted demo would have looked great. Maria hears about the plan Wednesday and asks, politely, what exactly she's supposed to learn from a rehearsal.",
@@ -26,13 +26,13 @@
     why:"Delaying feedback to look better later is the opposite of agile. The earlier real users touch the product, the cheaper every fix is."}
   ]},
  {id:"c4s2", domain:"People", task:"Own a failure in front of the customer",
-  text:s=>["Thursday, 10:40 AM. Dr. Nadia Fields, a hospitalist, dictates a short admission note. The agent drafts it cleanly. Then she stops scrolling.","<span class=\"said\">\"I never said metoprolol. This patient isn't on metoprolol.\"</span>","The agent added a medication that was never mentioned. The room goes quiet. Ochoa puts his coffee down. Grant is already leaning toward Sam to whisper something."],
+  text:s=>["Thursday, 10:40 AM. Dr. Nadia Fields, a hospitalist, dictates a short admission note. The agent drafts it cleanly. Then she stops scrolling.","<span class=\"said\" data-who=\"Nadia\">\"I never said metoprolol. This patient isn't on metoprolol.\"</span>","The agent added a medication that was never mentioned. The room goes quiet. Ochoa puts his coffee down. Grant is already leaning toward Sam to whisper something."],
   opts:[
    {t:"Say it's a known edge case in the test build and move to the next scenario.",s:0,d:{trust:-2,conf:-7,health:-2},
-    after:"Dr. Fields doesn't move to the next scenario. <span class=\"said\">\"In my hospital that edge case is a patient getting the wrong drug.\"</span> The room turns colder than if Sam had said nothing.",
+    after:"Dr. Fields doesn't move to the next scenario. <span class=\"said\" data-who=\"Nadia\">\"In my hospital that edge case is a patient getting the wrong drug.\"</span> The room turns colder than if Sam had said nothing.",
     why:"Minimizing a safety problem in front of the customer destroys trust faster than the defect itself. Own it plainly. Spinning it tells everyone you'll spin the next one."},
    {t:"Thank her, say plainly it's a serious defect, and pause that workflow until it's fixed.",s:3,d:{trust:3,conf:5,health:2},best:true,
-    after:"Sam writes it on the whiteboard in front of everyone. <span class=\"said\">\"That's exactly why we're here. We won't put this in front of a patient until we know why it happened.\"</span> Ochoa nods slowly. Dr. Fields keeps testing.",
+    after:"Sam writes it on the whiteboard in front of everyone. <span class=\"said\" data-who=\"Sam\">\"That's exactly why we're here. We won't put this in front of a patient until we know why it happened.\"</span> Ochoa nods slowly. Dr. Fields keeps testing.",
     why:"Be transparent, take ownership, and contain the risk. Pausing the affected workflow protects patients while the team investigates. Stakeholders trust a vendor who names problems before being forced to."},
    {t:"Have Priya debug it live in the room so the customer sees the team respond fast.",s:0,d:{trust:-3,conf:-2,health:-1},
     after:"Priya digs through logs while seven clinicians watch. After twenty minutes she still doesn't know why, and now everyone has seen that.",
@@ -58,7 +58,7 @@
     why:"Quality standards stick when the team owns them. A gate imposed from above, with no shared definition, becomes a box people tick."}
   ]},
  {id:"c4s4", domain:"Process", task:"Write acceptance criteria",
-  text:s=>["Maria's backlog has a story that reads, in full: <span class=\"said\">\"As a nurse, I want the agent to draft accurate shift notes.\"</span>","The team estimated it at thirteen points and nobody agreed on what accurate meant. Two engineers built different things for it last sprint."],
+  text:s=>["Maria's backlog has a story that reads, in full: \"As a nurse, I want the agent to draft accurate shift notes.\"","The team estimated it at thirteen points and nobody agreed on what accurate meant. Two engineers built different things for it last sprint."],
   opts:[
    {t:"Have the team define accurate themselves, since they'll build and test it anyway.",s:0,d:{trust:1,conf:-2,health:-2},
     after:"The team writes a good technical definition. Maria reads it and says it misses the two things her nurses complain about most.",
@@ -74,7 +74,7 @@
     why:"Feedback loops don't replace clear acceptance criteria. Without them, you pay for the same misunderstanding every sprint."}
   ]},
  {id:"c4s5", domain:"People", task:"Handle work added mid-sprint",
-  text:s=>["Tuesday of sprint nine. Maria messages Priya directly. <span class=\"said\">\"Can the team also add the wound care note template this sprint? The Cheyenne nurses really need it.\"</span>","The sprint is half done. The goal is getting the new definition of done working across all three note types."],
+  text:s=>["Tuesday of sprint nine. Maria messages Priya directly. <span class=\"said\" data-who=\"Maria\">\"Can the team also add the wound care note template this sprint? The Cheyenne nurses really need it.\"</span>","The sprint is half done. The goal is getting the new definition of done working across all three note types."],
   opts:[
    {t:"Tell Priya to fit it in. Maria's the product owner, so it's her call to make.",s:0,d:{trust:-4,conf:2,health:-4},
     after:"Priya says yes. The team quietly drops testing on one note type to make room, which is exactly the shortcut that caused the metoprolol problem.",
@@ -90,7 +90,7 @@
     why:"Starting unplanned work in parallel just splits capacity quietly. It's the same scope change without the conversation."}
   ]},
  {id:"c4s6", domain:"Business Environment", task:"Define the MVP for phase one",
-  text:s=>["The backlog has ninety-one items. The three hospital go-live is six weeks out. Grant wants the voice-activated summary feature because it demos beautifully. Maria wants the agents to get medication reconciliation right every time. Lena wants everything.","Ochoa asks a simple question: <span class=\"said\">\"What exactly will my nurses get on day one?\"</span>"],
+  text:s=>["The backlog has ninety-one items. The three hospital go-live is six weeks out. Grant wants the voice-activated summary feature because it demos beautifully. Maria wants the agents to get medication reconciliation right every time. Lena wants everything.","Ochoa asks a simple question: <span class=\"said\" data-who=\"Ochoa\">\"What exactly will my nurses get on day one?\"</span>"],
   opts:[
    {t:"Include Grant's voice feature in phase one, since it wins customer enthusiasm.",s:0,d:{trust:-1,conf:1,health:-4},
     after:"The voice feature takes two engineers for three weeks. Medication reconciliation slips into phase two.",
@@ -106,13 +106,13 @@
     why:"Team input on feasibility matters, but value decisions belong to the product owner. Balance the two; don't let either decide alone."}
   ]},
  {id:"c4s7", domain:"People", task:"Respond to a velocity drop",
-  text:s=>["Elena forwards a chart with a single line circled. Velocity dropped from forty points to twenty-eight over two sprints.","Her note says: <span class=\"said\">\"What happened? Can the team commit to forty again starting Monday?\"</span>"],
+  text:s=>["Elena forwards a chart with a single line circled. Velocity dropped from forty points to twenty-eight over two sprints.","Her note says: <span class=\"said\" data-who=\"Elena\">\"What happened? Can the team commit to forty again starting Monday?\"</span>"],
   opts:[
    {t:"Commit to forty points per sprint and ask the team to push a bit harder until go-live.",s:0,d:{trust:-6,conf:1,health:-4},
     after:"The team hits forty the next sprint. Somehow the stories got bigger point values. Nothing more actually shipped.",
     why:"Turning velocity into a target invites inflation and burnout. Velocity is a planning tool for the team, not a performance score."},
    {t:"Explain the drop to Elena and re-forecast with the team using the new velocity.",s:3,d:{trust:4,conf:3,health:3},best:true,
-    after:"Sam shows Elena the cause: the stricter definition of done and onboarding the Kraków team. The forecast holds for phase one at twenty-eight. Elena says, <span class=\"said\">\"Fine. That's a better answer than forty.\"</span>",
+    after:"Sam shows Elena the cause: the stricter definition of done and onboarding the Kraków team. The forecast holds for phase one at twenty-eight. Elena says, <span class=\"said\" data-who=\"Elena\">\"Fine. That's a better answer than forty.\"</span>",
     why:"Find out why with the team, explain it honestly, and use actual velocity to forecast. A drop after raising the quality bar is expected and healthy. Don't let velocity become a stick."},
    {t:"Ask each engineer to report their individual points so the slow ones can be found.",s:0,d:{trust:-7,conf:0,health:-2},
     after:"The team stops pairing, because pairing makes individual numbers look bad. Quality slips.",
@@ -122,7 +122,7 @@
     why:"The team owns its velocity, but stakeholders deserve transparent forecasts. Educate the sponsor instead of shutting the door."}
   ]},
  {id:"c4s8", domain:"Process", task:"Manage technical debt",
-  text:s=>["Priya brings Sam a list. During the burn-in crisis the team took shortcuts: hard-coded hospital settings, a test suite that skips the slow cases, a logging setup nobody fully understands. Fourteen items.","<span class=\"said\">\"None of it's broken yet,\"</span> she says. <span class=\"said\">\"It will be when we add eight more hospitals.\"</span> Grant overhears and says features first."],
+  text:s=>["Priya brings Sam a list. During the burn-in crisis the team took shortcuts: hard-coded hospital settings, a test suite that skips the slow cases, a logging setup nobody fully understands. Fourteen items.","<span class=\"said\" data-who=\"Priya\">\"None of it's broken yet,\"</span> she says. <span class=\"said\" data-who=\"Priya\">\"It will be when we add eight more hospitals.\"</span> Grant overhears and says features first."],
   opts:[
    {t:"Defer all of it to after phase one. Customers can't see debt and the date matters.",s:0,d:{trust:-3,conf:1,health:-5},
     after:"The hard-coded settings bite during rollout planning for hospital four. Nobody can remember which values are real.",
@@ -154,7 +154,7 @@
     why:"Documenting lessons matters, but improvement sticks when the team discovers it themselves. Facilitate; don't dictate."}
   ]},
  {id:"c4s10", domain:"Business Environment", task:"Make progress visible",
-  text:s=>["Week ten. The second demo is in four days. Ochoa calls. <span class=\"said\">\"My CMO asked me if we should pull the plug after Laramie. I need to show her this is under control, and I don't want another slide deck.\"</span>"],
+  text:s=>["Week ten. The second demo is in four days. Ochoa calls. <span class=\"said\" data-who=\"Ochoa\">\"My CMO asked me if we should pull the plug after Laramie. I need to show her this is under control, and I don't want another slide deck.\"</span>"],
   opts:[
    {t:"Send Ochoa a confident summary saying the defect is fixed and everything's on track.",s:0,d:{trust:0,conf:-3,health:0},
     after:"Ochoa forwards it. The CMO replies with one question: how do you know? Nobody has an answer that isn't another email.",
@@ -172,11 +172,11 @@
  ],
  closing:s=>[
   "Monday, week ten. The second demo runs two hours. Dr. Fields dictates eleven notes and tries to break the agents on purpose with half-finished sentences and a patient who changes their story. Every medication in every draft traces back to something someone actually said.",
-  "The CMO stays for all of it. At the end she says, <span class=\"said\">\"Okay. Laramie, Cheyenne, and Fort Collins. Week fourteen.\"</span>",
-  "Ruth is waiting in the lobby, the way she does. <span class=\"said\">\"At NASA we flew a lot of tests that didn't go well,\"</span> she says. <span class=\"said\">\"The failures weren't the problem. Hiding them was. You put that one on a whiteboard in front of the customer.\"</span>",
-  (s.score>=24?"She smiles. <span class=\"said\">\"That's the whole job, honestly.\"</span>":"She pauses. <span class=\"said\">\"Next time, slow down when the room goes quiet. That's when people decide whether to trust you.\"</span>"),
-  "Sam's phone shows a calendar invite from Elena. Subject: Go/No-Go, Week 14. Underneath, a second notification. Cascade's union representative at the Cheyenne hospital has requested a meeting about <span class=\"said\">\"AI replacing nursing judgment.\"</span>",
-  "Ruth reads it over his shoulder. <span class=\"said\">\"Chapter five,\"</span> she says."
+  "The CMO stays for all of it. At the end she says, <span class=\"said\" data-who=\"woman\">\"Okay. Laramie, Cheyenne, and Fort Collins. Week fourteen.\"</span>",
+  "Ruth is waiting in the lobby, the way she does. <span class=\"said\" data-who=\"Ruth\">\"At NASA we flew a lot of tests that didn't go well,\"</span> she says. <span class=\"said\" data-who=\"Ruth\">\"The failures weren't the problem. Hiding them was. You put that one on a whiteboard in front of the customer.\"</span>",
+  (s.score>=24?"She smiles. <span class=\"said\" data-who=\"Ruth\">\"That's the whole job, honestly.\"</span>":"She pauses. <span class=\"said\" data-who=\"Ruth\">\"Next time, slow down when the room goes quiet. That's when people decide whether to trust you.\"</span>"),
+  "Sam's phone shows a calendar invite from Elena. Subject: Go/No-Go, Week 14. Underneath, a second notification. Cascade's union representative at the Cheyenne hospital has requested a meeting about \"AI replacing nursing judgment.\"",
+  "Ruth reads it over his shoulder. <span class=\"said\" data-who=\"Ruth\">\"Chapter five,\"</span> she says."
  ],
  cast:[
   ["Maria Santos","Director of Nursing Informatics, Cascade. The product owner."],

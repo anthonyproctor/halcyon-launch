@@ -5,8 +5,8 @@
   "The email came in at 6:12 on a Monday morning, which was how Sam Okafor knew it was bad news. Nobody at Halcyon AI sent good news before seven.",
   "Halcyon had six hundred people, a Series C, and one deal that mattered more than all the others combined. Cascade Valley Health, a network of eleven hospitals across Colorado and Wyoming, had signed a contract to put Halcyon's AI agents into its clinical documentation workflow. Go-live was fourteen weeks out. The date was in the contract. Grant Mercer, the Chief Revenue Officer, had rung a bell in the office when it closed.",
   "On Friday the project manager running Cascade had quit. No exit interview, no handoff, just a two-line email and an empty desk.",
-  "By 8:30 Sam was in Elena Vasquez's office. The CEO didn't sit down. <span class=\"said\">\"You've run our data centers for three years and I have never once had to think about them. That's what I need on Cascade. You start today.\"</span>",
-  "Sam had never run a software project. He'd kept F-16s flying and kept racks humming. He said that. Elena said she knew. Then she said, <span class=\"said\">\"Ruth Calder is on our board. She ran launches at NASA for twenty years. I've asked her to check in with you.\"</span>",
+  "By 8:30 Sam was in Elena Vasquez's office. The CEO didn't sit down. <span class=\"said\" data-who=\"Elena\">\"You've run our data centers for three years and I have never once had to think about them. That's what I need on Cascade. You start today.\"</span>",
+  "Sam had never run a software project. He'd kept F-16s flying and kept racks humming. He said that. Elena said she knew. Then she said, <span class=\"said\" data-who=\"Elena\">\"Ruth Calder is on our board. She ran launches at NASA for twenty years. I've asked her to check in with you.\"</span>",
   "Sam walked back to his desk with a project that wasn't his, a team that didn't know him, and fourteen weeks."
  ],
  scenes:[
@@ -23,11 +23,11 @@
     after:"Sam reads the contract, the statement of work, and whatever passes for a plan. Then he sits down with each lead for thirty minutes and mostly listens. By Wednesday he has a page of notes that doesn't match the status reports at all.",
     why:"This is the PMI pattern: assess before you act. Review what exists, talk to the people closest to the work, and form your own picture. On a project you inherit, discovery is the first deliverable. The exam rewards the answer that gathers information before deciding."},
    {t:"Tell Elena right away that fourteen weeks can't be done, before expectations harden.",s:0,d:{trust:0,conf:-6,health:0},
-    after:"Elena's jaw tightens. <span class=\"said\">\"Based on what?\"</span> Sam doesn't have an answer, and now the CEO thinks her new project lead is a pessimist.",
+    after:"Elena's jaw tightens. <span class=\"said\" data-who=\"Elena\">\"Based on what?\"</span> Sam doesn't have an answer, and now the CEO thinks her new project lead is a pessimist.",
     why:"Maybe it is impossible. You don't know yet, and neither does anyone you'd tell. Escalating without data costs you credibility you'll need later. Bring evidence and options, not a gut feeling."}
   ]},
  {id:"c1s2", domain:"Business Environment", task:"Project charter and authority",
-  text:s=>["In the shared drive Sam finds a signed contract and a statement of work written by the sales team. He does not find a project charter. Nothing says who the sponsor is, what Sam is authorized to decide, or what success looks like beyond the go-live date.","Lena Cho, the CTO, shrugs when he asks. <span class=\"said\">\"We've never really done charters. Grant's contract is the charter.\"</span>"],
+  text:s=>["In the shared drive Sam finds a signed contract and a statement of work written by the sales team. He does not find a project charter. Nothing says who the sponsor is, what Sam is authorized to decide, or what success looks like beyond the go-live date.","Lena Cho, the CTO, shrugs when he asks. <span class=\"said\" data-who=\"Lena\">\"We've never really done charters. Grant's contract is the charter.\"</span>"],
   opts:[
    {t:"Treat the signed contract as the charter, since it's legally binding on both sides.",s:0,d:{trust:0,conf:-2,health:-3},
     after:"The contract tells Sam what Halcyon owes Cascade. It doesn't tell anyone inside Halcyon that Sam can pull an engineer off another project. The first time he tries, the other manager says no and nobody overrules him.",
@@ -59,7 +59,7 @@
     why:"Escalation is sometimes right, but this is in Sam's lane. The exam usually wants the PM to act on what they can control first, then escalate what they can't."}
   ]},
  {id:"c1s4", domain:"Business Environment", task:"Manage scope and change",
-  text:s=>["Thursday afternoon Sam joins Grant on a call with Cascade's project team. It's friendly until Cascade's nursing director asks whether the agents can also draft patient discharge instructions.","Grant doesn't hesitate. <span class=\"said\">\"Absolutely, we can make that happen for go-live.\"</span>","Sam has read the statement of work twice. Discharge instructions aren't in it, and nobody has estimated them."],
+  text:s=>["Thursday afternoon Sam joins Grant on a call with Cascade's project team. It's friendly until Cascade's nursing director asks whether the agents can also draft patient discharge instructions.","Grant doesn't hesitate. <span class=\"said\" data-who=\"Grant\">\"Absolutely, we can make that happen for go-live.\"</span>","Sam has read the statement of work twice. Discharge instructions aren't in it, and nobody has estimated them."],
   opts:[
    {t:"Correct Grant politely on the call so Cascade doesn't leave with the wrong idea.",s:1,d:{trust:0,conf:-5,health:1},
     after:"The call goes cold. Grant smiles through it and doesn't speak to Sam for two days.",
@@ -81,7 +81,7 @@
     after:"They apologize and say they didn't want to cause trouble. Sam gets their input. Next meeting, the room is just as quiet.",
     why:"You got this decision right but didn't fix the pattern. The real problem is that the team doesn't feel safe disagreeing out loud. That's Lencioni's fear of conflict, and it needs a team-level fix."},
    {t:"Set ground rules with the team, then ask them directly to poke holes in his plan.",s:3,d:{trust:7,conf:0,health:3},best:true,
-    after:"It feels awkward. Sam starts the next meeting by saying, <span class=\"said\">\"I've never run a software release. Tell me where this plan is wrong.\"</span> After a long pause, one of the kitchen engineers does. The plan gets better and the meeting runs over.",
+    after:"It feels awkward. Sam starts the next meeting by saying, <span class=\"said\" data-who=\"Sam\">\"I've never run a software release. Tell me where this plan is wrong.\"</span> After a long pause, one of the kitchen engineers does. The plan gets better and the meeting runs over.",
     why:"Creating a team charter with working agreements, and showing vulnerability as the leader, builds the trust that makes productive conflict possible. Five Dysfunctions starts with trust; PMI calls it psychological safety."},
    {t:"Keep the plan as agreed, since everyone had a fair chance to object in the room.",s:0,d:{trust:-4,conf:0,health:-4},
     after:"The team executes the plan they think is wrong. In sprint two the integration problem the engineers predicted shows up right on schedule.",
@@ -139,13 +139,13 @@
     why:"Regulations aren't negotiable and the customer's compliance team knows it. Guessing at compliance answers is a fast way to lose trust."}
   ]},
  {id:"c1s9", domain:"People", task:"Stakeholder engagement",
-  text:s=>["Ruth Calder calls on Thursday evening. <span class=\"said\">\"Have you talked to Raymond Ochoa yet?\"</span>","Sam hasn't. Ochoa is Cascade's CIO. He signed the deal. According to his assistant, nobody from Halcyon has spoken to him in three weeks, and he's started asking his team whether Halcyon is in trouble."],
+  text:s=>["Ruth Calder calls on Thursday evening. <span class=\"said\" data-who=\"Ruth\">\"Have you talked to Raymond Ochoa yet?\"</span>","Sam hasn't. Ochoa is Cascade's CIO. He signed the deal. According to his assistant, nobody from Halcyon has spoken to him in three weeks, and he's started asking his team whether Halcyon is in trouble."],
   opts:[
    {t:"Hold off on contacting Ochoa until there's real progress and good news to share.",s:0,d:{trust:0,conf:-6,health:0},
     after:"Ochoa calls Elena directly on Monday. Elena calls Sam. It isn't a good call.",
     why:"Silence lets stakeholders fill the gap with their worst guess. Proactive, honest communication, especially when things are uncertain, is what keeps engagement high."},
    {t:"Call Ochoa, give an honest status with the risks, and agree how they'll talk.",s:3,d:{trust:1,conf:7,health:1},best:true,
-    after:"The call runs forty minutes. Ochoa appreciates that Sam named the LabelForge delay before he had to ask. They agree on a weekly fifteen-minute call and a one-page status every Friday. Ochoa ends with, <span class=\"said\">\"This is the first time I've felt like I know what's going on.\"</span>",
+    after:"The call runs forty minutes. Ochoa appreciates that Sam named the LabelForge delay before he had to ask. They agree on a weekly fifteen-minute call and a one-page status every Friday. Ochoa ends with, <span class=\"said\" data-who=\"Ochoa\">\"This is the first time I've felt like I know what's going on.\"</span>",
     why:"Engage key stakeholders early and directly, be transparent about risks, and agree on a communication plan that fits them. That's stakeholder engagement and a communications plan in one move."},
    {t:"Send Ochoa a detailed status email with the full project plan and risk log attached.",s:1,d:{trust:0,conf:2,health:0},
     after:"Ochoa's assistant replies that he'll review it. He doesn't.",
@@ -155,13 +155,13 @@
     why:"The account owner should stay involved, but Sam is now responsible for delivery and the customer needs to hear from the person accountable for it."}
   ]},
  {id:"c1s10", domain:"Business Environment", task:"Communicate forecasts to the sponsor",
-  text:s=>["Friday, 4 PM. Elena's office again. <span class=\"said\">\"So. Will we hit the date?\"</span>","Sam has a week of real data now. With the LabelForge delay, the security review, and the integration work moving to the front, his forecast says eighteen weeks, not fourteen. There are ways to close the gap. None of them are free."],
+  text:s=>["Friday, 4 PM. Elena's office again. <span class=\"said\" data-who=\"Elena\">\"So. Will we hit the date?\"</span>","Sam has a week of real data now. With the LabelForge delay, the security review, and the integration work moving to the front, his forecast says eighteen weeks, not fourteen. There are ways to close the gap. None of them are free."],
   opts:[
    {t:"Say yes. It's week one, the team needs confidence, and there's time to recover.",s:0,d:{trust:-2,conf:-8,health:-4},
     after:"Elena smiles and tells the board on Tuesday that Cascade is on track. Sam spends the weekend unable to sleep.",
     why:"Telling the sponsor what they want to hear is the most expensive thing a PM can do. The gap doesn't close because you hid it; it just surfaces later, when there are fewer options."},
-   {t:"Show the eighteen week forecast and its causes, give options, and let Elena decide.",s:3,d:{trust:2,conf:6,health:5},best:true,
-    after:"Elena reads the page twice. She doesn't like it. Then she picks a phased release: the core documentation agents go live on the contract date with three hospitals, the rest follow over four weeks. <span class=\"said\">\"Get Grant in here,\"</span> she says. <span class=\"said\">\"He's going to hate this.\"</span>",
+   {t:"Show the eighteen week forecast and why, give options, and let Elena decide.",s:3,d:{trust:2,conf:6,health:5},best:true,
+    after:"Elena reads the page twice. She doesn't like it. Then she picks a phased release: the core documentation agents go live on the contract date with three hospitals, the rest follow over four weeks. <span class=\"said\" data-who=\"Elena\">\"Get Grant in here,\"</span> she says. <span class=\"said\" data-who=\"Elena\">\"He's going to hate this.\"</span>",
     why:"Give the sponsor an honest forecast based on data, explain the drivers, and bring options with their tradeoffs. The decision belongs to the sponsor. The PM's job is to make it an informed one."},
    {t:"Say no, the date can't be met, and recommend Elena tell Cascade it will slip.",s:1,d:{trust:0,conf:-2,health:2},
     after:"Elena asks if there's any other way. Sam realizes he should have led with options.",
@@ -173,10 +173,10 @@
  ],
  closing:s=>[
   "Saturday morning Sam meets Ruth at a coffee shop in Golden. She has the one-page plan he gave Elena, with notes in the margins.",
-  "<span class=\"said\">\"At NASA we had a saying,\"</span> she says. <span class=\"said\">\"Failure is not an option. Everybody quotes it. Nobody remembers that it only worked because the flight directors told the truth about the numbers every single day. The optimists didn't get people home. The honest ones did.\"</span>",
-  (s.score>=24?"She taps the page. <span class=\"said\">\"You did that this week. Most people in your chair don't.\"</span>":"She taps the page. <span class=\"said\">\"You're learning. Next week, listen first and decide second. The team will tell you what's wrong if you let them.\"</span>"),
-  "Sam's phone buzzes. It's Theo. <span class=\"said\">\"The IronPeak cluster failed its burn-in test. Half the GPUs. Can you call me?\"</span>",
-  "Ruth finishes her coffee. <span class=\"said\">\"Chapter two,\"</span> she says, and stands up."
+  "<span class=\"said\" data-who=\"Ruth\">\"At NASA we had a saying,\"</span> she says. <span class=\"said\" data-who=\"Ruth\">\"Failure is not an option. Everybody quotes it. Nobody remembers that it only worked because the flight directors told the truth about the numbers every single day. The optimists didn't get people home. The honest ones did.\"</span>",
+  (s.score>=24?"She taps the page. <span class=\"said\" data-who=\"Ruth\">\"You did that this week. Most people in your chair don't.\"</span>":"She taps the page. <span class=\"said\" data-who=\"Ruth\">\"You're learning. Next week, listen first and decide second. The team will tell you what's wrong if you let them.\"</span>"),
+  "Sam's phone buzzes. It's Theo. <span class=\"said\" data-who=\"Theo\">\"The IronPeak cluster failed its burn-in test. Half the GPUs. Can you call me?\"</span>",
+  "Ruth finishes her coffee. <span class=\"said\" data-who=\"Ruth\">\"Chapter two,\"</span> she says, and stands up."
  ]
 },{
  videos:{

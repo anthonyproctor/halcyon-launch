@@ -6,11 +6,11 @@
     `The merger memo went out on a Thursday, which Sam had learned was the day companies chose for news they hoped would be forgotten by Monday. Two teams became one. A product line that three people had loved was gone. The org chart on the wiki now had Sam's name above two projects instead of one.`,
     `Project one was phase two for Cascade: the discharge instructions agents that Grant had promised on a sales call fourteen months ago and that had finally earned a charter of their own. Project two was Northgate Health, a nine hospital system in Kansas and Nebraska that had signed in month six with a go-live date its board had already announced to the press.`,
     `Both projects needed the same people. Priya Shah, who now ran the platform. Tomasz Nowak's team in Kraków, who knew the integration layer better than anyone in Denver. Ken Ito's two security engineers, who reported to Ken and only lent themselves out when someone asked nicely and early.`,
-    `Victor Adeyemi had joined the board in month six with a private equity background and a habit of asking what things cost before asking what they were for. His first email to Sam was one line long. <span class="said">"Show me utilization by person, weekly."</span>`,
-    `Dana found Sam at the kitchen table at eleven that night with two schedules printed side by side and a highlighter in each hand. <span class="said">"You know they make software for that,"</span> she said.`,
-    `<span class="said">"The software says Priya is a hundred and forty percent allocated,"</span> Sam said. <span class="said">"I wanted to see if paper agreed."</span>`,
-    `She looked over his shoulder. <span class="said">"Paper agrees. Paper also says you should go to bed."</span>`,
-    `He didn't. He sat there another twenty minutes thinking about something Ray Mendez used to say on the flight line when two jets needed the same hydraulic mule at the same time. <span class="said">"You can't wish a second mule into existence. Somebody waits. Your job is deciding who, and telling them before they find out."</span>`
+    `Victor Adeyemi had joined the board in month six with a private equity background and a habit of asking what things cost before asking what they were for. His first email to Sam was one line long. <span class="said" data-who="Victor">"Show me utilization by person, weekly."</span>`,
+    `Dana found Sam at the kitchen table at eleven that night with two schedules printed side by side and a highlighter in each hand. <span class="said" data-who="Dana">"You know they make software for that,"</span> she said.`,
+    `<span class="said" data-who="Sam">"The software says Priya is a hundred and forty percent allocated,"</span> Sam said. <span class="said" data-who="Sam">"I wanted to see if paper agreed."</span>`,
+    `She looked over his shoulder. <span class="said" data-who="Dana">"Paper agrees. Paper also says you should go to bed."</span>`,
+    `He didn't. He sat there another twenty minutes thinking about something Ray Mendez used to say on the flight line when two jets needed the same hydraulic mule at the same time. <span class="said" data-who="Ray">"You can't wish a second mule into existence. Somebody waits. Your job is deciding who, and telling them before they find out."</span>`
   ],
   lesson: {
     title: `Resources across more than one project`,
@@ -117,7 +117,7 @@
         {t:`Have Sam review every team's sprint plan and resolve conflicts before each sprint.`, s:0, d:{trust:-3,conf:0,health:-1}, after:`Sam becomes the integration point for four teams and the reason sprints start late.`, why:`Centralizing coordination in the PM turns you into the bottleneck and takes ownership away from the teams. Help them coordinate with each other.`}
       ]},
     { id:`f13s8`, domain:`Process`, task:`R8`, title:`The API is late`,
-      text:(s,all,G)=>[`Kraków's new patient record API, a mandatory dependency for the Northgate integration, is eight days late. The integration team is waiting. Northgate's go-live is in five weeks.`,`Victor's message is short. <span class="said">"Add people or work weekends. Pick one."</span>`],
+      text:(s,all,G)=>[`Kraków's new patient record API, a mandatory dependency for the Northgate integration, is eight days late. The integration team is waiting. Northgate's go-live is in five weeks.`,`Victor's message is short. <span class="said" data-who="Victor">"Add people or work weekends. Pick one."</span>`],
       opts:[
         {t:`Measure the critical path impact first, then choose how to compress it.`, s:3, best:true, d:{trust:2,conf:3,health:5}, after:`The analysis shows four of the eight days are absorbed by float. Overlapping integration testing with the last API work recovers the rest, at some added risk Sam writes down.`, why:`Analyze before you compress. Know whether the delay hits the critical path and how much, then choose fast tracking (overlap, adds risk) or crashing (add resources, adds cost) based on facts.`},
         {t:`Add two contractors to the Kraków team right away to get the API back on track.`, s:0, d:{trust:-1,conf:0,health:-2}, after:`The new contractors need a week to ramp up, and the Kraków team slows down to onboard them.`, why:`Crashing late work by adding people often slows it further. And you acted without knowing whether the delay even mattered to the end date.`},
@@ -133,7 +133,7 @@
         {t:`Say nothing to Park and let the roadmap speak for itself when she reviews it.`, s:0, d:{trust:0,conf:-6,health:0}, after:`Park's team plans their nurse training around a feature that won't be there.`, why:`Silence lets a wrong expectation grow. Managing expectations means correcting them early and clearly.`}
       ]},
     { id:`f13s10`, domain:`People`, task:`P8`, title:`Eleven at night in Kraków`,
-      text:(s,all,G)=>[`Tomasz asks for fifteen minutes. He's polite and very direct. Every joint meeting is scheduled for Denver's morning, which is late evening in Kraków. His team hears about decisions after Denver has already made them.`,`<span class="said">"We are not a vending machine,"</span> he says. <span class="said">"You put in a ticket and code comes out."</span>`],
+      text:(s,all,G)=>[`Tomasz asks for fifteen minutes. He's polite and very direct. Every joint meeting is scheduled for Denver's morning, which is late evening in Kraków. His team hears about decisions after Denver has already made them.`,`<span class="said" data-who="Tomasz">"We are not a vending machine,"</span> he says. <span class="said" data-who="Tomasz">"You put in a ticket and code comes out."</span>`],
       opts:[
         {t:`Rotate meeting times, write decisions up async, and credit Kraków's work by name.`, s:3, best:true, d:{trust:7,conf:1,health:3}, after:`The next demo opens with Tomasz's team presenting their own API work. Decisions now get written up before they're final, so Kraków can weigh in during their day.`, why:`Virtual teams need communication that respects time zones and includes everyone in decisions. Recognition matters too, especially for a team that feels used.`},
         {t:`Apologize and ask Tomasz to send a summary of his concerns for the next retro.`, s:1, d:{trust:1,conf:0,health:0}, after:`Tomasz sends it. The retro is two weeks away and nothing changes until then.`, why:`Taking it seriously is good, but the problem is clear and in your power to fix now. Act on it instead of queuing it.`},
@@ -192,9 +192,9 @@
   ],
   closing:(s,all,G)=>[
     `By the end of month nine, Northgate's integration is two days behind a schedule that is finally honest. Phase two for Cascade has a date that survived the hiring freeze. Theo has written more documentation in eight weeks than in four years on staff, and has started calling Priya for advice instead of the other way around.`,
-    `Victor's weekly utilization view shows nobody above a hundred percent for the first time. He sends Sam a one word email. <span class="said">"Better."</span> Dana says that's practically a love letter from a private equity guy.`,
+    `Victor's weekly utilization view shows nobody above a hundred percent for the first time. He sends Sam a one word email. <span class="said" data-who="Victor">"Better."</span> Dana says that's practically a love letter from a private equity guy.`,
     `On Thursday evening, after most of LoDo has emptied, Grant Mercer knocks on the glass of Sam's office. He doesn't have his jacket on. He doesn't have his usual smile on either.`,
-    `<span class="said">"Do you have a minute?"</span> he says. <span class="said">"Actually, do you have an hour. There's something wrong with Northgate, and I think it's my fault."</span>`
+    `<span class="said" data-who="Grant">"Do you have a minute?"</span> he says. <span class="said" data-who="Grant">"Actually, do you have an hour. There's something wrong with Northgate, and I think it's my fault."</span>`
   ],
   episode:{src:`audio/full-ch13.mp3`, len:`about 35 minutes`},
   next:`The Hard Conversation`

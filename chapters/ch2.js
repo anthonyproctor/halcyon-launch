@@ -4,9 +4,9 @@
  cast:[["Hal Brennan","Site operations manager at IronPeak, the GPU colocation vendor."],["Priya Shah","Junior engineer. Shadows Theo on deploys and writes the runbook."]],
  opening:[
   "Sam called Theo back from the parking lot of the coffee shop. Theo talked fast. The IronPeak cluster had run its seventy-two hour burn-in test overnight, the standard stress run before anyone trusts new hardware. Half the GPUs had thrown errors, shut down, or both.",
-  "<span class=\"said\">\"It's not software,\"</span> Theo said. <span class=\"said\">\"I checked. It's the hardware.\"</span>",
+  "<span class=\"said\" data-who=\"Theo\">\"It's not software,\"</span> Theo said. <span class=\"said\" data-who=\"Theo\">\"I checked. It's the hardware.\"</span>",
   "IronPeak's colocation site sat in an industrial park east of the airport, a long gray building with no windows and a guard who checked IDs twice. Sam drove out Monday morning. He'd spent three years in rooms like this one. The air was cold and loud and smelled faintly of hot dust. For the first time since Elena's office, he felt like he knew what he was looking at.",
-  "Hal Brennan, IronPeak's site operations manager, met him at the cage. Hal was friendly, tired, and already had a theory. <span class=\"said\">\"Bad batch of GPUs from the manufacturer,\"</span> he said. <span class=\"said\">\"Happens. We'll swap them out.\"</span>",
+  "Hal Brennan, IronPeak's site operations manager, met him at the cage. Hal was friendly, tired, and already had a theory. <span class=\"said\" data-who=\"Hal\">\"Bad batch of GPUs from the manufacturer,\"</span> he said. <span class=\"said\" data-who=\"Hal\">\"Happens. We'll swap them out.\"</span>",
   "Sam looked at the dark half of the racks. Integration testing was supposed to start on this cluster in three weeks. Cascade's go-live depended on that date. Nobody had told Elena yet, and nobody had told Cascade."
  ],
  scenes:[
@@ -43,7 +43,7 @@
     why:"Escalating blame before you know the cause damages the relationship you need to fix it. Find the facts first."}
   ]},
  {id:"c2s3", domain:"Process", task:"Build quality in",
-  text:s=>["The fix is clear now: new power distribution units and the right firmware. IronPeak can install them by the end of next week.","Lena, relieved, proposes a plan. <span class=\"said\">\"After they finish, we run burn-in twice instead of once. If anything's wrong, we'll catch it.\"</span>"],
+  text:s=>["The fix is clear now: new power distribution units and the right firmware. IronPeak can install them by the end of next week.","Lena, relieved, proposes a plan. <span class=\"said\" data-who=\"Lena\">\"After they finish, we run burn-in twice instead of once. If anything's wrong, we'll catch it.\"</span>"],
   opts:[
    {t:"Agree to double burn-in. A second full test round is cheap insurance for this.",s:1,d:{trust:1,conf:0,health:1},
     after:"The second run adds three days. It catches nothing new, because the problem was never in the testing. It was in how the install was checked before testing started.",
@@ -59,7 +59,7 @@
     why:"Knowing the cause of the last failure doesn't prove the fix works. Never skip verification to save time on a quality problem."}
   ]},
  {id:"c2s4", domain:"Business Environment", task:"Use the contract",
-  text:s=>["Hal calls Thursday. IronPeak will install the new units, but they want Halcyon to pay $94,000 for the expedited parts and labor. <span class=\"said\">\"Your timeline, your rush fee,\"</span> he says.","Sam pulls the IronPeak contract. Section 9 covers equipment IronPeak supplies and installs. It includes a ninety-day workmanship and defect warranty."],
+  text:s=>["Hal calls Thursday. IronPeak will install the new units, but they want Halcyon to pay $94,000 for the expedited parts and labor. <span class=\"said\" data-who=\"Hal\">\"Your timeline, your rush fee,\"</span> he says.","Sam pulls the IronPeak contract. Section 9 covers equipment IronPeak supplies and installs. It includes a ninety-day workmanship and defect warranty."],
   opts:[
    {t:"Pay the $94,000 now to keep things moving, then sort out who owes what later on.",s:1,d:{trust:0,conf:0,health:2},
     after:"The parts ship. Getting the money back later takes four months and a lot of email.",
@@ -78,7 +78,7 @@
   text:s=>["End of week four. Elena wants numbers for Tuesday's board meeting. The project's budget at completion is $2.4 million.","Sam's status sheet shows: planned value to date $640,000. Earned value to date $544,000. Actual cost to date $680,000."],
   opts:[
    {t:"Report SPI 0.85 and CPI 0.80: behind and over budget, with causes and fixes.",s:3,d:{trust:0,conf:5,health:3},best:true,
-    after:"Sam's one page says: for every dollar of planned work, we've finished 85 cents. For every dollar spent, we've gotten 80 cents of value. Then it says why, the cluster failure and rework, and what's being done. Ruth reads it before the meeting and says only, <span class=\"said\">\"Good. No adjectives.\"</span>",
+    after:"Sam's one page says: for every dollar of planned work, we've finished 85 cents. For every dollar spent, we've gotten 80 cents of value. Then it says why, the cluster failure and rework, and what's being done. Ruth reads it before the meeting and says only, <span class=\"said\" data-who=\"Ruth\">\"Good. No adjectives.\"</span>",
     why:"SPI is EV divided by PV: 544 over 640 is 0.85, behind schedule. CPI is EV divided by AC: 544 over 680 is 0.80, over budget. Anything under 1.0 is bad news. Report it straight, with the drivers and the corrective actions."},
    {t:"Report that spending is about on plan, since $680K actual is close to $640K planned.",s:0,d:{trust:0,conf:-5,health:-3},
     after:"A board member who used to run a defense program asks what the earned value is. The room gets quiet.",
@@ -139,7 +139,7 @@
     why:"Recording it is a start. Waiting until it's too late to act turns a cheap fix into a crisis. Escalate early, while the owner still has options."}
   ]},
  {id:"c2s9", domain:"Business Environment", task:"Run the change request",
-  text:s=>["One more thing came out of the root cause work. To keep the new firmware stable, the cluster needs a monitoring tool IronPeak doesn't provide. It costs $38,000 a year and needs two weeks of setup.","It isn't in the scope or the budget. Lena says just buy it. <span class=\"said\">\"It's obviously needed.\"</span>"],
+  text:s=>["One more thing came out of the root cause work. To keep the new firmware stable, the cluster needs a monitoring tool IronPeak doesn't provide. It costs $38,000 a year and needs two weeks of setup.","It isn't in the scope or the budget. Lena says just buy it. <span class=\"said\" data-who=\"Lena\">\"It's obviously needed.\"</span>"],
   opts:[
    {t:"Buy it today with a team credit card and explain it at next week's status review.",s:0,d:{trust:0,conf:-4,health:1},
     after:"Finance flags the purchase in its monthly review. Elena hears about it from the CFO, not from Sam.",
@@ -155,7 +155,7 @@
     why:"Lena may be the right technical voice, but the charter says budget changes go to the sponsor. Route the change to whoever holds that authority."}
   ]},
  {id:"c2s10", domain:"People", task:"Close the loop with the team",
-  text:s=>["Friday afternoon of week four, burn-in passes. All 128 GPUs, green across every rack.","The team has been running on adrenaline and cold pizza for nine days. Lena wants to go straight into integration testing Monday. <span class=\"said\">\"Momentum,\"</span> she says."],
+  text:s=>["Friday afternoon of week four, burn-in passes. All 128 GPUs, green across every rack.","The team has been running on adrenaline and cold pizza for nine days. Lena wants to go straight into integration testing Monday. <span class=\"said\" data-who=\"Lena\">\"Momentum,\"</span> she says."],
   opts:[
    {t:"Run a short retrospective on the failure and thank people by name, specifically.",s:3,d:{trust:6,conf:1,health:3},best:true,
     after:"Forty-five minutes, no slides. What went well, what didn't, what we change. They add the install checklist to the standard process and agree to put an owner on every risk in the register. Then Sam thanks Theo, Priya, and the IronPeak techs by name, with what each did. Priya turns red.",
@@ -173,10 +173,10 @@
  ],
  closing:s=>[
   "Sunday morning Ruth meets Sam at the same coffee shop in Golden. She's read his earned value page twice.",
-  "<span class=\"said\">\"Apollo 13 didn't come home because the plan was good,\"</span> she says. <span class=\"said\">\"It came home because when the plan broke, people found out why before they decided what to do. You did that this week.\"</span>",
-  (s.score>=24?"She slides the page back across the table. <span class=\"said\">\"0.85 and 0.80. Most people would've hidden those numbers. You put them on top.\"</span>":"She slides the page back across the table. <span class=\"said\">\"Next time, slow down when it breaks. Find the cause, then act. The fast answer is usually the expensive one.\"</span>"),
+  "<span class=\"said\" data-who=\"Ruth\">\"Apollo 13 didn't come home because the plan was good,\"</span> she says. <span class=\"said\" data-who=\"Ruth\">\"It came home because when the plan broke, people found out why before they decided what to do. You did that this week.\"</span>",
+  (s.score>=24?"She slides the page back across the table. <span class=\"said\" data-who=\"Ruth\">\"0.85 and 0.80. Most people would've hidden those numbers. You put them on top.\"</span>":"She slides the page back across the table. <span class=\"said\" data-who=\"Ruth\">\"Next time, slow down when it breaks. Find the cause, then act. The fast answer is usually the expensive one.\"</span>"),
   "Monday at 8:05, Theo knocks on Sam's open door and closes it behind him. He doesn't sit down.",
-  "<span class=\"said\">\"I accepted an offer,\"</span> he says. <span class=\"said\">\"I'm sorry. I've been running on fumes since summer. My last day is three weeks from Friday.\"</span>",
+  "<span class=\"said\" data-who=\"Theo\">\"I accepted an offer,\"</span> he says. <span class=\"said\" data-who=\"Theo\">\"I'm sorry. I've been running on fumes since summer. My last day is three weeks from Friday.\"</span>",
   "Sam does the math before Theo finishes the sentence. Three weeks from Friday is four days before go-live."
  ],
  videos:{

@@ -5,7 +5,7 @@
  cast:[[`Joan Pruitt`,`Halcyon procurement lead. Contract precise. Secretly loves a good negotiation.`]],
  opening:[
   `Joan Pruitt's office was the only one at Halcyon with a paper filing cabinet. It was gray, it was dented, and it held a printed copy of every contract the company had signed since its seed round, each one tabbed in a color code nobody else understood.`,
-  `<span class="said">"People think procurement is paperwork,"</span> she said, sliding the LabelForge folder across the desk. <span class="said">"Procurement is memory. Everybody forgets what they promised. The contract doesn't."</span>`,
+  `<span class="said" data-who="Joan">"People think procurement is paperwork,"</span> she said, sliding the LabelForge folder across the desk. <span class="said" data-who="Joan">"Procurement is memory. Everybody forgets what they promised. The contract doesn't."</span>`,
   `LabelForge's final invoice was for the full fixed price, $186,000, as if the first batch hadn't arrived three weeks late and the third batch hadn't needed forty percent of its labels redone by Cascade's nurses. Joan had already highlighted section 7.2 in yellow. Sam didn't know what 7.2 said yet. He could tell from her face that it said something.`,
   `On top of that, Cascade wanted to change the deal. Their pharmacy committee had seen the grounding check and wanted discharge instructions moved from phase two into the current contract. Grant had replied to that email with three exclamation points. Joan had forwarded it to Sam with none.`,
   `And IronPeak was offering to expand the GPU cluster for the second wave under a new kind of contract Hal Brennan called "fixed price with upside." Joan called it something else.`,
@@ -60,7 +60,7 @@
     why:`The customer can inform the quality picture, but Halcyon holds the contract with LabelForge. Privity of contract means the decision is Halcyon's.`}
   ]},
  {id:`f8s2`, domain:`Process`, task:`R5`, title:`Before the negotiation`,
-  text:(s,all,G)=>[`LabelForge asks for a call to "resolve the invoice." Joan wants an hour with Sam first.`,`<span class="said">"Tell me what we actually want,"</span> she says. <span class="said">"Not what we're mad about. What we want."</span>`],
+  text:(s,all,G)=>[`LabelForge asks for a call to "resolve the invoice." Joan wants an hour with Sam first.`,`<span class="said" data-who="Joan">"Tell me what we actually want,"</span> she says. <span class="said" data-who="Joan">"Not what we're mad about. What we want."</span>`],
   opts:[
    {t:`Work out Halcyon's interests, LabelForge's likely interests, and our walk-away option.`,s:3,best:true,d:{trust:2,conf:1,health:3},
     after:`They write it out. Halcyon wants clean labels for wave two more than money. LabelForge probably wants a reference and repeat business. The walk-away is another vendor, six weeks out. Joan circles the overlap.`,
@@ -79,7 +79,7 @@
   text:(s,all,G)=>[`LabelForge's CEO joins the call. She opens with a five percent credit and an apology for the third batch, then says they're losing money on the contract.`,`Joan looks at Sam. It's his project. She's let him take this one.`],
   opts:[
    {t:`Offer seven percent plus free relabeling of batch three by their nurse team before wave two.`,s:3,best:true,d:{trust:1,conf:3,health:5},
-    after:`The CEO pauses, then agrees, because relabeling costs her less than cash and keeps Halcyon as a reference. Joan writes it up as a contract amendment before the call ends. Afterward she says, <span class="said">"That's the one I would have asked for."</span>`,
+    after:`The CEO pauses, then agrees, because relabeling costs her less than cash and keeps Halcyon as a reference. Joan writes it up as a contract amendment before the call ends. Afterward she says, <span class="said" data-who="Joan">"That's the one I would have asked for."</span>`,
     why:`A strong negotiated outcome addresses both sides' interests. Trading some of the credit for work Halcyon actually needs is a win-win, and it's documented in the contract.`},
    {t:`Accept the five percent and the apology, since the vendor is already losing money on it.`,s:1,d:{trust:0,conf:0,health:0},
     after:`It's fair but leaves Halcyon with bad labels going into wave two.`,
@@ -92,10 +92,10 @@
     why:`If you have the authority and a good deal is on the table, close it. Deferring without a reason just loses momentum.`}
   ]},
  {id:`f8s4`, domain:`Business Environment`, task:`B3`, title:`Cascade's change`,
-  text:(s,all,G)=>[`Cascade formally asks to move discharge instructions from phase two into the current contract, for the second wave. Ochoa's note is friendly and firm.`,`Grant replies-all before Sam is out of his first meeting: <span class="said">"Absolutely doable!!!"</span>`],
+  text:(s,all,G)=>[`Cascade formally asks to move discharge instructions from phase two into the current contract, for the second wave. Ochoa's note is friendly and firm.`,`Grant replies-all before Sam is out of his first meeting: <span class="said" data-who="Grant">"Absolutely doable!!!"</span>`],
   opts:[
    {t:`Log it as a change request, analyze the impact, and take it to the change control board.`,s:3,best:true,d:{trust:2,conf:3,health:4},
-    after:`Sam sends a short note to everyone on the thread: received, logged as CR-014, impact analysis by Friday, decision at the next board meeting. Grant calls him, annoyed. Ochoa replies, <span class="said">"Perfect, that's how we'd do it."</span>`,
+    after:`Sam sends a short note to everyone on the thread: received, logged as CR-014, impact analysis by Friday, decision at the next board meeting. Grant calls him, annoyed. Ochoa replies, <span class="said" data-who="Ochoa">"Perfect, that's how we'd do it."</span>`,
     why:`Every change goes through integrated change control: log it, assess impact on scope, schedule, cost, quality, and risk, then a decision by whoever has the authority. Grant's reply doesn't change the process.`},
    {t:`Agree with Grant's reply and ask the team to plan discharge instructions into wave two.`,s:0,d:{trust:-4,conf:2,health:-6},
     after:`The team estimates it at six weeks. Wave two was four. Nobody asked them first.`,
@@ -220,7 +220,7 @@
     why:`Talking to the vendor is reasonable, but it doesn't replace a planned response. Assess and prepare regardless of the answer.`}
   ]},
  {id:`f8s12`, domain:`People`, task:`P4`, title:`Go or no-go`,
-  text:(s,all,G)=>[`Week eleven. Go-live for the first three hospitals is in three weeks. Elena asks Sam how they'll decide whether to go.`,`<span class="said">"Gut feel,"</span> Grant says, only half joking. Ochoa, on the call, does not laugh.`],
+  text:(s,all,G)=>[`Week eleven. Go-live for the first three hospitals is in three weeks. Elena asks Sam how they'll decide whether to go.`,`<span class="said" data-who="Grant">"Gut feel,"</span> Grant says, only half joking. Ochoa, on the call, does not laugh.`],
   opts:[
    {t:`Agree measurable go/no-go criteria in writing with Cascade and Halcyon leads this week.`,s:3,best:true,d:{trust:2,conf:6,health:4},
     after:`They land on eight criteria: grounding check pass rate, open safety defects, training completion per unit, rollback tested, support staffed, and three others. Ochoa signs. Maria adds one. Elena says it's the first time a launch decision has felt like a decision.`,
@@ -266,10 +266,10 @@
  ],
  closing:(s,all,G)=>[
   `Joan stayed late on Friday to file the LabelForge amendment. Sam found her putting it in the gray cabinet behind a yellow tab.`,
-  `<span class="said">"You did fine,"</span> she said, which from Joan was a standing ovation. <span class="said">"Most PMs either fold or go to war. You traded."</span>`,
+  `<span class="said" data-who="Joan">"You did fine,"</span> she said, which from Joan was a standing ovation. <span class="said" data-who="Joan">"Most PMs either fold or go to war. You traded."</span>`,
   `He drove home past Union Station with the go/no-go criteria printed on the seat beside him. Eight lines. Eight facts that would decide whether three hospitals turned on software that wrote notes about real patients.`,
-  `Dana was grading lab reports at the kitchen table. She looked at the page over her glasses. <span class="said">"This is the first time you've brought work home that looks like a checklist,"</span> she said. <span class="said">"That's how I know you're scared."</span>`,
-  `She wasn't wrong. On Monday, Maria called from Cheyenne. The nurses there had read about the agents in a union newsletter, and they had questions. Denise Harmon, the nurse manager, had a list. <span class="said">"You should come up,"</span> Maria said. <span class="said">"Bring coffee. A lot of it."</span>`
+  `Dana was grading lab reports at the kitchen table. She looked at the page over her glasses. <span class="said" data-who="Dana">"This is the first time you've brought work home that looks like a checklist,"</span> she said. <span class="said" data-who="Dana">"That's how I know you're scared."</span>`,
+  `She wasn't wrong. On Monday, Maria called from Cheyenne. The nurses there had read about the agents in a union newsletter, and they had questions. Denise Harmon, the nurse manager, had a list. <span class="said" data-who="Maria">"You should come up,"</span> Maria said. <span class="said" data-who="Maria">"Bring coffee. A lot of it."</span>`
  ],
  episode:{src:`audio/full-ch08.mp3`, len:`about 35 minutes`},
  next:`Go-Live`

@@ -10,13 +10,13 @@
   opening: [
     `The Kraków team came with the budget. The departed PM had signed a contract with a software firm in Poland for six engineers, starting in week two, to build the integration layer between Halcyon's agents and Cascade's records system. Sam found the contract in folder twelve, under a file called "misc."`,
     `Tomasz Nowak, their lead, joined his first Halcyon call at 4 PM Denver time, which was midnight in Kraków. He had his camera on, a mug of tea, and the patient expression of a man who had been told the meeting was at 3 PM. Nobody had told him about daylight saving time.`,
-    `<span class="said">"We are ready to start,"</span> Tomasz said. <span class="said">"Someone should tell us what we are building. So far we have a repository and a Slack invite."</span>`,
+    `<span class="said" data-who="Tomasz">"We are ready to start,"</span> Tomasz said. <span class="said" data-who="Tomasz">"Someone should tell us what we are building. So far we have a repository and a Slack invite."</span>`,
     `That night Sam couldn't stop thinking about it. In the Air Force, when a new crew chief arrived from another base, nobody handed them a wrench and walked away. You walked the jet with them. You showed them where the forms lived, which tools stuck, who to ask at two in the morning. Ray Mendez called it "plugging them in." He'd say a new airman without a sponsor was just an expensive spectator.`,
-    `Dana found him at the kitchen table at eleven. <span class="said">"Plan problems or people problems?"</span>`,
-    `<span class="said">"People,"</span> he said. <span class="said">"I have forty people in Denver, six in Poland, and I've never managed a single one of them."</span>`,
-    `<span class="said">"You managed a flight line."</span>`,
-    `<span class="said">"Everybody on a flight line already knew what the jet needed."</span>`,
-    `She thought about it. <span class="said">"So tell them what the jet needs."</span>`
+    `Dana found him at the kitchen table at eleven. <span class="said" data-who="Dana">"Plan problems or people problems?"</span>`,
+    `<span class="said" data-who="Sam">"People,"</span> he said. <span class="said" data-who="Sam">"I have forty people in Denver, six in Poland, and I've never managed a single one of them."</span>`,
+    `<span class="said" data-who="Dana">"You managed a flight line."</span>`,
+    `<span class="said" data-who="Sam">"Everybody on a flight line already knew what the jet needed."</span>`,
+    `She thought about it. <span class="said" data-who="Dana">"So tell them what the jet needs."</span>`
   ],
   lesson: {
     title: `Resources, teams, and communication`,
@@ -79,7 +79,7 @@
           why:`A reminder doesn't fix unclear roles. Define who is responsible and who is accountable.`}
       ]},
     { id:`f3s3`, domain:`People`, task:`P3`, title:`Plugging in Kraków`,
-      text:(s,all,G)=>[`Tomasz's team has had repository access for a week and very little else. In a direct message he writes: <span class="said">"My engineers are asking if we are a team or a supplier. I would like to give them an answer."</span>`],
+      text:(s,all,G)=>[`Tomasz's team has had repository access for a week and very little else. In a direct message he writes: <span class="said" data-who="Tomasz">"My engineers are asking if we are a team or a supplier. I would like to give them an answer."</span>`],
       opts:[
         {t:`Send Tomasz a detailed spec so his team can work independently without delays.`, s:1, d:{trust:0,conf:0,health:2},
           after:`The spec helps them start. It doesn't answer Tomasz's question, and his team still feels like a vendor taking orders.`,
@@ -143,7 +143,7 @@
           why:`With two sites and real friction, waiting for norms to emerge means waiting for conflict. Make them explicit early.`}
       ]},
     { id:`f3s7`, domain:`People`, task:`P3`, title:`Tone in the code reviews`,
-      text:(s,all,G)=>[`A Kraków engineer's pull request gets a review from a senior Denver engineer that reads, in full: <span class="said">"No. Rewrite."</span> Another gets a comment calling an approach "junior." Tomasz forwards both to Sam with no message. He doesn't need one.`],
+      text:(s,all,G)=>[`A Kraków engineer's pull request gets a review from a senior Denver engineer that reads, in full: <span class="said" data-who="man">"No. Rewrite."</span> Another gets a comment calling an approach "junior." Tomasz forwards both to Sam with no message. He doesn't need one.`],
       opts:[
         {t:`Talk privately with the reviewer about tone and the team's new review agreement.`, s:3, best:true, d:{trust:5,conf:0,health:2},
           after:`The reviewer is surprised. He thought he was being efficient. Sam walks him through how it read from the other side. The next review has reasons in it. Two weeks later the same engineer pairs with the Kraków dev on a hard problem.`,
@@ -272,13 +272,13 @@
   ],
   closing:(s,all,G)=>[
     `Friday of week three is the first sprint review with both sites on screen. Sam expected it to feel like a milestone. It feels like a hallway after a fire drill.`,
-    `Priya demos the integration layer. It works. Nobody asks a question. Tomasz's engineers keep their cameras off. A Denver engineer says <span class="said">"looks good"</span> in a tone that means nothing. Lena thanks everyone warmly and ends ten minutes early.`,
+    `Priya demos the integration layer. It works. Nobody asks a question. Tomasz's engineers keep their cameras off. A Denver engineer says "looks good" in a tone that means nothing. Lena thanks everyone warmly and ends ten minutes early.`,
     `Afterward Sam sits in the empty conference room. On the flight line you could always tell when a crew didn't trust each other. Nobody said anything wrong. They just stopped telling each other things. A loose panel, a weird noise, a tool that went missing. Small silences. Ray Mendez used to say the silences were how jets got hurt.`,
     (s.score>=27?`He has the charter, the calendars, the RACI, and a team that wrote its own rules. What he doesn't have yet is a team that tells each other the truth. He's not sure a document can fix that.`:`He's got a RACI half the team ignores and a calendar nobody updates. Two sites, two teams, one project name. On a legal pad he writes what he'd redo from Monday. He stops at nine items and puts the pen down.`),
-    `Ruth calls on his drive home. <span class="said">"How'd the review go?"</span>`,
-    `<span class="said">"Quiet."</span>`,
-    `<span class="said">"Quiet's the dangerous one,"</span> she says. <span class="said">"Loud teams are arguing. Quiet teams are hiding. I learned that the expensive way."</span> She doesn't say how. Sam doesn't ask. Not yet.`,
-    `Monday, burn-in starts at IronPeak. Sam is brushing his teeth at 6:40 when his phone lights up on the sink. It's Theo, in the team channel, no greeting, no emoji: <span class="said">"rack 4 threw an error. then rack 7. looking."</span> Sam spits, rinses, and reads it again. Then he reaches for his keys.`
+    `Ruth calls on his drive home. <span class="said" data-who="Ruth">"How'd the review go?"</span>`,
+    `<span class="said" data-who="Sam">"Quiet."</span>`,
+    `<span class="said" data-who="Ruth">"Quiet's the dangerous one,"</span> she says. <span class="said" data-who="Ruth">"Loud teams are arguing. Quiet teams are hiding. I learned that the expensive way."</span> She doesn't say how. Sam doesn't ask. Not yet.`,
+    `Monday, burn-in starts at IronPeak. Sam is brushing his teeth at 6:40 when his phone lights up on the sink. It's Theo, in the team channel, no greeting, no emoji: <span class="said" data-who="Theo">"rack 4 threw an error. then rack 7. looking."</span> Sam spits, rinses, and reads it again. Then he reaches for his keys.`
   ],
   episode:{src:`audio/full-ch03.mp3`, len:`about 35 minutes`},
   next:`Burn-In`

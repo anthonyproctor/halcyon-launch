@@ -4,10 +4,10 @@
  tasks:[`P2`,`P7`,`P3`,`B4`],
  cast:[[`Devin Ruiz`,`Engineer. Coasting since his last manager left. More capable than he lets on.`]],
  opening:[
-  `Sam told Lena first, Monday at 7:30, before the office filled up. She took it the way she took most bad news, quietly, looking at a spot on the table. <span class="said">"I knew,"</span> she said finally. <span class="said">"I didn't want to know, so I didn't ask."</span>`,
-  `Elena took it the other way. <span class="said">"Counter him,"</span> she said. <span class="said">"Whatever they're paying, plus twenty."</span>`,
-  `<span class="said">"It isn't money,"</span> Sam said. <span class="said">"It's that he's the only one who can do the job. If we pay him more to keep being the only one, we fix nothing."</span>`,
-  `Elena looked at him for a long second. <span class="said">"Fine. Then don't lose what's in his head."</span>`,
+  `Sam told Lena first, Monday at 7:30, before the office filled up. She took it the way she took most bad news, quietly, looking at a spot on the table. <span class="said" data-who="Lena">"I knew,"</span> she said finally. <span class="said" data-who="Lena">"I didn't want to know, so I didn't ask."</span>`,
+  `Elena took it the other way. <span class="said" data-who="Elena">"Counter him,"</span> she said. <span class="said" data-who="Elena">"Whatever they're paying, plus twenty."</span>`,
+  `<span class="said" data-who="Sam">"It isn't money,"</span> Sam said. <span class="said" data-who="Sam">"It's that he's the only one who can do the job. If we pay him more to keep being the only one, we fix nothing."</span>`,
+  `Elena looked at him for a long second. <span class="said" data-who="Elena">"Fine. Then don't lose what's in his head."</span>`,
   `Back at his desk Sam thought about Ray Mendez. On the flight line in Wisconsin, Ray had a rule nobody liked: before you could sign off a task, you had to teach it back to the youngest airman on the crew. It doubled the time of everything. It also meant that when Ray retired, the jets didn't notice.`,
   `Sam had fifteen working days. He wrote three names on his list. Theo. Priya. Tomasz.`,
   `Then, under them, a fourth he hadn't meant to write. Devin.`
@@ -58,7 +58,7 @@
      why:`Retention is worth a conversation, but it doesn't address the real risk, which is that only one person knows the system.`}
    ]},
   {id:`f6s2`, domain:`People`, task:`P7`, title:`Why it's weird`,
-   text:(s,all,G)=>[`Half of what makes the platform work is in comments like <span class="said">"don't touch this, ask Theo."</span> Priya finds a retry loop that waits exactly 47 seconds. Nobody knows why.`,`Theo knows why. Theo knows why about a hundred things like it.`],
+   text:(s,all,G)=>[`Half of what makes the platform work is in comments like "don't touch this, ask Theo." Priya finds a retry loop that waits exactly 47 seconds. Nobody knows why.`,`Theo knows why. Theo knows why about a hundred things like it.`],
    opts:[
     {t:`Ask Theo to list every odd workaround on a wiki page before he leaves.`,s:1,d:{trust:0,conf:0,health:2},
      after:`The list has sixty three items. Most of the reasons are one line long. The 47 seconds says "vendor quirk."`,
@@ -80,7 +80,7 @@
      after:`It goes on for twenty minutes. Nobody else says a word. The sprint gets planned around a decision nobody made.`,
      why:`Healthy conflict is about ideas, in a safe setting. Two executives fighting in front of the team is the opposite. It teaches everyone else to stay quiet.`},
     {t:`Pause the meeting and meet with both of them privately after.`,s:3,best:true,d:{trust:5,conf:1,health:2},
-     after:`<span class="said">"Let's take this offline,"</span> Sam says, more calmly than he feels. The room breathes out. Planning finishes on the work everyone agrees on.`,
+     after:`<span class="said" data-who="Sam">"Let's take this offline,"</span> Sam says, more calmly than he feels. The room breathes out. Planning finishes on the work everyone agrees on.`,
      why:`Move a public conflict to a private setting quickly. It protects the people involved and the team, and gives you a real chance to resolve it.`},
     {t:`Back Lena, since the engineering estimate should decide what fits.`,s:0,d:{trust:0,conf:-3,health:0},
      after:`Lena wins the moment. Grant goes straight to Elena.`,
@@ -122,23 +122,23 @@
      why:`Individual performance is a private conversation. Retros are for how the team works, not for calling people out.`}
    ]},
   {id:`f6s6`, domain:`People`, task:`P3`, title:`The call`,
-   text:(s,all,G)=>[`Thursday, 6 AM Denver time, mid afternoon in Kraków. A deploy from Tomasz's team broke staging an hour before a Cascade review. Sam, short on sleep, says on the call, in front of Tomasz's whole team, <span class="said">"Did anybody over there actually test this?"</span>`,`The line goes quiet. That night Dana finds him on the back step. <span class="said">"You've got the face,"</span> she says. <span class="said">"The one from the Guard, when somebody on your crew got hurt and you thought it was your fault."</span>`],
+   text:(s,all,G)=>[`Thursday, 6 AM Denver time, mid afternoon in Kraków. A deploy from Tomasz's team broke staging an hour before a Cascade review. Sam, short on sleep, says on the call, in front of Tomasz's whole team, <span class="said" data-who="Sam">"Did anybody over there actually test this?"</span>`,`The line goes quiet. That night Dana finds him on the back step. <span class="said" data-who="Dana">"You've got the face,"</span> she says. <span class="said" data-who="Dana">"The one from the Guard, when somebody on your crew got hurt and you thought it was your fault."</span>`],
    opts:[
     {t:`Send Tomasz an email explaining the pressure Sam was under that day.`,s:1,d:{trust:1,conf:0,health:0},
-     after:`Tomasz replies, <span class="said">"Understood."</span> It doesn't sound understood.`,
+     after:`Tomasz replies, <span class="said" data-who="Tomasz">"Understood."</span> It doesn't sound understood.`,
      why:`Explaining context helps, but it can read like an excuse. Own it directly first.`},
     {t:`Let it go. Tomasz is a professional, and it will blow over.`,s:0,d:{trust:-5,conf:0,health:-2},
      after:`It doesn't blow over. Kraków's commits get smaller and more cautious. Velocity drops.`,
      why:`Ignoring damage you caused tells the team it's acceptable. A leader repairs it.`},
     {t:`Call Tomasz, apologize plainly, then talk through what went wrong.`,s:3,best:true,d:{trust:6,conf:0,health:3},
-     after:`<span class="said">"I was out of line,"</span> Sam says. <span class="said">"In front of your team. I'm sorry."</span> Silence, then Tomasz: <span class="said">"My team will hear this from me. Now. The deploy. We skipped a test because your environment was down. Shall we fix that together?"</span>`,
+     after:`<span class="said" data-who="Sam">"I was out of line,"</span> Sam says. <span class="said" data-who="Sam">"In front of your team. I'm sorry."</span> Silence, then Tomasz: <span class="said" data-who="Tomasz">"My team will hear this from me. Now. The deploy. We skipped a test because your environment was down. Shall we fix that together?"</span>`,
      why:`Self awareness and self regulation include repairing it when you lose your temper. A direct, specific apology rebuilds trust, and then you can solve the actual problem.`},
     {t:`Ask Lena to smooth things over with Tomasz on Sam's behalf.`,s:0,d:{trust:-3,conf:0,health:-1},
      after:`Lena does. Tomasz notes that Sam didn't.`,
      why:`An apology through a messenger isn't an apology. Repair it yourself.`}
    ]},
   {id:`f6s7`, domain:`Business Environment`, task:`B4`, title:`One approver`,
-   text:(s,all,G)=>[`Every production deploy needs Theo's approval. Theo is spending his days teaching Priya. Kraków has six changes waiting in a queue.`,`Tomasz, newly polite: <span class="said">"We are not complaining. We are only noting the queue."</span>`],
+   text:(s,all,G)=>[`Every production deploy needs Theo's approval. Theo is spending his days teaching Priya. Kraków has six changes waiting in a queue.`,`Tomasz, newly polite: <span class="said" data-who="Tomasz">"We are not complaining. We are only noting the queue."</span>`],
    opts:[
     {t:`Ask Theo to approve deploys in a batch at the end of each day.`,s:1,d:{trust:0,conf:0,health:1},
      after:`The queue moves, slowly. Theo is now teaching all day and approving all evening.`,
@@ -186,13 +186,13 @@
      why:`A contractor backup can be sensible, but it isn't verification, and it can undercut the new lead before she starts.`}
    ]},
   {id:`f6s10`, domain:`People`, task:`P3`, title:`Not Theo`,
-   text:(s,all,G)=>[`Thursday evening, Priya stops by Sam's desk. <span class="said">"I don't think I should be the lead,"</span> she says. <span class="said">"I'm not Theo. I can't do what he does."</span>`,`She's the best person for it, and the only one who doesn't see it.`],
+   text:(s,all,G)=>[`Thursday evening, Priya stops by Sam's desk. <span class="said" data-who="Priya">"I don't think I should be the lead,"</span> she says. <span class="said" data-who="Priya">"I'm not Theo. I can't do what he does."</span>`,`She's the best person for it, and the only one who doesn't see it.`],
    opts:[
     {t:`Offer her the role on a trial basis so there's less pressure on her.`,s:1,d:{trust:0,conf:0,health:1},
      after:`She accepts the trial. It also tells her Sam isn't sure either.`,
      why:`A trial can lower the stakes, but it can also signal doubt. Clear support usually works better.`},
     {t:`Say she doesn't need to be Theo, agree on support, and back her publicly.`,s:3,best:true,d:{trust:6,conf:1,health:4},
-     after:`<span class="said">"Theo did it alone,"</span> Sam says. <span class="said">"That's why he's leaving. You'll do it with a team."</span> They agree on a weekly check in and that Devin owns performance. On Friday Sam announces her as platform lead and the Kraków team applauds on the screen.`,
+     after:`<span class="said" data-who="Sam">"Theo did it alone,"</span> Sam says. <span class="said" data-who="Sam">"That's why he's leaving. You'll do it with a team."</span> They agree on a weekly check in and that Devin owns performance. On Friday Sam announces her as platform lead and the Kraków team applauds on the screen.`,
      why:`Coaching addresses the real fear and sets up support. Public backing gives a new leader the authority to succeed.`},
     {t:`Hire an experienced lead from outside and keep Priya as the deputy.`,s:0,d:{trust:-5,conf:0,health:-2},
      after:`Priya hears it as a verdict. The outside hire takes two months to find.`,
@@ -262,12 +262,12 @@
  ],
  closing:(s,all,G)=>[
   `Theo's going away party ended at nine. He hugged Priya, shook Devin's hand, and gave Tomasz's team on the screen a salute that made them laugh. He stopped at Sam's desk on the way out.`,
-  `<span class="said">"For what it's worth,"</span> Theo said, <span class="said">"this was the first time anyone made me teach it instead of do it. I should have been doing that for two years."</span>`,
-  `<span class="said">"So should I,"</span> Sam said, and meant it.`,
-  `On Monday the on call rotation went live with four names on it. Priya's was first. Devin had added a line to the team charter, in his own words: <span class="said">"Nobody is the only one."</span>`,
+  `<span class="said" data-who="Theo">"For what it's worth,"</span> Theo said, <span class="said" data-who="Theo">"this was the first time anyone made me teach it instead of do it. I should have been doing that for two years."</span>`,
+  `<span class="said" data-who="Sam">"So should I,"</span> Sam said, and meant it.`,
+  `On Monday the on call rotation went live with four names on it. Priya's was first. Devin had added a line to the team charter, in his own words: "Nobody is the only one."`,
   (s.score>=27?`The dashboard by the kitchen showed velocity back above where it had been before the burn-in. Lena noticed. She bought donuts, which for Lena was a speech.`:`Velocity was still below where it had been before the burn-in. But the standups were louder now, in the useful way, and Sam decided that counted for something.`),
   `At 4:12 that afternoon Ochoa's email arrived. Cascade wanted a live demo of the documentation agents for clinicians in two weeks. Real nurses, real workflows, test data.`,
-  `The last line was the one Sam read three times. <span class="said">"Maria Santos will run it from our side. She ran an ICU for eleven years before she ran informatics. Bring your best."</span>`
+  `The last line was the one Sam read three times. <span class="said" data-who="Ochoa">"Maria Santos will run it from our side. She ran an ICU for eleven years before she ran informatics. Bring your best."</span>`
  ],
  episode:{src:`audio/full-ch06.mp3`, len:`about 35 minutes`},
  next:`The Demo`

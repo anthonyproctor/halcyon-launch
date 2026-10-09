@@ -1,12 +1,14 @@
 // Spoken script for a Full Course chapter: opening, Ruth's whiteboard, decisions (pause, best answer, debrief), closing.
 // usage: node tools/episode_full.mjs full/chNN.js out.json
 import fs from 'fs';
+import {segments} from './voices.mjs';
+
 globalThis.window={};
 new Function('window',fs.readFileSync(process.argv[2],'utf8'))(globalThis.window);
 const C=globalThis.window.HALCYON_FULL[0];
 const strip=s=>String(s).replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
 const st={flags:{},score:24,m:{trust:60,conf:60,health:60}},N='narrator',R='ruth',out=[];
-const say=(v,t)=>{t=strip(t);if(t)out.push({v,t})},pause=s=>out.push({pause:s});
+const say=(v,t)=>{segments(String(t),v).forEach(x=>out.push(x))},pause=s=>out.push({pause:s});
 const W=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen'];
 say(N,`The Halcyon Launch, the full course. ${C.part}. Chapter ${W[C.num]}. ${C.title}.`);pause(1.2);
 C.opening.forEach(p=>{say(N,p);pause(0.6)});pause(1);

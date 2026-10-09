@@ -10,12 +10,12 @@
   "The second demo worked. Nobody cheered, which Sam took as a good sign. Cascade's clinicians just kept typing questions into the agent and nodding at the drafts, and at the end of the hour one of the hospitalists asked when she could have it for real.",
   "The answer was in the plan. Go-live for the first three hospitals, Fort Collins, Greeley, and Cheyenne, was set for the Monday after week fourteen, the date in the contract. The go/no-go meeting was the Friday before. Four weeks.",
   "Priya Shah ran the platform now. She'd inherited Theo's runbook, half his Slack channels, and none of his habits, which was the point. The offshore team in Kraków handled overnight testing. The board had stopped asking Elena about Cascade every meeting, which Ruth said was the highest compliment a board knows how to give.",
-  "On Monday morning Sam opened his inbox and found an email from Cascade's Cheyenne hospital. The subject line was <span class=\"said\">\"Concerns from the nursing staff.\"</span> It had sixty-two signatures.",
-  "Ruth called while he was still reading it. <span class=\"said\">\"The last four weeks before a launch are when the work stops being technical,\"</span> she said. <span class=\"said\">\"Everything that's left is people, paperwork, and nerve. Call me Friday.\"</span>"
+  "On Monday morning Sam opened his inbox and found an email from Cascade's Cheyenne hospital. The subject line was \"Concerns from the nursing staff.\" It had sixty-two signatures.",
+  "Ruth called while he was still reading it. <span class=\"said\" data-who=\"Ruth\">\"The last four weeks before a launch are when the work stops being technical,\"</span> she said. <span class=\"said\" data-who=\"Ruth\">\"Everything that's left is people, paperwork, and nerve. Call me Friday.\"</span>"
  ],
  scenes:[
  {id:"c5s1", domain:"People", task:"Lead people through change",
-  text:s=>["The petition is polite and specific. The Cheyenne nurses worry the agents will make mistakes they'll be blamed for, that charting will take longer while they learn, and that this is the first step toward cutting staff. Denise Harmon, their nurse manager, signed it first.","Ochoa forwards it to Sam with one line: <span class=\"said\">\"How do you want to handle this?\"</span>"],
+  text:s=>["The petition is polite and specific. The Cheyenne nurses worry the agents will make mistakes they'll be blamed for, that charting will take longer while they learn, and that this is the first step toward cutting staff. Denise Harmon, their nurse manager, signed it first.","Ochoa forwards it to Sam with one line: <span class=\"said\" data-who=\"Ochoa\">\"How do you want to handle this?\"</span>"],
   opts:[
    {t:"Ask Ochoa to tell the Cheyenne nurses that using the agents is now required policy.",s:0,d:{trust:0,conf:-5,health:-3},
     after:"Ochoa sends the memo. The nurses comply on paper. Two weeks later the usage reports show half of them open the agent and close it without reading the draft.",
@@ -47,7 +47,7 @@
     why:"Training is part of the project scope and the transition. Leaving users to figure it out pushes the cost onto them and onto the support team in the first week."}
   ]},
  {id:"c5s3", domain:"Process", task:"Set go/no-go criteria",
-  text:s=>["Elena stops Sam in the hall. <span class=\"said\">\"What does the go/no-go meeting actually decide? I want to know now, not on the Friday.\"</span>","Sam realizes nobody has written it down. Engineering thinks it means the tests pass. Grant thinks it means the date holds. Ochoa thinks it means his nurses are ready."],
+  text:s=>["Elena stops Sam in the hall. <span class=\"said\" data-who=\"Elena\">\"What does the go/no-go meeting actually decide? I want to know now, not on the Friday.\"</span>","Sam realizes nobody has written it down. Engineering thinks it means the tests pass. Grant thinks it means the date holds. Ochoa thinks it means his nurses are ready."],
   opts:[
    {t:"Use the final test results as the criteria, since passing tests means it works.",s:1,d:{trust:0,conf:0,health:1},
     after:"Engineering is happy. Ochoa asks what passing tests says about whether his nurses can use it. Nobody has an answer.",
@@ -79,7 +79,7 @@
     why:"Rollback steps touch both companies, so ownership has to be agreed and documented, not handed off. The project owns making sure the plan exists and works."}
   ]},
  {id:"c5s5", domain:"Business Environment", task:"Handle a privacy incident",
-  text:s=>["Wednesday of week twelve, 10 PM. Priya calls. <span class=\"said\">\"I was chasing a slow query and found patient names and record numbers in our debug logs. Real ones, from the test hospitals. The logs go to a monitoring tool the Kraków contractors can see.\"</span>","She's already checked. It's been happening for nine days."],
+  text:s=>["Wednesday of week twelve, 10 PM. Priya calls. <span class=\"said\" data-who=\"Priya\">\"I was chasing a slow query and found patient names and record numbers in our debug logs. Real ones, from the test hospitals. The logs go to a monitoring tool the Kraków contractors can see.\"</span>","She's already checked. It's been happening for nine days."],
   opts:[
    {t:"Stop the logging, lock down access, and report it through incident response.",s:3,d:{trust:3,conf:3,health:2},best:true,flag:"reported",
     after:"Priya disables the debug logging and cuts the contractors' access within the hour. Sam calls Ken Ito, Halcyon's security lead, at 10:40. Ken opens an incident, preserves the logs as evidence, and loops in legal. Under the business associate agreement, Cascade's privacy officer, Joan Whitfield, is notified the next morning.",
@@ -111,7 +111,7 @@
     why:"Legal input matters, but waiting on it alone stalls the work. Run the impact assessment in parallel with the legal question so you're ready either way."}
   ]},
  {id:"c5s7", domain:"Business Environment", task:"Baseline the benefits",
-  text:s=>["Cascade's CFO joins the Friday status call for the first time. <span class=\"said\">\"The business case says this saves each nurse forty minutes a shift on documentation. When do I see that number?\"</span>","Sam checks. Nobody has measured how long documentation takes today."],
+  text:s=>["Cascade's CFO joins the Friday status call for the first time. <span class=\"said\" data-who=\"man\">\"The business case says this saves each nurse forty minutes a shift on documentation. When do I see that number?\"</span>","Sam checks. Nobody has measured how long documentation takes today."],
   opts:[
    {t:"Use the forty minute figure from Halcyon's sales deck as the expected benefit.",s:0,d:{trust:0,conf:-4,health:0},
     after:"The CFO asks where the forty minutes came from. Grant says it was a pilot at another customer. The CFO writes something down.",
@@ -127,7 +127,7 @@
     why:"Waiting means you can never capture the before. Plan benefits measurement early, while the baseline still exists."}
   ]},
  {id:"c5s8", domain:"Process", task:"Protect quality under pressure",
-  text:s=>["Week thirteen, Thursday. The audit trail change ate four days. The final regression test cycle needs four more, and there are three left before the go/no-go meeting.","Elena calls Sam in. <span class=\"said\">\"We've tested this thing to death. Skip the last regression run. I'm not missing this date over a formality.\"</span>"],
+  text:s=>["Week thirteen, Thursday. The audit trail change ate four days. The final regression test cycle needs four more, and there are three left before the go/no-go meeting.","Elena calls Sam in. <span class=\"said\" data-who=\"Elena\">\"We've tested this thing to death. Skip the last regression run. I'm not missing this date over a formality.\"</span>"],
   opts:[
    {t:"Skip the regression run as Elena asks, and watch closely after go-live.",s:0,d:{trust:-3,conf:-2,health:-6},
     after:"The skipped cycle would have caught a bug in the new audit trail code. It shows up on day two, at Greeley.",
@@ -177,10 +177,10 @@
  ],
  closing:s=>[
   "Monday, 6 AM, Fort Collins. Sam watches the first day-shift nurse open a patient's chart, read the agent's draft, change two words, and sign it. It takes her ninety seconds. She doesn't look up.",
-  "Ochoa texts at 7:15. <span class=\"said\">\"Three hospitals. On the date. Thank you.\"</span>",
-  "Ruth calls that evening. <span class=\"said\">\"At NASA, launch day was never the end,\"</span> she says. <span class=\"said\">\"It was the start of the part where everyone stops watching. That's when you find out who actually built a program.\"</span>",
-  (s.score>=24?"<span class=\"said\">\"You kept your head every time someone asked you to lose it,\"</span> she adds. <span class=\"said\">\"That's the job.\"</span>":"<span class=\"said\">\"You got there,\"</span> she adds. <span class=\"said\">\"Next time, put the facts in front of people sooner. Pressure goes away when the numbers are on the table.\"</span>"),
-  "Tuesday morning there are two emails waiting. One is from LabelForge's finance team: a final invoice, and a note disputing the late delivery penalty. The other is from Elena. <span class=\"said\">\"Come see me when hypercare is done. I want to talk about what's next for you.\"</span>"
+  "Ochoa texts at 7:15. <span class=\"said\" data-who=\"Ochoa\">\"Three hospitals. On the date. Thank you.\"</span>",
+  "Ruth calls that evening. <span class=\"said\" data-who=\"Ruth\">\"At NASA, launch day was never the end,\"</span> she says. <span class=\"said\" data-who=\"Ruth\">\"It was the start of the part where everyone stops watching. That's when you find out who actually built a program.\"</span>",
+  (s.score>=24?"<span class=\"said\" data-who=\"Ruth\">\"You kept your head every time someone asked you to lose it,\"</span> she adds. <span class=\"said\" data-who=\"Ruth\">\"That's the job.\"</span>":"<span class=\"said\" data-who=\"Ruth\">\"You got there,\"</span> she adds. <span class=\"said\" data-who=\"Ruth\">\"Next time, put the facts in front of people sooner. Pressure goes away when the numbers are on the table.\"</span>"),
+  "Tuesday morning there are two emails waiting. One is from LabelForge's finance team: a final invoice, and a note disputing the late delivery penalty. The other is from Elena. <span class=\"said\" data-who=\"Elena\">\"Come see me when hypercare is done. I want to talk about what's next for you.\"</span>"
  ],
  videos:{
   c5s1:["84u5faiWDwM","How to Overcome Resistance in Project Change Management","Adriana Girdler","9:05"],

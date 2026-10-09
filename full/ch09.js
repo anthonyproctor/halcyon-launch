@@ -6,9 +6,9 @@
  opening:[
   `The Cheyenne hospital sat on a rise west of town, where the wind came straight off the high plains and didn't stop for anything. Sam drove up on a Tuesday with four boxes of coffee and Maria in the passenger seat reading him the union newsletter out loud.`,
   `The headline said "AI Will Write Your Notes. Who Will Read Them?" The article claimed the agents would be used to cut nursing staff, that the hospital would track how fast each nurse signed notes, and that a mistake by the software would be the nurse's license on the line.`,
-  `<span class="said">"Two of those are false,"</span> Maria said. <span class="said">"The third one is true. If a nurse signs a note, it's her note. That's how charting works. That's why they're scared."</span>`,
+  `<span class="said" data-who="Maria">"Two of those are false,"</span> Maria said. <span class="said" data-who="Maria">"The third one is true. If a nurse signs a note, it's her note. That's how charting works. That's why they're scared."</span>`,
   `Denise Harmon met them in the break room. She'd been a nurse for twenty-two years and a nurse manager for eight. She had a yellow legal pad with nineteen numbered items on it, and she put it on the table between the coffee boxes like a deposition.`,
-  `<span class="said">"I'm not against you,"</span> she said. <span class="said">"I'm against anything that gets put on my nurses without asking them first. We've had three 'efficiency' systems in ten years. Every one of them made the night shift worse."</span>`,
+  `<span class="said" data-who="Denise">"I'm not against you,"</span> she said. <span class="said" data-who="Denise">"I'm against anything that gets put on my nurses without asking them first. We've had three 'efficiency' systems in ten years. Every one of them made the night shift worse."</span>`,
   `Go-live for Fort Collins, Greeley, and Cheyenne was in three weeks. Cheyenne had the lowest training completion of the three, and Denise, Sam was starting to understand, was the reason. Driving home through the wind, he thought about the flight line again. You can't make a crew chief trust a new procedure by telling him to. You show him why, and then you let him try to break it.`
  ],
  lesson:{
@@ -47,13 +47,13 @@
  },
  scenes:[
  {id:`f9s1`, domain:`Business Environment`, task:`B7`, title:`The legal pad`,
-  text:(s,all,G)=>[`Denise slides the legal pad across the table. Item one: "Who decided this?" Item seven: "What happens when it's wrong at 3 AM?" Item nineteen: "Will you be here after go-live, or just at the party?"`,(G.hiddefect?`She adds, without looking up, <span class="said">"I also heard you sat on a bad medication for a week."</span> Maria winces.`:`Maria sits back and lets Sam answer.`)],
+  text:(s,all,G)=>[`Denise slides the legal pad across the table. Item one: "Who decided this?" Item seven: "What happens when it's wrong at 3 AM?" Item nineteen: "Will you be here after go-live, or just at the party?"`,(G.hiddefect?`She adds, without looking up, <span class="said" data-who="Denise">"I also heard you sat on a bad medication for a week."</span> Maria winces.`:`Maria sits back and lets Sam answer.`)],
   opts:[
    {t:`Go through every item with her, answer what he honestly can, and write down what he can't.`,s:3,best:true,d:{trust:4,conf:5,health:2},
     after:`It takes two hours and three refills. Sam answers eleven items, admits he doesn't know six, and agrees two of them are real problems. Denise doesn't smile. She does ask when he's coming back.`,
     why:`Resistance usually means a need hasn't been met. Listening to each concern and being honest about what you don't know is how you find the real causes and start building trust.`},
    {t:`Present the benefits of the agents first, then take her questions once she sees the value.`,s:1,d:{trust:0,conf:1,health:0},
-    after:`Denise waits politely through eight slides. Then she says, <span class="said">"That's what the last three vendors said,"</span> and turns to item one.`,
+    after:`Denise waits politely through eight slides. Then she says, <span class="said" data-who="Denise">"That's what the last three vendors said,"</span> and turns to item one.`,
     why:`Explaining why the change matters builds awareness, but leading with a pitch to someone who has specific concerns signals you didn't come to listen.`},
    {t:`Ask Ochoa to tell Denise the rollout is a hospital decision that isn't up for debate.`,s:0,d:{trust:-2,conf:-4,health:-2},
     after:`Ochoa does. Denise complies. Cheyenne's training numbers drop the following week.`,
@@ -66,7 +66,7 @@
   text:(s,all,G)=>[`Two of Denise's items are real. The training was built for day shift and assumes a quiet hour that nights never get. And nobody asked a floor nurse how the review screen should look at 3 AM.`,`Maria has an idea. Sam has the same one.`],
   opts:[
    {t:`Ask Denise and two of her night nurses to help redesign the training and review screen.`,s:3,best:true,d:{trust:6,conf:4,health:3},
-    after:`Denise says she'll think about it, which Maria says means yes. Her night nurses cut the review screen from three clicks to one and rewrite the training for twenty minute bursts. Denise starts calling it <span class="said">"our version."</span>`,
+    after:`Denise says she'll think about it, which Maria says means yes. Her night nurses cut the review screen from three clicks to one and rewrite the training for twenty minute bursts. Denise starts calling it <span class="said" data-who="Denise">"our version."</span>`,
     why:`Involving respected members of the affected group in the design builds desire, the hardest part of change. A skeptic who shapes the change often becomes its strongest champion.`},
    {t:`Fix the two problems with the Denver team and show Denise the improved version next week.`,s:1,d:{trust:1,conf:2,health:2},
     after:`The fixes are decent. Denise notes that they were made for her, not with her.`,
@@ -143,7 +143,7 @@
     why:`Reporting an impediment isn't removing it. The PM owns clearing blockers within their reach.`}
   ]},
  {id:`f9s7`, domain:`Process`, task:`R7`, title:`One red line`,
-  text:(s,all,G)=>[`Week thirteen. Seven of the eight go/no-go criteria are green. The eighth, "rollback tested end to end," is red. The rollback plan exists. Nobody has ever run it.`,`Lena says it's a formality. <span class="said">"We wrote it carefully."</span>`],
+  text:(s,all,G)=>[`Week thirteen. Seven of the eight go/no-go criteria are green. The eighth, "rollback tested end to end," is red. The rollback plan exists. Nobody has ever run it.`,`Lena says it's a formality. <span class="said" data-who="Lena">"We wrote it carefully."</span>`],
   opts:[
    {t:`Schedule a full end to end rollback rehearsal in staging this week with the go-live team.`,s:3,best:true,d:{trust:2,conf:3,health:6},
     after:`The rehearsal fails at step eleven. A database script assumes a table that the second wave renamed. They fix it and run it again Thursday. Clean. Lena buys the team lunch and says she'll never call anything a formality again.`,
@@ -159,7 +159,7 @@
     why:`More plans aren't more readiness. Test the one you have.`}
   ]},
  {id:`f9s8`, domain:`People`, task:`P6`, title:`The ask`,
-  text:(s,all,G)=>[`Elena calls Sam into her office on Monday of week fourteen. The incident cost four days. <span class="said">"The final regression cycle is five days,"</span> she says. <span class="said">"Skip it. The agents haven't changed since the last cycle. We go Friday."</span>`,(G.hidnumbers?`She adds, <span class="said">"And don't give me a scary number. Last time your numbers were rounder than they should have been."</span>`:`<span class="said">"You've been straight with me since week one,"</span> she says. <span class="said">"So tell me straight."</span>`),`That night Ruth calls. She heard from the board. She doesn't tell him what to do. She tells him about a sensor reading she saw in her second year at Johnson, on an uncrewed vehicle, that she decided was probably noise because she didn't want to look like the nervous new kid. <span class="said">"It wasn't noise,"</span> she says, and then she changes the subject.`],
+  text:(s,all,G)=>[`Elena calls Sam into her office on Monday of week fourteen. The incident cost four days. <span class="said" data-who="Elena">"The final regression cycle is five days,"</span> she says. <span class="said" data-who="Elena">"Skip it. The agents haven't changed since the last cycle. We go Friday."</span>`,(G.hidnumbers?`She adds, <span class="said" data-who="Elena">"And don't give me a scary number. Last time your numbers were rounder than they should have been."</span>`:`<span class="said" data-who="Elena">"You've been straight with me since week one,"</span> she says. <span class="said" data-who="Elena">"So tell me straight."</span>`),`That night Ruth calls. She heard from the board. She doesn't tell him what to do. She tells him about a sensor reading she saw in her second year at Johnson, on an uncrewed vehicle, that she decided was probably noise because she didn't want to look like the nervous new kid. <span class="said" data-who="Ruth">"It wasn't noise,"</span> she says, and then she changes the subject.`],
   opts:[
    {t:`Show Elena what changed, the risk of skipping it, and a two day targeted test.`,s:3,best:true,d:{trust:2,conf:5,health:5},
     after:`Sam shows her the list: the logging fix, the rollback script, and two configuration changes, all touching patient data paths. He offers a two day targeted regression on those paths. Elena takes it. Go-live holds.`,
@@ -194,7 +194,7 @@
   text:(s,all,G)=>[`Thursday. The go/no-go meeting. Seven criteria are green. Training completion is 93 percent against a target of 95: Fort Collins and Greeley are at 97, Cheyenne at 88.`,`Denise is on the call. So are Ochoa, Maria, Elena, and Lena.`],
   opts:[
    {t:`Present each criterion, the Cheyenne gap, and the options, and let the decision makers decide.`,s:3,best:true,d:{trust:3,conf:6,health:3},
-    after:`Sam lays it out: go with Cheyenne's super users doubled for the first week, or hold Cheyenne for five days. Denise speaks up. <span class="said">"My night nurses trained the day shift this week. We're ready."</span> The decision makers vote to go, all three hospitals.`,
+    after:`Sam lays it out: go with Cheyenne's super users doubled for the first week, or hold Cheyenne for five days. Denise speaks up. <span class="said" data-who="Denise">"My night nurses trained the day shift this week. We're ready."</span> The decision makers vote to go, all three hospitals.`,
     why:`At go/no-go the PM presents status against the agreed criteria, including gaps and options. The named decision makers decide. That keeps the decision honest and owned.`},
    {t:`Recommend going live, since 93 percent is close enough and the other seven are green.`,s:1,d:{trust:0,conf:1,health:0},
     after:`They agree, but Maria notes that "close enough" wasn't one of the criteria.`,
@@ -267,10 +267,10 @@
  ],
  closing:(s,all,G)=>[
   `Sunday morning, the third day of hypercare, Sam drove back up to Cheyenne. Denise was at the nurses' station with a coffee from one of his boxes, which had to be cold by now.`,
-  `<span class="said">"Item nineteen,"</span> she said. <span class="said">"You came back."</span> She didn't say anything else about it. She didn't have to.`,
+  `<span class="said" data-who="Denise">"Item nineteen,"</span> she said. <span class="said" data-who="Denise">"You came back."</span> She didn't say anything else about it. She didn't have to.`,
   ((s.flags.skippedtest||G.skippedtest)?`On the drive home he thought about Greeley. The outage had been Cascade's network, not the path they'd skipped testing. They'd gotten lucky. He wrote "lucky isn't a plan" in his notebook so he wouldn't forget it.`:`On the drive home he thought about the two day regression cycle and the logging path it had covered. Nothing had broken there. That was the point.`),
   `That evening he called Ruth. He asked her what happened after the sensor reading, in her second year. There was a long pause on the line.`,
-  `<span class="said">"Another time,"</span> she said. <span class="said">"You've got eight hospitals left and a contract to close. Get some sleep, Sam. Three of them are live. On the date."</span>`,
+  `<span class="said" data-who="Ruth">"Another time,"</span> she said. <span class="said" data-who="Ruth">"You've got eight hospitals left and a contract to close. Get some sleep, Sam. Three of them are live. On the date."</span>`,
   `He did sleep. Monday, the second wave started. So did the work nobody talks about, the closing of a project, which Ruth said was where you find out what you actually built.`
  ],
  episode:{src:`audio/full-ch09.mp3`, len:`about 35 minutes`},
