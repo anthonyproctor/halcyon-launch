@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#16303f">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Halcyon">
 <title>The Halcyon Launch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +38,7 @@
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.55}
 .wrap{max-width:1060px;margin:0 auto;padding-inline:18px;padding-block:24px 56px;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:22px;align-items:start}
-@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}.rail{order:-1}}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}}
 .page{background:var(--page);border:1px solid var(--line);border-radius:10px;padding:28px clamp(18px,4vw,44px) 30px;min-width:0}
 .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 h1{font-family:var(--story);font-weight:600;font-size:clamp(28px,4.4vw,40px);line-height:1.1;margin:6px 0 4px;text-wrap:balance}
@@ -104,6 +111,10 @@ body.withbar{padding-bottom:84px}
 .chmap li+li::before{content:"›";margin:0 8px;color:var(--line)}
 .chmap li.now{color:var(--accent);font-weight:600}.chmap li.done{color:var(--ink)}
 .lessonintro{font-size:15px;color:var(--muted);background:var(--soft);border-radius:8px;padding:9px 13px;margin:6px 0 16px;max-width:none}
+.tophead{max-width:1060px;margin:0 auto;padding-inline:18px;padding-block:10px 0}
+.topbar{font-size:13.5px}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}.rail{order:1!important;position:static}.page{padding:20px 16px 24px}
+ #narbar .narrow{gap:8px}#narlabel{display:none}#narplay{padding:8px 14px}}
 .stepnav{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
 .sdot{width:16px;height:8px;border-radius:4px;border:none;background:var(--soft);padding:0;cursor:pointer}
 .sdot.seen{background:var(--accent-soft)} .sdot.now{background:var(--accent)} .sdot[disabled]{cursor:default}
@@ -153,10 +164,11 @@ body.withbar{padding-bottom:84px}
 </style>
 </head>
 <body>
+<header class="tophead"><div class="topbar" id="usercard" hidden><div class="userbar"><span id="username"></span><span><button class="linkbtn" id="homelink" type="button">Home</button> · <button class="linkbtn" id="proglink" type="button">Progress</button> · <a id="adminlink" href="/admin" hidden>Admin</a> <button class="linkbtn" id="signout" type="button">Sign out</button></span></div></div></header>
 <div class="wrap">
   <main class="page" id="page" aria-live="polite"></main>
   <aside class="rail" aria-label="Status">
-    <div class="card" id="usercard" hidden><div class="userbar"><span id="username"></span><span><button class="linkbtn" id="homelink" type="button">Home</button> · <button class="linkbtn" id="proglink" type="button">Progress</button> · <a id="adminlink" href="/admin" hidden>Admin</a> <button class="linkbtn" id="signout" type="button">Sign out</button></span></div></div>
+
     <div class="card" id="mockcard" hidden></div>
     <div id="railgame">
     <div class="card">

@@ -294,6 +294,18 @@ function narInit(){
   NAR.audio.addEventListener("pause",narUI);
 }
 narInit();window.__nar=NAR;
+/* lock screen and car controls */
+function narMedia(){if(!("mediaSession" in navigator)||!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
+if("mediaSession" in navigator){try{
+  navigator.mediaSession.setActionHandler("play",()=>{NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight()})});
+  navigator.mediaSession.setActionHandler("pause",()=>{NAR.listening=false;NAR.audio.pause();narUI()});
+  navigator.mediaSession.setActionHandler("nexttrack",()=>{const b=$("next")||$("fnext")||$("go");if(b)b.click()});
+  navigator.mediaSession.setActionHandler("seekbackward",()=>{NAR.audio.currentTime=Math.max(0,NAR.audio.currentTime-10)});
+  navigator.mediaSession.setActionHandler("seekforward",()=>{NAR.audio.currentTime=Math.min(NAR.audio.duration||0,NAR.audio.currentTime+10)});
+}catch(e){}}
+NAR.audio.addEventListener("play",narMedia);
+if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("/sw.js").catch(()=>{});
+
 
 /* ===== home and rail ===== */
 function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
