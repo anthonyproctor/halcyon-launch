@@ -195,6 +195,6 @@
   c4s10:["msg96wt0ie0","Setting Up Agile Information Radiators","Bill Dow","7:08"]
  },
  deeper:["8j-76_QQX30","21 Agile Topics in 21 Minutes for the PMP","PMPwithRay","21:21"],
- episode:{src:"audio/ch4-the-demo.mp3",len:"about 20 minutes"},
+ episode:{src:"audio/ch4-the-demo.mp3",len:"18 minutes"},
  next:"Go-Live"
 });

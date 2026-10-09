@@ -199,6 +199,6 @@
   c3s10:["liCn3Xd3_y0","How to Manage Data Privacy and Compliance Risks in IT Projects","NxtChair","10:58"]
  },
  deeper:["LcZvGRTJnLo","The Complete Project Management Body of Knowledge in One Video (PMBOK Guide 8th Edition)","David McLachlan","1:15:03"],
- episode:{src:"audio/ch3-storming.mp3",len:"about 20 minutes"},
+ episode:{src:"audio/ch3-storming.mp3",len:"21 minutes"},
  next:"The Demo"
 });
