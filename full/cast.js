@@ -1,6 +1,6 @@
 // Cast wiki for the Full Course. Each section unlocks after the reader reaches the given chapter.
 window.HALCYON_CAST=[
- { id:`sam`, name:`Sam Okafor`, role:`Halcyon's data center lead, drafted to run the Cascade launch. You.`, firstChapter:1, speaker:`Sam`,
+ { id:`sam`, intro:`I'm Sam Okafor. Nine years in the Air Force keeping F-16s ready to fly, then twelve years running Halcyon's data centers. My racks are boring on purpose. Boring means nobody calls me at two in the morning. Now I've got the company's biggest deal, fourteen weeks, and a team that doesn't know me yet. I've never run a software project. I'm going to listen first.`, name:`Sam Okafor`, role:`Halcyon's data center lead, drafted to run the Cascade launch. You.`, firstChapter:1, speaker:`Sam`,
    look:`Black man in his early forties, close cropped hair with a little gray at the temples, steady eyes, plain navy quarter zip over a collared shirt.`,
    sections:[
     {unlock:1, title:`Who he is`, body:[`Sam spent nine years in the Air Force keeping F-16s ready to fly, the last four as a crew chief. Twelve years after that he runs the data centers at Halcyon AI, and his racks are boring on purpose. Boring means nobody pages him at two in the morning.`,`He's methodical, calm under pressure, and suspicious of slides. He trusts checklists, forms signed honestly, and people who tell the pilot the truth about the aircraft.`]},
@@ -13,7 +13,7 @@ window.HALCYON_CAST=[
    quote:{unlock:1, text:`It's a jet with no forms.`},
    ties:[{unlock:1,id:`dana`,text:`Married. She reads his face before he says a word.`},{unlock:1,id:`ray`,text:`His old flight chief and the voice in his head.`},{unlock:1,id:`ruth`,text:`Mentor. She asks the annoying questions.`},{unlock:1,id:`elena`,text:`His sponsor, then his boss.`},{unlock:6,id:`priya`,text:`The engineer he bets on.`}] },
 
- { id:`dana`, name:`Dana Okafor`, role:`Sam's wife. High school chemistry teacher.`, firstChapter:1, speaker:`Dana`,
+ { id:`dana`, intro:`I'm Dana. I teach chemistry to sixteen year olds, which is good training for living with Sam. I grade lab reports at the kitchen table with a red pen and coffee that went cold an hour ago. I can tell which face he's wearing before he can. There's his work face, and then there's the one from the flight line. Tonight it's the flight line.`, name:`Dana Okafor`, role:`Sam's wife. High school chemistry teacher.`, firstChapter:1, speaker:`Dana`,
    look:`Woman in her early forties with dark curly hair pulled back, reading glasses pushed up on her head, a red grading pen tucked behind one ear, warm cardigan.`,
    sections:[
     {unlock:1, title:`Who she is`, body:[`Dana teaches chemistry to sixteen year olds and grades lab reports at the kitchen table with a red pen and a cold cup of coffee. She can read a face across a parking lot, and she can read Sam's from across the kitchen.`]},
@@ -24,7 +24,7 @@ window.HALCYON_CAST=[
    quote:{unlock:1, text:`Go. And eat something that isn't a granola bar.`},
    ties:[{unlock:1,id:`sam`,text:`Married. She keeps him honest at home.`}] },
 
- { id:`ray`, name:`Ray Mendez`, role:`Sam's old flight chief, MSgt (ret.). Lives in Tucson.`, firstChapter:1, speaker:`Ray`,
+ { id:`ray`, intro:`Ray Mendez. Master Sergeant, retired. I was Sam's flight chief back when he still had hair worth cutting. I live in Tucson now and I don't miss the cold. I said one thing so often somebody painted it on a toolbox. You do the inspection. You sign the forms honestly. Every time, no matter what kind of day you're having.`, name:`Ray Mendez`, role:`Sam's old flight chief, MSgt (ret.). Lives in Tucson.`, firstChapter:1, speaker:`Ray`,
    look:`Weathered Latino man in his late sixties, gray crew cut, deep lines around his eyes, faded Air Force ball cap, gravel in his voice even in a picture.`,
    sections:[
     {unlock:1, title:`Who he is`, body:[`Ray was Sam's flight chief in the Air Force. He had one rule he said so often it got painted on a toolbox: the jet doesn't care how you feel. You did the inspection anyway. You signed the forms honestly anyway.`]},
@@ -34,7 +34,7 @@ window.HALCYON_CAST=[
    quote:{unlock:4, text:`The jet doesn't care what you think broke it, Okafor. Prove it.`},
    ties:[{unlock:1,id:`sam`,text:`Trained him on the flight line.`}] },
 
- { id:`ruth`, name:`Ruth Calder`, role:`Halcyon board member. Retired NASA flight director. Sam's mentor.`, firstChapter:1, speaker:`Ruth`,
+ { id:`ruth`, intro:`Ruth Calder. I spent twenty years as a flight director at NASA, and now I sit on Halcyon's board and ask annoying questions. Elena asked me to keep an eye on Sam. I write my notes in green ink so people know they're from me. I'll tell you the same thing I tell him. The honest ones got people home. The optimists didn't.`, name:`Ruth Calder`, role:`Halcyon board member. Retired NASA flight director. Sam's mentor.`, firstChapter:1, speaker:`Ruth`,
    look:`Small woman in her late sixties with short white hair, sharp eyes behind reading glasses, a faded windbreaker with JSC on the chest, holding a green pen.`,
    sections:[
     {unlock:1, title:`Who she is`, body:[`Ruth spent twenty years as a flight director at NASA before joining Halcyon's board. Elena asked her to keep an eye on Sam. She says she mostly asks annoying questions, and she writes her notes in green ink.`]},
@@ -47,7 +47,7 @@ window.HALCYON_CAST=[
    quote:{unlock:1, text:`Maintainers don't lie to pilots. The ones who do don't last.`},
    ties:[{unlock:1,id:`sam`,text:`Her last mentee, and the one she tells the whole story to.`},{unlock:1,id:`elena`,text:`Sits on her board.`},{unlock:12,id:`lena`,text:`Proud of her for saying stop.`}] },
 
- { id:`elena`, name:`Elena Vasquez`, role:`Halcyon's CEO and founder.`, firstChapter:1, speaker:`Elena`,
+ { id:`elena`, intro:`I'm Elena Vasquez. I founded Halcyon, and I run it standing up. When something's on fire I skip to the last line of the email. A contract date is a promise, and I don't like breaking promises. I put my data center lead in charge of our biggest deal because I've never once had to think about his racks. That's what I need on Cascade.`, name:`Elena Vasquez`, role:`Halcyon's CEO and founder.`, firstChapter:1, speaker:`Elena`,
    look:`Latina woman in her late forties, sleek dark bob, sharp tailored blazer, standing rather than sitting, a direct and impatient gaze.`,
    sections:[
     {unlock:1, title:`Who she is`, body:[`Elena founded Halcyon and runs it standing up. She doesn't sit down in hard meetings, skips the body of an email when something's on fire, and treats a contract date like a law of physics.`]},
@@ -58,7 +58,7 @@ window.HALCYON_CAST=[
    quote:{unlock:5, text:`I hated every slide. I believed every one.`},
    ties:[{unlock:1,id:`sam`,text:`Bet on him early.`},{unlock:1,id:`grant`,text:`Her chief revenue officer.`},{unlock:1,id:`lena`,text:`Her CTO.`},{unlock:11,id:`victor`,text:`The board member pushing her on cost.`}] },
 
- { id:`grant`, name:`Grant Mercer`, role:`Halcyon's Chief Revenue Officer. Closed the Cascade deal.`, firstChapter:1, speaker:`Grant`,
+ { id:`grant`, intro:`Grant Mercer, Chief Revenue Officer. I closed Cascade, and yes, I rang the bell. Somebody has to bring the deals in the door. I like customers, I like saying yes, and I like a room that's moving. What I don't love is getting corrected on a call. Talk to me after. I'll listen. Probably.`, name:`Grant Mercer`, role:`Halcyon's Chief Revenue Officer. Closed the Cascade deal.`, firstChapter:1, speaker:`Grant`,
    look:`White man in his early fifties with silver hair and an easy smile, open collared dress shirt, sleeves rolled once, a salesman's confident posture.`,
    sections:[
     {unlock:1, title:`Who he is`, body:[`Grant rang a brass bell when Cascade signed. He's charming, fast, and says yes on customer calls before anyone has estimated anything. He hates being contradicted in public.`]},
@@ -70,7 +70,7 @@ window.HALCYON_CAST=[
    quote:{unlock:13, text:`There's something wrong with Northgate, and I think it's my fault.`},
    ties:[{unlock:1,id:`sam`,text:`Started as his biggest problem, ended as an ally.`},{unlock:6,id:`lena`,text:`They fight about yes and no.`},{unlock:14,id:`alyssa`,text:`Owed her an apology and gave it in public.`}] },
 
- { id:`lena`, name:`Lena Cho`, role:`Halcyon's CTO.`, firstChapter:1, speaker:`Lena`,
+ { id:`lena`, intro:`I'm Lena Cho, the CTO. I care a lot about the engineering and about the people doing it. I'll be honest, I'd rather fix a hard bug than have a hard conversation. That's how we ended up running on Grant's contract instead of a charter. I'm working on it. Mostly I'm glad someone calm is running Cascade now.`, name:`Lena Cho`, role:`Halcyon's CTO.`, firstChapter:1, speaker:`Lena`,
    look:`Korean American woman in her mid forties with shoulder length black hair, round glasses, a soft gray sweater, kind but guarded expression.`,
    sections:[
     {unlock:1, title:`Who she is`, body:[`Lena is technically excellent and says most things kindly. She also avoids most things that might start an argument, which is how a company ends up with no project charters.`]},
@@ -81,7 +81,7 @@ window.HALCYON_CAST=[
    quote:{unlock:12, text:`I didn't nod once. It was terrible. I'd do it again.`},
    ties:[{unlock:6,id:`grant`,text:`Engineering says no, sales says yes.`},{unlock:3,id:`priya`,text:`Her report.`},{unlock:12,id:`elena`,text:`Finally tells her the truth.`}] },
 
- { id:`theo`, name:`Theo Lindqvist`, role:`ML platform lead. Everything runs through him.`, firstChapter:1, speaker:`Theo`,
+ { id:`theo`, intro:`Theo Lindqvist. I run the ML platform. If a model update ships, I shipped it, because I'm the only one who knows how. I'm also on the critical path for most of Cascade and on call for three other customers. I'm fine. Really. I just haven't had a full night's sleep since Labor Day.`, name:`Theo Lindqvist`, role:`ML platform lead. Everything runs through him.`, firstChapter:1, speaker:`Theo`,
    look:`Swedish American man in his mid thirties, messy dirty blond hair, stubble, dark circles under tired eyes, faded hoodie, headphones around his neck.`,
    sections:[
     {unlock:1, title:`Who he is`, body:[`Theo is assigned to eleven of the fourteen critical tasks, the only person who can deploy model updates, and on call for three other customers. He says he's fine. He looks like he hasn't slept since Labor Day.`]},
@@ -93,7 +93,7 @@ window.HALCYON_CAST=[
    quote:{unlock:15, text:`He was the first manager who fixed the system instead of fixing me.`},
    ties:[{unlock:1,id:`priya`,text:`Trained her, then started asking her for advice.`},{unlock:1,id:`sam`,text:`Sam saw the burnout coming and wrote it down.`}] },
 
- { id:`priya`, name:`Priya Shah`, role:`Data engineer who becomes platform lead, then a project manager.`, firstChapter:1, speaker:`Priya`,
+ { id:`priya`, intro:`Hi, I'm Priya. I'm a data engineer on the platform team, and I'm newer than most people here. I usually keep quiet in meetings. But in Sam's first week I asked the question nobody else would, about where our deadline actually came from. It turned out a lot of people were wondering. I'm still a little surprised I said it out loud.`, name:`Priya Shah`, role:`Data engineer who becomes platform lead, then a project manager.`, firstChapter:1, speaker:`Priya`,
    look:`South Asian woman in her late twenties with long dark hair in a low ponytail, thoughtful expression, small silver earrings, simple green button down.`,
    sections:[
     {unlock:1, title:`Who she is`, body:[`Quiet, sharp, and sure she's less capable than she is. In Sam's first week she said out loud what everyone was thinking: nobody knew why the date was the date. Then she pinned the team's new vision statement in the channel, and people started quoting it.`]},
@@ -105,7 +105,7 @@ window.HALCYON_CAST=[
    quote:{unlock:1, text:`I don't actually know why the date is the date.`},
    ties:[{unlock:1,id:`theo`,text:`Learned the platform from him.`},{unlock:6,id:`sam`,text:`He bet on her before she did.`},{unlock:6,id:`devin`,text:`Her teammate on performance.`}] },
 
- { id:`tomasz`, name:`Tomasz Nowak`, role:`Leads the Kraków contractor team, eight hours ahead of Denver.`, firstChapter:3, speaker:`Tomasz`,
+ { id:`tomasz`, intro:`Tomasz Nowak. I lead the contractor team in Kraków, eight hours ahead of you. My first Halcyon call, I joined at midnight because nobody mentioned daylight saving time. My engineers are very good, and they want to know one thing. Are we part of the team, or are we a supplier? Please assume the other site is not stupid. We'll do the same.`, name:`Tomasz Nowak`, role:`Leads the Kraków contractor team, eight hours ahead of Denver.`, firstChapter:3, speaker:`Tomasz`,
    look:`Polish man in his forties with a trimmed salt and pepper beard, short hair, dark rimmed glasses, a plain black crewneck, holding a mug of tea.`,
    sections:[
     {unlock:3, title:`Who he is`, body:[`Tomasz joined his first Halcyon call at midnight Kraków time because nobody told him about daylight saving time. He's direct, proud of his team, and wary of being treated as cheap labor.`]},
@@ -115,7 +115,7 @@ window.HALCYON_CAST=[
    quote:{unlock:4, text:`My team is billing you to wait. Tell me if that is the plan.`},
    ties:[{unlock:3,id:`sam`,text:`Earned each other's trust slowly.`},{unlock:3,id:`priya`,text:`His team's first guide to the clinical problem.`}] },
 
- { id:`devin`, name:`Devin Ruiz`, role:`Engineer. Coasting until someone gave him a real problem.`, firstChapter:3,
+ { id:`devin`, intro:`I'm Devin. I'm an engineer on the Cascade work. I'm the guy who got the integration tests running in under ten minutes, back when somebody cared about that kind of thing. My last manager left in the spring, and since then nobody's really asked much of me. So I do what's assigned. Give me a real problem and see what happens.`, voice:`man`, name:`Devin Ruiz`, role:`Engineer. Coasting until someone gave him a real problem.`, firstChapter:3,
    look:`Latino man in his early thirties with a short fade, a little scruff, a slightly skeptical half smile, gray t-shirt under an open flannel.`,
    sections:[
     {unlock:3, title:`Who he is`, body:[`Devin is talented, and he stopped trying when his last manager left in the spring. He's also the only engineer who ever made the integration tests run in under ten minutes.`]},
@@ -124,7 +124,7 @@ window.HALCYON_CAST=[
     {unlock:15, title:`The workflow that saved go-live`, body:[`A year after he was coasting, Devin wrote the manual reconciliation workflow that saved Northgate's go-live. He hates attention, so he got a handwritten note and the lead on the next integration.`]}],
    ties:[{unlock:6,id:`priya`,text:`Owns performance on her team.`},{unlock:6,id:`sam`,text:`The manager who finally asked him.`}] },
 
- { id:`ochoa`, name:`Dr. Raymond Ochoa`, role:`CIO, Cascade Valley Health. Eleven hospitals in Colorado and Wyoming.`, firstChapter:1, speaker:`Ochoa`,
+ { id:`ochoa`, intro:`Dr. Raymond Ochoa. I'm the CIO at Cascade Valley Health, eleven hospitals across Colorado and Wyoming. I signed with Halcyon, and then I didn't hear from them for three weeks. I stopped reading their two page status reports in June. I don't need good news. I need the truth early, especially when it's bad. Tell me what's wrong before I have to ask.`, name:`Dr. Raymond Ochoa`, role:`CIO, Cascade Valley Health. Eleven hospitals in Colorado and Wyoming.`, firstChapter:1, speaker:`Ochoa`,
    look:`Mexican American man in his late fifties, neat gray mustache, wire rimmed glasses, crisp white shirt and dark tie, skeptical but fair expression.`,
    sections:[
     {unlock:1, title:`Who he is`, body:[`Ochoa signed the Cascade deal and then heard nothing from Halcyon for three weeks. He wants the truth early, especially when it's bad, and he stopped reading the old PM's two page reports in June.`]},
@@ -134,7 +134,7 @@ window.HALCYON_CAST=[
    quote:{unlock:4, text:`Thank you for not making me find this out myself.`},
    ties:[{unlock:1,id:`sam`,text:`Trusts him because he hears bad news first.`},{unlock:6,id:`maria`,text:`Sent her to run the demo.`}] },
 
- { id:`maria`, name:`Maria Santos`, role:`Nurse informatics director at Cascade. Product owner.`, firstChapter:7, speaker:`Maria`,
+ { id:`maria`, intro:`I'm Maria Santos. I was an ICU nurse for more than ten years before I ran informatics for all eleven Cascade hospitals. Now I'm your product owner. I don't care how the model works. I care what it writes at four in the morning, on hour eleven of a twelve hour shift, when a tired nurse is going to trust it. That's the danger.`, name:`Maria Santos`, role:`Nurse informatics director at Cascade. Product owner.`, firstChapter:7, speaker:`Maria`,
    look:`Filipina American woman in her early fifties with short practical dark hair, a lanyard and badge, sensible cardigan, the steady gaze of a career ICU nurse.`,
    sections:[
     {unlock:7, title:`Who she is`, body:[`Maria spent more than a decade as an ICU nurse before she ran informatics for all eleven Cascade hospitals. She showed up with a canvas bag and a printed backlog covered in her handwriting, and no interest in how the model works.`]},
@@ -144,7 +144,7 @@ window.HALCYON_CAST=[
    quote:{unlock:7, text:`I don't need to understand the model.`},
    ties:[{unlock:7,id:`grant`,text:`Changed his mind with real numbers.`},{unlock:9,id:`denise`,text:`Brought Sam to Cheyenne.`}] },
 
- { id:`denise`, name:`Denise Harmon`, role:`Nurse manager, Cascade's Cheyenne hospital.`, firstChapter:9, speaker:`Denise`,
+ { id:`denise`, intro:`Denise Harmon. Twenty two years a nurse, eight of them managing nurses at the Cheyenne hospital. I've watched three efficiency systems in ten years make my night shift worse. So I brought a legal pad with nineteen questions on it. I'm not against new tools. I'm against tools that land on my nurses without anybody asking them first.`, name:`Denise Harmon`, role:`Nurse manager, Cascade's Cheyenne hospital.`, firstChapter:9, speaker:`Denise`,
    look:`Black woman in her late fifties with short graying natural hair, scrubs and a fleece vest, reading glasses on a beaded chain, arms crossed but eyes curious.`,
    sections:[
     {unlock:9, title:`Who she is`, body:[`Twenty two years a nurse and eight a nurse manager. She met Sam with a yellow legal pad of nineteen numbered items and set it between the coffee boxes like a deposition. Three efficiency systems in ten years had made her night shift worse.`]},
@@ -154,7 +154,7 @@ window.HALCYON_CAST=[
    quote:{unlock:9, text:`I'm not against you.`},
    ties:[{unlock:9,id:`maria`,text:`Colleague at Cascade.`},{unlock:9,id:`sam`,text:`Tested him with nineteen questions.`}] },
 
- { id:`hal`, name:`Hal Brennan`, role:`IronPeak's account and site operations manager. GPU colocation vendor.`, firstChapter:1, speaker:`Hal`,
+ { id:`hal`, intro:`Hal Brennan, IronPeak. I run the account and the site where your GPUs live. I call on Sundays because that's when the burn-in results come in. Most of what I do is tell people things they don't want to hear about power and cooling, a little before they'd have found out the hard way. Somebody's got to.`, name:`Hal Brennan`, role:`IronPeak's account and site operations manager. GPU colocation vendor.`, firstChapter:1, speaker:`Hal`,
    look:`Burly white man in his fifties with a ruddy face and a graying goatee, IronPeak polo shirt, a lanyard, and a coffee cup in hand.`,
    sections:[
     {unlock:1, title:`Who he is`, body:[`Hal calls on Sundays. He's the first person to tell Sam nobody ever sent IronPeak a power plan.`]},
@@ -163,7 +163,7 @@ window.HALCYON_CAST=[
    quote:{unlock:4, text:`Bad batch from the manufacturer. Happens.`},
    ties:[{unlock:4,id:`joan`,text:`She reads his contracts twice.`}] },
 
- { id:`joan`, name:`Joan Pruitt`, role:`Halcyon procurement lead.`, firstChapter:4, speaker:`Joan`,
+ { id:`joan`, intro:`Joan Pruitt, procurement. I read every contract twice, and I keep a printed copy of each one in a gray filing cabinet with a color code only I understand. People think procurement is paperwork. It isn't. It's memory. When everyone in the room remembers a deal differently, I'm the one who opens the drawer.`, name:`Joan Pruitt`, role:`Halcyon procurement lead.`, firstChapter:4, speaker:`Joan`,
    look:`White woman in her sixties with a silver bob, cat eye reading glasses, a cardigan over a crisp blouse, a color tabbed folder under one arm.`,
    sections:[
     {unlock:4, title:`Who she is`, body:[`Joan reads every contract twice and keeps a printed copy of each one in a dented gray filing cabinet, tabbed in a color code nobody else understands. Procurement isn't paperwork to her. It's memory.`]},
@@ -172,7 +172,7 @@ window.HALCYON_CAST=[
    quote:{unlock:8, text:`Everybody forgets what they promised. The contract doesn't.`},
    ties:[{unlock:8,id:`sam`,text:`Taught him to negotiate for what he wants, not what he's mad about.`}] },
 
- { id:`douglas`, name:`Douglas Reyes`, role:`Board member and audit committee chair. Former hospital CFO.`, firstChapter:5, speaker:`Douglas`,
+ { id:`douglas`, intro:`Douglas Reyes. I chair the board's audit committee. Before this I ran finance for a hospital system for twenty years. Last quarter one of my colleagues called Halcyon's forecasts vibes, and he wasn't wrong. So I'll ask the question I always ask. Show me how you measured it, and give me something I can check.`, name:`Douglas Reyes`, role:`Board member and audit committee chair. Former hospital CFO.`, firstChapter:5, speaker:`Douglas`,
    look:`Latino man in his sixties with a full head of white hair, a dark suit and no tie, reading a printout over half moon glasses.`,
    sections:[
     {unlock:5, title:`Who he is`, body:[`Douglas ran finance at a hospital system for twenty years. The quarter before Sam arrived, a board member called Halcyon's forecasts vibes.`]},
@@ -180,21 +180,21 @@ window.HALCYON_CAST=[
    quote:{unlock:5, text:`Why should we believe this forecast when we didn't believe the last one?`},
    ties:[{unlock:5,id:`sam`,text:`Now gets his numbers monthly.`}] },
 
- { id:`marcus`, name:`Marcus Bell`, role:`Head of customer support at Halcyon.`, firstChapter:10, speaker:`Marcus`,
+ { id:`marcus`, intro:`Marcus Bell. I run customer support at Halcyon. Projects end and the customers stay, and when they stay, they're mine. Six agents, a wiki, and whatever the project team forgot to write down. I'm polite about handoffs. I also read the fine print on them. If you want my team ready, let us shadow the people who actually built it.`, name:`Marcus Bell`, role:`Head of customer support at Halcyon.`, firstChapter:10, speaker:`Marcus`,
    look:`Black man in his forties with a shaved head, a headset around his neck, a Halcyon support fleece, and a patient, skeptical smile.`,
    sections:[
     {unlock:10, title:`Who he is`, body:[`Marcus inherits Cascade once the project ends. He was polite about it the way people are polite about a used car: six agents, a wiki, and three months of tribal knowledge he didn't have.`]},
     {unlock:10, title:`The handoff`, body:[`His agents shadowed Priya for two weeks, then led while she watched. Hypercare ended when ticket volume held under the agreed line for ten days, and Marcus signed the handoff himself.`]}],
    ties:[{unlock:10,id:`priya`,text:`Learned the system from her.`}] },
 
- { id:`ken`, name:`Ken Ito`, role:`Halcyon's privacy officer. Runs the security team.`, firstChapter:9, speaker:`Ken`,
+ { id:`ken`, intro:`Ken Ito. I'm Halcyon's privacy officer, and I run the security team. My job is the boring kind of fast. When something looks wrong with patient data, we open an incident, contain it, and notify through the channel the contract requires. No heroics, no hiding. Call me early and the bad night stays a bad night instead of a bad month.`, name:`Ken Ito`, role:`Halcyon's privacy officer. Runs the security team.`, firstChapter:9, speaker:`Ken`,
    look:`Japanese American man in his forties with neat short black hair, rimless glasses, a dark quarter zip, calm and precise expression.`,
    sections:[
     {unlock:9, title:`The logging incident`, body:[`When Priya found patient names in a staging log at 10:40 at night, Ken was on a call by 11:15 and opened an incident. Cascade's privacy office heard the next morning through the channel the contract requires.`]},
     {unlock:13, title:`Ken says no`, body:[`Ken owns the security engineers every project wants. When Northgate needed one during his own audit, he said no. They worked out a start date that held both, and Sam lent him a Kraków tester in return.`]}],
    ties:[{unlock:13,id:`sam`,text:`A balanced matrix, negotiated fairly.`}] },
 
- { id:`victor`, name:`Victor Adeyemi`, role:`Halcyon board member from a private equity firm.`, firstChapter:10, speaker:`Victor`,
+ { id:`victor`, intro:`Victor Adeyemi. I joined Halcyon's board from a private equity firm. I tend to ask what something costs before I ask what it's for, and people find that rude until they need the answer. I don't mind hearing bad news. I mind hearing it late. Tell me who owns the results, and I'll write it down.`, name:`Victor Adeyemi`, role:`Halcyon board member from a private equity firm.`, firstChapter:10, speaker:`Victor`,
    look:`Nigerian British man in his fifties with close cropped graying hair, a perfectly fitted charcoal suit, an open collar, and an unhurried, evaluating gaze.`,
    sections:[
     {unlock:10, title:`Who he is`, body:[`Victor joined the board with a private equity background and a habit of asking what things cost before asking what they're for. His first question to Sam was who owned the benefits now. He wrote down the answer, which Ruth said was his highest compliment.`]},
@@ -204,7 +204,7 @@ window.HALCYON_CAST=[
    quote:{unlock:14, text:`Good. I'd rather fund someone who tells me that.`},
    ties:[{unlock:11,id:`elena`,text:`Pushes her on cost.`},{unlock:12,id:`sam`,text:`Tests him, then trusts him.`}] },
 
- { id:`keisha`, name:`Keisha Moore`, role:`Project manager Sam hires for phase two. Came from a hospital IT department.`, firstChapter:11, speaker:`Keisha`,
+ { id:`keisha`, intro:`I'm Keisha Moore. I came over from a hospital IT department, so I know what it's like on the customer side of a project like this. We didn't have templates there. We had grit and spreadsheets. I'm the new project manager for phase two, and I'm here to learn how Sam runs things. I take a lot of notes.`, name:`Keisha Moore`, role:`Project manager Sam hires for phase two. Came from a hospital IT department.`, firstChapter:11, speaker:`Keisha`,
    look:`Black woman in her mid thirties with long braids pulled back, bright attentive eyes, a blazer over a striped top, a planner in hand.`,
    sections:[
     {unlock:11, title:`Who she is`, body:[`Keisha came from a hospital IT department that had no templates, so she was glad to get some. Two weeks into the job she watched closely to see how Sam handled Rob.`]},
@@ -212,7 +212,7 @@ window.HALCYON_CAST=[
     {unlock:12, title:`Compliance by design`, body:[`When the state guidance required a visible AI disclosure, Keisha raised the change request for Cascade and built the requirement into Northgate's design from day one.`]}],
    ties:[{unlock:11,id:`rob`,text:`He cut her templates; she wrote the status page he uses.`}] },
 
- { id:`rob`, name:`Rob Delgado`, role:`Halcyon's longest serving project manager.`, firstChapter:11, speaker:`Rob`,
+ { id:`rob`, intro:`Rob Delgado. Eleven years at Halcyon, longest serving project manager in the building. I've watched four delivery offices start with a vision statement and end with a forty page template. So you'll forgive me if I'm skeptical. Tell me what actually helps the work, and I'm in. Hand me a template for the template, and I'm out.`, name:`Rob Delgado`, role:`Halcyon's longest serving project manager.`, firstChapter:11, speaker:`Rob`,
    look:`Latino man in his late fifties with a gray mustache, a slight paunch, a rumpled sport coat, and a coffee mug that says DONE.`,
    sections:[
     {unlock:11, title:`Who he is`, body:[`Rob has been at Halcyon eleven years and considers templates a personal insult. He's seen four delivery offices start with a vision statement and end with a forty page template.`]},
@@ -220,14 +220,14 @@ window.HALCYON_CAST=[
    quote:{unlock:11, text:`Can we skip to the part where you tell us what to fill out?`},
    ties:[{unlock:11,id:`keisha`,text:`Ends up using her status page.`}] },
 
- { id:`nora`, name:`Nora Kim`, role:`Halcyon's head of security and compliance.`, firstChapter:12,
+ { id:`nora`, intro:`I'm Nora Kim. I run security and compliance at Halcyon. I'm calm, I'm thorough, and I really don't like surprises. When a new rule lands, I don't argue about whether to wait. I map it to the specific requirements and trace each one to a test. Then nobody has to guess what we owe, or prove it twice.`, voice:`woman`, name:`Nora Kim`, role:`Halcyon's head of security and compliance.`, firstChapter:12,
    look:`Korean American woman in her early forties with a sleek low bun, minimal makeup, a dark blazer, and a calm, thorough expression.`,
    sections:[
     {unlock:12, title:`Who she is`, body:[`Nora is calm, thorough, and hates surprises. When the state guidance landed, she mapped it to three specific requirements before anyone could argue about whether to wait.`]},
     {unlock:12, title:`The cleanest package`, body:[`When Northgate's security team asked for proof, Nora sent the SOC 2 report with a bridge letter and the disclosure requirement traced to its test case. Their security lead called it the cleanest package she'd received that year.`]}],
    ties:[{unlock:12,id:`keisha`,text:`Turned the guidance into her requirements.`}] },
 
- { id:`helen`, name:`Dr. Helen Park`, role:`CIO, Northgate Health. Nine hospitals in Kansas and Nebraska.`, firstChapter:11, speaker:`Helen`,
+ { id:`helen`, intro:`Dr. Helen Park. I'm the CIO at Northgate Health, nine hospitals across Kansas and Nebraska. I'm polite, I'm precise, and I keep score. I've bought software from vendors who promised everything and delivered half. So I'll judge Halcyon the simple way. Not by what the sales deck says, but by what my clinicians can actually rely on.`, name:`Dr. Helen Park`, role:`CIO, Northgate Health. Nine hospitals in Kansas and Nebraska.`, firstChapter:11, speaker:`Helen`,
    look:`Korean American woman in her fifties with chin length gray streaked hair, pearl earrings, a tailored navy dress, polite and exacting expression.`,
    sections:[
     {unlock:11, title:`Who she is`, body:[`Helen runs IT for Northgate's nine hospitals. She's precise, polite, and keeps score.`]},
@@ -236,7 +236,7 @@ window.HALCYON_CAST=[
    quote:{unlock:14, text:`Not what we were promised. What we can trust.`},
    ties:[{unlock:13,id:`ochoa`,text:`Shares a roadmap with him.`},{unlock:13,id:`priya`,text:`Asks for her by name.`}] },
 
- { id:`alyssa`, name:`Alyssa Kemp`, role:`Halcyon sales engineer.`, firstChapter:14, speaker:`Alyssa`,
+ { id:`alyssa`, intro:`I'm Alyssa Kemp, a sales engineer at Halcyon. Two years in. I build the demos and keep them honest, or I try to. I like this job and I'd like to keep it. Right now I've been asked to do something I'm not comfortable with, and I don't know who to tell. So I'm going to ask Sam.`, name:`Alyssa Kemp`, role:`Halcyon sales engineer.`, firstChapter:14, speaker:`Alyssa`,
    look:`White woman in her late twenties with a red ponytail, freckles, a Halcyon branded vest over a white shirt, nervous but determined expression.`,
    sections:[
     {unlock:14, title:`The demo`, body:[`Two years into the job, Alyssa was told to run the conference mockup for a prospect and call it live. She didn't want to, and she didn't want to lose her job. She asked Sam for help instead.`]},
