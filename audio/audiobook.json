@@ -19,6 +19,84 @@
     "src": "audio/full-ch02.mp3",
     "min": 24.0
    }
+  },
+  "3": {
+   "story": {
+    "src": "audio/story/full-ch03.mp3",
+    "min": 10.9
+   }
+  },
+  "4": {
+   "story": {
+    "src": "audio/story/full-ch04.mp3",
+    "min": 10.4
+   }
+  },
+  "5": {
+   "story": {
+    "src": "audio/story/full-ch05.mp3",
+    "min": 10.2
+   }
+  },
+  "6": {
+   "story": {
+    "src": "audio/story/full-ch06.mp3",
+    "min": 9.8
+   }
+  },
+  "7": {
+   "story": {
+    "src": "audio/story/full-ch07.mp3",
+    "min": 10.7
+   }
+  },
+  "8": {
+   "story": {
+    "src": "audio/story/full-ch08.mp3",
+    "min": 10.3
+   }
+  },
+  "9": {
+   "story": {
+    "src": "audio/story/full-ch09.mp3",
+    "min": 10.9
+   }
+  },
+  "10": {
+   "story": {
+    "src": "audio/story/full-ch10.mp3",
+    "min": 11.3
+   }
+  },
+  "11": {
+   "story": {
+    "src": "audio/story/full-ch11.mp3",
+    "min": 11.4
+   }
+  },
+  "12": {
+   "story": {
+    "src": "audio/story/full-ch12.mp3",
+    "min": 10.6
+   }
+  },
+  "13": {
+   "story": {
+    "src": "audio/story/full-ch13.mp3",
+    "min": 10.2
+   }
+  },
+  "14": {
+   "story": {
+    "src": "audio/story/full-ch14.mp3",
+    "min": 10.2
+   }
+  },
+  "15": {
+   "story": {
+    "src": "audio/story/full-ch15.mp3",
+    "min": 11.6
+   }
   }
  },
  "ref": {}
