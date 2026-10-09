@@ -70,6 +70,10 @@
    "story": {
     "src": "audio/story/full-ch08.mp3",
     "min": 10.3
+   },
+   "study": {
+    "src": "audio/full-ch08.mp3",
+    "min": 24.9
    }
   },
   "9": {
