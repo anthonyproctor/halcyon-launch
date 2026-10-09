@@ -36,6 +36,10 @@
    "story": {
     "src": "audio/story/full-ch05.mp3",
     "min": 10.2
+   },
+   "study": {
+    "src": "audio/full-ch05.mp3",
+    "min": 23.7
    }
   },
   "6": {
