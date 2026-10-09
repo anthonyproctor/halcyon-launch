@@ -1,0 +1,30 @@
+// Whole-course audit: giveaway patterns, task coverage, flags, duplicates.
+import fs from 'fs';
+globalThis.window={};
+for(const f of [...fs.readdirSync('full').filter(f=>/^ch\d+\.js$/.test(f)).map(f=>'full/'+f),'mock/people.js','mock/process.js','mock/business.js',...[1,2,3,4,5,6].map(n=>`chapters/ch${n}.js`)])new Function('window',fs.readFileSync(f,'utf8'))(globalThis.window);
+const F=window.HALCYON_FULL.sort((a,b)=>a.num-b.num),M=window.HALCYON_MOCK.flatMap(p=>p.questions),R=window.HALCYON;
+const stat=(items)=>{let longest=0,shortest=0,pos=[0,0,0,0];items.forEach(([texts,right,shownPos])=>{const L=texts.map(t=>t.length),o=L.filter((_,k)=>k!==right);if(L[right]>Math.max(...o))longest++;if(L[right]<Math.min(...o))shortest++;if(shownPos!==undefined)pos[shownPos]++});return {n:items.length,longest:+(longest/items.length*100).toFixed(0),shortest:+(shortest/items.length*100).toFixed(0),pos}};
+const scenesF=F.flatMap(c=>c.scenes.map(s=>[s.opts.map(o=>o.t),s.opts.findIndex(o=>o.best)]));
+const scenesR=R.flatMap(c=>c.scenes.map(s=>[s.opts.map(o=>o.t),s.opts.findIndex(o=>o.best)]));
+const quizF=F.flatMap(c=>c.quiz.map(q=>[q.opts,q.a]));
+const mock=M.map(q=>[q.opts,q.a]);
+console.log("Giveaway check (percent of items where the right answer is the longest / shortest option; 25 is chance):");
+console.log(" refresher decisions",stat(scenesR));console.log(" full decisions",stat(scenesF));console.log(" full quizzes",stat(quizF));console.log(" mock exam",stat(mock));
+console.log(" quiz key positions (stored):",[0,1,2,3].map(p=>quizF.filter(x=>x[1]===p).length),"(decisions and quiz options are shuffled on screen)");
+console.log(" mock key positions (stored):",[0,1,2,3].map(p=>mock.filter(x=>x[1]===p).length));
+const cov={};const add=(t,k)=>{cov[t]=cov[t]||{taught:0,scenes:0,quiz:0,mock:0};cov[t][k]++};
+F.forEach(c=>{c.tasks.forEach(t=>add(t,"taught"));c.scenes.forEach(s=>add(s.task,"scenes"));c.quiz.forEach(q=>add(q.task,"quiz"))});M.forEach(q=>add(q.task,"mock"));
+console.log("\nTask coverage (chapters listing it / decisions / quiz Qs / mock Qs):");
+Object.keys(cov).sort().forEach(t=>console.log(" ",t.padEnd(4),Object.values(cov[t]).join(" / ")));
+const all26=["P1","P2","P3","P4","P5","P6","P7","P8","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","B1","B2","B3","B4","B5","B6","B7","B8"];
+console.log(" missing from chapters:",all26.filter(t=>!cov[t]||!cov[t].taught).join(",")||"none");
+const dom=d=>F.reduce((a,c)=>a+c.scenes.filter(s=>s.domain===d).length+c.quiz.filter(q=>q.domain===d).length,0);
+const tot=dom("People")+dom("Process")+dom("Business Environment");
+console.log(` domain mix in course items: People ${Math.round(dom("People")/tot*100)}%, Process ${Math.round(dom("Process")/tot*100)}%, BE ${Math.round(dom("Business Environment")/tot*100)}% (exam 33/41/26)`);
+const set={},read={};F.forEach(c=>{c.scenes.forEach(s=>s.opts.forEach(o=>{if(o.flag)(set[o.flag]=set[o.flag]||[]).push(c.num)}));const src=c.scenes.map(s=>s.text.toString()).join(" ")+c.closing.toString();(src.match(/G\.(\w+)|G\[["'`](\w+)/g)||[]).forEach(m=>{const f=m.replace(/G\.|G\[["'`]/,"");(read[f]=read[f]||[]).push(c.num)})});
+console.log("\nFlags set:",JSON.stringify(set));console.log("Flags read via G:",JSON.stringify(read));
+const norm=s=>s.toLowerCase().replace(/[^a-z0-9 ]/g,"").split(" ").filter(w=>w.length>3);
+const qs=[...F.flatMap(c=>c.quiz.map((q,i)=>({id:`ch${c.num}q${i+1}`,w:new Set(norm(q.q))}))),...M.map((q,i)=>({id:`mock${i}`,w:new Set(norm(q.q))}))];
+const dups=[];for(let i=0;i<qs.length;i++)for(let j=i+1;j<qs.length;j++){const a=qs[i].w,b=qs[j].w;const inter=[...a].filter(x=>b.has(x)).length;const jac=inter/(a.size+b.size-inter);if(jac>0.55)dups.push(`${qs[i].id}~${qs[j].id} ${jac.toFixed(2)}`)}
+console.log("\nNear-duplicate questions:",dups.length?dups.join(", "):"none");
+const words=F.reduce((a,c)=>a+JSON.stringify(c).split(/\s+/).length,0);console.log("\nFull course size: about",words,"words; 15 chapters,",F.reduce((a,c)=>a+(c.drills||[]).length,0),"drills,",F.filter(c=>c.exercise).length,"exercises,",quizF.length,"quiz Qs; mock",M.length);

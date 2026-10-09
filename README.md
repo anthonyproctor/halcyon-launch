@@ -17,7 +17,15 @@ You play Sam Okafor, an infrastructure ops manager at Halcyon AI who gets drafte
 - A full audio episode per chapter (about 20 minutes) that pauses at each decision, for listening in the car or the gym
 - Your weakest exam area is called out at the end of each chapter
 
-## Chapters
+## Three tracks
+
+- **Refresher:** 6 chapters, about 2.5 hours of decisions and debriefs.
+- **Full Course:** 15 chapters, about 15 to 20 hours. Each has a story, Ruth's Whiteboard lesson, 12 decisions, math drills, an exercise, and a 15-question quiz, mapped to all 26 tasks of the July 2026 PMP outline. Story bible in `full/BIBLE.md`.
+- **Mock Exam:** 180 questions weighted 33/41/26 like the real exam, timed exam mode or practice mode.
+
+A Progress page tracks every score, maps mastery across the 26 tasks, builds a study plan, and serves targeted practice sets. `tools/check_full.mjs` and `tools/audit.mjs` lint content for answer giveaways, coverage, duplicates, and dashes.
+
+## Refresher chapters
 
 1. The Promotion
 2. Burn-In
