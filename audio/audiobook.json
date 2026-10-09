@@ -130,6 +130,10 @@
    "story": {
     "src": "audio/story/full-ch14.mp3",
     "min": 10.2
+   },
+   "study": {
+    "src": "audio/full-ch14.mp3",
+    "min": 24.0
    }
   },
   "15": {
