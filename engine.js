@@ -268,7 +268,7 @@ function renderPractice(){setTimeout(navSync,0);
 
 
 /* ===== page narration: sticky player, per-page clips, word highlight ===== */
-const NAR={car:store.get("car",false),audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
+const NAR={car:false,audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
 NAR.audio.preload="auto";
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
 async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];try{const r=await fetch(`audio/pages/${key}/timings.json`,{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
@@ -292,7 +292,7 @@ function narHighlight(){if(NAR.page==="book"){const pr=$("narprog");if(pr&&NAR.a
   const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";
   if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight)}
 function narUI(){const b=$("narbar");if(!b)return;const has=NAR.page==="car"||NAR.page==="book"||!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
-  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent=NAR.page==="book"?`Audiobook · Ch ${NAR.book.n} · ${NAR.book.ed==="story"?"Story":"Study"}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:"Ruth's whiteboard",end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
+  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent=NAR.page==="book"?`Hands-free · Ch ${NAR.book.n} · ${NAR.book.ed==="story"?"Story only":"Story + lessons"}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:"Ruth's whiteboard",end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
 async function narAttach(){
   if(NAR.page==="book"&&!NAR.audio.paused){narUI();return}
   const key0=narKey();
@@ -317,17 +317,16 @@ NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.b
 function foldInit(){document.querySelectorAll("details.fold").forEach(d=>{const k="fold."+d.id;const v=store.get(k,null);if(v!==null)d.open=v;d.addEventListener("toggle",()=>store.set(k,d.open))})}
 foldInit();
 function narInit(){
-  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<div class="nartrack"><span id="narprog"></span></div><div class="narrow"><button class="btn" id="narplay" type="button">▶ Listen</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto"><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label><label class="chk prog" for="narcar"><input type="checkbox" id="narcar" ${NAR.car?"checked":""}> Car mode</label></div>`;
+  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<div class="nartrack"><span id="narprog"></span></div><div class="narrow"><button class="btn" id="narplay" type="button">▶ Listen</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto"><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label></div>`;
   document.body.appendChild(bar);
   $("narplay").onclick=()=>{if(NAR.audio.paused){NAR.listening=true;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{narUI();narHighlight()})}else{NAR.listening=false;NAR.audio.pause();narUI()}};
   $("narrate").onchange=e=>{NAR.rate=+e.target.value;NAR.audio.playbackRate=NAR.rate;store.set("rate",NAR.rate)};
   $("narauto").onchange=e=>{NAR.auto=e.target.checked;store.set("auto2",NAR.auto)};
-  $("narcar").onchange=e=>{NAR.car=e.target.checked;store.set("car",NAR.car);const was=!NAR.audio.paused;NAR.audio.pause();NAR.audio.removeAttribute("src");NAR.listening=was;narAttach()};
   NAR.audio.addEventListener("pause",narUI);
 }
 narInit();window.__nar=NAR;
 /* lock screen and car controls */
-function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:"The Halcyon Launch",album:NAR.book.ed==="story"?"Audiobook, Story edition":"Audiobook, Study edition",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
+function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:"The Halcyon Launch",album:NAR.book.ed==="story"?"Hands-free, story only":"Hands-free, story + lessons",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
 if("mediaSession" in navigator){try{
   navigator.mediaSession.setActionHandler("play",()=>{NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight()})});
   navigator.mediaSession.setActionHandler("pause",()=>{NAR.listening=false;NAR.audio.pause();narUI()});
@@ -381,8 +380,8 @@ async function renderBook(){setTimeout(ambSync,0);
   const ed=store.get("bookEd","story");const full=TRACKS.full.list();
   const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
     return `<button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>`};
-  $("page").innerHTML=`<div class="kicker">Listen</div><h1>Audiobook</h1>
-   <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story edition</b><span class="prog">Just the novel. No lessons or questions. About 12 minutes a chapter.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Study edition</b><span class="prog">Story, Ruth's lesson, and each decision with the answer. About 25 minutes.</span></button></div>
+  $("page").innerHTML=`<div class="kicker">Hands-free</div><h1>Listen hands-free</h1><p class="lead">No tapping needed. It plays the story on the right-answer path, chapter after chapter, and keeps going with your phone locked. Pause or skip with your car or lock-screen controls.</p>
+   <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. Sam makes the right calls and you hear what happens. About 10 to 13 minutes a chapter.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus Ruth's lesson, and each decision read aloud with a pause, then the answer and why. About 25 minutes.</span></button></div>
    <p class="prog">Plays chapter to chapter on its own and remembers where you stopped. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
    <h2>Full Course</h2><div class="brows">${full.map(row).join("")}</div>`;
   $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd",b.dataset.ed);renderBook()});
@@ -437,6 +436,7 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
   const fullDone=full.filter(c=>chapterProgress("full",c)==="done").length;
   $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Welcome back</h1>
    ${lp?`<button class="hero" type="button" id="resume"><span class="prog">Pick up where you left off</span><b>${esc(lp[0])}</b><span class="go">Continue ›</span></button>`:`<button class="hero" type="button" id="resume"><span class="prog">New here?</span><b>Start the Full Course: Chapter 1, The Promotion</b><span class="go">Begin ›</span></button>`}
+   <button class="handsfree" type="button" id="hfree"><span>🎧</span><span><b>Listen hands-free</b><span class="prog">Starts at your current chapter. No tapping while you drive.</span></span></button>
    ${plan[0]?`<div class="nextstep"><span class="prog">Ruth's next step for you</span><p><b>${esc(plan[0][0])}.</b> ${esc(plan[0][1])}</p><button class="btn small" type="button" id="planbtn">${plan[0][2].task?"Practice now":plan[0][2].mock?"Open mock exam":"Go"}</button> <button class="linkbtn" type="button" id="seeplan">See the full study plan</button></div>`:""}
    <h2>Full Course <span class="prog">${fullDone} of ${full.length} chapters done · about 15 to 20 hours</span></h2>
    <div class="ctiles">${full.map(c=>tile("full",c)).join("")}</div>
@@ -446,6 +446,7 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
    <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the 26-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>Cast</b><span class="prog">Meet everyone, hear them talk</span></button></div>`;
   const pg=$("page");
   $("resume").onclick=()=>lp?lp[1]():openChapter("full",1);
+  $("hfree").onclick=async()=>{const B=await bookManifest();const lpv=store.get("lastplace",null);const ed=store.get("bookEd","story");let n=lpv&&lpv.t==="full"?lpv.n:1;const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);if(!have.length)return renderBook();if(!have.includes(n))n=have.find(k=>k>=n)||have[have.length-1];renderBook();bookPlay(ed,n)};
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
   $("mockbtn").onclick=()=>openMock();$("qprog").onclick=()=>{renderDash();top()};$("qcast").onclick=()=>{renderCast();top()};
   if($("planbtn")){const a=plan[0][2];$("planbtn").onclick=()=>{if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)};$("seeplan").onclick=()=>{renderDash();top()}}
