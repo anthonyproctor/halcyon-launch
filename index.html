@@ -79,6 +79,17 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .end-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
 .end-grid .card{padding:12px}
 .big{font-family:var(--mono);font-size:26px;font-variant-numeric:tabular-nums}
+.auth{max-width:420px}
+.auth label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--muted);margin-bottom:12px}
+.auth input{font:inherit;font-size:16px;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:7px;padding:9px 11px}
+.auth .err{color:var(--bad);background:var(--bad-soft);border-radius:6px;padding:8px 11px;font-size:14px;margin-bottom:12px}
+.userbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;font-size:13.5px}
+.linkbtn{font:inherit;font-size:13.5px;background:none;border:none;color:var(--accent);cursor:pointer;padding:0;text-decoration:underline}
+.chap{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:6px;align-items:center;width:100%;font:inherit;font-size:14px;text-align:left;background:none;border:none;border-bottom:1px dashed var(--line);padding:6px 0;color:var(--ink);cursor:pointer}
+.chap:last-child{border-bottom:none}
+.chap .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.chap.cur{color:var(--accent);font-weight:600}
+.chap[disabled]{color:var(--muted);cursor:default}
 .video{margin-top:12px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--page)}
 .video .vhead{display:flex;gap:10px;align-items:center;padding:9px 12px;font-size:14px;flex-wrap:wrap}
 .video .vhead b{font-weight:600}
@@ -96,6 +107,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 <div class="wrap">
   <main class="page" id="page" aria-live="polite"></main>
   <aside class="rail" aria-label="Status">
+    <div class="card" id="usercard" hidden><div class="userbar"><span id="username"></span><span><a id="adminlink" href="/admin" hidden>Admin</a> <button class="linkbtn" id="signout" type="button">Sign out</button></span></div></div>
     <div class="card">
       <h3>Project state</h3>
       <div id="meters"></div>
@@ -105,260 +117,69 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     <div class="card">
       <h3>Exam areas</h3>
       <div id="domains"></div>
-      <p class="prog" style="margin:8px 0 0">Points earned out of points possible, by PMP exam area.</p>
+      <p class="prog" style="margin:8px 0 0">This chapter, then all chapters played. Points earned out of points possible.</p>
     </div>
     <div class="card">
-      <h3>Narration</h3>
-      <div class="bar" style="margin:0">
-        <button class="btn small" id="readBtn" type="button">Read aloud</button>
-        <button class="btn small ghost" id="stopBtn" type="button">Stop</button>
-      </div>
-      <label class="prog" for="rate" style="display:block;margin-top:10px">Speed</label>
-      <input id="rate" type="range" min="0.8" max="1.4" step="0.05" value="1" style="width:100%">
+      <h3>Chapters</h3>
+      <div id="chapters"></div>
     </div>
     <div class="card">
       <h3>Cast</h3>
-      <dl class="cast" style="margin:0">
-        <dt>Sam Okafor</dt><dd>You. Infrastructure ops manager, former Air Force maintenance NCO.</dd>
-        <dt>Ruth Calder</dt><dd>Board member, retired NASA flight director. Your mentor.</dd>
-        <dt>Elena Vasquez</dt><dd>CEO and founder.</dd>
-        <dt>Grant Mercer</dt><dd>Chief Revenue Officer. Closed the Cascade deal.</dd>
-        <dt>Lena Cho</dt><dd>CTO. Brilliant, hates conflict.</dd>
-        <dt>Theo Lindqvist</dt><dd>ML platform lead. Everything runs through him.</dd>
-        <dt>Dr. Raymond Ochoa</dt><dd>CIO, Cascade Valley Health.</dd>
-      </dl>
+      <dl class="cast" style="margin:0" id="cast"></dl>
     </div>
   </aside>
 </div>
 
+<script src="chapters/ch1.js"></script>
+<script src="chapters/ch2.js"></script>
+<script src="chapters/ch3.js"></script>
+<script src="chapters/ch4.js"></script>
+<script src="chapters/ch5.js"></script>
+<script src="chapters/ch6.js"></script>
 <script>
 (function(){
 "use strict";
 const $=id=>document.getElementById(id);
 const store={get(k,d){try{const v=localStorage.getItem("halcyon."+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("halcyon."+k,JSON.stringify(v))}catch(e){}}};
-
-/* ===== Chapter 1 content ===== */
-const CH = {
- num:1, title:"The Promotion",
- opening:[
-  "The email came in at 6:12 on a Monday morning, which was how Sam Okafor knew it was bad news. Nobody at Halcyon AI sent good news before seven.",
-  "Halcyon had six hundred people, a Series C, and one deal that mattered more than all the others combined. Cascade Valley Health, a network of eleven hospitals across Colorado and Wyoming, had signed a contract to put Halcyon's AI agents into its clinical documentation workflow. Go-live was fourteen weeks out. The date was in the contract. Grant Mercer, the Chief Revenue Officer, had rung a bell in the office when it closed.",
-  "On Friday the project manager running Cascade had quit. No exit interview, no handoff, just a two-line email and an empty desk.",
-  "By 8:30 Sam was in Elena Vasquez's office. The CEO didn't sit down. <span class=\"said\">\"You've run our data centers for three years and I have never once had to think about them. That's what I need on Cascade. You start today.\"</span>",
-  "Sam had never run a software project. He'd kept F-16s flying and kept racks humming. He said that. Elena said she knew. Then she said, <span class=\"said\">\"Ruth Calder is on our board. She ran launches at NASA for twenty years. I've asked her to check in with you.\"</span>",
-  "Sam walked back to his desk with a project that wasn't his, a team that didn't know him, and fourteen weeks."
- ],
- scenes:[
- {id:"c1s1", domain:"Process", task:"Assess before acting",
-  text:s=>["It's 9:15. Sam has a calendar full of meetings the last PM left behind, a shared drive with forty folders, and a Slack channel with three hundred unread messages. Elena wants an update by Friday.","What does Sam do first?"],
-  opts:[
-   {t:"Rebuild the schedule from scratch this week so it reflects reality.",s:1,d:{trust:-2,conf:0,health:2},
-    after:"Sam spends two days in a spreadsheet. The schedule looks clean. Nobody on the team was asked a single question, and on Wednesday two engineers point out dependencies he couldn't have known about.",
-    why:"A new plan is coming, but not yet. You can't re-plan what you don't understand, and the people who know the real state of the work haven't been heard. On the exam, building something before gathering information is almost always the wrong first move."},
-   {t:"Call an all-hands to announce he's in charge and set expectations.",s:0,d:{trust:-6,conf:1,health:0},
-    after:"Sam stands up in front of forty people and lays out how things will run now. The room is polite. The Slack channel goes quiet for the rest of the day, which is worse than complaints.",
-    why:"Authority from a title is the weakest kind you have. The team just lost their PM and is waiting to see who you are. Announcing control before you've listened tells them exactly that. PMI wants servant leadership: earn it by understanding them first."},
-   {t:"Read the key project documents, then meet the leads one on one to learn where things really stand.",s:3,d:{trust:6,conf:1,health:3},best:true,
-    after:"Sam reads the contract, the statement of work, and whatever passes for a plan. Then he sits down with each lead for thirty minutes and mostly listens. By Wednesday he has a page of notes that doesn't match the status reports at all.",
-    why:"This is the PMI pattern: assess before you act. Review what exists, talk to the people closest to the work, and form your own picture. On a project you inherit, discovery is the first deliverable. The exam rewards the answer that gathers information before deciding."},
-   {t:"Tell Elena right away that fourteen weeks is impossible.",s:0,d:{trust:0,conf:-6,health:0},
-    after:"Elena's jaw tightens. <span class=\"said\">\"Based on what?\"</span> Sam doesn't have an answer, and now the CEO thinks her new project lead is a pessimist.",
-    why:"Maybe it is impossible. You don't know yet, and neither does anyone you'd tell. Escalating without data costs you credibility you'll need later. Bring evidence and options, not a gut feeling."}
-  ]},
- {id:"c1s2", domain:"Business Environment", task:"Project charter and authority",
-  text:s=>["In the shared drive Sam finds a signed contract and a statement of work written by the sales team. He does not find a project charter. Nothing says who the sponsor is, what Sam is authorized to decide, or what success looks like beyond the go-live date.","Lena Cho, the CTO, shrugs when he asks. <span class=\"said\">\"We've never really done charters. Grant's contract is the charter.\"</span>"],
-  opts:[
-   {t:"Use the contract as the charter. It's legally binding, which is stronger than any document he could write.",s:0,d:{trust:0,conf:-2,health:-3},
-    after:"The contract tells Sam what Halcyon owes Cascade. It doesn't tell anyone inside Halcyon that Sam can pull an engineer off another project. The first time he tries, the other manager says no and nobody overrules him.",
-    why:"A contract defines obligations to the customer. A charter formally authorizes the project inside your own company and names the PM's authority. Without one, every resource request turns into a negotiation."},
-   {t:"Draft a short charter with objectives, success measures, his authority, and Elena as sponsor, and ask Elena to sign it.",s:3,d:{trust:2,conf:4,health:4},best:true,
-    after:"It's two pages. Elena reads it, changes one line about budget authority, and signs it Thursday. When Sam needs Theo's time later in the week, he points to page one and the conversation takes five minutes.",
-    why:"The charter is issued by the sponsor and it formally authorizes the project and the PM. Even on a project already in motion, creating one is right: it fixes who decides, what success means, and where your authority comes from."},
-   {t:"Skip it. Fourteen weeks is too tight for paperwork, so focus on delivery.",s:0,d:{trust:0,conf:-1,health:-4},
-    after:"Sam saves a day. Over the next three weeks he loses far more than that to arguments about who owns what.",
-    why:"The exam treats 'skip the process, there's no time' as a trap. Lightweight is fine, and tailoring is good. Having no authorization and no agreed success measures isn't tailoring, it's risk."},
-   {t:"Ask Lena to write the charter since she runs engineering.",s:1,d:{trust:0,conf:0,health:1},
-    after:"Lena agrees, then doesn't do it. Two weeks later it's still on her list.",
-    why:"Close, but the charter comes from the sponsor, usually with the PM drafting it. The CTO isn't the sponsor here, and handing it off leaves your authority undefined. Draft it yourself and get the sponsor to sign."}
-  ]},
- {id:"c1s3", domain:"People", task:"Remove impediments and protect capacity",
-  text:s=>[(s.flags.allhands?"The team is still guarded after Monday's all-hands, but people answer when Sam asks direct questions. ":"")+"Every thread Sam pulls leads back to the same name. Theo Lindqvist, the ML platform lead, is assigned to eleven of the fourteen critical tasks. He's also the only person who can deploy model updates, and he answers support questions for three other customers.","At standup Theo says he's fine. He looks like he hasn't slept since Labor Day."],
-  opts:[
-   {t:"Ask Theo to work weekends until go-live. It's only fourteen weeks.",s:0,d:{trust:-5,conf:0,health:-2},
-    after:"Theo says yes. He'd say yes to anything. His error rate climbs and in week three a bad deploy takes the demo environment down for a day.",
-    why:"Adding hours to the bottleneck makes the bottleneck worse. This is Brent from The Phoenix Project. The PMI answer protects the constraint, reduces the work flowing through it, and spreads the knowledge."},
-   {t:"Route all requests for Theo through Sam, pair another engineer with him on deploys, and cut the work in progress he's carrying.",s:3,d:{trust:5,conf:1,health:6},best:true,
-    after:"Theo's queue drops from nineteen items to six. A junior engineer, Priya, shadows him on every deploy and writes the runbook as she goes. Theo stops answering Slack at midnight.",
-    why:"You protected the constraint, limited work in progress, and started knowledge transfer so one person stops being a single point of failure. Removing impediments and shielding the team from interruptions is core servant leadership."},
-   {t:"Take Theo off the Cascade project so he can recover.",s:0,d:{trust:-1,conf:-2,health:-6},
-    after:"Theo is relieved for about an hour, then three tasks stop moving because nobody else knows how they work.",
-    why:"Pulling the only person who knows the system without a transition plan creates a crisis. The issue is overload and concentration, not Theo. Fix the flow of work to him, don't remove him."},
-   {t:"Escalate to Lena and ask her to fix Theo's workload.",s:1,d:{trust:0,conf:0,health:1},
-    after:"Lena promises to look at it. She talks to Theo, who tells her he's fine.",
-    why:"Escalation is sometimes right, but this is in Sam's lane. The exam usually wants the PM to act on what they can control first, then escalate what they can't."}
-  ]},
- {id:"c1s4", domain:"Business Environment", task:"Manage scope and change",
-  text:s=>["Thursday afternoon Sam joins Grant on a call with Cascade's project team. It's friendly until Cascade's nursing director asks whether the agents can also draft patient discharge instructions.","Grant doesn't hesitate. <span class=\"said\">\"Absolutely, we can make that happen for go-live.\"</span>","Sam has read the statement of work twice. Discharge instructions aren't in it, and nobody has estimated them."],
-  opts:[
-   {t:"Correct Grant on the call so the customer knows it isn't in scope.",s:1,d:{trust:0,conf:-5,health:1},
-    after:"The call goes cold. Grant smiles through it and doesn't speak to Sam for two days.",
-    why:"Your instinct is right but the method costs you. Contradicting a senior colleague in front of the customer damages the relationship you need. Handle it privately, then fix the commitment through the proper process."},
-   {t:"Stay quiet, then add it to the backlog. The customer will be happy.",s:0,d:{trust:-2,conf:1,health:-6},
-    after:"Three engineers quietly start on discharge instructions. Two planned features slip and nobody decided that they should.",
-    why:"That's scope creep: new work added with no analysis and no decision. Sooner or later someone pays, usually the schedule. Every change needs an impact assessment and an approval."},
-   {t:"Don't contradict Grant on the call. Afterward, talk to Grant privately, then run it through change control with an impact analysis before anything is promised.",s:3,d:{trust:2,conf:3,health:4},best:true,
-    after:"After the call Sam walks Grant through the statement of work. Grant pushes back, then agrees to a change request. The impact analysis says six weeks of work. Cascade gets a formal answer: discharge instructions in a phase two, with a price.",
-    why:"Protect the relationship in public, address the issue in private, then use the change control process. Analyze the impact before any approval. That's the textbook sequence the exam expects."},
-   {t:"Email Elena that Grant is promising work that isn't in the contract.",s:0,d:{trust:-2,conf:-2,health:0},
-    after:"Elena forwards the email to Grant. Now Sam has an enemy in the C-suite in his first week.",
-    why:"Going over someone's head before talking to them breaks trust, and it skips the change process entirely. Talk to the person first."}
-  ]},
- {id:"c1s5", domain:"People", task:"Build trust and healthy conflict",
-  text:s=>["Friday's planning meeting has eight people around the table. Sam proposes a sequence for the next three sprints and asks for concerns. Silence. Lena nods. Theo stares at his laptop.","Two hours later, in the kitchen, Sam overhears two engineers saying the sequence is backwards and the integration work should come first."],
-  opts:[
-   {t:"Go back to the engineers and ask them why they didn't speak up.",s:1,d:{trust:-1,conf:0,health:1},
-    after:"They apologize and say they didn't want to cause trouble. Sam gets their input. Next meeting, the room is just as quiet.",
-    why:"You got this decision right but didn't fix the pattern. The real problem is that the team doesn't feel safe disagreeing out loud. That's Lencioni's fear of conflict, and it needs a team-level fix."},
-   {t:"Set team ground rules together, including that disagreement happens in the room, and model it by asking people directly to poke holes in his plan.",s:3,d:{trust:7,conf:0,health:3},best:true,
-    after:"It feels awkward. Sam starts the next meeting by saying, <span class=\"said\">\"I've never run a software release. Tell me where this plan is wrong.\"</span> After a long pause, one of the kitchen engineers does. The plan gets better and the meeting runs over.",
-    why:"Creating a team charter with working agreements, and showing vulnerability as the leader, builds the trust that makes productive conflict possible. Five Dysfunctions starts with trust; PMI calls it psychological safety."},
-   {t:"Keep his plan. The meeting had its chance and nobody objected.",s:0,d:{trust:-4,conf:0,health:-4},
-    after:"The team executes the plan they think is wrong. In sprint two the integration problem the engineers predicted shows up right on schedule.",
-    why:"Silence isn't agreement. A leader who knows there are unspoken objections and moves ahead anyway gets compliance, not commitment."},
-   {t:"Ask Lena to tell her engineers to speak up in meetings.",s:0,d:{trust:-1,conf:0,health:0},
-    after:"Lena sends a Slack message encouraging open discussion. It changes nothing.",
-    why:"You can't order people into feeling safe, and handing it to a conflict-averse CTO makes it worse. The PM shapes the team's working environment directly."}
-  ]},
- {id:"c1s6", domain:"Process", task:"Tailor the approach",
-  text:s=>["Sam maps the work. Half of it is physical: a new GPU cluster at the IronPeak colocation site, network links to Cascade's data center, and a fixed install window IronPeak won't move. The other half is software. The agent and integration teams run two-week sprints and their scope changes every time Cascade's clinicians try a demo.","Lena wants everything agile. The IronPeak contract manager wants a dated plan with no surprises."],
-  opts:[
-   {t:"Run everything in two-week sprints, including the hardware.",s:0,d:{trust:-1,conf:-2,health:-4},
-    after:"The infrastructure team tries to fit a ninety-day hardware lead time into a sprint backlog. IronPeak asks for a schedule and gets a burndown chart.",
-    why:"Agile fits work where the requirements are uncertain and change is cheap. Hardware with long lead times and fixed install windows needs a plan-driven approach. One method for everything ignores the nature of the work."},
-   {t:"Put the whole project on a single detailed waterfall plan.",s:0,d:{trust:-3,conf:1,health:-3},
-    after:"The plan is beautiful for two weeks. Then Cascade's clinicians change three requirements after a demo and the plan is fiction.",
-    why:"The software requirements really are changing, so locking them into a predictive plan just means constant rework of the plan. Match the approach to each part of the work."},
-   {t:"Use a hybrid approach: a plan-driven schedule for the cluster and facilities, sprints for the software, and shared milestones that tie them together.",s:3,d:{trust:3,conf:3,health:6},best:true,
-    after:"Sam builds a milestone plan with the IronPeak dates fixed and the software sprints lined up beneath them. Integration testing is set for the week after the cluster is commissioned. Lena and the IronPeak manager both get what they need.",
-    why:"Tailoring the life cycle to the work is a big theme on the current exam. Predictive where scope is fixed, adaptive where it's changing, with integration points that let both sides plan around each other."},
-   {t:"Let each team pick its own method and coordinate informally.",s:1,d:{trust:2,conf:-1,health:-2},
-    after:"The teams are happy. Nobody can say whether the software will be ready when the cluster is.",
-    why:"Team autonomy is good, but the project needs one integrated view of milestones and dependencies. Tailoring is deliberate; no plan isn't tailoring."}
-  ]},
- {id:"c1s7", domain:"Process", task:"Manage vendors and contracts",
-  text:s=>["LabelForge, the vendor labeling twenty thousand clinical notes to train and test the agents, was due to deliver the first batch last Tuesday. It hasn't arrived. Their account manager says they had \"onboarding challenges\" with their annotator team.","The contract is fixed price, with delivery dates and a clause for late delivery."],
-  opts:[
-   {t:"Terminate the contract and find a new vendor.",s:0,d:{trust:0,conf:-2,health:-6},
-    after:"Procurement tells Sam a new vendor would take six weeks to onboard and needs a new security review. The delay just got worse.",
-    why:"Termination is a last resort. It's expensive and slow, and you don't even know the cause yet. Understand the problem and use the contract's remedies first."},
-   {t:"Meet LabelForge to understand the root cause, ask for a written recovery plan, check the contract terms, and document everything.",s:3,d:{trust:1,conf:2,health:4},best:true,
-    after:"The meeting reveals LabelForge lost its two clinical annotation leads. Their recovery plan adds a nurse annotator team and delivers in three batches. Sam logs the delay in the risk register and keeps a written record in case the late delivery clause is needed.",
-    why:"Find the root cause, work with the vendor on a recovery plan, and know your contract. Document it so contractual remedies are available if needed. That's collaborative vendor management with your rights protected."},
-   {t:"Have Halcyon's engineers label the data themselves.",s:0,d:{trust:-4,conf:0,health:-3},
-    after:"Three engineers spend a week labeling clinical notes they aren't qualified to judge. The quality team rejects forty percent of them.",
-    why:"Taking on a vendor's contracted work pulls your team off the critical path and may waive your rights under a fixed price contract. It also wasn't their skill set."},
-   {t:"Send LabelForge a formal notice citing the late delivery clause.",s:1,d:{trust:0,conf:0,health:1},
-    after:"LabelForge's lawyers reply. The account manager stops returning calls.",
-    why:"You may get there, but leading with legal notice before understanding the cause usually damages the relationship you need for recovery. Talk first, document as you go, escalate formally only if needed."}
-  ]},
- {id:"c1s8", domain:"Business Environment", task:"Compliance requirements",
-  text:s=>["Cascade's security office sends a forty-page questionnaire. They need a signed business associate agreement under HIPAA, Halcyon's SOC 2 report, and an explanation of how patient data is kept out of model training. Go-live depends on their sign-off.","Nobody at Halcyon owns this. Legal thinks security owns it. Security thinks sales handled it in the contract."],
-  opts:[
-   {t:"Forward it to Halcyon's security team and move on.",s:0,d:{trust:0,conf:-2,health:-4},
-    after:"Security puts it in their queue behind three other questionnaires. Cascade follows up twice.",
-    why:"Forwarding it isn't managing it. A requirement that gates go-live belongs in your project scope with an owner and a date."},
-   {t:"Add it to the project scope and the risk register, name an owner in security and in legal, and put the review on the schedule as a go-live dependency.",s:3,d:{trust:1,conf:4,health:5},best:true,
-    after:"Sam sets up a weekly thirty-minute check with security and legal. The business associate agreement is signed in week three. The training data question takes longer, so Sam tracks it as a risk and Elena knows about it.",
-    why:"Compliance requirements are project requirements. Identify them, assign owners, schedule them, and track the risk. On the exam, compliance isn't someone else's problem when it affects your deliverables."},
-   {t:"Ask Grant what he promised Cascade about security.",s:1,d:{trust:0,conf:0,health:1},
-    after:"Grant says he told them Halcyon was \"enterprise ready.\" Helpful context, but nobody owns the work yet.",
-    why:"Understanding past commitments is useful, but it's a first step, not the answer. Somebody has to own and schedule the work."},
-   {t:"Tell Cascade that Halcyon's standard terms cover it.",s:0,d:{trust:0,conf:-6,health:-2},
-    after:"Cascade's CISO replies that standard terms don't include a business associate agreement, which is required by law. The relationship takes a hit.",
-    why:"Regulations aren't negotiable and the customer's compliance team knows it. Guessing at compliance answers is a fast way to lose trust."}
-  ]},
- {id:"c1s9", domain:"People", task:"Stakeholder engagement",
-  text:s=>["Ruth Calder calls on Thursday evening. <span class=\"said\">\"Have you talked to Raymond Ochoa yet?\"</span>","Sam hasn't. Ochoa is Cascade's CIO. He signed the deal. According to his assistant, nobody from Halcyon has spoken to him in three weeks, and he's started asking his team whether Halcyon is in trouble."],
-  opts:[
-   {t:"Wait until there's good news to share.",s:0,d:{trust:0,conf:-6,health:0},
-    after:"Ochoa calls Elena directly on Monday. Elena calls Sam. It isn't a good call.",
-    why:"Silence lets stakeholders fill the gap with their worst guess. Proactive, honest communication, especially when things are uncertain, is what keeps engagement high."},
-   {t:"Set up a call with Ochoa, introduce himself, give an honest status including the risks, and agree on how often and how they'll communicate.",s:3,d:{trust:1,conf:7,health:1},best:true,
-    after:"The call runs forty minutes. Ochoa appreciates that Sam named the LabelForge delay before he had to ask. They agree on a weekly fifteen-minute call and a one-page status every Friday. Ochoa ends with, <span class=\"said\">\"This is the first time I've felt like I know what's going on.\"</span>",
-    why:"Engage key stakeholders early and directly, be transparent about risks, and agree on a communication plan that fits them. That's stakeholder engagement and a communications plan in one move."},
-   {t:"Send Ochoa a detailed status email with the full project plan attached.",s:1,d:{trust:0,conf:2,health:0},
-    after:"Ochoa's assistant replies that he'll review it. He doesn't.",
-    why:"Information sent isn't communication received. A senior stakeholder who is anxious needs a conversation, and you need to learn what they actually want to hear."},
-   {t:"Ask Grant to call Ochoa since he owns the relationship.",s:1,d:{trust:0,conf:1,health:0},
-    after:"Grant calls Ochoa and tells him everything is on track. That's not quite true.",
-    why:"The account owner should stay involved, but Sam is now responsible for delivery and the customer needs to hear from the person accountable for it."}
-  ]},
- {id:"c1s10", domain:"Business Environment", task:"Communicate forecasts to the sponsor",
-  text:s=>["Friday, 4 PM. Elena's office again. <span class=\"said\">\"So. Will we hit the date?\"</span>","Sam has a week of real data now. With the LabelForge delay, the security review, and the integration work moving to the front, his forecast says eighteen weeks, not fourteen. There are ways to close the gap. None of them are free."],
-  opts:[
-   {t:"Say yes. It's week one and morale matters.",s:0,d:{trust:-2,conf:-8,health:-4},
-    after:"Elena smiles and tells the board on Tuesday that Cascade is on track. Sam spends the weekend unable to sleep.",
-    why:"Telling the sponsor what they want to hear is the most expensive thing a PM can do. The gap doesn't close because you hid it; it just surfaces later, when there are fewer options."},
-   {t:"Show the eighteen week forecast and the reasons, then lay out options with tradeoffs: phase the release, add specific people, or move the date. Ask Elena to decide.",s:3,d:{trust:2,conf:6,health:5},best:true,
-    after:"Elena reads the page twice. She doesn't like it. Then she picks a phased release: the core documentation agents go live on the contract date with three hospitals, the rest follow over four weeks. <span class=\"said\">\"Get Grant in here,\"</span> she says. <span class=\"said\">\"He's going to hate this.\"</span>",
-    why:"Give the sponsor an honest forecast based on data, explain the drivers, and bring options with their tradeoffs. The decision belongs to the sponsor. The PM's job is to make it an informed one."},
-   {t:"Say no, the date is impossible, and recommend telling Cascade it will be late.",s:1,d:{trust:0,conf:-2,health:2},
-    after:"Elena asks if there's any other way. Sam realizes he should have led with options.",
-    why:"Honest, but incomplete. Jumping to one recommendation skips the options a sponsor needs to weigh. Bring choices, not a verdict."},
-   {t:"Ask for two more weeks before giving a forecast.",s:0,d:{trust:0,conf:-4,health:-2},
-    after:"Elena gives him one week, and tells him she expected more.",
-    why:"You have enough data to forecast with stated uncertainty. Waiting for perfect information burns the time the sponsor needs to act. Share what you know now and how sure you are."}
-  ]}
- ],
- closing:s=>[
-  "Saturday morning Sam meets Ruth at a coffee shop in Golden. She has the one-page plan he gave Elena, with notes in the margins.",
-  "<span class=\"said\">\"At NASA we had a saying,\"</span> she says. <span class=\"said\">\"Failure is not an option. Everybody quotes it. Nobody remembers that it only worked because the flight directors told the truth about the numbers every single day. The optimists didn't get people home. The honest ones did.\"</span>",
-  (s.score>=24?"She taps the page. <span class=\"said\">\"You did that this week. Most people in your chair don't.\"</span>":"She taps the page. <span class=\"said\">\"You're learning. Next week, listen first and decide second. The team will tell you what's wrong if you let them.\"</span>"),
-  "Sam's phone buzzes. It's Theo. <span class=\"said\">\"The IronPeak cluster failed its burn-in test. Half the GPUs. Can you call me?\"</span>",
-  "Ruth finishes her coffee. <span class=\"said\">\"Chapter two,\"</span> she says, and stands up."
- ]
-};
-
-const VIDEOS={
- c1s1:["EHnKAgDyz1o","Master the PMP Exam Mindset: 9 Key Principles","PM Aspirant","11:46"],
- c1s2:["xvj0bbOfyTg","What is a Project Charter? Explained in 4 Minutes","Max Mao","4:39"],
- c1s3:["YASLijHmB54","Agile: Servant Leadership","David McLachlan","4:23"],
- c1s4:["_c-qzFV5yM4","Project Management Scope Creep: Manage It Like a Pro","Adriana Girdler","4:37"],
- c1s5:["75bO_XWk7fw","The Five Dysfunctions of a Team","Patrick Lencioni","6:08"],
- c1s6:["qf0Yzrzr_i4","Waterfall vs Agile vs Hybrid Approaches Explained","Alvin the PM","9:08"],
- c1s7:["JWI_wZeebO8","Types of Contracts: Key Concepts in Project Management","David McLachlan","6:31"],
- c1s8:["p5qTCI-alfw","PMP Exam Mindset: Confirm Project Compliance Requirements","Praizion","10:53"],
- c1s9:["5VrHeEfRceo","Stakeholder Engagement: Five-step Process","Mike Clayton","4:05"],
- c1s10:["qNEVrb1Bq-Q","When Your Projects Are Late","ProjectManager","4:17"]
-};
-const DEEPER=["-u0rO-YQr9c","Complete PMP Mindset: 50 Principles and Questions","Andrew Ramdayal","2:53:56"];
-const EPISODE={src:"audio/ch1-the-promotion.mp3",len:"19 minutes"};
-function videoCard(v,label){if(!v)return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${v[1]}</b><span class="prog">${v[2]} · ${v[3]}</span></div><div class="vframe"><button type="button" data-vid="${v[0]}" aria-label="Play video: ${v[1]}" style="background-image:url('https://i.ytimg.com/vi/${v[0]}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
-function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
-function episodeCard(){return `<div class="episode"><div class="who prog">Listen instead · Chapter ${CH.num} audio episode · ${EPISODE.len}</div><p class="prog" style="margin:4px 0 0">The whole chapter read aloud. It pauses at each decision so you can pick, then gives the answer and Ruth's debrief.</p><audio controls preload="none" src="${EPISODE.src}"></audio></div>`}
+const CHAPTERS=(window.HALCYON||[]).filter(c=>c&&c.scenes&&c.scenes.length).sort((a,b)=>a.num-b.num);
+const BASE_CAST=[["Sam Okafor","You. Infrastructure ops manager, former Air Force maintenance NCO."],["Ruth Calder","Board member, retired NASA flight director. Your mentor."],["Elena Vasquez","CEO and founder."],["Grant Mercer","Chief Revenue Officer. Closed the Cascade deal."],["Lena Cho","CTO. Brilliant, hates conflict."],["Theo Lindqvist","ML platform lead. Everything runs through him."],["Dr. Raymond Ochoa","CIO, Cascade Valley Health."]];
 const RUTH_LEADS={3:["That's the move.","Good. That's what I'd want from a flight director.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best answer.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have stopped you there.","Let's talk about that one."]};
 const METERS=[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Delivery health"]];
 const DOMS=["People","Process","Business Environment"];
-
-/* ===== state ===== */
-function fresh(){return{step:-1,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:{People:[0,0],Process:[0,0],"Business Environment":[0,0]}}}
-let S=store.get("ch1",null)||fresh();
-function save(){store.set("ch1",S)}
 const clamp=v=>Math.max(0,Math.min(100,v));
+function fresh(){return{step:-1,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:{People:[0,0],Process:[0,0],"Business Environment":[0,0]}}}
+// migrate old single-chapter save
+const old=store.get("ch1",null);if(old&&!store.get("c1",null))store.set("c1",old);
+let curNum=store.get("cur",CHAPTERS.length?CHAPTERS[0].num:1);
+let CH=CHAPTERS.find(c=>c.num===curNum)||CHAPTERS[0];
+let S=store.get("c"+CH.num,null)||fresh();
+let SYNC=null,syncTimer=null;
+function save(){store.set("c"+CH.num,S);store.set("cur",CH.num);if(SYNC){clearTimeout(syncTimer);const n=CH.num,st=JSON.parse(JSON.stringify(S));syncTimer=setTimeout(()=>SYNC(n,st),400)}}
+function stateOf(n){return n===CH.num?S:store.get("c"+n,null)}
+function done(n){const st=stateOf(n),c=CHAPTERS.find(x=>x.num===n);return !!(st&&c&&st.step>=c.scenes.length)}
+function allStates(){const o={};CHAPTERS.forEach(c=>{o[c.num]=stateOf(c.num)});return o}
 
-/* ===== render ===== */
+function order(sc){let h=0;for(const ch of sc.id)h=(h*31+ch.charCodeAt(0))>>>0;const a=sc.opts.map((_,j)=>j);for(let i=a.length-1;i>0;i--){h=(h*1103515245+12345)>>>0;const k=h%(i+1);[a[i],a[k]]=[a[k],a[i]]}return a}
+function paras(arr){return `<div class="story">${arr.map(p=>`<p>${p}</p>`).join("")}</div>`}
+function videoCard(v,label){if(!v)return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${v[1]}</b><span class="prog">${v[2]} · ${v[3]}</span></div><div class="vframe"><button type="button" data-vid="${v[0]}" aria-label="Play video: ${v[1]}" style="background-image:url('https://i.ytimg.com/vi/${v[0]}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
+function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
+function episodeCard(){if(!CH.episode)return "";return `<div class="episode"><div class="prog">Listen instead · Chapter ${CH.num} audio episode · ${CH.episode.len}</div><p class="prog" style="margin:4px 0 0">The whole chapter read aloud. It pauses at each decision so you can pick, then gives the answer and Ruth's debrief.</p><audio controls preload="none" src="${CH.episode.src}"></audio></div>`}
+
 function renderRail(){
   $("meters").innerHTML=METERS.map(([k,l])=>{const v=S.m[k];const col=v>=60?"var(--good)":v>=40?"var(--mid)":"var(--bad)";return `<div class="meter"><div class="row"><span>${l}</span><span class="num">${v}</span></div><div class="track" role="img" aria-label="${l} ${v} of 100"><span style="width:${v}%;background:${col}"></span></div></div>`}).join("");
-  const n=CH.scenes.length,done=Object.keys(S.picks).length;
-  $("prog").textContent=`Chapter ${CH.num} · Decision ${Math.min(done+(S.step>=0&&S.step<n&&!S.picks[S.step]?1:0),n)} of ${n} · Score ${S.score}/${n*3}`;
+  const n=CH.scenes.length,dn=Object.keys(S.picks).length;
+  $("prog").textContent=`Chapter ${CH.num} · Decision ${Math.min(dn+(S.step>=0&&S.step<n&&S.picks[S.step]===undefined?1:0),n)} of ${n} · Score ${S.score}/${n*3}`;
   $("dots").innerHTML=CH.scenes.map((sc,i)=>{const p=S.picks[i];const cls=p!==undefined?"s"+sc.opts[p].s:(i===S.step?"now":"");return `<span class="dot ${cls}" title="Decision ${i+1}"></span>`}).join("");
-  $("domains").innerHTML=DOMS.map(d=>{const [g,t]=S.dom[d];const pct=t?Math.round(g/t*100):null;return `<div class="dom-row"><span>${d}</span><span class="prog">${t?g+"/"+t+" · "+pct+"%":"none yet"}</span></div>`}).join("");
+  const tot={People:[0,0],Process:[0,0],"Business Environment":[0,0]};
+  CHAPTERS.forEach(c=>{const st=stateOf(c.num);if(st)DOMS.forEach(d=>{tot[d][0]+=st.dom[d][0];tot[d][1]+=st.dom[d][1]})});
+  const fmtd=([g,t])=>t?`${Math.round(g/t*100)}%`:"·";
+  $("domains").innerHTML=DOMS.map(d=>`<div class="dom-row"><span>${d}</span><span class="prog">${fmtd(S.dom[d])} · ${fmtd(tot[d])}</span></div>`).join("");
+  $("chapters").innerHTML=CHAPTERS.map(c=>{const st=stateOf(c.num);const lab=done(c.num)?`${st.score}/${c.scenes.length*3}`:(st&&st.step>=0?"in progress":"");return `<button class="chap${c.num===CH.num?" cur":""}" data-n="${c.num}" type="button"><span class="n">${c.num}</span><span>${c.title}</span><span class="prog">${lab}</span></button>`}).join("");
+  $("chapters").querySelectorAll(".chap").forEach(b=>b.onclick=()=>switchTo(+b.dataset.n));
+  const cast=[...BASE_CAST];CHAPTERS.filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));
+  const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));$("cast").innerHTML=[...seen].map(([n,d])=>`<dt>${n}</dt><dd>${d}</dd>`).join("");
 }
-function order(sc){ // stable shuffle per scene so the best answer isn't always in the same slot
-  let h=0;for(const ch of sc.id)h=(h*31+ch.charCodeAt(0))>>>0;
-  const a=sc.opts.map((_,j)=>j);for(let i=a.length-1;i>0;i--){h=(h*1103515245+12345)>>>0;const k=h%(i+1);[a[i],a[k]]=[a[k],a[i]]}return a;
-}
-function paras(arr){return `<div class="story">${arr.map(p=>`<p>${p}</p>`).join("")}</div>`}
+function switchTo(n){save();CH=CHAPTERS.find(c=>c.num===n);S=store.get("c"+n,null)||fresh();save();render();window.scrollTo({top:0})}
 function renderOpening(){
   $("page").innerHTML=`<div class="kicker">Chapter ${CH.num}</div><h1>${CH.title}</h1>${paras(CH.opening)}${episodeCard()}<div class="bar"><button class="btn" id="go" type="button">Begin</button>${Object.keys(S.picks).length?'<button class="btn ghost" id="restart" type="button">Start over</button>':""}</div>`;
   $("go").onclick=()=>{S.step=0;save();render()};
@@ -366,12 +187,12 @@ function renderOpening(){
 }
 function renderScene(i){
   const sc=CH.scenes[i],picked=S.picks[i];
-  let h=`<div class="kicker">Chapter ${CH.num} · Decision ${i+1} of ${CH.scenes.length}</div><h2>${sc.task}</h2>${paras(sc.text(S))}<div class="choices" role="group" aria-label="Choices">`;
+  let h=`<div class="kicker">Chapter ${CH.num} · Decision ${i+1} of ${CH.scenes.length}</div><h2>${sc.task}</h2>${paras(sc.text(S,allStates()))}<div class="choices" role="group" aria-label="Choices">`;
   order(sc).forEach((j,pos)=>{const o=sc.opts[j];const cls=picked===undefined?"":(j===picked?"picked":"")+(o.best&&picked!==undefined?" best":"");h+=`<button class="choice ${cls}" data-j="${j}" type="button"${picked!==undefined?" disabled":""}><span class="k">${"ABCD"[pos]}</span><span>${o.t}</span></button>`});
   h+=`</div>`;
   if(picked!==undefined){
     const o=sc.opts[picked],best=sc.opts.find(x=>x.best),lead=RUTH_LEADS[o.s][i%3];
-    h+=`<div class="outcome"><span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>${paras([o.after])}<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${sc.task}</span></div></div>${videoCard(VIDEOS[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">${i+1<CH.scenes.length?"Next":"Finish the chapter"}</button></div></div>`;
+    h+=`<div class="outcome"><span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>${paras([o.after])}<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${sc.task}</span></div></div>${videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">${i+1<CH.scenes.length?"Next":"Finish the chapter"}</button></div></div>`;
   }
   $("page").innerHTML=h;wireVideos();
   if(picked===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>choose(i,+b.dataset.j));
@@ -380,9 +201,10 @@ function renderScene(i){
 function choose(i,j){
   const sc=CH.scenes[i],o=sc.opts[j];
   S.picks[i]=j;S.score+=o.s;
-  for(const k in o.d)S.m[k]=clamp(S.m[k]+o.d[k]);
+  for(const k in (o.d||{}))S.m[k]=clamp(S.m[k]+o.d[k]);
   S.dom[sc.domain][0]+=o.s;S.dom[sc.domain][1]+=3;
-  if(i===0&&j===1)S.flags.allhands=true;
+  if(o.flag)S.flags[o.flag]=true;
+  if(CH.num===1&&i===0&&j===1)S.flags.allhands=true;
   save();render();
   const out=document.querySelector(".outcome");if(out)out.scrollIntoView({behavior:"smooth",block:"start"});
 }
@@ -390,26 +212,60 @@ function renderEnd(){
   const n=CH.scenes.length;
   const weak=DOMS.map(d=>[d,S.dom[d][1]?S.dom[d][0]/S.dom[d][1]:1]).sort((a,b)=>a[1]-b[1])[0];
   const missed=CH.scenes.map((sc,i)=>[sc,S.picks[i]]).filter(([sc,p])=>p!==undefined&&sc.opts[p].s<3);
-  $("page").innerHTML=`<div class="kicker">Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S))}
+  const nxt=CHAPTERS.find(c=>c.num===CH.num+1);
+  $("page").innerHTML=`<div class="kicker">Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates()))}
    <div class="end-grid"><div class="card"><h3>Score</h3><div class="big">${S.score}/${n*3}</div></div>${METERS.map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
    <h2>What to study next</h2><div class="story"><p>Your weakest area this chapter was <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent.${missed.length?" The decisions to revisit:":" You found the best answer every time."}</p></div>
    ${missed.length?`<ul class="story" style="padding-left:22px">${missed.map(([sc])=>`<li>${sc.task} (${sc.domain})</li>`).join("")}</ul>`:""}
-   ${videoCard(DEEPER,"Go deeper")}${episodeCard()}<div class="bar"><button class="btn" id="restart2" type="button">Replay chapter 1</button><span class="prog">Chapter 2, "Burn-In," is next.</span></div>`;
+   ${videoCard(CH.deeper,"Go deeper")}${episodeCard()}
+   <div class="bar">${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:""}<button class="btn ghost" id="restart2" type="button">Replay chapter ${CH.num}</button></div>`;
   $("restart2").onclick=restart;wireVideos();
+  if(nxt)$("nextch").onclick=()=>switchTo(nxt.num);
 }
 function restart(){S=fresh();save();render();window.scrollTo({top:0})}
 function render(){renderRail();if(S.step<0)renderOpening();else if(S.step>=CH.scenes.length)renderEnd();else renderScene(S.step)}
 
-/* ===== narration ===== */
-const synth=window.speechSynthesis;
-function speakable(){const el=$("page").cloneNode(true);el.querySelectorAll("button,.tags,.kicker,.verdict,.video,.episode").forEach(x=>x.remove());return el.innerText.replace(/\s+/g," ").trim()}
-$("readBtn").onclick=()=>{if(!synth)return;synth.cancel();const text=speakable();const chunks=text.match(/[^.!?]+[.!?"]*\s*/g)||[text];const rate=+$("rate").value;
-  const voices=synth.getVoices();const v=voices.find(x=>/en-US/.test(x.lang)&&/Samantha|Daniel|Alex|Aria|Jenny|Google US/.test(x.name))||voices.find(x=>/^en/.test(x.lang));
-  chunks.forEach(c=>{const u=new SpeechSynthesisUtterance(c);u.rate=rate;if(v)u.voice=v;synth.speak(u)})};
-$("stopBtn").onclick=()=>{if(synth)synth.cancel()};
-if(!synth){$("readBtn").disabled=true;$("readBtn").textContent="Not supported"}
-
-render();
+/* ===== accounts ===== */
+const ONLINE=location.protocol.startsWith("http");
+async function api(path,opts={}){const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
+function clearLocal(){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")).forEach(k=>localStorage.removeItem(k))}catch(e){}}
+function renderAuth(mode,invite){
+  document.querySelector(".rail").hidden=true;
+  const signup=mode==="signup";
+  $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>${signup?"Create your account":"Sign in"}</h1>
+   <div class="story"><p>${signup?"You've been invited to The Halcyon Launch, a story-driven PMP practice game. Your progress saves to your account so you can pick up anywhere.":"Invite only. Sign in to pick up where you left off."}</p></div>
+   <form class="auth" id="authform" novalidate><div id="autherr"></div>
+   ${signup?'<label for="a-name">Name<input id="a-name" autocomplete="name" required></label>':""}
+   <label for="a-email">Email<input id="a-email" type="email" autocomplete="email" required></label>
+   <label for="a-pw">Password${signup?" (10 characters or more)":""}<input id="a-pw" type="password" autocomplete="${signup?"new-password":"current-password"}" required></label>
+   <button class="btn" type="submit">${signup?"Create account":"Sign in"}</button></form>
+   ${signup?'<p class="prog">Already have an account? <a href="/">Sign in</a></p>':'<p class="prog">No account? You need an invite link from Anthony.</p>'}`;
+  $("authform").onsubmit=async e=>{e.preventDefault();$("autherr").innerHTML="";
+    const b={email:$("a-email").value,password:$("a-pw").value};if(signup){b.name=$("a-name").value;b.token=invite}
+    const r=await api("/api/auth?action="+(signup?"signup":"login"),{method:"POST",body:JSON.stringify(b)});
+    if(!r.ok){$("autherr").innerHTML=`<div class="err">${r.error||"That didn't work. Try again."}</div>`;return}
+    if(signup)history.replaceState(null,"","/");boot()};
+}
+async function boot(){
+  if(!ONLINE){render();return}
+  let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
+  if(!me.user){
+    const inv=new URLSearchParams(location.search).get("invite");
+    if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
+      $("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;document.querySelector(".rail").hidden=true;return}
+    return renderAuth("login");
+  }
+  clearLocal();
+  Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st));
+  store.set("cur",me.user.cur||1);
+  CH=CHAPTERS.find(c=>c.num===(me.user.cur||1))||CHAPTERS[0];S=store.get("c"+CH.num,null)||fresh();
+  SYNC=(n,st)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st})}).catch(()=>{});
+  document.querySelector(".rail").hidden=false;
+  $("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
+  $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();location.href="/"};
+  render();
+}
+boot();
 })();
 </script>
 </body>

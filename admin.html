@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
+<title>Halcyon Admin</title>
+<style>
+:root{--bg:#f3f1ec;--page:#fbfaf7;--ink:#1d2024;--muted:#5d636b;--line:#dcd8cf;--soft:#ece9e2;--accent:#28536b;--on:#fff;--good:#2e7350;--bad:#a63c32;color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121417;--page:#1a1d21;--ink:#e7e5e0;--muted:#a0a5ab;--line:#2e3238;--soft:#23272c;--accent:#8dbcd4;--on:#121417;--good:#74c69a;--bad:#ec8b80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121417;--page:#1a1d21;--ink:#e7e5e0;--muted:#a0a5ab;--line:#2e3238;--soft:#23272c;--accent:#8dbcd4;--on:#121417;--good:#74c69a;--bad:#ec8b80;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding-inline:18px;padding-block:24px 48px}
+h1{font:600 28px Georgia,serif;margin:0 0 4px}h2{font:600 19px Georgia,serif;margin:26px 0 8px}
+.card{background:var(--page);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+input{font:inherit;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-width:0}
+.btn{font:inherit;font-weight:600;background:var(--accent);color:var(--on);border:1px solid var(--accent);border-radius:6px;padding:8px 13px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.tw{overflow-x:auto;background:var(--page);border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:var(--soft);padding:8px 10px}
+td{padding:8px 10px;border-top:1px solid var(--line);vertical-align:top}
+.muted{color:var(--muted);font-size:13px}.ok{color:var(--good)}.bad{color:var(--bad)}
+code{font:13px ui-monospace,Menlo,monospace;word-break:break-all}
+</style>
+</head>
+<body><div class="wrap">
+<p class="muted"><a href="/">Back to the game</a></p>
+<h1>Halcyon Admin</h1>
+<div id="msg" class="muted"></div>
+<h2>Invite someone</h2>
+<div class="card"><div class="row"><label class="muted" for="note" style="display:flex;flex-direction:column;gap:4px;flex:1">Who it's for (just a note for you)<input id="note" placeholder="e.g. Kelsey"></label><button class="btn" id="make" type="button">Make invite link</button></div>
+<div id="newlink" style="margin-top:10px"></div><p class="muted" style="margin:8px 0 0">Each link works once and expires in 30 days.</p></div>
+<h2>Players</h2><div class="tw"><table id="users"></table></div>
+<h2>Invites</h2><div class="tw"><table id="invites"></table></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+async function api(path,opts={}){const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return{ok:r.ok,...j}}
+const d=x=>x?new Date(x).toLocaleDateString("en-US",{month:"short",day:"numeric"}):"";
+async function load(){
+  const r=await api("/api/admin?action=overview");
+  if(!r.ok){document.querySelector(".wrap").innerHTML=`<h1>Admins only</h1><p><a href="/">Back to the game</a></p>`;return}
+  $("users").innerHTML=`<tr><th>Name</th><th>Email</th><th>Progress</th><th>Joined</th><th></th></tr>`+r.users.map(u=>`<tr><td>${esc(u.name)}${u.is_admin?' <span class="muted">admin</span>':""}</td><td>${esc(u.email)}</td><td>${u.progress.length?u.progress.map(p=>`Ch ${p.chapter}: ${p.step>=10?"done "+p.score+"/30":(p.step<0?"not started":"decision "+(Number(p.step)+1))}`).join("<br>"):'<span class="muted">not started</span>'}</td><td>${d(u.created_at)}</td><td>${u.is_admin?"":`<button class="btn ghost" data-u="${u.id}" data-dis="${!u.disabled}">${u.disabled?"Re-enable":"Disable"}</button>`}</td></tr>`).join("");
+  $("invites").innerHTML=`<tr><th>For</th><th>Made</th><th>Status</th><th></th></tr>`+r.invites.map(i=>{const st=i.used_by?`<span class="ok">Used by ${esc(i.used_by)}</span>`:i.revoked?'<span class="bad">Revoked</span>':(new Date(i.expires_at)<new Date()?'<span class="muted">Expired</span>':"Open");return `<tr><td>${esc(i.note)||'<span class="muted">no note</span>'}</td><td>${d(i.created_at)}</td><td>${st}</td><td>${!i.used_by&&!i.revoked?`<button class="btn ghost" data-t="${i.token}">Revoke</button>`:""}</td></tr>`}).join("");
+  document.querySelectorAll("[data-t]").forEach(b=>b.onclick=async()=>{await api("/api/admin?action=revoke",{method:"POST",body:JSON.stringify({token:b.dataset.t})});load()});
+  document.querySelectorAll("[data-u]").forEach(b=>b.onclick=async()=>{await api("/api/admin?action=disable",{method:"POST",body:JSON.stringify({id:b.dataset.u,disabled:b.dataset.dis==="true"})});load()});
+}
+$("make").onclick=async()=>{const r=await api("/api/admin?action=invite",{method:"POST",body:JSON.stringify({note:$("note").value})});
+  if(!r.ok){$("newlink").textContent=r.error||"Couldn't make a link.";return}
+  const link=location.origin+"/?invite="+r.token;
+  $("newlink").innerHTML=`<code id="lk">${link}</code> <button class="btn ghost" id="cp" type="button">Copy</button>`;
+  $("cp").onclick=()=>navigator.clipboard.writeText(link).then(()=>$("cp").textContent="Copied").catch(()=>{const g=document.createRange();g.selectNodeContents($("lk"));getSelection().removeAllRanges();getSelection().addRange(g)});
+  $("note").value="";load()};
+load();
+</script>
+</body></html>

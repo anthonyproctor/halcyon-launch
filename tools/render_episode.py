@@ -2,6 +2,7 @@
 import json, subprocess, sys, tempfile, os
 VOICES = {"narrator": ("Ava (Premium)", 172), "ruth": ("Samantha (Enhanced)", 165)}
 script, out = sys.argv[1], sys.argv[2]
+title = sys.argv[3] if len(sys.argv) > 3 else "The Halcyon Launch"
 segs = json.load(open(script))
 tmp = tempfile.mkdtemp()
 files = []
@@ -20,5 +21,5 @@ for i, s in enumerate(segs):
 lst = f"{tmp}/list.txt"
 open(lst,"w").write("".join(f"file '{f}'\n" for f in files))
 subprocess.run(["ffmpeg","-loglevel","error","-y","-f","concat","-safe","0","-i",lst,"-af","loudnorm=I=-16:TP=-1.5:LRA=11","-c:a","libmp3lame","-b:a","96k","-ac","1",
-                "-metadata","title=The Halcyon Launch, Chapter 1: The Promotion","-metadata","artist=The Halcyon Launch",out],check=True)
+                "-metadata","title="+title,"-metadata","artist=The Halcyon Launch",out],check=True)
 print("done", out)
