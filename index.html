@@ -130,6 +130,12 @@ body.withbar{padding-bottom:84px}
 .castcard .av span{font-size:22px}.castquote{font-family:var(--story);font-style:italic;font-size:20px;border-left:4px solid var(--accent);margin:14px 0;padding:4px 14px}
 .casthead{display:flex;gap:16px;align-items:center;margin:8px 0}.casthead .av span{font-size:40px}
 .locked h2{color:var(--muted)}.ties{padding-left:20px}
+.topnav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:8px}
+.navl,.navr{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.navbtn{font:inherit;font-size:14px;font-weight:500;color:var(--ink);background:none;border:1px solid transparent;border-radius:999px;padding:5px 12px;cursor:pointer;text-decoration:none}
+.navbtn:hover{background:var(--soft)}.navbtn.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.navbtn.cont{background:var(--accent);color:var(--on-accent);font-weight:600}
+.backlink{margin:0 0 10px}
 .stepnav{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
 .sdot{width:16px;height:8px;border-radius:4px;border:none;background:var(--soft);padding:0;cursor:pointer}
 .sdot.seen{background:var(--accent-soft)} .sdot.now{background:var(--accent)} .sdot[disabled]{cursor:default}
@@ -179,7 +185,10 @@ body.withbar{padding-bottom:84px}
 </style>
 </head>
 <body>
-<header class="tophead"><div class="topbar" id="usercard" hidden><div class="userbar"><span id="username"></span><span><button class="linkbtn" id="homelink" type="button">Home</button> · <button class="linkbtn" id="proglink" type="button">Progress</button> · <button class="linkbtn" id="castlink" type="button">Cast</button> · <a id="adminlink" href="/admin" hidden>Admin</a> <button class="linkbtn" id="signout" type="button">Sign out</button></span></div></div></header>
+<header class="tophead"><nav class="topnav" id="usercard" hidden aria-label="Main">
+  <div class="navl"><button class="navbtn" id="homelink" type="button">Home</button><button class="navbtn" id="proglink" type="button">Progress</button><button class="navbtn" id="castlink" type="button">Cast</button><button class="navbtn cont" id="contlink" type="button" hidden></button></div>
+  <div class="navr"><span id="username" class="prog"></span><a id="adminlink" class="navbtn" href="/admin" hidden>Admin</a><button class="navbtn" id="signout" type="button">Sign out</button></div>
+</nav></header>
 <div class="wrap">
   <main class="page" id="page" aria-live="polite"></main>
   <aside class="rail" aria-label="Status">

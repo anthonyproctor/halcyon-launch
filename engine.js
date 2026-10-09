@@ -25,7 +25,7 @@ function freshFull(){return{pos:0,max:0,picks:{},m:{trust:50,conf:50,health:50},
 function keyOf(tr,n){return TRACKS[tr].key(n)}
 function load(tr,n){return store.get("c"+keyOf(tr,n),null)}
 function persist(tr,n,st){store.set("c"+keyOf(tr,n),st);if(SYNC){const k=keyOf(tr,n),copy=JSON.parse(JSON.stringify(st));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(k,copy),400)}}
-function save(){if(TRACK==="mock"){persistMock();return}persist(TRACK,CH.num,S);store.set("cur",keyOf(TRACK,CH.num))}
+function save(){if(TRACK==="mock"){persistMock();return}persist(TRACK,CH.num,S);store.set("cur",keyOf(TRACK,CH.num));store.set("lastplace",{t:TRACK,n:CH.num})}
 function chapters(){return TRACKS[TRACK].list()}
 function globalFlags(){const G={};if(TRACK!=="full")return G;chapters().forEach(c=>{if(c.num<CH.num){const st=load("full",c.num);if(st)Object.assign(G,st.flags||{})}});if(S&&S.flags)Object.assign(G,S.flags);return G}
 function allStates(){const o={};chapters().forEach(c=>{o[c.num]=c.num===CH.num?S:load(TRACK,c.num)});return o}
@@ -127,7 +127,7 @@ const MOCK_LIMIT=240*60;
 function mockQuestions(){const all=[];(window.HALCYON_MOCK||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part[0]+i})));return all}
 function freshMock(mode){const qs=mockQuestions();const seed=Date.now()%100000;const ord=order("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
 function persistMock(){store.set("c"+MOCK_KEY,MS);store.set("cur",MOCK_KEY);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(MOCK_KEY,copy),600)}}
-function openMock(){TRACK="mock";store.set("track","mock");MS=store.get("c"+MOCK_KEY,null);render();top()}
+function openMock(){store.set("lastplace",{t:"mock"});TRACK="mock";store.set("track","mock");MS=store.get("c"+MOCK_KEY,null);render();top()}
 function fmtTime(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return `${h}:${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`}
 function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode!=="exam")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT){mockSubmit()}},1000)}
 function mockRender(){
@@ -200,7 +200,7 @@ function studyPlan(m){
   if(!plan.length)plan.push(["Start here","Open the Full Course and play chapter 1.",{open:1}]);
   return plan.slice(0,5);
 }
-function renderDash(){
+function renderDash(){setTimeout(navSync,0);
   TRACK="dash";$("railgame").hidden=true;$("mockcard").hidden=true;
   const m=mastery(),H=(store.get("c901",null)||{list:[]}).list;
   const fullL=TRACKS.full.list(),refL=TRACKS.ref.list();
@@ -233,7 +233,7 @@ function renderDash(){
 let PR=null;
 function practicePool(t){const pool=[];TRACKS.full.list().forEach(c=>c.quiz.forEach((q,i)=>pool.push({...q,src:`Chapter ${c.num} quiz`,pid:`f${c.num}q${i}`})));mockQuestions().forEach(q=>pool.push({...q,src:"Mock bank",pid:"m"+q.id}));return t==="mixed"?pool:pool.filter(q=>q.task===t)}
 function startPractice(t){const pool=practicePool(t);if(!pool.length)return;const seed=Date.now()%9973;const pick=order("pr"+t+seed,pool.length).slice(0,10).map(i=>pool[i]);PR={task:t,qs:pick,v:null};TRACK="practice";renderPractice();top()}
-function renderPractice(){
+function renderPractice(){setTimeout(navSync,0);
   $("railgame").hidden=true;$("mockcard").hidden=true;const {task,qs,v}=PR;
   $("page").innerHTML=`<div class="kicker">Practice set</div><h1>${task==="mixed"?"Mixed practice":`${task} ${TASKNAMES[task]}`}</h1><p class="prog">${qs.length} questions from the chapter quizzes and the mock bank. Results feed your progress map.</p>
    <form id="prform" novalidate>${qs.map((x,qi)=>{const ord=order("pq"+x.pid,4);return `<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${v?(oi===x.a?"qright":v[qi]===oi?"qwrong":""):""}"><input type="radio" name="p${qi}" value="${oi}" ${v?"disabled":""} ${v&&v[qi]===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`).join("")}${v?`<p class="qwhy"><b>${v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} · ${x.src}</span></p>`:""}</fieldset>`}).join("")}${v?"":`<button class="btn" type="submit">Check my answers</button>`}</form>
@@ -321,7 +321,7 @@ function castList(){return window.HALCYON_CAST||[]}
 function storyReach(){let done=0;TRACKS.full.list().forEach(c=>{const st=c.num===(TRACK==="full"&&CH?CH.num:-1)?S:load("full",c.num);if(st&&(st.pos||0)>=steps(c).length-1)done=Math.max(done,c.num)});return done}
 function avatar(c,size){const ini=c.name.split(" ").map(w=>w[0]).slice(0,2).join("");let h=0;for(const ch of c.id)h=(h*31+ch.charCodeAt(0))>>>0;const hue=h%360;
   return `<span class="av" style="width:${size}px;height:${size}px;--avh:${hue}"><img src="cast/${c.id}.jpg" alt="" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='cast/${c.id}.svg'}else this.remove()"><span>${esc(ini)}</span></span>`}
-function renderCast(id){
+function renderCast(id){setTimeout(navSync,0);
   TRACK="cast";$("railgame").hidden=true;$("mockcard").hidden=true;const L=castList();const reach=store.get("spoilers",false)?99:storyReach();
   if(!L.length){$("page").innerHTML=`<h1>Cast</h1><p class="prog">The cast guide is on its way.</p>`;return}
   if(!id){$("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Cast</h1><div class="story"><p>Profiles fill in as you play the Full Course, so nothing gets spoiled. You've finished ${reach>=99?"everything (spoilers on)":reach?`chapter ${reach}`:"no chapters yet"}.</p></div>
@@ -337,16 +337,24 @@ function renderCast(id){
   $("castback").onclick=()=>{if(window.__castAudio)window.__castAudio.pause();renderCast();top()};$("page").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{renderCast(b.dataset.c);top()});
 }
 
+
+function lastPlaceLabel(){const lp=store.get("lastplace",null);if(!lp)return null;if(lp.t==="mock")return["Mock exam",()=>openMock()];const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
+function navSync(){const map={home:"homelink",dash:"proglink",practice:"proglink",cast:"castlink"};["homelink","proglink","castlink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+  const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
+  const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
+  if(lp&&!inPlace){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
+  if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="dash"||TRACK==="practice")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
+
 /* ===== home and rail ===== */
 function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
-function renderHome(){
+function renderHome(){setTimeout(navSync,0);
   TRACK=null;CH=null;$("railgame").hidden=true;
   const cards=Object.values(TRACKS).map(t=>{let sub="";if(t.id!=="mock"){const L=t.list();const done=L.filter(c=>chapterProgress(t.id,c)==="done"||/\d+\/\d+/.test(chapterProgress(t.id,c))).length;sub=L.length?`${done} of ${L.length} chapters done`:"coming soon"}else{const m=store.get("c"+MOCK_KEY,null);sub=m&&m.order?(m.submitted?"last attempt finished":"in progress"):"not started"}
     return `<div class="card track"><h3>${t.name}</h3><p>${t.blurb}</p><p class="prog">${sub}</p><button class="btn" data-t="${t.id}" type="button">${t.id==="mock"?"Open the mock exam":"Open"}</button></div>`}).join("");
   $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Pick your path</h1><div class="story"><p>Same company, same people. The refresher is a fast review. The full course teaches the PMP from scratch through Sam's story. The mock exam tests you like the real thing.</p></div><div class="tracks">${cards}</div><div class="bar"><button class="btn ghost" id="todash2" type="button">My progress and study plan</button></div>`;$("todash2").onclick=()=>renderDash();
   $("page").querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const t=b.dataset.t;if(t==="mock")return openMock();const L=TRACKS[t].list();if(!L.length)return;const last=store.get("lastch."+t,L[0].num);openChapter(t,L.find(c=>c.num===last)?last:L[0].num)});
 }
-function openChapter(tr,n){TRACK=tr;store.set("track",tr);store.set("lastch."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
+function openChapter(tr,n){store.set("lastplace",{t:tr,n});TRACK=tr;store.set("track",tr);store.set("lastch."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
 function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this chapter will be cleared.`))return;const st=TRACK==="ref"?freshRef():freshFull();if(n===CH.num){S=st;save();render();top()}else{persist(TRACK,n,st);renderRail()}}
 function renderRail(){
   const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
@@ -366,7 +374,7 @@ function renderRail(){
   const cast=[...BASE_CAST,...(TRACK==="full"?FULL_CAST_EXTRA:[])];chapters().filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));
   $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
 }
-function render(){_render();narAttach()}
+function render(){_render();narAttach();navSync()}
 function _render(){if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
@@ -386,7 +394,7 @@ async function boot(){
   if($("castlink"))$("castlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderCast();top()};
   $("proglink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderDash();top()};
   $("homelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderHome();renderRail()};
-  if(!ONLINE){resumeFrom(store.get("cur",0));return}
+  if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;$("username").textContent="";resumeFrom(store.get("cur",0));return}
   let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
   if(!me.user){const inv=new URLSearchParams(location.search).get("invite");
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
