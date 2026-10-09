@@ -79,6 +79,15 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .end-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
 .end-grid .card{padding:12px}
 .big{font-family:var(--mono);font-size:26px;font-variant-numeric:tabular-nums}
+.video{margin-top:12px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--page)}
+.video .vhead{display:flex;gap:10px;align-items:center;padding:9px 12px;font-size:14px;flex-wrap:wrap}
+.video .vhead b{font-weight:600}
+.video .vframe{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:#000}
+.video .vframe iframe,.video .vframe button{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video .vframe button{cursor:pointer;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center}
+.video .play{font:600 15px var(--ui);color:#fff;background:rgba(0,0,0,.65);border-radius:999px;padding:9px 16px}
+.episode{background:var(--soft);border-radius:8px;padding:12px 14px;margin:16px 0}
+.episode audio{width:100%;margin-top:6px}
 @media (prefers-reduced-motion:no-preference){.track span{transition:width .4s ease}.outcome{animation:rise .35s ease}}
 @keyframes rise{from{transform:translateY(6px);opacity:.4}to{transform:none;opacity:1}}
 </style>
@@ -310,6 +319,23 @@ const CH = {
  ]
 };
 
+const VIDEOS={
+ c1s1:["EHnKAgDyz1o","Master the PMP Exam Mindset: 9 Key Principles","PM Aspirant","11:46"],
+ c1s2:["xvj0bbOfyTg","What is a Project Charter? Explained in 4 Minutes","Max Mao","4:39"],
+ c1s3:["YASLijHmB54","Agile: Servant Leadership","David McLachlan","4:23"],
+ c1s4:["_c-qzFV5yM4","Project Management Scope Creep: Manage It Like a Pro","Adriana Girdler","4:37"],
+ c1s5:["75bO_XWk7fw","The Five Dysfunctions of a Team","Patrick Lencioni","6:08"],
+ c1s6:["qf0Yzrzr_i4","Waterfall vs Agile vs Hybrid Approaches Explained","Alvin the PM","9:08"],
+ c1s7:["JWI_wZeebO8","Types of Contracts: Key Concepts in Project Management","David McLachlan","6:31"],
+ c1s8:["p5qTCI-alfw","PMP Exam Mindset: Confirm Project Compliance Requirements","Praizion","10:53"],
+ c1s9:["5VrHeEfRceo","Stakeholder Engagement: Five-step Process","Mike Clayton","4:05"],
+ c1s10:["qNEVrb1Bq-Q","When Your Projects Are Late","ProjectManager","4:17"]
+};
+const DEEPER=["-u0rO-YQr9c","Complete PMP Mindset: 50 Principles and Questions","Andrew Ramdayal","2:53:56"];
+const EPISODE={src:"audio/ch1-the-promotion.mp3",len:"19 minutes"};
+function videoCard(v,label){if(!v)return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${v[1]}</b><span class="prog">${v[2]} · ${v[3]}</span></div><div class="vframe"><button type="button" data-vid="${v[0]}" aria-label="Play video: ${v[1]}" style="background-image:url('https://i.ytimg.com/vi/${v[0]}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
+function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
+function episodeCard(){return `<div class="episode"><div class="who prog">Listen instead · Chapter ${CH.num} audio episode · ${EPISODE.len}</div><p class="prog" style="margin:4px 0 0">The whole chapter read aloud. It pauses at each decision so you can pick, then gives the answer and Ruth's debrief.</p><audio controls preload="none" src="${EPISODE.src}"></audio></div>`}
 const RUTH_LEADS={3:["That's the move.","Good. That's what I'd want from a flight director.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best answer.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have stopped you there.","Let's talk about that one."]};
 const METERS=[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Delivery health"]];
 const DOMS=["People","Process","Business Environment"];
@@ -334,7 +360,7 @@ function order(sc){ // stable shuffle per scene so the best answer isn't always 
 }
 function paras(arr){return `<div class="story">${arr.map(p=>`<p>${p}</p>`).join("")}</div>`}
 function renderOpening(){
-  $("page").innerHTML=`<div class="kicker">Chapter ${CH.num}</div><h1>${CH.title}</h1>${paras(CH.opening)}<div class="bar"><button class="btn" id="go" type="button">Begin</button>${Object.keys(S.picks).length?'<button class="btn ghost" id="restart" type="button">Start over</button>':""}</div>`;
+  $("page").innerHTML=`<div class="kicker">Chapter ${CH.num}</div><h1>${CH.title}</h1>${paras(CH.opening)}${episodeCard()}<div class="bar"><button class="btn" id="go" type="button">Begin</button>${Object.keys(S.picks).length?'<button class="btn ghost" id="restart" type="button">Start over</button>':""}</div>`;
   $("go").onclick=()=>{S.step=0;save();render()};
   const r=$("restart");if(r)r.onclick=restart;
 }
@@ -345,9 +371,9 @@ function renderScene(i){
   h+=`</div>`;
   if(picked!==undefined){
     const o=sc.opts[picked],best=sc.opts.find(x=>x.best),lead=RUTH_LEADS[o.s][i%3];
-    h+=`<div class="outcome"><span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>${paras([o.after])}<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${sc.task}</span></div></div><div class="bar"><button class="btn" id="next" type="button">${i+1<CH.scenes.length?"Next":"Finish the chapter"}</button></div></div>`;
+    h+=`<div class="outcome"><span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>${paras([o.after])}<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${sc.task}</span></div></div>${videoCard(VIDEOS[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">${i+1<CH.scenes.length?"Next":"Finish the chapter"}</button></div></div>`;
   }
-  $("page").innerHTML=h;
+  $("page").innerHTML=h;wireVideos();
   if(picked===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>choose(i,+b.dataset.j));
   else $("next").onclick=()=>{S.step=i+1;save();render();window.scrollTo({top:0,behavior:"smooth"})};
 }
@@ -368,15 +394,15 @@ function renderEnd(){
    <div class="end-grid"><div class="card"><h3>Score</h3><div class="big">${S.score}/${n*3}</div></div>${METERS.map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
    <h2>What to study next</h2><div class="story"><p>Your weakest area this chapter was <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent.${missed.length?" The decisions to revisit:":" You found the best answer every time."}</p></div>
    ${missed.length?`<ul class="story" style="padding-left:22px">${missed.map(([sc])=>`<li>${sc.task} (${sc.domain})</li>`).join("")}</ul>`:""}
-   <div class="bar"><button class="btn" id="restart2" type="button">Replay chapter 1</button><span class="prog">Chapter 2, "Burn-In," is next.</span></div>`;
-  $("restart2").onclick=restart;
+   ${videoCard(DEEPER,"Go deeper")}${episodeCard()}<div class="bar"><button class="btn" id="restart2" type="button">Replay chapter 1</button><span class="prog">Chapter 2, "Burn-In," is next.</span></div>`;
+  $("restart2").onclick=restart;wireVideos();
 }
 function restart(){S=fresh();save();render();window.scrollTo({top:0})}
 function render(){renderRail();if(S.step<0)renderOpening();else if(S.step>=CH.scenes.length)renderEnd();else renderScene(S.step)}
 
 /* ===== narration ===== */
 const synth=window.speechSynthesis;
-function speakable(){const el=$("page").cloneNode(true);el.querySelectorAll("button,.tags,.kicker,.verdict").forEach(x=>x.remove());return el.innerText.replace(/\s+/g," ").trim()}
+function speakable(){const el=$("page").cloneNode(true);el.querySelectorAll("button,.tags,.kicker,.verdict,.video,.episode").forEach(x=>x.remove());return el.innerText.replace(/\s+/g," ").trim()}
 $("readBtn").onclick=()=>{if(!synth)return;synth.cancel();const text=speakable();const chunks=text.match(/[^.!?]+[.!?"]*\s*/g)||[text];const rate=+$("rate").value;
   const voices=synth.getVoices();const v=voices.find(x=>/en-US/.test(x.lang)&&/Samantha|Daniel|Alex|Aria|Jenny|Google US/.test(x.name))||voices.find(x=>/^en/.test(x.lang));
   chunks.forEach(c=>{const u=new SpeechSynthesisUtterance(c);u.rate=rate;if(v)u.voice=v;synth.speak(u)})};
