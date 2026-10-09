@@ -192,6 +192,6 @@
  c1s10:["qNEVrb1Bq-Q","When Your Projects Are Late","ProjectManager","4:17"]
 },
  deeper:["-u0rO-YQr9c","Complete PMP Mindset: 50 Principles and Questions","Andrew Ramdayal","2:53:56"],
- episode:{src:"audio/ch1-the-promotion.mp3",len:"20 minutes"},
+ episode:{src:"audio/ch1-the-promotion.mp3",len:"17 minutes"},
  next:"Burn-In"
 }));
