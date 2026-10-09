@@ -12,7 +12,7 @@ let BASE_CAST=[["Sam Okafor","You. Infrastructure ops manager, former Air Force 
 let FULL_CAST_EXTRA=[["Dana Okafor","Sam's wife. High school chemistry teacher. Notices when he isn't sleeping."],["Priya Shah","Junior engineer. Shadows Theo."]];
 
 const TRACKS={
-  ref:{id:"ref",name:"Refresher",blurb:"6 chapters, about 2.5 hours. Ten decisions per chapter with Ruth's debriefs. Best for a quick review.",list:()=> (DATA().ref||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>n},
+  ref:{id:"ref",name:"Refresher",blurb:"6 chapters, about 2.5 hours. Ten decisions per chapter with mentor debriefs. Best for a quick review.",list:()=> (DATA().ref||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>n},
   full:{id:"full",name:"Full Course",blurb:"15 chapters, about 15 to 20 hours. Lessons, decisions, math drills, exercises, and a quiz every chapter. Learn the PMP from the ground up.",list:()=> (DATA().full||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>100+n},
   mock:{id:"mock",name:"Mock Exam",blurb:"180 questions in 240 minutes with two breaks, weighted like the real exam. Practice mode gives feedback as you go.",key:()=>900}
 };
@@ -23,6 +23,8 @@ let COURSE=COURSES[0];
 function courseById(id){return COURSES.find(c=>c.id===id)}
 function courseOfKey(k){return COURSES.filter(c=>k>=c.base).sort((a,b)=>b.base-a.base)[0]||COURSES[0]}
 function DATA(){if(COURSE.id==="pmp")return{ref:window.HALCYON,full:window.HALCYON_FULL,mock:window.HALCYON_MOCK,cast:window.HALCYON_CAST};return (window.HALCYON_DATA||{})[COURSE.id]||{}}
+function MENTOR(){return COURSE.mentor||"Ruth"}
+function LESSON(){return COURSE.lessonName||"Ruth's whiteboard"}
 function R(p){return /^(https?:|\/)/.test(p)?p:COURSE.root+p}
 function taskDomain(t){return (COURSE.taskDomain||{})[t[0]]||DOMS[0]}
 function loadScripts(list){return Promise.all(list.map(src=>new Promise(ok=>{if(document.querySelector(`script[data-c="${src}"]`))return ok();const el=document.createElement("script");el.src=src;el.dataset.c=src;el.onload=ok;el.onerror=ok;document.head.appendChild(el)})))}
@@ -76,7 +78,7 @@ function sceneHTML(sc,i,n,picked,stateForText){
   h+=`</div>`;
   if(picked!==undefined){const o=sc.opts[picked],best=sc.opts.find(x=>x.best),lead=RUTH_LEADS[o.s][i%3];
     const ruth=`<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${esc(sc.task&&TASKNAMES[sc.task]?sc.task+" "+TASKNAMES[sc.task]:sc.task)}</span></div></div>`;
-    h+=`<div class="outcome">${SM?"":`<span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>`}${paras([o.after])}${SM?`<details class="ruthtake"><summary>Ruth's take</summary>${ruth}</details>`:ruth}${SM?"":videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">Next</button><button class="btn ghost" id="redo" type="button">Redo this decision</button></div></div>`}
+    h+=`<div class="outcome">${SM?"":`<span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>`}${paras([o.after])}${SM?`<details class="ruthtake"><summary>${MENTOR()}'s take</summary>${ruth}</details>`:ruth}${SM?"":videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">Next</button><button class="btn ghost" id="redo" type="button">Redo this decision</button></div></div>`}
   return h;
 }
 
@@ -113,14 +115,14 @@ function fullGo(p){const L=steps(CH);if(p>=L.length)p=L.findIndex(x=>x.k==="end"
 function fullRender(){
   const st=steps(CH),cur=st[Math.min(S.pos,st.length-1)];
   const phase=k=>({open:"Story",lesson:"Lesson",scene:"Decisions",drill:"Decisions",exercise:"Decisions",quiz:"Quiz",end:"Debrief"})[k];
-  const curPhase=STORY()?({open:"Story",scene:"Story",end:"Story",lesson:"Ruth's notes",drill:"Ruth's notes",exercise:"Ruth's notes",quiz:"Ruth's notes"})[cur.k]:phase(cur.k);const PH=STORY()?["Story","Ruth's notes"]:["Story","Lesson","Decisions","Quiz","Debrief"];
+  const curPhase=STORY()?({open:"Story",scene:"Story",end:"Story",lesson:MENTOR()+"'s notes",drill:MENTOR()+"'s notes",exercise:MENTOR()+"'s notes",quiz:MENTOR()+"'s notes"})[cur.k]:phase(cur.k);const PH=STORY()?["Story",MENTOR()+"'s notes"]:["Story","Lesson","Decisions","Quiz","Debrief"];
   const chmap=`<ol class="chmap" aria-label="Chapter steps">${PH.map((p,i)=>{const idx=PH.indexOf(curPhase);return `<li class="${p===curPhase?"now":i<idx?"done":""}">${p}</li>`}).join("")}</ol>`;
   const nav=chmap+`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${x.k}" ${i>S.max?"disabled":""}></button>`).join("")}</div>`;
   let h=nav;
   if(cur.k==="open"){
     h+=chapterArt()+`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1>${STORY()?"":`<div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>`}${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">${STORY()?"Continue the story":"Next: the lesson"}</button></div>`;
   }else if(cur.k==="lesson"){
-    const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · The lesson · Ruth's Whiteboard</div><h1>${esc(L.title)}</h1><p class="lessonintro">Ruth Calder is Sam's mentor, a retired NASA flight director on Halcyon's board. Her whiteboard is the lesson: the PMP ideas behind this chapter, before you make the decisions.</p>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Next: the decisions</button></div>`;
+    const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · The lesson · ${LESSON()}</div><h1>${esc(L.title)}</h1><p class="lessonintro">Ruth Calder is Sam's mentor, a retired NASA flight director on Halcyon's board. Her whiteboard is the lesson: the PMP ideas behind this chapter, before you make the decisions.</p>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Next: the decisions</button></div>`;
   }else if(cur.k==="scene"){
     const i=cur.i,sc=CH.scenes[i];h+=sceneHTML(sc,i,CH.scenes.length,S.picks[i],S);
   }else if(cur.k==="drill"){
@@ -142,7 +144,7 @@ function fullRender(){
     h+=`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates(),globalFlags()))}
      <div class="end-grid"><div class="card"><h3>Decisions</h3><div class="big">${S.score}/${n*3}</div></div><div class="card"><h3>Quiz</h3><div class="big">${S.quiz?S.quiz.right+"/"+CH.quiz.length:"·"}</div></div>${dr?`<div class="card"><h3>Drills</h3><div class="big">${drOk}/${dr}</div></div>`:""}${METERS.map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
      <div class="story"><p>Weakest area this chapter: <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent, counting decisions and quiz together.</p></div>
-     ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">Ruth's notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`<button class="btn" id="tomock" type="button">Take the mock exam</button>`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
+     ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">${MENTOR()}'s notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`<button class="btn" id="tomock" type="button">Take the mock exam</button>`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
   }
   $("page").innerHTML=h;wireVideos();
   $("page").querySelectorAll(".sdot[data-p]").forEach(b=>b.onclick=()=>fullGo(+b.dataset.p));
@@ -172,7 +174,7 @@ function mockRender(){
   if(!qs.length){$("page").innerHTML=`<h1>Mock exam</h1><p>The question bank is still being written. Check back soon.</p>`;return}
   if(!MS){
     $("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${qs.length} questions. ${COURSE.mockBlurb||""}</p></div>
-    <div class="grid2"><div class="card"><h3>Exam mode</h3><p>${Math.round(MOCK_LIMIT()/60)} minutes, the timer runs${(COURSE.mockBreaks||[]).length?`, optional breaks after questions ${COURSE.mockBreaks.join(" and ")}`:""}, results and explanations at the end.</p><button class="btn" id="exam" type="button">Start exam mode</button></div><div class="card"><h3>Practice mode</h3><p>No timer. See the answer and Ruth's explanation after each question.</p><button class="btn ghost" id="practice" type="button">Start practice mode</button></div></div>`;
+    <div class="grid2"><div class="card"><h3>Exam mode</h3><p>${Math.round(MOCK_LIMIT()/60)} minutes, the timer runs${(COURSE.mockBreaks||[]).length?`, optional breaks after questions ${COURSE.mockBreaks.join(" and ")}`:""}, results and explanations at the end.</p><button class="btn" id="exam" type="button">Start exam mode</button></div><div class="card"><h3>Practice mode</h3><p>No timer. See the answer and ${MENTOR()}'s explanation after each question.</p><button class="btn ghost" id="practice" type="button">Start practice mode</button></div></div>`;
     $("exam").onclick=()=>{MS=freshMock("exam");persistMock();render()};$("practice").onclick=()=>{MS=freshMock("practice");persistMock();render()};return}
   if(MS.submitted)return mockResults(byId);
   if(MS.onBreak!==null){$("page").innerHTML=`<h1>Break</h1><div class="story"><p>You've finished question ${MS.onBreak}. Take up to 10 minutes. The exam timer is paused. On the real exam you can't go back to earlier questions after a break.</p></div><div class="bar"><button class="btn" id="resume" type="button">Resume the exam</button></div>`;$("resume").onclick=()=>{MS.breaksTaken.push(MS.onBreak);MS.onBreak=null;persistMock();render()};return}
@@ -230,7 +232,7 @@ function weakTasks(m,k){return ALLT().filter(t=>m[t].n>=2).map(t=>[t,pctOf(m[t])
 function studyPlan(m){
   const weak=weakTasks(m,3).filter(([,p])=>p<80),plan=[];
   const nextCh=TRACKS.full.list().find(c=>{const st=load("full",c.num);return !st||(st.pos||0)<steps(c).length-1});
-  if(nextCh)plan.push(["Keep the story moving",`Full Course chapter ${nextCh.num}, ${nextCh.title}. Read Ruth's whiteboard and play the decisions.`,{open:nextCh.num}]);
+  if(nextCh)plan.push(["Keep the story moving",`Full Course chapter ${nextCh.num}, ${nextCh.title}. Read ${LESSON()} and play the decisions.`,{open:nextCh.num}]);
   weak.forEach(([t,p])=>{const where=taughtIn(t)[0];plan.push([`Shore up ${t} ${TASKNAMES[t]} (${p}%)`,where?`Re-read the chapter ${where.c.num} lesson, then do 10 practice questions on this task.`:`Do 10 practice questions on this task.`,{task:t}])});
   const H=store.get("c"+(COURSE.base+901),null);if(!H||!H.list.length){if(TRACKS.full.list().filter(c=>{const st=load("full",c.num);return st&&(st.pos||0)>=steps(c).length-1}).length>=5)plan.push(["Take a mock exam","You've finished five chapters. A full timed mock now shows where you really stand.",{mock:1}])}
   else plan.push(["Mixed practice","Do 10 mixed practice questions to keep everything warm.",{task:"mixed"}]);
@@ -250,7 +252,7 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   const plan=studyPlan(m),weak=weakTasks(m,5);
   $("page").innerHTML=`<div class="kicker">My progress</div><h1>Scoreboard</h1>
    <div class="end-grid"><div class="card"><h3>Readiness</h3><div class="big">${ready!==null?ready+"%":"·"}</div><p class="prog">${last?`Last timed mock, ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}`:"Take a timed mock to see this"}</p></div>${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${domPct(d)!==null?domPct(d)+"%":"·"}</div></div>`).join("")}</div>
-   <h2>Ruth's study plan</h2><div class="story"><p>Built from your weakest tasks and where you are in the course. It updates as you play.</p></div>
+   <h2>${MENTOR()}'s study plan</h2><div class="story"><p>Built from your weakest tasks and where you are in the course. It updates as you play.</p></div>
    <ol class="plan">${plan.map(([h,b,a],i)=>`<li><b>${esc(h)}.</b> ${esc(b)} <button class="btn small" data-plan="${i}" type="button">${a.mock?"Open mock exam":a.task?"Practice":"Open"}</button></li>`).join("")}</ol>
    <h2>Where you need help</h2>${weak.length?weak.map(([t,p])=>{const ti=taughtIn(t),vids=videosFor(t);return `<div class="card helpcard"><div class="row"><b>${t} ${TASKNAMES[t]}</b><span class="pill ${p>=75?"p-ok":p>=50?"p-warn":"p-bad"}">${p}%</span></div>
      <p class="prog">Taught in: ${ti.map(({c,scenes})=>`<button class="linkbtn" data-lesson="${c.num}">Ch ${c.num} lesson</button>${scenes.map(i=>` · <button class="linkbtn" data-scene="${c.num}:${i}">decision ${i+1}</button>`).join("")}`).join(" | ")||"the mock exam only"}</p>
@@ -306,7 +308,7 @@ function narHighlight(){if(NAR.page==="book"){const pr=$("narprog");if(pr&&NAR.a
   const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";
   if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight)}
 function narUI(){const b=$("narbar");if(!b)return;const has=NAR.page==="car"||NAR.page==="book"||!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
-  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent=NAR.page==="book"?`Hands-free · Ch ${NAR.book.n} · ${NAR.book.ed==="story"?"Story only":"Story + lessons"}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:"Ruth's whiteboard",end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
+  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent=NAR.page==="book"?`Hands-free · Ch ${NAR.book.n} · ${NAR.book.ed==="story"?"Story only":"Story + lessons"}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:LESSON(),end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
 async function narAttach(){
   if(NAR.page==="book"&&!NAR.audio.paused){narUI();return}
   const key0=narKey();
@@ -396,7 +398,7 @@ async function renderBook(){setTimeout(ambSync,0);
   const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${COURSE.id}.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
     return `<button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>`};
   $("page").innerHTML=`<div class="kicker">Hands-free</div><h1>Listen hands-free</h1><p class="lead">No tapping needed. It plays the story on the right-answer path, chapter after chapter, and keeps going with your phone locked. Pause or skip with your car or lock-screen controls.</p>
-   <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. Sam makes the right calls and you hear what happens. About 10 to 13 minutes a chapter.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus Ruth's lesson, and each decision read aloud with a pause, then the answer and why. About 25 minutes.</span></button></div>
+   <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. Sam makes the right calls and you hear what happens. About 10 to 13 minutes a chapter.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus ${MENTOR()}'s lesson, and each decision read aloud with a pause, then the answer and why. About 25 minutes.</span></button></div>
    <p class="prog">Plays chapter to chapter on its own and remembers where you stopped. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
    <h2>Full Course</h2><div class="brows">${full.map(row).join("")}</div>`;
   $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd."+COURSE.id,b.dataset.ed);renderBook()});
@@ -452,7 +454,7 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
   $("page").innerHTML=`<div class="kicker"><button class="linkbtn" type="button" id="tolib">Library</button> › ${esc(COURSE.title)}</div><h1>${esc(COURSE.full_title||COURSE.title)}</h1>
    ${lp?`<button class="hero" type="button" id="resume"><span class="prog">Pick up where you left off</span><b>${esc(lp[0])}</b><span class="go">Continue ›</span></button>`:`<button class="hero" type="button" id="resume"><span class="prog">New here?</span><b>Start the ${esc(COURSE.fullName||"Full Course")}: Chapter 1${TRACKS.full.list()[0]?", "+esc(TRACKS.full.list()[0].title):""}</b><span class="go">Begin ›</span></button>`}
    <button class="handsfree" type="button" id="hfree"><span>🎧</span><span><b>Listen hands-free</b><span class="prog">Starts at your current chapter. No tapping while you drive.</span></span></button>
-   ${plan[0]?`<div class="nextstep"><span class="prog">Ruth's next step for you</span><p><b>${esc(plan[0][0])}.</b> ${esc(plan[0][1])}</p><button class="btn small" type="button" id="planbtn">${plan[0][2].task?"Practice now":plan[0][2].mock?"Open mock exam":"Go"}</button> <button class="linkbtn" type="button" id="seeplan">See the full study plan</button></div>`:""}
+   ${plan[0]?`<div class="nextstep"><span class="prog">${MENTOR()}'s next step for you</span><p><b>${esc(plan[0][0])}.</b> ${esc(plan[0][1])}</p><button class="btn small" type="button" id="planbtn">${plan[0][2].task?"Practice now":plan[0][2].mock?"Open mock exam":"Go"}</button> <button class="linkbtn" type="button" id="seeplan">See the full study plan</button></div>`:""}
    <h2>${esc(COURSE.fullName||"Full Course")} <span class="prog">${fullDone} of ${full.length} chapters done${COURSE.fullHours?" · "+COURSE.fullHours:""}</span></h2>
    <div class="ctiles">${full.map(c=>tile("full",c)).join("")}</div>
    ${ref.length?`<h2>Refresher <span class="prog">${ref.length} chapters · a fast review</span></h2><div class="ctiles">${ref.map(c=>tile("ref",c)).join("")}</div>`:""}
