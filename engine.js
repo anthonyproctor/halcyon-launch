@@ -317,11 +317,12 @@ NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.b
 function foldInit(){document.querySelectorAll("details.fold").forEach(d=>{const k="fold."+d.id;const v=store.get(k,null);if(v!==null)d.open=v;d.addEventListener("toggle",()=>store.set(k,d.open))})}
 foldInit();
 function narInit(){
-  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<div class="nartrack"><span id="narprog"></span></div><div class="narrow"><button class="btn" id="narplay" type="button">▶ Listen</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto"><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label></div>`;
+  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<div class="nartrack"><span id="narprog"></span></div><div class="narrow"><button class="btn" id="narplay" type="button">▶ Listen</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto"><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label><button class="btn small ghost" id="gohf" type="button">🎧 Go hands-free</button></div>`;
   document.body.appendChild(bar);
   $("narplay").onclick=()=>{if(NAR.audio.paused){NAR.listening=true;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{narUI();narHighlight()})}else{NAR.listening=false;NAR.audio.pause();narUI()}};
   $("narrate").onchange=e=>{NAR.rate=+e.target.value;NAR.audio.playbackRate=NAR.rate;store.set("rate",NAR.rate)};
   $("narauto").onchange=e=>{NAR.auto=e.target.checked;store.set("auto2",NAR.auto)};
+  $("gohf").onclick=async()=>{if(TRACK==="full"||TRACK==="ref")save();const n=TRACK==="full"&&CH?CH.num:1;const B=await bookManifest();const ed=store.get("bookEd","story");const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);renderBook();top();if(have.length)bookPlay(ed,have.includes(n)?n:(have.find(k=>k>=n)||have[have.length-1]))};
   NAR.audio.addEventListener("pause",narUI);
 }
 narInit();window.__nar=NAR;
