@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   if (req.method !== "PUT") return send(res, 405, { error: "Method not allowed." });
   const b = await body(req);
   const chapter = Number(b.chapter);
-  if (!Number.isInteger(chapter) || chapter < 1 || chapter > 999) return send(res, 400, { error: "Bad chapter." });
+  if (!Number.isInteger(chapter) || chapter < 1 || chapter > 99999) return send(res, 400, { error: "Bad chapter." });
   const state = b.state;
   const json = JSON.stringify(state || {});
   if (json.length > 60000) return send(res, 400, { error: "Too large." });

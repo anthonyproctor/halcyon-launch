@@ -215,11 +215,21 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 .episode audio{width:100%;margin-top:6px}
 @media (prefers-reduced-motion:no-preference){.track span{transition:width .4s ease}.outcome{animation:rise .35s ease}}
 @keyframes rise{from{transform:translateY(6px);opacity:.4}to{transform:none;opacity:1}}
+.libgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:12px}
+.libcard{display:flex;gap:14px;align-items:flex-start;text-align:left;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--page);color:inherit;font:inherit;cursor:pointer}
+.libcard.live:hover{border-color:var(--accent)}
+.libcard.soon{opacity:.6;cursor:default}
+.libart{font-size:34px;line-height:1}
+.libtxt{display:flex;flex-direction:column;gap:4px}
+.libtxt b{font-size:1.1em}
+.libstory{font-size:.92em}
+.libstate{font-size:.82em;font-weight:600;color:var(--accent)}
+.libcard.soon .libstate{color:inherit}
 </style>
 </head>
 <body>
 <header class="tophead"><nav class="topnav" id="usercard" hidden aria-label="Main">
-  <div class="navl"><button class="navbtn" id="homelink" type="button">Home</button><button class="navbtn" id="proglink" type="button">Progress</button><button class="navbtn" id="listenlink" type="button">Hands-free</button><button class="navbtn" id="castlink" type="button">Cast</button><button class="navbtn cont" id="contlink" type="button" hidden></button></div>
+  <div class="navl"><button class="navbtn" id="liblink" type="button">Library</button><button class="navbtn" id="homelink" type="button">Home</button><button class="navbtn" id="proglink" type="button">Progress</button><button class="navbtn" id="listenlink" type="button">Hands-free</button><button class="navbtn" id="castlink" type="button">Cast</button><button class="navbtn cont" id="contlink" type="button" hidden></button></div>
   <div class="navr"><label class="chk prog storyt" for="ambtoggle" title="Background sound that matches each scene"><input type="checkbox" id="ambtoggle"> Ambience</label><input type="range" id="ambvol" min="0.05" max="0.6" step="0.05" aria-label="Ambience volume" class="ambvol"><label class="chk prog storyt" for="storytoggle" title="Hide scores and tuck lessons away while you play. You still make the choices."><input type="checkbox" id="storytoggle"> Immersive</label><span id="username" class="prog"></span><a id="adminlink" class="navbtn" href="/admin" hidden>Admin</a><button class="navbtn" id="signout" type="button">Sign out</button></div>
 </nav></header>
 <div class="wrap">
@@ -277,6 +287,7 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 <script src="mock/business.js"></script>
 <script src="order.js"></script>
 <script src="full/cast.js"></script>
+<script src="courses.js"></script>
 <script src="engine.js"></script>
 </body>
 </html>
