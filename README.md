@@ -17,11 +17,19 @@ You play Sam Okafor, an infrastructure ops manager at Halcyon AI who gets drafte
 - A full audio episode per chapter (about 20 minutes) that pauses at each decision, for listening in the car or the gym
 - Your weakest exam area is called out at the end of each chapter
 
-## Status
+## Chapters
 
-- Chapter 1, "The Promotion": done
-- Chapter 2, "Burn-In": next
+1. The Promotion
+2. Burn-In
+3. Storming
+4. The Demo
+5. Go-Live
+6. Closeout
 
-One static HTML file, no build step. Audio episodes are generated from the game text with `tools/episode_script.mjs` and `tools/render_episode.py` (macOS voices plus ffmpeg). Progress saves in your browser.
+## Accounts
+
+Invite only. Each invite link works once. Progress (chapter, decisions, scores) saves to your account in Postgres, so you can pick up on any device. Admins make and revoke invites at `/admin`.
+
+A static front end plus three small serverless functions in `api/` (Neon Postgres, signed session cookie, scrypt password hashes). No build step. Audio episodes are generated from the game text with `tools/episode_script.mjs` and `tools/render_episode.py` (macOS voices plus ffmpeg). Progress saves in your browser.
 
 All companies and people are fictional. Not affiliated with or endorsed by PMI. PMP is a registered mark of the Project Management Institute.

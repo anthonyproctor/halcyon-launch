@@ -1,0 +1,32 @@
+# The Halcyon Launch: story bible
+
+Canonical timeline. Each chapter opening assumes the BEST choices were made in earlier chapters (the phased release was chosen in ch1, etc.). Player choices affect only scenes inside a chapter, via `S.flags`.
+
+## Fixed facts
+- Halcyon AI: 600 people, Series C, Denver. Product: AI agents for clinical documentation.
+- Customer: Cascade Valley Health, 11 hospitals in Colorado and Wyoming. CIO Dr. Raymond Ochoa.
+- Contract go-live date: 14 weeks from ch1 start. Ch1 outcome: PHASED release. Core documentation agents go live on the contract date at 3 hospitals; the other 8 follow over 4 weeks. Discharge instructions = phase two change request (priced, not in this release).
+- Vendors: IronPeak (GPU colocation, fixed install windows), LabelForge (clinical note labeling, fixed price, late; recovering with a nurse annotator team in three batches).
+- Mentor Ruth Calder: retired NASA flight director, board member. Plain spoken, launch analogies, never preachy. She debriefs every decision.
+- Weekly 15 minute call with Ochoa and a one-page Friday status were agreed in ch1. Team working agreements (disagree in the room) set in ch1. Priya (junior engineer) shadows Theo on deploys and writes the runbook.
+
+## Base cast (already in the sidebar)
+Sam Okafor (you), Ruth Calder, Elena Vasquez (CEO), Grant Mercer (CRO), Lena Cho (CTO, conflict-averse), Theo Lindqvist (ML platform lead, the bottleneck), Dr. Raymond Ochoa (Cascade CIO).
+Add new characters through the chapter's `cast` array as `["Name","one line role"]`.
+
+## Chapter arc
+1. **The Promotion** (week 1). Done. Ends: Theo calls, the IronPeak cluster failed burn-in, half the GPUs.
+2. **Burn-In** (weeks 2 to 4). Quality and risk. Half the GPUs fail burn-in (root cause: a bad batch of power distribution units plus a firmware mismatch). Topics: risk vs issue (issue log), root cause analysis, quality control vs quality assurance, vendor warranty and contract remedies with IronPeak, earned value with real numbers (PV, EV, AC, SPI, CPI and what they mean), schedule compression (fast tracking vs crashing), contingency vs management reserve, risk response strategies (avoid, transfer, mitigate, accept, escalate), change request for budget, risk owner. Ends: cluster fixed, about 2 weeks of float burned; Theo, exhausted, tells Sam he has accepted another offer and leaves in three weeks.
+3. **Storming** (weeks 5 to 7). People. Theo's departure (knowledge transfer, succession, Priya stepping up with coaching), Lena and Grant clash in front of the team, Tuckman storming, conflict resolution modes (collaborate/problem solve best), a new offshore contractor team in a different time zone (virtual team, cultural awareness, working agreements), an underperforming engineer (private conversation, coaching first), negotiating for a shared resource with another PM in a matrix org, recognition and motivation, emotional intelligence when Sam gets angry, team decision making. New cast: Priya Shah (engineer, Theo's successor), offshore lead, maybe the other PM. Ends: team has normed; first live demo with Cascade clinicians is scheduled.
+4. **The Demo** (weeks 8 to 10). Agile delivery. Cascade product owner (a nurse informatics director) joins. The first demo goes wrong: an agent invents a medication in a draft note. Topics: sprint review, definition of done, acceptance criteria, backlog prioritization by value, the PO adding work mid-sprint, velocity drop, technical debt, retrospective, MVP for phase one, information radiators, servant leadership in agile, quality built in (not inspected in). Ends: second demo succeeds; go/no-go meeting set for week 14.
+5. **Go-Live** (weeks 11 to 14). Business environment and transition. Nurses at one hospital push back on AI (organizational change management, training, champions), go/no-go criteria, cutover and rollback plan, a patient data privacy problem found in logs (stop, contain, follow the incident and compliance process, escalate, never hide), a new state guidance on AI in clinical documentation (assess impact, update compliance plan; keep it fictional, do not cite a real law), benefits baseline (documentation time per note), the sponsor wanting to skip final testing to protect the date, hypercare. Ends: three hospitals live on the contract date.
+6. **Closeout** (weeks 15 to 18, then a coda). Closing. Remaining 8 hospitals roll out, final customer acceptance, transition to operations and support, LabelForge contract closeout (late delivery claim, final payment, claims administration, procurement audit), lessons learned (with the team, not a blame session), releasing resources, recognizing the team, benefits realization ownership after the project ends, the discharge instructions phase two as a new project (business case, new charter), and Elena offering Sam a role leading delivery. Last scene with Ruth.
+
+## Format rules (all chapters)
+- Exactly 10 scenes, ids `c{N}s1` to `c{N}s10`. Each has domain (People, Process, or Business Environment), a short task name, `text:s=>[...]` paragraphs, and 4 opts.
+- Each opt: `t` (the choice), `s` (3 best, 1 partial, 0 miss), `d` meter deltas `{trust,conf,health}` in about -8 to +8, `after` (what happened, story voice), `why` (Ruth's plain explanation of the PMI mindset). Exactly one `best:true` per scene, with s:3. Aim for one partial (s:1) and two misses per scene, or two partials and one miss.
+- Balance the domains across the chapter (roughly 3 to 4 each, weighted to the chapter's theme). About half of all exam questions are agile or hybrid, so lean in.
+- Answers must match the current PMP exam mindset (PMBOK 8 and the July 2026 outline): assess before acting, talk to the person first, servant leadership, follow the process, tailor, transparency, escalate only what you can't handle.
+- Voice: like The Phoenix Project and The Five Dysfunctions. Plain, specific, a little dry humor. No em or en dashes anywhere. Contractions. No AI tells ("delve", "tapestry", "it's worth noting", "not X but Y" framing). Dialogue in `<span class="said">"..."</span>`.
+- `closing:s=>[...]` ends with a scene and a hook into the next chapter. Can branch on `s.score`.
+- `videos`: one vetted YouTube video per scene id `[id,title,channel,length]`, ideally under 15 minutes, checked live with the oembed endpoint. `deeper`: one longer video for the chapter. `episode:{src:"audio/ch{N}-{slug}.mp3",len:"about 20 minutes"}`. `next`: next chapter title (omit on ch6). Optional `cast`.
