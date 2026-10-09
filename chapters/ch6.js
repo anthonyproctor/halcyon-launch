@@ -7,13 +7,13 @@
  ],
  opening:[
   `On the Monday of week fifteen, three Cascade hospitals were running Halcyon's agents and nobody had called Sam at two in the morning. That was the whole celebration. Somebody brought donuts. Priya ate two and went back to the hypercare dashboard.`,
-  `Ruth had sent a text on go-live night. <span class="said">"Splashdown isn't the end of a mission. Recovery is. Get some sleep."</span> Sam had read it four times and slept five hours, which felt like a vacation.`,
+  `Ruth had sent a text on go-live night. <span class="said" data-who="Ruth">"Splashdown isn't the end of a mission. Recovery is. Get some sleep."</span> Sam had read it four times and slept five hours, which felt like a vacation.`,
   `Eight hospitals were still waiting. Phase one wasn't done until all eleven were live, Cascade had signed off, the support team owned the system, and the vendors were paid and closed out. Elena wanted the whole thing wrapped by the end of week eighteen. The board met that Friday.`,
-  `Sam opened a new page in his notebook and wrote one word at the top. <span class="said">"Finish."</span>`
+  `Sam opened a new page in his notebook and wrote one word at the top. "Finish."`
  ],
  scenes:[
  {id:`c6s1`, domain:`Process`, task:`Plan the remaining rollout waves`,
-  text:s=>[`The plan said eight hospitals over four weeks, in three waves. Wave one had gone well, but not perfectly. The night shift at one site never got its training, and a printer driver at another kept two nursing units on paper for a day.`,`Grant stops by with coffee and a pitch. <span class="said">"The first three went great. Let's flip all eight next Monday. The board will love it."</span>`],
+  text:s=>[`The plan said eight hospitals over four weeks, in three waves. Wave one had gone well, but not perfectly. The night shift at one site never got its training, and a printer driver at another kept two nursing units on paper for a day.`,`Grant stops by with coffee and a pitch. <span class="said" data-who="Grant">"The first three went great. Let's flip all eight next Monday. The board will love it."</span>`],
   opts:[
    {t:`Roll all eight hospitals live next Monday, since the first three went smoothly.`,s:0,d:{trust:-4,conf:-3,health:-6},
     after:`Eight hospitals go live on the same morning. Five of them have the night shift training gap from wave one, and Marcus's support line takes ninety calls before noon. Two hospitals ask to roll back.`,
@@ -45,7 +45,7 @@
     why:`The commercial side cares about the invoice. Acceptance is about whether the deliverables meet the criteria, and the person accountable for delivery should walk the customer through it.`}
   ]},
  {id:`c6s3`, domain:`Process`, task:`Transition to operations`,
-  text:s=>[`Marcus Bell runs customer support at Halcyon. His team will own Cascade once the project closes. In week sixteen he tells Sam his people have never seen the system outside a sales demo.`,`Lena has a simpler idea. <span class="said">"The engineers built it. Let them keep supporting it. It's easier."</span> The engineers, who have phase two waiting, do not think it's easier.`],
+  text:s=>[`Marcus Bell runs customer support at Halcyon. His team will own Cascade once the project closes. In week sixteen he tells Sam his people have never seen the system outside a sales demo.`,`Lena has a simpler idea. <span class="said" data-who="Lena">"The engineers built it. Let them keep supporting it. It's easier."</span> The engineers, who have phase two waiting, do not think it's easier.`],
   opts:[
    {t:`Have the engineering team keep supporting Cascade, since they know the system best.`,s:0,d:{trust:-5,conf:0,health:-4},
     after:`The engineers become the support desk. Phase two starts late because its team is answering tickets about printer drivers.`,
@@ -77,7 +77,7 @@
     why:`Litigation and formal disputes are the last resort for claims. Negotiation comes first, and here the facts were clear enough to settle in a day.`}
   ]},
  {id:`c6s5`, domain:`People`, task:`Run lessons learned without blame`,
-  text:s=>[`Sam schedules a lessons learned session for the whole team. Grant asks to be added and sends an agenda of his own: <span class="said">"What IronPeak and LabelForge did wrong."</span>`,`Priya tells Sam quietly that people are nervous. The burn-in failure, the scope fight in week one, and Theo leaving are all still sore. Some of them expect to be blamed.`],
+  text:s=>[`Sam schedules a lessons learned session for the whole team. Grant asks to be added and sends an agenda of his own: "What IronPeak and LabelForge did wrong."`,`Priya tells Sam quietly that people are nervous. The burn-in failure, the scope fight in week one, and Theo leaving are all still sore. Some of them expect to be blamed.`],
   opts:[
    {t:`Run it with the whole team, focused on process not people, and log every lesson.`,s:3,d:{trust:7,conf:1,health:3},best:true,
     after:`Sam opens by naming one of his own mistakes from week one. The room loosens. The team finds twelve lessons, including three about how Halcyon sells deals, and they go into the company's lessons learned register with owners.`,
@@ -93,7 +93,7 @@
     why:`Lessons fade fast and people move on. Capture them throughout the project and hold the final session at closeout, while the team is still together and memories are fresh.`}
   ]},
  {id:`c6s6`, domain:`People`, task:`Release the team`,
-  text:s=>[`The offshore contractors' terms end in week eighteen. Priya and three engineers are wanted for phase two and another customer.`,`Lena messages Sam on Thursday. <span class="said">"I'm moving Priya and the others Monday. Phase two needs them."</span> Marcus's handover still has a week to run.`],
+  text:s=>[`The offshore contractors' terms end in week eighteen. Priya and three engineers are wanted for phase two and another customer.`,`Lena messages Sam on Thursday. <span class="said" data-who="Lena">"I'm moving Priya and the others Monday. Phase two needs them."</span> Marcus's handover still has a week to run.`],
   opts:[
    {t:`Let Lena move the engineers Monday, since phase two needs them more right now.`,s:0,d:{trust:-2,conf:-1,health:-5},
     after:`The engineers move Monday. Marcus's team loses its shadows halfway through the handover, and Cascade's tickets start bouncing between two teams.`,
@@ -109,7 +109,7 @@
     why:`Following the contract dates is fine, and cost is a fair factor. But it dodges the real decision, which is how to release the core team without breaking the handover.`}
   ]},
  {id:`c6s7`, domain:`People`, task:`Recognize the team`,
-  text:s=>[`Elena drafts a company-wide email. The subject line is <span class="said">"Congratulations to Sam and his team!"</span> She sends it to Sam first and asks if he wants to add anything.`,`Sam thinks about the people who carried this. Priya, who learned Theo's job in three weeks. The nurse annotators LabelForge brought in. An offshore engineer who stayed up through a cutover at 3 AM his time. Marcus's team, who are just starting.`],
+  text:s=>[`Elena drafts a company-wide email. The subject line is "Congratulations to Sam and his team!" She sends it to Sam first and asks if he wants to add anything.`,`Sam thinks about the people who carried this. Priya, who learned Theo's job in three weeks. The nurse annotators LabelForge brought in. An offshore engineer who stayed up through a cutover at 3 AM his time. Marcus's team, who are just starting.`],
   opts:[
    {t:`Let Elena's email stand, since public thanks from the CEO means the most.`,s:1,d:{trust:1,conf:1,health:0},
     after:`The email goes out. It's nice. Priya's name isn't in it, and the offshore engineer isn't on the company mailing list.`,
@@ -141,7 +141,7 @@
     why:`Halcyon does have a real interest in proving value, so involving Grant isn't wrong. But the benefits are Cascade's, and the owner should be someone who'll report them straight.`}
   ]},
  {id:`c6s9`, domain:`Business Environment`, task:`Start phase two the right way`,
-  text:s=>[`Ochoa signs the change order for discharge instructions, the request that started as a promise on a sales call in week one.`,`Grant is thrilled. <span class="said">"Same team, same backlog, keep the sprints rolling. Why stop?"</span> It's a fair question. The team is warm and the code base is fresh.`],
+  text:s=>[`Ochoa signs the change order for discharge instructions, the request that started as a promise on a sales call in week one.`,`Grant is thrilled. <span class="said" data-who="Grant">"Same team, same backlog, keep the sprints rolling. Why stop?"</span> It's a fair question. The team is warm and the code base is fresh.`],
   opts:[
    {t:`Treat phase two as its own project, with a business case and a new charter.`,s:3,d:{trust:2,conf:4,health:4},best:true,
     after:`Sam drafts a one-page business case and a charter with Elena as sponsor. It takes three days. It also surfaces that discharge instructions need a clinical safety review the first release never had.`,
@@ -157,7 +157,7 @@
     why:`Closing one project and initiating the next can overlap. Waiting to even begin planning burns time and goodwill the customer gave you.`}
   ]},
  {id:`c6s10`, domain:`Business Environment`, task:`Close the project formally`,
-  text:s=>[`Friday of week eighteen. Elena calls Sam in. She wants him to build Halcyon's delivery practice, a new role, Director of Delivery, starting Monday.`,`Then she adds, <span class="said">"And skip the closeout report. Everyone knows how it went."</span>`],
+  text:s=>[`Friday of week eighteen. Elena calls Sam in. She wants him to build Halcyon's delivery practice, a new role, Director of Delivery, starting Monday.`,`Then she adds, <span class="said" data-who="Elena">"And skip the closeout report. Everyone knows how it went."</span>`],
   opts:[
    {t:`Start the new role Monday and let the closeout report wait until things calm down.`,s:0,d:{trust:0,conf:-2,health:-4},
     after:`Things never calm down. The project files stay scattered across three drives. In a year, when someone asks how Cascade was delivered, the answer is a shrug.`,
@@ -176,13 +176,13 @@
  closing:s=>[
   `The board meeting was short. Elena showed one slide with eleven hospitals on it, all green. Grant thanked the team by name, reading from a list Sam had sent him the night before.`,
   `Afterward Ruth found Sam in the hallway and walked him out to the parking lot. It was the first cold evening of the year.`,
-  `<span class="said">"In Houston,"</span> she said, <span class="said">"when a mission ended, the flight director's last job was the debrief. Then you handed the room to the next team and walked out. Nobody clapped. The next crew needed the consoles."</span>`,
-  (s.score>=24?`<span class="said">"You ran this like a flight director,"</span> she said. <span class="said">"You told the truth about the numbers, you listened before you decided, and you gave the credit away. That's the whole job."</span>`:`<span class="said">"You made some calls I'd have made differently,"</span> she said. <span class="said">"So did I, my first time in the chair. What matters is you can see them now. Write them down. The next person in your seat will need them."</span>`),
+  `<span class="said" data-who="Ruth">"In Houston,"</span> she said, <span class="said" data-who="Ruth">"when a mission ended, the flight director's last job was the debrief. Then you handed the room to the next team and walked out. Nobody clapped. The next crew needed the consoles."</span>`,
+  (s.score>=24?`<span class="said" data-who="Ruth">"You ran this like a flight director,"</span> she said. <span class="said" data-who="Ruth">"You told the truth about the numbers, you listened before you decided, and you gave the credit away. That's the whole job."</span>`:`<span class="said" data-who="Ruth">"You made some calls I'd have made differently,"</span> she said. <span class="said" data-who="Ruth">"So did I, my first time in the chair. What matters is you can see them now. Write them down. The next person in your seat will need them."</span>`),
   `Sam asked her the question he'd been carrying since week one. Why she'd spent her Saturdays on a data center manager she'd never met.`,
-  `Ruth laughed. <span class="said">"Somebody did it for me. A flight director named Pete, my first year. He said he wasn't doing me a favor, he was paying a debt."</span> She unlocked her car. <span class="said">"You owe one now. Find somebody on their first launch."</span>`,
+  `Ruth laughed. <span class="said" data-who="Ruth">"Somebody did it for me. A flight director named Pete, my first year. He said he wasn't doing me a favor, he was paying a debt."</span> She unlocked her car. <span class="said" data-who="Ruth">"You owe one now. Find somebody on their first launch."</span>`,
   `On Monday somebody had taped a paper sign to a conference room door. It said Delivery and it was crooked. Priya was already inside with the phase two charter printed out, still unsigned, and a question about the clinical safety review she'd been chewing on all weekend.`,
-  `<span class="said">"Do we do the business case first or the safety stuff?"</span> she asked.`,
-  `Sam sat down across from her. <span class="said">"Tell me what you've got so far,"</span> he said, and then he didn't say anything for a while.`
+  `<span class="said" data-who="Priya">"Do we do the business case first or the safety stuff?"</span> she asked.`,
+  `Sam sat down across from her. <span class="said" data-who="Sam">"Tell me what you've got so far,"</span> he said, and then he didn't say anything for a while.`
  ],
  videos:{
   c6s1:[`PwESbblSdQ0`,`Agile Practice Guide: Rolling Wave Planning`,`David McLachlan`,`4:44`],

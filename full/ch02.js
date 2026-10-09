@@ -4,12 +4,12 @@
   cast: [[`Hal Brennan`,`IronPeak account manager. Calls on Sundays.`]],
   opening: [
     `Sam didn't sleep much Sunday night. At 5 AM he was at the kitchen table with a legal pad, drawing boxes and arrows the way he used to sketch an engine change on the back of a work order.`,
-    `On the flight line nobody did anything to an F-16 without the technical order open in front of them. The tech order told you what to do, in what sequence, with what tools, and what to check before you called it done. Ray Mendez used to tap the binder and say, <span class="said">"This isn't for you. It's for the guy who has to fix what you did."</span> Sam had always liked that. A plan wasn't a promise. It was a way to make sure the next person could see what you meant.`,
+    `On the flight line nobody did anything to an F-16 without the technical order open in front of them. The tech order told you what to do, in what sequence, with what tools, and what to check before you called it done. Ray Mendez used to tap the binder and say, <span class="said" data-who="Ray">"This isn't for you. It's for the guy who has to fix what you did."</span> Sam had always liked that. A plan wasn't a promise. It was a way to make sure the next person could see what you meant.`,
     `Cascade didn't have a tech order. It had a contract, a two-page charter Elena had signed on Thursday, and forty people who each carried a slightly different version of the project in their heads.`,
-    `Dana came down at six, saw the legal pad, and poured him a coffee without comment. Then she looked closer. <span class="said">"Those arrows are going in circles."</span>`,
-    `<span class="said">"That's the problem,"</span> Sam said.`,
+    `Dana came down at six, saw the legal pad, and poured him a coffee without comment. Then she looked closer. <span class="said" data-who="Dana">"Those arrows are going in circles."</span>`,
+    `<span class="said" data-who="Sam">"That's the problem,"</span> Sam said.`,
     `By the time he got to LoDo he had a list. A scope statement nobody had written. A power plan IronPeak needed by Wednesday. A software backlog that lived in four different Jira projects. And estimates, which so far were mostly vibes.`,
-    `Ruth texted at 7:40: <span class="said">"A plan is a hypothesis. The launch is the experiment. Write it down so you can tell when you're wrong."</span> Sam read it twice, then put the phone face down and started writing.`
+    `Ruth texted at 7:40: <span class="said" data-who="Ruth">"A plan is a hypothesis. The launch is the experiment. Write it down so you can tell when you're wrong."</span> Sam read it twice, then put the phone face down and started writing.`
   ],
   lesson: {
     title: `Building the integrated plan: scope, estimates, and the schedule`,
@@ -72,7 +72,7 @@
           why:`Merging every request isn't defining scope. Scope needs decisions, including what's excluded, approved by the right people.`}
       ]},
     { id:`f2s3`, domain:`Process`, task:`R2`, title:`Breaking down the cluster`,
-      text:(s,all,G)=>[`For the infrastructure work, Sam starts a list of tasks: order cables, rack servers, run power, configure the network, test. It's sixty lines long and he's not sure it's complete.`,`Ruth looks at it over a video call. <span class="said">"That's a to-do list. Where's the thing you're building?"</span>`],
+      text:(s,all,G)=>[`For the infrastructure work, Sam starts a list of tasks: order cables, rack servers, run power, configure the network, test. It's sixty lines long and he's not sure it's complete.`,`Ruth looks at it over a video call. <span class="said" data-who="Ruth">"That's a to-do list. Where's the thing you're building?"</span>`],
       opts:[
         {t:`Keep the task list but add owners and dates so it works as a schedule for now.`, s:1, d:{trust:0,conf:0,health:1},
           after:`The list becomes a schedule. Two weeks later they realize nobody planned the cooling upgrade, because it wasn't anybody's task.`,
@@ -88,7 +88,7 @@
           why:`Delegating detail is fine, but the PM still needs the integrated view of deliverables and dependencies. Tracking one date hides everything that feeds it.`}
       ]},
     { id:`f2s4`, domain:`Process`, task:`R1`, title:`Agile or not`,
-      text:(s,all,G)=>[`Lena wants everything in two-week sprints. <span class="said">"It's how we work. Planning far out is fiction."</span>`,`Hal from IronPeak wants a dated plan. Cascade's procurement team wants milestone dates in writing. The cluster has a ninety-day hardware lead time that no sprint can shorten.`],
+      text:(s,all,G)=>[`Lena wants everything in two-week sprints. <span class="said" data-who="Lena">"It's how we work. Planning far out is fiction."</span>`,`Hal from IronPeak wants a dated plan. Cascade's procurement team wants milestone dates in writing. The cluster has a ninety-day hardware lead time that no sprint can shorten.`],
       opts:[
         {t:`Run everything in two-week sprints, hardware included, so there's one rhythm.`, s:0, d:{trust:-1,conf:-2,health:-4},
           after:`The infrastructure team tries to fit a ninety-day lead time into a sprint backlog. IronPeak asks for a schedule and gets a burndown chart.`,
@@ -110,7 +110,7 @@
           after:`The backlog gets tidier. It's still built on guesses, and the first demo will prove it.`,
           why:`Requirements need to come from the people who will use the product. A clean backlog of guesses is still guesses.`},
         {t:`Ask Ochoa for two hours with a few nurses and run a story workshop with them.`, s:3, best:true, d:{trust:2,conf:4,health:4},
-          after:`Ochoa sends three nurses and an informatics analyst. In two hours they rewrite the top thirty stories and throw out forty. One nurse says, <span class="said">"Nobody's ever asked us before they built something."</span>`,
+          after:`Ochoa sends three nurses and an informatics analyst. In two hours they rewrite the top thirty stories and throw out forty. One nurse says, <span class="said" data-who="woman">"Nobody's ever asked us before they built something."</span>`,
           why:`Eliciting requirements from real users, through workshops, interviews, or observation, is how you build the right thing. Make it easy for busy stakeholders by asking for a small, focused time commitment.`},
         {t:`Send Cascade the backlog as a spreadsheet and ask them to mark what they need.`, s:1, d:{trust:0,conf:1,health:1},
           after:`Cascade returns it with ninety percent of rows marked "needed." It tells Sam almost nothing about priority.`,
@@ -120,7 +120,7 @@
           why:`A product owner is important, but you don't stop discovering requirements while you wait. Engage users now and keep pushing for a product owner.`}
       ]},
     { id:`f2s6`, domain:`Process`, task:`R8`, title:`Theo's estimate`,
-      text:(s,all,G)=>[`Sam asks Theo how long fine-tuning the documentation model will take. Theo says, <span class="said">"Four weeks."</span> Sam has learned that Theo's estimates come in two flavors: wildly optimistic when he's excited and quietly doubled when he's tired. Right now he's tired.`],
+      text:(s,all,G)=>[`Sam asks Theo how long fine-tuning the documentation model will take. Theo says, <span class="said" data-who="Theo">"Four weeks."</span> Sam has learned that Theo's estimates come in two flavors: wildly optimistic when he's excited and quietly doubled when he's tired. Right now he's tired.`],
       opts:[
         {t:`Accept four weeks, since Theo knows the model better than anyone at Halcyon.`, s:1, d:{trust:1,conf:0,health:-1},
           after:`Four weeks goes into the plan. Sam has no idea whether it's a stretch or a cushion.`,
@@ -136,7 +136,7 @@
           why:`Analogous estimating is fast and useful early, but it's only as good as the comparison. Here, the person doing the work can give you a better range.`}
       ]},
     { id:`f2s7`, domain:`Process`, task:`R8`, title:`Make it fit`,
-      text:(s,all,G)=>[`The first full estimate rolls up to fifteen weeks for the phase one scope, one more than the contract allows. Elena reads it and says, <span class="said">"Have everyone take ten percent off. Engineers always pad."</span>`],
+      text:(s,all,G)=>[`The first full estimate rolls up to fifteen weeks for the phase one scope, one more than the contract allows. Elena reads it and says, <span class="said" data-who="Elena">"Have everyone take ten percent off. Engineers always pad."</span>`],
       opts:[
         {t:`Have every lead take ten percent off their estimates to meet Elena's request.`, s:0, d:{trust:-6,conf:1,health:-4},
           after:`The plan now shows fourteen weeks. Nothing about the work has changed. The team starts calling it "the Friday plan."`,
@@ -152,7 +152,7 @@
           why:`Reserves are good, but hidden ones aren't. Contingency should be explicit and owned, so the sponsor knows what it's for.`}
       ]},
     { id:`f2s8`, domain:`Process`, task:`R8`, title:`The long path`,
-      text:(s,all,G)=>[`With the network drawn, one chain of work jumps out: racks installed, burn-in tested, integration tested, clinicians test it. Nothing on that chain has room to slip. Everything else does.`,`Grant, reading over his shoulder, asks why Sam is so worried about burn-in testing. <span class="said">"It's just running the machines, right?"</span>`],
+      text:(s,all,G)=>[`With the network drawn, one chain of work jumps out: racks installed, burn-in tested, integration tested, clinicians test it. Nothing on that chain has room to slip. Everything else does.`,`Grant, reading over his shoulder, asks why Sam is so worried about burn-in testing. <span class="said" data-who="Grant">"It's just running the machines, right?"</span>`],
       opts:[
         {t:`Focus his weekly reviews on critical path work and track float on everything else.`, s:3, best:true, d:{trust:1,conf:2,health:5},
           after:`Burn-in, integration testing, and clinician testing get named owners and a weekly check. When a non-critical task slips two days later, Sam doesn't panic, because it has four days of float.`,
@@ -184,7 +184,7 @@
           why:`Asking the customer to move a date should come after you've tried to recover the schedule. There were real options inside the project.`}
       ]},
     { id:`f2s10`, domain:`Process`, task:`R1`, title:`Locking it in`,
-      text:(s,all,G)=>[`By Friday of week two Sam has a scope statement, a WBS for the cluster, a prioritized backlog, a schedule with a critical path, and a budget. Lena asks, <span class="said">"Can we just start? We've been planning for two weeks."</span>`],
+      text:(s,all,G)=>[`By Friday of week two Sam has a scope statement, a WBS for the cluster, a prioritized backlog, a schedule with a critical path, and a budget. Lena asks, <span class="said" data-who="Lena">"Can we just start? We've been planning for two weeks."</span>`],
       opts:[
         {t:`Start execution now and treat the plan as a living draft that changes as needed.`, s:0, d:{trust:2,conf:-2,health:-3},
           after:`The plan changes eleven times in the next month. Nobody can say whether the project is ahead or behind, because there's nothing to measure against.`,
@@ -200,7 +200,7 @@
           why:`Rolling wave planning means you don't need full detail on later phases before you start. Baseline what you have, elaborate later.`}
       ]},
     { id:`f2s11`, domain:`Business Environment`, task:`B3`, title:`A small change`,
-      text:(s,all,G)=>[`Monday of week three, an engineer wants to swap a data library for a better one. It's a good idea. It adds three days to a task on the critical path. Lena says, <span class="said">"It's an internal technical decision. We don't need to bother the change board with it."</span>`],
+      text:(s,all,G)=>[`Monday of week three, an engineer wants to swap a data library for a better one. It's a good idea. It adds three days to a task on the critical path. Lena says, <span class="said" data-who="Lena">"It's an internal technical decision. We don't need to bother the change board with it."</span>`],
       opts:[
         {t:`Let Lena's team make the swap, since it's an internal technical decision.`, s:0, d:{trust:2,conf:-1,health:-3},
           after:`The swap goes in. Three days later the schedule slips and nobody on the change board knows why.`,
@@ -270,12 +270,12 @@
   closing:(s,all,G)=>[
     `Friday night of week two, Sam gets home at seven, which Dana marks with a small round of applause from the couch.`,
     `He tells her about the critical path over dinner, which is not something either of them planned. She asks good questions. She teaches stoichiometry to sixteen-year-olds; she knows what it's like to explain why one thing has to happen before another.`,
-    `<span class="said">"So the whole thing hangs on the machines passing their test,"</span> she says.`,
-    `<span class="said">"Burn-in. Six days of running them hot to see what breaks."</span>`,
-    `<span class="said">"And if something breaks?"</span>`,
-    `<span class="said">"Then that's what the float's for."</span> He says it more confidently than he feels.`,
-    (s.score>=27?`Ruth texts at nine: <span class="said">"Saw the baseline. That's a plan I'd sign. Now go meet your team. Really meet them."</span>`:`Ruth texts at nine: <span class="said">"Saw the baseline. It'll do. Next week, stop managing the plan and go meet your team."</span>`),
-    `Saturday morning Hal calls again. <span class="said">"Good news for once. Your first racks are on the truck. Burn-in starts the Monday after next. Hope you've got people ready."</span> Sam looks at his team list, half in Denver, and half in a city eight hours ahead he hasn't visited yet.`
+    `<span class="said" data-who="Dana">"So the whole thing hangs on the machines passing their test,"</span> she says.`,
+    `<span class="said" data-who="Sam">"Burn-in. Six days of running them hot to see what breaks."</span>`,
+    `<span class="said" data-who="Dana">"And if something breaks?"</span>`,
+    `<span class="said" data-who="Sam">"Then that's what the float's for."</span> He says it more confidently than he feels.`,
+    (s.score>=27?`Ruth texts at nine: <span class="said" data-who="Ruth">"Saw the baseline. That's a plan I'd sign. Now go meet your team. Really meet them."</span>`:`Ruth texts at nine: <span class="said" data-who="Ruth">"Saw the baseline. It'll do. Next week, stop managing the plan and go meet your team."</span>`),
+    `Saturday morning Hal calls again. <span class="said" data-who="Hal">"Good news for once. Your first racks are on the truck. Burn-in starts the Monday after next. Hope you've got people ready."</span> Sam looks at his team list, half in Denver, and half in a city eight hours ahead he hasn't visited yet.`
   ],
   episode:{src:`audio/full-ch02.mp3`, len:`about 35 minutes`},
   next:`The Team`

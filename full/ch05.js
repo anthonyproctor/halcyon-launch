@@ -7,11 +7,11 @@
   `At 1:20 in the morning Sam was still at the kitchen table with a laptop, a legal pad, and a mug of coffee that had gone cold around eleven. The board meeting was Tuesday. Elena wanted real numbers. Sam had discovered that Halcyon didn't really have any.`,
   `The Cascade budget was one line in the sales deal: two million and forty thousand dollars. Nobody could tell him how Grant's team had arrived at it. The finance system tracked spending by department, not by project. The engineers reported progress as percentages, and every percentage was somewhere between eighty and ninety, which in Sam's experience meant nobody knew.`,
   `Dana came down for water and found him there. She looked over his shoulder at the legal pad, which had the same column of numbers added up four times.`,
-  `<span class="said">"You're doing the thing,"</span> she said. <span class="said">"Where you check it five times because you don't trust the first four."</span>`,
-  `<span class="said">"I don't trust the inputs."</span>`,
-  `<span class="said">"Then fix the inputs."</span> She kissed the top of his head. <span class="said">"I tell my juniors that every week. Garbage measurements, garbage results. Go to bed."</span>`,
-  `He didn't go to bed. But he wrote one line at the top of the legal pad, underlined twice: <span class="said">"What did we plan to have done by now, and what is actually done?"</span>`,
-  `On Saturday morning he called Ruth. She listened to the whole mess without interrupting, then laughed. <span class="said">"Sam, every program I ever ran had this problem in week five. You know what saved us? We stopped asking people how they felt about progress and started measuring what they'd finished."</span>`
+  `<span class="said" data-who="Dana">"You're doing the thing,"</span> she said. <span class="said" data-who="Dana">"Where you check it five times because you don't trust the first four."</span>`,
+  `<span class="said" data-who="Sam">"I don't trust the inputs."</span>`,
+  `<span class="said" data-who="Dana">"Then fix the inputs."</span> She kissed the top of his head. <span class="said" data-who="Dana">"I tell my juniors that every week. Garbage measurements, garbage results. Go to bed."</span>`,
+  `He didn't go to bed. But he wrote one line at the top of the legal pad, underlined twice: "What did we plan to have done by now, and what is actually done?"`,
+  `On Saturday morning he called Ruth. She listened to the whole mess without interrupting, then laughed. <span class="said" data-who="Ruth">"Sam, every program I ever ran had this problem in week five. You know what saved us? We stopped asking people how they felt about progress and started measuring what they'd finished."</span>`
  ],
  lesson:{
   title:`Money and measurement`,
@@ -60,7 +60,7 @@
      why:`Estimates need a basis: the work packages, rates, and assumptions. Gut feel isn't a baseline.`}
    ]},
   {id:`f5s2`, domain:`Process`, task:`R6`, title:`Whose money`,
-   text:(s,all,G)=>[`The burn-in cost Halcyon $22,000 in overtime and the weekend crew. Lena wants to charge it to management reserve. <span class="said">"That's what reserve is for,"</span> she says.`,`Hardware failure was row four in the risk register before the cluster ever failed.`],
+   text:(s,all,G)=>[`The burn-in cost Halcyon $22,000 in overtime and the weekend crew. Lena wants to charge it to management reserve. <span class="said" data-who="Lena">"That's what reserve is for,"</span> she says.`,`Hardware failure was row four in the risk register before the cluster ever failed.`],
    opts:[
     {t:`Charge it to management reserve, since the failure caught everyone off guard.`,s:0,d:{trust:0,conf:-2,health:-1},
      after:`Elena asks why an identified risk is drawing on her reserve. Sam doesn't have a good answer.`,
@@ -76,7 +76,7 @@
      why:`Hiding costs in other buckets corrupts your data and is a transparency problem. Record costs where they belong.`}
    ]},
   {id:`f5s3`, domain:`Process`, task:`R9`, title:`Ninety percent done`,
-   text:(s,all,G)=>[`Sam asks each lead how far along they are. The integration team says ninety percent. The data team says eighty five. The infrastructure team says ninety, though the cluster passed burn-in four days ago.`,`Priya, quietly, at his desk afterward: <span class="said">"We've been ninety percent done for three weeks."</span>`],
+   text:(s,all,G)=>[`Sam asks each lead how far along they are. The integration team says ninety percent. The data team says eighty five. The infrastructure team says ninety, though the cluster passed burn-in four days ago.`,`Priya, quietly, at his desk afterward: <span class="said" data-who="Priya">"We've been ninety percent done for three weeks."</span>`],
    opts:[
     {t:`Average the leads' percentages and report that as overall progress.`,s:0,d:{trust:0,conf:-1,health:-3},
      after:`The average is eighty seven percent. The project is nowhere near eighty seven percent done.`,
@@ -108,7 +108,7 @@
      why:`Reporting a number and demanding speed skips the analysis. Find the cause first, then decide the response.`}
    ]},
   {id:`f5s5`, domain:`Process`, task:`R6`, title:`Sprints cost money too`,
-   text:(s,all,G)=>[`The software teams run two week sprints with a fixed team. Lena says earned value doesn't fit agile. <span class="said">"We deliver value every sprint. Isn't that the measure?"</span>`,`The board still needs to know whether the money will last.`],
+   text:(s,all,G)=>[`The software teams run two week sprints with a fixed team. Lena says earned value doesn't fit agile. <span class="said" data-who="Lena">"We deliver value every sprint. Isn't that the measure?"</span>`,`The board still needs to know whether the money will last.`],
    opts:[
     {t:`Exempt the software teams from cost tracking, since they're agile.`,s:0,d:{trust:1,conf:-3,health:-3},
      after:`Half the budget becomes invisible. The board notices.`,
@@ -124,7 +124,7 @@
      why:`Velocity is a planning tool for the team, not a cost measure. Pair it with cost per sprint.`}
    ]},
   {id:`f5s6`, domain:`Process`, task:`R9`, title:`What will it cost`,
-   text:(s,all,G)=>[`Elena asks the question every sponsor asks. <span class="said">"So what will the whole thing cost?"</span>`,`Sam knows CPI is 0.85. He also knows most of the overrun came from the burn-in, which shouldn't happen twice.`],
+   text:(s,all,G)=>[`Elena asks the question every sponsor asks. <span class="said" data-who="Elena">"So what will the whole thing cost?"</span>`,`Sam knows CPI is 0.85. He also knows most of the overrun came from the burn-in, which shouldn't happen twice.`],
    opts:[
     {t:`Give one number, $2,400,000, using BAC divided by CPI.`,s:1,d:{trust:0,conf:1,health:1},
      after:`It's a defensible number. It also assumes the burn-in will keep happening, which Sam doesn't believe.`,
@@ -140,10 +140,10 @@
      why:`You have enough data to forecast with stated uncertainty. Waiting leaves the sponsor without what she needs to decide.`}
    ]},
   {id:`f5s7`, domain:`People`, task:`P6`, title:`Grant's advice`,
-   text:(s,all,G)=>[`Monday night Grant calls. He's heard about the numbers. <span class="said">"Sam, I've been in a lot of board meetings. Don't lead with point eight five. Lead with the recovery. Round up where you can. Boards punish bad news."</span>`,`He isn't wrong about boards. He might be wrong about everything else.`],
+   text:(s,all,G)=>[`Monday night Grant calls. He's heard about the numbers. <span class="said" data-who="Grant">"Sam, I've been in a lot of board meetings. Don't lead with point eight five. Lead with the recovery. Round up where you can. Boards punish bad news."</span>`,`He isn't wrong about boards. He might be wrong about everything else.`],
    opts:[
     {t:`Present the honest numbers, the causes, and the recovery plan together.`,s:3,best:true,d:{trust:1,conf:5,health:2},
-     after:`Grant sighs. <span class="said">"Your funeral."</span> Then, after a pause: <span class="said">"Send me the deck. I'll tell you which questions they'll ask."</span>`,
+     after:`Grant sighs. <span class="said" data-who="Grant">"Your funeral."</span> Then, after a pause: <span class="said" data-who="Grant">"Send me the deck. I'll tell you which questions they'll ask."</span>`,
      why:`Honesty is a PMI Code of Ethics standard. Present accurate data with context and a plan. It manages expectations instead of setting up a later surprise.`},
     {t:`Show only the one time forecast, since Sam believes it's the likelier one.`,s:1,d:{trust:0,conf:0,health:0},
      after:`It's honest, mostly. If performance doesn't recover, the board will wonder why they never saw the other number.`,
@@ -159,7 +159,7 @@
    text:(s,all,G)=>[`Elena's preference is clear: finish at the original budget. Sam runs the to complete performance index. To hit $2,040,000, the team would have to perform at 1.14 for the rest of the project. They've been running at 0.85.`,`Elena asks if that's doable.`],
    opts:[
     {t:`Say it's unlikely, and lay out a revised target or the reserve to cover it.`,s:3,best:true,d:{trust:2,conf:4,health:4},
-     after:`Elena is quiet. Then: <span class="said">"What's realistic?"</span> They work through it together. That's the meeting Sam wanted.`,
+     after:`Elena is quiet. Then: <span class="said" data-who="Elena">"What's realistic?"</span> They work through it together. That's the meeting Sam wanted.`,
      why:`A TCPI of 1.14 against a CPI of 0.85 means asking for a jump in efficiency nobody has shown. Say so, and bring options: a revised EAC through change control or management reserve.`},
     {t:`Say yes, and ask the team to find savings to close the gap.`,s:0,d:{trust:-4,conf:-2,health:-3},
      after:`The team cuts testing time to find savings. Quality starts to slip.`,
@@ -188,13 +188,13 @@
      why:`Once a change is approved, update the baseline so performance reports stay meaningful.`}
    ]},
   {id:`f5s10`, domain:`People`, task:`P4`, title:`Douglas Reyes`,
-   text:(s,all,G)=>[`Tuesday. The boardroom on the top floor has a view of the mountains nobody looks at. Douglas Reyes, the audit committee chair, ran finance at a hospital system for twenty years. He waits until Sam finishes, then asks the only question that matters.`,`<span class="said">"Why should we believe this forecast when we didn't believe the last one?"</span>`],
+   text:(s,all,G)=>[`Tuesday. The boardroom on the top floor has a view of the mountains nobody looks at. Douglas Reyes, the audit committee chair, ran finance at a hospital system for twenty years. He waits until Sam finishes, then asks the only question that matters.`,`<span class="said" data-who="Douglas">"Why should we believe this forecast when we didn't believe the last one?"</span>`],
    opts:[
     {t:`Say the new numbers come from a better process and ask for his trust.`,s:1,d:{trust:0,conf:1,health:0},
      after:`Reyes nods politely. He wanted to see the process, not hear about it.`,
      why:`Asking for trust is weaker than showing your basis. Engage skeptical stakeholders with evidence.`},
     {t:`Show the method, the assumptions, and what would change the forecast.`,s:3,best:true,d:{trust:1,conf:6,health:1},
-     after:`Sam walks through the 0/100 rule, the two EACs, and the three triggers that would move them. Reyes asks two follow-ups and then says, <span class="said">"Send this to me every month."</span>`,
+     after:`Sam walks through the 0/100 rule, the two EACs, and the three triggers that would move them. Reyes asks two follow-ups and then says, <span class="said" data-who="Douglas">"Send this to me every month."</span>`,
      why:`Credibility comes from transparency about method and assumptions. Telling a stakeholder what would change your answer shows you understand it.`},
     {t:`Point out that the last forecast came from sales, not delivery.`,s:0,d:{trust:0,conf:-3,health:0},
      after:`Grant, at the end of the table, stops smiling.`,
@@ -268,14 +268,14 @@
   {q:`What is the main purpose of variance thresholds in the project management plan?`,opts:[`To set the maximum budget the sponsor will ever approve`,`To decide in advance when a variance needs action`,`To limit how often stakeholders receive status reports`,`To calculate the contingency reserve for each risk`],a:1,why:`Thresholds define when a variance is large enough to require action or escalation, removing debate in the moment.`,task:`R9`,domain:`Process`}
  ],
  closing:(s,all,G)=>[
-  `The board approved the revised target with a vote of six to one. Douglas Reyes stopped Sam at the elevator. <span class="said">"Monthly,"</span> he said. <span class="said">"And Sam? ${(s.flags&&s.flags.hidnumbers)||G.hidnumbers?`Next time, don't round. I can do arithmetic.`:`That's the first forecast from this company I've been able to check.`}"</span>`,
-  `Elena didn't say much on the way down. In the lobby she stopped. <span class="said">"I hated every slide,"</span> she said. <span class="said">"I believed every one."</span>`,
+  `The board approved the revised target with a vote of six to one. Douglas Reyes stopped Sam at the elevator. <span class="said" data-who="Douglas">"Monthly,"</span> he said. <span class="said" data-who="Douglas">"And Sam? ${(s.flags&&s.flags.hidnumbers)||G.hidnumbers?`Next time, don't round. I can do arithmetic.`:`That's the first forecast from this company I've been able to check.`}"</span>`,
+  `Elena didn't say much on the way down. In the lobby she stopped. <span class="said" data-who="Elena">"I hated every slide,"</span> she said. <span class="said" data-who="Elena">"I believed every one."</span>`,
   `Sam got home before seven for the first time in two weeks. Dana had made the enchiladas her grandmother taught her, the ones she only made when something was worth noticing. He told her about Reyes. She told him about a junior who had finally balanced a redox equation on her own and cried a little from relief. They both agreed the junior had the better week.`,
   `Friday, 5:40. Most of the office had gone. Theo knocked on the door frame, which he never did.`,
   `He had a letter. On paper. Nobody at Halcyon printed anything, so Sam knew before he read a word.`,
-  `<span class="said">"I took the other job,"</span> Theo said. <span class="said">"Three weeks. Sorry. It isn't you."</span>`,
-  `Sam read it twice anyway. Old habit. <span class="said">"Is it the work?"</span>`,
-  `Theo did a half laugh, mostly air. <span class="said">"It's that nobody else can do the work. I can't get sick. I can't go to my sister's wedding without my laptop. I'm tired, man."</span> He nodded at the dashboard glowing over the empty kitchen. <span class="said">"Your row one. You called it."</span>`,
+  `<span class="said" data-who="Theo">"I took the other job,"</span> Theo said. <span class="said" data-who="Theo">"Three weeks. Sorry. It isn't you."</span>`,
+  `Sam read it twice anyway. Old habit. <span class="said" data-who="Sam">"Is it the work?"</span>`,
+  `Theo did a half laugh, mostly air. <span class="said" data-who="Theo">"It's that nobody else can do the work. I can't get sick. I can't go to my sister's wedding without my laptop. I'm tired, man."</span> He nodded at the dashboard glowing over the empty kitchen. <span class="said" data-who="Theo">"Your row one. You called it."</span>`,
   `Sam didn't feel like he'd called anything. He felt like he'd watched it.`,
   `Three weeks. He grabbed a pen.`
  ],

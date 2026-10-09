@@ -3,14 +3,14 @@
  num:3, title:"Storming",
  opening:[
   "Theo told Sam on a Thursday, in the parking garage, which was the only place at Halcyon without a whiteboard. He'd taken a job at a research lab in Seattle. Better pay, no pager, a team of twelve instead of a company of six hundred that all needed him at once. His last day was three weeks out.",
-  "Sam didn't argue. He'd watched Theo answer Slack at two in the morning for a month. He just said, <span class=\"said\">\"Thank you for telling me first.\"</span>",
+  "Sam didn't argue. He'd watched Theo answer Slack at two in the morning for a month. He just said, <span class=\"said\" data-who=\"Sam\">\"Thank you for telling me first.\"</span>",
   "The cluster was fixed. IronPeak had swapped the bad power units and the firmware matched now, but the burn-in mess had eaten about two weeks of float. Go-live for the first three Cascade hospitals was nine weeks away, and the one person who understood the whole ML platform was leaving in three.",
-  "By Monday everyone knew. Standup was eleven minutes of people looking at their shoes. Lena Cho canceled her one on ones. Grant Mercer sent Elena a message that started with <span class=\"said\">\"I warned you about engineering\"</span> and went downhill from there.",
-  "Ruth Calder called that night. <span class=\"said\">\"So your team just lost its best player and found out it has opinions,\"</span> she said. <span class=\"said\">\"Good. Now you'll find out what they're made of.\"</span>"
+  "By Monday everyone knew. Standup was eleven minutes of people looking at their shoes. Lena Cho canceled her one on ones. Grant Mercer sent Elena a message that started with <span class=\"said\" data-who=\"Grant\">\"I warned you about engineering\"</span> and went downhill from there.",
+  "Ruth Calder called that night. <span class=\"said\" data-who=\"Ruth\">\"So your team just lost its best player and found out it has opinions,\"</span> she said. <span class=\"said\" data-who=\"Ruth\">\"Good. Now you'll find out what they're made of.\"</span>"
  ],
  scenes:[
  {id:"c3s1", domain:"Process", task:"Plan the knowledge transfer",
-  text:s=>["Sam spends Tuesday listing what Theo knows that nobody else does. The deploy pipeline. The model evaluation harness. The IronPeak cluster configuration, which lives mostly in Theo's head and partly in a text file called <span class=\"said\">\"notes_final_v3.\"</span>","Three weeks. Theo is willing. He's also still carrying four critical tasks."],
+  text:s=>["Sam spends Tuesday listing what Theo knows that nobody else does. The deploy pipeline. The model evaluation harness. The IronPeak cluster configuration, which lives mostly in Theo's head and partly in a text file called \"notes_final_v3.\"","Three weeks. Theo is willing. He's also still carrying four critical tasks."],
   opts:[
    {t:"Map what only Theo knows, rank it by risk, and have him hand it to Priya in pairs.",s:3,best:true,d:{trust:4,conf:2,health:6},
     after:"Sam and Theo spend an hour ranking the list by what would hurt most if it walked out the door. The deploy pipeline goes first. Priya pairs with Theo every afternoon and runs the deploys herself while he watches. By day ten she's done four without him touching the keyboard.",
@@ -26,13 +26,13 @@
     why:"Hiring is a long term fix for a short term problem. Freezing critical path work while you wait guarantees a slip. Transfer the knowledge to the people you have."}
   ]},
  {id:"c3s2", domain:"People", task:"Coach a new lead",
-  text:s=>["Priya Shah has been at Halcyon two years. She's quick, careful, and the only person Theo trusts with production. On Wednesday she asks Sam for ten minutes and closes the door.","<span class=\"said\">\"Everyone's acting like I'm the new Theo,\"</span> she says. <span class=\"said\">\"I'm not. I don't think I'm ready for this.\"</span>"],
+  text:s=>["Priya Shah has been at Halcyon two years. She's quick, careful, and the only person Theo trusts with production. On Wednesday she asks Sam for ten minutes and closes the door.","<span class=\"said\" data-who=\"Priya\">\"Everyone's acting like I'm the new Theo,\"</span> she says. <span class=\"said\" data-who=\"Priya\">\"I'm not. I don't think I'm ready for this.\"</span>"],
   opts:[
    {t:"Give Priya full ownership of the platform now. People grow fastest when thrown in.",s:0,d:{trust:-5,conf:0,health:-3},
     after:"Priya says okay because Sam is her boss's boss's peer and it feels like an order. She stops sleeping well. In week two she misses a warning sign in the evaluation results because she's covering four jobs.",
     why:"Sink or swim isn't empowerment. It ignores what she told you. Growing someone into a role means support that tapers off as their confidence and skill rise."},
    {t:"Ask what worries her most, agree what she owns first, and coach her weekly.",s:3,best:true,d:{trust:6,conf:1,health:4},
-    after:"It turns out she's fine with deploys. What scares her is the evaluation harness and being the one who says <span class=\"said\">\"no\"</span> to Grant. They agree she owns deploys now, the harness in two weeks, and Sam takes the Grant conversations until she's ready. They meet every Friday for thirty minutes.",
+    after:"It turns out she's fine with deploys. What scares her is the evaluation harness and being the one who says \"no\" to Grant. They agree she owns deploys now, the harness in two weeks, and Sam takes the Grant conversations until she's ready. They meet every Friday for thirty minutes.",
     why:"Coaching starts with listening. Find out what she's actually worried about, give her a clear and limited scope to start, and support her as she grows. That's how a servant leader builds capability instead of just assigning it."},
    {t:"Keep Priya as backup for now and take on Theo's coordination work personally.",s:0,d:{trust:-2,conf:0,health:-4},
     after:"Sam becomes the new bottleneck. He spends his evenings in Slack answering platform questions he half understands, and the status reports start arriving late.",
@@ -42,7 +42,7 @@
     why:"Training is a good idea, so this gets partial credit. The timing is wrong. With Theo leaving, on the job learning beside the expert is worth more than a course. Schedule the formal training after he's gone."}
   ]},
  {id:"c3s3", domain:"People", task:"Resolve conflict between leaders",
-  text:s=>["Thursday's sprint planning. Fifteen people in the room, four on video from Kraków. Grant walks in late and says, to nobody in particular, that the phased release is <span class=\"said\">\"engineering covering for itself.\"</span>","Lena, who never raises her voice, raises her voice. <span class=\"said\">\"Engineering is covering for promises you made without asking us.\"</span>","The room goes silent. Fifteen people watch the CTO and the CRO stare at each other."],
+  text:s=>["Thursday's sprint planning. Fifteen people in the room, four on video from Kraków. Grant walks in late and says, to nobody in particular, that the phased release is <span class=\"said\" data-who=\"Grant\">\"engineering covering for itself.\"</span>","Lena, who never raises her voice, raises her voice. <span class=\"said\" data-who=\"Lena\">\"Engineering is covering for promises you made without asking us.\"</span>","The room goes silent. Fifteen people watch the CTO and the CRO stare at each other."],
   opts:[
    {t:"Call a break and tell them both this argument needs to happen outside the meeting.",s:1,d:{trust:2,conf:-1,health:1},
     after:"The meeting recovers. Grant and Lena both leave annoyed with Sam, and with each other, and nothing gets resolved. They avoid each other for a week.",
@@ -154,7 +154,7 @@
     why:"Delayed recognition feels like no recognition. Recognize good work when it happens, and celebrate the milestone too."}
   ]},
  {id:"c3s10", domain:"Business Environment", task:"Check compliance before sharing data",
-  text:s=>["Tomasz asks for a copy of real Cascade clinical notes. His team is debugging how the agents handle unusual abbreviations, and the synthetic test notes don't have enough of them.","Grant, copied on the thread, replies first. <span class=\"said\">\"Just send them a sample. They're under contract.\"</span>","Kraków is in Poland. The notes contain patient information."],
+  text:s=>["Tomasz asks for a copy of real Cascade clinical notes. His team is debugging how the agents handle unusual abbreviations, and the synthetic test notes don't have enough of them.","Grant, copied on the thread, replies first. <span class=\"said\" data-who=\"Grant\">\"Just send them a sample. They're under contract.\"</span>","Kraków is in Poland. The notes contain patient information."],
   opts:[
    {t:"Send Tomasz a small sample of real notes, since his team is under a signed contract.",s:0,d:{trust:0,conf:-7,health:-2},
     after:"Three weeks later Cascade's privacy office asks where patient data has been processed. Sam has to tell them. It goes all the way to Ochoa.",
@@ -174,10 +174,10 @@
   "Theo's last day is a Friday. The team gets him a cake shaped like a GPU, which is mostly a rectangle. Priya runs the afternoon deploy while Theo eats cake and doesn't look over her shoulder once. Somebody notices, and it gets a round of applause.",
   "Tomasz joins on video from Kraków at midnight his time to say goodbye. Lena and Grant stand next to each other at the cake, which is the most anyone could have asked for.",
   "Saturday, Sam drives to Ruth's place in Evergreen. She's on the porch with two coffees.",
-  "<span class=\"said\">\"In Florida we had afternoon storms almost every day in summer,\"</span> she says. <span class=\"said\">\"You don't cancel the launch program because it rains. You learn the pattern and plan around it. Teams are the same. Every one of them storms. The bad ones just never get out the other side.\"</span>",
-  (s.score>=24?"She hands him a coffee. <span class=\"said\">\"Yours got out the other side. You let them fight about the right things.\"</span>":"She hands him a coffee. <span class=\"said\">\"You're closer than you think. Next time it gets loud, ask what the team is really arguing about. It's almost never the thing they say.\"</span>"),
+  "<span class=\"said\" data-who=\"Ruth\">\"In Florida we had afternoon storms almost every day in summer,\"</span> she says. <span class=\"said\" data-who=\"Ruth\">\"You don't cancel the launch program because it rains. You learn the pattern and plan around it. Teams are the same. Every one of them storms. The bad ones just never get out the other side.\"</span>",
+  (s.score>=24?"She hands him a coffee. <span class=\"said\" data-who=\"Ruth\">\"Yours got out the other side. You let them fight about the right things.\"</span>":"She hands him a coffee. <span class=\"said\" data-who=\"Ruth\">\"You're closer than you think. Next time it gets loud, ask what the team is really arguing about. It's almost never the thing they say.\"</span>"),
   "Sam's phone buzzes. It's Ochoa. Cascade has named a product owner for the project, Maria Santos, their director of nursing informatics. She wants a live demo with real clinicians in two weeks.",
-  "<span class=\"said\">\"Now comes the part where the customer touches it,\"</span> Ruth says. <span class=\"said\">\"That's always where it gets interesting.\"</span>"
+  "<span class=\"said\" data-who=\"Ruth\">\"Now comes the part where the customer touches it,\"</span> Ruth says. <span class=\"said\" data-who=\"Ruth\">\"That's always where it gets interesting.\"</span>"
  ],
  cast:[
   ["Priya Shah","Engineer stepping up as ML platform lead after Theo."],

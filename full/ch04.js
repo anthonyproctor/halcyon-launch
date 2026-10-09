@@ -5,14 +5,14 @@
  cast:[[`Hal Brennan`,`Site operations manager at IronPeak, the GPU colocation vendor.`],[`Joan Pruitt`,`Halcyon procurement lead. Reads every contract twice.`]],
  opening:[
   `The text came in at 5:48 on a Monday morning. Sam saw it because he was already awake, lying in the dark, replaying Friday's sprint review. Eight people on the call. Two questions. Nobody had disagreed with anything, and he'd learned enough by now to know that wasn't good news.`,
-  `The text was from Theo. <span class="said">"Burn-in finished overnight. Half the GPUs failed. Call me when you're up."</span>`,
-  `Dana rolled over and looked at him in the light of the phone. She taught chemistry to sixteen year olds and could read a face across a parking lot. <span class="said">"That's your work face,"</span> she said. <span class="said">"It's not even six."</span>`,
-  `<span class="said">"The cluster failed its test."</span>`,
-  `<span class="said">"Is that the expensive thing?"</span>`,
-  `<span class="said">"That's the expensive thing."</span>`,
+  `The text was from Theo. <span class="said" data-who="Theo">"Burn-in finished overnight. Half the GPUs failed. Call me when you're up."</span>`,
+  `Dana rolled over and looked at him in the light of the phone. She taught chemistry to sixteen year olds and could read a face across a parking lot. <span class="said" data-who="Dana">"That's your work face,"</span> she said. <span class="said" data-who="Dana">"It's not even six."</span>`,
+  `<span class="said" data-who="Sam">"The cluster failed its test."</span>`,
+  `<span class="said" data-who="Dana">"Is that the expensive thing?"</span>`,
+  `<span class="said" data-who="Sam">"That's the expensive thing."</span>`,
   `Burn-in is the seventy-two hour stress run every new rack of hardware goes through before anyone trusts it. The IronPeak cluster held the GPUs that would run Halcyon's agents for Cascade Valley Health. Integration testing was supposed to start on it in three weeks. Go-live sat nine weeks behind that, and the contract didn't care about burn-in.`,
-  `By eight Sam was at IronPeak's site east of the airport, a long gray building with no windows and a guard who checked IDs twice. The air inside was cold and loud and smelled like hot dust. Hal Brennan, IronPeak's site operations manager, met him at the cage with coffee and a theory. <span class="said">"Bad batch from the manufacturer,"</span> Hal said. <span class="said">"Happens. We'll swap them and rerun."</span>`,
-  `Sam looked at the dark half of the racks. Twelve years ago a crew chief named Ray Mendez had told him something on a flight line in the snow, and it came back to him now. <span class="said">"The jet doesn't care what you think broke it, Okafor. Prove it."</span>`
+  `By eight Sam was at IronPeak's site east of the airport, a long gray building with no windows and a guard who checked IDs twice. The air inside was cold and loud and smelled like hot dust. Hal Brennan, IronPeak's site operations manager, met him at the cage with coffee and a theory. <span class="said" data-who="Hal">"Bad batch from the manufacturer,"</span> Hal said. <span class="said" data-who="Hal">"Happens. We'll swap them and rerun."</span>`,
+  `Sam looked at the dark half of the racks. Twelve years ago a crew chief named Ray Mendez had told him something on a flight line in the snow, and it came back to him now. <span class="said" data-who="Ray">"The jet doesn't care what you think broke it, Okafor. Prove it."</span>`
  ],
  lesson:{
   title:`Quality and risk`,
@@ -90,13 +90,13 @@
      why:`If the process had a gap, the defect isn't one time. Lessons that don't change the process don't count as lessons.`}
    ]},
   {id:`f4s4`, domain:`People`, task:`P3`, title:`Who signed it`,
-   text:(s,all,G)=>[`Tuesday standup has extra guests. Grant drops in, arms crossed. <span class="said">"So who signed off on this cluster?"</span> he asks the room.`,`Theo signed IronPeak's handover checklist. Everyone at the table knows it. Theo is looking at the floor.`],
+   text:(s,all,G)=>[`Tuesday standup has extra guests. Grant drops in, arms crossed. <span class="said" data-who="Grant">"So who signed off on this cluster?"</span> he asks the room.`,`Theo signed IronPeak's handover checklist. Everyone at the table knows it. Theo is looking at the floor.`],
    opts:[
     {t:`Say Theo signed the handover, so the team understands where the gap came from.`,s:0,flag:`blamedtheo`,d:{trust:-8,conf:1,health:-1},
      after:`Grant nods, satisfied. Theo says nothing for the rest of the meeting. Priya does the math on what happens to whoever is next.`,
      why:`Naming a person in public turns a process failure into a blame session. The team learns to hide problems, which is the opposite of what you need.`},
     {t:`Say the process had a gap, Sam owns the fix, and talk to Theo privately later.`,s:3,best:true,d:{trust:7,conf:1,health:2},
-     after:`Grant opens his mouth, then closes it. After standup Sam finds Theo in the kitchen. <span class="said">"The checklist failed you,"</span> Sam says. <span class="said">"We're fixing the checklist."</span> Theo looks like he wants to believe it.`,
+     after:`Grant opens his mouth, then closes it. After standup Sam finds Theo in the kitchen. <span class="said" data-who="Sam">"The checklist failed you,"</span> Sam says. <span class="said" data-who="Sam">"We're fixing the checklist."</span> Theo looks like he wants to believe it.`,
      why:`A leader takes public responsibility for the system and handles individual feedback in private. It protects trust and keeps people reporting problems.`},
     {t:`Say it's still being investigated and move the meeting on to the next topic.`,s:1,d:{trust:1,conf:-2,health:0},
      after:`The room exhales. Grant asks again in Slack an hour later.`,
@@ -106,7 +106,7 @@
      why:`A public walk through of one person's miss is blame with extra steps. Share lessons learned as process lessons, not personal ones.`}
    ]},
   {id:`f4s5`, domain:`Business Environment`, task:`B5`, title:`The register nobody reads`,
-   text:(s,all,G)=>[`Sam opens the project risk register for the first time since he inherited it. Forty-one rows. Most were written in the first week by the PM who quit. <span class="said">"Technical complexity."</span> <span class="said">"Resource constraints."</span> No owners. No triggers. The GPU hardware risk is row 33, rated low.`,`It's clear nobody has opened this file in a month.`],
+   text:(s,all,G)=>[`Sam opens the project risk register for the first time since he inherited it. Forty-one rows. Most were written in the first week by the PM who quit. "Technical complexity." "Resource constraints." No owners. No triggers. The GPU hardware risk is row 33, rated low.`,`It's clear nobody has opened this file in a month.`],
    opts:[
     {t:`Score all forty-one risks on probability and impact before changing anything.`,s:1,d:{trust:0,conf:0,health:1},
      after:`It takes two afternoons. The scores are better. The rows are still vague and nobody owns them.`,
@@ -115,7 +115,7 @@
      after:`The status email gets longer every week. Risks get mentioned once and forgotten.`,
      why:`A status email isn't a risk register. Risks need a home where they're tracked with owners, triggers, and responses over time.`},
     {t:`Rebuild it with specific risks, each with an owner, a trigger, and a response.`,s:3,best:true,d:{trust:3,conf:2,health:6},
-     after:`Sam runs a ninety minute session with the leads. The register shrinks to nineteen real risks. Each one has a name next to it. <span class="said">"Key person dependency on Theo"</span> goes in at high probability, high impact.`,
+     after:`Sam runs a ninety minute session with the leads. The register shrinks to nineteen real risks. Each one has a name next to it. "Key person dependency on Theo" goes in at high probability, high impact.`,
      why:`A register is only useful if it's specific and owned. Identify real risks with the people closest to the work, then assign owners, triggers, and planned responses.`},
     {t:`Ask each team lead to add any new risks they think of to the existing register.`,s:0,d:{trust:0,conf:0,health:-2},
      after:`Three new rows appear. They look a lot like the old ones.`,
@@ -138,7 +138,7 @@
      why:`Avoiding a risk at any price isn't a strategy. Compare the cost of each response against the expected cost of the risk.`}
    ]},
   {id:`f4s7`, domain:`Process`, task:`R5`, title:`Customer configuration`,
-   text:(s,all,G)=>[`IronPeak's account team sends a polite email. The power units are covered. The firmware, they say, was <span class="said">"customer configuration"</span> and falls outside the warranty. They'll fix it at their standard rate.`,`Joan Pruitt has the contract open before Sam finishes reading. <span class="said">"Section nine,"</span> she says. <span class="said">"I want to read it twice."</span>`],
+   text:(s,all,G)=>[`IronPeak's account team sends a polite email. The power units are covered. The firmware, they say, was "customer configuration" and falls outside the warranty. They'll fix it at their standard rate.`,`Joan Pruitt has the contract open before Sam finishes reading. <span class="said" data-who="Joan">"Section nine,"</span> she says. <span class="said" data-who="Joan">"I want to read it twice."</span>`],
    opts:[
     {t:`Withhold IronPeak's next monthly payment until they fix the firmware for free.`,s:0,d:{trust:0,conf:-3,health:-3},
      after:`IronPeak's finance team flags the account. The relationship turns to letters between lawyers.`,
@@ -170,7 +170,7 @@
      why:`Moving a contractual date is a last resort and not Sam's call alone. Try schedule compression first, then bring options to the sponsor.`}
    ]},
   {id:`f4s9`, domain:`Business Environment`, task:`B4`, title:`Locked out`,
-   text:(s,all,G)=>[`After the incident, Halcyon's security team tightened remote access to staging. Nobody told Kraków. Tomasz's team has been locked out for two days.`,`Tomasz's message is short. <span class="said">"My team is billing you to wait. Tell me if that is the plan."</span>`],
+   text:(s,all,G)=>[`After the incident, Halcyon's security team tightened remote access to staging. Nobody told Kraków. Tomasz's team has been locked out for two days.`,`Tomasz's message is short. <span class="said" data-who="Tomasz">"My team is billing you to wait. Tell me if that is the plan."</span>`],
    opts:[
     {t:`Have Tomasz's team write documentation until access is restored.`,s:1,d:{trust:-1,conf:0,health:-1},
      after:`They write documentation. Tomasz's next message is shorter.`,
@@ -179,20 +179,20 @@
      after:`Security finds out the next morning. Now there are two incidents.`,
      why:`Bypassing a security control to remove an impediment creates a compliance problem. Work with the control owner, not around them.`},
     {t:`Get security and Tomasz on a call today and agree on a safe access path.`,s:3,best:true,d:{trust:5,conf:1,health:4},
-     after:`Forty minutes later Kraków has scoped access through the new jump host. Tomasz sends one word: <span class="said">"Good."</span> From Tomasz, that's a parade.`,
+     after:`Forty minutes later Kraków has scoped access through the new jump host. Tomasz sends one word: <span class="said" data-who="Tomasz">"Good."</span> From Tomasz, that's a parade.`,
      why:`Removing impediments is a core servant leadership task. Bring the people who can clear it together quickly and solve it within the rules.`},
     {t:`Raise it at next week's steering meeting as an escalation for Lena.`,s:0,d:{trust:-3,conf:0,health:-3},
      after:`A week of contractor time is lost waiting for a meeting.`,
      why:`An impediment you can clear today shouldn't wait for a steering committee. Escalate only what you can't resolve yourself.`}
    ]},
   {id:`f4s10`, domain:`People`, task:`P8`, title:`Friday's page`,
-   text:(s,all,G)=>[`Friday's one page status goes to Ochoa at four. This is the first week with real bad news in it.`,`Grant stops by Sam's desk. <span class="said">"Lead with the recovery,"</span> he says. <span class="said">"Nobody needs the gory details."</span>`],
+   text:(s,all,G)=>[`Friday's one page status goes to Ochoa at four. This is the first week with real bad news in it.`,`Grant stops by Sam's desk. <span class="said" data-who="Grant">"Lead with the recovery,"</span> he says. <span class="said" data-who="Grant">"Nobody needs the gory details."</span>`],
    opts:[
     {t:`Report the recovery plan only, since the failure is already being fixed.`,s:1,d:{trust:0,conf:-2,health:0},
      after:`Ochoa reads it and asks on Monday's call what the recovery is recovering from.`,
      why:`Partial transparency still leaves the stakeholder guessing. Give the whole picture plainly, with the plan attached.`},
     {t:`Report the failure, its root cause, the recovery, and the days at risk.`,s:3,best:true,d:{trust:1,conf:6,health:1},
-     after:`Ochoa replies in four minutes. <span class="said">"Thank you for not making me find this out myself."</span>`,
+     after:`Ochoa replies in four minutes. <span class="said" data-who="Ochoa">"Thank you for not making me find this out myself."</span>`,
      why:`Stakeholders trust project managers who tell them bad news early, with facts and a plan. That's how communication management earns confidence.`},
     {t:`Leave the cluster out of this week's status until repairs are complete.`,s:0,d:{trust:0,conf:-7,health:0},
      after:`Ochoa hears about it from his own infrastructure lead, who heard it from IronPeak.`,
@@ -202,7 +202,7 @@
      why:`Information isn't communication. Tailor the message to what the stakeholder needs to know and decide.`}
    ]},
   {id:`f4s11`, domain:`Process`, task:`R7`, title:`One more burn-in`,
-   text:(s,all,G)=>[`Repairs are done. A second full burn-in would take three days. Lena wants to skip it. <span class="said">"We know the cause. We fixed the cause. Why burn three days proving it?"</span>`,`It's a fair question, and it's the CTO asking it.`],
+   text:(s,all,G)=>[`Repairs are done. A second full burn-in would take three days. Lena wants to skip it. <span class="said" data-who="Lena">"We know the cause. We fixed the cause. Why burn three days proving it?"</span>`,`It's a fair question, and it's the CTO asking it.`],
    opts:[
     {t:`Run a shorter burn-in on a sample of racks to save two of the three days.`,s:1,d:{trust:0,conf:0,health:2},
      after:`The sample passes. Nobody knows about the racks that weren't sampled.`,
@@ -230,7 +230,7 @@
      after:`The risk stays real whether or not anyone writes it down.`,
      why:`Avoiding an uncomfortable risk doesn't make it go away. Log it, own it, and respond with care for the person.`},
     {t:`Make Priya's shadowing the planned response, with Sam as the risk owner.`,s:3,best:true,d:{trust:3,conf:1,health:4},
-     after:`Sam blocks two hours a week for Priya and Theo to pair. He tells Theo why, plainly. Theo almost smiles. <span class="said">"She's better than she thinks,"</span> he says.`,
+     after:`Sam blocks two hours a week for Priya and Theo to pair. He tells Theo why, plainly. Theo almost smiles. <span class="said" data-who="Theo">"She's better than she thinks,"</span> he says.`,
      why:`A key person risk needs an owner and a mitigation that actually spreads the skill. Pairing transfers tacit knowledge in a way documents can't.`}
    ]}
  ],
@@ -271,11 +271,11 @@
   `The cluster passed its second burn-in on a Thursday at 2:14 in the afternoon. Theo sent the result to the channel with no comment. Priya added a thumbs up. Hal sent a photo of all the racks lit green, which Sam suspected was the closest IronPeak got to an apology.`,
   `Nine days of float were gone. Six came back through fast tracking. The plan held, barely.`,
   `That evening Sam had dinner with Ruth at a diner on Colfax she swore made the best green chile in Denver. She read the risk register on his phone while her food got cold.`,
-  `<span class="said">"Row one,"</span> she said. <span class="said">"Good. Most people don't write that one down."</span> She was quiet for a moment. <span class="said">"Early in my career I saw a sensor reading I didn't like. I talked myself out of mentioning it. I didn't want to be the alarmist in the room."</span>`,
+  `<span class="said" data-who="Ruth">"Row one,"</span> she said. <span class="said" data-who="Ruth">"Good. Most people don't write that one down."</span> She was quiet for a moment. <span class="said" data-who="Ruth">"Early in my career I saw a sensor reading I didn't like. I talked myself out of mentioning it. I didn't want to be the alarmist in the room."</span>`,
   `Sam waited. She picked up her fork instead.`,
-  `<span class="said">"Another time,"</span> she said. <span class="said">"Write things down, Sam. Even the ones that make people uncomfortable. Especially those."</span>`,
+  `<span class="said" data-who="Ruth">"Another time,"</span> she said. <span class="said" data-who="Ruth">"Write things down, Sam. Even the ones that make people uncomfortable. Especially those."</span>`,
   (s.score>=27?`On the drive home he realized he hadn't checked his phone once during dinner. Dana noticed too.`:`On the drive home he checked his phone at every red light. Dana took it out of his hand at the last one.`),
-  `At home there was an email from Elena. The board meeting had moved up. She wanted the budget, the burn-in costs, and a forecast by Tuesday. <span class="said">"Real numbers,"</span> she wrote. <span class="said">"Last quarter a board member called our forecasts vibes."</span>`,
+  `At home there was an email from Elena. The board meeting had moved up. She wanted the budget, the burn-in costs, and a forecast by Tuesday. <span class="said" data-who="Elena">"Real numbers,"</span> she wrote. <span class="said" data-who="Elena">"Last quarter a board member called our forecasts vibes."</span>`,
   `Sam opened a spreadsheet and started building them.`
  ],
  episode:{src:`audio/full-ch04.mp3`, len:`about 35 minutes`},

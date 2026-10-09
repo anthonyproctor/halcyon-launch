@@ -7,9 +7,9 @@
   `Week eight started with an empty chair. Theo's desk had been cleared on Friday, and on Monday morning someone had already left a stack of loaner laptops on it, the way an office fills a gap before anybody has decided what the gap means.`,
   `Priya Shah ran the platform work now. She'd moved Theo's runbook into a shared doc and added a section at the top called "Things that surprised me," which she updated every day. Nobody had asked her to. When Sam mentioned it in standup she turned red and changed the subject to the deploy queue.`,
   `Cascade had sent a product owner. Maria Santos had spent fourteen years as an ICU nurse before she ran nursing informatics for all eleven hospitals. She showed up at Halcyon's office in LoDo on Monday with a canvas bag, a printed copy of the backlog covered in her handwriting, and no interest at all in how the agents worked.`,
-  `<span class="said">"I don't need to understand the model,"</span> she told Sam in the elevator. <span class="said">"I need to know whether a nurse at four in the morning, on hour eleven of a twelve, can trust what it writes. Because she will. That's the danger. She'll trust it."</span>`,
+  `<span class="said" data-who="Maria">"I don't need to understand the model,"</span> she told Sam in the elevator. <span class="said" data-who="Maria">"I need to know whether a nurse at four in the morning, on hour eleven of a twelve, can trust what it writes. Because she will. That's the danger. She'll trust it."</span>`,
   `The first live demo was set for Thursday of week nine. Six nurses and a hospitalist from Cascade's Laramie hospital would use the agents on real workflows in a test environment, with real looking patient records that weren't real. Ochoa would watch from the back of the room.`,
-  `At home that night, Dana found Sam at the kitchen table at eleven, reading the backlog on his phone. <span class="said">"You've got the inspection face,"</span> she said. He did. On the flight line, the night before an inspection, everything always looked fine. That was exactly what used to worry him, and it worried him now.`
+  `At home that night, Dana found Sam at the kitchen table at eleven, reading the backlog on his phone. <span class="said" data-who="Dana">"You've got the inspection face,"</span> she said. He did. On the flight line, the night before an inspection, everything always looked fine. That was exactly what used to worry him, and it worried him now.`
  ],
  lesson:{
   title:`Delivering value, not just output`,
@@ -47,7 +47,7 @@
  },
  scenes:[
  {id:`f7s1`, domain:`Process`, task:`R3`, title:`Who decides what comes first`,
-  text:(s,all,G)=>[`Maria's handwritten backlog doesn't match the one in the tracker. She's moved medication reconciliation to the bottom and pulled nursing shift notes to the top. Grant sees it in the shared doc within the hour.`,`<span class="said">"Med rec is the feature we sold,"</span> he tells Sam. <span class="said">"It was on every slide. Put it back."</span>`],
+  text:(s,all,G)=>[`Maria's handwritten backlog doesn't match the one in the tracker. She's moved medication reconciliation to the bottom and pulled nursing shift notes to the top. Grant sees it in the shared doc within the hour.`,`<span class="said" data-who="Grant">"Med rec is the feature we sold,"</span> he tells Sam. <span class="said" data-who="Grant">"It was on every slide. Put it back."</span>`],
   opts:[
    {t:`Explain to Grant that Maria owns the order, and set up a talk between them about value.`,s:3,best:true,d:{trust:3,conf:4,health:3},
     after:`Grant grumbles, but he meets Maria. She walks him through how many minutes a nurse spends on shift notes versus med rec. Grant leaves quiet. Two days later he's quoting her numbers to another prospect.`,
@@ -95,10 +95,10 @@
     why:`The fix is to demo only what meets done, not to slip the event. A sprint review shows finished increments, and you can show fewer of them.`}
   ]},
  {id:`f7s4`, domain:`People`, task:`P5`, title:`Setting up the room`,
-  text:(s,all,G)=>[`Grant wants a polished slide deck and a scripted walkthrough with perfect data. <span class="said">"First impressions,"</span> he says. Maria wants the nurses to use it cold, with no script, the way they'd use it at work.`,`Ochoa calls Sam that evening. <span class="said">"What exactly am I going to see tomorrow?"</span>`],
+  text:(s,all,G)=>[`Grant wants a polished slide deck and a scripted walkthrough with perfect data. <span class="said" data-who="Grant">"First impressions,"</span> he says. Maria wants the nurses to use it cold, with no script, the way they'd use it at work.`,`Ochoa calls Sam that evening. <span class="said" data-who="Ochoa">"What exactly am I going to see tomorrow?"</span>`],
   opts:[
    {t:`Tell Ochoa it's an early working version, nurses will use it unscripted, and expect rough edges.`,s:3,best:true,d:{trust:1,conf:6,health:1},
-    after:`Ochoa says that's exactly what he wanted to hear. <span class="said">"If it's perfect, I won't believe it."</span> Grant drops the script.`,
+    after:`Ochoa says that's exactly what he wanted to hear. <span class="said" data-who="Ochoa">"If it's perfect, I won't believe it."</span> Grant drops the script.`,
     why:`Aligning expectations before an event means stakeholders judge it against the right standard. An honest framing turns problems found tomorrow into progress instead of surprises.`},
    {t:`Promise Ochoa a smooth demo and run Grant's scripted walkthrough to protect the first impression.`,s:0,d:{trust:-2,conf:-3,health:0},
     after:`The script works for eleven minutes. Then a nurse asks to try a real scenario and the room goes quiet.`,
@@ -111,10 +111,10 @@
     why:`The PM owns stakeholder expectations for what the project is delivering. Handing the conversation off, especially when you were asked directly, reads as avoidance.`}
   ]},
  {id:`f7s5`, domain:`Process`, task:`R7`, title:`The invented medication`,
-  text:(s,all,G)=>[`Thursday, forty minutes in. A Laramie nurse named Becca asks the agent to draft a note for a post-op patient. The draft is clean and fast. It also lists metoprolol, which the patient has never taken.`,`Becca catches it in about four seconds. <span class="said">"Where did that come from?"</span> The room goes still. Ochoa writes something down.`],
+  text:(s,all,G)=>[`Thursday, forty minutes in. A Laramie nurse named Becca asks the agent to draft a note for a post-op patient. The draft is clean and fast. It also lists metoprolol, which the patient has never taken.`,`Becca catches it in about four seconds. <span class="said" data-who="woman">"Where did that come from?"</span> The room goes still. Ochoa writes something down.`],
   opts:[
    {t:`Call it a serious defect out loud, log it live, and keep testing the rest with them.`,s:3,best:true,d:{trust:3,conf:5,health:2},
-    after:`Sam says, <span class="said">"That's exactly what this session is for. That's a safety defect and we're logging it now."</span> Priya writes it up live on the screen. The nurses relax and get more aggressive about testing, and they find two smaller problems.`,
+    after:`Sam says, <span class="said" data-who="Sam">"That's exactly what this session is for. That's a safety defect and we're logging it now."</span> Priya writes it up live on the screen. The nurses relax and get more aggressive about testing, and they find two smaller problems.`,
     why:`Acknowledge the defect openly, record it, and keep learning. A review is where you want problems to surface, and how the team reacts tells the customer whether they can trust you.`},
    {t:`Explain that the test data may have caused it and move on to the next scenario quickly.`,s:0,d:{trust:-2,conf:-6,health:-1},
     after:`Becca doesn't buy it, and neither does Ochoa. The rest of the session the nurses are polite and unconvinced.`,
@@ -127,10 +127,10 @@
     why:`Hot fixing in a review skips the root cause and the quality process. Log it, investigate it properly, and fix it the right way.`}
   ]},
  {id:`f7s6`, domain:`People`, task:`P6`, title:`Telling Cascade`,
-  text:(s,all,G)=>[`After the demo, in the hallway, Grant pulls Sam aside. <span class="said">"Ochoa saw a blip. Let's not put 'invented medication' in writing. We fix it, we show him the fix, nobody makes it bigger than it is."</span>`,`Priya's preliminary look says it isn't a blip. The agent filled a gap in the record with something statistically likely.`],
+  text:(s,all,G)=>[`After the demo, in the hallway, Grant pulls Sam aside. <span class="said" data-who="Grant">"Ochoa saw a blip. Let's not put 'invented medication' in writing. We fix it, we show him the fix, nobody makes it bigger than it is."</span>`,`Priya's preliminary look says it isn't a blip. The agent filled a gap in the record with something statistically likely.`],
   opts:[
    {t:`Send Ochoa and Maria a written summary today: what happened, what we know, next steps.`,s:3,best:true,d:{trust:2,conf:6,health:1},
-    after:`Ochoa replies in nine minutes. <span class="said">"Thank you. This is why I'm still on this call every week."</span> Maria asks to join the root cause review.`,
+    after:`Ochoa replies in nine minutes. <span class="said" data-who="Ochoa">"Thank you. This is why I'm still on this call every week."</span> Maria asks to join the root cause review.`,
     why:`Manage stakeholder expectations with honest, timely information, especially on safety. Putting it in writing the same day, with what you know and don't, is how trust survives a bad moment.`},
    {t:`Wait until the fix is ready, then tell Ochoa what happened and show him it's solved.`,s:0,flag:`hiddefect`,d:{trust:-1,conf:-5,health:0},
     after:`It takes eight days to fix properly. Maria hears about the root cause from a Halcyon engineer at lunch on day five. She doesn't say anything to Sam. She doesn't have to.`,
@@ -155,11 +155,11 @@
     after:`Retraining takes three weeks and the behavior improves but doesn't go away. Models still guess.`,
     why:`More training might reduce the rate, but it doesn't guarantee safety. For a known failure with patient risk, add a deterministic control.`},
    {t:`Add a warning in the interface telling nurses to double-check all medications in drafts.`,s:0,d:{trust:0,conf:-1,health:-1},
-    after:`Maria reads the warning text and says, <span class="said">"Nobody reads these after day two."</span> She's right.`,
+    after:`Maria reads the warning text and says, <span class="said" data-who="Maria">"Nobody reads these after day two."</span> She's right.`,
     why:`Pushing the burden to the user is the weakest control. Fix the defect at the source.`}
   ]},
  {id:`f7s8`, domain:`Process`, task:`R3`, title:`The mid-sprint ask`,
-  text:(s,all,G)=>[`Wednesday of the next sprint, Maria messages the team channel directly. Cascade's pharmacy committee wants allergy alerts shown above the note, starting with this release. <span class="said">"Can you add it this sprint?"</span>`,`The sprint goal is the grounding check across all three hospitals' templates. Priya estimates the alert at five points. The team committed to thirty.`],
+  text:(s,all,G)=>[`Wednesday of the next sprint, Maria messages the team channel directly. Cascade's pharmacy committee wants allergy alerts shown above the note, starting with this release. <span class="said" data-who="Maria">"Can you add it this sprint?"</span>`,`The sprint goal is the grounding check across all three hospitals' templates. Priya estimates the alert at five points. The team committed to thirty.`],
   opts:[
    {t:`Ask the team how it affects the sprint goal; if it threatens it, Maria tops next sprint.`,s:3,best:true,d:{trust:4,conf:2,health:3},
     after:`The team says it would push the grounding check. Maria agrees safety comes first and puts the alerts at the top of the next sprint. Pharmacy gets a date and is fine with it.`,
@@ -175,7 +175,7 @@
     why:`Adding work to a team outside the plan dodges the prioritization question and creates integration risk. Let the backlog decide.`}
   ]},
  {id:`f7s9`, domain:`Process`, task:`R2`, title:`The debt`,
-  text:(s,all,G)=>[`Priya brings Sam a list. Fourteen shortcuts the team took to make the demo, from hard-coded hospital templates to a test suite that only covers the happy path. <span class="said">"None of it is on fire,"</span> she says. <span class="said">"All of it will be."</span>`,`The release date hasn't moved, and Grant has already promised Northgate a demo next quarter.`],
+  text:(s,all,G)=>[`Priya brings Sam a list. Fourteen shortcuts the team took to make the demo, from hard-coded hospital templates to a test suite that only covers the happy path. <span class="said" data-who="Priya">"None of it is on fire,"</span> she says. <span class="said" data-who="Priya">"All of it will be."</span>`,`The release date hasn't moved, and Grant has already promised Northgate a demo next quarter.`],
   opts:[
    {t:`Make the debt visible in the backlog and reserve some capacity each sprint to pay it.`,s:3,best:true,d:{trust:4,conf:1,health:5},
     after:`The team sets aside about fifteen percent of each sprint. Maria agrees because Priya shows her which items carry patient safety risk. The list shrinks every sprint.`,
@@ -226,7 +226,7 @@
   text:(s,all,G)=>[`Week ten. The same six nurses and the hospitalist, the same room. This time Becca tries to break it on purpose: a record with three gaps and an allergy listed twice.`,`Every gap is flagged in red. The allergy shows once, at the top. Becca laughs. Afterward Ochoa asks whether Laramie could join the first wave, since the nurses there are already trained.`],
   opts:[
    {t:`Thank him, explain the impact on the first wave, and offer to bring it as a change request.`,s:3,best:true,d:{trust:2,conf:5,health:2},
-    after:`Ochoa nods. <span class="said">"Show me the tradeoff on paper."</span> The change request goes to the next steering meeting with the impact spelled out, and Laramie is scheduled first in the second wave instead.`,
+    after:`Ochoa nods. <span class="said" data-who="Ochoa">"Show me the tradeoff on paper."</span> The change request goes to the next steering meeting with the impact spelled out, and Laramie is scheduled first in the second wave instead.`,
     why:`Align expectations by making tradeoffs visible. A reasonable request still goes through the change process so the decision is informed and recorded.`},
    {t:`Agree on the spot, since Laramie's nurses are trained and Ochoa has been a strong partner.`,s:0,d:{trust:-2,conf:2,health:-5},
     after:`The team learns about it from Ochoa's email. Laramie's interface configuration alone takes nine days nobody had planned.`,
@@ -265,10 +265,10 @@
  ],
  closing:(s,all,G)=>[
   `Friday evening, Sam and Maria walked out of the building together. The light over the Front Range had gone orange.`,
-  `<span class="said">"You know what I was looking for on Thursday?"</span> Maria said. <span class="said">"Not whether it would fail. Everything fails. I was watching what you'd do when it did."</span>`,
-  (G.hiddefect?`She didn't mention the eight days. She didn't need to. Sam had been carrying them all week.`:`<span class="said">"You told us the same day,"</span> she added. <span class="said">"In writing. I took that to our safety committee and they relaxed for the first time since we signed."</span>`),
-  `At home, Dana asked how the demo went. <span class="said">"The first one was a disaster,"</span> he said. <span class="said">"The second one was the best day I've had at Halcyon."</span> She said that sounded about right for anything worth doing.`,
-  `Monday morning, Joan Pruitt from procurement was waiting outside his office with a thick folder and a look Sam would come to recognize. <span class="said">"LabelForge sent their final invoice,"</span> she said. <span class="said">"And Cascade wants to change the contract. We should talk."</span>`
+  `<span class="said" data-who="Maria">"You know what I was looking for on Thursday?"</span> Maria said. <span class="said" data-who="Maria">"Not whether it would fail. Everything fails. I was watching what you'd do when it did."</span>`,
+  (G.hiddefect?`She didn't mention the eight days. She didn't need to. Sam had been carrying them all week.`:`<span class="said" data-who="Maria">"You told us the same day,"</span> she added. <span class="said" data-who="Maria">"In writing. I took that to our safety committee and they relaxed for the first time since we signed."</span>`),
+  `At home, Dana asked how the demo went. <span class="said" data-who="Sam">"The first one was a disaster,"</span> he said. <span class="said" data-who="Sam">"The second one was the best day I've had at Halcyon."</span> She said that sounded about right for anything worth doing.`,
+  `Monday morning, Joan Pruitt from procurement was waiting outside his office with a thick folder and a look Sam would come to recognize. <span class="said" data-who="Joan">"LabelForge sent their final invoice,"</span> she said. <span class="said" data-who="Joan">"And Cascade wants to change the contract. We should talk."</span>`
  ],
  episode:{src:`audio/full-ch07.mp3`, len:`about 35 minutes`},
  next:`The Contract`

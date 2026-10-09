@@ -1,5 +1,7 @@
 // Builds the spoken script for a chapter episode from the game content in index.html.
 import fs from 'fs';
+import {segments} from './voices.mjs';
+
 // usage: node episode_script.mjs chapters/chN.js out.json
 globalThis.window={};
 new Function('window',fs.readFileSync(process.argv[2],'utf8'))(globalThis.window);
@@ -7,7 +9,7 @@ const CH=globalThis.window.HALCYON[0];
 const strip=s=>s.replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
 const state={flags:{},score:24,m:{trust:60,conf:60,health:60}};
 const N='narrator',R='ruth',out=[];
-const say=(v,t)=>out.push({v,t:strip(t)}), pause=s=>out.push({pause:s});
+const say=(v,t)=>{segments(String(t),v).forEach(x=>out.push(x))}, pause=s=>out.push({pause:s});
 const words=['one','two','three','four','five','six','seven','eight','nine','ten'];
 say(N,`The Halcyon Launch. Chapter ${words[CH.num-1]}. ${CH.title}.`);pause(1.2);
 CH.opening.forEach(p=>{say(N,p);pause(0.6)});pause(1.2);
