@@ -138,8 +138,8 @@
         {t:`Ask Lena to set standards for code reviews and response times as CTO.`, s:0, d:{trust:0,conf:0,health:0},
           after:`Lena writes a thoughtful doc that avoids every contentious point.`,
           why:`Leadership-issued standards have a place, but working agreements for a team belong to that team.`},
-        {t:`Let norms form naturally, since forcing agreements this early can feel artificial.`, s:0, d:{trust:0,conf:0,health:-2},
-          after:`Norms do form. Different ones in each city.`,
+        {t:`Let norms form naturally, since forcing agreements this early can feel artificial.`, s:0, flag:`noteamcharter`, d:{trust:0,conf:0,health:-2},
+          after:`Norms do form. Different ones in each city, and nobody writes them down.`,
           why:`With two sites and real friction, waiting for norms to emerge means waiting for conflict. Make them explicit early.`}
       ]},
     { id:`f3s7`, domain:`People`, task:`P3`, title:`Tone in the code reviews`,
@@ -278,7 +278,9 @@
     `Ruth calls on his drive home. <span class="said" data-who="Ruth">"How'd the review go?"</span>`,
     `<span class="said" data-who="Sam">"Quiet."</span>`,
     `<span class="said" data-who="Ruth">"Quiet's the dangerous one,"</span> she says. <span class="said" data-who="Ruth">"Loud teams are arguing. Quiet teams are hiding. I learned that the expensive way."</span> She doesn't say how. Sam doesn't ask. Not yet.`,
-    `Monday, burn-in starts at IronPeak. Sam is brushing his teeth at 6:40 when his phone lights up on the sink. It's Theo, in the team channel, no greeting, no emoji: <span class="said" data-who="Theo">"rack 4 threw an error. then rack 7. looking."</span> Sam spits, rinses, and reads it again. Then he reaches for his keys.`
+    `Monday, burn-in starts at IronPeak. Sam is brushing his teeth at 6:40 when his phone lights up on the sink. It's Theo, in the team channel, no greeting, no emoji.`,
+    `<prop type="chat" from="Theo" time="6:40 AM"><span class="said" data-who="Theo">rack 4 threw an error. then rack 7. looking.</span></prop>`,
+    `Sam spits, rinses, and reads it again. Then he reaches for his keys.`
   ],
   episode:{src:`audio/full-ch03.mp3`, len:`about 35 minutes`},
   next:`Burn-In`

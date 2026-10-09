@@ -38,18 +38,31 @@ function buildOrders(){const groups=[];
   const mq=[];(window.HALCYON_MOCK||[]).forEach(p=>p.questions.forEach((q,i)=>mq.push({id:"mq"+p.part.slice(0,3)+i,n:4,correct:q.a})));groups.push({key:"mockbank",items:mq});
   window.HalcyonOrder.build(groups)}
 buildOrders();
-function paras(arr){return `<div class="story">${arr.map(p=>`<p>${p}</p>`).join("")}</div>`}
+function propHTML(p){const m=p.match(/^<prop\s+([^>]*)>([\s\S]*)<\/prop>$/);if(!m)return `<p>${p}</p>`;const a={};m[1].replace(/(\w+)="([^"]*)"/g,(_,k,v)=>a[k]=v);const body=m[2];
+  if(a.type==="email")return `<div class="prop pemail"><div class="ph"><b>${esc(a.subject||"(no subject)")}</b><span>${esc(a.time||"")}</span></div><div class="pm"><span>From: ${esc(a.from||"")}</span>${a.to?`<span>To: ${esc(a.to)}</span>`:""}</div><div class="pb">${body}</div></div>`;
+  if(a.type==="chat")return `<div class="prop pchat"><div class="pav">${esc((a.from||"?")[0])}</div><div><div class="pm"><b>${esc(a.from||"")}</b> <span>${esc(a.time||"")}</span></div><div class="pb">${body}</div></div></div>`;
+  if(a.type==="text")return `<div class="prop ptext"><div class="pm">${esc(a.from||"")} · ${esc(a.time||"")}</div><div class="bubble">${body}</div></div>`;
+  if(a.type==="doc")return `<div class="prop pdoc"><div class="ph"><b>${esc(a.title||"Document")}</b></div><div class="pb">${body}</div></div>`;
+  if(a.type==="chart"){const num=x=>(x||"").split(",").map(Number).filter(v=>!isNaN(v));
+    if(a.kind==="evm"){const pv=num(a.pv),ev=num(a.ev),ac=num(a.ac);const all=[...pv,...ev,...ac];const mx=Math.max(...all,1),n=Math.max(pv.length,ev.length,ac.length,2);
+      const path=(arr)=>arr.map((v,i)=>`${i?"L":"M"}${40+i*(520/(n-1))} ${210-v/mx*180}`).join(" ");
+      return `<div class="prop pchart"><div class="ph"><b>${esc(a.title||"Earned value")}</b></div><svg viewBox="0 0 600 240" role="img" aria-label="${esc(a.title||"chart")}"><path d="M40 210H580M40 20V210" stroke="currentColor" opacity=".3"/><path d="${path(pv)}" class="lpv"/><path d="${path(ev)}" class="lev"/><path d="${path(ac)}" class="lac"/></svg><div class="legend"><span class="kpv">Planned value</span><span class="kev">Earned value</span><span class="kac">Actual cost</span></div>${body?`<div class="pb">${body}</div>`:""}</div>`}
+    const labels=(a.labels||"").split(","),vals=num(a.values),mx=Math.max(...vals,1);
+    return `<div class="prop pchart"><div class="ph"><b>${esc(a.title||"Chart")}</b></div><div class="bars">${vals.map((v,i)=>`<div class="barrow"><span>${esc(labels[i]||"")}</span><span class="bt"><span style="width:${v/mx*100}%"></span></span><span class="num">${v}</span></div>`).join("")}</div>${body?`<div class="pb">${body}</div>`:""}</div>`}
+  return `<p>${body}</p>`}
+function paras(arr){return `<div class="story">${arr.map(p=>/^<prop\s/.test(p)?propHTML(p):`<p>${p}</p>`).join("")}</div>`}
 function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${esc(v[1])}</b><span class="prog">${esc(v[2])} · ${esc(v[3])}</span></div><div class="vframe"><button type="button" data-vid="${esc(v[0])}" aria-label="Play video: ${esc(v[1])}" style="background-image:url('https://i.ytimg.com/vi/${esc(v[0])}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
 function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
 function episodeCard(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Whole chapter as one audio file · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">For the car or the gym. In the app, use the Listen button at the bottom of the screen instead.</p><audio controls preload="metadata" src="${esc(c.episode.src)}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
 function top(){window.scrollTo({top:0,behavior:"smooth"})}
 function applyPick(st,sc,i,j){const o=sc.opts[j];st.picks[i]=j;st.score+=o.s;for(const k in (o.d||{}))st.m[k]=clamp(st.m[k]+o.d[k]);st.dom[sc.domain][0]+=o.s;st.dom[sc.domain][1]+=3;if(o.flag)st.flags[o.flag]=true;if(TRACK==="ref"&&CH.num===1&&i===0&&j===1)st.flags.allhands=true}
 function sceneHTML(sc,i,n,picked,stateForText){
-  let h=`<div class="kicker">Chapter ${CH.num} · Decision ${i+1} of ${n}${sc.task&&TASKNAMES[sc.task]?` · ${sc.task} ${TASKNAMES[sc.task]}`:""}</div><h2>${esc(sc.title||sc.task)}</h2>${paras(sc.text(stateForText,allStates(),globalFlags()))}<div class="choices" role="group" aria-label="Choices">`;
+  const SM=TRACK==="full"&&STORY();let h=`<div class="kicker">Chapter ${CH.num} · ${SM?"What do you do?":`Decision ${i+1} of ${n}${sc.task&&TASKNAMES[sc.task]?` · ${sc.task} ${TASKNAMES[sc.task]}`:""}`}</div><h2>${esc(sc.title||sc.task)}</h2>${paras(sc.text(stateForText,allStates(),globalFlags()))}<div class="choices" role="group" aria-label="Choices">`;
   order(sc.id,sc.opts.length).forEach((j,pos)=>{const o=sc.opts[j];const cls=picked===undefined?"":(j===picked?"picked":"")+(o.best&&picked!==undefined?" best":"");h+=`<button class="choice ${cls}" data-j="${j}" type="button"${picked!==undefined?" disabled":""}><span class="k">${"ABCD"[pos]}</span><span>${o.t}</span></button>`});
   h+=`</div>`;
   if(picked!==undefined){const o=sc.opts[picked],best=sc.opts.find(x=>x.best),lead=RUTH_LEADS[o.s][i%3];
-    h+=`<div class="outcome"><span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>${paras([o.after])}<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${esc(sc.task&&TASKNAMES[sc.task]?sc.task+" "+TASKNAMES[sc.task]:sc.task)}</span></div></div>${videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">Next</button><button class="btn ghost" id="redo" type="button">Redo this decision</button></div></div>`}
+    const ruth=`<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${esc(sc.task&&TASKNAMES[sc.task]?sc.task+" "+TASKNAMES[sc.task]:sc.task)}</span></div></div>`;
+    h+=`<div class="outcome">${SM?"":`<span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>`}${paras([o.after])}${SM?`<details class="ruthtake"><summary>Ruth's take</summary>${ruth}</details>`:ruth}${SM?"":videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">Next</button><button class="btn ghost" id="redo" type="button">Redo this decision</button></div></div>`}
   return h;
 }
 
@@ -77,17 +90,21 @@ function refEnd(){
 }
 
 /* ===== full course track ===== */
-function steps(c){const out=[{k:"open"},{k:"lesson"}];c.scenes.forEach((sc,i)=>{out.push({k:"scene",i});(c.drills||[]).forEach((d,j)=>{if(d.after===sc.id)out.push({k:"drill",j})});if(c.exercise&&c.exercise.after===sc.id)out.push({k:"exercise"})});out.push({k:"quiz"},{k:"end"});return out}
-function fullGo(p){S.pos=p;S.max=Math.max(S.max||0,p);save();render();top()}
+const STORY=()=>store.get("storymode",false);
+function steps(c){if(STORY()){const out=[{k:"open"}];c.scenes.forEach((sc,i)=>out.push({k:"scene",i}));out.push({k:"end"},{k:"lesson"});(c.drills||[]).forEach((d,j)=>out.push({k:"drill",j}));if(c.exercise)out.push({k:"exercise"});out.push({k:"quiz"});return out}
+  const out=[{k:"open"},{k:"lesson"}];c.scenes.forEach((sc,i)=>{out.push({k:"scene",i});(c.drills||[]).forEach((d,j)=>{if(d.after===sc.id)out.push({k:"drill",j})});if(c.exercise&&c.exercise.after===sc.id)out.push({k:"exercise"})});out.push({k:"quiz"},{k:"end"});return out}
+function setStoryMode(on){const keyOf=st=>st?st.k+(st.i??st.j??""):"";let cur=null;if(TRACK==="full"&&CH&&S)cur=keyOf(steps(CH)[S.pos]);store.set("storymode",on);
+  if(cur!==null){const ns=steps(CH);const idx=ns.findIndex(x=>keyOf(x)===cur);S.pos=Math.max(0,idx);S.max=Math.max(S.max||0,S.pos);save()}render()}
+function fullGo(p){const L=steps(CH);if(p>=L.length)p=L.findIndex(x=>x.k==="end");S.pos=p;S.max=Math.max(S.max||0,p);save();render();top()}
 function fullRender(){
   const st=steps(CH),cur=st[Math.min(S.pos,st.length-1)];
   const phase=k=>({open:"Story",lesson:"Lesson",scene:"Decisions",drill:"Decisions",exercise:"Decisions",quiz:"Quiz",end:"Debrief"})[k];
-  const curPhase=phase(cur.k);const PH=["Story","Lesson","Decisions","Quiz","Debrief"];
+  const curPhase=STORY()?({open:"Story",scene:"Story",end:"Story",lesson:"Ruth's notes",drill:"Ruth's notes",exercise:"Ruth's notes",quiz:"Ruth's notes"})[cur.k]:phase(cur.k);const PH=STORY()?["Story","Ruth's notes"]:["Story","Lesson","Decisions","Quiz","Debrief"];
   const chmap=`<ol class="chmap" aria-label="Chapter steps">${PH.map((p,i)=>{const idx=PH.indexOf(curPhase);return `<li class="${p===curPhase?"now":i<idx?"done":""}">${p}</li>`}).join("")}</ol>`;
   const nav=chmap+`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${x.k}" ${i>S.max?"disabled":""}></button>`).join("")}</div>`;
   let h=nav;
   if(cur.k==="open"){
-    h+=chapterArt()+`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1><div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">Next: the lesson</button></div>`;
+    h+=chapterArt()+`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1>${STORY()?"":`<div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>`}${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">${STORY()?"Continue the story":"Next: the lesson"}</button></div>`;
   }else if(cur.k==="lesson"){
     const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · The lesson · Ruth's Whiteboard</div><h1>${esc(L.title)}</h1><p class="lessonintro">Ruth Calder is Sam's mentor, a retired NASA flight director on Halcyon's board. Her whiteboard is the lesson: the PMP ideas behind this chapter, before you make the decisions.</p>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Next: the decisions</button></div>`;
   }else if(cur.k==="scene"){
@@ -111,7 +128,7 @@ function fullRender(){
     h+=`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates(),globalFlags()))}
      <div class="end-grid"><div class="card"><h3>Decisions</h3><div class="big">${S.score}/${n*3}</div></div><div class="card"><h3>Quiz</h3><div class="big">${S.quiz?S.quiz.right+"/"+CH.quiz.length:"·"}</div></div>${dr?`<div class="card"><h3>Drills</h3><div class="big">${drOk}/${dr}</div></div>`:""}${METERS.map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
      <div class="story"><p>Weakest area this chapter: <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent, counting decisions and quiz together.</p></div>
-     ${episodeCard(CH)}<div class="bar">${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`<button class="btn" id="tomock" type="button">Take the mock exam</button>`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
+     ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">Ruth's notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`<button class="btn" id="tomock" type="button">Take the mock exam</button>`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
   }
   $("page").innerHTML=h;wireVideos();
   $("page").querySelectorAll(".sdot[data-p]").forEach(b=>b.onclick=()=>fullGo(+b.dataset.p));
@@ -206,7 +223,7 @@ function studyPlan(m){
   if(!plan.length)plan.push(["Start here","Open the Full Course and play chapter 1.",{open:1}]);
   return plan.slice(0,5);
 }
-function renderDash(){setTimeout(navSync,0);
+function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK="dash";$("railgame").hidden=true;$("mockcard").hidden=true;
   const m=mastery(),H=(store.get("c901",null)||{list:[]}).list;
   const fullL=TRACKS.full.list(),refL=TRACKS.ref.list();
@@ -328,7 +345,7 @@ function castList(){return window.HALCYON_CAST||[]}
 function storyReach(){let done=0;TRACKS.full.list().forEach(c=>{const st=c.num===(TRACK==="full"&&CH?CH.num:-1)?S:load("full",c.num);if(st&&(st.pos||0)>=steps(c).length-1)done=Math.max(done,c.num)});return done}
 function avatar(c,size){const ini=c.name.split(" ").map(w=>w[0]).slice(0,2).join("");let h=0;for(const ch of c.id)h=(h*31+ch.charCodeAt(0))>>>0;const hue=h%360;
   return `<span class="av" style="width:${size}px;height:${size}px;--avh:${hue}"><img src="cast/${c.id}.jpg" alt="" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='cast/${c.id}.svg'}else this.remove()"><span>${esc(ini)}</span></span>`}
-function renderCast(id){setTimeout(navSync,0);
+function renderCast(id){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK="cast";$("railgame").hidden=true;$("mockcard").hidden=true;const L=castList();const reach=store.get("spoilers",false)?99:storyReach();
   if(!L.length){$("page").innerHTML=`<h1>Cast</h1><p class="prog">The cast guide is on its way.</p>`;return}
   if(!id){$("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Cast</h1><div class="story"><p>Profiles fill in as you play the Full Course, so nothing gets spoiled. You've finished ${reach>=99?"everything (spoilers on)":reach?`chapter ${reach}`:"no chapters yet"}.</p></div>
@@ -359,7 +376,7 @@ async function bookManifest(){if(BOOK)return BOOK;try{const r=await fetch("audio
 function bookPlay(ed,n){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=M.src;NAR.audio.playbackRate=NAR.rate;
   const pos=store.get(`bookpos.${ed}.${n}`,0);NAR.audio.addEventListener("loadedmetadata",()=>{if(pos>5&&pos<(NAR.audio.duration-5))NAR.audio.currentTime=pos},{once:true});
   NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight();narMedia()}).catch(()=>{});narUI();if(TRACK==="book")renderBook()}
-async function renderBook(){
+async function renderBook(){setTimeout(ambSync,0);
   TRACK="book";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;const B=await bookManifest();if(TRACK!=="book")return;
   const ed=store.get("bookEd","story");const full=TRACKS.full.list();
   const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
@@ -391,9 +408,26 @@ function castStrip(){
   el.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{save();renderCast(b.dataset.x);top()});
 }
 
+
+/* ===== soundscapes and stings ===== */
+const AMB={on:store.get("amb",false),vol:store.get("ambvol",0.25),cur:null,els:[new Audio(),new Audio()],i:0,sting:new Audio(),lastSting:""};
+AMB.els.forEach(a=>{a.loop=true;a.volume=0});
+const AMB_RULES=[["jet",/flight line|F-16|crew chief|jet engine|afterburner|\bjets?\b/i],["servers",/data center|server|rack|GPU|IronPeak|cluster|burn-in/i],["hospital",/hospital|\bICU\b|nurse|clinician|ward|Cheyenne|Greeley|Fort Collins|bedside/i],["rain",/\brain\b|storm|thunder|downpour/i],["night",/midnight|\bnight\b|\bdark\b|stars|11:\d\d PM/i],["morning",/kitchen|6:12|morning|breakfast|sunrise|dawn/i],["coffee",/coffee shop|café|cafe|barista/i],["car",/\bdrove\b|\bdrive\b|\bcar\b|truck|traffic|highway|I-25/i],["boardroom",/board meeting|boardroom|the board|conference room/i]];
+function ambFor(text,kind){if(kind==="lesson")return "boardroom";for(const [k,re] of AMB_RULES)if(re.test(text))return k;return "office"}
+function fade(a,to,ms){const from=a.volume,t0=performance.now();const step=()=>{const k=Math.min(1,(performance.now()-t0)/ms);a.volume=Math.max(0,Math.min(1,from+(to-from)*k));if(k<1)requestAnimationFrame(step);else if(to===0)a.pause()};requestAnimationFrame(step)}
+function ambSync(){
+  const inChapter=(TRACK==="full"||TRACK==="ref")&&CH;if(!AMB.on||!inChapter){AMB.els.forEach(a=>fade(a,0,800));AMB.cur=null;return}
+  const pg=$("page");const text=[...pg.querySelectorAll(".story p, .prop")].map(e=>e.textContent).join(" ");const kind=pg.querySelector(".lesson")?"lesson":"";
+  const want=ambFor(text,kind);if(want!==AMB.cur){const old=AMB.els[AMB.i];AMB.i=1-AMB.i;const nw=AMB.els[AMB.i];nw.src=`audio/amb/${want}.mp3`;nw.volume=0;nw.play().then(()=>fade(nw,AMB.vol,1500)).catch(()=>{});fade(old,0,1500);AMB.cur=want}
+  // chapter stings
+  const isOpen=!!pg.querySelector(".chart")&&(TRACK==="full"?S.pos===0:S.step<0);const isEnd=pg.querySelector(".end-grid");const tag=`${TRACK}${CH.num}${isOpen?"o":isEnd?"e":""}`;
+  if((isOpen||isEnd)&&AMB.lastSting!==tag){AMB.lastSting=tag;AMB.sting.src=isOpen?"audio/sting-open.mp3":"audio/sting-close.mp3";AMB.sting.volume=Math.min(1,AMB.vol*2.4);AMB.sting.play().catch(()=>{})}
+}
+function ambUI(){const t=$("ambtoggle");if(t)t.checked=AMB.on;const v=$("ambvol");if(v)v.value=AMB.vol}
+
 /* ===== home and rail ===== */
 function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
-function renderHome(){setTimeout(navSync,0);
+function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK=null;CH=null;$("railgame").hidden=true;$("mockcard").hidden=true;
   const lp=lastPlaceLabel();const m=mastery();const plan=studyPlan(m);const H=(store.get("c901",null)||{list:[]}).list;const last=H.slice(-1)[0];
   const tile=(tr,c)=>{const st=load(tr,c.num);const lab=chapterProgress(tr,c);const state=lab==="done"||/\d+\/\d+/.test(lab)?"done":lab==="in progress"?"prog":"new";
@@ -436,7 +470,7 @@ function renderRail(){
   const cast=[...BASE_CAST,...(TRACK==="full"?FULL_CAST_EXTRA:[])];chapters().filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));
   $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
 }
-function render(){_render();castStrip();narAttach();navSync()}
+function render(){_render();castStrip();narAttach();navSync();ambSync()}
 function _render(){if(TRACK==="book")return renderBook();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
@@ -453,6 +487,8 @@ function renderAuth(mode,invite){
 }
 function resumeFrom(cur){if(cur>=900)return openMock();if(cur>100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-100))return openChapter("full",cur-100)}else if(cur>=1){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
 async function boot(){
+  if($("ambtoggle")){ambUI();$("ambtoggle").onchange=e=>{AMB.on=e.target.checked;store.set("amb",AMB.on);AMB.cur=null;AMB.lastSting="";ambSync()};$("ambvol").oninput=e=>{AMB.vol=+e.target.value;store.set("ambvol",AMB.vol);AMB.els[AMB.i].volume=AMB.vol}}
+  if($("storytoggle")){$("storytoggle").checked=STORY();$("storytoggle").onchange=e=>setStoryMode(e.target.checked)}
   if($("listenlink"))$("listenlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderBook();top()};
   if($("castlink"))$("castlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderCast();top()};
   $("proglink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderDash();top()};

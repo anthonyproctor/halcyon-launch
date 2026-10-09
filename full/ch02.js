@@ -9,7 +9,9 @@
     `Dana came down at six, saw the legal pad, and poured him a coffee without comment. Then she looked closer. <span class="said" data-who="Dana">"Those arrows are going in circles."</span>`,
     `<span class="said" data-who="Sam">"That's the problem,"</span> Sam said.`,
     `By the time he got to LoDo he had a list. A scope statement nobody had written. A power plan IronPeak needed by Wednesday. A software backlog that lived in four different Jira projects. And estimates, which so far were mostly vibes.`,
-    `Ruth texted at 7:40: <span class="said" data-who="Ruth">"A plan is a hypothesis. The launch is the experiment. Write it down so you can tell when you're wrong."</span> Sam read it twice, then put the phone face down and started writing.`
+    `Ruth texted at 7:40.`,
+    `<prop type="text" from="Ruth Calder" time="7:40 AM"><span class="said" data-who="Ruth">A plan is a hypothesis. The launch is the experiment. Write it down so you can tell when you're wrong.</span></prop>`,
+    `Sam read it twice, then put the phone face down and started writing.`
   ],
   lesson: {
     title: `Building the integrated plan: scope, estimates, and the schedule`,
@@ -147,7 +149,7 @@
         {t:`Keep fifteen weeks and tell Elena the estimates are final and can't be changed.`, s:0, d:{trust:2,conf:-5,health:0},
           after:`Elena hears "no" and goes to Grant, who suggests a vendor who claims they can do it in ten.`,
           why:`Defending estimates is right, but refusing to look for options isn't. The PM's job is to find honest ways to meet the goal, or show clearly why they don't exist.`},
-        {t:`Add a week of buffer quietly to the plan so the team has room either way.`, s:1, d:{trust:1,conf:-1,health:1},
+        {t:`Add a week of buffer quietly to the plan so the team has room either way.`, s:1, flag:`paddedestimates`, d:{trust:1,conf:-1,health:1},
           after:`The buffer helps the team. When Elena finds it later, she wonders what else isn't visible.`,
           why:`Reserves are good, but hidden ones aren't. Contingency should be explicit and owned, so the sponsor knows what it's for.`}
       ]},

@@ -5,7 +5,7 @@
  cast:[[`Denise Harmon`,`Nurse manager, Cascade's Cheyenne hospital. Twenty-two years on the floor. Has a list.`]],
  opening:[
   `The Cheyenne hospital sat on a rise west of town, where the wind came straight off the high plains and didn't stop for anything. Sam drove up on a Tuesday with four boxes of coffee and Maria in the passenger seat reading him the union newsletter out loud.`,
-  `The headline said "AI Will Write Your Notes. Who Will Read Them?" The article claimed the agents would be used to cut nursing staff, that the hospital would track how fast each nurse signed notes, and that a mistake by the software would be the nurse's license on the line.`,
+  `<prop type="doc" title="Cascade nurses union newsletter, page 1">AI Will Write Your Notes. Who Will Read Them?<br><br>Hospital leaders say the new documentation agents will save time. Nurses should ask who that time is for. The agents could be used to cut staff. The hospital may track how fast each nurse signs notes. And if the software gets it wrong, it's your license on the line.</prop>`,
   `<span class="said" data-who="Maria">"Two of those are false,"</span> Maria said. <span class="said" data-who="Maria">"The third one is true. If a nurse signs a note, it's her note. That's how charting works. That's why they're scared."</span>`,
   `Denise Harmon met them in the break room. She'd been a nurse for twenty-two years and a nurse manager for eight. She had a yellow legal pad with nineteen numbered items on it, and she put it on the table between the coffee boxes like a deposition.`,
   `<span class="said" data-who="Denise">"I'm not against you,"</span> she said. <span class="said" data-who="Denise">"I'm against anything that gets put on my nurses without asking them first. We've had three 'efficiency' systems in ten years. Every one of them made the night shift worse."</span>`,
@@ -55,7 +55,7 @@
    {t:`Present the benefits of the agents first, then take her questions once she sees the value.`,s:1,d:{trust:0,conf:1,health:0},
     after:`Denise waits politely through eight slides. Then she says, <span class="said" data-who="Denise">"That's what the last three vendors said,"</span> and turns to item one.`,
     why:`Explaining why the change matters builds awareness, but leading with a pitch to someone who has specific concerns signals you didn't come to listen.`},
-   {t:`Ask Ochoa to tell Denise the rollout is a hospital decision that isn't up for debate.`,s:0,d:{trust:-2,conf:-4,health:-2},
+   {t:`Ask Ochoa to tell Denise the rollout is a hospital decision that isn't up for debate.`,s:0,d:{trust:-2,conf:-4,health:-2},flag:`forcedrollout`,
     after:`Ochoa does. Denise complies. Cheyenne's training numbers drop the following week.`,
     why:`Mandates get compliance, not adoption. Forcing a change on a skeptical, respected leader turns quiet resistance into organized resistance.`},
    {t:`Thank her for the list and promise a written response to every item within two weeks.`,s:0,d:{trust:-1,conf:-1,health:0},
@@ -63,7 +63,7 @@
     why:`A written response has its place, but deferring every concern to a document misses the chance to engage in person when it matters.`}
   ]},
  {id:`f9s2`, domain:`Business Environment`, task:`B7`, title:`Bring her in`,
-  text:(s,all,G)=>[`Two of Denise's items are real. The training was built for day shift and assumes a quiet hour that nights never get. And nobody asked a floor nurse how the review screen should look at 3 AM.`,`Maria has an idea. Sam has the same one.`],
+  text:(s,all,G)=>[`Two of Denise's items are real. The training was built for day shift and assumes a quiet hour that nights never get. And nobody asked a floor nurse how the review screen should look at 3 AM.`,...(G.overrodepo?[`Maria has an idea. She waits to see whether Sam asks for it this time. Since the backlog fight, she doesn't volunteer.`]:[`Maria has an idea. Sam has the same one.`])],
   opts:[
    {t:`Ask Denise and two of her night nurses to help redesign the training and review screen.`,s:3,best:true,d:{trust:6,conf:4,health:3},
     after:`Denise says she'll think about it, which Maria says means yes. Her night nurses cut the review screen from three clicks to one and rewrite the training for twenty minute bursts. Denise starts calling it <span class="said" data-who="Denise">"our version."</span>`,
@@ -191,7 +191,7 @@
     why:`A checkpoint without criteria just schedules the argument.`}
   ]},
  {id:`f9s10`, domain:`People`, task:`P6`, title:`The go/no-go meeting`,
-  text:(s,all,G)=>[`Thursday. The go/no-go meeting. Seven criteria are green. Training completion is 93 percent against a target of 95: Fort Collins and Greeley are at 97, Cheyenne at 88.`,`Denise is on the call. So are Ochoa, Maria, Elena, and Lena.`],
+  text:(s,all,G)=>[`Thursday. The go/no-go meeting. Sam shares the board.`,`<prop type="doc" title="Go/no-go criteria, wave one">Grounding check passing on all templates: green<br>Rollback rehearsed end to end: green<br>Interfaces tested at all three sites: green<br>Privacy review closed: green<br>Super users named on every shift: green<br>Hypercare roster staffed: green<br>Support handoff signed: green<br>Training completion at 95 percent: amber, 93 percent (Fort Collins 97, Greeley 97, Cheyenne 88)</prop>`,`Denise is on the call. So are Ochoa, Maria, Elena, and Lena.`,...(G.hidfromochoa?[`Before Sam can start, Ochoa asks for the evidence behind every green, in writing. Since the burn-in, he checks Halcyon's work himself.`]:[])],
   opts:[
    {t:`Present each criterion, the Cheyenne gap, and the options, and let the decision makers decide.`,s:3,best:true,d:{trust:3,conf:6,health:3},
     after:`Sam lays it out: go with Cheyenne's super users doubled for the first week, or hold Cheyenne for five days. Denise speaks up. <span class="said" data-who="Denise">"My night nurses trained the day shift this week. We're ready."</span> The decision makers vote to go, all three hospitals.`,

@@ -138,7 +138,7 @@
      why:`Avoiding a risk at any price isn't a strategy. Compare the cost of each response against the expected cost of the risk.`}
    ]},
   {id:`f4s7`, domain:`Process`, task:`R5`, title:`Customer configuration`,
-   text:(s,all,G)=>[`IronPeak's account team sends a polite email. The power units are covered. The firmware, they say, was "customer configuration" and falls outside the warranty. They'll fix it at their standard rate.`,`Joan Pruitt has the contract open before Sam finishes reading. <span class="said" data-who="Joan">"Section nine,"</span> she says. <span class="said" data-who="Joan">"I want to read it twice."</span>`],
+   text:(s,all,G)=>[`IronPeak's account team sends a polite email.`,`<prop type="email" from="IronPeak Account Team" to="Sam Okafor" time="9:14 AM" subject="Re: Burn-in failures">The power distribution units are covered under warranty and will be replaced at no charge. The firmware issue was a customer configuration matter and falls outside the warranty. We're happy to correct it at our standard rate.</prop>`,`Joan Pruitt has the contract open before Sam finishes reading. <span class="said" data-who="Joan">"Section nine,"</span> she says. <span class="said" data-who="Joan">"I want to read it twice."</span>`],
    opts:[
     {t:`Withhold IronPeak's next monthly payment until they fix the firmware for free.`,s:0,d:{trust:0,conf:-3,health:-3},
      after:`IronPeak's finance team flags the account. The relationship turns to letters between lawyers.`,
@@ -194,7 +194,7 @@
     {t:`Report the failure, its root cause, the recovery, and the days at risk.`,s:3,best:true,d:{trust:1,conf:6,health:1},
      after:`Ochoa replies in four minutes. <span class="said" data-who="Ochoa">"Thank you for not making me find this out myself."</span>`,
      why:`Stakeholders trust project managers who tell them bad news early, with facts and a plan. That's how communication management earns confidence.`},
-    {t:`Leave the cluster out of this week's status until repairs are complete.`,s:0,d:{trust:0,conf:-7,health:0},
+    {t:`Leave the cluster out of this week's status until repairs are complete.`,s:0,flag:`hidfromochoa`,d:{trust:0,conf:-7,health:0},
      after:`Ochoa hears about it from his own infrastructure lead, who heard it from IronPeak.`,
      why:`Stakeholders always find out. When they find out from someone else, you lose trust you can't easily get back.`},
     {t:`Send IronPeak's full incident report and let Ochoa draw his own conclusions.`,s:0,d:{trust:0,conf:-1,health:0},
@@ -268,14 +268,17 @@
   {q:`A risk register has many entries with no owners. What is the most important fix?`,opts:[`Assign an owner who will monitor each risk and its response`,`Rerun the qualitative analysis to rescore every listed risk`,`Move the low priority risks onto a separate watch list now`,`Have the sponsor review and approve the full register again`],a:0,why:`Every risk needs an owner who monitors it and carries out the response. Unowned risks aren't managed.`,task:`B5`,domain:`Business Environment`}
  ],
  closing:(s,all,G)=>[
-  `The cluster passed its second burn-in on a Thursday at 2:14 in the afternoon. Theo sent the result to the channel with no comment. Priya added a thumbs up. Hal sent a photo of all the racks lit green, which Sam suspected was the closest IronPeak got to an apology.`,
+  `The cluster passed its second burn-in on a Thursday at 2:14 in the afternoon. Theo sent the result to the channel with no comment.`,
+  `<prop type="chat" from="Theo" time="2:14 PM">burn-in 2: all racks pass. 0 errors.</prop>`,
+  `Priya added a thumbs up. Hal sent a photo of all the racks lit green, which Sam suspected was the closest IronPeak got to an apology.`,
   `Nine days of float were gone. Six came back through fast tracking. The plan held, barely.`,
   `That evening Sam had dinner with Ruth at a diner on Colfax she swore made the best green chile in Denver. She read the risk register on his phone while her food got cold.`,
   `<span class="said" data-who="Ruth">"Row one,"</span> she said. <span class="said" data-who="Ruth">"Good. Most people don't write that one down."</span> She was quiet for a moment. <span class="said" data-who="Ruth">"Early in my career I saw a sensor reading I didn't like. I talked myself out of mentioning it. I didn't want to be the alarmist in the room."</span>`,
   `Sam waited. She picked up her fork instead.`,
   `<span class="said" data-who="Ruth">"Another time,"</span> she said. <span class="said" data-who="Ruth">"Write things down, Sam. Even the ones that make people uncomfortable. Especially those."</span>`,
   (s.score>=27?`On the drive home he realized he hadn't checked his phone once during dinner. Dana noticed too.`:`On the drive home he checked his phone at every red light. Dana took it out of his hand at the last one.`),
-  `At home there was an email from Elena. The board meeting had moved up. She wanted the budget, the burn-in costs, and a forecast by Tuesday. <span class="said" data-who="Elena">"Real numbers,"</span> she wrote. <span class="said" data-who="Elena">"Last quarter a board member called our forecasts vibes."</span>`,
+  `At home there was an email from Elena.`,
+  `<prop type="email" from="Elena Vasquez" to="Sam Okafor" time="8:47 PM" subject="Board moved up">The board meeting moved up. I need the budget, the burn-in costs, and a forecast by Tuesday.<br><span class="said" data-who="Elena">Real numbers. Last quarter a board member called our forecasts vibes.</span></prop>`,
   `Sam opened a spreadsheet and started building them.`
  ],
  episode:{src:`audio/full-ch04.mp3`, len:`about 35 minutes`},

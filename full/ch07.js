@@ -52,7 +52,7 @@
    {t:`Explain to Grant that Maria owns the order, and set up a talk between them about value.`,s:3,best:true,d:{trust:3,conf:4,health:3},
     after:`Grant grumbles, but he meets Maria. She walks him through how many minutes a nurse spends on shift notes versus med rec. Grant leaves quiet. Two days later he's quoting her numbers to another prospect.`,
     why:`The product owner owns backlog order and makes it on value. The PM's job is to protect that and connect stakeholders who disagree to the person who decides, not to settle it by rank.`},
-   {t:`Move med rec back to the top, since it was promised in the sales process to Cascade.`,s:0,d:{trust:-3,conf:-4,health:-2},
+   {t:`Move med rec back to the top, since it was promised in the sales process to Cascade.`,s:0,d:{trust:-3,conf:-4,health:-2},flag:`overrodepo`,
     after:`Maria finds out the next morning. She asks Sam, politely, what exactly she's there for. It takes a week to rebuild that.`,
     why:`Overriding the product owner to satisfy an internal executive undermines the role and the customer's trust. What was promised in a sales deck isn't automatically what delivers value first.`},
    {t:`Leave Maria's order but ask her to explain her reasoning in writing to the steering group.`,s:1,d:{trust:1,conf:1,health:1},
@@ -95,7 +95,7 @@
     why:`The fix is to demo only what meets done, not to slip the event. A sprint review shows finished increments, and you can show fewer of them.`}
   ]},
  {id:`f7s4`, domain:`People`, task:`P5`, title:`Setting up the room`,
-  text:(s,all,G)=>[`Grant wants a polished slide deck and a scripted walkthrough with perfect data. <span class="said" data-who="Grant">"First impressions,"</span> he says. Maria wants the nurses to use it cold, with no script, the way they'd use it at work.`,`Ochoa calls Sam that evening. <span class="said" data-who="Ochoa">"What exactly am I going to see tomorrow?"</span>`],
+  text:(s,all,G)=>[`Grant wants a polished slide deck and a scripted walkthrough with perfect data. <span class="said" data-who="Grant">"First impressions,"</span> he says. Maria wants the nurses to use it cold, with no script, the way they'd use it at work.`,`Ochoa calls Sam that evening. <span class="said" data-who="Ochoa">"What exactly am I going to see tomorrow?"</span>`,...(G.hidfromochoa?[`He doesn't say it, but Sam hears it anyway. Ochoa found out about the burn-in failure from IronPeak, not from Halcyon, and he hasn't forgotten.`]:[])],
   opts:[
    {t:`Tell Ochoa it's an early working version, nurses will use it unscripted, and expect rough edges.`,s:3,best:true,d:{trust:1,conf:6,health:1},
     after:`Ochoa says that's exactly what he wanted to hear. <span class="said" data-who="Ochoa">"If it's perfect, I won't believe it."</span> Grant drops the script.`,
@@ -111,7 +111,7 @@
     why:`The PM owns stakeholder expectations for what the project is delivering. Handing the conversation off, especially when you were asked directly, reads as avoidance.`}
   ]},
  {id:`f7s5`, domain:`Process`, task:`R7`, title:`The invented medication`,
-  text:(s,all,G)=>[`Thursday, forty minutes in. A Laramie nurse named Becca asks the agent to draft a note for a post-op patient. The draft is clean and fast. It also lists metoprolol, which the patient has never taken.`,`Becca catches it in about four seconds. <span class="said" data-who="woman">"Where did that come from?"</span> The room goes still. Ochoa writes something down.`],
+  text:(s,all,G)=>[`Thursday, forty minutes in. A Laramie nurse named Becca asks the agent to draft a note for a post-op patient. The draft is clean and fast.`,`<prop type="doc" title="Draft progress note, post-op day 1 (test patient)">Patient resting comfortably. Incision clean, dry, and intact. Pain 3 out of 10, managed with oral acetaminophen.<br>Current medications: acetaminophen 650 mg every 6 hours, enoxaparin 40 mg daily, <mark>metoprolol 25 mg twice daily</mark>.<br>Plan: ambulate three times today, advance diet as tolerated.</prop>`,`The patient has never taken metoprolol.`,`Becca catches it in about four seconds. <span class="said" data-who="woman">"Where did that come from?"</span> The room goes still. Ochoa writes something down.`],
   opts:[
    {t:`Call it a serious defect out loud, log it live, and keep testing the rest with them.`,s:3,best:true,d:{trust:3,conf:5,health:2},
     after:`Sam says, <span class="said" data-who="Sam">"That's exactly what this session is for. That's a safety defect and we're logging it now."</span> Priya writes it up live on the screen. The nurses relax and get more aggressive about testing, and they find two smaller problems.`,
@@ -159,7 +159,7 @@
     why:`Pushing the burden to the user is the weakest control. Fix the defect at the source.`}
   ]},
  {id:`f7s8`, domain:`Process`, task:`R3`, title:`The mid-sprint ask`,
-  text:(s,all,G)=>[`Wednesday of the next sprint, Maria messages the team channel directly. Cascade's pharmacy committee wants allergy alerts shown above the note, starting with this release. <span class="said" data-who="Maria">"Can you add it this sprint?"</span>`,`The sprint goal is the grounding check across all three hospitals' templates. Priya estimates the alert at five points. The team committed to thirty.`],
+  text:(s,all,G)=>[`Wednesday of the next sprint, Maria messages the team channel directly.`,`<prop type="chat" from="Maria Santos" time="10:41 AM">Pharmacy committee wants allergy alerts shown above the note, starting with this release. <span class="said" data-who="Maria">Can you add it this sprint?</span></prop>`,`The sprint goal is the grounding check across all three hospitals' templates. Priya estimates the alert at five points. The team committed to thirty.`],
   opts:[
    {t:`Ask the team how it affects the sprint goal; if it threatens it, Maria tops next sprint.`,s:3,best:true,d:{trust:4,conf:2,health:3},
     after:`The team says it would push the grounding check. Maria agrees safety comes first and puts the alerts at the top of the next sprint. Pharmacy gets a date and is fine with it.`,

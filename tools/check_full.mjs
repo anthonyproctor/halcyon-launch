@@ -5,7 +5,7 @@ const files=process.argv.slice(2);
 for(const f of files) new Function('window',fs.readFileSync(f,'utf8'))(globalThis.window);
 const TASKS=new Set(["P1","P2","P3","P4","P5","P6","P7","P8","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","B1","B2","B3","B4","B5","B6","B7","B8"]);
 const DOM={P:"People",R:"Process",B:"Business Environment"};
-const FLAGS=new Set(["allhands","nocharter","blamedtheo","hidnumbers","publicfight","hiddefect","skippedtest","cutcorners"]);
+const FLAGS=new Set(["allhands","nocharter","blamedtheo","hidnumbers","publicfight","hiddefect","skippedtest","cutcorners","paddedestimates","noteamcharter","hidfromochoa","sidelineddevin","overrodepo","squeezedlabelforge","forcedrollout","nolessons","nobusinesscase","overloadedpriya"]);
 let bad=0;const err=(m)=>{console.log("  ERROR "+m);bad++};
 const dash=t=>/[–—]/.test(t);
 function lenCheck(label,texts,right){const L=texts.map(t=>t.length);const others=L.filter((_,k)=>k!==right);
