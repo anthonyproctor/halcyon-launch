@@ -1,0 +1,303 @@
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem("halcyon."+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("halcyon."+k,JSON.stringify(v))}catch(e){}}};
+const clamp=v=>Math.max(0,Math.min(100,v));
+const DOMS=["People","Process","Business Environment"];
+const METERS=[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Delivery health"]];
+const RUTH_LEADS={3:["That's the move.","Good. That's what I'd want from a flight director.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best answer.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have stopped you there.","Let's talk about that one."]};
+const TASKNAMES={P1:"Develop a common vision",P2:"Manage conflicts",P3:"Lead the project team",P4:"Engage stakeholders",P5:"Align stakeholder expectations",P6:"Manage stakeholder expectations",P7:"Help ensure knowledge transfer",P8:"Plan and manage communication",R1:"Integrated plan and plan delivery",R2:"Develop and manage scope",R3:"Value-based delivery",R4:"Plan and manage resources",R5:"Plan and manage procurement",R6:"Plan and manage finance",R7:"Plan and optimize quality",R8:"Plan and manage schedule",R9:"Evaluate project status",R10:"Manage project closure",B1:"Project governance",B2:"Project compliance",B3:"Manage and control changes",B4:"Remove impediments, manage issues",B5:"Plan and manage risk",B6:"Continuous improvement",B7:"Support organizational change",B8:"External business environment"};
+const BASE_CAST=[["Sam Okafor","You. Infrastructure ops manager, former Air Force maintenance NCO."],["Ruth Calder","Board member, retired NASA flight director. Your mentor."],["Elena Vasquez","CEO and founder."],["Grant Mercer","Chief Revenue Officer. Closed the Cascade deal."],["Lena Cho","CTO. Brilliant, hates conflict."],["Theo Lindqvist","ML platform lead. Everything runs through him."],["Dr. Raymond Ochoa","CIO, Cascade Valley Health."]];
+const FULL_CAST_EXTRA=[["Dana Okafor","Sam's wife. High school chemistry teacher. Notices when he isn't sleeping."],["Priya Shah","Junior engineer. Shadows Theo."]];
+
+const TRACKS={
+  ref:{id:"ref",name:"Refresher",blurb:"6 chapters, about 2.5 hours. Ten decisions per chapter with Ruth's debriefs. Best for a quick review.",list:()=> (window.HALCYON||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>n},
+  full:{id:"full",name:"Full Course",blurb:"15 chapters, about 15 to 20 hours. Lessons, decisions, math drills, exercises, and a quiz every chapter. Learn the PMP from the ground up.",list:()=> (window.HALCYON_FULL||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>100+n},
+  mock:{id:"mock",name:"Mock Exam",blurb:"180 questions in 240 minutes with two breaks, weighted like the real exam. Practice mode gives feedback as you go.",key:()=>900}
+};
+const MOCK_KEY=900;
+
+/* ===== state ===== */
+let TRACK=null,CH=null,S=null,SYNC=null,syncTimer=null;
+function freshRef(){return{step:-1,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:{People:[0,0],Process:[0,0],"Business Environment":[0,0]}}}
+function freshFull(){return{pos:0,max:0,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:{People:[0,0],Process:[0,0],"Business Environment":[0,0]},drills:{},ex:null,quiz:null}}
+function keyOf(tr,n){return TRACKS[tr].key(n)}
+function load(tr,n){return store.get("c"+keyOf(tr,n),null)}
+function persist(tr,n,st){store.set("c"+keyOf(tr,n),st);if(SYNC){const k=keyOf(tr,n),copy=JSON.parse(JSON.stringify(st));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(k,copy),400)}}
+function save(){if(TRACK==="mock"){persistMock();return}persist(TRACK,CH.num,S);store.set("cur",keyOf(TRACK,CH.num))}
+function chapters(){return TRACKS[TRACK].list()}
+function globalFlags(){const G={};if(TRACK!=="full")return G;chapters().forEach(c=>{if(c.num<CH.num){const st=load("full",c.num);if(st)Object.assign(G,st.flags||{})}});if(S&&S.flags)Object.assign(G,S.flags);return G}
+function allStates(){const o={};chapters().forEach(c=>{o[c.num]=c.num===CH.num?S:load(TRACK,c.num)});return o}
+
+/* ===== shared render helpers ===== */
+function order(id,n){let h=0;for(const ch of id)h=(h*31+ch.charCodeAt(0))>>>0;const a=[...Array(n).keys()];for(let i=a.length-1;i>0;i--){h=(h*1103515245+12345)>>>0;const k=h%(i+1);[a[i],a[k]]=[a[k],a[i]]}return a}
+function paras(arr){return `<div class="story">${arr.map(p=>`<p>${p}</p>`).join("")}</div>`}
+function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${esc(v[1])}</b><span class="prog">${esc(v[2])} · ${esc(v[3])}</span></div><div class="vframe"><button type="button" data-vid="${esc(v[0])}" aria-label="Play video: ${esc(v[1])}" style="background-image:url('https://i.ytimg.com/vi/${esc(v[0])}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
+function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
+function episodeCard(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Listen instead · Chapter ${c.num} audio episode · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">The chapter read aloud. It pauses at each decision so you can pick, then gives the answer and Ruth's debrief.</p><audio controls preload="metadata" src="${esc(c.episode.src)}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
+function top(){window.scrollTo({top:0,behavior:"smooth"})}
+function applyPick(st,sc,i,j){const o=sc.opts[j];st.picks[i]=j;st.score+=o.s;for(const k in (o.d||{}))st.m[k]=clamp(st.m[k]+o.d[k]);st.dom[sc.domain][0]+=o.s;st.dom[sc.domain][1]+=3;if(o.flag)st.flags[o.flag]=true;if(TRACK==="ref"&&CH.num===1&&i===0&&j===1)st.flags.allhands=true}
+function sceneHTML(sc,i,n,picked,stateForText){
+  let h=`<div class="kicker">Chapter ${CH.num} · Decision ${i+1} of ${n}${sc.task&&TASKNAMES[sc.task]?` · ${sc.task} ${TASKNAMES[sc.task]}`:""}</div><h2>${esc(sc.title||sc.task)}</h2>${paras(sc.text(stateForText,allStates(),globalFlags()))}<div class="choices" role="group" aria-label="Choices">`;
+  order(sc.id,sc.opts.length).forEach((j,pos)=>{const o=sc.opts[j];const cls=picked===undefined?"":(j===picked?"picked":"")+(o.best&&picked!==undefined?" best":"");h+=`<button class="choice ${cls}" data-j="${j}" type="button"${picked!==undefined?" disabled":""}><span class="k">${"ABCD"[pos]}</span><span>${o.t}</span></button>`});
+  h+=`</div>`;
+  if(picked!==undefined){const o=sc.opts[picked],best=sc.opts.find(x=>x.best),lead=RUTH_LEADS[o.s][i%3];
+    h+=`<div class="outcome"><span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>${paras([o.after])}<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${esc(sc.task&&TASKNAMES[sc.task]?sc.task+" "+TASKNAMES[sc.task]:sc.task)}</span></div></div>${videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">Next</button><button class="btn ghost" id="redo" type="button">Redo this decision</button></div></div>`}
+  return h;
+}
+
+/* ===== refresher track ===== */
+function refRender(){
+  const n=CH.scenes.length;
+  if(S.step<0){
+    $("page").innerHTML=`<div class="kicker">Refresher · Chapter ${CH.num}</div><h1>${CH.title}</h1>${paras(CH.opening)}${episodeCard(CH)}<div class="bar"><button class="btn" id="go" type="button">Begin</button></div>`;
+    $("go").onclick=()=>{S.step=0;save();render()};return}
+  if(S.step>=n)return refEnd();
+  const i=S.step,sc=CH.scenes[i];$("page").innerHTML=sceneHTML(sc,i,n,S.picks[i],S);wireVideos();
+  if(S.picks[i]===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>{applyPick(S,sc,i,+b.dataset.j);save();render();const o=document.querySelector(".outcome");if(o)o.scrollIntoView({behavior:"smooth",block:"start"})});
+  else{$("next").textContent=i+1<n?"Next":"Finish the chapter";$("next").onclick=()=>{S.step=i+1;save();render();top()};$("redo").onclick=()=>{const p={...S.picks};delete p[i];const st=freshRef();Object.keys(p).map(Number).sort((a,b)=>a-b).forEach(k=>applyPick(st,CH.scenes[k],k,p[k]));st.step=i;S=st;save();render();top()}}
+}
+function refEnd(){
+  const n=CH.scenes.length,weak=DOMS.map(d=>[d,S.dom[d][1]?S.dom[d][0]/S.dom[d][1]:1]).sort((a,b)=>a[1]-b[1])[0];
+  const missed=CH.scenes.map((sc,i)=>[sc,S.picks[i]]).filter(([sc,p])=>p!==undefined&&sc.opts[p].s<3);const nxt=chapters().find(c=>c.num===CH.num+1);
+  $("page").innerHTML=`<div class="kicker">Refresher · Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates()))}
+   <div class="end-grid"><div class="card"><h3>Score</h3><div class="big">${S.score}/${n*3}</div></div>${METERS.map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
+   <h2>What to study next</h2><div class="story"><p>Your weakest area this chapter was <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent.${missed.length?" The decisions to revisit:":" You found the best answer every time."}</p></div>
+   ${missed.length?`<ul class="story" style="padding-left:22px">${missed.map(([sc])=>`<li>${sc.task} (${sc.domain})</li>`).join("")}</ul>`:""}
+   ${videoCard(CH.deeper,"Go deeper")}${episodeCard(CH)}
+   <div class="bar">${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:""}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
+  wireVideos();$("replay").onclick=()=>{S=freshRef();save();render();top()};if(nxt)$("nextch").onclick=()=>openChapter("ref",nxt.num);
+}
+
+/* ===== full course track ===== */
+function steps(c){const out=[{k:"open"},{k:"lesson"}];c.scenes.forEach((sc,i)=>{out.push({k:"scene",i});(c.drills||[]).forEach((d,j)=>{if(d.after===sc.id)out.push({k:"drill",j})});if(c.exercise&&c.exercise.after===sc.id)out.push({k:"exercise"})});out.push({k:"quiz"},{k:"end"});return out}
+function fullGo(p){S.pos=p;S.max=Math.max(S.max||0,p);save();render();top()}
+function fullRender(){
+  const st=steps(CH),cur=st[Math.min(S.pos,st.length-1)];
+  const nav=`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${x.k}" ${i>S.max?"disabled":""}></button>`).join("")}</div>`;
+  let h=nav;
+  if(cur.k==="open"){
+    h+=`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1><div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">To Ruth's whiteboard</button></div>`;
+  }else if(cur.k==="lesson"){
+    const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · Ruth's Whiteboard</div><h1>${esc(L.title)}</h1>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Start the decisions</button></div>`;
+  }else if(cur.k==="scene"){
+    const i=cur.i,sc=CH.scenes[i];h+=sceneHTML(sc,i,CH.scenes.length,S.picks[i],S);
+  }else if(cur.k==="drill"){
+    const d=CH.drills[cur.j],ans=S.drills[cur.j];
+    h+=`<div class="kicker">Chapter ${CH.num} · Math drill</div><h2>${esc(d.title)}</h2>${paras(d.setup)}${d.table?`<div class="tablewrap"><table>${d.table.map((r,ri)=>`<tr>${r.map(c=>ri?`<td>${c}</td>`:`<th>${c}</th>`).join("")}</tr>`).join("")}</table></div>`:""}
+     <form class="drill" id="drillform" novalidate>${d.fields.map((f,fi)=>{const got=ans&&ans.vals[fi];const ok=ans?ans.ok[fi]:null;return `<label for="df${fi}">${f.label}<input id="df${fi}" inputmode="decimal" ${ans?"disabled":""} value="${got!==undefined&&got!==null?esc(got):""}">${ans?`<span class="pill ${ok?"p-ok":"p-bad"}">${ok?"Correct":"Answer: "+f.answer}</span>`:""}</label>`}).join("")}
+     ${ans?"":`<button class="btn" type="submit">Check</button>`}</form>
+     ${ans?`<div class="mentor"><div class="who">Worked solution</div>${paras(d.solution)}</div><div class="bar"><button class="btn" id="fnext" type="button">Continue</button><button class="btn ghost" id="dretry" type="button">Try again</button></div>`:""}`;
+  }else if(cur.k==="exercise"){
+    const e=CH.exercise,ans=S.ex;
+    h+=`<div class="kicker">Chapter ${CH.num} · Exercise</div><h2>${esc(e.title)}</h2>${paras([e.intro])}<form id="exform" novalidate>${e.items.map((it,ii)=>`<div class="exitem"><p>${it.prompt}</p><select id="ex${ii}" ${ans?"disabled":""}><option value="">Choose</option>${it.choices.map((c,ci)=>`<option value="${ci}" ${ans&&ans.v[ii]===ci?"selected":""}>${esc(c)}</option>`).join("")}</select>${ans?`<span class="pill ${ans.v[ii]===it.answer?"p-ok":"p-bad"}">${ans.v[ii]===it.answer?"Correct":"Answer: "+esc(it.choices[it.answer])}</span><p class="prog">${it.why}</p>`:""}</div>`).join("")}${ans?"":`<button class="btn" type="submit">Check my answers</button>`}</form>${ans?`<div class="bar"><button class="btn" id="fnext" type="button">Continue</button><button class="btn ghost" id="exretry" type="button">Try again</button></div>`:""}`;
+  }else if(cur.k==="quiz"){
+    const q=CH.quiz,ans=S.quiz;
+    h+=`<div class="kicker">Chapter ${CH.num} · Exam-style quiz</div><h2>${q.length} questions</h2><p class="prog">Answer them all, then check. Written like the real exam.</p><form id="quizform" novalidate>${q.map((x,qi)=>{const ord=order("q"+CH.num+"_"+qi,4);return `<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>{const chosen=ans&&ans.v[qi]===oi;const right=ans&&oi===x.a;return `<label class="qopt ${ans?(right?"qright":chosen?"qwrong":""):""}"><input type="radio" name="q${qi}" value="${oi}" ${ans?"disabled":""} ${chosen?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`}).join("")}${ans?`<p class="qwhy"><b>${ans.v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} ${TASKNAMES[x.task]||""}</span></p>`:""}</fieldset>`}).join("")}${ans?"":`<div id="qerr"></div><button class="btn" type="submit">Check my answers</button>`}</form>${ans?`<div class="callout"><b>Quiz score: ${ans.right} of ${q.length}</b> (${Math.round(ans.right/q.length*100)} percent).</div><div class="bar"><button class="btn" id="fnext" type="button">Finish the chapter</button><button class="btn ghost" id="qretry" type="button">Retake the quiz</button></div>`:""}`;
+  }else{
+    const n=CH.scenes.length,nxt=chapters().find(c=>c.num===CH.num+1);
+    const dr=(CH.drills||[]).length,drOk=Object.values(S.drills||{}).reduce((a,x)=>a+(x.ok.every(Boolean)?1:0),0);
+    const weak=DOMS.map(d=>[d,S.dom[d][1]?S.dom[d][0]/S.dom[d][1]:1]).sort((a,b)=>a[1]-b[1])[0];
+    h+=`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates(),globalFlags()))}
+     <div class="end-grid"><div class="card"><h3>Decisions</h3><div class="big">${S.score}/${n*3}</div></div><div class="card"><h3>Quiz</h3><div class="big">${S.quiz?S.quiz.right+"/"+CH.quiz.length:"·"}</div></div>${dr?`<div class="card"><h3>Drills</h3><div class="big">${drOk}/${dr}</div></div>`:""}${METERS.map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
+     <div class="story"><p>Weakest area this chapter: <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent, counting decisions and quiz together.</p></div>
+     ${episodeCard(CH)}<div class="bar">${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`<button class="btn" id="tomock" type="button">Take the mock exam</button>`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
+  }
+  $("page").innerHTML=h;wireVideos();
+  $("page").querySelectorAll(".sdot[data-p]").forEach(b=>b.onclick=()=>fullGo(+b.dataset.p));
+  const nx=$("fnext");if(nx)nx.onclick=()=>fullGo(S.pos+1);
+  if(cur.k==="scene"){const i=cur.i,sc=CH.scenes[i];
+    if(S.picks[i]===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>{applyPick(S,sc,i,+b.dataset.j);save();render();const o=document.querySelector(".outcome");if(o)o.scrollIntoView({behavior:"smooth",block:"start"})});
+    else{$("next").onclick=()=>fullGo(S.pos+1);$("redo").onclick=()=>{const p={...S.picks};delete p[i];const keep={pos:S.pos,max:S.max,drills:S.drills,ex:S.ex,quiz:S.quiz};const st=freshFull();Object.keys(p).map(Number).sort((a,b)=>a-b).forEach(k=>applyPick(st,CH.scenes[k],k,p[k]));Object.assign(st,keep);if(st.quiz)st.quiz.v.forEach((v,qi)=>{const x=CH.quiz[qi];st.dom[x.domain][1]+=3;if(v===x.a)st.dom[x.domain][0]+=3});S=st;save();render();top()}}}
+  if(cur.k==="drill"){const d=CH.drills[cur.j];const f=$("drillform");if(f)f.onsubmit=e=>{e.preventDefault();const vals=d.fields.map((_,fi)=>$("df"+fi).value.replace(/[$,%\s]/g,""));const ok=d.fields.map((fl,fi)=>{const v=parseFloat(vals[fi]);return !isNaN(v)&&Math.abs(v-fl.answer)<=(fl.tol??0.01)});S.drills[cur.j]={vals,ok};save();render()};const r=$("dretry");if(r)r.onclick=()=>{delete S.drills[cur.j];save();render()}}
+  if(cur.k==="exercise"){const e=CH.exercise;const f=$("exform");if(f)f.onsubmit=ev=>{ev.preventDefault();const v=e.items.map((_,ii)=>{const x=$("ex"+ii).value;return x===""?-1:+x});S.ex={v,right:v.filter((x,ii)=>x===e.items[ii].answer).length};save();render()};const r=$("exretry");if(r)r.onclick=()=>{S.ex=null;save();render()}}
+  if(cur.k==="quiz"){const q=CH.quiz;const f=$("quizform");if(f)f.onsubmit=ev=>{ev.preventDefault();const v=q.map((_,qi)=>{const c=document.querySelector(`input[name=q${qi}]:checked`);return c?+c.value:-1});const miss=v.filter(x=>x<0).length;if(miss&&!confirm(`${miss} unanswered. Check anyway?`))return;S.quiz={v,right:v.filter((x,qi)=>x===q[qi].a).length};v.forEach((x,qi)=>{const d=q[qi].domain;S.dom[d][1]+=3;if(x===q[qi].a)S.dom[d][0]+=3});save();render();top()};const r=$("qretry");if(r)r.onclick=()=>{S.quiz.v.forEach((x,qi)=>{const d=q[qi].domain;S.dom[d][1]-=3;if(x===q[qi].a)S.dom[d][0]-=3});S.quiz=null;save();render();top()}}
+  const nc=$("nextch");if(nc){const nxt=chapters().find(c=>c.num===CH.num+1);nc.onclick=()=>openChapter("full",nxt.num)}
+  const tm=$("tomock");if(tm)tm.onclick=()=>openMock();
+  const rp=$("replay");if(rp)rp.onclick=()=>{if(confirm(`Replay chapter ${CH.num} from the start? This clears its decisions, drills, and quiz.`)){S=freshFull();save();render();top()}};
+}
+
+/* ===== mock exam ===== */
+let MS=null,mockTimer=null;
+const MOCK_LIMIT=240*60;
+function mockQuestions(){const all=[];(window.HALCYON_MOCK||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part[0]+i})));return all}
+function freshMock(mode){const qs=mockQuestions();const seed=Date.now()%100000;const ord=order("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
+function persistMock(){store.set("c"+MOCK_KEY,MS);store.set("cur",MOCK_KEY);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(MOCK_KEY,copy),600)}}
+function openMock(){TRACK="mock";store.set("track","mock");MS=store.get("c"+MOCK_KEY,null);render();top()}
+function fmtTime(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return `${h}:${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`}
+function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode!=="exam")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT){mockSubmit()}},1000)}
+function mockRender(){
+  const qs=mockQuestions();const byId={};qs.forEach(q=>byId[q.id]=q);
+  if(!qs.length){$("page").innerHTML=`<h1>Mock exam</h1><p>The question bank is still being written. Check back soon.</p>`;return}
+  if(!MS){
+    $("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>PMP practice exam</h1><div class="story"><p>${qs.length} questions weighted like the July 2026 exam: People 33 percent, Process 41 percent, Business Environment 26 percent, with most questions agile or hybrid. All questions are single answer; the real exam also has multi-select, matching, and hotspot items.</p></div>
+    <div class="grid2"><div class="card"><h3>Exam mode</h3><p>240 minutes, timer runs, two optional 10 minute breaks after questions 60 and 120, results and explanations at the end.</p><button class="btn" id="exam" type="button">Start exam mode</button></div><div class="card"><h3>Practice mode</h3><p>No timer. See the answer and Ruth's explanation after each question.</p><button class="btn ghost" id="practice" type="button">Start practice mode</button></div></div>`;
+    $("exam").onclick=()=>{MS=freshMock("exam");persistMock();render()};$("practice").onclick=()=>{MS=freshMock("practice");persistMock();render()};return}
+  if(MS.submitted)return mockResults(byId);
+  if(MS.onBreak!==null){$("page").innerHTML=`<h1>Break</h1><div class="story"><p>You've finished question ${MS.onBreak}. Take up to 10 minutes. The exam timer is paused. On the real exam you can't go back to earlier questions after a break.</p></div><div class="bar"><button class="btn" id="resume" type="button">Resume the exam</button></div>`;$("resume").onclick=()=>{MS.breaksTaken.push(MS.onBreak);MS.onBreak=null;persistMock();render()};return}
+  const i=MS.cur,q=byId[MS.order[i]],chosen=MS.ans[q.id],showAns=MS.mode==="practice"&&chosen!==undefined;
+  const ord=order("mq"+q.id,4);
+  $("page").innerHTML=`<div class="kicker">Mock exam · ${MS.mode==="exam"?"Exam mode":"Practice mode"} · Question ${i+1} of ${MS.order.length}</div>
+   <fieldset class="qitem"><legend>${q.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${showAns?(oi===q.a?"qright":oi===chosen?"qwrong":""):""}"><input type="radio" name="mq" value="${oi}" ${chosen===oi?"checked":""} ${showAns?"disabled":""}><span class="k">${"ABCD"[pos]}</span> ${q.opts[oi]}</label>`).join("")}
+   ${showAns?`<p class="qwhy"><b>${chosen===q.a?"Correct.":"Not quite."}</b> ${q.why} <span class="tag">${q.task} ${TASKNAMES[q.task]||""}</span></p>`:""}</fieldset>
+   <div class="bar"><button class="btn ghost" id="prev" type="button" ${i===0?"disabled":""}>Back</button><button class="btn" id="nextq" type="button">${i+1<MS.order.length?"Next":"Review and submit"}</button><label class="chk"><input type="checkbox" id="flagq" ${MS.flagged[q.id]?"checked":""}> Flag for review</label></div>
+   <details class="navgrid"><summary>All questions (${Object.keys(MS.ans).length} answered, ${Object.values(MS.flagged).filter(Boolean).length} flagged)</summary><div>${MS.order.map((id,k)=>`<button type="button" data-q="${k}" class="nq ${MS.ans[id]!==undefined?"done":""} ${MS.flagged[id]?"flag":""} ${k===i?"now":""}">${k+1}</button>`).join("")}</div></details>
+   <div class="bar"><button class="btn ghost" id="submitnow" type="button">Submit exam</button></div>`;
+  $("page").querySelectorAll("input[name=mq]").forEach(r=>r.onchange=()=>{MS.ans[q.id]=+r.value;persistMock();if(MS.mode==="practice")render()});
+  $("flagq").onchange=e=>{MS.flagged[q.id]=e.target.checked;persistMock()};
+  $("prev").onclick=()=>{MS.cur=Math.max(0,i-1);persistMock();render()};
+  $("nextq").onclick=()=>{if(i+1>=MS.order.length){if(confirm(`Submit the exam? ${MS.order.length-Object.keys(MS.ans).length} unanswered.`))mockSubmit();return}MS.cur=i+1;if(MS.mode==="exam"&&(i+1===60||i+1===120)&&!MS.breaksTaken.includes(i+1))MS.onBreak=i+1;persistMock();render();top()};
+  $("page").querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{MS.cur=+b.dataset.q;persistMock();render()});
+  $("submitnow").onclick=()=>{if(confirm(`Submit now? ${MS.order.length-Object.keys(MS.ans).length} unanswered.`))mockSubmit()};
+  mockTick();
+}
+function mockSubmit(){clearInterval(mockTimer);MS.submitted=true;MS.finishedAt=new Date().toISOString();persistMock();
+  const byId={};mockQuestions().forEach(q=>byId[q.id]=q);const byTask={};let right=0,ans=0;MS.order.forEach(id=>{const q=byId[id];if(!q)return;if(MS.ans[id]===undefined)return;ans++;byTask[q.task]=byTask[q.task]||[0,0];byTask[q.task][1]++;if(MS.ans[id]===q.a){right++;byTask[q.task][0]++}});
+  const H=store.get("c901",null)||{list:[]};H.list.push({at:MS.finishedAt,mode:MS.mode,right,answered:ans,total:MS.order.length,byTask,secs:MS.elapsed});store.set("c901",H);if(SYNC)SYNC(901,H);
+  render();top()}
+function mockResults(byId){
+  const qs=MS.order.map(id=>byId[id]).filter(Boolean);const right=qs.filter(q=>MS.ans[q.id]===q.a).length;
+  const dom={},task={};qs.forEach(q=>{dom[q.domain]=dom[q.domain]||[0,0];task[q.task]=task[q.task]||[0,0];dom[q.domain][1]++;task[q.task][1]++;if(MS.ans[q.id]===q.a){dom[q.domain][0]++;task[q.task][0]++}});
+  const pct=x=>x[1]?Math.round(x[0]/x[1]*100):0;
+  const weakTasks=Object.entries(task).sort((a,b)=>pct(a[1])-pct(b[1])).slice(0,5);
+  $("page").innerHTML=`<div class="kicker">Mock exam · Results</div><h1>${right} of ${qs.length} (${Math.round(right/qs.length*100)} percent)</h1>
+   <div class="story"><p>PMI doesn't publish a passing score. Many instructors treat 75 percent or better on full-length practice exams as a sign you're ready. ${MS.mode==="exam"?`Time used: ${fmtTime(MS.elapsed)}.`:""}</p></div>
+   <div class="end-grid">${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${dom[d]?pct(dom[d]):0}%</div><p class="prog">${dom[d]?dom[d][0]+" of "+dom[d][1]:""}</p></div>`).join("")}</div>
+   <h2>Weakest tasks</h2><ul class="story" style="padding-left:22px">${weakTasks.map(([t,x])=>`<li>${t} ${TASKNAMES[t]||""}: ${x[0]} of ${x[1]}</li>`).join("")}</ul>
+   <h2>Review</h2><details><summary>Show every question with explanations</summary>${qs.map((q,k)=>`<div class="qitem"><p><b>${k+1}.</b> ${q.q}</p><p class="${MS.ans[q.id]===q.a?"qright":"qwrong"}">Your answer: ${MS.ans[q.id]!==undefined?q.opts[MS.ans[q.id]]:"none"}</p>${MS.ans[q.id]===q.a?"":`<p class="qright">Correct: ${q.opts[q.a]}</p>`}<p class="qwhy">${q.why} <span class="tag">${q.task}</span></p></div>`).join("")}</details>
+   <div class="bar"><button class="btn" id="again" type="button">Take a new mock exam</button></div>`;
+  $("again").onclick=()=>{if(confirm("Start a new mock exam? Your results above will be replaced.")){MS=null;store.set("c"+MOCK_KEY,null);if(SYNC)SYNC(MOCK_KEY,{});render()}};
+}
+
+
+/* ===== progress dashboard, practice sets, study plan ===== */
+const ALL26=Object.keys(TASKNAMES);
+function mastery(){
+  const m={};ALL26.forEach(t=>m[t]={got:0,max:0,n:0});
+  const add=(t,g,mx)=>{if(!m[t])return;m[t].got+=g;m[t].max+=mx;m[t].n++};
+  TRACKS.full.list().forEach(c=>{const st=c.num===(CH&&TRACK==="full"?CH.num:-1)?S:load("full",c.num);if(!st)return;
+    c.scenes.forEach((sc,i)=>{const p=(st.picks||{})[i];if(p!==undefined)add(sc.task,sc.opts[p].s,3)});
+    if(st.quiz)c.quiz.forEach((q,qi)=>{if(st.quiz.v[qi]>=0)add(q.task,st.quiz.v[qi]===q.a?3:0,3)})});
+  const H=store.get("c901",null);(H&&H.list||[]).forEach(a=>Object.entries(a.byTask||{}).forEach(([t,[g,n]])=>{if(m[t]){m[t].got+=g*3;m[t].max+=n*3;m[t].n+=n}}));
+  const P=store.get("c902",null);Object.entries((P&&P.tasks)||{}).forEach(([t,[g,n]])=>{if(m[t]){m[t].got+=g*3;m[t].max+=n*3;m[t].n+=n}});
+  return m;
+}
+const pctOf=x=>x.max?Math.round(x.got/x.max*100):null;
+function taughtIn(t){const out=[];TRACKS.full.list().forEach(c=>{const sc=c.scenes.map((x,i)=>[x,i]).filter(([x])=>x.task===t);if((c.tasks||[]).includes(t)||sc.length)out.push({c,scenes:sc.map(([,i])=>i)})});return out}
+function videosFor(t){const v=[];taughtIn(t).forEach(({c})=>{if(c.lesson&&c.lesson.video&&c.lesson.video[0])v.push([c.lesson.video,c])});return v}
+function weakTasks(m,k){return ALL26.filter(t=>m[t].n>=2).map(t=>[t,pctOf(m[t])]).sort((a,b)=>a[1]-b[1]).slice(0,k)}
+function studyPlan(m){
+  const weak=weakTasks(m,3).filter(([,p])=>p<80),plan=[];
+  const nextCh=TRACKS.full.list().find(c=>{const st=load("full",c.num);return !st||(st.pos||0)<steps(c).length-1});
+  if(nextCh)plan.push(["Keep the story moving",`Full Course chapter ${nextCh.num}, ${nextCh.title}. Read Ruth's whiteboard and play the decisions.`,{open:nextCh.num}]);
+  weak.forEach(([t,p])=>{const where=taughtIn(t)[0];plan.push([`Shore up ${t} ${TASKNAMES[t]} (${p}%)`,where?`Re-read the chapter ${where.c.num} lesson, then do 10 practice questions on this task.`:`Do 10 practice questions on this task.`,{task:t}])});
+  const H=store.get("c901",null);if(!H||!H.list.length){if(TRACKS.full.list().filter(c=>{const st=load("full",c.num);return st&&(st.pos||0)>=steps(c).length-1}).length>=5)plan.push(["Take a mock exam","You've finished five chapters. A full timed mock now shows where you really stand.",{mock:1}])}
+  else plan.push(["Mixed practice","Do 10 mixed practice questions to keep everything warm.",{task:"mixed"}]);
+  if(!plan.length)plan.push(["Start here","Open the Full Course and play chapter 1.",{open:1}]);
+  return plan.slice(0,5);
+}
+function renderDash(){
+  TRACK="dash";$("railgame").hidden=true;$("mockcard").hidden=true;
+  const m=mastery(),H=(store.get("c901",null)||{list:[]}).list;
+  const fullL=TRACKS.full.list(),refL=TRACKS.ref.list();
+  const rows=(tr,L)=>L.map(c=>{const st=load(tr,c.num);if(!st)return `<tr><td>${c.num}</td><td>${c.title}</td><td class="prog" colspan="3">not started</td></tr>`;const n=c.scenes.length,dec=`${st.score}/${n*3}`;
+    const quiz=tr==="full"&&st.quiz?`${st.quiz.right}/${c.quiz.length}`:"·";const drills=tr==="full"&&(c.drills||[]).length?`${Object.values(st.drills||{}).filter(x=>x.ok.every(Boolean)).length}/${c.drills.length}`:"·";
+    return `<tr><td>${c.num}</td><td><button class="linkbtn" data-open="${tr}:${c.num}">${c.title}</button></td><td class="num">${dec}</td><td class="num">${quiz}</td><td class="num">${drills}</td></tr>`}).join("");
+  const last=H.filter(a=>a.mode==="exam").slice(-1)[0];
+  const ready=last?Math.round(last.right/last.total*100):null;
+  const domPct=d=>{const ts=ALL26.filter(t=>t[0]===({People:"P",Process:"R","Business Environment":"B"})[d]);const g=ts.reduce((a,t)=>a+m[t].got,0),x=ts.reduce((a,t)=>a+m[t].max,0);return x?Math.round(g/x*100):null};
+  const plan=studyPlan(m),weak=weakTasks(m,5);
+  $("page").innerHTML=`<div class="kicker">My progress</div><h1>Scoreboard</h1>
+   <div class="end-grid"><div class="card"><h3>Readiness</h3><div class="big">${ready!==null?ready+"%":"·"}</div><p class="prog">${last?`Last timed mock, ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}`:"Take a timed mock to see this"}</p></div>${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${domPct(d)!==null?domPct(d)+"%":"·"}</div></div>`).join("")}</div>
+   <h2>Ruth's study plan</h2><div class="story"><p>Built from your weakest tasks and where you are in the course. It updates as you play.</p></div>
+   <ol class="plan">${plan.map(([h,b,a],i)=>`<li><b>${esc(h)}.</b> ${esc(b)} <button class="btn small" data-plan="${i}" type="button">${a.mock?"Open mock exam":a.task?"Practice":"Open"}</button></li>`).join("")}</ol>
+   <h2>Where you need help</h2>${weak.length?weak.map(([t,p])=>{const ti=taughtIn(t),vids=videosFor(t);return `<div class="card helpcard"><div class="row"><b>${t} ${TASKNAMES[t]}</b><span class="pill ${p>=75?"p-ok":p>=50?"p-warn":"p-bad"}">${p}%</span></div>
+     <p class="prog">Taught in: ${ti.map(({c,scenes})=>`<button class="linkbtn" data-lesson="${c.num}">Ch ${c.num} lesson</button>${scenes.map(i=>` · <button class="linkbtn" data-scene="${c.num}:${i}">decision ${i+1}</button>`).join("")}`).join(" | ")||"the mock exam only"}</p>
+     ${vids.slice(0,2).map(([v,c])=>`<p class="prog">Video: <a href="https://www.youtube.com/watch?v=${esc(v[0])}" target="_blank" rel="noopener">${esc(v[1])}</a> (${esc(v[2])}, ${esc(v[3])})</p>`).join("")}
+     <button class="btn small" data-task="${t}" type="button">10 practice questions</button></div>`}).join(""):`<div class="story"><p>Play a few chapters and quizzes first. This fills in once there's enough to judge.</p></div>`}
+   <h2>All 26 exam tasks</h2><div class="taskgrid">${ALL26.map(t=>{const p=pctOf(m[t]);return `<button class="taskcell" data-task="${t}" type="button" title="${TASKNAMES[t]}"><span class="tc">${t}</span><span class="tn">${TASKNAMES[t]}</span><span class="mbar"><span style="width:${p||0}%;background:${p===null?"var(--soft)":p>=75?"var(--good)":p>=50?"var(--mid)":"var(--bad)"}"></span></span><span class="prog">${p===null?"no data":p+"% · "+m[t].n+" items"}</span></button>`}).join("")}</div>
+   <h2>Full Course</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("full",fullL)}</table></div>
+   <h2>Refresher</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("ref",refL)}</table></div>
+   <h2>Mock exams</h2>${H.length?`<div class="tablewrap"><table><tr><th>Date</th><th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td><td>${a.mode}</td><td class="num">${a.right}/${a.total} (${Math.round(a.right/a.total*100)}%)</td><td class="num">${a.mode==="exam"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No mock exams yet.</p>`}`;
+  const pg=$("page");
+  pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
+  pg.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>{openChapter("full",+b.dataset.lesson);S.max=Math.max(S.max||0,1);fullGo(1)});
+  pg.querySelectorAll("[data-scene]").forEach(b=>b.onclick=()=>{const [n,i]=b.dataset.scene.split(":").map(Number);openChapter("full",n);const p=steps(CH).findIndex(x=>x.k==="scene"&&x.i===i);S.max=Math.max(S.max||0,p);fullGo(p)});
+  pg.querySelectorAll("[data-task]").forEach(b=>b.onclick=()=>startPractice(b.dataset.task));
+  pg.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>{const a=plan[+b.dataset.plan][2];if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)});
+}
+let PR=null;
+function practicePool(t){const pool=[];TRACKS.full.list().forEach(c=>c.quiz.forEach((q,i)=>pool.push({...q,src:`Chapter ${c.num} quiz`,pid:`f${c.num}q${i}`})));mockQuestions().forEach(q=>pool.push({...q,src:"Mock bank",pid:"m"+q.id}));return t==="mixed"?pool:pool.filter(q=>q.task===t)}
+function startPractice(t){const pool=practicePool(t);if(!pool.length)return;const seed=Date.now()%9973;const pick=order("pr"+t+seed,pool.length).slice(0,10).map(i=>pool[i]);PR={task:t,qs:pick,v:null};TRACK="practice";renderPractice();top()}
+function renderPractice(){
+  $("railgame").hidden=true;$("mockcard").hidden=true;const {task,qs,v}=PR;
+  $("page").innerHTML=`<div class="kicker">Practice set</div><h1>${task==="mixed"?"Mixed practice":`${task} ${TASKNAMES[task]}`}</h1><p class="prog">${qs.length} questions from the chapter quizzes and the mock bank. Results feed your progress map.</p>
+   <form id="prform" novalidate>${qs.map((x,qi)=>{const ord=order("pq"+x.pid,4);return `<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${v?(oi===x.a?"qright":v[qi]===oi?"qwrong":""):""}"><input type="radio" name="p${qi}" value="${oi}" ${v?"disabled":""} ${v&&v[qi]===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`).join("")}${v?`<p class="qwhy"><b>${v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} · ${x.src}</span></p>`:""}</fieldset>`}).join("")}${v?"":`<button class="btn" type="submit">Check my answers</button>`}</form>
+   ${v?`<div class="callout"><b>${v.filter((x,i)=>x===qs[i].a).length} of ${qs.length} correct.</b></div><div class="bar"><button class="btn" id="again" type="button">Another set</button><button class="btn ghost" id="todash" type="button">Back to progress</button></div>`:""}`;
+  const f=$("prform");if(f)f.onsubmit=e=>{e.preventDefault();PR.v=qs.map((_,qi)=>{const c=document.querySelector(`input[name=p${qi}]:checked`);return c?+c.value:-1});
+    const P=store.get("c902",null)||{tasks:{}};qs.forEach((x,qi)=>{if(PR.v[qi]<0)return;P.tasks[x.task]=P.tasks[x.task]||[0,0];P.tasks[x.task][1]++;if(PR.v[qi]===x.a)P.tasks[x.task][0]++});store.set("c902",P);if(SYNC)SYNC(902,P);renderPractice();top()};
+  const a=$("again");if(a)a.onclick=()=>startPractice(task);const d=$("todash");if(d)d.onclick=()=>renderDash();
+}
+
+/* ===== home and rail ===== */
+function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
+function renderHome(){
+  TRACK=null;CH=null;$("railgame").hidden=true;
+  const cards=Object.values(TRACKS).map(t=>{let sub="";if(t.id!=="mock"){const L=t.list();const done=L.filter(c=>chapterProgress(t.id,c)==="done"||/\d+\/\d+/.test(chapterProgress(t.id,c))).length;sub=L.length?`${done} of ${L.length} chapters done`:"coming soon"}else{const m=store.get("c"+MOCK_KEY,null);sub=m&&m.order?(m.submitted?"last attempt finished":"in progress"):"not started"}
+    return `<div class="card track"><h3>${t.name}</h3><p>${t.blurb}</p><p class="prog">${sub}</p><button class="btn" data-t="${t.id}" type="button">${t.id==="mock"?"Open the mock exam":"Open"}</button></div>`}).join("");
+  $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Pick your path</h1><div class="story"><p>Same company, same people. The refresher is a fast review. The full course teaches the PMP from scratch through Sam's story. The mock exam tests you like the real thing.</p></div><div class="tracks">${cards}</div><div class="bar"><button class="btn ghost" id="todash2" type="button">My progress and study plan</button></div>`;$("todash2").onclick=()=>renderDash();
+  $("page").querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const t=b.dataset.t;if(t==="mock")return openMock();const L=TRACKS[t].list();if(!L.length)return;const last=store.get("lastch."+t,L[0].num);openChapter(t,L.find(c=>c.num===last)?last:L[0].num)});
+}
+function openChapter(tr,n){TRACK=tr;store.set("track",tr);store.set("lastch."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
+function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this chapter will be cleared.`))return;const st=TRACK==="ref"?freshRef():freshFull();if(n===CH.num){S=st;save();render();top()}else{persist(TRACK,n,st);renderRail()}}
+function renderRail(){
+  const rg=$("railgame");if(!TRACK||TRACK==="mock"||TRACK==="dash"||TRACK==="practice"){rg.hidden=true}else rg.hidden=false;
+  $("trackname").textContent=TRACK?TRACKS[TRACK].name:"";
+  if(TRACK==="mock"){$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Mock exam</h3><p class="big" id="mocktime">${MS.mode==="exam"?fmtTime(MOCK_LIMIT-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Mock exam</h3><p class="prog">Pick a mode to start.</p>`;return}
+  $("mockcard").hidden=true;if(!TRACK)return;
+  $("meters").innerHTML=METERS.map(([k,l])=>{const v=S.m[k];const col=v>=60?"var(--good)":v>=40?"var(--mid)":"var(--bad)";return `<div class="meter"><div class="row"><span>${l}</span><span class="num">${v}</span></div><div class="track" role="img" aria-label="${l} ${v} of 100"><span style="width:${v}%;background:${col}"></span></div></div>`}).join("");
+  const n=CH.scenes.length,dn=Object.keys(S.picks).length;
+  $("prog").textContent=`Chapter ${CH.num} · ${dn} of ${n} decisions · Score ${S.score}/${n*3}`;
+  $("dots").innerHTML=CH.scenes.map((sc,i)=>{const p=S.picks[i];return `<span class="dot ${p!==undefined?"s"+sc.opts[p].s:""}" title="Decision ${i+1}"></span>`}).join("");
+  const tot={People:[0,0],Process:[0,0],"Business Environment":[0,0]};chapters().forEach(c=>{const st=c.num===CH.num?S:load(TRACK,c.num);if(st)DOMS.forEach(d=>{tot[d][0]+=st.dom[d][0];tot[d][1]+=st.dom[d][1]})});
+  const fmtd=([g,t])=>t?`${Math.round(g/t*100)}%`:"·";
+  $("domains").innerHTML=DOMS.map(d=>`<div class="dom-row"><span>${d}</span><span class="prog">${fmtd(S.dom[d])} · ${fmtd(tot[d])}</span></div>`).join("");
+  $("chapters").innerHTML=chapters().map(c=>{const lab=chapterProgress(TRACK,c);const started=!!load(TRACK,c.num)||c.num===CH.num&&(Object.keys(S.picks).length||(S.pos||0)>0||S.step>=0);return `<div class="chaprow"><button class="chap${c.num===CH.num?" cur":""}" data-n="${c.num}" type="button"><span class="n">${c.num}</span><span>${c.title}</span><span class="prog">${lab}</span></button>${started?`<button class="linkbtn reset" data-r="${c.num}" type="button" aria-label="Reset chapter ${c.num}">Reset</button>`:""}</div>`}).join("");
+  $("chapters").querySelectorAll(".chap").forEach(b=>b.onclick=()=>{save();openChapter(TRACK,+b.dataset.n)});
+  $("chapters").querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>resetChapter(+b.dataset.r));
+  const cast=[...BASE_CAST,...(TRACK==="full"?FULL_CAST_EXTRA:[])];chapters().filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));
+  $("cast").innerHTML=[...seen].map(([n,d])=>`<dt>${n}</dt><dd>${d}</dd>`).join("");
+}
+function render(){if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+
+/* ===== accounts ===== */
+const ONLINE=location.protocol.startsWith("http");
+async function api(path,opts={}){const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
+function clearLocal(){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")).forEach(k=>localStorage.removeItem(k))}catch(e){}}
+function renderAuth(mode,invite){
+  document.querySelector(".rail").hidden=true;const signup=mode==="signup";
+  $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>${signup?"Create your account":"Sign in"}</h1><div class="story"><p>${signup?"You've been invited to The Halcyon Launch, a story-driven PMP course. Your progress saves to your account so you can pick up anywhere.":"Invite only. Sign in to pick up where you left off."}</p></div>
+   <form class="auth" id="authform" novalidate><div id="autherr"></div>${signup?'<label for="a-name">Name<input id="a-name" autocomplete="name" required></label>':""}<label for="a-email">Email<input id="a-email" type="email" autocomplete="email" required></label><label for="a-pw">Password${signup?" (10 characters or more)":""}<input id="a-pw" type="password" autocomplete="${signup?"new-password":"current-password"}" required></label><button class="btn" type="submit">${signup?"Create account":"Sign in"}</button></form>
+   ${signup?'<p class="prog">Already have an account? <a href="/">Sign in</a></p>':'<p class="prog">No account? You need an invite link from Anthony.</p>'}`;
+  $("authform").onsubmit=async e=>{e.preventDefault();$("autherr").innerHTML="";const b={email:$("a-email").value,password:$("a-pw").value};if(signup){b.name=$("a-name").value;b.token=invite}
+    const r=await api("/api/auth?action="+(signup?"signup":"login"),{method:"POST",body:JSON.stringify(b)});if(!r.ok){$("autherr").innerHTML=`<div class="err">${esc(r.error||"That didn't work. Try again.")}</div>`;return}if(signup)history.replaceState(null,"","/");boot()};
+}
+function resumeFrom(cur){if(cur>=900)return openMock();if(cur>100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-100))return openChapter("full",cur-100)}else if(cur>=1){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
+async function boot(){
+  $("proglink").onclick=()=>{if(TRACK&&TRACK!=="mock"&&TRACK!=="dash"&&TRACK!=="practice")save();clearInterval(mockTimer);renderDash();top()};
+  $("homelink").onclick=()=>{if(TRACK&&TRACK!=="mock"&&TRACK!=="dash"&&TRACK!=="practice")save();clearInterval(mockTimer);renderHome();renderRail()};
+  if(!ONLINE){resumeFrom(store.get("cur",0));return}
+  let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
+  if(!me.user){const inv=new URLSearchParams(location.search).get("invite");
+    if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
+      document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;return}
+    return renderAuth("login")}
+  clearLocal();Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
+  SYNC=(n,st)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st})}).catch(()=>{});
+  document.querySelector(".rail").hidden=false;$("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
+  $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();location.href="/"};
+  resumeFrom(me.user.cur||0);
+}
+boot();
+})();

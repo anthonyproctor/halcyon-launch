@@ -85,6 +85,39 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .auth .err{color:var(--bad);background:var(--bad-soft);border-radius:6px;padding:8px 11px;font-size:14px;margin-bottom:12px}
 .userbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;font-size:13.5px}
 .linkbtn{font:inherit;font-size:13.5px;background:none;border:none;color:var(--accent);cursor:pointer;padding:0;text-decoration:underline}
+.plan{padding-left:20px;font-size:16px}.plan li{margin:8px 0}
+.btn.small{font-size:13px;padding:5px 10px;margin-left:6px}
+.helpcard{margin:10px 0}.helpcard .row{display:flex;justify-content:space-between;gap:8px}
+.taskgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.taskcell{display:flex;flex-direction:column;gap:3px;text-align:left;font:inherit;font-size:13px;background:var(--page);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer}
+.taskcell .tc{font-family:var(--mono);font-size:12px;color:var(--accent)}.taskcell .tn{font-weight:500;min-height:2.6em}
+.mbar{display:block;height:6px;background:var(--soft);border-radius:3px;overflow:hidden;margin:2px 0}.mbar span{display:block;height:100%}
+.stepnav{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
+.sdot{width:16px;height:8px;border-radius:4px;border:none;background:var(--soft);padding:0;cursor:pointer}
+.sdot.seen{background:var(--accent-soft)} .sdot.now{background:var(--accent)} .sdot[disabled]{cursor:default}
+.lesson{margin-bottom:18px}
+.terms{display:grid;grid-template-columns:minmax(120px,max-content) minmax(0,1fr);gap:4px 14px;background:var(--soft);border-radius:8px;padding:10px 14px;margin:8px 0;font-size:15px}
+.terms dt{font-weight:600}.terms dd{margin:0}
+@media (max-width:560px){.terms{grid-template-columns:minmax(0,1fr)}.terms dd{margin-bottom:6px}}
+.examtip{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:9px 13px;margin:8px 0;font-size:15px}
+.drill label{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:15px;margin:10px 0}
+.drill input,.exitem select{font:inherit;font-size:16px;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:7px;padding:7px 10px;max-width:200px}
+.tablewrap{overflow-x:auto;margin:10px 0}.tablewrap table{border-collapse:collapse;font-size:14px;min-width:360px}.tablewrap th,.tablewrap td{border:1px solid var(--line);padding:6px 9px;text-align:left}.tablewrap th{background:var(--soft)}
+.exitem{border-bottom:1px dashed var(--line);padding:10px 0}.exitem p{margin:0 0 6px}
+.qitem{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0}
+.qitem legend{font-family:var(--story);font-size:18px;line-height:1.5;padding:0 4px}
+.qopt{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;border-radius:6px;cursor:pointer;font-size:15.5px}
+.qopt:hover{background:var(--soft)}.qopt .k{font-family:var(--mono);color:var(--accent);font-size:13px;padding-top:2px}
+.qright{background:var(--good-soft);color:var(--ink)}.qwrong{background:var(--bad-soft);color:var(--ink)}
+.qwhy{font-size:15px;background:var(--soft);border-radius:6px;padding:9px 12px;margin:8px 0 0}
+.callout{background:var(--page);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:10px 14px;margin:14px 0}
+.navgrid{margin:14px 0}.navgrid summary{cursor:pointer;font-size:14px;color:var(--muted)}
+.navgrid div{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.nq{font:12px var(--mono);width:34px;padding:4px 0;border:1px solid var(--line);border-radius:4px;background:var(--page);color:var(--ink);cursor:pointer}
+.nq.done{background:var(--accent-soft)}.nq.flag{border-color:var(--mid);box-shadow:inset 0 -3px 0 var(--mid)}.nq.now{outline:2px solid var(--accent)}
+.tracks,.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:14px}
+.track p{margin:6px 0}
+.chk{display:flex;gap:6px;align-items:center;font-size:14px}
 .chaprow{display:flex;align-items:center;gap:8px;border-bottom:1px dashed var(--line)}
 .chaprow:last-child{border-bottom:none}
 .chaprow .chap{border-bottom:none;flex:1;min-width:0}
@@ -111,7 +144,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 <div class="wrap">
   <main class="page" id="page" aria-live="polite"></main>
   <aside class="rail" aria-label="Status">
-    <div class="card" id="usercard" hidden><div class="userbar"><span id="username"></span><span><a id="adminlink" href="/admin" hidden>Admin</a> <button class="linkbtn" id="signout" type="button">Sign out</button></span></div></div>
+    <div class="card" id="usercard" hidden><div class="userbar"><span id="username"></span><span><button class="linkbtn" id="homelink" type="button">Home</button> · <button class="linkbtn" id="proglink" type="button">Progress</button> · <a id="adminlink" href="/admin" hidden>Admin</a> <button class="linkbtn" id="signout" type="button">Sign out</button></span></div></div>
+    <div class="card" id="mockcard" hidden></div>
+    <div id="railgame">
     <div class="card">
       <h3>Project state</h3>
       <div id="meters"></div>
@@ -121,15 +156,16 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     <div class="card">
       <h3>Exam areas</h3>
       <div id="domains"></div>
-      <p class="prog" style="margin:8px 0 0">This chapter, then all chapters played. Points earned out of points possible.</p>
+      <p class="prog" style="margin:8px 0 0">This chapter, then all chapters. Decisions and quizzes count.</p>
     </div>
     <div class="card">
-      <h3>Chapters</h3>
+      <h3 id="trackname">Chapters</h3>
       <div id="chapters"></div>
     </div>
     <div class="card">
       <h3>Cast</h3>
       <dl class="cast" style="margin:0" id="cast"></dl>
+    </div>
     </div>
   </aside>
 </div>
@@ -140,138 +176,24 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 <script src="chapters/ch4.js"></script>
 <script src="chapters/ch5.js"></script>
 <script src="chapters/ch6.js"></script>
-<script>
-(function(){
-"use strict";
-const $=id=>document.getElementById(id);
-const store={get(k,d){try{const v=localStorage.getItem("halcyon."+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("halcyon."+k,JSON.stringify(v))}catch(e){}}};
-const CHAPTERS=(window.HALCYON||[]).filter(c=>c&&c.scenes&&c.scenes.length).sort((a,b)=>a.num-b.num);
-const BASE_CAST=[["Sam Okafor","You. Infrastructure ops manager, former Air Force maintenance NCO."],["Ruth Calder","Board member, retired NASA flight director. Your mentor."],["Elena Vasquez","CEO and founder."],["Grant Mercer","Chief Revenue Officer. Closed the Cascade deal."],["Lena Cho","CTO. Brilliant, hates conflict."],["Theo Lindqvist","ML platform lead. Everything runs through him."],["Dr. Raymond Ochoa","CIO, Cascade Valley Health."]];
-const RUTH_LEADS={3:["That's the move.","Good. That's what I'd want from a flight director.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best answer.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have stopped you there.","Let's talk about that one."]};
-const METERS=[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Delivery health"]];
-const DOMS=["People","Process","Business Environment"];
-const clamp=v=>Math.max(0,Math.min(100,v));
-function fresh(){return{step:-1,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:{People:[0,0],Process:[0,0],"Business Environment":[0,0]}}}
-// migrate old single-chapter save
-const old=store.get("ch1",null);if(old&&!store.get("c1",null))store.set("c1",old);
-let curNum=store.get("cur",CHAPTERS.length?CHAPTERS[0].num:1);
-let CH=CHAPTERS.find(c=>c.num===curNum)||CHAPTERS[0];
-let S=store.get("c"+CH.num,null)||fresh();
-let SYNC=null,syncTimer=null;
-function save(){store.set("c"+CH.num,S);store.set("cur",CH.num);if(SYNC){clearTimeout(syncTimer);const n=CH.num,st=JSON.parse(JSON.stringify(S));syncTimer=setTimeout(()=>SYNC(n,st),400)}}
-function stateOf(n){return n===CH.num?S:store.get("c"+n,null)}
-function done(n){const st=stateOf(n),c=CHAPTERS.find(x=>x.num===n);return !!(st&&c&&st.step>=c.scenes.length)}
-function allStates(){const o={};CHAPTERS.forEach(c=>{o[c.num]=stateOf(c.num)});return o}
-
-function order(sc){let h=0;for(const ch of sc.id)h=(h*31+ch.charCodeAt(0))>>>0;const a=sc.opts.map((_,j)=>j);for(let i=a.length-1;i>0;i--){h=(h*1103515245+12345)>>>0;const k=h%(i+1);[a[i],a[k]]=[a[k],a[i]]}return a}
-function paras(arr){return `<div class="story">${arr.map(p=>`<p>${p}</p>`).join("")}</div>`}
-function videoCard(v,label){if(!v)return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${v[1]}</b><span class="prog">${v[2]} · ${v[3]}</span></div><div class="vframe"><button type="button" data-vid="${v[0]}" aria-label="Play video: ${v[1]}" style="background-image:url('https://i.ytimg.com/vi/${v[0]}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
-function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
-function episodeCard(){if(!CH.episode)return "";return `<div class="episode"><div class="prog">Listen instead · Chapter ${CH.num} audio episode · ${CH.episode.len}</div><p class="prog" style="margin:4px 0 0">The whole chapter read aloud. It pauses at each decision so you can pick, then gives the answer and Ruth's debrief.</p><audio controls preload="none" src="${CH.episode.src}"></audio></div>`}
-
-function renderRail(){
-  $("meters").innerHTML=METERS.map(([k,l])=>{const v=S.m[k];const col=v>=60?"var(--good)":v>=40?"var(--mid)":"var(--bad)";return `<div class="meter"><div class="row"><span>${l}</span><span class="num">${v}</span></div><div class="track" role="img" aria-label="${l} ${v} of 100"><span style="width:${v}%;background:${col}"></span></div></div>`}).join("");
-  const n=CH.scenes.length,dn=Object.keys(S.picks).length;
-  $("prog").textContent=S.step<0&&!dn?`Chapter ${CH.num} · Not started`:`Chapter ${CH.num} · Decision ${Math.max(1,Math.min(dn+(S.step>=0&&S.step<n&&S.picks[S.step]===undefined?1:0),n))} of ${n} · Score ${S.score}/${n*3}`;
-  $("dots").innerHTML=CH.scenes.map((sc,i)=>{const p=S.picks[i];const cls=p!==undefined?"s"+sc.opts[p].s:(i===S.step?"now":"");return `<span class="dot ${cls}" title="Decision ${i+1}"></span>`}).join("");
-  const tot={People:[0,0],Process:[0,0],"Business Environment":[0,0]};
-  CHAPTERS.forEach(c=>{const st=stateOf(c.num);if(st)DOMS.forEach(d=>{tot[d][0]+=st.dom[d][0];tot[d][1]+=st.dom[d][1]})});
-  const fmtd=([g,t])=>t?`${Math.round(g/t*100)}%`:"·";
-  $("domains").innerHTML=DOMS.map(d=>`<div class="dom-row"><span>${d}</span><span class="prog">${fmtd(S.dom[d])} · ${fmtd(tot[d])}</span></div>`).join("");
-  $("chapters").innerHTML=CHAPTERS.map(c=>{const st=stateOf(c.num);const lab=done(c.num)?`${st.score}/${c.scenes.length*3}`:(st&&st.step>=0?"in progress":"");const started=st&&(st.step>=0||Object.keys(st.picks||{}).length);return `<div class="chaprow"><button class="chap${c.num===CH.num?" cur":""}" data-n="${c.num}" type="button"><span class="n">${c.num}</span><span>${c.title}</span><span class="prog">${lab}</span></button>${started?`<button class="linkbtn reset" data-r="${c.num}" type="button" aria-label="Reset chapter ${c.num}">Reset</button>`:""}</div>`}).join("");
-  $("chapters").querySelectorAll(".chap").forEach(b=>b.onclick=()=>switchTo(+b.dataset.n));$("chapters").querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>resetChapter(+b.dataset.r));
-  const cast=[...BASE_CAST];CHAPTERS.filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));
-  const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));$("cast").innerHTML=[...seen].map(([n,d])=>`<dt>${n}</dt><dd>${d}</dd>`).join("");
-}
-function switchTo(n){save();CH=CHAPTERS.find(c=>c.num===n);S=store.get("c"+n,null)||fresh();save();render();window.scrollTo({top:0})}
-function renderOpening(){
-  $("page").innerHTML=`<div class="kicker">Chapter ${CH.num}</div><h1>${CH.title}</h1>${paras(CH.opening)}${episodeCard()}<div class="bar"><button class="btn" id="go" type="button">Begin</button>${Object.keys(S.picks).length?'<button class="btn ghost" id="restart" type="button">Start over</button>':""}</div>`;
-  $("go").onclick=()=>{S.step=0;save();render()};
-  const r=$("restart");if(r)r.onclick=restart;
-}
-function renderScene(i){
-  const sc=CH.scenes[i],picked=S.picks[i];
-  let h=`<div class="kicker">Chapter ${CH.num} · Decision ${i+1} of ${CH.scenes.length}</div><h2>${sc.task}</h2>${paras(sc.text(S,allStates()))}<div class="choices" role="group" aria-label="Choices">`;
-  order(sc).forEach((j,pos)=>{const o=sc.opts[j];const cls=picked===undefined?"":(j===picked?"picked":"")+(o.best&&picked!==undefined?" best":"");h+=`<button class="choice ${cls}" data-j="${j}" type="button"${picked!==undefined?" disabled":""}><span class="k">${"ABCD"[pos]}</span><span>${o.t}</span></button>`});
-  h+=`</div>`;
-  if(picked!==undefined){
-    const o=sc.opts[picked],best=sc.opts.find(x=>x.best),lead=RUTH_LEADS[o.s][i%3];
-    h+=`<div class="outcome"><span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>${paras([o.after])}<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${sc.task}</span></div></div>${videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">${i+1<CH.scenes.length?"Next":"Finish the chapter"}</button><button class="btn ghost" id="redo" type="button">Redo this decision</button></div></div>`;
-  }
-  $("page").innerHTML=h;wireVideos();
-  if(picked===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>choose(i,+b.dataset.j));
-  else{$("next").onclick=()=>{S.step=i+1;save();render();window.scrollTo({top:0,behavior:"smooth"})};$("redo").onclick=()=>redo(i)}
-}
-function applyPick(st,i,j){const sc=CH.scenes[i],o=sc.opts[j];st.picks[i]=j;st.score+=o.s;for(const k in (o.d||{}))st.m[k]=clamp(st.m[k]+o.d[k]);st.dom[sc.domain][0]+=o.s;st.dom[sc.domain][1]+=3;if(o.flag)st.flags[o.flag]=true;if(CH.num===1&&i===0&&j===1)st.flags.allhands=true}
-function rebuild(picks,step){const st=fresh();Object.keys(picks).map(Number).sort((a,b)=>a-b).forEach(i=>applyPick(st,i,picks[i]));st.step=step;return st}
-function redo(i){const picks={...S.picks};delete picks[i];S=rebuild(picks,i);save();render();window.scrollTo({top:0,behavior:"smooth"})}
-function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your decisions and score for this chapter will be cleared.`))return;
-  if(n===CH.num){S=fresh();save();render();window.scrollTo({top:0})}
-  else{const st=fresh();store.set("c"+n,st);if(SYNC)SYNC(n,st);renderRail()}}
-function choose(i,j){
-  applyPick(S,i,j);
-  save();render();
-  const out=document.querySelector(".outcome");if(out)out.scrollIntoView({behavior:"smooth",block:"start"});
-}
-function renderEnd(){
-  const n=CH.scenes.length;
-  const weak=DOMS.map(d=>[d,S.dom[d][1]?S.dom[d][0]/S.dom[d][1]:1]).sort((a,b)=>a[1]-b[1])[0];
-  const missed=CH.scenes.map((sc,i)=>[sc,S.picks[i]]).filter(([sc,p])=>p!==undefined&&sc.opts[p].s<3);
-  const nxt=CHAPTERS.find(c=>c.num===CH.num+1);
-  $("page").innerHTML=`<div class="kicker">Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates()))}
-   <div class="end-grid"><div class="card"><h3>Score</h3><div class="big">${S.score}/${n*3}</div></div>${METERS.map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
-   <h2>What to study next</h2><div class="story"><p>Your weakest area this chapter was <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent.${missed.length?" The decisions to revisit:":" You found the best answer every time."}</p></div>
-   ${missed.length?`<ul class="story" style="padding-left:22px">${missed.map(([sc])=>`<li>${sc.task} (${sc.domain})</li>`).join("")}</ul>`:""}
-   ${videoCard(CH.deeper,"Go deeper")}${episodeCard()}
-   <div class="bar">${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:""}<button class="btn ghost" id="restart2" type="button">Replay chapter ${CH.num}</button></div>`;
-  $("restart2").onclick=restart;wireVideos();
-  if(nxt)$("nextch").onclick=()=>switchTo(nxt.num);
-}
-function restart(){S=fresh();save();render();window.scrollTo({top:0})}
-function render(){renderRail();if(S.step<0)renderOpening();else if(S.step>=CH.scenes.length)renderEnd();else renderScene(S.step)}
-
-/* ===== accounts ===== */
-const ONLINE=location.protocol.startsWith("http");
-async function api(path,opts={}){const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
-function clearLocal(){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")).forEach(k=>localStorage.removeItem(k))}catch(e){}}
-function renderAuth(mode,invite){
-  document.querySelector(".rail").hidden=true;
-  const signup=mode==="signup";
-  $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>${signup?"Create your account":"Sign in"}</h1>
-   <div class="story"><p>${signup?"You've been invited to The Halcyon Launch, a story-driven PMP practice game. Your progress saves to your account so you can pick up anywhere.":"Invite only. Sign in to pick up where you left off."}</p></div>
-   <form class="auth" id="authform" novalidate><div id="autherr"></div>
-   ${signup?'<label for="a-name">Name<input id="a-name" autocomplete="name" required></label>':""}
-   <label for="a-email">Email<input id="a-email" type="email" autocomplete="email" required></label>
-   <label for="a-pw">Password${signup?" (10 characters or more)":""}<input id="a-pw" type="password" autocomplete="${signup?"new-password":"current-password"}" required></label>
-   <button class="btn" type="submit">${signup?"Create account":"Sign in"}</button></form>
-   ${signup?'<p class="prog">Already have an account? <a href="/">Sign in</a></p>':'<p class="prog">No account? You need an invite link from Anthony.</p>'}`;
-  $("authform").onsubmit=async e=>{e.preventDefault();$("autherr").innerHTML="";
-    const b={email:$("a-email").value,password:$("a-pw").value};if(signup){b.name=$("a-name").value;b.token=invite}
-    const r=await api("/api/auth?action="+(signup?"signup":"login"),{method:"POST",body:JSON.stringify(b)});
-    if(!r.ok){$("autherr").innerHTML=`<div class="err">${r.error||"That didn't work. Try again."}</div>`;return}
-    if(signup)history.replaceState(null,"","/");boot()};
-}
-async function boot(){
-  if(!ONLINE){render();return}
-  let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
-  if(!me.user){
-    const inv=new URLSearchParams(location.search).get("invite");
-    if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
-      $("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;document.querySelector(".rail").hidden=true;return}
-    return renderAuth("login");
-  }
-  clearLocal();
-  Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st));
-  store.set("cur",me.user.cur||1);
-  CH=CHAPTERS.find(c=>c.num===(me.user.cur||1))||CHAPTERS[0];S=store.get("c"+CH.num,null)||fresh();
-  SYNC=(n,st)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st})}).catch(()=>{});
-  document.querySelector(".rail").hidden=false;
-  $("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
-  $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();location.href="/"};
-  render();
-}
-boot();
-})();
-</script>
+<script src="full/ch01.js"></script>
+<script src="full/ch02.js"></script>
+<script src="full/ch03.js"></script>
+<script src="full/ch04.js"></script>
+<script src="full/ch05.js"></script>
+<script src="full/ch06.js"></script>
+<script src="full/ch07.js"></script>
+<script src="full/ch08.js"></script>
+<script src="full/ch09.js"></script>
+<script src="full/ch10.js"></script>
+<script src="full/ch11.js"></script>
+<script src="full/ch12.js"></script>
+<script src="full/ch13.js"></script>
+<script src="full/ch14.js"></script>
+<script src="full/ch15.js"></script>
+<script src="mock/people.js"></script>
+<script src="mock/process.js"></script>
+<script src="mock/business.js"></script>
+<script src="engine.js"></script>
 </body>
 </html>
