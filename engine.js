@@ -31,7 +31,13 @@ function globalFlags(){const G={};if(TRACK!=="full")return G;chapters().forEach(
 function allStates(){const o={};chapters().forEach(c=>{o[c.num]=c.num===CH.num?S:load(TRACK,c.num)});return o}
 
 /* ===== shared render helpers ===== */
-function order(id,n){let h=0;for(const ch of id)h=(h*31+ch.charCodeAt(0))>>>0;const a=[...Array(n).keys()];for(let i=a.length-1;i>0;i--){h=(h*1103515245+12345)>>>0;const k=h%(i+1);[a[i],a[k]]=[a[k],a[i]]}return a}
+function order(id,n){return window.HalcyonOrder.get(id,n)}
+function buildOrders(){const groups=[];
+  (window.HALCYON||[]).forEach(c=>groups.push({key:"ref"+c.num+"dec",items:c.scenes.map(sc=>({id:sc.id,n:sc.opts.length,correct:sc.opts.findIndex(o=>o.best)}))}));
+  (window.HALCYON_FULL||[]).forEach(c=>{groups.push({key:"full"+c.num+"dec",items:c.scenes.map(sc=>({id:sc.id,n:sc.opts.length,correct:sc.opts.findIndex(o=>o.best)}))});groups.push({key:"full"+c.num+"quiz",items:c.quiz.map((q,qi)=>({id:"q"+c.num+"_"+qi,n:4,correct:q.a}))})});
+  const mq=[];(window.HALCYON_MOCK||[]).forEach(p=>p.questions.forEach((q,i)=>mq.push({id:"mq"+p.part.slice(0,3)+i,n:4,correct:q.a})));groups.push({key:"mockbank",items:mq});
+  window.HalcyonOrder.build(groups)}
+buildOrders();
 function paras(arr){return `<div class="story">${arr.map(p=>`<p>${p}</p>`).join("")}</div>`}
 function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${esc(v[1])}</b><span class="prog">${esc(v[2])} · ${esc(v[3])}</span></div><div class="vframe"><button type="button" data-vid="${esc(v[0])}" aria-label="Play video: ${esc(v[1])}" style="background-image:url('https://i.ytimg.com/vi/${esc(v[0])}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
 function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
@@ -51,7 +57,7 @@ function sceneHTML(sc,i,n,picked,stateForText){
 function refRender(){
   const n=CH.scenes.length;
   if(S.step<0){
-    $("page").innerHTML=`<div class="kicker">Refresher · Chapter ${CH.num}</div><h1>${CH.title}</h1>${paras(CH.opening)}${episodeCard(CH)}<div class="bar"><button class="btn" id="go" type="button">Begin</button></div>`;
+    $("page").innerHTML=chapterArt()+`<div class="kicker">Refresher · Chapter ${CH.num}</div><h1>${CH.title}</h1>${paras(CH.opening)}${episodeCard(CH)}<div class="bar"><button class="btn" id="go" type="button">Begin</button></div>`;
     $("go").onclick=()=>{S.step=0;save();render()};return}
   if(S.step>=n)return refEnd();
   const i=S.step,sc=CH.scenes[i];$("page").innerHTML=sceneHTML(sc,i,n,S.picks[i],S);wireVideos();
@@ -81,7 +87,7 @@ function fullRender(){
   const nav=chmap+`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${x.k}" ${i>S.max?"disabled":""}></button>`).join("")}</div>`;
   let h=nav;
   if(cur.k==="open"){
-    h+=`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1><div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">Next: the lesson</button></div>`;
+    h+=chapterArt()+`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1><div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">Next: the lesson</button></div>`;
   }else if(cur.k==="lesson"){
     const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · The lesson · Ruth's Whiteboard</div><h1>${esc(L.title)}</h1><p class="lessonintro">Ruth Calder is Sam's mentor, a retired NASA flight director on Halcyon's board. Her whiteboard is the lesson: the PMP ideas behind this chapter, before you make the decisions.</p>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Next: the decisions</button></div>`;
   }else if(cur.k==="scene"){
@@ -124,7 +130,7 @@ function fullRender(){
 /* ===== mock exam ===== */
 let MS=null,mockTimer=null;
 const MOCK_LIMIT=240*60;
-function mockQuestions(){const all=[];(window.HALCYON_MOCK||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part[0]+i})));return all}
+function mockQuestions(){const all=[];(window.HALCYON_MOCK||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part.slice(0,3)+i})));return all}
 function freshMock(mode){const qs=mockQuestions();const seed=Date.now()%100000;const ord=order("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
 function persistMock(){if(MS&&MS.order&&!MS.submitted)store.set("lastplace",{t:"mock"});store.set("c"+MOCK_KEY,MS);store.set("cur",MOCK_KEY);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(MOCK_KEY,copy),600)}}
 function openMock(){TRACK="mock";store.set("track","mock");MS=store.get("c"+MOCK_KEY,null);render();top()}
@@ -236,7 +242,7 @@ function startPractice(t){const pool=practicePool(t);if(!pool.length)return;cons
 function renderPractice(){setTimeout(navSync,0);
   $("railgame").hidden=true;$("mockcard").hidden=true;const {task,qs,v}=PR;
   $("page").innerHTML=`<div class="kicker">Practice set</div><h1>${task==="mixed"?"Mixed practice":`${task} ${TASKNAMES[task]}`}</h1><p class="prog">${qs.length} questions from the chapter quizzes and the mock bank. Results feed your progress map.</p>
-   <form id="prform" novalidate>${qs.map((x,qi)=>{const ord=order("pq"+x.pid,4);return `<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${v?(oi===x.a?"qright":v[qi]===oi?"qwrong":""):""}"><input type="radio" name="p${qi}" value="${oi}" ${v?"disabled":""} ${v&&v[qi]===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`).join("")}${v?`<p class="qwhy"><b>${v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} · ${x.src}</span></p>`:""}</fieldset>`}).join("")}${v?"":`<button class="btn" type="submit">Check my answers</button>`}</form>
+   <form id="prform" novalidate>${qs.map((x,qi)=>{const ord=order(x.pid.startsWith("m")?"mq"+x.pid.slice(1):x.pid.replace(/^f(\d+)q(\d+)$/,"q$1_$2"),4);return `<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${v?(oi===x.a?"qright":v[qi]===oi?"qwrong":""):""}"><input type="radio" name="p${qi}" value="${oi}" ${v?"disabled":""} ${v&&v[qi]===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`).join("")}${v?`<p class="qwhy"><b>${v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} · ${x.src}</span></p>`:""}</fieldset>`}).join("")}${v?"":`<button class="btn" type="submit">Check my answers</button>`}</form>
    ${v?`<div class="callout"><b>${v.filter((x,i)=>x===qs[i].a).length} of ${qs.length} correct.</b></div><div class="bar"><button class="btn" id="again" type="button">Another set</button><button class="btn ghost" id="todash" type="button">Back to progress</button></div>`:""}`;
   const f=$("prform");if(f)f.onsubmit=e=>{e.preventDefault();PR.v=qs.map((_,qi)=>{const c=document.querySelector(`input[name=p${qi}]:checked`);return c?+c.value:-1});
     const P=store.get("c902",null)||{tasks:{}};qs.forEach((x,qi)=>{if(PR.v[qi]<0)return;P.tasks[x.task]=P.tasks[x.task]||[0,0];P.tasks[x.task][1]++;if(PR.v[qi]===x.a)P.tasks[x.task][0]++});store.set("c902",P);if(SYNC)SYNC(902,P);renderPractice();top()};
@@ -263,14 +269,15 @@ function wrapWords(sel){const els=[...$("page").querySelectorAll(sel)];const wor
   return words}
 function alignWords(tw,dom){const map=[];let j=0;const dn=dom.map(d=>norm(d.textContent));
   tw.forEach(([t])=>{const n=norm(t);if(!n||/^[A-D]$/.test(t)){map.push(null);return}const win=n.length<=2?3:12;let hit=null;for(let k=j;k<Math.min(dom.length,j+win);k++){if(dn[k]&&(dn[k]===n||dn[k].startsWith(n)||n.startsWith(dn[k]))){hit=k;break}}if(hit!==null){map.push(hit);j=hit+1}else map.push(null)});return map}
-function narHighlight(){if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
+function narHighlight(){if(NAR.page==="book"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set(`bookpos.${NAR.book.ed}.${NAR.book.n}`,NAR.audio.currentTime);if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
   let lo=0,hi=W.length-1,idx=-1;while(lo<=hi){const mid=(lo+hi)>>1;if(W[mid][1]<=t){idx=mid;lo=mid+1}else hi=mid-1}
   const di=idx>=0?NAR.map[idx]:null;if(di!==NAR.cur){if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");if(di!=null&&NAR.words[di]){const w=NAR.words[di];w.classList.add("hl");const r=w.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-110)w.scrollIntoView({block:"center",behavior:"smooth"})}NAR.cur=di}
   const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";
   if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight)}
-function narUI(){const b=$("narbar");if(!b)return;const has=NAR.page==="car"||!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
-  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent=NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:"Ruth's whiteboard",end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
+function narUI(){const b=$("narbar");if(!b)return;const has=NAR.page==="car"||NAR.page==="book"||!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
+  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent=NAR.page==="book"?`Audiobook · Ch ${NAR.book.n} · ${NAR.book.ed==="story"?"Story":"Study"}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:"Ruth's whiteboard",end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
 async function narAttach(){
+  if(NAR.page==="book"&&!NAR.audio.paused){narUI();return}
   const key0=narKey();
   if(NAR.car&&key0&&CH.episode){ // car mode: one continuous track per chapter, page changes don't interrupt it
     NAR.key=key0;NAR.page="car";const src=new URL(CH.episode.src,location.href).href;
@@ -285,7 +292,7 @@ async function narAttach(){
   NAR.audio.src=`audio/pages/${key}/${pid}.mp3`;NAR.audio.playbackRate=NAR.rate;narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
 }
-NAR.audio.addEventListener("ended",()=>{if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
+NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${ed}.${n}`,true);store.set(`bookpos.${ed}.${n}`,0);const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
   if(!NAR.auto)return;const pid=NAR.page||"";
   if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>b.click(),700)}
   else if(pid[0]==="o"){const b=$("next");if(b)setTimeout(()=>b.click(),900)}
@@ -303,7 +310,7 @@ function narInit(){
 }
 narInit();window.__nar=NAR;
 /* lock screen and car controls */
-function narMedia(){if(!("mediaSession" in navigator)||!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
+function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:"The Halcyon Launch",album:NAR.book.ed==="story"?"Audiobook, Story edition":"Audiobook, Study edition",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
 if("mediaSession" in navigator){try{
   navigator.mediaSession.setActionHandler("play",()=>{NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight()})});
   navigator.mediaSession.setActionHandler("pause",()=>{NAR.listening=false;NAR.audio.pause();narUI()});
@@ -339,11 +346,50 @@ function renderCast(id){setTimeout(navSync,0);
 
 
 function lastPlaceLabel(){const lp=store.get("lastplace",null);if(!lp)return null;if(lp.t==="mock")return["Mock exam",()=>openMock()];const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
-function navSync(){const map={home:"homelink",dash:"proglink",practice:"proglink",cast:"castlink"};["homelink","proglink","castlink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+function navSync(){const map={home:"homelink",dash:"proglink",practice:"proglink",cast:"castlink",book:"listenlink"};["homelink","proglink","castlink","listenlink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
-  if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="dash"||TRACK==="practice")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
+  if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="dash"||TRACK==="practice"||TRACK==="book")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
+
+
+/* ===== audiobook ===== */
+let BOOK=null;
+async function bookManifest(){if(BOOK)return BOOK;try{const r=await fetch("audio/audiobook.json",{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
+function bookPlay(ed,n){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=M.src;NAR.audio.playbackRate=NAR.rate;
+  const pos=store.get(`bookpos.${ed}.${n}`,0);NAR.audio.addEventListener("loadedmetadata",()=>{if(pos>5&&pos<(NAR.audio.duration-5))NAR.audio.currentTime=pos},{once:true});
+  NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight();narMedia()}).catch(()=>{});narUI();if(TRACK==="book")renderBook()}
+async function renderBook(){
+  TRACK="book";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;const B=await bookManifest();if(TRACK!=="book")return;
+  const ed=store.get("bookEd","story");const full=TRACKS.full.list();
+  const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
+    return `<button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>`};
+  $("page").innerHTML=`<div class="kicker">Listen</div><h1>Audiobook</h1>
+   <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story edition</b><span class="prog">Just the novel. No lessons or questions. About 12 minutes a chapter.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Study edition</b><span class="prog">Story, Ruth's lesson, and each decision with the answer. About 25 minutes.</span></button></div>
+   <p class="prog">Plays chapter to chapter on its own and remembers where you stopped. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
+   <h2>Full Course</h2><div class="brows">${full.map(row).join("")}</div>`;
+  $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd",b.dataset.ed);renderBook()});
+  $("page").querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{const n=+b.dataset.b;if(NAR.page==="book"&&NAR.book&&NAR.book.n===n&&NAR.book.ed===ed){if(NAR.audio.paused){NAR.audio.play();narHighlight()}else NAR.audio.pause();setTimeout(renderBook,50);return}bookPlay(ed,n)});
+}
+
+
+/* ===== chapter art + "In this scene" cast strip ===== */
+const REF_ART={1:1,2:4,3:6,4:7,5:9,6:10};
+function chapterArt(){if(!CH)return "";const n=TRACK==="full"?CH.num:REF_ART[CH.num];if(!n)return "";const nn=String(n).padStart(2,"0");
+  return `<div class="chart"><img src="art/full-ch${nn}.jpg" alt="" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='art/full-ch${nn}.svg'}else this.parentNode.remove()"></div>`}
+function castStrip(){
+  const pg=$("page");if(!pg||!(TRACK==="full"||TRACK==="ref")||!castList().length)return;const old=pg.querySelector(".xray");if(old)old.remove();
+  const scope=[...pg.querySelectorAll(".outcome").length?pg.querySelectorAll(".story p, .outcome .story p"):pg.querySelectorAll(".story p, .lesson .story p, .choice span")];
+  const text=scope.map(e=>e.textContent).join(" ");const speakers=new Set([...pg.querySelectorAll("[data-who]")].map(e=>e.dataset.who));
+  const reach=store.get("spoilers",false)?99:Math.max(storyReach(),TRACK==="full"?CH.num:0);
+  const who=castList().filter(c=>{if(c.firstChapter>Math.max(1,reach))return false;const first=c.name.split(" ")[0],last=c.name.split(" ").slice(-1)[0];
+    return speakers.has(c.speaker||"")||new RegExp(`\\b(${first}|${last})\\b`).test(text)});
+  if(pg.querySelector(".lesson")&&!who.find(c=>c.id==="ruth")){const r=castList().find(c=>c.id==="ruth");if(r)who.unshift(r)}
+  if(!who.length)return;const el=document.createElement("div");el.className="xray";
+  el.innerHTML=`<span class="prog">In this scene</span>${who.slice(0,8).map(c=>`<button type="button" class="xp" data-x="${c.id}" title="${esc(c.name)}">${avatar(c,34)}<span>${esc(c.name.split(" ")[0])}</span></button>`).join("")}`;
+  const h=pg.querySelector("h1,h2");if(h)h.after(el);else pg.prepend(el);
+  el.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{save();renderCast(b.dataset.x);top()});
+}
 
 /* ===== home and rail ===== */
 function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
@@ -373,7 +419,7 @@ function renderHome(){setTimeout(navSync,0);
 function openChapter(tr,n){store.set("lastplace",{t:tr,n});TRACK=tr;store.set("track",tr);store.set("lastch."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
 function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this chapter will be cleared.`))return;const st=TRACK==="ref"?freshRef():freshFull();if(n===CH.num){S=st;save();render();top()}else{persist(TRACK,n,st);renderRail()}}
 function renderRail(){
-  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
+  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","book"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
   $("trackname").textContent=TRACK?TRACKS[TRACK].name:"";
   if(TRACK==="mock"){$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Mock exam</h3><p class="big" id="mocktime">${MS.mode==="exam"?fmtTime(MOCK_LIMIT-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Mock exam</h3><p class="prog">Pick a mode to start.</p>`;return}
   $("mockcard").hidden=true;if(!TRACK)return;
@@ -390,8 +436,8 @@ function renderRail(){
   const cast=[...BASE_CAST,...(TRACK==="full"?FULL_CAST_EXTRA:[])];chapters().filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));
   $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
 }
-function render(){_render();narAttach();navSync()}
-function _render(){if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function render(){_render();castStrip();narAttach();navSync()}
+function _render(){if(TRACK==="book")return renderBook();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
@@ -407,6 +453,7 @@ function renderAuth(mode,invite){
 }
 function resumeFrom(cur){if(cur>=900)return openMock();if(cur>100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-100))return openChapter("full",cur-100)}else if(cur>=1){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
 async function boot(){
+  if($("listenlink"))$("listenlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderBook();top()};
   if($("castlink"))$("castlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderCast();top()};
   $("proglink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderDash();top()};
   $("homelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderHome();renderRail()};

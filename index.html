@@ -146,6 +146,16 @@ body.withbar{padding-bottom:84px}
 h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 .mockhome p{margin:0 0 10px}.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:16px}
 .qlink{display:grid;gap:2px;text-align:left;font:inherit;color:var(--ink);cursor:pointer}
+.edtoggle{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;margin:12px 0}
+.edtoggle button{display:grid;gap:2px;text-align:left;font:inherit;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer}
+.edtoggle button.on{border-color:var(--accent);background:var(--accent-soft)}
+.brows{display:grid;gap:6px}.brow{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:8px;align-items:center;text-align:left;font:inherit;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer}
+.brow[disabled]{opacity:.5;cursor:default}.brow.now{border-color:var(--accent);background:var(--accent-soft)}.brow .cn{font-family:var(--mono);color:var(--muted)}.brow .cs{font-size:13px;color:var(--muted)}
+.chart{margin:-6px -4px 14px;border-radius:10px;overflow:hidden;aspect-ratio:5/2;background:#16303f}.chart img{display:block;width:100%;height:100%;object-fit:cover}
+.xray{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:2px 0 14px}
+.xray>.prog{font-size:12px;margin-right:4px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.xp{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:13px;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:3px 10px 3px 3px;cursor:pointer}
+.xp:hover{border-color:var(--accent)}.xp .av span{font-size:13px}
 .stepnav{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
 .sdot{width:16px;height:8px;border-radius:4px;border:none;background:var(--soft);padding:0;cursor:pointer}
 .sdot.seen{background:var(--accent-soft)} .sdot.now{background:var(--accent)} .sdot[disabled]{cursor:default}
@@ -196,7 +206,7 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 </head>
 <body>
 <header class="tophead"><nav class="topnav" id="usercard" hidden aria-label="Main">
-  <div class="navl"><button class="navbtn" id="homelink" type="button">Home</button><button class="navbtn" id="proglink" type="button">Progress</button><button class="navbtn" id="castlink" type="button">Cast</button><button class="navbtn cont" id="contlink" type="button" hidden></button></div>
+  <div class="navl"><button class="navbtn" id="homelink" type="button">Home</button><button class="navbtn" id="proglink" type="button">Progress</button><button class="navbtn" id="listenlink" type="button">Listen</button><button class="navbtn" id="castlink" type="button">Cast</button><button class="navbtn cont" id="contlink" type="button" hidden></button></div>
   <div class="navr"><span id="username" class="prog"></span><a id="adminlink" class="navbtn" href="/admin" hidden>Admin</a><button class="navbtn" id="signout" type="button">Sign out</button></div>
 </nav></header>
 <div class="wrap">
@@ -252,6 +262,7 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 <script src="mock/people.js"></script>
 <script src="mock/process.js"></script>
 <script src="mock/business.js"></script>
+<script src="order.js"></script>
 <script src="full/cast.js"></script>
 <script src="engine.js"></script>
 </body>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480"><style>@media (prefers-reduced-motion:no-preference){
+.steam{animation:steam 3s ease-in-out infinite}@keyframes steam{0%{opacity:0;transform:translateY(8px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+.glow{animation:glow 2.4s ease-in-out infinite}@keyframes glow{50%{opacity:.6}}
+.blink{animation:blink 1.6s steps(2) infinite}@keyframes blink{50%{opacity:.2}}
+.pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pulse{50%{transform:scale(1.12)}}
+.grow{animation:grow 3.5s ease-out infinite;transform-box:fill-box;transform-origin:left}@keyframes grow{0%{transform:scaleX(0)}40%,100%{transform:scaleX(1)}}
+.draw{stroke-dasharray:1400;animation:draw 5s ease-out infinite}@keyframes draw{0%{stroke-dashoffset:1400}60%,100%{stroke-dashoffset:0}}
+.flash{animation:flash 3s infinite}@keyframes flash{0%,8%,16%,100%{opacity:1}4%,12%{opacity:.1}60%{opacity:.9}}
+.tick{animation:tick 8s steps(8) infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes tick{to{transform:rotate(360deg)}}
+.tilt{animation:tilt 4s ease-in-out infinite;transform-box:view-box;transform-origin:880px 100px}@keyframes tilt{50%{transform:rotate(-4deg)}}
+.flick{animation:flick 4s infinite}@keyframes flick{0%,30%{opacity:.25}35%,100%{opacity:1}}
+.twinkle{animation:twinkle 2.5s ease-in-out infinite}@keyframes twinkle{50%{opacity:.2}}
+.check{animation:check 6s infinite;opacity:0}@keyframes check{0%{opacity:0}15%,90%{opacity:1}100%{opacity:0}}
+.sway{animation:sway 5s ease-in-out infinite;transform-box:view-box;transform-origin:600px 40px}@keyframes sway{50%{transform:rotate(2deg)}}
+.lift{animation:lift 6s ease-in infinite}@keyframes lift{0%,30%{transform:translateY(0)}100%{transform:translateY(-320px)}}
+.flame{animation:flame .3s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top}@keyframes flame{to{transform:scaleY(1.3)}}
+.move1{animation:m 4s linear infinite}@keyframes m{0%{opacity:0}20%,80%{opacity:1}100%{opacity:0}}
+}</style><defs><linearGradient id="dim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1a24"/><stop offset="1" stop-color="#122630"/></linearGradient></defs><rect width="1200" height="480" fill="url(#dim)"/><g class="sway"><path d="M600 40v90" stroke="#555" stroke-width="4"/><path d="M540 130h120l-30 50h-60z" fill="#e0b25c"/><path d="M420 470L560 180h80L780 470z" fill="#e0b25c" opacity=".12"/></g>
+<rect x="430" y="300" width="340" height="20" rx="6" fill="#1d4052"/><path d="M460 320v120M740 320v120" stroke="#1d4052" stroke-width="12"/>
+<g fill="#2d6b7a"><rect x="260" y="250" width="120" height="20" rx="6"/><rect x="260" y="160" width="20" height="110" rx="6"/><path d="M270 270v150M370 270v150" stroke="#2d6b7a" stroke-width="10"/></g>
+<g fill="#2d6b7a"><rect x="820" y="250" width="120" height="20" rx="6"/><rect x="920" y="160" width="20" height="110" rx="6"/><path d="M830 270v150M930 270v150" stroke="#2d6b7a" stroke-width="10"/></g></svg>

@@ -87,11 +87,12 @@ def svg(cid,skin,style,col,outfit,ex):
     collar='<path d="M86 148l14 14 14-14" fill="#fff" opacity=".7"/>' if "collar" in ex else ""
     back = hair(style,col,s) if style in ("bob","shoulder","braids","chinbob","ponytail") else ""
     front = "" if back else hair(style,col,s)
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#16303f"/><circle cx="100" cy="100" r="96" fill="#1d4052"/>
+    import_seed=sum(map(ord,cid));d1=round(2+import_seed%40/10,1);d2=round(import_seed%17/10,1)
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><style>@media (prefers-reduced-motion:no-preference){{.eyes{{animation:bl {d1+3}s infinite;animation-delay:{d2}s;transform-box:fill-box;transform-origin:center}}@keyframes bl{{0%,94%,100%{{transform:scaleY(1)}}97%{{transform:scaleY(.1)}}}}.body{{animation:br 4.5s ease-in-out infinite;animation-delay:{d2}s;transform-origin:100px 200px}}@keyframes br{{50%{{transform:translateY(-2px) scale(1.006)}}}}}}</style><g class="body"><rect width="200" height="200" fill="#16303f"/><circle cx="100" cy="100" r="96" fill="#1d4052"/>
 {back}<path d="M40 200c4-34 28-52 60-52s56 18 60 52z" fill="{outfit}"/>{blazer}{collar}<rect x="88" y="126" width="24" height="26" rx="8" fill="{s}"/>
 <ellipse cx="66" cy="98" rx="6" ry="9" fill="{s}"/><ellipse cx="134" cy="98" rx="6" ry="9" fill="{s}"/><ellipse cx="100" cy="94" rx="34" ry="42" fill="{s}"/>
-<circle cx="86" cy="94" r="3.4" fill="#1e1a18"/><circle cx="114" cy="94" r="3.4" fill="#1e1a18"/><path d="M79 85q7-4 14 0M107 85q7-4 14 0" stroke="#1e1a18" stroke-opacity=".7" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-<path d="M100 98v10q-3 2-6 0" stroke="#000" stroke-opacity=".25" stroke-width="2" fill="none"/>{mouth}{front}{extras(ex,s)}</svg>'''
+<g class="eyes"><circle cx="86" cy="94" r="3.4" fill="#1e1a18"/><circle cx="114" cy="94" r="3.4" fill="#1e1a18"/></g><path d="M79 85q7-4 14 0M107 85q7-4 14 0" stroke="#1e1a18" stroke-opacity=".7" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M100 98v10q-3 2-6 0" stroke="#000" stroke-opacity=".25" stroke-width="2" fill="none"/>{mouth}{front}{extras(ex,s)}</g></svg>'''
 os.makedirs("cast",exist_ok=True)
 for cid,(skin,style,col,outfit,ex) in C.items():
     open(f"cast/{cid}.svg","w").write(svg(cid,skin,style,col,outfit,ex))
