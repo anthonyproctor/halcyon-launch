@@ -114,6 +114,10 @@
    "story": {
     "src": "audio/story/full-ch12.mp3",
     "min": 10.6
+   },
+   "study": {
+    "src": "audio/full-ch12.mp3",
+    "min": 24.9
    }
   },
   "13": {
