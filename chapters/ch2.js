@@ -192,6 +192,6 @@
   c2s10:["aht1Px8FvMs","What are Lessons Learned?","Mike Clayton","3:56"]
  },
  deeper:["RET8LcOUJLA","All the PMP and CAPM Formulas in One Video","Andrew Ramdayal","1:10:52"],
- episode:{src:"audio/ch2-burn-in.mp3",len:"19 minutes"},
+ episode:{src:"audio/ch2-burn-in.mp3",len:"17 minutes"},
  next:"Storming"
 });
