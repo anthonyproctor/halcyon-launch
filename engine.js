@@ -242,7 +242,7 @@ function renderPractice(){
 
 
 /* ===== page narration: sticky player, per-page clips, word highlight ===== */
-const NAR={audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto",true),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
+const NAR={audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
 NAR.audio.preload="auto";
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
 async function narTimings(key){if(key in NAR.timings)return NAR.timings[key];NAR.timings[key]=null;try{const r=await fetch(`audio/pages/${key}/timings.json`,{cache:"force-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]}
@@ -273,7 +273,7 @@ async function narAttach(){
   const [pid,sel]=narPageId();NAR.page=pid;
   const T=await narTimings(key);if(!T||!pid||!T[pid]){NAR.page=null;narUI();return}
   if(NAR.key!==key||NAR.page!==pid)return;
-  NAR.words=wrapWords(sel);NAR.map=alignWords(T[pid].w,NAR.words);
+  $("page").querySelectorAll(".episode").forEach(e=>e.hidden=true);NAR.words=wrapWords(sel);NAR.map=alignWords(T[pid].w,NAR.words);
   NAR.audio.src=`audio/pages/${key}/${pid}.mp3`;NAR.audio.playbackRate=NAR.rate;narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
 }
@@ -287,7 +287,7 @@ function narInit(){
   document.body.appendChild(bar);
   $("narplay").onclick=()=>{if(NAR.audio.paused){NAR.listening=true;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{narUI();narHighlight()})}else{NAR.listening=false;NAR.audio.pause();narUI()}};
   $("narrate").onchange=e=>{NAR.rate=+e.target.value;NAR.audio.playbackRate=NAR.rate;store.set("rate",NAR.rate)};
-  $("narauto").onchange=e=>{NAR.auto=e.target.checked;store.set("auto",NAR.auto)};
+  $("narauto").onchange=e=>{NAR.auto=e.target.checked;store.set("auto2",NAR.auto)};
   NAR.audio.addEventListener("pause",narUI);
 }
 narInit();window.__nar=NAR;
