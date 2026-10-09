@@ -315,6 +315,27 @@ NAR.audio.addEventListener("play",narMedia);
 if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("/sw.js").catch(()=>{});
 
 
+
+/* ===== cast wiki ===== */
+function castList(){return window.HALCYON_CAST||[]}
+function storyReach(){let done=0;TRACKS.full.list().forEach(c=>{const st=c.num===(TRACK==="full"&&CH?CH.num:-1)?S:load("full",c.num);if(st&&(st.pos||0)>=steps(c).length-1)done=Math.max(done,c.num)});return done}
+function avatar(c,size){const ini=c.name.split(" ").map(w=>w[0]).slice(0,2).join("");let h=0;for(const ch of c.id)h=(h*31+ch.charCodeAt(0))>>>0;const hue=h%360;
+  return `<span class="av" style="width:${size}px;height:${size}px;--avh:${hue}"><img src="cast/${c.id}.jpg" alt="" loading="lazy" onerror="this.remove()"><span>${esc(ini)}</span></span>`}
+function renderCast(id){
+  TRACK="cast";$("railgame").hidden=true;$("mockcard").hidden=true;const L=castList();const reach=store.get("spoilers",false)?99:storyReach();
+  if(!L.length){$("page").innerHTML=`<h1>Cast</h1><p class="prog">The cast guide is on its way.</p>`;return}
+  if(!id){$("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Cast</h1><div class="story"><p>Profiles fill in as you play the Full Course, so nothing gets spoiled. You've finished ${reach>=99?"everything (spoilers on)":reach?`chapter ${reach}`:"no chapters yet"}.</p></div>
+    <div class="castgrid">${L.map(c=>{const seen=c.firstChapter<=Math.max(1,reach+1);return `<button class="castcard" type="button" data-c="${c.id}" ${seen?"":"disabled"}>${avatar(c,64)}<span><b>${seen?esc(c.name):"Not met yet"}</b><span class="prog">${seen?esc(c.role):`Appears in chapter ${c.firstChapter}`}</span></span></button>`}).join("")}</div>
+    <label class="chk prog" style="margin-top:16px"><input type="checkbox" id="spoil" ${store.get("spoilers",false)?"checked":""}> Show everything, including spoilers</label>`;
+    $("page").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{renderCast(b.dataset.c);top()});$("spoil").onchange=e=>{store.set("spoilers",e.target.checked);renderCast()};return}
+  const c=L.find(x=>x.id===id);const byId={};L.forEach(x=>byId[x.id]=x);
+  $("page").innerHTML=`<div class="kicker"><button class="linkbtn" id="castback" type="button">Cast</button> · ${esc(c.role)}</div><div class="casthead">${avatar(c,112)}<div><h1>${esc(c.name)}</h1><p class="prog">First appears in chapter ${c.firstChapter}</p></div></div>
+    ${c.quote&&c.quote.unlock<=reach+1?`<blockquote class="castquote">${c.quote.text}</blockquote>`:""}
+    ${c.sections.map(sec=>sec.unlock<=Math.max(1,reach)||(sec.unlock===1)?`<section class="lesson"><h2>${esc(sec.title)}</h2>${paras(sec.body)}</section>`:`<section class="locked"><h2>${esc(sec.title)}</h2><p class="prog">Unlocks after chapter ${sec.unlock}.</p></section>`).join("")}
+    ${(c.ties||[]).filter(t=>t.unlock<=Math.max(1,reach)).length?`<h2>Connections</h2><ul class="ties">${c.ties.filter(t=>t.unlock<=Math.max(1,reach)).map(t=>`<li><button class="linkbtn" data-c="${t.id}" type="button">${esc((byId[t.id]||{}).name||t.id)}</button>: ${esc(t.text)}</li>`).join("")}</ul>`:""}`;
+  $("castback").onclick=()=>{renderCast();top()};$("page").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{renderCast(b.dataset.c);top()});
+}
+
 /* ===== home and rail ===== */
 function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
 function renderHome(){
@@ -327,7 +348,7 @@ function renderHome(){
 function openChapter(tr,n){TRACK=tr;store.set("track",tr);store.set("lastch."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
 function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this chapter will be cleared.`))return;const st=TRACK==="ref"?freshRef():freshFull();if(n===CH.num){S=st;save();render();top()}else{persist(TRACK,n,st);renderRail()}}
 function renderRail(){
-  const rg=$("railgame");if(!TRACK||TRACK==="mock"||TRACK==="dash"||TRACK==="practice"){rg.hidden=true}else rg.hidden=false;
+  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
   $("trackname").textContent=TRACK?TRACKS[TRACK].name:"";
   if(TRACK==="mock"){$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Mock exam</h3><p class="big" id="mocktime">${MS.mode==="exam"?fmtTime(MOCK_LIMIT-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Mock exam</h3><p class="prog">Pick a mode to start.</p>`;return}
   $("mockcard").hidden=true;if(!TRACK)return;
@@ -342,10 +363,10 @@ function renderRail(){
   $("chapters").querySelectorAll(".chap").forEach(b=>b.onclick=()=>{save();openChapter(TRACK,+b.dataset.n)});if($("chnote"))$("chnote").textContent=`Ch ${CH.num}: ${CH.title}`;
   $("chapters").querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>resetChapter(+b.dataset.r));
   const cast=[...BASE_CAST,...(TRACK==="full"?FULL_CAST_EXTRA:[])];chapters().filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));
-  $("cast").innerHTML=[...seen].map(([n,d])=>`<dt>${n}</dt><dd>${d}</dd>`).join("");
+  $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
 }
 function render(){_render();narAttach()}
-function _render(){if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function _render(){if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
@@ -361,8 +382,9 @@ function renderAuth(mode,invite){
 }
 function resumeFrom(cur){if(cur>=900)return openMock();if(cur>100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-100))return openChapter("full",cur-100)}else if(cur>=1){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
 async function boot(){
-  $("proglink").onclick=()=>{if(TRACK&&TRACK!=="mock"&&TRACK!=="dash"&&TRACK!=="practice")save();clearInterval(mockTimer);renderDash();top()};
-  $("homelink").onclick=()=>{if(TRACK&&TRACK!=="mock"&&TRACK!=="dash"&&TRACK!=="practice")save();clearInterval(mockTimer);renderHome();renderRail()};
+  if($("castlink"))$("castlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderCast();top()};
+  $("proglink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderDash();top()};
+  $("homelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderHome();renderRail()};
   if(!ONLINE){resumeFrom(store.get("cur",0));return}
   let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
   if(!me.user){const inv=new URLSearchParams(location.search).get("invite");
