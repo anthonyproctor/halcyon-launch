@@ -15,7 +15,7 @@ def pron(t): return PRON_RE.sub(lambda m: f"[{m.group(1)}](/{PRON[m.group(1)]}/)
 SR = 24000
 pipes = {"a": KPipeline(lang_code="a"), "b": KPipeline(lang_code="b")}
 spec = json.load(open(sys.argv[1]))
-key = ("r" if spec["track"]=="ref" else "f") + str(spec["num"])
+key = spec.get("outkey") or (("r" if spec["track"]=="ref" else "f") + str(spec["num"]))
 outdir = f"audio/pages/{key}"; os.makedirs(outdir, exist_ok=True)
 def enc(audio, path, title=None):
     pcm = (np.clip(audio, -1, 1) * 32767).astype("<i2").tobytes()
@@ -55,7 +55,7 @@ json.dump(timings, open(f"{outdir}/timings.json", "w"), separators=(",", ":"))
 # whole-chapter episode: page clips in plan order; after each decision, a pause to pick
 ep = []
 for pid in spec["plan"]:
-    ep.append(clips[pid]); ep.append(np.zeros(int(SR*(4 if pid.startswith("s") else 1.2)), np.float32))
+    ep.append(clips[pid]); ep.append(np.zeros(int(SR*(4 if (pid.startswith("s") and pid!="story") else 1.2)), np.float32))
     if pid.startswith("s"): pass
 whole = np.concatenate(ep)
 name = f"audio/{'ch'+str(spec['num']) if spec['track']=='ref' else 'full-ch'+str(spec['num']).zfill(2)}"
