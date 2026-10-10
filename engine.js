@@ -69,7 +69,8 @@ function propHTML(p){const m=p.match(/^<prop\s+([^>]*)>([\s\S]*)<\/prop>$/);if(!
 function paras(arr){return `<div class="story">${arr.map(p=>/^<prop\s/.test(p)?propHTML(p):`<p>${p}</p>`).join("")}</div>`}
 function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${esc(v[1])}</b><span class="prog">${esc(v[2])} · ${esc(v[3])}</span></div><div class="vframe"><button type="button" data-vid="${esc(v[0])}" aria-label="Play video: ${esc(v[1])}" style="background-image:url('https://i.ytimg.com/vi/${esc(v[0])}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
 function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
-function episodeCard(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Whole chapter as one audio file · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">For the car or the gym. In the app, use the Listen button at the bottom of the screen instead.</p><audio controls preload="metadata" src="${esc(R(c.episode.src))}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
+function episodeCard(c){return ""}  // whole-chapter file now lives on the Listen page as a download link (10/10)
+function episodeCardOld(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Whole chapter as one audio file · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">For the car or the gym. In the app, use the Listen button at the bottom of the screen instead.</p><audio controls preload="metadata" src="${esc(R(c.episode.src))}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
 function top(){window.scrollTo({top:0,behavior:"smooth"})}
 function applyPick(st,sc,i,j){const o=sc.opts[j];st.picks[i]=j;st.score+=o.s;for(const k in (o.d||{}))st.m[k]=clamp(st.m[k]+o.d[k]);st.dom[sc.domain][0]+=o.s;st.dom[sc.domain][1]+=3;if(o.flag)st.flags[o.flag]=true;if(TRACK==="ref"&&CH.num===1&&i===0&&j===1)st.flags.allhands=true}
 function sceneHTML(sc,i,n,picked,stateForText){
@@ -286,6 +287,17 @@ function renderPractice(){setTimeout(navSync,0);
 /* ===== page narration: sticky player, per-page clips, word highlight ===== */
 const NAR={car:false,audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
 NAR.audio.preload="auto";
+/* listening position: per course, saved to the account so any device picks up where you stopped */
+function LKEY(){return COURSE.base+903}
+function lget(){return store.get("c"+LKEY(),null)||{}}
+let lsyncT=0,lsaveAt=0;
+function lput(patch,now){const L=Object.assign(lget(),patch,{at:Date.now()});store.set("c"+LKEY(),L);if(SYNC){clearTimeout(lsyncT);const k=LKEY(),c=JSON.parse(JSON.stringify(L));lsyncT=setTimeout(()=>SYNC(k,c),now?0:1500)}}
+function narSavePos(now){const a=NAR.audio;if(!a.src||!(a.currentTime>0))return;const t=+a.currentTime.toFixed(1),dur=a.duration||0;
+  if(NAR.page==="book"&&NAR.book)lput({book:{ed:NAR.book.ed,n:NAR.book.n,t,dur}},now);
+  else if(NAR.page&&NAR.key&&NAR.page!=="car")lput({page:{key:NAR.key,pid:NAR.page,t}},now);}
+function narTick(){if(Date.now()-lsaveAt>5000){lsaveAt=Date.now();narSavePos(false)}}
+function fmtT(s){s=Math.max(0,Math.round(s||0));return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`}
+function bookResumePos(ed,n,dur){const L=lget(),B=L.book;if(B&&B.n===n){if(B.ed===ed)return B.t;if(B.dur&&dur)return Math.max(0,B.t/B.dur*dur-15)}const old=store.get(`bookpos.${COURSE.id}.${ed}.${n}`,0);return old||0}
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
 async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];try{const r=await fetch(R(`audio/pages/${key}/timings.json`),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
 function narPageId(){
@@ -302,10 +314,10 @@ function wrapWords(sel){const els=[...$("page").querySelectorAll(sel)];const wor
   return words}
 function alignWords(tw,dom){const map=[];let j=0;const dn=dom.map(d=>norm(d.textContent));
   tw.forEach(([t])=>{const n=norm(t);if(!n||/^[A-D]$/.test(t)){map.push(null);return}const win=n.length<=2?3:12;let hit=null;for(let k=j;k<Math.min(dom.length,j+win);k++){if(dn[k]&&(dn[k]===n||dn[k].startsWith(n)||n.startsWith(dn[k]))){hit=k;break}}if(hit!==null){map.push(hit);j=hit+1}else map.push(null)});return map}
-function narHighlight(){if(NAR.page==="book"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set(`bookpos.${NAR.book.ed}.${NAR.book.n}`,NAR.audio.currentTime);if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
+function narHighlight(){if(NAR.page==="book"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
   let lo=0,hi=W.length-1,idx=-1;while(lo<=hi){const mid=(lo+hi)>>1;if(W[mid][1]<=t){idx=mid;lo=mid+1}else hi=mid-1}
   const di=idx>=0?NAR.map[idx]:null;if(di!==NAR.cur){if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");if(di!=null&&NAR.words[di]){const w=NAR.words[di];w.classList.add("hl");const r=w.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-110)w.scrollIntoView({block:"center",behavior:"smooth"})}NAR.cur=di}
-  const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";
+  const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();
   if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight)}
 function narUI(){const b=$("narbar");if(!b)return;const has=NAR.page==="car"||NAR.page==="book"||!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
   $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent=NAR.page==="book"?`Hands-free · Ch ${NAR.book.n} · ${NAR.book.ed==="story"?"Story only":"Story + lessons"}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:LESSON(),end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
@@ -322,10 +334,12 @@ async function narAttach(){
   const T=await narTimings(key);if(!T||!pid||!T[pid]){NAR.page=null;narUI();return}
   if(NAR.key!==key||NAR.page!==pid)return;
   $("page").querySelectorAll(".episode").forEach(e=>e.hidden=true);NAR.words=wrapWords(sel);NAR.map=alignWords(T[pid].w,NAR.words);
-  NAR.audio.src=R(`audio/pages/${key}/${pid}.mp3`);NAR.audio.playbackRate=NAR.rate;narUI();
+  NAR.audio.src=R(`audio/pages/${key}/${pid}.mp3`);NAR.audio.playbackRate=NAR.rate;
+  {const P=lget().page;if(P&&P.key===key&&P.pid===pid&&P.t>2)NAR.audio.addEventListener("loadedmetadata",()=>{if(P.t<NAR.audio.duration-1)NAR.audio.currentTime=Math.max(0,P.t-2)},{once:true})}
+  narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
 }
-NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${COURSE.id}.${ed}.${n}`,true);store.set(`bookpos.${COURSE.id}.${ed}.${n}`,0);const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
+NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${COURSE.id}.${ed}.${n}`,true);store.set(`bookpos.${COURSE.id}.${ed}.${n}`,0);{const L=lget();if(L.book&&L.book.n===n)lput({book:null},true)}const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
   if(!NAR.auto)return;const pid=NAR.page||"";
   if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>b.click(),700)}
   else if(pid[0]==="o"){const b=$("next");if(b)setTimeout(()=>b.click(),900)}
@@ -333,13 +347,17 @@ NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.b
 function foldInit(){document.querySelectorAll("details.fold").forEach(d=>{const k="fold."+d.id;const v=store.get(k,null);if(v!==null)d.open=v;d.addEventListener("toggle",()=>store.set(k,d.open))})}
 foldInit();
 function narInit(){
-  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<div class="nartrack"><span id="narprog"></span></div><div class="narrow"><button class="btn" id="narplay" type="button">▶ Listen</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto"><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label><button class="btn small ghost" id="gohf" type="button">🎧 Go hands-free</button></div>`;
+  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<div class="nartrack"><span id="narprog"></span></div><div class="narrow"><button class="btn small ghost" id="narback" type="button" aria-label="Back 10 seconds" data-tip="Jump back 10 seconds for a quick refresher.">⟲ 10</button><button class="btn" id="narplay" type="button">▶ Listen</button><button class="btn small ghost" id="narfwd" type="button" aria-label="Forward 30 seconds" data-tip="Skip ahead 30 seconds.">30 ⟳</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate" data-tip="Reading speed. Your choice is remembered.">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto" data-tip="When a page finishes reading, turn to the next page by itself. Decisions still wait for you to choose."><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label><button class="btn small ghost" id="gohf" type="button" data-tip="Switch to the audiobook: the whole chapter plays straight through, then the next one.">🎧 Go hands-free</button></div>`;
   document.body.appendChild(bar);
   $("narplay").onclick=()=>{if(NAR.audio.paused){NAR.listening=true;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{narUI();narHighlight()})}else{NAR.listening=false;NAR.audio.pause();narUI()}};
+  $("narback").onclick=()=>{NAR.audio.currentTime=Math.max(0,NAR.audio.currentTime-10);narSavePos(true);if(NAR.audio.paused)narHighlight()};
+  $("narfwd").onclick=()=>{NAR.audio.currentTime=Math.min((NAR.audio.duration||0)-0.5,NAR.audio.currentTime+30);narSavePos(true);if(NAR.audio.paused)narHighlight()};
   $("narrate").onchange=e=>{NAR.rate=+e.target.value;NAR.audio.playbackRate=NAR.rate;store.set("rate",NAR.rate)};
   $("narauto").onchange=e=>{NAR.auto=e.target.checked;store.set("auto2",NAR.auto)};
-  $("gohf").onclick=async()=>{if(TRACK==="full"||TRACK==="ref")save();const n=TRACK==="full"&&CH?CH.num:1;const B=await bookManifest();const ed=store.get("bookEd."+COURSE.id,"story");const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);renderBook();top();if(have.length)bookPlay(ed,have.includes(n)?n:(have.find(k=>k>=n)||have[have.length-1]))};
-  NAR.audio.addEventListener("pause",narUI);
+  $("gohf").onclick=async()=>{if(TRACK==="full"||TRACK==="ref")save();const LB=lget().book;const n=LB&&!(TRACK==="full"&&CH)?LB.n:(TRACK==="full"&&CH?CH.num:1);const B=await bookManifest();const ed=store.get("bookEd."+COURSE.id,"story");const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);renderBook();top();if(have.length)bookPlay(ed,have.includes(n)?n:(have.find(k=>k>=n)||have[have.length-1]))};
+  NAR.audio.addEventListener("pause",()=>{narUI();narSavePos(true)});
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)narSavePos(true);else listenPull()});
+  addEventListener("pagehide",()=>narSavePos(true));
 }
 narInit();window.__nar=NAR;
 /* lock screen and car controls */
@@ -378,30 +396,57 @@ function renderCast(id){setTimeout(ambSync,0);setTimeout(navSync,0);
 }
 
 
+function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;
+  $("page").innerHTML=`<div class="kicker">Guide</div><h1>How to use it</h1><div class="story guide"><p>Two ways to take in each chapter: read it and play it yourself, or let it play like an audiobook. Your place is saved to your account, so you can stop on your desktop and pick up on your phone.</p>
+  <h2>Reading a chapter</h2><dl>
+   <dt>▶ Listen (bar at the bottom)</dt><dd>Reads the page you're on aloud and highlights each word as it goes. Pausing, switching pages or switching devices keeps your spot.</dd>
+   <dt><span class="key">⟲ 10</span> and <span class="key">30 ⟳</span></dt><dd>Back 10 seconds for a quick refresher, or ahead 30. Your lock screen and car controls skip too.</dd>
+   <dt>Speed</dt><dd>0.8x to 1.5x. Remembered for next time.</dd>
+   <dt>Keep going</dt><dd>When a page finishes, it turns to the next one on its own. Decisions still wait for you to pick.</dd>
+  </dl>
+  <h2>Hands-free</h2><dl>
+   <dt>What it is</dt><dd>The audiobook version. No tapping. It plays the whole chapter, then the next, with your phone locked. Made for the car or the gym.</dd>
+   <dt>Story only</dt><dd>Just the novel, about 10 to 13 minutes a chapter. The lead makes the right calls and you hear what happens.</dd>
+   <dt>Story + lessons</dt><dd>The story plus ${MENTOR()}'s lesson, with each decision read aloud, a pause to think, then the answer and why. About 25 minutes.</dd>
+   <dt>Resume</dt><dd>The Hands-free page shows a Resume button with where you stopped. Switch editions and it picks up near the same point in the chapter.</dd>
+   <dt>⬇ Download</dt><dd>Each chapter has a download button if you want the file for a drive with no signal.</dd>
+  </dl>
+  <h2>Settings at the top</h2><dl>
+   <dt>Immersive</dt><dd>Reads like a novel. Scores and meters are hidden and the lessons move to the end of the chapter. You still make every decision. Turn it off to see your scores as you go.</dd>
+   <dt>Ambience</dt><dd>Quiet background sound that fits each scene, like an office or a data center. The slider sets the volume. It plays under the narration.</dd>
+  </dl>
+  <h2>Put it on your iPhone</h2><dl>
+   <dt>Install</dt><dd>Open the site in <b>Safari</b>, tap the <b>Share</b> button, then <b>Add to Home Screen</b>. It opens full screen like an app.</dd>
+   <dt>Sign in once</dt><dd>The home screen app keeps its own sign-in, so sign in again the first time you open it. After that your progress and listening spot follow you.</dd>
+   <dt>Lock screen</dt><dd>Start Hands-free, lock the phone, and use the lock screen or CarPlay controls to pause and skip.</dd>
+  </dl></div>`}
 function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return["Mock exam",()=>openMock()];const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
-function navSync(){const map={home:"homelink",library:"liblink",dash:"proglink",practice:"proglink",cast:"castlink",book:"listenlink"};["liblink","homelink","proglink","castlink","listenlink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+function navSync(){const map={home:"homelink",library:"liblink",dash:"proglink",practice:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
-  if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="dash"||TRACK==="practice"||TRACK==="book")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
+  if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="dash"||TRACK==="practice"||TRACK==="book"||TRACK==="guide")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
 
 
 /* ===== audiobook ===== */
 let BOOK=null;
 async function bookManifest(){if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;try{const r=await fetch(R("audio/audiobook.json"),{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
 function bookPlay(ed,n){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=R(M.src);NAR.audio.playbackRate=NAR.rate;
-  const pos=store.get(`bookpos.${COURSE.id}.${ed}.${n}`,0);NAR.audio.addEventListener("loadedmetadata",()=>{if(pos>5&&pos<(NAR.audio.duration-5))NAR.audio.currentTime=pos},{once:true});
+  NAR.audio.addEventListener("loadedmetadata",()=>{const pos=bookResumePos(ed,n,NAR.audio.duration);if(pos>5&&pos<(NAR.audio.duration-5))NAR.audio.currentTime=pos},{once:true});
   NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight();narMedia()}).catch(()=>{});narUI();if(TRACK==="book")renderBook()}
 async function renderBook(){setTimeout(ambSync,0);
   TRACK="book";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;const B=await bookManifest();if(TRACK!=="book")return;
   const ed=store.get("bookEd."+COURSE.id,"story");const full=TRACKS.full.list();
   const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${COURSE.id}.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
-    return `<button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>`};
+    const dl=M?`<a class="dl prog" href="${esc(R(M.src))}" download title="Download chapter ${c.num} for the car or gym">⬇</a>`:"";
+    return `<div class="browwrap"><button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>${dl}</div>`};
   $("page").innerHTML=`<div class="kicker">Hands-free</div><h1>Listen hands-free</h1><p class="lead">No tapping needed. It plays the story on the right-answer path, chapter after chapter, and keeps going with your phone locked. Pause or skip with your car or lock-screen controls.</p>
    <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. Sam makes the right calls and you hear what happens. About 10 to 13 minutes a chapter.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus ${MENTOR()}'s lesson, and each decision read aloud with a pause, then the answer and why. About 25 minutes.</span></button></div>
-   <p class="prog">Plays chapter to chapter on its own and remembers where you stopped. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
+   ${(()=>{const LB=lget().book;if(!LB||!(B.full[LB.n]))return "";const same=LB.ed===ed;const c=full.find(x=>x.num===LB.n);return `<button class="handsfree" type="button" id="bresume"><span>▶</span><span><b>Resume chapter ${LB.n}${c?": "+esc(c.title):""}</b><span class="prog">${same?`at ${fmtT(LB.t)}`:`near where you stopped in ${LB.ed==="story"?"Story only":"Story + lessons"}`} · picks up on any device</span></span></button>`})()}
+   <p class="prog">Plays chapter to chapter on its own and remembers where you stopped, on any device. Use ⟲ 10 for a quick refresher. The ⬇ next to a chapter downloads it for the car or the gym. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
    <h2>Full Course</h2><div class="brows">${full.map(row).join("")}</div>`;
   $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd."+COURSE.id,b.dataset.ed);renderBook()});
+  {const r=$("bresume");if(r)r.onclick=()=>{const LB=lget().book;if(LB)bookPlay(ed,LB.n)}}
   $("page").querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{const n=+b.dataset.b;if(NAR.page==="book"&&NAR.book&&NAR.book.n===n&&NAR.book.ed===ed){if(NAR.audio.paused){NAR.audio.play();narHighlight()}else NAR.audio.pause();setTimeout(renderBook,50);return}bookPlay(ed,n)});
 }
 
@@ -488,11 +533,12 @@ function renderRail(){
   $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
 }
 function render(){_render();castStrip();narAttach();navSync();ambSync()}
-function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="book")return renderBook();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
 async function api(path,opts={}){const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
+async function listenPull(){if(!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);if(TRACK==="book")renderBook()}}catch(e){}}
 function clearLocal(){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){
   document.querySelector(".rail").hidden=true;const signup=mode==="signup";
@@ -512,6 +558,9 @@ async function boot(){
   if($("ambtoggle")){ambUI();$("ambtoggle").onchange=e=>{AMB.on=e.target.checked;store.set("amb",AMB.on);AMB.cur=null;AMB.lastSting="";ambSync()};$("ambvol").oninput=e=>{AMB.vol=+e.target.value;store.set("ambvol",AMB.vol);AMB.els[AMB.i].volume=AMB.vol}}
   if($("storytoggle")){$("storytoggle").checked=STORY();$("storytoggle").onchange=e=>setStoryMode(e.target.checked)}
   if($("listenlink"))$("listenlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderBook();top()};
+  if($("guidelink"))$("guidelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderGuide();top()};
+  /* info bubbles: hover on desktop, tap-and-hold-free toggle on touch */
+  document.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("[data-tip]");document.querySelectorAll(".tipopen").forEach(x=>{if(x!==el)x.classList.remove("tipopen")});if(el&&matchMedia("(hover: none)").matches){if(!el.classList.contains("tipopen")){el.classList.add("tipopen");setTimeout(()=>el.classList.remove("tipopen"),3500)}}},true);
   if($("castlink"))$("castlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderCast();top()};
   $("proglink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderDash();top()};
   if($("liblink"))$("liblink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderLibrary();top()};

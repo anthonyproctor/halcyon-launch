@@ -13,6 +13,7 @@ export default async function handler(req, res) {
   if (json.length > 60000) return send(res, 400, { error: "Too large." });
   await sql()`insert into progress(user_id,chapter,state,updated_at) values(${u.id},${chapter},${json}::jsonb,now())
     on conflict(user_id,chapter) do update set state=excluded.state,updated_at=now()`;
-  await sql()`update users set cur=${chapter} where id=${u.id}`;
+  // 901+ in each course block are side records (mock history, practice, listening position), not a place to resume
+  if (chapter % 10000 < 901) await sql()`update users set cur=${chapter} where id=${u.id}`;
   return send(res, 200, { ok: true });
 }
