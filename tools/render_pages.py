@@ -3,6 +3,7 @@ usage: render_pages.py pages.json   (from tools/pages.mjs)"""
 import json, os, re, sys, subprocess, numpy as np
 from kokoro import KPipeline
 CAST = {"narrator":"af_heart","ruth":"bf_emma","Ruth":"bf_emma","Sam":"am_michael","Elena":"af_sarah","Grant":"am_puck","Lena":"af_nova",
+ "Jordan":"af_bella","Abby":"af_sarah","Walt":"am_onyx","Lourdes":"af_aoede","Claire":"af_nova","Marisol":"af_kore","Ellie":"af_sky","Russ":"am_puck","Danny":"am_michael","Kendra":"af_jessica",
  "Theo":"am_fenrir","Priya":"af_sky","Ochoa":"am_onyx","Dana":"af_bella","Ray":"am_eric","Tomasz":"bm_lewis","Maria":"af_kore",
  "Denise":"af_aoede","Joan":"af_river","Hal":"am_liam","Devin":"am_echo","Victor":"bm_george","Ken":"am_adam","Keisha":"af_alloy",
  "Rob":"am_liam","Nora":"af_river","Helen":"bf_isabella","Alyssa":"af_nicole","Marcus":"am_echo","Douglas":"bm_daniel","Owen":"am_adam",

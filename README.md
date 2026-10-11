@@ -21,6 +21,7 @@ You play Sam Okafor, an infrastructure ops manager at Halcyon AI who gets drafte
 - **Audiobook:** every Full Course chapter in two editions. *Story only* is the novel on the right-answer path (about 10 to 13 minutes). *Story + lessons* adds Ruth's lesson and reads each decision with a pause, then the answer and why (about 25 minutes). It plays chapter to chapter with the phone locked, works with lock screen and car controls, and each chapter can be downloaded.
 - **Resume anywhere:** your listening spot saves to your account, so you can stop on one device and pick up on another, in either edition.
 - **Switch between reading and listening:** tap 🎧 Audiobook on a chapter and it starts at the scene you're reading. Open a chapter after listening and it offers to jump to the scene you were hearing. `audio/bookmarks.json` maps each scene to its spot in the audio, built by `tools/book_marks.sh` from whisper transcripts.
+- **Contents and sections:** every chapter lists its parts (opening, lesson, each decision by name, drills, quiz, ending) in the chapter header and the side menu, and the Audiobook lists each chapter's scenes with start times. Lessons and quizzes are always open; decisions open in order.
 - **Focus mode:** hides scores and meters and moves the lesson to the end of the chapter. You still make every decision.
 - **Ambience:** quiet scene-matched background sound under the reading narration.
 - Focus mode and Ambience follow your account. The in-app **Guide** explains every control, and the site installs to an iPhone home screen as an app.

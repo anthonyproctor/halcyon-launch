@@ -24,6 +24,8 @@ function courseById(id){return COURSES.find(c=>c.id===id)}
 function courseOfKey(k){return COURSES.filter(c=>k>=c.base).sort((a,b)=>b.base-a.base)[0]||COURSES[0]}
 function DATA(){if(COURSE.id==="pmp")return{ref:window.HALCYON,full:window.HALCYON_FULL,mock:window.HALCYON_MOCK,cast:window.HALCYON_CAST};return (window.HALCYON_DATA||{})[COURSE.id]||{}}
 function MENTOR(){return COURSE.mentor||"Ruth"}
+function MENTOR_FULL(){return COURSE.mentorFull||(MENTOR()==="Ruth"?"Ruth Calder":MENTOR())}
+function LEADS(){return COURSE.leads||(MENTOR()==="Ruth"?RUTH_LEADS:{...RUTH_LEADS,3:["That's the move.","Good. That's the call.","Exactly right."]})}
 function LESSON(){return COURSE.lessonName||"Ruth's whiteboard"}
 function R(p){return /^(https?:|\/)/.test(p)?p:COURSE.root+p}
 function taskDomain(t){const TD=COURSE.taskDomain||{};return TD[t]||TD[t.split(".")[0]]||TD[t[0]]||DOMS[0]}
@@ -77,8 +79,8 @@ function sceneHTML(sc,i,n,picked,stateForText){
   const SM=TRACK==="full"&&STORY();let h=`<div class="kicker">Chapter ${CH.num} · ${SM?"What do you do?":`Decision ${i+1} of ${n}${sc.task&&TASKNAMES[sc.task]?` · ${sc.task} ${TASKNAMES[sc.task]}`:""}`}</div><h2>${esc(sc.title||sc.task)}</h2>${paras(sc.text(stateForText,allStates(),globalFlags()))}<div class="choices" role="group" aria-label="Choices">`;
   order(sc.id,sc.opts.length).forEach((j,pos)=>{const o=sc.opts[j];const cls=picked===undefined?"":(j===picked?"picked":"")+(o.best&&picked!==undefined?" best":"");h+=`<button class="choice ${cls}" data-j="${j}" type="button"${picked!==undefined?" disabled":""}><span class="k">${"ABCD"[pos]}</span><span>${o.t}</span></button>`});
   h+=`</div>`;
-  if(picked!==undefined){const o=sc.opts[picked],best=sc.opts.find(x=>x.best),lead=RUTH_LEADS[o.s][i%3];
-    const ruth=`<div class="mentor"><div class="who">Ruth Calder</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${esc(sc.task&&TASKNAMES[sc.task]?sc.task+" "+TASKNAMES[sc.task]:sc.task)}</span></div></div>`;
+  if(picked!==undefined){const o=sc.opts[picked],best=sc.opts.find(x=>x.best),lead=LEADS()[o.s][i%3];
+    const ruth=`<div class="mentor"><div class="who">${MENTOR_FULL()}</div>${paras([lead+" "+o.why])}${o.best?"":paras(["<b>The best answer:</b> "+best.t+" "+best.why])}<div class="tags"><span class="tag dom">${sc.domain}</span><span class="tag">${esc(sc.task&&TASKNAMES[sc.task]?sc.task+" "+TASKNAMES[sc.task]:sc.task)}</span></div></div>`;
     h+=`<div class="outcome">${SM?"":`<span class="verdict v${o.s}">${o.s===3?"Best answer · +3":o.s===1?"Partial · +1":"Missed · +0"}</span>`}${paras([o.after])}${SM?`<details class="ruthtake"><summary>${MENTOR()}'s take</summary>${ruth}</details>`:ruth}${SM?"":videoCard((CH.videos||{})[sc.id],"Watch")}<div class="bar"><button class="btn" id="next" type="button">Next</button><button class="btn ghost" id="redo" type="button">Redo this decision</button></div></div>`}
   return h;
 }
@@ -116,17 +118,26 @@ function applyPrefs(p){if(!p)return;if(p.amb!==undefined){AMB.on=!!p.amb;store.s
 function setStoryMode(on,fromSync){const keyOf=st=>st?st.k+(st.i??st.j??""):"";let cur=null;if(TRACK==="full"&&CH&&S)cur=keyOf(steps(CH)[S.pos]);store.set("storymode",on);
   if(cur!==null){const ns=steps(CH);const idx=ns.findIndex(x=>keyOf(x)===cur);S.pos=Math.max(0,idx);S.max=Math.max(S.max||0,S.pos);save()}if(!fromSync)savePrefs();if(TRACK==="full"||TRACK==="ref")render()}
 function fullGo(p){const L=steps(CH);store.set(`readat.${COURSE.id}.${CH.num}`,Date.now());if(p>=L.length)p=L.findIndex(x=>x.k==="end");S.pos=p;S.max=Math.max(S.max||0,p);save();render();top()}
+/* chapter sections: names, the lock rule (study items always open, story in order), and the list used by Contents, the side menu and ⏭ */
+function secName(c,pid){if(pid==="open")return "Opening";if(pid==="lesson")return LESSON();if(pid==="end")return "Chapter ending";const i=+String(pid).slice(1),sc=c&&c.scenes[i];return `Decision ${i+1}${sc?": "+(sc.title||sc.task):""}`}
+function secLabel(c,x){return x.k==="scene"?secName(c,"s"+x.i):x.k==="drill"?`Drill: ${c.drills[x.j].title}`:x.k==="exercise"?`Exercise: ${c.exercise.title}`:x.k==="quiz"?"Quiz":secName(c,x.k)}
+function secOpen(p){const x=steps(CH)[p];if(!x)return false;if(["open","lesson","drill","exercise","quiz"].includes(x.k))return true;
+  let f=CH.scenes.findIndex((_,i)=>S.picks[i]===undefined);if(f<0)f=CH.scenes.length; // first decision not yet answered
+  return x.k==="scene"?x.i<=f:(f>=CH.scenes.length||p===S.pos)}
+function secDone(x){return x.k==="scene"?S.picks[x.i]!==undefined:x.k==="drill"?!!(S.drills&&S.drills[x.j]):x.k==="exercise"?!!S.ex:x.k==="quiz"?!!S.quiz:false}
+function secListHTML(){return `<ol class="secs">${steps(CH).map((x,p)=>{const open=secOpen(p);return `<li><button type="button" class="sec${p===S.pos?" now":""}" data-sec="${p}" ${open?"":"disabled"}><span>${esc(secLabel(CH,x))}</span><span class="prog">${p===S.pos?"here":secDone(x)?"✓":open?"":"🔒"}</span></button></li>`}).join("")}</ol>`}
 function fullRender(){
   const st=steps(CH),cur=st[Math.min(S.pos,st.length-1)];
   const phase=k=>({open:"Story",lesson:"Lesson",scene:"Decisions",drill:"Decisions",exercise:"Decisions",quiz:"Quiz",end:"Debrief"})[k];
   const curPhase=STORY()?({open:"Story",scene:"Story",end:"Story",lesson:MENTOR()+"'s notes",drill:MENTOR()+"'s notes",exercise:MENTOR()+"'s notes",quiz:MENTOR()+"'s notes"})[cur.k]:phase(cur.k);const PH=STORY()?["Story",MENTOR()+"'s notes"]:["Story","Lesson","Decisions","Quiz","Debrief"];
-  const chmap=`<ol class="chmap" aria-label="Chapter steps">${PH.map((p,i)=>{const idx=PH.indexOf(curPhase);return `<li class="${p===curPhase?"now":i<idx?"done":""}">${p}</li>`}).join("")}</ol>`;
-  const nav=chmap+`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${x.k}" ${i>S.max?"disabled":""}></button>`).join("")}</div>`;
+  const phOf=k=>STORY()?({open:"Story",scene:"Story",end:"Story"}[k]||MENTOR()+"'s notes"):phase(k);const phStart=ph=>{const a=st.map((x,p)=>p).filter(p=>phOf(st[p].k)===ph&&secOpen(p));return a.length?(a.includes(S.pos)?S.pos:a.filter(p=>p<=S.max).pop()??a[0]):-1};
+  const chmap=`<ol class="chmap" aria-label="Chapter steps">${PH.map((p,i)=>{const idx=PH.indexOf(curPhase),to=phStart(p);return `<li class="${p===curPhase?"now":i<idx?"done":""}"><button type="button" class="phbtn" data-ph="${to}" ${to<0?"disabled":""}>${p}</button></li>`}).join("")}</ol>`;
+  const nav=chmap+`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${esc(secLabel(CH,x))}" aria-label="${esc(secLabel(CH,x))}" ${secOpen(i)?"":"disabled"}></button>`).join("")}</div><details class="contents"><summary>Contents · ${esc(secLabel(CH,cur))}</summary>${secListHTML()}</details>`;
   let h=nav;
   if(cur.k==="open"){
     h+=chapterArt()+`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1>${STORY()?"":`<div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>`}${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">${STORY()?"Continue the story":"Next: the lesson"}</button></div>`;
   }else if(cur.k==="lesson"){
-    const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · The lesson · ${LESSON()}</div><h1>${esc(L.title)}</h1><p class="lessonintro">Ruth Calder is Sam's mentor, a retired NASA flight director on Halcyon's board. Her whiteboard is the lesson: the PMP ideas behind this chapter, before you make the decisions.</p>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Next: the decisions</button></div>`;
+    const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · The lesson · ${LESSON()}</div><h1>${esc(L.title)}</h1><p class="lessonintro">${COURSE.lessonIntro||(COURSE.id==="pmp"?"Ruth Calder is Sam's mentor, a retired NASA flight director on Halcyon's board. Her whiteboard is the lesson: the PMP ideas behind this chapter, before you make the decisions.":`${esc(LESSON())} is the lesson: the ideas behind this chapter, before you make the decisions.`)}</p>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Next: the decisions</button></div>`;
   }else if(cur.k==="scene"){
     const i=cur.i,sc=CH.scenes[i];h+=sceneHTML(sc,i,CH.scenes.length,S.picks[i],S);
   }else if(cur.k==="drill"){
@@ -152,6 +163,7 @@ function fullRender(){
   }
   $("page").innerHTML=h;wireVideos();
   $("page").querySelectorAll(".sdot[data-p]").forEach(b=>b.onclick=()=>fullGo(+b.dataset.p));
+  $("page").querySelectorAll("[data-ph]").forEach(b=>b.onclick=()=>{const p=+b.dataset.ph;if(p>=0&&p!==S.pos)fullGo(p)});
   const nx=$("fnext");if(nx)nx.onclick=()=>fullGo(S.pos+1);
   if(cur.k==="scene"){const i=cur.i,sc=CH.scenes[i];
     if(S.picks[i]===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>{applyPick(S,sc,i,+b.dataset.j);save();render();const o=document.querySelector(".outcome");if(o)o.scrollIntoView({behavior:"smooth",block:"start"})});
@@ -301,7 +313,7 @@ async function narSkip(dir){const a=NAR.audio;
     if(dir>0){const s=L.find(x=>x>t+1);if(s!=null&&s<(a.duration||1e9)-2){a.currentTime=s;narSavePos(true);return}const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((x,y)=>x-y)[0];if(nx)bookPlay(ed,nx,0);return}
     const s=L.filter(x=>x<t-3).pop();if(s!=null||t>3){a.currentTime=s!=null?s:0;narSavePos(true);return}
     const pv=Object.keys(BOOK.full).map(Number).filter(k=>k<n&&BOOK.full[k][ed]).sort((x,y)=>y-x)[0];if(pv)bookPlay(ed,pv,0);else a.currentTime=0;return}
-  if(TRACK==="full"&&CH&&S){const p=S.pos+dir;if(p>=0&&p<steps(CH).length)fullGo(p);return}
+  if(TRACK==="full"&&CH&&S){const L=steps(CH),cur=L[S.pos];if(dir>0&&cur&&cur.k==="scene"&&S.picks[cur.i]===undefined)return;const p=S.pos+dir;if(p>=0&&p<L.length&&secOpen(p))fullGo(p);return}
   if(TRACK==="ref"&&CH&&S){if(dir>0){const b=$("next")||$("go");if(b)b.click()}else if(S.step>=0){S.step--;save();render();top()}}}
 function narSavePos(now){const a=NAR.audio;if(!a.src||!(a.currentTime>0))return;const t=+a.currentTime.toFixed(1),dur=a.duration||0;
   if(NAR.page==="book"&&NAR.book)lput({book:{ed:NAR.book.ed,n:NAR.book.n,t,dur,at:Date.now()}},now);
@@ -323,7 +335,7 @@ async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];try{c
 function narPageId(){
   if(TRACK==="ref"){if(S.step<0)return["open",".story p"];if(S.step>=CH.scenes.length)return["end",".story p"];const i=S.step,p=S.picks[i];return p===undefined?["s"+i,".story p, .choice span:not(.k)"]:[`o${i}_${p}`,".outcome .story p"]}
   const st=steps(CH)[Math.min(S.pos,steps(CH).length-1)];
-  if(st.k==="open")return["open",".story p"];if(st.k==="lesson")return["lesson",".lesson h2, .lesson .story p, .lesson .examtip"];if(st.k==="end")return["end",".story p"];
+  if(st.k==="open")return["open",".story p"];if(st.k==="lesson")return["lesson","h1, .lesson h2, .lesson .story p, .lesson .examtip"];if(st.k==="end")return["end",".story p"];
   if(st.k==="scene"){const p=S.picks[st.i];return p===undefined?["s"+st.i,".story p, .choice span:not(.k)"]:[`o${st.i}_${p}`,".outcome .story p"]}
   return[null,null];
 }
@@ -334,13 +346,15 @@ function wrapWords(sel){const els=[...$("page").querySelectorAll(sel)];const wor
   return words}
 function alignWords(tw,dom){const map=[];let j=0;const dn=dom.map(d=>norm(d.textContent));
   tw.forEach(([t])=>{const n=norm(t);if(!n||/^[A-D]$/.test(t)){map.push(null);return}const win=n.length<=2?3:12;let hit=null;for(let k=j;k<Math.min(dom.length,j+win);k++){if(dn[k]&&(dn[k]===n||dn[k].startsWith(n)||n.startsWith(dn[k]))){hit=k;break}}if(hit!==null){map.push(hit);j=hit+1}else map.push(null)});return map}
-function narHighlight(){if(NAR.page==="book"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
+function bookSec(){if(NAR.page!=="book"||!NAR.book)return;const pid=pidAt(NAR.book.n,NAR.book.ed,NAR.audio.currentTime||0);if(pid&&pid!==NAR.bsec){NAR.bsec=pid;const l=$("narlabel");if(l)l.textContent=`Ch ${NAR.book.n} · ${pidLabel(pid,NAR.book.n)}`;narMedia()}}
+["seeked","timeupdate"].forEach(ev=>NAR.audio.addEventListener(ev,()=>bookSec()));
+function narHighlight(){if(NAR.page==="book"){bookSec();const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
   let lo=0,hi=W.length-1,idx=-1;while(lo<=hi){const mid=(lo+hi)>>1;if(W[mid][1]<=t){idx=mid;lo=mid+1}else hi=mid-1}
   const di=idx>=0?NAR.map[idx]:null;if(di!==NAR.cur){if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");if(di!=null&&NAR.words[di]){const w=NAR.words[di];w.classList.add("hl");const r=w.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-110)w.scrollIntoView({block:"center",behavior:"smooth"})}NAR.cur=di}
   const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();
   if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight)}
 function narUI(){const b=$("narbar");if(!b)return;const has=NAR.page==="car"||NAR.page==="book"||!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
-  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";$("narlabel").textContent=NAR.page==="book"?`Audiobook · Ch ${NAR.book.n} · ${NAR.book.ed==="story"?"Story only":"Story + lessons"}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:LESSON(),end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
+  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";b.classList.toggle("book",NAR.page==="book");$("narlabel").textContent=NAR.page==="book"?`Ch ${NAR.book.n} · ${NAR.bsec?pidLabel(NAR.bsec,NAR.book.n):(NAR.book.ed==="story"?"Story only":"Story + lessons")}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:LESSON(),end:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
 async function narAttach(){
   if(NAR.page==="book"&&!NAR.audio.paused){narUI();return}
   const key0=narKey();
@@ -387,7 +401,7 @@ function narInit(){
 }
 narInit();window.__nar=NAR;
 /* lock screen and car controls */
-function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:NAR.book.ed==="story"?"Audiobook, story only":"Audiobook, story + lessons",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
+function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:NAR.bsec?`Ch ${NAR.book.n} · ${pidLabel(NAR.bsec,NAR.book.n)}`:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:NAR.book.ed==="story"?"Audiobook, story only":"Audiobook, story + lessons",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
 if("mediaSession" in navigator){try{
   navigator.mediaSession.setActionHandler("play",()=>{NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight()})});
   navigator.mediaSession.setActionHandler("pause",()=>{NAR.listening=false;NAR.audio.pause();narUI()});
@@ -428,6 +442,8 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
    <dt>▶ Listen (bar at the bottom)</dt><dd>Reads the page you're on aloud and highlights each word as it goes. Pausing, switching pages or switching devices keeps your spot.</dd>
    <dt><span class="key">⟲ 10</span> and <span class="key">30 ⟳</span></dt><dd>Back 10 seconds for a quick refresher, or ahead 30. Your lock screen and car controls skip too.</dd>
    <dt>Speed</dt><dd>0.8x to 1.5x. Remembered for next time.</dd>
+   <dt>Contents</dt><dd>Tap Contents under the chapter steps, or use the list under the chapter in the side menu, to jump to any part. The lesson, drills and quiz are always open. Decisions open in order as you answer them, so the story doesn't spoil.</dd>
+   <dt>⏮ and ⏭</dt><dd>Previous and next page. In the Audiobook they jump scene to scene.</dd>
    <dt>Keep going</dt><dd>When a page finishes, it turns to the next one on its own. Decisions still wait for you to pick.</dd>
   </dl>
   <h2>Audiobook</h2><dl>
@@ -436,6 +452,7 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
    <dt>Story + lessons</dt><dd>The story plus ${MENTOR()}'s lesson, with each decision read aloud, a pause to think, then the answer and why. About 25 minutes.</dd>
    <dt>Resume</dt><dd>The Audiobook page shows a Resume button with where you stopped. Switch editions and it picks up near the same point in the chapter.</dd>
    <dt>Switching between reading and listening</dt><dd>Tap 🎧 Audiobook on a chapter and it starts at the part you're reading. Open a chapter after listening and it offers to jump to the scene you were hearing. The Audiobook page has a 📖 Read from here button too. Works across devices.</dd>
+   <dt>Sections</dt><dd>Tap Sections under a chapter on the Audiobook page to start from any scene. The player shows which scene you're hearing.</dd>
    <dt>⬇ Download</dt><dd>Each chapter has a download button if you want the file for a drive with no signal.</dd>
   </dl>
   <h2>Settings at the top</h2><dl>
@@ -461,6 +478,7 @@ async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filt
   if((v==="full"||v==="ref")&&TRACKS[v].list().find(x=>x.num===n)){openChapter(v,n);return true}
   if(v==="listen"){renderBook();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){renderDash();return true}if(v==="mock"){openMock();return true}
   renderHome();renderRail();return true}
+window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
 function navSync(){noteRoute();const map={home:"homelink",library:"liblink",dash:"proglink",practice:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
@@ -474,7 +492,7 @@ let MARKS=null;
 async function bookMarks(){if(MARKS)return MARKS;try{const r=await fetch(R("audio/bookmarks.json"),{cache:"no-store"});MARKS=r.ok?await r.json():{full:{}}}catch(e){MARKS={full:{}}}return MARKS}
 const PIDS=c=>["open",...(c.lesson?["lesson"]:[]),...c.scenes.map((_,i)=>"s"+i),"end"];
 function pidAt(n,ed,t){const L=MARKS&&MARKS.full[n]&&MARKS.full[n][ed];if(!L||!L.length)return null;let p=L[0][0];for(const [id,s] of L)if(s<=t+1)p=id;return p}
-function pidLabel(pid){return pid==="open"?"the opening":pid==="lesson"?`${MENTOR()}'s lesson`:pid==="end"?"the chapter ending":`Decision ${+pid.slice(1)+1}`}
+function pidLabel(pid,n){const c=TRACKS.full.list().find(x=>x.num===n);return secName(c,pid)}
 function stepOfPid(c,pid){const L=steps(c);const k=pid==="open"||pid==="lesson"||pid==="end"?L.findIndex(x=>x.k===pid):L.findIndex(x=>x.k==="scene"&&x.i===+pid.slice(1));return Math.max(0,k)}
 function readPid(){const L=steps(CH);for(let p=Math.min(S.pos,L.length-1);p>=0;p--){const x=L[p];if(x.k==="open"||x.k==="lesson"||x.k==="end")return x.k;if(x.k==="scene")return "s"+x.i}return "open"}
 function markTime(n,ed,pid){const L=MARKS&&MARKS.full[n]&&MARKS.full[n][ed];if(!L)return null;const order=PIDS(TRACKS.full.list().find(x=>x.num===n)||CH);for(let k=order.indexOf(pid);k>=0&&k<order.length;k++){const m=L.find(x=>x[0]===order[k]);if(m)return m[1]}return null}
@@ -482,10 +500,10 @@ const readAt=n=>store.get(`readat.${COURSE.id}.${n}`,0);
 function readFromBook(){const LB=lget().book;if(!LB)return;const pid=pidAt(LB.n,LB.ed,LB.t)||"open";if(NAR.page==="book")NAR.audio.pause();store.set("handoff.seen",LB.at||0);openChapter("full",LB.n);if(TRACK==="full"&&CH&&CH.num===LB.n)fullGo(stepOfPid(CH,pid))}
 async function handoffOffer(){if(TRACK!=="full"||!CH||!S)return;const LB=lget().book;if(!LB||LB.n!==CH.num||!LB.at||LB.at<=readAt(CH.num)||LB.at<=store.get("handoff.seen",0))return;await bookMarks();if(TRACK!=="full"||!CH||CH.num!==LB.n)return;
   const pid=pidAt(LB.n,LB.ed,LB.t);if(!pid)return;const k=stepOfPid(CH,pid);if(k===S.pos||$("handoff"))return;
-  const d=document.createElement("div");d.id="handoff";d.className="handoff";d.innerHTML=`<span>🎧 You were listening at <b>${pidLabel(pid)}</b> in the Audiobook (${fmtT(LB.t)}).</span><button class="btn small" type="button" id="hojump">Pick up there</button><button class="btn small ghost" type="button" id="hox" aria-label="Dismiss">✕</button>`;
+  const d=document.createElement("div");d.id="handoff";d.className="handoff";d.innerHTML=`<span>🎧 You were listening at <b>${esc(pidLabel(pid,LB.n))}</b> in the Audiobook (${fmtT(LB.t)}).</span><button class="btn small" type="button" id="hojump">Pick up there</button><button class="btn small ghost" type="button" id="hox" aria-label="Dismiss">✕</button>`;
   $("page").prepend(d);$("hojump").onclick=()=>{store.set("handoff.seen",LB.at);if(NAR.page==="book")NAR.audio.pause();fullGo(k)};$("hox").onclick=()=>{store.set("handoff.seen",LB.at);d.remove()}}
 async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;try{const r=await fetch(R("audio/audiobook.json"),{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
-function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=R(M.src);NAR.audio.playbackRate=NAR.rate;
+function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;NAR.bsec=null;bookMarks();NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=R(M.src);NAR.audio.playbackRate=NAR.rate;
   if(at!=null){if(at>1)seekTo(at)}else{const LB=lget().book;const sameEd=LB&&LB.n===n&&LB.ed===ed;const pos0=sameEd?LB.t:0;
    if(pos0>5)seekTo(pos0);else NAR.audio.addEventListener("loadedmetadata",()=>{const pos=bookResumePos(ed,n,NAR.audio.duration);if(pos>5&&pos<(NAR.audio.duration-5))seekTo(pos)},{once:true})}
   NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight();narMedia()}).catch(()=>{});narUI();if(TRACK==="book")renderBook()}
@@ -494,15 +512,18 @@ async function renderBook(){setTimeout(ambSync,0);
   const ed=store.get("bookEd."+COURSE.id,"story");const full=TRACKS.full.list();
   const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${COURSE.id}.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
     const dl=M?`<a class="dl prog" href="${esc(R(M.src))}" download title="Download chapter ${c.num} for the car or gym">⬇</a>`:"";
-    return `<div class="browwrap"><button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>${dl}</div>`};
+    const mk=(MARKS&&MARKS.full[c.num]&&MARKS.full[c.num][ed])||[];
+    const secs=M&&mk.length?`<details class="bsecs"><summary class="prog">Sections</summary><div class="bsecl">${mk.map(([pid,t])=>`<button type="button" class="bsec" data-bn="${c.num}" data-bt="${t}"><span>${esc(secName(c,pid))}</span><span class="prog">${fmtT(t)}</span></button>`).join("")}</div></details>`:"";
+    return `<div class="browwrap"><button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>${dl}</div>${secs}`};
   $("page").innerHTML=`<div class="kicker">Audiobook</div><h1>Audiobook</h1><p class="lead">No tapping needed. It plays the story on the right-answer path, chapter after chapter, and keeps going with your phone locked. Pause or skip with your car or lock-screen controls.</p>
-   <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. Sam makes the right calls and you hear what happens. About 10 to 13 minutes a chapter.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus ${MENTOR()}'s lesson, and each decision read aloud with a pause, then the answer and why. About 25 minutes.</span></button></div>
-   ${(()=>{const LB=lget().book;if(!LB||!(B.full[LB.n]))return "";const same=LB.ed===ed;const c=full.find(x=>x.num===LB.n);return `<button class="handsfree" type="button" id="bresume"><span>▶</span><span><b>Resume chapter ${LB.n}${c?": "+esc(c.title):""}</b><span class="prog">${same?`at ${fmtT(LB.t)}`:`near where you stopped in ${LB.ed==="story"?"Story only":"Story + lessons"}`} · picks up on any device</span></span></button><button class="btn small ghost" type="button" id="bread">📖 Read from here${pidAt(LB.n,LB.ed,LB.t)?": "+pidLabel(pidAt(LB.n,LB.ed,LB.t)):""}</button>`})()}
+   <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. ${esc(COURSE.hero||"The lead")} makes the right calls and you hear what happens.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus ${MENTOR()}'s lesson, and each decision read aloud with a pause, then the answer and why. About twice as long.</span></button></div>
+   ${(()=>{const LB=lget().book;if(!LB||!(B.full[LB.n]))return "";const same=LB.ed===ed;const c=full.find(x=>x.num===LB.n);return `<button class="handsfree" type="button" id="bresume"><span>▶</span><span><b>Resume chapter ${LB.n}${c?": "+esc(c.title):""}</b><span class="prog">${same?`at ${fmtT(LB.t)}`:`near where you stopped in ${LB.ed==="story"?"Story only":"Story + lessons"}`} · picks up on any device</span></span></button><button class="btn small ghost" type="button" id="bread">📖 Read from here${pidAt(LB.n,LB.ed,LB.t)?": "+esc(pidLabel(pidAt(LB.n,LB.ed,LB.t),LB.n)):""}</button>`})()}
    <p class="prog">Plays chapter to chapter on its own and remembers where you stopped, on any device. Use ⟲ 10 for a quick refresher. The ⬇ next to a chapter downloads it for the car or the gym. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
    <h2>Full Course</h2><div class="brows">${full.map(row).join("")}</div>`;
   $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd."+COURSE.id,b.dataset.ed);renderBook()});
   {const r=$("bresume");if(r)r.onclick=()=>{const LB=lget().book;if(LB)bookPlay(ed,LB.n)}}
   {const r=$("bread");if(r)r.onclick=()=>{readFromBook();top()}}
+  $("page").querySelectorAll("[data-bn]").forEach(b=>b.onclick=()=>bookPlay(ed,+b.dataset.bn,+b.dataset.bt));
   $("page").querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{const n=+b.dataset.b;if(NAR.page==="book"&&NAR.book&&NAR.book.n===n&&NAR.book.ed===ed){if(NAR.audio.paused){NAR.audio.play();narHighlight()}else NAR.audio.pause();setTimeout(renderBook,50);return}bookPlay(ed,n)});
 }
 
@@ -583,6 +604,7 @@ function renderRail(){
   const fmtd=([g,t])=>t?`${Math.round(g/t*100)}%`:"·";
   $("domains").innerHTML=DOMS.map(d=>`<div class="dom-row"><span>${d}</span><span class="prog">${fmtd(S.dom[d])} · ${fmtd(tot[d])}</span></div>`).join("");
   $("chapters").innerHTML=chapters().map(c=>{const lab=chapterProgress(TRACK,c);const started=!!load(TRACK,c.num)||c.num===CH.num&&(Object.keys(S.picks).length||(S.pos||0)>0||S.step>=0);return `<div class="chaprow"><button class="chap${c.num===CH.num?" cur":""}" data-n="${c.num}" type="button"><span class="n">${c.num}</span><span>${c.title}</span><span class="prog">${lab}</span></button>${started?`<button class="linkbtn reset" data-r="${c.num}" type="button" aria-label="Reset chapter ${c.num}">Reset</button>`:""}</div>`}).join("");
+  if(TRACK==="full"){const cur=$("chapters").querySelector(".chap.cur");if(cur){const d=document.createElement("div");d.className="railsecs";d.innerHTML=secListHTML();cur.closest(".chaprow").after(d)}}
   $("chapters").querySelectorAll(".chap").forEach(b=>b.onclick=()=>{save();openChapter(TRACK,+b.dataset.n)});if($("chnote"))$("chnote").textContent=`Ch ${CH.num}: ${CH.title}`;
   $("chapters").querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>resetChapter(+b.dataset.r));
   const cast=[...BASE_CAST,...(TRACK==="full"?FULL_CAST_EXTRA:[])];chapters().filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));
@@ -614,6 +636,7 @@ function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!
 async function boot(){
   if($("ambtoggle")){ambUI();$("ambtoggle").onchange=e=>{AMB.on=e.target.checked;store.set("amb",AMB.on);AMB.cur=null;AMB.lastSting="";ambSync();savePrefs()};$("ambvol").oninput=e=>{AMB.vol=+e.target.value;store.set("ambvol",AMB.vol);AMB.els[AMB.i].volume=AMB.vol;savePrefs()}}
   if($("storytoggle")){$("storytoggle").checked=STORY();$("storytoggle").onchange=e=>setStoryMode(e.target.checked)}
+  document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-sec]");if(b&&!b.disabled&&TRACK==="full"&&CH){const p=+b.dataset.sec;if(p!==S.pos)fullGo(p)}});
   if($("listenlink"))$("listenlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderBook();top()};
   if($("guidelink"))$("guidelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderGuide();top()};
   /* info bubbles: hover on desktop, tap-and-hold-free toggle on touch */

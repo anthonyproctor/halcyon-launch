@@ -3,6 +3,7 @@ usage: render_kokoro.py script.json out.mp3 "Title" """
 import json, sys, subprocess, numpy as np
 from kokoro import KPipeline
 CAST = {
+ "Jordan":"af_bella","Abby":"af_sarah","Walt":"am_onyx","Lourdes":"af_aoede","Claire":"af_nova","Marisol":"af_kore","Ellie":"af_sky","Russ":"am_puck","Danny":"am_michael","Kendra":"af_jessica",
  "narrator":"af_heart","ruth":"bf_emma","Ruth":"bf_emma",
  "Sam":"am_michael","Elena":"af_sarah","Grant":"am_puck","Lena":"af_nova","Theo":"am_fenrir","Priya":"af_sky",
  "Ochoa":"am_onyx","Dana":"af_jessica","Ray":"am_eric","Tomasz":"bm_lewis","Maria":"af_kore","Denise":"af_aoede",
