@@ -33,11 +33,31 @@
   "4": {
    "story": {
     "src": "audio/story/full-ch04.mp3",
-    "min": 24.7
+    "min": 24.9
    },
    "study": {
     "src": "audio/full-ch04.mp3",
-    "min": 61.9
+    "min": 62.4
+   }
+  },
+  "5": {
+   "story": {
+    "src": "audio/story/full-ch05.mp3",
+    "min": 34.6
+   },
+   "study": {
+    "src": "audio/full-ch05.mp3",
+    "min": 65.1
+   }
+  },
+  "6": {
+   "story": {
+    "src": "audio/story/full-ch06.mp3",
+    "min": 22.8
+   },
+   "study": {
+    "src": "audio/full-ch06.mp3",
+    "min": 56.2
    }
   }
  }

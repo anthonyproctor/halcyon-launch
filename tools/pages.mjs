@@ -19,8 +19,8 @@ const RUTH_LEADS=CO.leads||{3:["That's the move.","Good. That's what I'd want fr
 const W=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen'];
 const st={flags:{},score:24,m:{trust:60,conf:60,health:60}}; // a middling run: kept as the _alt version of any page whose text depends on how you've played
 // the Audiobook plays the best-answer path, so pages are narrated with that path's state (state before each decision, and at the end)
-const clamp=v=>Math.max(0,Math.min(100,v));const BEST=[{flags:{},score:0,m:{trust:50,conf:50,health:50}}];
-C.scenes.forEach(sc=>{const p=BEST[BEST.length-1],o=sc.opts.find(x=>x.best),n={flags:{...p.flags},score:p.score+o.s,m:{...p.m}};for(const k in (o.d||{}))n.m[k]=clamp(n.m[k]+o.d[k]);if(o.flag)n.flags[o.flag]=true;BEST.push(n)});
+const clamp=v=>Math.max(0,Math.min(100,v));const BEST=[{flags:{},score:0,m:{trust:50,conf:50,health:50},picks:{}}];
+C.scenes.forEach((sc,i)=>{const p=BEST[BEST.length-1],o=sc.opts.find(x=>x.best),n={flags:{...p.flags},score:p.score+o.s,m:{...p.m},picks:{...p.picks,[i]:sc.opts.indexOf(o)}};for(const k in (o.d||{}))n.m[k]=clamp(n.m[k]+o.d[k]);if(o.flag)n.flags[o.flag]=true;BEST.push(n)});
 const FINAL=BEST[BEST.length-1];const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const pages={};
 const mk=()=>{const segs=[];const say=(v,t)=>segments(String(t),v).forEach(x=>segs.push(x));const pause=s=>segs.push({pause:s});return {segs,say,pause}};
