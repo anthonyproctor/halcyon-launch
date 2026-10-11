@@ -163,5 +163,13 @@ window.HALCYON_CAST=[
     {unlock:6, title:`Who she is`, body:[`Okonkwo leads the station engineers who will run the Breather once Halcyon delivers it. Since the station joined the Breather team in the summer of 2061, she has answered the joint team's morning packets at the end of her shift, and every answer starts with the question number and the words understood as.`]},
     {unlock:6, title:`The bench`, body:[`In July 2061 she proposed running the Breather's control code on the station's own bench, the old plant's spare controller, before it ever touched the plant. Five station engineers joined the program's Breather team that August, eleven minutes away. Her July proposal asked who decides when a test stops.`]}],
    quote:{unlock:6, text:`We'd like to be on the team, not on the distribution list.`},
-   ties:[{unlock:6,id:`quinn`,text:`Runs the other end of the decision log.`},{unlock:6,id:`rafa`,text:`His code, her plant.`},{unlock:6,id:`ada`,text:`Same station, the other end of the air.`}] }
+   ties:[{unlock:6,id:`quinn`,text:`Runs the other end of the decision log.`},{unlock:6,id:`rafa`,text:`His code, her plant.`},{unlock:6,id:`ada`,text:`Same station, the other end of the air.`}] },
+
+ { id:`thandi`, intro:`Thandi Mokoena. I lead independent verification and validation for Halcyon's software. The ARA pays my team, the agency's mission assurance office runs it, and nobody at Tallgrass can tell us to stop. That's the point of us. I'd like done to mean flown.`, name:`Thandi Mokoena`, role:`Lead of the ARA's independent verification and validation team for Halcyon's software, 47.`, firstChapter:7, speaker:`Thandi`,
+   look:`Black woman of forty seven, short gray locs, rectangular glasses, a quilted vest over a collared shirt, a thick paper notebook with colored tabs.`,
+   sections:[
+    {unlock:7, title:`Who she is`, body:[`Mokoena's team of five works out of a trailer behind the sim bay at Watkins. It's funded by the ARA and reports to the agency's mission assurance office, so its money, its management, and its technical judgment don't come from the people whose code it checks. She sat at the back of the room for all nine of Build A1's runs on September 29, 2061, writing.`]},
+    {unlock:7, title:`Done means flown`, body:[`At the first sprint planning of release A2, on October 10, 2061, she asked the autonomy squad to count nothing as done until it had flown in the integrated sim, been reviewed by someone outside the squad, and passed full regression. On November 1 her team traced a lander that climbed when it should have hovered to one constant: Earth's gravity, in a routine written for Mars.`]}],
+   quote:{unlock:7, text:`I'd like done to mean flown.`},
+   ties:[{unlock:7,id:`rafa`,text:`His squad's code. Her checks.`},{unlock:7,id:`yusra`,text:`The customer she checks it for.`}] }
 ];
