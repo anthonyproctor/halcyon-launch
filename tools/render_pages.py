@@ -52,6 +52,8 @@ for pid, segs in spec["pages"].items():
     clips[pid] = audio
     enc(audio, f"{outdir}/{pid}.mp3")
     timings[pid] = {"d": round(len(audio)/SR, 2), "w": words}
+if os.environ.get("MERGE") and os.path.exists(f"{outdir}/timings.json"):  # MERGE=1: re-render some pages, keep the rest
+    old = json.load(open(f"{outdir}/timings.json")); old.update(timings); timings = old
 json.dump(timings, open(f"{outdir}/timings.json", "w"), separators=(",", ":"))
 # whole-chapter episode: page clips in plan order; after each decision, a pause to pick
 ep = []

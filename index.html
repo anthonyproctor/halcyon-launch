@@ -233,6 +233,10 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 .libcard{display:flex;gap:14px;align-items:flex-start;text-align:left;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--page);color:inherit;font:inherit;cursor:pointer}
 .libcard.live:hover{border-color:var(--accent)}
 .libcard.soon{opacity:.6;cursor:default}
+.libwrap{position:relative;display:flex}.libwrap .libcard{flex:1;padding-right:48px;padding-bottom:40px}.libabout{position:absolute;bottom:12px;right:14px;z-index:1;font-size:13px}
+.howbox{border:2px solid var(--line);border-radius:12px;padding:4px 16px;margin:16px 0}.howbox h2{font-size:1.05em;margin:12px 0 6px}
+.facts{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;margin:12px 0 18px}.facts dt{color:var(--muted)}.facts dd{margin:0}@media(max-width:520px){.facts{grid-template-columns:1fr}.facts dd{margin-bottom:6px}}#libcont{margin:8px 0 4px}
+.pin{position:absolute;top:8px;right:8px;z-index:1;width:40px;height:40px;border:0;border-radius:8px;background:none;color:var(--muted);font-size:22px;line-height:1;cursor:pointer}.pin:hover{background:var(--line)}.pin.on{color:var(--accent)}
 .libart{font-size:34px;line-height:1}
 .libtxt{display:flex;flex-direction:column;gap:4px}
 .libtxt b{font-size:1.1em}

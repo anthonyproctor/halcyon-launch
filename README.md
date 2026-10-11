@@ -1,24 +1,29 @@
 # The Halcyon Launch
 
-A story-driven PMP practice game, built in the style of business fables like *The Phoenix Project* and *The Five Dysfunctions of a Team*.
-
-You play Sam Okafor, an infrastructure ops manager at Halcyon AI who gets drafted to rescue the company's biggest customer launch with fourteen weeks left. Every chapter is a run of decisions. After each one you see what happened, and Ruth Calder, a retired NASA flight director on the board, explains the PMI mindset behind the best answer.
+A library of choose-your-path certification courses. Each one is a short novel with an exam inside it, in the style of business fables like *The Phoenix Project*. You play the lead, you make the calls, and the story changes with them. After every decision a mentor explains the best answer and why, the way the exam sees it.
 
 **Play it:** https://halcyon-launch.vercel.app
 
 ## How it works
 
-- Ten decisions per chapter, scored against the PMI mindset (3 for the best answer, 1 for a partial, 0 for a miss)
-- Every decision is tagged to an exam area: People, Process, or Business Environment
-- Meters for team trust, stakeholder confidence, and delivery health respond to your choices
-- Earlier choices change later scenes
+- About a dozen decisions per chapter, scored 3 for the best answer, 1 for a partial, 0 for a miss
+- Your choices follow you: each option has its own outcome, some later scenes change, and chapter endings depend on how you played
+- Every decision maps to the exam outline, and meters respond to your choices
+- Each chapter has the story, a lesson, drills, an exercise and an exam-style quiz, plus a practice exam per course
 - Read-aloud narration with a full cast, word-by-word highlighting, a seek slider, back 10 / forward 30, previous and next section, and a speed control
-- A short, hand-picked YouTube explainer after every decision, playable in the page
-- Your weakest exam area is called out at the end of each chapter
+- A short, hand-picked YouTube explainer after decisions, playable in the page
+- A Progress page tracks scores, maps mastery across the exam tasks, and builds a study plan
+
+## Library
+
+- **Continue** at the top opens wherever you left off, in any course
+- **★ Pin** the books you're working on; the rest sort by when you last played them
+- **About this book** on each card reads like a back cover: the premise, the cast, the exam, and how long it is
+- Pins and history follow your account
 
 ## Listening
 
-- **Audiobook:** every Full Course chapter in two editions. *Story only* is the novel on the right-answer path (about 10 to 13 minutes). *Story + lessons* adds Ruth's lesson and reads each decision with a pause, then the answer and why (about 25 minutes). It plays chapter to chapter with the phone locked, works with lock screen and car controls, and each chapter can be downloaded.
+- **Audiobook:** every Full Course chapter in two editions. *Story only* is the novel on the best path, always with the good ending. *Story + lessons* adds the mentor's lesson and reads each decision with a pause, then the answer and why (about twice as long). It plays chapter to chapter with the phone locked, works with lock screen and car controls, and each chapter can be downloaded.
 - **Resume anywhere:** your listening spot saves to your account, so you can stop on one device and pick up on another, in either edition.
 - **Switch between reading and listening:** tap 🎧 Audiobook on a chapter and it starts at the scene you're reading. Open a chapter after listening and it offers to jump to the scene you were hearing. `audio/bookmarks.json` maps each scene to its spot in the audio, built by `tools/book_marks.sh` from whisper transcripts.
 - **Contents and sections:** every chapter lists its parts (opening, lesson, each decision by name, drills, quiz, ending) in the chapter header and the side menu, and the Audiobook lists each chapter's scenes with start times. Lessons and quizzes are always open; decisions open in order.
@@ -36,7 +41,7 @@ The Library holds five story courses: **The Halcyon Launch** (PMP), **One Chart*
 - **Full Course:** 15 chapters, about 15 to 20 hours. Each has a story, Ruth's Whiteboard lesson, 12 decisions, math drills, an exercise, and a 15-question quiz, mapped to all 26 tasks of the July 2026 PMP outline. Story bible in `full/BIBLE.md`.
 - **Mock Exam:** 180 questions weighted 33/41/26 like the real exam, timed exam mode or practice mode.
 
-A Progress page tracks every score, maps mastery across the 26 tasks, builds a study plan, and serves targeted practice sets. `tools/check_full.mjs` and `tools/audit.mjs` lint content for answer giveaways, coverage, duplicates, and dashes.
+`tools/check_full.mjs` and `tools/audit.mjs` lint content for answer giveaways, coverage, duplicates, and dashes.
 
 ## Refresher chapters
 
