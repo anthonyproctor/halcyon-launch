@@ -5,3 +5,6 @@ node_modules
 .ttsvenv
 voice-samples
 cast-src
+
+# Story bibles are private (spoilers); kept local only
+BIBLE*.md
