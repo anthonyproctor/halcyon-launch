@@ -8,6 +8,9 @@ CAST = {"narrator":"af_heart","ruth":"bf_emma","Ruth":"bf_emma","Sam":"am_michae
  "Denise":"af_aoede","Joan":"af_river","Hal":"am_liam","Devin":"am_echo","Victor":"bm_george","Ken":"am_adam","Keisha":"af_alloy",
  "Rob":"am_liam","Nora":"af_river","Helen":"bf_isabella","Alyssa":"af_nicole","Marcus":"am_echo","Douglas":"bm_daniel","Owen":"am_adam",
  "Ben":"am_liam","Nadia":"af_kore","man":"am_liam","woman":"af_alloy",
+ # PMP v2 (full/BIBLE_v2_proposal.md cast table); Sam, Ruth, Ray keep their keys above. No other course uses these tags.
+ "Ada":"af_sky","Imogen":"af_sarah","Garrett":"am_puck","Hana":"af_kore","Rafa":"am_liam","Wendell":"am_onyx","Quinn":"af_river","Yusra":"af_aoede",
+ "Frances":"af_alloy","Simon":"bm_daniel","Calvin":"bm_george","Peg":"af_nova","Nell":"bf_isabella","Hollis":"am_fenrir","Bea":"af_jessica","Leo":"am_adam",
  "Henry":"bm_lewis","Dot":"af_nicole","Lou":"am_onyx","Giles":"bm_daniel","Nkechi":"af_alloy","Maisie":"af_sky","Arthur":"bm_fable","Precious":"bf_isabella","Leonard":"am_adam","Laura":"af_nova"}
 # word -> IPA for names and terms the voice gets wrong
 PRON = {"Okafor":"ˈoʊkəfɔɹ","Okafors":"ˈoʊkəfɔɹz","LoDo":"lˈoʊdoʊ","Lindqvist":"lˈɪndkvɪst","Ochoa":"oʊtʃˈoʊə","Tomasz":"tˈɔmɑʃ",
@@ -19,7 +22,7 @@ pipes = {"a": KPipeline(lang_code="a"), "b": KPipeline(lang_code="b")}
 spec = json.load(open(sys.argv[1]))
 if spec.get("narrator"): CAST["narrator"] = spec["narrator"]  # per-course narrator (courses.js narratorVoice)
 key = spec.get("outkey") or (("r" if spec["track"]=="ref" else "f") + str(spec["num"]))
-outdir = f"audio/pages/{key}"; os.makedirs(outdir, exist_ok=True)
+outdir = f"{spec.get('audio', 'audio')}/pages/{key}"; os.makedirs(outdir, exist_ok=True)  # spec "audio" = audio/v2 for the PMP v2 drafts (pages.mjs --v2)
 def enc(audio, path, title=None):
     pcm = (np.clip(audio, -1, 1) * 32767).astype("<i2").tobytes()
     cmd = ["ffmpeg","-loglevel","error","-y","-f","s16le","-ar",str(SR),"-ac","1","-i","-","-c:a","libmp3lame","-b:a","80k"]

@@ -10,6 +10,9 @@ CAST = {
  "Joan":"af_river","Hal":"am_liam","Devin":"am_echo","Victor":"bm_george","Ken":"am_adam","Keisha":"af_alloy",
  "Rob":"am_liam","Nora":"af_river","Helen":"bf_isabella","Alyssa":"af_nicole","Marcus":"am_echo","Douglas":"bm_daniel",
  "Owen":"am_adam","Ben":"am_liam","Nadia":"af_kore","man":"am_liam","woman":"af_alloy",
+ # PMP v2 (full/BIBLE_v2_proposal.md cast table); Sam, Ruth, Ray keep their keys above. No other course uses these tags.
+ "Ada":"af_sky","Imogen":"af_sarah","Garrett":"am_puck","Hana":"af_kore","Rafa":"am_liam","Wendell":"am_onyx","Quinn":"af_river","Yusra":"af_aoede",
+ "Frances":"af_alloy","Simon":"bm_daniel","Calvin":"bm_george","Peg":"af_nova","Nell":"bf_isabella","Hollis":"am_fenrir","Bea":"af_jessica","Leo":"am_adam",
 }
 SR = 24000
 pipes = {"a": KPipeline(lang_code="a"), "b": KPipeline(lang_code="b")}

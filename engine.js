@@ -2,7 +2,12 @@
 "use strict";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const store={get(k,d){try{const v=localStorage.getItem("halcyon."+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("halcyon."+k,JSON.stringify(v))}catch(e){}}};
+/* v2 preview (unlisted): /?v2#pmp/full/1 swaps the PMP Full Course for the drafts in full/v2 for this page session only. Its own local storage namespace, no server writes. */
+const V2P=(()=>{try{return new URLSearchParams(location.search).has("v2")}catch(e){return false}})();
+const SP=V2P?"halcyon.v2preview.":"halcyon.";
+const V2=p=>V2P&&COURSE&&COURSE.id==="pmp"&&!/^(art|cast|audio)\/v2\//.test(p)?p.replace(/^(art|cast|audio)\//,"$1/v2/"):p; // preview reads its own art, portraits, and audio
+const NOAUD=()=>V2("audio/")!=="audio/"&&!(window.HALCYON_V2||{}).audio; // preview before its narration is rendered: don't fetch audio that isn't there
+const store={get(k,d){try{const v=localStorage.getItem(SP+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(SP+k,JSON.stringify(v))}catch(e){}}};
 const clamp=v=>Math.max(0,Math.min(100,v));
 let DOMS=["People","Process","Business Environment"];
 const PMP_METERS=[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Delivery health"]];
@@ -24,7 +29,7 @@ let COURSE=COURSES[0];
 function courseById(id){return COURSES.find(c=>c.id===id)}
 function courseOfKey(k){return COURSES.filter(c=>k>=c.base).sort((a,b)=>b.base-a.base)[0]||COURSES[0]}
 function DATA(){if(COURSE.id==="pmp")return{ref:window.HALCYON,full:window.HALCYON_FULL,mock:window.HALCYON_MOCK,cast:window.HALCYON_CAST};return (window.HALCYON_DATA||{})[COURSE.id]||{}}
-function labsOf(c){return (c&&c.scenes&&((window.HALCYON_LABS||{})[COURSE.id]||{})[c.num])||[]} // optional hands-on labs, registered per course by chapter number
+function labsOf(c){if(V2P&&COURSE.id==="pmp"&&!(window.HALCYON_V2||{}).labs)return [];return (c&&c.scenes&&((window.HALCYON_LABS||{})[COURSE.id]||{})[c.num])||[]} // optional hands-on labs, registered per course by chapter number
 function MENTOR(){return COURSE.mentor||"Ruth"}
 function MENTOR_FULL(){return COURSE.mentorFull||(MENTOR()==="Ruth"?"Ruth Calder":MENTOR())}
 function LEADS(){return COURSE.leads||(MENTOR()==="Ruth"?RUTH_LEADS:{...RUTH_LEADS,3:["That's the move.","Good. That's the call.","Exactly right."]})}
@@ -62,6 +67,10 @@ function propHTML(p){const m=p.match(/^<prop\s+([^>]*)>([\s\S]*)<\/prop>$/);if(!
   if(a.type==="email")return `<div class="prop pemail"><div class="ph"><b>${esc(a.subject||"(no subject)")}</b><span>${esc(a.time||"")}</span></div><div class="pm"><span>From: ${esc(a.from||"")}</span>${a.to?`<span>To: ${esc(a.to)}</span>`:""}</div><div class="pb">${body}</div></div>`;
   if(a.type==="chat")return `<div class="prop pchat"><div class="pav">${esc((a.from||"?")[0])}</div><div><div class="pm"><b>${esc(a.from||"")}</b> <span>${esc(a.time||"")}</span></div><div class="pb">${body}</div></div></div>`;
   if(a.type==="text")return `<div class="prop ptext"><div class="pm">${esc(a.from||"")} · ${esc(a.time||"")}</div><div class="bubble">${body}</div></div>`;
+  if(a.type==="doc"&&a.kind==="vlog"){const tp=(a.title||"").split(/\s*·\s*/),tc=x=>String(x||"").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());const who=a.name||(tp[0]?tc(tp[0]):a.from||"Log"),where=a.station||(tp[1]?tc(tp[1]):"");
+    const meta=[a.sol?`Sol ${esc(a.sol)}`:"",a.delay?`One way ${esc(a.delay)}`:""].filter(Boolean);
+    return `<div class="prop pvlog" role="group" aria-label="${esc(who)}, recorded log"><div class="vh"><span class="vrec" aria-hidden="true"></span><span class="vwho"><b>${esc(who)}</b>${where?`<span>${esc(where)}</span>`:""}</span><span class="vtag">Recorded</span></div>${meta.length||a.margin?`<div class="vm">${meta.map(x=>`<span>${x}</span>`).join("")}${a.margin?`<span class="vmargin">Margin <b>${esc(a.margin)}</b></span>`:""}</div>`:""}<div class="pb">${body.split(/(?:<br\s*\/?>\s*){2,}/).map(x=>`<p>${x}</p>`).join("")}</div></div>`}
+  if(a.type==="doc"&&a.kind==="consolelog")return `<div class="prop pconsole"><div class="ph"><b>${esc(a.title||"Console log")}</b></div><div class="pb">${body}</div></div>`;
   if(a.type==="doc")return `<div class="prop pdoc"><div class="ph"><b>${esc(a.title||"Document")}</b></div><div class="pb">${body}</div></div>`;
   if(a.type==="chart"){const num=x=>(x||"").split(",").map(Number).filter(v=>!isNaN(v));
     if(a.kind==="evm"){const pv=num(a.pv),ev=num(a.ev),ac=num(a.ac);const all=[...pv,...ev,...ac];const mx=Math.max(...all,1),n=Math.max(pv.length,ev.length,ac.length,2);
@@ -70,6 +79,8 @@ function propHTML(p){const m=p.match(/^<prop\s+([^>]*)>([\s\S]*)<\/prop>$/);if(!
     const labels=(a.labels||"").split(","),vals=num(a.values),mx=Math.max(...vals,1);
     return `<div class="prop pchart"><div class="ph"><b>${esc(a.title||"Chart")}</b></div><div class="bars">${vals.map((v,i)=>`<div class="barrow"><span>${esc(labels[i]||"")}</span><span class="bt"><span style="width:${v/mx*100}%"></span></span><span class="num">${v}</span></div>`).join("")}</div>${body?`<div class="pb">${body}</div>`:""}</div>`}
   return `<p>${body}</p>`}
+function caseHTML(cs){return `<div class="qcase"><div class="kicker">Case study</div><h3>${esc(cs.title||"Case")}</h3>${paras([].concat(cs.text||[]))}</div>`}
+function caseBefore(cases,x,seen,tag){if(!x.case||!cases)return "";const k=(tag||"")+x.case;if(seen.has(k))return "";const cs=cases.find(c=>c.id===x.case);if(!cs)return "";seen.add(k);return caseHTML(cs)} // a case cluster's scenario, once, before its first question
 function paras(arr){return `<div class="story">${arr.map(p=>/^<prop\s/.test(p)?propHTML(p):`<p>${p}</p>`).join("")}</div>`}
 function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${esc(v[1])}</b><span class="prog">${esc(v[2])} · ${esc(v[3])}</span></div><div class="vframe"><button type="button" data-vid="${esc(v[0])}" aria-label="Play video: ${esc(v[1])}" style="background-image:url('https://i.ytimg.com/vi/${esc(v[0])}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
 function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
@@ -158,8 +169,8 @@ function fullRender(){
   }else if(cur.k==="labs"){
     h+=`<div class="kicker">Chapter ${CH.num} · Labs · optional</div><h1>Hands-on labs</h1><p class="labsintro">Practice with real tools and real data. It's optional: nothing here locks the story or counts toward your score. Get it right, or miss three times, and you'll see the worked answer.</p>${labsOf(CH).map(l=>`<section class="lab" id="lab-${esc(l.id)}"></section>`).join("")}<div class="bar"><button class="btn" id="fnext" type="button">Continue</button></div>`;
   }else if(cur.k==="quiz"){
-    const q=CH.quiz,ans=S.quiz;
-    h+=`<div class="kicker">Chapter ${CH.num} · Exam-style quiz</div><h2>${q.length} questions</h2><p class="prog">Answer them all, then check. Written like the real exam.</p><form id="quizform" novalidate>${q.map((x,qi)=>{const ord=order("q"+CH.num+"_"+qi,x.opts.length);return `<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>{const chosen=ans&&ans.v[qi]===oi;const right=ans&&oi===x.a;return `<label class="qopt ${ans?(right?"qright":chosen?"qwrong":""):""}"><input type="radio" name="q${qi}" value="${oi}" ${ans?"disabled":""} ${chosen?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`}).join("")}${ans?`<p class="qwhy"><b>${ans.v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} ${TASKNAMES[x.task]||""}</span></p>`:""}</fieldset>`}).join("")}${ans?"":`<div id="qerr"></div><button class="btn" type="submit">Check my answers</button>`}</form>${ans?`<div class="callout"><b>Quiz score: ${ans.right} of ${q.length}</b> (${Math.round(ans.right/q.length*100)} percent).</div><div class="bar"><button class="btn" id="fnext" type="button">Finish the chapter</button><button class="btn ghost" id="qretry" type="button">Retake the quiz</button></div>`:""}`;
+    const q=CH.quiz,ans=S.quiz,cseen=new Set();
+    h+=`<div class="kicker">Chapter ${CH.num} · Exam-style quiz</div><h2>${q.length} questions</h2><p class="prog">Answer them all, then check. Written like the real exam.</p><form id="quizform" novalidate>${q.map((x,qi)=>{const ord=order("q"+CH.num+"_"+qi,x.opts.length);return `${caseBefore(CH.cases,x,cseen)}<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>{const chosen=ans&&ans.v[qi]===oi;const right=ans&&oi===x.a;return `<label class="qopt ${ans?(right?"qright":chosen?"qwrong":""):""}"><input type="radio" name="q${qi}" value="${oi}" ${ans?"disabled":""} ${chosen?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`}).join("")}${ans?`<p class="qwhy"><b>${ans.v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} ${TASKNAMES[x.task]||""}</span></p>`:""}</fieldset>`}).join("")}${ans?"":`<div id="qerr"></div><button class="btn" type="submit">Check my answers</button>`}</form>${ans?`<div class="callout"><b>Quiz score: ${ans.right} of ${q.length}</b> (${Math.round(ans.right/q.length*100)} percent).</div><div class="bar"><button class="btn" id="fnext" type="button">Finish the chapter</button><button class="btn ghost" id="qretry" type="button">Retake the quiz</button></div>`:""}`;
   }else{
     const n=CH.scenes.length,nxt=chapters().find(c=>c.num===CH.num+1);
     const dr=(CH.drills||[]).length,drOk=Object.values(S.drills||{}).reduce((a,x)=>a+(x.ok.every(Boolean)?1:0),0);
@@ -307,12 +318,12 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   pg.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>{const a=plan[+b.dataset.plan][2];if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)});
 }
 let PR=null;
-function practicePool(t){const pool=[];TRACKS.full.list().forEach(c=>c.quiz.forEach((q,i)=>pool.push({...q,src:`Chapter ${c.num} quiz`,pid:`f${c.num}q${i}`})));mockQuestions().forEach(q=>pool.push({...q,src:"Mock bank",pid:"m"+q.id}));return t==="mixed"?pool:pool.filter(q=>q.task===t)}
+function practicePool(t){const pool=[];TRACKS.full.list().forEach(c=>c.quiz.forEach((q,i)=>pool.push({...q,src:`Chapter ${c.num} quiz`,pid:`f${c.num}q${i}`,cases:c.cases})));mockQuestions().forEach(q=>pool.push({...q,src:"Mock bank",pid:"m"+q.id}));return t==="mixed"?pool:pool.filter(q=>q.task===t)}
 function startPractice(t){const pool=practicePool(t);if(!pool.length)return;const seed=Date.now()%9973;const pick=order("pr"+t+seed,pool.length).slice(0,10).map(i=>pool[i]);PR={task:t,qs:pick,v:null};TRACK="practice";renderPractice();top()}
 function renderPractice(){setTimeout(navSync,0);
   $("railgame").hidden=true;$("mockcard").hidden=true;const {task,qs,v}=PR;
   $("page").innerHTML=`<div class="kicker">Practice set</div><h1>${task==="mixed"?"Mixed practice":`${task} ${TASKNAMES[task]}`}</h1><p class="prog">${qs.length} questions from the chapter quizzes and the mock bank. Results feed your progress map.</p>
-   <form id="prform" novalidate>${qs.map((x,qi)=>{const ord=order(x.pid.startsWith("m")?"mq"+x.pid.slice(1):x.pid.replace(/^f(\d+)q(\d+)$/,"q$1_$2"),x.opts.length);return `<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${v?(oi===x.a?"qright":v[qi]===oi?"qwrong":""):""}"><input type="radio" name="p${qi}" value="${oi}" ${v?"disabled":""} ${v&&v[qi]===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`).join("")}${v?`<p class="qwhy"><b>${v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} · ${x.src}</span></p>`:""}</fieldset>`}).join("")}${v?"":`<button class="btn" type="submit">Check my answers</button>`}</form>
+   <form id="prform" novalidate>${(()=>{const pseen=new Set();return qs.map((x,qi)=>{const ord=order(x.pid.startsWith("m")?"mq"+x.pid.slice(1):x.pid.replace(/^f(\d+)q(\d+)$/,"q$1_$2"),x.opts.length);return `${caseBefore(x.cases,x,pseen,x.src)}<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${v?(oi===x.a?"qright":v[qi]===oi?"qwrong":""):""}"><input type="radio" name="p${qi}" value="${oi}" ${v?"disabled":""} ${v&&v[qi]===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`).join("")}${v?`<p class="qwhy"><b>${v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} · ${x.src}</span></p>`:""}</fieldset>`}).join("")})()}${v?"":`<button class="btn" type="submit">Check my answers</button>`}</form>
    ${v?`<div class="callout"><b>${v.filter((x,i)=>x===qs[i].a).length} of ${qs.length} correct.</b></div><div class="bar"><button class="btn" id="again" type="button">Another set</button><button class="btn ghost" id="todash" type="button">Back to progress</button></div>`:""}`;
   const f=$("prform");if(f)f.onsubmit=e=>{e.preventDefault();PR.v=qs.map((_,qi)=>{const c=document.querySelector(`input[name=p${qi}]:checked`);return c?+c.value:-1});
     const P=store.get("c"+(COURSE.base+902),null)||{tasks:{}};qs.forEach((x,qi)=>{if(PR.v[qi]<0)return;P.tasks[x.task]=P.tasks[x.task]||[0,0];P.tasks[x.task][1]++;if(PR.v[qi]===x.a)P.tasks[x.task][0]++});store.set("c"+(COURSE.base+902),P);if(SYNC)SYNC(COURSE.base+902,P);renderPractice();top()};
@@ -352,7 +363,7 @@ function seekTo(pos){const a=NAR.audio;plog("seekTo "+(+pos).toFixed(1)+" src="+
 function fmtT(s){s=Math.max(0,Math.round(s||0));return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`}
 function bookResumePos(ed,n,dur){const L=lget(),B=L.book;if(B&&B.n===n){if(B.ed===ed)return B.t;if(B.dur&&dur)return Math.max(0,B.t/B.dur*dur-15)}const old=store.get(`bookpos.${COURSE.id}.${ed}.${n}`,0);return old||0}
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
-async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];try{const r=await fetch(R(`audio/pages/${key}/timings.json`),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
+async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];if(NOAUD())return null;try{const r=await fetch(R(V2(`audio/pages/${key}/timings.json`)),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
 function narPageId(){
   if(TRACK==="ref"){if(S.step<0)return["open",".story p"];if(S.step>=CH.scenes.length)return["end",".story p"];const i=S.step,p=S.picks[i];return p===undefined?["s"+i,".story p, .choice span:not(.k)"]:[`o${i}_${p}`,".outcome .story p"]}
   const st=steps(CH)[Math.min(S.pos,steps(CH).length-1)];
@@ -397,7 +408,7 @@ async function narAttach(){
   if(NAR.key!==key||NAR.page!==pid)return;
   $("page").querySelectorAll(".episode").forEach(e=>e.hidden=true);NAR.free=false;NAR.lastw=null;narFollowUI(false);NAR.words=wrapWords(sel);NAR.map=alignWords(T[pid].w,NAR.words);
   if(T[pid+"_alt"]){const m2=alignWords(T[pid+"_alt"].w,NAR.words),hits=m=>m.filter(x=>x!=null).length;if(hits(m2)>hits(NAR.map)){NAR.page=pid+"_alt";NAR.map=m2}} // two narrations (best path, middling run): play the one that matches this page
-  NAR.audio.src=R(`audio/pages/${key}/${NAR.page}.mp3`);NAR.audio.playbackRate=NAR.rate;
+  NAR.audio.src=R(V2(`audio/pages/${key}/${NAR.page}.mp3`));NAR.audio.playbackRate=NAR.rate;
   {const P=lget().page;if(P&&P.key===key&&P.pid===NAR.page&&P.t>2)seekTo(Math.max(0,P.t-2))}
   narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
@@ -448,7 +459,7 @@ if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceW
 function castList(){return DATA().cast||[]}
 function storyReach(){let done=0;TRACKS.full.list().forEach(c=>{const st=c.num===(TRACK==="full"&&CH?CH.num:-1)?S:load("full",c.num);if(st&&(st.pos||0)>=steps(c).length-1)done=Math.max(done,c.num)});return done}
 function avatar(c,size){const ini=c.name.split(" ").map(w=>w[0]).slice(0,2).join("");let h=0;for(const ch of c.id)h=(h*31+ch.charCodeAt(0))>>>0;const hue=h%360;
-  return `<span class="av" style="width:${size}px;height:${size}px;--avh:${hue}"><img src="${R("cast/"+c.id+".jpg")}" alt="" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${R("cast/"+c.id+".svg")}'}else this.remove()"><span>${esc(ini)}</span></span>`}
+  return `<span class="av" style="width:${size}px;height:${size}px;--avh:${hue}"><img src="${R(V2("cast/"+c.id+".jpg"))}" alt="" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${R(V2("cast/"+c.id+".svg"))}'}else this.remove()"><span>${esc(ini)}</span></span>`}
 function renderCast(id){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK="cast";$("railgame").hidden=true;$("mockcard").hidden=true;const L=castList();const reach=store.get("spoilers",false)?99:storyReach();
   if(!L.length){$("page").innerHTML=`<h1>Cast</h1><p class="prog">The cast guide is on its way.</p>`;return}
@@ -461,7 +472,7 @@ function renderCast(id){setTimeout(ambSync,0);setTimeout(navSync,0);
     ${c.quote&&c.quote.unlock<=reach+1?`<blockquote class="castquote">${c.quote.text}</blockquote>`:""}
     ${c.sections.map(sec=>sec.unlock<=Math.max(1,reach)||(sec.unlock===1)?`<section class="lesson"><h2>${esc(sec.title)}</h2>${paras(sec.body)}</section>`:`<section class="locked"><h2>${esc(sec.title)}</h2><p class="prog">Unlocks after chapter ${sec.unlock}.</p></section>`).join("")}
     ${(c.ties||[]).filter(t=>t.unlock<=Math.max(1,reach)).length?`<h2>Connections</h2><ul class="ties">${c.ties.filter(t=>t.unlock<=Math.max(1,reach)).map(t=>`<li><button class="linkbtn" data-c="${t.id}" type="button">${esc((byId[t.id]||{}).name||t.id)}</button>: ${esc(t.text)}</li>`).join("")}</ul>`:""}`;
-  if(window.__castAudio)window.__castAudio.pause();const h=$("hear");if(h){const a=new Audio(R(`cast/voice/${c.id}.mp3`));window.__castAudio=a;a.onended=()=>h.textContent=`▶ Hear ${c.name.split(" ")[0]}`;a.onerror=()=>h.remove();h.onclick=()=>{if(a.paused){a.play().catch(()=>{});h.textContent="❚❚ Pause"}else{a.pause();h.textContent=`▶ Hear ${c.name.split(" ")[0]}`}}}
+  if(window.__castAudio)window.__castAudio.pause();const h=$("hear");if(h){const a=new Audio(R(V2(`cast/voice/${c.id}.mp3`)));window.__castAudio=a;a.onended=()=>h.textContent=`▶ Hear ${c.name.split(" ")[0]}`;a.onerror=()=>h.remove();h.onclick=()=>{if(a.paused){a.play().catch(()=>{});h.textContent="❚❚ Pause"}else{a.pause();h.textContent=`▶ Hear ${c.name.split(" ")[0]}`}}}
   $("castback").onclick=()=>{if(window.__castAudio)window.__castAudio.pause();renderCast();top()};$("page").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{renderCast(b.dataset.c);top()});
 }
 
@@ -538,7 +549,7 @@ function navSync(){noteRoute();const map={home:"homelink",library:"liblink",upco
 /* ===== audiobook ===== */
 let BOOK=null;
 let MARKS=null;
-async function bookMarks(){if(MARKS)return MARKS;try{const r=await fetch(R("audio/bookmarks.json"),{cache:"no-store"});MARKS=r.ok?await r.json():{full:{}}}catch(e){MARKS={full:{}}}return MARKS}
+async function bookMarks(){if(MARKS)return MARKS;if(NOAUD())return MARKS={full:{}};try{const r=await fetch(R(V2("audio/bookmarks.json")),{cache:"no-store"});MARKS=r.ok?await r.json():{full:{}}}catch(e){MARKS={full:{}}}return MARKS}
 const PIDS=c=>["open",...(c.lesson?["lesson"]:[]),...c.scenes.map((_,i)=>"s"+i),"end"];
 function pidAt(n,ed,t){const L=MARKS&&MARKS.full[n]&&MARKS.full[n][ed];if(!L||!L.length)return null;let p=L[0][0];for(const [id,s] of L)if(s<=t+1)p=id;return p}
 function pidLabel(pid,n){const c=TRACKS.full.list().find(x=>x.num===n);return secName(c,pid)}
@@ -551,7 +562,7 @@ async function handoffOffer(){if(TRACK!=="full"||!CH||!S)return;const LB=lget().
   const pid=pidAt(LB.n,LB.ed,LB.t);if(!pid)return;const k=stepOfPid(CH,pid);if(k===S.pos||$("handoff"))return;
   const d=document.createElement("div");d.id="handoff";d.className="handoff";d.innerHTML=`<span>🎧 You were listening at <b>${esc(pidLabel(pid,LB.n))}</b> in the Audiobook (${fmtT(LB.t)}).</span><button class="btn small" type="button" id="hojump">Pick up there</button><button class="btn small ghost" type="button" id="hox" aria-label="Dismiss">✕</button>`;
   $("page").prepend(d);$("hojump").onclick=()=>{store.set("handoff.seen",LB.at);if(NAR.page==="book")NAR.audio.pause();fullGo(k)};$("hox").onclick=()=>{store.set("handoff.seen",LB.at);d.remove()}}
-async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;try{const r=await fetch(R("audio/audiobook.json"),{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
+async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;if(NOAUD())return BOOK={full:{}};try{const r=await fetch(R(V2("audio/audiobook.json")),{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
 function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;libTouch({t:"book",n});labQueue(n);NAR.bsec=null;bookMarks();NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=R(M.src);NAR.audio.playbackRate=NAR.rate;
   if(at!=null){if(at>1)seekTo(at)}else{const LB=lget().book;const sameEd=LB&&LB.n===n&&LB.ed===ed;const pos0=sameEd?LB.t:0;
    if(pos0>5)seekTo(pos0);else NAR.audio.addEventListener("loadedmetadata",()=>{const pos=bookResumePos(ed,n,NAR.audio.duration);if(pos>5&&pos<(NAR.audio.duration-5))seekTo(pos)},{once:true})}
@@ -580,7 +591,7 @@ async function renderBook(){setTimeout(ambSync,0);
 /* ===== chapter art + "In this scene" cast strip ===== */
 function REF_ART(){return COURSE.refArt||{}}
 function chapterArt(){if(!CH)return "";const n=TRACK==="full"?CH.num:REF_ART()[CH.num];if(!n)return "";const nn=String(n).padStart(2,"0");
-  return `<div class="chart"><img src="${R("art/full-ch"+nn+".jpg")}" alt="" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${R("art/full-ch"+nn+".svg")}'}else this.parentNode.remove()"></div>`}
+  return `<div class="chart"><img src="${R(V2("art/full-ch"+nn+".jpg"))}" alt="" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${R(V2("art/full-ch"+nn+".svg"))}'}else this.parentNode.remove()"></div>`}
 function castStrip(){
   const pg=$("page");if(!pg||!(TRACK==="full"||TRACK==="ref")||!castList().length)return;const old=pg.querySelector(".xray");if(old)old.remove();
   const scope=[...pg.querySelectorAll(".outcome").length?pg.querySelectorAll(".story p, .outcome .story p"):pg.querySelectorAll(".story p, .lesson .story p, .choice span")];
@@ -726,7 +737,14 @@ function renderLibrary(){setTimeout(ambSync,0);TRACK="library";CH=null;$("railga
   $("page").querySelectorAll("[data-pin]").forEach(b=>b.onclick=e=>{e.stopPropagation();const L2=libget(),id=b.dataset.pin;L2.pins=L2.pins.includes(id)?L2.pins.filter(x=>x!==id):[...L2.pins,id];libput(L2);renderLibrary()});
   $("page").querySelectorAll("[data-course]").forEach(b=>b.onclick=async()=>{if(await useCourse(b.dataset.course)){renderHome();renderRail();top()}})}
 function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!==COURSE.id){useCourse(c.id).then(()=>resumeFrom(cur));return}cur=(cur||0)-COURSE.base;if(cur>=900)return openMock();if(cur>100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-100))return openChapter("full",cur-100)}else if(cur>=1){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
+/* v2 preview: full/v2/preview.js lists the draft files and the course and cast values v2 will use; they replace v1 in memory, for this page only */
+async function v2Load(){window.HALCYON_FULL=[];await loadScripts(["full/v2/preview.js"]);const P=window.HALCYON_V2||{};await loadScripts((P.files||[]).map(f=>"full/v2/"+f));
+  const c=courseById("pmp");if(c&&P.course)Object.assign(c,P.course);
+  ["DOMS","TASKNAMES","BASE_CAST","FULL_CAST_EXTRA"].forEach(k=>{if(P.meta&&P.meta[k])PMP_META[k]=P.meta[k]});
+  if(COURSE.id==="pmp"){BASE_CAST=PMP_META.BASE_CAST;FULL_CAST_EXTRA=PMP_META.FULL_CAST_EXTRA;TASKNAMES=PMP_META.TASKNAMES}
+  buildOrders();const b=document.createElement("div");b.className="v2badge";b.setAttribute("role","note");b.textContent="v2 preview · progress stays on this device";document.body.prepend(b)}
 async function boot(){
+  if(V2P)await v2Load();
   if($("ambtoggle")){ambUI();$("ambtoggle").onchange=e=>{AMB.on=e.target.checked;store.set("amb",AMB.on);AMB.cur=null;AMB.lastSting="";ambSync();savePrefs()};$("ambvol").oninput=e=>{AMB.vol=+e.target.value;store.set("ambvol",AMB.vol);AMB.els[AMB.i].volume=AMB.vol;savePrefs()}}
   if($("storytoggle")){$("storytoggle").checked=STORY();$("storytoggle").onchange=e=>setStoryMode(e.target.checked)}
   document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-sec]");if(b&&!b.disabled&&TRACK==="full"&&CH){const p=+b.dataset.sec;if(p!==S.pos)fullGo(p)}});
@@ -745,12 +763,12 @@ async function boot(){
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
       document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;return}
     return renderAuth("login")}
-  clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
-  SYNC=(n,st)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st})}).catch(()=>{});
+  if(!V2P){clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
+  SYNC=(n,st)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st})}).catch(()=>{})} // the v2 preview never hydrates from or writes to the account
   applyPrefs(lget().prefs);
   document.querySelector(".rail").hidden=false;$("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
   $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();location.href="/"};
-  if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(me.user.cur||0);
+  if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(V2P?store.get("cur",0):me.user.cur||0);
 }
 boot();
 })();

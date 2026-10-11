@@ -1,13 +1,15 @@
 // Build per-page narration scripts for a chapter. Page ids match what the engine shows.
-// usage: node tools/pages.mjs ref|full N out.json [--story] [--course <id>]   (no --course = the PMP course)
+// usage: node tools/pages.mjs ref|full N out.json [--story] [--course <id>] [--v2]   (no --course = the PMP course)
+// --v2: the PMP v2 draft in full/v2/chNN.js, with the v2 mentor leads from full/v2/preview.js; render_pages.py then writes audio/v2/pages/fN so v1 audio is never overwritten
 import fs from 'fs';
 import {segments} from './voices.mjs';
-const A=process.argv.slice(2);const [track,nArg,outPath]=A;const n=+nArg;const STORY=A.includes('--story');const CID=A.includes('--course')?A[A.indexOf('--course')+1]:null;
+const A=process.argv.slice(2);const [track,nArg,outPath]=A;const n=+nArg;const STORY=A.includes('--story');const CID=A.includes('--course')?A[A.indexOf('--course')+1]:null;const V2=A.includes('--v2')&&!CID;
 globalThis.window={};
 let C,CO={};
 if(CID){new Function('window',fs.readFileSync('courses.js','utf8'))(globalThis.window);CO=window.HALCYON_COURSES.find(c=>c.id===CID);
   new Function('window',fs.readFileSync(`courses/${CID}/full/ch${String(n).padStart(2,'0')}.js`,'utf8'))(globalThis.window);C=window.HALCYON_DATA[CID][track].find(c=>c.num===n)}
-else{const file=track==='ref'?`chapters/ch${n}.js`:`full/ch${String(n).padStart(2,'0')}.js`;
+else{const file=track==='ref'?`chapters/ch${n}.js`:`full/${V2?'v2/':''}ch${String(n).padStart(2,'0')}.js`;
+if(V2){new Function('window',fs.readFileSync('full/v2/preview.js','utf8'))(globalThis.window);CO={leads:window.HALCYON_V2.course.leads}}
 new Function('window',fs.readFileSync(file,'utf8'))(globalThis.window);
 C=(track==='ref'?window.HALCYON:window.HALCYON_FULL)[0];}
 const MV=CID?CO.mentor:'ruth'; // mentor's voice
@@ -27,7 +29,7 @@ const mk=()=>{const segs=[];const say=(v,t)=>segments(String(t),v).forEach(x=>se
 // opening
 {const {segs,say,pause}=mk();say('narrator',`Chapter ${W[C.num]}. ${C.title}.`);pause(0.8);C.opening.forEach(p=>{say('narrator',p);pause(0.5)});pages.open=segs}
 // lesson (full only)
-if(C.lesson){const {segs,say,pause}=mk();say(MV,CID?`${C.lesson.title}.`:`Ruth's whiteboard. ${C.lesson.title}.`);pause(0.6);C.lesson.sections.forEach(s=>{say(MV,s.h+'.');pause(0.3);s.body.forEach(p=>{say(MV,p);pause(0.35)});if(s.exam){say(MV,'How the exam asks it. '+s.exam);pause(0.5)}});pages.lesson=segs}
+if(C.lesson){const {segs,say,pause}=mk();say(MV,CID||V2?`${C.lesson.title}.`:`Ruth's whiteboard. ${C.lesson.title}.`);pause(0.6);C.lesson.sections.forEach(s=>{say(MV,s.h+'.');pause(0.3);s.body.forEach(p=>{say(MV,p);pause(0.35)});if(s.exam){say(MV,'How the exam asks it. '+s.exam);pause(0.5)}});pages.lesson=segs}
 // scenes and outcomes
 C.scenes.forEach((sc,i)=>{
   {const {segs,say,pause}=mk();say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);sc.text(BEST[i],{},{}).forEach(p=>{say('narrator',p);pause(0.35)});
@@ -48,6 +50,6 @@ if(STORY){ // novel edition: story only, best path, no options, no lesson, no de
   C.scenes.forEach((sc,i)=>{const paras=sc.text(BEST[i],{},{}).filter(p=>!(/\?\s*$/.test(p.replace(/<[^>]+>/g,'').trim())&&p.replace(/<[^>]+>/g,'').split(/\s+/).length<14));paras.forEach(p=>{say('narrator',p);pause(0.45)});pause(0.6);
     const b=sc.opts.find(o=>o.best);say('narrator',b.after);pause(1.4)});
   C.closing(FINAL,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});
-  fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages:{story:segs},plan:['story'],outkey:(track==='ref'?'r':'f')+n+'s',narrator:CO&&CO.narratorVoice||undefined}));console.log('story edition');process.exit(0)}
-fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages,plan,narrator:CO&&CO.narratorVoice||undefined}));
+  fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages:{story:segs},plan:['story'],outkey:(track==='ref'?'r':'f')+n+'s',...(V2?{audio:'audio/v2'}:{}),narrator:CO&&CO.narratorVoice||undefined}));console.log('story edition');process.exit(0)}
+fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages,plan,narrator:CO&&CO.narratorVoice||undefined,...(V2?{audio:'audio/v2'}:{})}));
 console.log(Object.keys(pages).length,'pages');

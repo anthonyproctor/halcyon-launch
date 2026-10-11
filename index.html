@@ -177,6 +177,20 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 .pchat{display:flex;gap:10px;padding:10px 12px;border-left:4px solid #6b4a8a}.pchat .pm,.pchat .pb{padding:0}.pav{flex:none;width:34px;height:34px;border-radius:7px;background:#6b4a8a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
 .ptext{border:none;background:none;max-width:420px}.ptext .pm{padding:0 0 4px}.bubble{display:inline-block;background:#2f7de1;color:#fff;border-radius:18px 18px 18px 4px;padding:9px 14px;line-height:1.45}
 .pdoc{border-left:4px solid var(--accent)}.pdoc .pb{font-family:var(--story);font-size:16.5px}
+/* v2 props: Ada's recorded logs from Mars, Ruth's console log, and quiz case clusters */
+.pvlog{--vl:#b4472f;border-left:4px solid var(--vl)}
+:root[data-theme="dark"] .pvlog{--vl:#e3866f}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pvlog{--vl:#e3866f}}
+.pvlog .vh{display:flex;align-items:center;gap:10px;padding:10px 12px 6px;flex-wrap:wrap}
+.pvlog .vwho{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;flex:1 1 auto;min-width:0}.pvlog .vwho b{font-size:15px}.pvlog .vwho span{color:var(--muted);font-size:13.5px}
+.pvlog .vrec{flex:none;width:9px;height:9px;border-radius:50%;background:var(--vl);opacity:.85}
+.pvlog .vtag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 6px}
+.pvlog .vm{display:flex;flex-wrap:wrap;gap:4px 14px;padding:0 12px 8px;font-family:var(--mono);font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line)}
+.pvlog .vmargin b{color:var(--vl);font-weight:500}
+.pvlog .pb{font-family:var(--story);font-size:16.5px;padding-top:10px}.pvlog .pb p{margin:0 0 .7em}.pvlog .pb p:last-child{margin-bottom:0}
+.pconsole{border-left:4px solid var(--muted);background:var(--soft)}.pconsole .ph{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;background:transparent;border-bottom:1px dashed var(--line)}
+.pconsole .pb{font-family:var(--mono);font-size:13px;line-height:1.65;white-space:normal;overflow-wrap:anywhere}
+.qcase{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin:18px 0 8px;background:var(--soft)}.qcase h3{margin:4px 0 6px;font-size:16px}.qcase .story{font-size:16.5px}.qcase .story p{margin:.4em 0}
+.v2badge{font-family:var(--mono);font-size:11.5px;text-align:center;background:var(--mid-soft);color:var(--mid);border-bottom:1px solid var(--mid);padding:4px 12px}
 .pchart svg{display:block;width:100%;height:auto;padding:6px 10px;color:var(--ink)}.pchart path{fill:none;stroke-width:3.5}.lpv{stroke:#2d6b7a}.lev{stroke:#c9952f}.lac{stroke:#c0473b;stroke-dasharray:8 6}
 .legend{display:flex;flex-wrap:wrap;gap:12px;padding:0 12px 8px;font-size:12.5px;color:var(--muted)}.legend span::before{content:"";display:inline-block;width:14px;height:3px;margin-right:5px;vertical-align:middle}.kpv::before{background:#2d6b7a}.kev::before{background:#c9952f}.kac::before{background:#c0473b}
 .bars{padding:8px 12px;display:grid;gap:6px}.barrow{display:grid;grid-template-columns:minmax(80px,30%) 1fr auto;gap:8px;align-items:center;font-size:13.5px}.bt{height:10px;background:var(--soft);border-radius:5px;overflow:hidden}.bt span{display:block;height:100%;background:var(--accent)}

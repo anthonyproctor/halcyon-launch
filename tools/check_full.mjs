@@ -1,11 +1,16 @@
 // Validates Full Course chapter files and mock exam files.
+// PMP v2 drafts: pass files from full/v2/ (or add --v2) and the v2 flags, speakers, approach tags, and case clusters are checked instead.
 import fs from 'fs';
 globalThis.window={};
-const files=process.argv.slice(2);
+const files=process.argv.slice(2).filter(a=>a!=="--v2");
+const isV2=f=>/(^|\/)full\/v2\//.test(f);
+const V2=process.argv.includes("--v2")||(files.length>0&&files.every(isV2));
+if(!V2&&files.some(isV2)){console.log("ERROR: run full/v2 drafts separately from v1 files");process.exit(1)}
+const V2M=V2?await import('./v2meta.mjs'):null;
 for(const f of files) new Function('window',fs.readFileSync(f,'utf8'))(globalThis.window);
 const TASKS=new Set(["P1","P2","P3","P4","P5","P6","P7","P8","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","B1","B2","B3","B4","B5","B6","B7","B8"]);
 const DOM={P:"People",R:"Process",B:"Business Environment"};
-const FLAGS=new Set(["allhands","nocharter","blamedtheo","hidnumbers","publicfight","hiddefect","skippedtest","cutcorners","paddedestimates","noteamcharter","hidfromochoa","sidelineddevin","overrodepo","squeezedlabelforge","forcedrollout","nolessons","nobusinesscase","overloadedpriya"]);
+const FLAGS=V2?V2M.V2_FLAGS:new Set(["allhands","nocharter","blamedtheo","hidnumbers","publicfight","hiddefect","skippedtest","cutcorners","paddedestimates","noteamcharter","hidfromochoa","sidelineddevin","overrodepo","squeezedlabelforge","forcedrollout","nolessons","nobusinesscase","overloadedpriya"]);
 let bad=0;const err=(m)=>{console.log("  ERROR "+m);bad++};
 const dash=t=>/[–—]/.test(t);
 function lenCheck(label,texts,right){const L=texts.map(t=>t.length);const others=L.filter((_,k)=>k!==right);
@@ -25,7 +30,8 @@ for(const c of (window.HALCYON_FULL||[])){
     if(sc.opts.length!==4)err(`${sc.id} opts`);
     const b=sc.opts.findIndex(o=>o.best);if(sc.opts.filter(o=>o.best).length!==1||sc.opts[b].s!==3)err(`${sc.id} best`);
     if(!sc.opts.some(o=>o.s===1))err(`${sc.id} needs a partial`);
-    sc.opts.forEach(o=>{if(o.flag&&!FLAGS.has(o.flag))err(`${sc.id} unknown flag ${o.flag}`);prose.push(o.t,o.after,o.why)});
+    sc.opts.forEach(o=>{if(o.flag&&!FLAGS.has(o.flag))err(`${sc.id} unknown flag ${o.flag}`);if(V2&&o.flag)if(/^r_/.test(o.flag)?!o.best:o.s>1)err(`${sc.id} flag ${o.flag} on the wrong kind of option`);prose.push(o.t,o.after,o.why)});
+    if(V2&&!V2M.APPROACHES.has(sc.approach))err(`${sc.id} approach ${sc.approach}`);
     const r=lenCheck(sc.id,sc.opts.map(o=>o.t),b);if(r.longest)lb++;if(r.shortest)sb++;
     try{prose.push(...sc.text(st,{},G),...sc.text(st,{},{}))}catch(e){err(`${sc.id} text() threw ${e.message}`)}
   });
@@ -33,7 +39,9 @@ for(const c of (window.HALCYON_FULL||[])){
   const q=c.quiz||[];if(q.length!==15)err(`quiz=${q.length} (want 15)`);
   const pos=[0,0,0,0];let ql=0;
   q.forEach((x,i)=>{if(x.opts.length!==4||x.a<0||x.a>3)err(`quiz ${i}`);pos[x.a]++;if(!TASKS.has(x.task))err(`quiz ${i} task`);else if(DOM[x.task[0]]!==x.domain)err(`quiz ${i} domain`);
-    if(lenCheck(`quiz ${i}`,x.opts,x.a).longest)ql++;prose.push(x.q,...x.opts,x.why)});
+    if(lenCheck(`quiz ${i}`,x.opts,x.a).longest)ql++;prose.push(x.q,...x.opts,x.why);
+    if(V2&&!V2M.APPROACHES.has(x.approach))err(`quiz ${i} approach ${x.approach}`);if(x.case!==undefined&&!(c.cases||[]).some(k=>k.id===x.case))err(`quiz ${i} unknown case ${x.case}`)});
+  (c.cases||[]).forEach((k,i)=>{if(!k.id||!k.title||!Array.isArray(k.text)||!k.text.length)err(`case ${i} needs id, title, text[]`);if(!q.some(x=>x.case===k.id))err(`case ${k.id} has no quiz items`);prose.push(k.title||"",...(k.text||[]))});
   if(Math.max(...pos)>6)err(`quiz answer positions ${pos}`); if(ql>5)err(`quiz right answer longest in ${ql}/15`);
   (c.drills||[]).forEach((d,i)=>{if(!d.fields||!d.fields.every(f=>typeof f.answer==="number"))err(`drill ${i} fields`);if(!(c.scenes||[]).some(s=>s.id===d.after))err(`drill ${i} after`);prose.push(...d.setup,...d.solution)});
   if(c.exercise){const e=c.exercise;if(!(c.scenes||[]).some(s=>s.id===e.after))err("exercise after");e.items.forEach((it,i)=>{if(it.answer<0||it.answer>=it.choices.length)err(`exercise ${i}`);prose.push(it.prompt,it.why)})}
@@ -41,6 +49,8 @@ for(const c of (window.HALCYON_FULL||[])){
   const lw=(L.sections||[]).reduce((a,s)=>a+s.body.join(" ").split(/\s+/).length,0);if(lw<600)err(`lesson only ${lw} words`);
   try{prose.push(...c.closing(st,{},{}),...c.closing(st,{},G))}catch(e){err("closing threw")}
   const all=prose.join("\n");if(dash(all))err("contains em/en dash");
+  if(V2){(all.match(/<span class="said"[^>]*>/g)||[]).forEach(t=>{const m=t.match(/data-who="([^"]+)"/);if(!m)err("untagged quote");else if(!V2M.V2_SPEAKERS.has(m[1]))err("unknown speaker "+m[1])});
+    (all.match(/<prop\s[^>]*kind="vlog"[^>]*>/g)||[]).forEach(t=>{for(const k of ["from","sol","delay","margin"])if(!new RegExp(` ${k}="[^"]+"`).test(t))err(`vlog prop missing ${k}`);const f=(t.match(/ from="([^"]+)"/)||[])[1];if(f&&!V2M.V2_SPEAKERS.has(f))err("vlog from unknown speaker "+f)})}
   const words=all.split(/\s+/).length;
   console.log(`  ok-ish: scenes ${(c.scenes||[]).length}, best longest ${lb}, shortest ${sb}, quiz pos ${pos}, drills ${(c.drills||[]).length}, exercise ${c.exercise?c.exercise.items.length:0}, lesson ${lw}w, total ${words}w`);
   if(process.env.DUMP)fs.writeFileSync(process.env.DUMP,all.replace(/<[^>]+>/g,""));
