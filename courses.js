@@ -1,6 +1,7 @@
 // Course registry. Each course owns a key block (base) so progress never collides.
 window.HALCYON_COURSES=[
   {id:"pmp",about:["Sam Okafor ran F-16 flight line crews in the Air Force and has spent twelve years keeping servers alive. He has never run a project. Then Halcyon AI's project manager walks out with the company's biggest customer launch fourteen weeks from a date sales promised before anyone asked engineering.", "Eleven hospitals are waiting on AI agents that draft clinical notes. The CEO treats dates as wishes, the sales chief hates being contradicted, the one engineer who understands the platform is burning out, and the GPU racks have an install window nobody planned for.", "Ruth Calder, a retired NASA flight director on the board, teaches Sam what she learned the hard way: the optimists don't get people home. The honest ones do."],planned:15,mentorRole:"Ruth Calder, a retired NASA flight director on the board",hero:"Sam",title:"PMP",full_title:"The Halcyon Launch",exam:"Project Management Professional (PMI)",story:"Sam Okafor gets drafted to rescue Halcyon AI's biggest customer launch with fourteen weeks left.",base:0,root:"",status:"live",
+   labs:"courses/pmp/labs.js",
    taskDomain:{P:"People",R:"Process",B:"Business Environment"},refArt:{1:1,2:4,3:6,4:7,5:9,6:10},
    fullName:"Full Course",fullHours:"about 15 to 20 hours",mockTitle:"PMP practice exam",mockMinutes:240,mockBreaks:[60,120],
    mockBlurb:"Weighted like the July 2026 exam: People 33 percent, Process 41 percent, Business Environment 26 percent, with most questions agile or hybrid. All questions are single answer; the real exam also has multi-select, matching, and hotspot items.",
@@ -30,5 +31,6 @@ window.HALCYON_COURSES=[
    mentor:"Abby",mentorFull:"Abby Strand",stateTitle:"Pilot state",mockPassNote:"The FAA knowledge test passes at 70 percent. Get comfortably above that on practice tests before you book the real one.",meters:[["trust","Abby's trust"],["conf","Your confidence"],["health","Safety margin"]],lessonName:"Abby's Ground School",lessonIntro:"Abby Strand is Jordan's flight instructor at the club. Her ground school is the lesson: what you need to know for this chapter, before you make the decisions.",leads:{3:["That's it.","Yep. That's the one.","Exactly right."],1:["Close, but not quite.","Not wrong. Not the best answer.","You're in the neighborhood."],0:["That one's going to bite you.","I'd have stopped you there.","Let's talk about that one."]},levels:false,options:3,
    flags:["rushedpreflight","ignoredwind","noflightfollowing","skippedwb","forcedlanding","nopersonalmins","thinfuel","pushedweather"],
    speakers:["Jordan","Abby","Walt","Marisol","Lourdes","Claire","Ellie","Russ","Danny","Kendra"],
+   labs:"labs.js",
    status:"live"}
 ];

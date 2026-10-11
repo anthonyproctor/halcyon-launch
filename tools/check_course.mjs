@@ -1,6 +1,7 @@
 // Validates a non-PMP course's chapter files: node tools/check_course.mjs <courseId> [chapter files...]
 // Reads task codes from courses/<id>/meta.js and domain mapping from courses.js taskDomain.
 import fs from 'fs';
+import { checkLabs } from './check_labs.mjs';
 globalThis.window={};
 const id=process.argv[2];const files=process.argv.slice(3);
 new Function('window',fs.readFileSync('courses.js','utf8'))(window);
@@ -57,4 +58,5 @@ for(const c of data.full){
   console.log(`  scenes ${JSON.stringify(domCount)}, best longest ${lb}, shortest ${sb}, quiz pos ${pos}, quiz right longest ${ql} shortest ${qs}, levels ${JSON.stringify(lv)}, quiz domains ${JSON.stringify(qd)}, drills ${(c.drills||[]).length}, exercise ${c.exercise?c.exercise.items.length:0}, lesson ${lw}w, total ${words}w`);
   if(process.env.DUMP)fs.writeFileSync(process.env.DUMP,all.replace(/<[^>]+>/g,""));
 }
+if(course.labs){console.log(`${id} labs`);bad+=checkLabs([id])}
 process.exit(bad?1:0);
