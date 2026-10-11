@@ -77,7 +77,8 @@ window.HALCYON_CAST=[
    look:`White woman of forty seven, straight graying blond hair, a navy fleece, no makeup, the hollowed look of someone who hasn't slept in months.`,
    sections:[
     {unlock:1, title:`What happened`, body:[`At the January 7 schedule review Bea closed her laptop and walked out past the CEO and the agency's deputy director. On Monday a sheriff's deputy found her sitting in her car in a grocery store lot in Bennett with the heater on. She was safe. Her sister came to get her. Tallgrass put her on medical leave.`,`She writes in square capitals. Her fleece stayed on her chair for weeks.`]},
-    {unlock:1, title:`The folder`, body:[`On her personal drive is a folder named DO NOT CLOSE. Inside it is Anomaly Report AR 2207, closed with her signature, and a note on the folder tab: I signed it. I shouldn't have. Somebody has to open it again.`]}],
+    {unlock:1, title:`The folder`, body:[`On her personal drive is a folder named DO NOT CLOSE. Inside it is Anomaly Report AR 2207, closed with her signature, and a note on the folder tab: I signed it. I shouldn't have. Somebody has to open it again.`]},
+    {unlock:6, title:`Strasburg`, body:[`Bea resigned from Tallgrass on June 30, 2061. She lives at her sister's place six miles south of Strasburg and cuts keys at the counter of Kiowa Creek Hardware, between the register and the feed store.`]}],
    quote:{unlock:1, text:`I can't make this true.`},
    ties:[{unlock:1,id:`quinn`,text:`Her scheduler.`},{unlock:1,id:`sam`,text:`He reached out once, as a person. Or he didn't.`}] },
 
@@ -156,11 +157,11 @@ window.HALCYON_CAST=[
    quote:{unlock:5, text:`I'll fight you on the money. I won't have to fight you on the numbers.`},
    ties:[{unlock:5,id:`sam`,text:`A program lead who gives him numbers he doesn't have to check twice. Or doesn't.`},{unlock:5,id:`imogen`,text:`His director. Her promises are his arithmetic.`}] },
 
- { id:`okonkwo`, intro:`Chiamaka Okonkwo, Breather operations, Ares Station. When the new plant gets here, my people run it, for twenty years if it lets us. I answer Earth's questions every morning, and I send three of my own back. Somebody has to ask who decides.`, name:`Chiamaka Okonkwo`, role:`Breather operations lead on Ares Station, 38. Speaks only in engineering packets.`, firstChapter:6, speaker:`Chiamaka`,
+ { id:`chiamaka`, intro:`Chiamaka Okonkwo, Breather operations, Ares Station. When the new plant gets here, my people run it, for twenty years if it lets us. I answer Earth's questions every morning, and I send three of my own back. Somebody has to ask who decides.`, name:`Chiamaka Okonkwo`, role:`Breather operations lead on Ares Station, 38. Speaks only in engineering packets.`, firstChapter:6, speaker:`Chiamaka`,
    look:`Black woman of thirty eight, hair cropped close, a station coverall with the sleeves rolled and a grease pencil behind one ear, a calm, assessing expression.`,
    sections:[
-    {unlock:6, title:`Who she is`, body:[`Okonkwo leads the station engineers who will run the Breather once Halcyon delivers it. Since January 2061 she has answered the program's daily question packets at the end of her shift, and every answer starts with the question number and the words understood as.`]},
-    {unlock:6, title:`The bench`, body:[`In July 2061 she proposed running the Breather's control code on the station's own bench, the old plant's spare controller, before it ever touched the plant. Five station engineers joined the program's Breather team that August, eleven minutes away. Her first packet asked who decides when a test stops.`]}],
+    {unlock:6, title:`Who she is`, body:[`Okonkwo leads the station engineers who will run the Breather once Halcyon delivers it. Since the station joined the Breather team in the summer of 2061, she has answered the joint team's morning packets at the end of her shift, and every answer starts with the question number and the words understood as.`]},
+    {unlock:6, title:`The bench`, body:[`In July 2061 she proposed running the Breather's control code on the station's own bench, the old plant's spare controller, before it ever touched the plant. Five station engineers joined the program's Breather team that August, eleven minutes away. Her July proposal asked who decides when a test stops.`]}],
    quote:{unlock:6, text:`We'd like to be on the team, not on the distribution list.`},
    ties:[{unlock:6,id:`quinn`,text:`Runs the other end of the decision log.`},{unlock:6,id:`rafa`,text:`His code, her plant.`},{unlock:6,id:`ada`,text:`Same station, the other end of the air.`}] }
 ];

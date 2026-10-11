@@ -20,7 +20,7 @@ window.HALCYON_V2={
     meters:[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Halcyon readiness"]],stateTitle:"Mission state",
     leads:{3:["That's a go.","Good. That's what I'd want on my loop.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best call.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have called a hold there.","Let's talk about that one."]},
     flags:["rosylog","nocharter","buriedar","r_reopened","trustedai","pushedstand","r_testarticle","hidnumbers","r_reserve","exposedada","cutregression","r_autonomy","squeezedaldergrove","sacrificedhana","crashedtest","r_protectedtest","spunmedia","r_wendell","skippedwendell"],
-    speakers:["Sam","Ada","Ruth","Imogen","Garrett","Hana","Rafa","Wendell","Quinn","Yusra","Frances","Simon","Calvin","Peg","Nell","Hollis","Bea","Ray","Leo","Paloma","man","woman"],
+    speakers:["Sam","Ada","Ruth","Imogen","Garrett","Hana","Rafa","Wendell","Quinn","Yusra","Frances","Simon","Calvin","Peg","Nell","Hollis","Bea","Ray","Leo","Paloma","Chiamaka","Arlo","man","woman"],
     mockBlurb:"Weighted like the July 2026 exam: People 33 percent, Process 41 percent, Business Environment 26 percent, about 60 percent agile or hybrid. All questions are single answer; the real exam opens with a case study section and also has multiple response, matching, point and click, and graphic-based items."
   },
   meta:{
