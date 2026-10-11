@@ -423,7 +423,7 @@ function avatar(c,size){const ini=c.name.split(" ").map(w=>w[0]).slice(0,2).join
 function renderCast(id){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK="cast";$("railgame").hidden=true;$("mockcard").hidden=true;const L=castList();const reach=store.get("spoilers",false)?99:storyReach();
   if(!L.length){$("page").innerHTML=`<h1>Cast</h1><p class="prog">The cast guide is on its way.</p>`;return}
-  if(!id){$("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>Cast</h1><div class="story"><p>Profiles fill in as you play the Full Course, so nothing gets spoiled. You've finished ${reach>=99?"everything (spoilers on)":reach?`chapter ${reach}`:"no chapters yet"}.</p></div>
+  if(!id){$("page").innerHTML=`<div class="kicker">${esc(COURSE.full_title||COURSE.title)}</div><h1>Cast</h1><div class="story"><p>Profiles fill in as you play the Full Course, so nothing gets spoiled. You've finished ${reach>=99?"everything (spoilers on)":reach?`chapter ${reach}`:"no chapters yet"}.</p></div>
     <div class="castgrid">${L.map(c=>{const seen=c.firstChapter<=Math.max(1,reach+1);return `<button class="castcard" type="button" data-c="${c.id}" ${seen?"":"disabled"}>${avatar(c,64)}<span><b>${seen?esc(c.name):"Not met yet"}</b><span class="prog">${seen?esc(c.role):`Appears in chapter ${c.firstChapter}`}</span></span></button>`}).join("")}</div>
     <label class="chk prog" style="margin-top:16px"><input type="checkbox" id="spoil" ${store.get("spoilers",false)?"checked":""}> Show everything, including spoilers</label>`;
     $("page").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{renderCast(b.dataset.c);top()});$("spoil").onchange=e=>{store.set("spoilers",e.target.checked);renderCast()};return}
