@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480"><style>@media (prefers-reduced-motion:no-preference){
+.steam{animation:steam 3s ease-in-out infinite}@keyframes steam{0%{opacity:0;transform:translateY(8px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+.glow{animation:glow 2.4s ease-in-out infinite}@keyframes glow{50%{opacity:.6}}
+.blink{animation:blink 1.6s steps(2) infinite}@keyframes blink{50%{opacity:.2}}
+.pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pulse{50%{transform:scale(1.12)}}
+.grow{animation:grow 3.5s ease-out infinite;transform-box:fill-box;transform-origin:left}@keyframes grow{0%{transform:scaleX(0)}40%,100%{transform:scaleX(1)}}
+.draw{stroke-dasharray:1400;animation:draw 5s ease-out infinite}@keyframes draw{0%{stroke-dashoffset:1400}60%,100%{stroke-dashoffset:0}}
+.flash{animation:flash 3s infinite}@keyframes flash{0%,8%,16%,100%{opacity:1}4%,12%{opacity:.1}60%{opacity:.9}}
+.tick{animation:tick 8s steps(8) infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes tick{to{transform:rotate(360deg)}}
+.tilt{animation:tilt 4s ease-in-out infinite;transform-box:view-box;transform-origin:880px 100px}@keyframes tilt{50%{transform:rotate(-4deg)}}
+.flick{animation:flick 4s infinite}@keyframes flick{0%,30%{opacity:.25}35%,100%{opacity:1}}
+.twinkle{animation:twinkle 2.5s ease-in-out infinite}@keyframes twinkle{50%{opacity:.2}}
+.check{animation:check 6s infinite;opacity:0}@keyframes check{0%{opacity:0}15%,90%{opacity:1}100%{opacity:0}}
+.sway{animation:sway 5s ease-in-out infinite;transform-box:view-box;transform-origin:600px 40px}@keyframes sway{50%{transform:rotate(2deg)}}
+.lift{animation:lift 6s ease-in infinite}@keyframes lift{0%,30%{transform:translateY(0)}100%{transform:translateY(-320px)}}
+.flame{animation:flame .3s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top}@keyframes flame{to{transform:scaleY(1.3)}}
+.move1{animation:m 4s linear infinite}@keyframes m{0%{opacity:0}20%,80%{opacity:1}100%{opacity:0}}
+}</style><style>@media (prefers-reduced-motion:no-preference){
+.taxi{animation:taxi 22s linear infinite}@keyframes taxi{0%{transform:translateX(0);opacity:0}6%{opacity:1}90%{opacity:1}100%{transform:translateX(-760px);opacity:0}}
+.sock{animation:sock 2.8s ease-in-out infinite;transform-box:fill-box;transform-origin:0 50%}@keyframes sock{50%{transform:rotate(7deg) scaleX(.93)}}
+.swing{animation:swing 3.4s ease-in-out infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes swing{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-6deg)}}
+.lamp{animation:lamp 6s ease-in-out infinite}@keyframes lamp{0%,100%{opacity:.75}40%{opacity:.6}44%{opacity:.82}48%{opacity:.62}}
+.drift{animation:drift 16s ease-in-out infinite alternate}@keyframes drift{to{transform:translateX(46px)}}
+.drift2{animation:drift 11s ease-in-out infinite alternate-reverse}
+.bolt{animation:bolt 5.5s infinite;opacity:0}@keyframes bolt{0%,58%,63%,67%,100%{opacity:0}59%,61%,65%{opacity:1}}
+.lit{animation:lit 5.5s infinite;opacity:0}@keyframes lit{0%,58%,63%,67%,100%{opacity:0}59%,65%{opacity:.45}}
+.shimmer{animation:shimmer 7s ease-in-out infinite}@keyframes shimmer{50%{opacity:.55}}
+}</style><defs><linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1c2" stop-opacity=".55"/><stop offset="1" stop-color="#fff1c2" stop-opacity="0"/></linearGradient></defs><rect width="1200" height="480" fill="#1d2a33"/><path d="M0 0V372" stroke="#16242c" stroke-width="3"/><path d="M24 0V372" stroke="#16242c" stroke-width="3"/><path d="M48 0V372" stroke="#16242c" stroke-width="3"/><path d="M72 0V372" stroke="#16242c" stroke-width="3"/><path d="M96 0V372" stroke="#16242c" stroke-width="3"/><path d="M120 0V372" stroke="#16242c" stroke-width="3"/><path d="M144 0V372" stroke="#16242c" stroke-width="3"/><path d="M168 0V372" stroke="#16242c" stroke-width="3"/><path d="M192 0V372" stroke="#16242c" stroke-width="3"/><path d="M216 0V372" stroke="#16242c" stroke-width="3"/><path d="M240 0V372" stroke="#16242c" stroke-width="3"/><path d="M264 0V372" stroke="#16242c" stroke-width="3"/><path d="M288 0V372" stroke="#16242c" stroke-width="3"/><path d="M312 0V372" stroke="#16242c" stroke-width="3"/><path d="M336 0V372" stroke="#16242c" stroke-width="3"/><path d="M360 0V372" stroke="#16242c" stroke-width="3"/><path d="M384 0V372" stroke="#16242c" stroke-width="3"/><path d="M408 0V372" stroke="#16242c" stroke-width="3"/><path d="M432 0V372" stroke="#16242c" stroke-width="3"/><path d="M456 0V372" stroke="#16242c" stroke-width="3"/><path d="M480 0V372" stroke="#16242c" stroke-width="3"/><path d="M504 0V372" stroke="#16242c" stroke-width="3"/><path d="M528 0V372" stroke="#16242c" stroke-width="3"/><path d="M552 0V372" stroke="#16242c" stroke-width="3"/><path d="M576 0V372" stroke="#16242c" stroke-width="3"/><path d="M600 0V372" stroke="#16242c" stroke-width="3"/><path d="M624 0V372" stroke="#16242c" stroke-width="3"/><path d="M648 0V372" stroke="#16242c" stroke-width="3"/><path d="M672 0V372" stroke="#16242c" stroke-width="3"/><path d="M696 0V372" stroke="#16242c" stroke-width="3"/><path d="M720 0V372" stroke="#16242c" stroke-width="3"/><path d="M744 0V372" stroke="#16242c" stroke-width="3"/><path d="M768 0V372" stroke="#16242c" stroke-width="3"/><path d="M792 0V372" stroke="#16242c" stroke-width="3"/><path d="M816 0V372" stroke="#16242c" stroke-width="3"/><path d="M840 0V372" stroke="#16242c" stroke-width="3"/><path d="M864 0V372" stroke="#16242c" stroke-width="3"/><path d="M888 0V372" stroke="#16242c" stroke-width="3"/><path d="M912 0V372" stroke="#16242c" stroke-width="3"/><path d="M936 0V372" stroke="#16242c" stroke-width="3"/><path d="M960 0V372" stroke="#16242c" stroke-width="3"/><path d="M984 0V372" stroke="#16242c" stroke-width="3"/><path d="M1008 0V372" stroke="#16242c" stroke-width="3"/><path d="M1032 0V372" stroke="#16242c" stroke-width="3"/><path d="M1056 0V372" stroke="#16242c" stroke-width="3"/><path d="M1080 0V372" stroke="#16242c" stroke-width="3"/><path d="M1104 0V372" stroke="#16242c" stroke-width="3"/><path d="M1128 0V372" stroke="#16242c" stroke-width="3"/><path d="M1152 0V372" stroke="#16242c" stroke-width="3"/><path d="M1176 0V372" stroke="#16242c" stroke-width="3"/>
+<rect x="330" y="40" width="210" height="160" rx="6" fill="#f3f1ec"/><rect x="330" y="200" width="210" height="8" fill="#9aa4ad"/>
+<g font-family="Arial" font-weight="900" fill="#23395b"><text x="346" y="74" font-size="21">DUE LIST</text><g font-size="15"><text x="346" y="102">ANNUAL 8/26</text><text x="346" y="126">XPDR 10/26</text><text x="346" y="150">ELT BATT 3/26</text></g></g>
+<rect x="340" y="134" width="130" height="22" fill="none" stroke="#c0473b" stroke-width="3"/><path d="M480 146l8 8 16-18" stroke="#5fa37a" stroke-width="4" fill="none"/>
+<path d="M346 176h120M346 188h90" stroke="#9aa4ad" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="470" y="214" width="44" height="40" rx="4" fill="#9a8a60"/><g fill="#c9ccd1"><circle cx="482" cy="210" r="6"/><circle cx="498" cy="208" r="6"/></g><rect x="330" y="254" width="210" height="6" fill="#3a4a54"/>
+<rect x="0" y="372" width="1200" height="108" fill="#24323b"/><path d="M0 372H1200" stroke="#3a4a54" stroke-width="3"/>
+<g class="lamp"><path d="M640 112L470 372H900L760 112Z" fill="url(#beam)"/></g>
+<path d="M700 0V96" stroke="#1e1a18" stroke-width="3"/><path d="M672 96h56l12 22h-80z" fill="#c9a04a"/><circle class="glow" cx="700" cy="118" r="14" fill="#fff4d0"/>
+<g transform="translate(0 0)">
+<path d="M770 150L1200 120V350L770 330Z" fill="#f3f1ec"/><path d="M780 300L1200 280V296L780 314Z" fill="#7a2e3a"/>
+<path d="M800 158L880 150L860 230L800 236Z" fill="#2a4a5c"/><path d="M900 148L1010 142L1000 232L890 236Z" fill="#2a4a5c"/>
+<path d="M860 100L1200 84V112L860 124Z" fill="#e8e6e0"/><path d="M1010 120L960 330" stroke="#c9ccd1" stroke-width="10"/>
+<rect x="756" y="150" width="18" height="190" fill="#8a8f96"/>
+<g stroke="#5a6470" stroke-width="6" fill="none"><path d="M756 200L700 230M756 300L700 280M756 200L720 290"/></g>
+<rect x="590" y="226" width="160" height="56" rx="10" fill="#8a8f96"/>
+<g><circle cx="624" cy="250" r="36" fill="#6b6f75"/><circle cx="624" cy="250" r="31" fill="none" stroke="#4a4e54" stroke-width="2.5"/><circle cx="624" cy="250" r="25" fill="none" stroke="#4a4e54" stroke-width="2.5"/><circle cx="624" cy="250" r="19" fill="none" stroke="#4a4e54" stroke-width="2.5"/><circle cx="624" cy="250" r="12" fill="#8a8f96"/><rect x="594" y="198" width="60" height="18" rx="5" fill="#9aa4ad"/><path d="M618 286q-4 40 22 66" stroke="#7a5a3a" stroke-width="9" fill="none"/></g><g><circle cx="708" cy="250" r="36" fill="#6b6f75"/><circle cx="708" cy="250" r="31" fill="none" stroke="#4a4e54" stroke-width="2.5"/><circle cx="708" cy="250" r="25" fill="none" stroke="#4a4e54" stroke-width="2.5"/><circle cx="708" cy="250" r="19" fill="none" stroke="#4a4e54" stroke-width="2.5"/><circle cx="708" cy="250" r="12" fill="#8a8f96"/><rect x="678" y="198" width="60" height="18" rx="5" fill="#9aa4ad"/><path d="M702 286q-4 40 22 66" stroke="#7a5a3a" stroke-width="9" fill="none"/></g>
+<rect x="610" y="300" width="56" height="40" rx="6" fill="#9a8a60"/><path d="M620 340h36v12h-36z" fill="#6b6f75"/>
+<rect x="730" y="290" width="26" height="40" rx="6" fill="#3f6a8a"/>
+<g class="swing" style="--o:744px 330px"><path d="M744 330q-6 10 0 18t0 18q-6 10 2 22" stroke="#d9dde3" stroke-width="2.5" fill="none"/></g>
+<ellipse cx="572" cy="254" rx="20" ry="26" fill="#c9ccd1"/><rect x="560" y="70" width="12" height="380" rx="6" fill="#3a3d44"/>
+<path d="M640 360L630 420" stroke="#6b6f75" stroke-width="10"/><circle cx="630" cy="432" r="22" fill="#1e1a18"/><circle cx="630" cy="432" r="8" fill="#6b6f75"/>
+</g>
+<rect x="330" y="410" width="250" height="44" rx="6" fill="#2d4f7a"/><path d="M350 410v44M390 410v44M430 410v44M470 410v44M510 410v44M550 410v44" stroke="#24406a" stroke-width="3"/>
+<path d="M350 414Q370 370 450 368Q530 370 560 414Z" fill="#f3f1ec"/><path d="M380 404Q450 386 530 404" stroke="#c9ccd1" stroke-width="3" fill="none"/>
+<rect x="420" y="440" width="94" height="34" rx="4" fill="#e8743b"/><text x="467" y="462" text-anchor="middle" font-family="Arial" font-weight="900" font-size="15" fill="#0f2430">ELT BATT</text>
+<rect x="86" y="268" width="230" height="190" rx="8" fill="#b23a30"/>
+<g fill="#8f2c24"><rect x="98" y="280" width="206" height="26" rx="4"/><rect x="98" y="314" width="206" height="26" rx="4"/><rect x="98" y="348" width="206" height="26" rx="4"/><rect x="98" y="382" width="206" height="26" rx="4"/><rect x="98" y="416" width="206" height="26" rx="4"/></g>
+<g fill="#d9dde3"><rect x="176" y="290" width="50" height="5" rx="2"/><rect x="176" y="324" width="50" height="5" rx="2"/><rect x="176" y="358" width="50" height="5" rx="2"/><rect x="176" y="392" width="50" height="5" rx="2"/><rect x="176" y="426" width="50" height="5" rx="2"/></g>
+<circle cx="110" cy="462" r="9" fill="#1e1a18"/><circle cx="292" cy="462" r="9" fill="#1e1a18"/>
+<path d="M86 268L106 112H296L316 268Z" fill="#8f2c24"/><path d="M100 256L116 124H286L302 256Z" fill="#d2c6b4"/>
+<rect x="128" y="138" width="56" height="70" fill="#f3f1ec"/><g stroke="#9aa4ad" stroke-width="3"><path d="M134 150h44M134 162h40M134 174h44M134 186h34M134 198h40"/></g>
+<rect x="210" y="140" width="64" height="46" fill="#c8b89a"/><path d="M220 166l22-6 24 2-8 4-14 1-14 4z" fill="#d9b04a"/><path d="M228 176h34" stroke="#f3f1ec" stroke-width="2"/>
+<path d="M148 222q6-8 12 0t12 0q4-10 12-2t10 2q8-8 14 0t12-2q6-6 10 2" stroke="#d9dde3" stroke-width="3.5" fill="none"/>
+<rect x="130" y="232" width="146" height="18" fill="#e9dfb0" transform="rotate(-2 203 241)"/>
+<text x="203" y="246" text-anchor="middle" font-family="Arial" font-weight="900" font-size="11.5" fill="#2b2b2b" transform="rotate(-2 203 241)">D. REYES 2017. DO NOT FLY.</text></svg>

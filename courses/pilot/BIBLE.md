@@ -9,7 +9,7 @@ A 12 to 15 hour story-driven companion course for the FAA **Private Pilot Airpla
 - **Private Pilot Airplane (PAR) knowledge test:** 60 scored questions, plus up to 5 unscored validation questions (about 65 on screen). **2.0 hours** (reduced from 150 minutes effective April 24, 2023). **Passing score 70 percent** (42 of 60). Multiple choice, three options (A, B, C) on the real test.
 - **Standard:** Private Pilot Airplane Airman Certification Standards, **FAA-S-ACS-6C** (effective May 31, 2024). Some older material still lists 2.5 hours; it's stale.
 - **Supplement:** questions reference the Airman Knowledge Testing Supplement (FAA-CT-8080-2, figures: sectional excerpts, METAR/TAF, performance charts, weight and balance, airport diagrams). Our props and drills mimic those figures.
-- **Primary references:** Pilot's Handbook of Aeronautical Knowledge (PHAK, FAA-H-8083-25), Airplane Flying Handbook (AFH, FAA-H-8083-3), Aviation Weather Handbook (FAA-H-8083-28), Aeronautical Information Manual (AIM), 14 CFR Parts 61 and 91, NTSB 830, Risk Management Handbook (FAA-H-8083-2).
+- **Primary references:** Pilot's Handbook of Aeronautical Knowledge (PHAK, FAA-H-8083-25), Airplane Flying Handbook (AFH, FAA-H-8083-3), Aviation Weather Handbook (FAA-H-8083-28B, April 2026), Aeronautical Information Manual (AIM), 14 CFR Parts 61 and 91, NTSB 830, Risk Management Handbook (FAA-H-8083-2).
 - Sources:
   - FAA community advisory on reduced test times: https://www.faa.gov/training_testing/testing/community_advisory_april_2023
   - FAA ACS knowledge test table: https://www.faa.gov/training_testing/testing/acs/acs_knowledge_test_table.pdf

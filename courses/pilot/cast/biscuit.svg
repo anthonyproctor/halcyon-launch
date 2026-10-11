@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><style>@media (prefers-reduced-motion:no-preference){.beacon{animation:bl 2.2s infinite}@keyframes bl{0%,80%,100%{opacity:.25}85%,92%{opacity:1}}.body{animation:br 4.5s ease-in-out infinite;transform-origin:100px 200px}@keyframes br{50%{transform:translateY(-2px) scale(1.006)}}.prop{animation:pr 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pr{50%{transform:scaleY(.82)}}}</style>
+<rect width="200" height="200" fill="#16303f"/><circle cx="100" cy="100" r="96" fill="#1d4052"/>
+<path d="M8 128h184v8a96 96 0 0 1-184 0z" fill="#2d6b7a" opacity=".55"/>
+<g class="body">
+<ellipse cx="104" cy="138" rx="66" ry="5" fill="#000" opacity=".28"/>
+<path d="M150 87L166 50h12l-3 42z" fill="#f3f1ec"/><path d="M166 50h12l-1 9h-13z" fill="#7a2e3a"/>
+<ellipse cx="164" cy="98" rx="16" ry="3" fill="#dcdad4"/>
+<path d="M34 97L58 89L74 77H128L172 89L172 99L128 108Q110 116 92 116L46 115Q34 113 34 105Z" fill="#f3f1ec"/>
+<path d="M38 104L128 101L171 93L171 96.5L128 105L42 108.5Z" fill="#7a2e3a"/>
+<path d="M60 89L74 78H82L74 93Z" fill="#2a4a5c"/><path d="M86 80H104V93H80Z" fill="#2a4a5c"/><path d="M108 80H125L120 93H108Z" fill="#2a4a5c"/><path d="M129 81L140 84L135 91H126Z" fill="#2a4a5c"/>
+<path d="M105 80V106M86 94v12" stroke="#9aa4ad" stroke-width="1"/>
+<path d="M66 77Q70 68 86 67.5L130 69.5L132 77Z" fill="#e8e6e0"/><path d="M68 74H131" stroke="#7a2e3a" stroke-width="1.5"/>
+<path d="M112 77L92 113" stroke="#c9ccd1" stroke-width="3" stroke-linecap="round"/>
+<path d="M48 114L46 125M100 114L107 125" stroke="#6b6f75" stroke-width="3"/>
+<circle cx="46" cy="129" r="5" fill="#1e1a18"/><path d="M38 128q8-9 16 0z" fill="#f3f1ec"/>
+<circle cx="108" cy="129" r="6" fill="#1e1a18"/><path d="M98 128q10-11 20 0z" fill="#f3f1ec"/>
+<text x="148" y="92" font-family="Arial" font-weight="700" font-size="6.5" fill="#23395b" transform="rotate(-11 148 92)">N4791E</text>
+<ellipse cx="31" cy="102" rx="5" ry="6.5" fill="#c9ccd1"/>
+<rect class="prop" x="27.5" y="72" width="4" height="60" rx="2" fill="#3a3d44"/>
+<circle class="beacon" cx="172" cy="49" r="3.2" fill="#e04a3b"/>
+</g></svg>
