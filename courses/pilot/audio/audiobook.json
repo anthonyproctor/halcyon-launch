@@ -3,11 +3,11 @@
   "1": {
    "story": {
     "src": "audio/story/full-ch01.mp3",
-    "min": 15.2
+    "min": 15.4
    },
    "study": {
     "src": "audio/full-ch01.mp3",
-    "min": 31.0
+    "min": 31.2
    }
   }
  }

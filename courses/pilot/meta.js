@@ -13,7 +13,7 @@ C.meta={
     "VII":"Slow flight and stalls","VIII":"Basic instrument maneuvers","IX":"Emergency operations","XI":"Night operations","XII":"Postflight procedures"
   },
   BASE_CAST:[
-    ["Jordan Reyes","You. 35, commercial HVAC estimator in Aurora. Has never flown. Inherited a quarter of an airplane."],
+    ["Jordan Reyes","You. 35, a paramedic in Aurora. Has never flown. Inherited a quarter of an airplane."],
     ["Danny Reyes","Jordan's older brother. Private pilot for eleven years. Died in March at 41. Left the logbook."],
     ["Abby Strand","Flight instructor at the club, 28. Counting hours toward an airline job. Doesn't do pep talks."],
     ["Walt Herrera","Partner and club safety officer. Retired airline dispatcher. Wants the share sold back."],
