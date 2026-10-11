@@ -2,7 +2,7 @@
 // Each section unlocks after the reader reaches the given chapter. Written to full/BIBLE_v2_proposal.md and its Decisions (2026-10-11):
 // a separate world from the other courses; Sam a widower; Sam's wound never answered. Covers everyone who appears in chapter 1.
 window.HALCYON_CAST=[
- { id:`sam`, intro:`I'm Sam Okafor. Nine years in the Air Force on F-16s, the last stretch as a crew chief, then nineteen years keeping the high bay at Tallgrass running. My signature used to mean a jet was ready. For a long time now it's only meant a building was. Then the program manager walked out, and the ARA gave me the ship. My daughter is on the station it's for. I'm going to listen first.`, name:`Sam Okafor`, role:`Tallgrass integration operations manager, drafted to run the Halcyon program. Fifty. You.`, firstChapter:1, speaker:`Sam`,
+ { id:`sam`, intro:`I'm Sam Okafor. Nine years in the Air Force on F-16s, the last stretch as a dedicated crew chief, then nineteen years keeping the high bay at Tallgrass running. My signature used to mean a jet was ready. For a long time now it's only meant a building was. Then the program manager walked out, and the ARA gave me the ship. My daughter is on the station it's for. I'm going to listen first.`, name:`Sam Okafor`, role:`Tallgrass integration operations manager, drafted to run the Halcyon program. Fifty. You.`, firstChapter:1, speaker:`Sam`,
    look:`Black man of fifty, close cropped hair gone gray at the temples, broad shoulders, reading glasses pushed up on his head, a Tallgrass fleece over a plain work shirt.`,
    sections:[
     {unlock:1, title:`Who he is`, body:[`Sam spent nine years in the Air Force keeping F-16s ready to fly. He left in 2042 and took a job at Tallgrass Aerospace in Watkins, where for nineteen years he kept the high bay running: cranes, power, clean rooms, the doors that stick in a north wind. He has never run a project.`,`He lives in Aurora, in the house his daughter grew up in. He records his logs to her at the kitchen table, and never from his late wife's chair.`]},
@@ -21,18 +21,18 @@ window.HALCYON_CAST=[
    quote:{unlock:1, text:`I'm an engineer on a planet that's trying to kill me. I can take a number.`},
    ties:[{unlock:1,id:`sam`,text:`Her father. She knows his voices.`},{unlock:1,id:`hollis`,text:`Station director. His reports are rosier than her logs.`}] },
 
- { id:`ruth`, intro:`Ruth Calder. I was a flight director for the agency for twenty two years, and I sit on the Independent Readiness Board now, which decides whether ships are ready to fly. I'm not anybody's mentor. I keep a binder. Sometimes I hand out a page.`, name:`Ruth Calder`, role:`Retired ARA flight director, 74. Member of the Independent Readiness Board. Lives in Golden.`, firstChapter:1, speaker:`Ruth`,
+ { id:`ruth`, intro:`Ruth Calder. I was a flight director for twenty two years, for the agency that came before the ARA and then, at the very end, for the ARA. I sit on the Independent Readiness Board now, which decides whether ships are ready to fly. I'm not anybody's mentor. I keep a binder. Sometimes I hand out a page.`, name:`Ruth Calder`, role:`Retired ARA flight director, 74. Member of the Independent Readiness Board. Lives in Golden.`, firstChapter:1, speaker:`Ruth`,
    look:`White woman of seventy four, small, short white hair, reading glasses on a cord, a gray cardigan with a green pen clipped in the pocket, a steady and unimpressed expression.`,
    sections:[
-    {unlock:1, title:`Who she is`, body:[`Ruth lives in a narrow house above Clear Creek in Golden. There's a telescope in her garage she hasn't used since 2035, and no car in it. She writes in green ink. She doesn't drive out to Watkins anymore and doesn't say why.`,`In 2034 she became the flight director for the Petrel, a three person Mars ship. Everybody Sam's age learned about the Petrel in school.`]},
-    {unlock:1, title:`The binder`, body:[`On her kitchen table is a green cloth binder: her console log from the Petrel's last fourteen months. She gives Sam the first page, from April 14, 2034, the day she wrote down who could call a hold. Everybody. Write that down, Ruthie.`,`She wrote ARA Flight Rule 2.36 in March 2036. Sam finds her name on it at midnight, four weeks into the job.`]}],
+    {unlock:1, title:`Who she is`, body:[`Ruth lives in a narrow house above Clear Creek in Golden. There's a telescope in her garage she hasn't used since 2035, and no car in it. She writes in green ink. She doesn't drive out to Watkins anymore and doesn't say why.`,`In 2034 she became the flight director for the Petrel, a three person Mars ship flown by the agency that came before the ARA. Sam knows about the Petrel the way everybody on a flight line did that summer: a squadron break room TV, three people, June 2035.`]},
+    {unlock:1, title:`The binder`, body:[`On her kitchen table is a green cloth binder: her console log from the Petrel's last fourteen months. She gives Sam the first page, from April 14, 2034, the day she wrote down who could call a hold. Everybody. Write that down, Ruthie.`,`She wrote Flight Rule 2.36 in March 2036, for the old agency. The ARA carried it into its own book in 2056. Sam finds her name on it at midnight, four weeks into the job.`]}],
    quote:{unlock:1, text:`I'm not your mentor.`},
    ties:[{unlock:1,id:`sam`,text:`He came to disclose a conflict. She noticed.`},{unlock:1,id:`wendell`,text:`He sat her propulsion console in 2034.`}] },
 
  { id:`imogen`, intro:`Imogen Hale, Director of the Ares Relief Authority. I spent twelve years in the Senate learning that money follows stories. I said February 2063 on camera, and I go back to eleven governments every year to pay for it. I'd rather be honest with you than pretend I'm not counting votes.`, name:`Imogen Hale`, role:`Director of the Ares Relief Authority, 58. Former senator. The program's sponsor.`, firstChapter:1, speaker:`Imogen`,
    look:`White woman of fifty eight, silver bob, dark tailored coat over a high collared blouse, a flag pin, the composed face of someone who expects a camera.`,
    sections:[
-    {unlock:1, title:`Who she is`, body:[`Hale ran the ARA's founding legislation through the Senate and then left the Senate to run the agency. She treats a date she said in public as a promise she made. The Halcyon mandate, a November 2058 press release, quotes her: "Halcyon will launch in February 2063. That's a promise."`]},
+    {unlock:1, title:`Who she is`, body:[`Hale ran the ARA's founding legislation through the Senate in 2055 and then left the Senate to run the new agency, which took over the old agency's Mars work and, the next year, its flight rules. She treats a date she said in public as a promise she made. The Halcyon mandate, a November 2058 press release, quotes her: "Halcyon will launch in February 2063. That's a promise."`]},
     {unlock:1, title:`Why she picked Sam`, body:[`She wanted someone the engineers would follow, and she wanted a story. She told Sam both to his face, which he respected more than he expected to.`]}],
    quote:{unlock:1, text:`A project lead with a daughter on Mars is a story the public will understand.`},
    ties:[{unlock:1,id:`sam`,text:`Her program lead.`},{unlock:1,id:`garrett`,text:`Her prime contractor. They need each other and both know it.`}] },
@@ -107,5 +107,21 @@ window.HALCYON_CAST=[
    sections:[
     {unlock:1, title:`Who he is`, body:[`Greaves streams every ARA briefing and most of what happens outside them. Bea refused to go on his feed. He sits in the second row and writes things down when someone says something true.`]}],
    quote:{unlock:1, text:`Will Halcyon meet February 18?`},
-   ties:[{unlock:1,id:`imogen`,text:`He covers her. She counts his audience.`}] }
+   ties:[{unlock:1,id:`imogen`,text:`He covers her. She counts his audience.`}] },
+
+ { id:`yusra`, intro:`Commander Yusra Haddad. I'll fly Halcyon to Mars and help install the Breather, and then I'll live at Ares Station until somebody comes to get us. I signed up for one way in 2059. I have four kids in Aurora and a husband who'd like that last part said to his face.`, name:`Yusra Haddad`, role:`Halcyon's commander, 44. Trains between Houston and Aurora. The customer's voice in the software demos.`, firstChapter:2, speaker:`Yusra`,
+   look:`Woman of forty four, dark hair pulled back tight, a navy flight suit with the Halcyon patch, sleeves pushed to the elbows, a steady level gaze.`,
+   sections:[
+    {unlock:2, title:`Who she is`, body:[`Haddad commands Halcyon's crew of four. Every other Friday she sits in on Rafa's software demos from Houston and finds the things that would kill her. She has four children in Aurora.`]},
+    {unlock:2, title:`Page eleven`, body:[`Halcyon carries no way home. Its crew stays at Ares Station until a later window brings a return ship. Haddad has known since 2059. When the scope statement put it in writing, she asked Sam for one thing: that her husband hear it from him before he read it.`]}],
+   quote:{unlock:2, text:`I signed up for one way in 2059.`},
+   ties:[{unlock:2,id:`sam`,text:`Her program lead. He sat at her kitchen table for an hour, or he put her husband on page eleven.`},{unlock:2,id:`rafa`,text:`She's the customer in his demos.`}] },
+
+ { id:`marisol`, intro:`Marisol Benavidez, test engineer at Rio Puerco Electrochemical in Albuquerque. We build the Breather's stacks, and I run them at Mars pressure in a chamber you can stand up in. For two years I was the only one who could. Ask me about Pump 2.`, name:`Marisol Benavidez`, role:`Test engineer at Rio Puerco Electrochemical, the Breather's stack supplier, 34. Runs the acceptance test chamber.`, firstChapter:3, speaker:`Marisol`,
+   look:`Latina woman of thirty four, dark hair in a low knot, safety glasses pushed up on her head, a fleece vest over a lab shirt with the cuffs rolled, a pen behind one ear.`,
+   sections:[
+    {unlock:3, title:`Who she is`, body:[`Marisol wrote most of the Breather's acceptance test procedure and ran the qualification unit herself. Her chamber in Albuquerque can pull down to Mars surface pressure and chill to sixty below. Until April 2061 she hadn't taken a week off since 2059, because nobody else could run it.`]},
+    {unlock:3, title:`Three numbers`, body:[`Asked for one number, she said four weeks, too fast. Asked for three, she said three, four, and eleven, and then explained exactly what would make it eleven. On Halcyon's critical path, her chamber was the critical path.`]}],
+   quote:{unlock:3, text:`If it sounds fine, check it anyway.`},
+   ties:[{unlock:3,id:`sam`,text:`He flew down on the first flight because it was the critical path.`},{unlock:3,id:`wendell`,text:`He sat her first pump down. Or he was supposed to.`},{unlock:3,id:`quinn`,text:`Put her eleven in a schedule without yelling at her.`}] }
 ];
