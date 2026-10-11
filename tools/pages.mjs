@@ -48,6 +48,6 @@ if(STORY){ // novel edition: story only, best path, no options, no lesson, no de
   C.scenes.forEach((sc,i)=>{const paras=sc.text(BEST[i],{},{}).filter(p=>!(/\?\s*$/.test(p.replace(/<[^>]+>/g,'').trim())&&p.replace(/<[^>]+>/g,'').split(/\s+/).length<14));paras.forEach(p=>{say('narrator',p);pause(0.45)});pause(0.6);
     const b=sc.opts.find(o=>o.best);say('narrator',b.after);pause(1.4)});
   C.closing(FINAL,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});
-  fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages:{story:segs},plan:['story'],outkey:(track==='ref'?'r':'f')+n+'s'}));console.log('story edition');process.exit(0)}
-fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages,plan}));
+  fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages:{story:segs},plan:['story'],outkey:(track==='ref'?'r':'f')+n+'s',narrator:CO&&CO.narratorVoice||undefined}));console.log('story edition');process.exit(0)}
+fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages,plan,narrator:CO&&CO.narratorVoice||undefined}));
 console.log(Object.keys(pages).length,'pages');

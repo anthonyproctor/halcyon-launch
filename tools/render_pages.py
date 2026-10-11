@@ -7,15 +7,17 @@ CAST = {"narrator":"af_heart","ruth":"bf_emma","Ruth":"bf_emma","Sam":"am_michae
  "Theo":"am_fenrir","Priya":"af_sky","Ochoa":"am_onyx","Dana":"af_bella","Ray":"am_eric","Tomasz":"bm_lewis","Maria":"af_kore",
  "Denise":"af_aoede","Joan":"af_river","Hal":"am_liam","Devin":"am_echo","Victor":"bm_george","Ken":"am_adam","Keisha":"af_alloy",
  "Rob":"am_liam","Nora":"af_river","Helen":"bf_isabella","Alyssa":"af_nicole","Marcus":"am_echo","Douglas":"bm_daniel","Owen":"am_adam",
- "Ben":"am_liam","Nadia":"af_kore","man":"am_liam","woman":"af_alloy"}
+ "Ben":"am_liam","Nadia":"af_kore","man":"am_liam","woman":"af_alloy",
+ "Henry":"bm_lewis","Dot":"af_nicole","Lou":"am_onyx","Giles":"bm_daniel","Nkechi":"af_alloy","Maisie":"af_sky","Arthur":"bm_fable","Precious":"bf_isabella","Leonard":"am_adam","Laura":"af_nova"}
 # word -> IPA for names and terms the voice gets wrong
 PRON = {"Okafor":"ˈoʊkəfɔɹ","Okafors":"ˈoʊkəfɔɹz","LoDo":"lˈoʊdoʊ","Lindqvist":"lˈɪndkvɪst","Ochoa":"oʊtʃˈoʊə","Tomasz":"tˈɔmɑʃ",
- "Kraków":"kɹˈɑkuf","Krakow":"kɹˈɑkuf","Nowak":"nˈoʊvɑk","Adeyemi":"ˌɑdeɪjˈɛmi","ADKAR":"ˈædkɑɹ","PESTLE":"pˈɛsəl","Halcyon":"hˈælsiən"}
+ "Kraków":"kɹˈɑkuf","Krakow":"kɹˈɑkuf","Nowak":"nˈoʊvɑk","Adeyemi":"ˌɑdeɪjˈɛmi","ADKAR":"ˈædkɑɹ","PESTLE":"pˈɛsəl","Halcyon":"hˈælsiən","Nkechi":"ɛŋkˈɛtʃi","Kessler":"kˈɛslɚ"}
 PRON_RE = re.compile(r"\b(" + "|".join(map(re.escape, PRON)) + r")\b")
 def pron(t): return PRON_RE.sub(lambda m: f"[{m.group(1)}](/{PRON[m.group(1)]}/)", t)
 SR = 24000
 pipes = {"a": KPipeline(lang_code="a"), "b": KPipeline(lang_code="b")}
 spec = json.load(open(sys.argv[1]))
+if spec.get("narrator"): CAST["narrator"] = spec["narrator"]  # per-course narrator (courses.js narratorVoice)
 key = spec.get("outkey") or (("r" if spec["track"]=="ref" else "f") + str(spec["num"]))
 outdir = f"audio/pages/{key}"; os.makedirs(outdir, exist_ok=True)
 def enc(audio, path, title=None):
