@@ -171,5 +171,13 @@ window.HALCYON_CAST=[
     {unlock:7, title:`Who she is`, body:[`Mokoena's team of five works out of a trailer behind the sim bay at Watkins. It's funded by the ARA and reports to the agency's mission assurance office, so its money, its management, and its technical judgment don't come from the people whose code it checks. She sat at the back of the room for all nine of Build A1's runs on September 29, 2061, writing.`]},
     {unlock:7, title:`Done means flown`, body:[`At the first sprint planning of release A2, on October 10, 2061, she asked the autonomy squad to count nothing as done until it had flown in the integrated sim, been reviewed by someone outside the squad, and passed full regression. On November 1 her team traced a lander that climbed when it should have hovered to one constant: Earth's gravity, in a routine written for Mars.`]}],
    quote:{unlock:7, text:`I'd like done to mean flown.`},
-   ties:[{unlock:7,id:`rafa`,text:`His squad's code. Her checks.`},{unlock:7,id:`yusra`,text:`The customer she checks it for.`}] }
+   ties:[{unlock:7,id:`rafa`,text:`His squad's code. Her checks.`},{unlock:7,id:`yusra`,text:`The customer she checks it for.`}] },
+
+ { id:`emmett`, intro:`Emmett Garrity, Aldergrove Fluid Systems, Pueblo. We are shipping under protest. We are still asking about cycle 3.`, name:`Emmett Garrity`, role:`President of Aldergrove Fluid Systems in 2035, and Nell's father. Died in 2041. Known now from his letters.`, firstChapter:8,
+   look:`White man in his late fifties in a company photograph from the 2030s, broad, gray crew cut, half glasses on a cord, a short sleeved shirt with a steel company badge clipped to the pocket.`,
+   sections:[
+    {unlock:8, title:`Who he was`, body:[`Emmett Garrity ran Aldergrove Fluid Systems in Pueblo when it built the 7740 valve family for the Petrel. In April 2035 he asked the agency for three weeks and five hundred cold cycles on the lot's shelf valve, and a change order to pay for them. He was told a late valve was a defaulted contract. He shipped on time, under protest.`]},
+    {unlock:8, title:`Still asking`, body:[`In September 2035 the agency terminated Aldergrove's contracts for default. In 2039 an appeals board found Aldergrove hadn't been in default, and the terminations became terminations for convenience. By then the company had sixty one people. He wrote to the investigation board every June 12 with a copy of his 2034 cold cycle data. He died at his desk in March 2041, at sixty three, with that year's letter already in the drawer. Nell has mailed one every June since.`]}],
+   quote:{unlock:8, text:`We are still asking about cycle 3.`},
+   ties:[{unlock:8,id:`nell`,text:`His daughter. Wears his badge.`},{unlock:8,id:`ruth`,text:`She told him the date, and filed his letter.`},{unlock:8,id:`wendell`,text:`The W in his note. He never made the call.`}] }
 ];
