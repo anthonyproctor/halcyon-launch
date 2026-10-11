@@ -154,5 +154,13 @@ window.HALCYON_CAST=[
     {unlock:5, title:`Who he is`, body:[`Osterhout has run the ARA's money since the agency was founded in 2055. He signs a great many letters in blue ink. Every July he puts each program in front of the eleven partners' budget delegations, in a hotel ballroom in Washington, because the ARA's own building has no room big enough.`]},
     {unlock:5, title:`The camera`, body:[`At the July 14, 2061 review he asked Sam what the live stream of the departure burn cost to finish, and whether the partners would notice if it went. He wanted the answer. He also wanted to see what kind of answer he'd get.`]}],
    quote:{unlock:5, text:`I'll fight you on the money. I won't have to fight you on the numbers.`},
-   ties:[{unlock:5,id:`sam`,text:`A program lead who gives him numbers he doesn't have to check twice. Or doesn't.`},{unlock:5,id:`imogen`,text:`His director. Her promises are his arithmetic.`}] }
+   ties:[{unlock:5,id:`sam`,text:`A program lead who gives him numbers he doesn't have to check twice. Or doesn't.`},{unlock:5,id:`imogen`,text:`His director. Her promises are his arithmetic.`}] },
+
+ { id:`okonkwo`, intro:`Chiamaka Okonkwo, Breather operations, Ares Station. When the new plant gets here, my people run it, for twenty years if it lets us. I answer Earth's questions every morning, and I send three of my own back. Somebody has to ask who decides.`, name:`Chiamaka Okonkwo`, role:`Breather operations lead on Ares Station, 38. Speaks only in engineering packets.`, firstChapter:6, speaker:`Chiamaka`,
+   look:`Black woman of thirty eight, hair cropped close, a station coverall with the sleeves rolled and a grease pencil behind one ear, a calm, assessing expression.`,
+   sections:[
+    {unlock:6, title:`Who she is`, body:[`Okonkwo leads the station engineers who will run the Breather once Halcyon delivers it. Since January 2061 she has answered the program's daily question packets at the end of her shift, and every answer starts with the question number and the words understood as.`]},
+    {unlock:6, title:`The bench`, body:[`In July 2061 she proposed running the Breather's control code on the station's own bench, the old plant's spare controller, before it ever touched the plant. Five station engineers joined the program's Breather team that August, eleven minutes away. Her first packet asked who decides when a test stops.`]}],
+   quote:{unlock:6, text:`We'd like to be on the team, not on the distribution list.`},
+   ties:[{unlock:6,id:`quinn`,text:`Runs the other end of the decision log.`},{unlock:6,id:`rafa`,text:`His code, her plant.`},{unlock:6,id:`ada`,text:`Same station, the other end of the air.`}] }
 ];

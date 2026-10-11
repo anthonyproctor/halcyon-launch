@@ -6,7 +6,7 @@
 // audio: set to true once audio/v2/ narration exists (pages under audio/v2/pages/fN, audiobook.json, bookmarks.json); until then the preview skips audio.
 // At switch-over these values move into courses.js and engine.js; see full/v2/README.md.
 window.HALCYON_V2={
-  files:["cast.js","ch01.js","ch02.js","ch03.js","ch04.js","ch05.js"],
+  files:["cast.js","ch01.js","ch02.js","ch03.js","ch04.js","ch05.js","ch06.js"],
   audio:false,
   labs:false, // the v1 labs in courses/pmp/labs.js teach the v1 story; true shows them in the preview once v2 labs replace them
   course:{
