@@ -66,7 +66,7 @@
     `That was September. The rest of it was the pattern.`,
     `<prop type="text" from="Abby Strand" time="8:02 PM">Next three weeks we live in the pattern. Takeoff, crosswind, downwind, base, final, land, do it again until you hate it, then do it until you don't. Tuesdays 7am, Saturdays 7am. Bring a sandwich, you won't get one.</prop>`,
     `Then, on the last Monday in September, a text from a number she'd saved in April under WALT (CLUB).`,
-    `<prop type="text" from="Walt Herrera" time="6:15 AM">Six months gone this week. Monthly logbook check tomorrow, before your lesson. I'll be at the fence Saturday.</prop>`,
+    `<prop type="text" from="Walt Herrera" time="6:15 AM">Six months gone last week. Monthly logbook check tomorrow, before your lesson. I'll be at the fence Saturday.</prop>`,
     `No question mark. Walt didn't use them much. Jordan was in the station kitchen at the end of a shift, eating a granola bar standing up, and she read it twice. Six months. Thirty one hours in her logbook, every one of them dual, every one signed by Abby in green ink. Six months left to get a certificate she'd need, best case, all of them for. She didn't do that math out loud. Her partner asked who it was. She said the guy who wanted to buy her airplane. Her partner looked up from the coffee maker. Her airplane. She'd said it in her own voice, out loud, to see how it sounded.`,
     `It sounded fine. That was the strange part.`,
     `The club chat, meanwhile, had found something to fight about.`,
