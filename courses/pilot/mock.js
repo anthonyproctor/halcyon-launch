@@ -230,7 +230,7 @@ C.mock.push({ part:`Preflight`, questions:[
   opts:[`A rise in RPM followed by engine roughness`,
         `A rise in oil temperature with steady RPM`,
         `A loss of RPM, which may be followed by roughness`],
-  a:2, why:`PHAK ch 7: with a fixed pitch propeller, carburetor ice first shows as a decrease in RPM, which may be followed by roughness. When you apply carburetor heat, RPM usually drops a bit more and then rises as the ice melts; the RPM rise comes after the fix, not as the warning. Ice can form in temperatures from about 20°F to 70°F when humidity is high.`,
+  a:2, why:`PHAK ch 7: with a fixed pitch propeller, carburetor ice first shows as a decrease in RPM, which may be followed by roughness. When you apply carburetor heat, RPM usually drops a bit more and then rises as the ice melts; the RPM rise comes after the fix, not as the warning. Ice can form in temperatures from about 20°F to as high as 100°F when humidity is high.`,
   task:`I.G`, domain:`Preflight` },
 
 { q:`The static port becomes blocked, but the pitot tube stays clear. How will the airspeed indicator read as you climb?`,
@@ -290,7 +290,7 @@ C.mock.push({ part:`Airport and flight`, questions:[
   opts:[`Cleared to land on the runway in use`,
         `Return for landing; a steady green will follow`,
         `Give way to other aircraft and continue circling`],
-  a:1, why:`AIM TBL 4-3-1: for an aircraft in flight, flashing green means return for landing, to be followed by steady green at the proper time. Steady green is cleared to land, and steady red is give way and continue circling. In daylight, acknowledge by moving the ailerons or rudder.`,
+  a:1, why:`AIM TBL 4-3-1: for an aircraft in flight, flashing green means return for landing, to be followed by steady green at the proper time. Steady green is cleared to land, and steady red is give way and continue circling. In flight, acknowledge in daylight by rocking your wings, and at night by blinking the landing or navigation lights.`,
   task:`III.A`, domain:`Airport and flight` },
 
 { q:`Taxiing toward a runway, you reach four yellow lines across the taxiway, two solid and two dashed, with the solid lines on your side. You have no clearance onto the runway. What must you do?`,
