@@ -146,5 +146,13 @@ window.HALCYON_CAST=[
    sections:[
     {unlock:3, title:`Who she is`, body:[`Peg writes the arrangements that outlast the people who made them: a backup engineer into a supplier's statement of work, a loan agreement for a pump by noon. She once drafted a technical data agreement in forty minutes and called it a personal best.`]}],
    quote:{unlock:4, text:`That's Aldergrove proprietary.`},
-   ties:[{unlock:3,id:`sam`,text:`Saves him from his own shortcuts, mostly in writing.`},{unlock:4,id:`nell`,text:`The supplier across her table.`}] }
+   ties:[{unlock:3,id:`sam`,text:`Saves him from his own shortcuts, mostly in writing.`},{unlock:4,id:`nell`,text:`The supplier across her table.`}] },
+
+ { id:`calvin`, intro:`Calvin Osterhout, comptroller of the Ares Relief Authority. I run the partners' budget review and I'm paid to want cuts. I don't mind bad numbers. I mind numbers that have been dressed for the occasion.`, name:`Calvin Osterhout`, role:`ARA comptroller, 60. Runs the Partner Finance Committee's annual review of Halcyon.`, firstChapter:5, speaker:`Calvin`,
+   look:`White man of sixty, gray hair combed flat, a bow tie in an old fashioned pattern, half glasses pushed up on his forehead, a stack of tabbed binders under one arm.`,
+   sections:[
+    {unlock:5, title:`Who he is`, body:[`Osterhout has run the ARA's money since the agency was founded in 2055. He signs a great many letters in blue ink. Every July he puts each program in front of the eleven partners' budget delegations, in a hotel ballroom in Washington, because the ARA's own building has no room big enough.`]},
+    {unlock:5, title:`The camera`, body:[`At the July 14, 2061 review he asked Sam what the live stream of the departure burn cost to finish, and whether the partners would notice if it went. He wanted the answer. He also wanted to see what kind of answer he'd get.`]}],
+   quote:{unlock:5, text:`I'll fight you on the money. I won't have to fight you on the numbers.`},
+   ties:[{unlock:5,id:`sam`,text:`A program lead who gives him numbers he doesn't have to check twice. Or doesn't.`},{unlock:5,id:`imogen`,text:`His director. Her promises are his arithmetic.`}] }
 ];
