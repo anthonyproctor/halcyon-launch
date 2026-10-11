@@ -69,7 +69,7 @@ window.HALCYON_CAST=[
  { id:`wendell`, intro:`Wendell Price. Test conductor. I've been chilling down stands since before most of this building was born. Come out some night and listen to it. The data's on the screen. The rest of it you hear.`, name:`Wendell Price`, role:`Test conductor, 69. Sat a propulsion console in 2034.`, firstChapter:1, speaker:`Wendell`,
    look:`Black man of sixty nine, lean, white stubble, a canvas work jacket with the pockets worn through at the corners, hearing protection around his neck.`,
    sections:[
-    {unlock:1, title:`Who he is`, body:[`Wendell runs the propulsion test stand two miles out on the prairie. He doesn't do hallway versions. He knew Bea was in the building until two in the morning because hers was the only car in the lot when he came in to chill the stand.`,`In 2034 he answered first on the Petrel's first loop check. Ruth wrote that down.`]}],
+    {unlock:1, title:`Who he is`, body:[`Wendell runs the propulsion test stand two miles out on the prairie. He doesn't do hallway versions. He knew Bea was in the building until two in the morning because hers was the only car in the lot when he came in to chill the stand.`,`In 2034 he answered first on the Petrel's first loop check. Ruth wrote that down.`,`He retired in 2058 and came back the next spring as a contractor.`]}],
    quote:{unlock:1, text:`It wasn't soft.`},
    ties:[{unlock:1,id:`ruth`,text:`They worked the same console twenty seven years ago.`},{unlock:1,id:`bea`,text:`He saw what the job did to her.`}] },
 
