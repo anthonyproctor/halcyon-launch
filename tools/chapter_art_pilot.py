@@ -315,6 +315,98 @@ A[7] = frame2(f'''<path d="M0 286L70 236L130 256L210 206L290 246L360 222L440 190
  f'<defs><linearGradient id="sky7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f78b0"/><stop offset=".7" stop-color="#a9cbe0"/><stop offset="1" stop-color="#e6ecdc"/></linearGradient></defs>'
  f'<rect width="{W}" height="{H}" fill="url(#sky7)"/>')
 
+# 8 Human Factors: Saturday at nine, Biscuit tied down in a hard northwest wind. Inside, over Ellie's shoulder (green jersey, two
+#   braids) as she leans across from the right seat: Jordan's personal minimums card taped above the mag switch, right over the
+#   darker rectangle where Danny kept El's picture, four strips of white IV tape over his two old yellowed corners, the HI DAD sticker
+#   underneath with one corner up. Claire stands at the open door with her arms folded against the cold; Jordan's thumb holds the
+#   last strip down. The tape strips press on one at a time, the sticker corner is pressed flat and lifts again, clouds race and the
+#   windsock stands out. Reduced motion: all four strips on, the corner up.
+def gauge(cx, cy, kind, r=50):
+    g = f'<circle cx="{cx}" cy="{cy}" r="{r+6}" fill="#1c1f23"/><circle cx="{cx}" cy="{cy}" r="{r}" fill="#0d1114"/>'
+    if kind == "ai":
+        g += (f'<path d="M{cx-r} {cy+4}A{r} {r} 0 0 1 {cx+r} {cy-4}Z" fill="#3f7fae"/><path d="M{cx-r} {cy+4}A{r} {r} 0 0 0 {cx+r} {cy-4}Z" fill="#8a5a3a"/>'
+              f'<path d="M{cx-r} {cy+4}L{cx+r} {cy-4}" stroke="{CRM}" stroke-width="2"/><path d="M{cx-30} {cy+2}h20l6 8 6-8h20" stroke="{AMB}" stroke-width="4" fill="none"/>')
+    else:
+        for k in range(12):
+            a = math.radians(k * 30 + (15 if kind == "hi" else 0)); r1 = r - (12 if k % 3 == 0 else 7)
+            g += f'<path d="M{cx+r1*math.sin(a):.1f} {cy-r1*math.cos(a):.1f}L{cx+(r-3)*math.sin(a):.1f} {cy-(r-3)*math.cos(a):.1f}" stroke="{CRM}" stroke-width="{3 if k % 3 == 0 else 1.6}"/>'
+        if kind == "asi":
+            g += f'<path d="M{cx} {cy}m-38 14a40 40 0 0 1 22 -50" stroke="{GRN}" stroke-width="4" fill="none"/><path d="M{cx} {cy}m-16 -36a40 40 0 0 1 32 2" stroke="{AMB}" stroke-width="4" fill="none"/>'
+        if kind == "tc":
+            g += f'<path d="M{cx-24} {cy+2}h48M{cx} {cy-6}v8" stroke="{CRM}" stroke-width="4" stroke-linecap="round"/><rect x="{cx-18}" y="{cy+22}" width="36" height="10" rx="5" fill="none" stroke="{CRM}" stroke-width="1.5"/><circle cx="{cx}" cy="{cy+27}" r="4" fill="#1e1a18"/>'
+        if kind == "hi":
+            g += f'<path d="M{cx} {cy-24}l-6 18h12zM{cx-4} {cy-6}v26h8v-26z" fill="{AMB}"/>'
+        ang = {"asi": -120, "alt": 15, "vsi": -90, "hi": 0, "tc": None}.get(kind)
+        if ang is not None and kind != "hi":
+            g += f'<g transform="rotate({ang} {cx} {cy})"><path d="M{cx-3} {cy+8}L{cx} {cy-(r-10)}L{cx+3} {cy+8}Z" fill="{CRM}"/></g><circle cx="{cx}" cy="{cy}" r="5" fill="#33393f"/>'
+    return g + f'<path d="M{cx-r*.7} {cy-r*.55}Q{cx-r*.2} {cy-r*.95} {cx+r*.35} {cy-r*.85}" stroke="#fff" stroke-width="6" fill="none" opacity=".07" stroke-linecap="round"/>'
+def tape(cx, cy, ang, fill, cls="", w=58, h=22):
+    zig = lambda x, d: "".join(f'L{x + (3 if i % 2 else 0)} {d*(-h/2 + i*h/5):.1f}' for i in range(6))
+    return (f'<g{(" class=" + chr(34) + cls + chr(34)) if cls else ""} transform="translate({cx} {cy}) rotate({ang})">'
+            f'<path d="M{-w/2} {-h/2}H{w/2}{zig(w/2, 1)}L{w/2} {h/2}H{-w/2}{zig(-w/2-3, -1)}Z" fill="{fill}"/></g>')
+CX, CY = 430, 284  # card center
+A[8] = frame2(f'''<g class="drift" fill="#e9eef1" opacity=".9"><path d="M230 70q18-26 56-16q26-20 58 0q30-6 38 18q-80 14-152-2z"/><path d="M700 46q22-22 54-10q28-16 52 6q28 2 30 20q-70 8-136-16z"/></g>
+<g class="drift2" fill="#f3f5f6" opacity=".75"><path d="M440 110q16-18 44-10q20-14 44 2q22 0 26 14q-60 10-114-6z"/><path d="M960 92q16-20 44-10q22-12 42 4q22 2 24 16q-58 8-110-10z"/></g>
+<path d="M170 142L260 128L330 136L420 122L520 134L640 124L760 136L880 126L1000 136L1200 128V170H170Z" fill="#7d8aa0"/>
+<g fill="#5a6070"><rect x="250" y="132" width="120" height="30"/><rect x="380" y="140" width="80" height="22"/><rect x="900" y="134" width="140" height="28"/><rect x="1050" y="140" width="70" height="22"/></g>
+<rect x="170" y="158" width="1030" height="20" fill="#6e7276"/>
+<path d="M820 96V160" stroke="#9aa4ad" stroke-width="3"/><g class="sock"><path d="M820 100L866 92L868 104L820 110Z" fill="#e8743b"/><path d="M836 98V108M852 95V105" stroke="{CRM}" stroke-width="5"/></g>
+<path d="M600 0V30" stroke="#3a3d44" stroke-width="6"/><rect x="574" y="26" width="52" height="36" rx="8" fill="#2a2e33"/><rect x="584" y="34" width="32" height="18" rx="3" fill="#e6dfc8"/><path d="M592 34v10M600 34v14M608 34v10" stroke="#2b2b2b" stroke-width="1.6"/>
+<path d="M0 0H1200V18Q600 4 0 18Z" fill="#3a3530"/>
+<path d="M0 178Q600 146 1200 178V214H0Z" fill="#1f2226"/><path d="M0 178Q600 146 1200 178" stroke="#33373c" stroke-width="3" fill="none"/>
+<path d="M780 168l26 10 22-4" stroke="#14171a" stroke-width="2" fill="none"/><rect x="784" y="163" width="46" height="16" rx="2" fill="#a9b0b8" transform="rotate(4 807 171)"/>
+<rect x="0" y="210" width="{W}" height="270" fill="url(#pnl)"/>
+<rect x="{CX-117}" y="{CY-71}" width="234" height="142" rx="3" fill="#2a2e33" transform="rotate(-1.5 {CX} {CY})"/>
+<g transform="rotate(-1.5 {CX} {CY})">
+<rect x="{CX-113}" y="{CY-68}" width="226" height="136" fill="#f8f5ea"/><path d="M{CX-113} {CY-40}H{CX+113}" stroke="#d98a8a" stroke-width="1.6"/>
+<g stroke="#a9c3dc" stroke-width="1">{"".join(f'<path d="M{CX-113} {CY-40+i*14}H{CX+113}"/>' for i in range(1, 8))}</g>
+<g font-family="Arial" font-weight="900" fill="#2b3550"><text x="{CX-102}" y="{CY-46}" font-size="12.5" textLength="204" lengthAdjust="spacingAndGlyphs">J. REYES. PERSONAL MINIMUMS.</text>
+<text x="{CX-102}" y="{CY+25}" font-size="12" textLength="138" lengthAdjust="spacingAndGlyphs">EMOTION IS WEATHER.</text></g>
+<g stroke="#5a6478" stroke-width="2.6" stroke-linecap="round" opacity=".55">{"".join(f'<path d="M{CX-102} {CY-30+i*14}h{(196, 172, 150, 186, 0, 160, 120)[i]}"/>' for i in range(7) if i != 4)}</g>
+<g opacity=".95">{tape(CX-113, CY-68, -42, "#d9c27a", w=40, h=18)}{tape(CX+113, CY-68, 40, "#d6bd72", w=42, h=18)}</g>
+{tape(CX-110, CY-64, -45, "#fbfbf8", "tp1")}{tape(CX+110, CY-64, 45, "#fbfbf8", "tp2")}{tape(CX+110, CY+64, -45, "#fbfbf8", "tp3")}{tape(CX-110, CY+64, 45, "#fbfbf8", "tp4")}
+</g>
+<g transform="translate(0 -8) rotate(-3 {CX} 392)"><path d="M{CX-50} 376H{CX+34}L{CX+50} 392V410H{CX-50}Z" fill="#f4f1fa"/><path d="M{CX+34} 376L{CX+50} 392L{CX+30} 388Z" fill="#dcd6e8"/><path d="M{CX+34} 376L{CX+50} 392" stroke="#c2bad4" stroke-width="1"/>
+<path class="flat" opacity="0" d="M{CX+34} 376L{CX+50} 376V392Z" fill="#f4f1fa"/>
+<g font-family="Comic Sans MS, Chalkboard, Arial" font-weight="700" font-size="22" fill="#7a3fb0"><text x="{CX-42}" y="402" transform="rotate(-6 {CX-42} 402)">H</text><text x="{CX-25}" y="400">I</text><text x="{CX-6}" y="404" transform="rotate(5 {CX-6} 404)">D</text><text x="{CX+11}" y="401" transform="rotate(-4 {CX+11} 401)">A</text><text x="{CX+27}" y="405" transform="rotate(7 {CX+27} 405)">D</text></g></g>
+<circle cx="{CX}" cy="446" r="28" fill="#1c1f23"/><circle cx="{CX}" cy="446" r="21" fill="#9aa4ad"/><circle cx="{CX}" cy="446" r="15" fill="#6b6f75"/><rect x="{CX-2.5}" y="436" width="5" height="20" rx="2" fill="#1e1a18"/>
+<g font-family="Arial" font-weight="700" font-size="8" fill="{CRM}" text-anchor="middle"><text x="{CX-42}" y="450">OFF</text><text x="{CX-33}" y="429">R</text><text x="{CX-12}" y="418">L</text><text x="{CX+30}" y="424">BOTH</text><text x="{CX+48}" y="446">START</text></g>
+<rect x="268" y="430" width="22" height="38" rx="3" fill="#1c1f23"/><rect x="271" y="433" width="8" height="32" rx="2" fill="#c0473b"/><rect x="279" y="433" width="8" height="32" rx="2" fill="#c0473b"/>
+{gauge(650, 274, "asi")}{gauge(770, 274, "ai")}{gauge(890, 274, "alt")}{gauge(650, 398, "tc")}{gauge(770, 398, "hi")}{gauge(890, 398, "vsi")}
+<rect x="980" y="226" width="190" height="236" rx="4" fill="#1c1f23"/><rect x="992" y="238" width="166" height="62" rx="3" fill="#24323b"/><rect x="1002" y="248" width="110" height="42" fill="#3d5a3a"/>
+<g fill="#33393f">{"".join(f'<rect x="992" y="{312+i*36}" width="166" height="28" rx="3"/>' for i in range(4))}</g>
+<g fill="{AMB}" opacity=".8">{"".join(f'<rect x="1010" y="{320+i*36}" width="50" height="12" rx="1"/>' for i in range(4))}</g>
+<rect class="shimmer" x="0" y="210" width="{W}" height="270" fill="url(#sun8)"/>
+<g clip-path="url(#door8)">
+<rect x="0" y="0" width="178" height="480" fill="url(#sky8)"/><rect x="0" y="300" width="178" height="180" fill="#6e7276"/><path d="M0 330H178" stroke="{AMB}" stroke-width="4" opacity=".6"/>
+<path d="M62 300V330" stroke="#8a8f96" stroke-width="3"/><path d="M62 330q6 30 -4 50" stroke="#8a8f96" stroke-width="2" fill="none"/>
+<rect x="76" y="118" width="26" height="24" fill="#e2b8a0"/>
+<path d="M24 480V180Q28 148 66 140H112Q150 148 156 180V480Z" fill="#8fb8d8"/><path d="M74 140L90 168L106 140" fill="#e2b8a0"/>
+<path d="M30 214Q90 236 152 210L154 254Q90 274 28 252Z" fill="#7aa6c8"/><path d="M28 236Q60 226 92 238M152 228Q120 220 92 236" stroke="#6893b6" stroke-width="3" fill="none"/>
+<ellipse cx="44" cy="226" rx="14" ry="10" fill="#e2b8a0"/><ellipse cx="140" cy="242" rx="14" ry="10" fill="#e2b8a0"/>
+<rect x="100" y="170" width="10" height="26" rx="2" fill="{CRM}"/><path d="M105 140V172" stroke="#2d4f7a" stroke-width="2"/></g>
+<path d="M0 0H178V126Q90 120 0 132Z" fill="#cdc6b6"/><path d="M0 132Q90 120 178 126" stroke="#3a3d44" stroke-width="8" fill="none"/><path d="M178 0V480" stroke="#3a3d44" stroke-width="16"/><path d="M186 0V480" stroke="#55595f" stroke-width="2"/>
+<path d="M150 480Q220 420 300 372L322 392Q258 444 230 480Z" fill="#23395b"/><path d="M298 372Q310 356 326 352L346 350Q354 352 350 360L336 364Q342 372 336 382L320 394Z" fill="#b5866a"/>
+<path d="M326 352Q336 340 346 342Q352 346 344 352Z" fill="#c99a78"/>
+<path d="M960 480Q968 432 1018 418Q1070 432 1124 418Q1176 432 1190 480Z" fill="#3fa85a"/><path d="M1026 420Q1070 442 1116 420L1110 412Q1070 430 1032 412Z" fill="{CRM}"/>
+<g transform="rotate(-14 1070 380)"><path d="M1004 360Q1010 300 1070 296Q1132 300 1136 362Q1130 410 1070 414Q1010 410 1004 360Z" fill="#3a2a20"/>
+<path d="M1070 300Q1062 350 1072 412" stroke="#2c1f17" stroke-width="3" fill="none"/>
+<path d="M1016 382Q1004 420 1012 458M1124 382Q1136 420 1128 458" stroke="#3a2a20" stroke-width="16" stroke-linecap="round" fill="none"/>
+<path d="M1006 404l12 6M1008 422l12 6M1008 440l12 6M1134 404l-12 6M1132 422l-12 6M1132 440l-12 6" stroke="#2c1f17" stroke-width="2.5"/>
+<circle cx="1012" cy="462" r="5" fill="#7fd68a"/><circle cx="1128" cy="462" r="5" fill="#7fd68a"/></g>''',
+ f'<defs><linearGradient id="sky8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5f86a8"/><stop offset=".75" stop-color="#c6d3dc"/><stop offset="1" stop-color="#dfe3e0"/></linearGradient>'
+ f'<linearGradient id="pnl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f45"/><stop offset="1" stop-color="#2c3035"/></linearGradient>'
+ f'<linearGradient id="sun8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e2b0" stop-opacity="0"/><stop offset=".35" stop-color="#f6e2b0" stop-opacity=".16"/><stop offset=".55" stop-color="#f6e2b0" stop-opacity=".03"/><stop offset="1" stop-color="#f6e2b0" stop-opacity="0"/></linearGradient>'
+ f'<clipPath id="door8"><path d="M0 132Q90 120 178 126V480H0Z"/></clipPath></defs>'
+ f'<rect width="{W}" height="{H}" fill="url(#sky8)"/>'
+ '<style>@media (prefers-reduced-motion:no-preference){\n'
+ '.tp1{animation:tp1 10s infinite}@keyframes tp1{0%,4%{opacity:0}6%,95%{opacity:1}98%,100%{opacity:0}}\n'
+ '.tp2{animation:tp2 10s infinite}@keyframes tp2{0%,13%{opacity:0}15%,95%{opacity:1}98%,100%{opacity:0}}\n'
+ '.tp3{animation:tp3 10s infinite}@keyframes tp3{0%,22%{opacity:0}24%,95%{opacity:1}98%,100%{opacity:0}}\n'
+ '.tp4{animation:tp4 10s infinite}@keyframes tp4{0%,31%{opacity:0}33%,95%{opacity:1}98%,100%{opacity:0}}\n'
+ '.flat{animation:flat 10s infinite}@keyframes flat{0%,52%{opacity:0}54%,64%{opacity:1}68%,100%{opacity:0}}\n'
+ '}</style>')
+
 out = os.path.join(ROOT, "courses", "pilot", "art")
 os.makedirs(out, exist_ok=True)
 for n, s in A.items():
