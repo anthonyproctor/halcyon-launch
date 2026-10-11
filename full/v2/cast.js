@@ -123,5 +123,28 @@ window.HALCYON_CAST=[
     {unlock:3, title:`Who she is`, body:[`Paloma wrote most of the Breather's acceptance test procedure and ran the qualification unit herself. Her chamber in Albuquerque can pull down to Mars surface pressure and chill to sixty below. Until April 2061 she hadn't taken a week off since 2059, because nobody else could run it.`]},
     {unlock:3, title:`Three numbers`, body:[`Asked for one number, she said four weeks, too fast. Asked for three, she said three, four, and eleven, and then explained exactly what would make it eleven. On Halcyon's critical path, her chamber was the critical path.`]}],
    quote:{unlock:3, text:`If it sounds fine, check it anyway.`},
-   ties:[{unlock:3,id:`sam`,text:`He flew down on the first flight because it was the critical path.`},{unlock:3,id:`wendell`,text:`He sat her first pump down. Or he was supposed to.`},{unlock:3,id:`quinn`,text:`Put her eleven in a schedule without yelling at her.`}] }
+   ties:[{unlock:3,id:`sam`,text:`He flew down on the first flight because it was the critical path.`},{unlock:3,id:`wendell`,text:`He sat her first pump down. Or he was supposed to.`},{unlock:3,id:`quinn`,text:`Put her eleven in a schedule without yelling at her.`}] },
+
+ { id:`nell`, intro:`Nell Garrity, account lead at Aldergrove Fluid Systems in Pueblo. We make the valves. My father ran the company in 2035, and my name has been on that valve family's paperwork, one way or another, ever since. People call me the valve lady. I'd rather be called when somebody wants the answer.`, name:`Nell Garrity`, role:`Account lead at Aldergrove Fluid Systems, the departure stage valve supplier, Pueblo. Forty five.`, firstChapter:4, speaker:`Nell`,
+   look:`White woman of forty five, tall, dark hair going gray pulled back plainly, a canvas work coat over a collared shirt, an old steel company badge on a frayed lanyard.`,
+   sections:[
+    {unlock:4, title:`Who she is`, body:[`Nell drove up from Pueblo on April 29, 2061, in a white company pickup with a banker's box on the passenger seat: Aldergrove's own Petrel era records for the 7740 valve family, every cold cycle anyone had run on it before Halcyon. She'd carried some form of that box for twenty six years.`]},
+    {unlock:4, title:`Ask W`, body:[`In the box was a page of 2034 cold cycle data with a note in her father's handwriting: cycle 3 after soak, ask W. Nobody had.`]}],
+   quote:{unlock:4, text:`Waiting for someone to ask for it who wanted to know the answer instead of a name.`},
+   ties:[{unlock:4,id:`sam`,text:`He took her box through the contract, or he didn't.`},{unlock:4,id:`wendell`,text:`The W in her father's note.`},{unlock:4,id:`hana`,text:`On the same root cause team, maybe.`}] },
+
+ { id:`arlo`, intro:`Arlo Dunn. Stand technician, Stand 2, nights mostly. I'm from Limon. I've knocked ice off that vent a dozen times. Once was in the dark, in April, by myself, and I'd like that to be the last one anybody ever does.`, name:`Arlo Dunn`, role:`Propulsion test stand technician, 31. From Limon.`, firstChapter:4, speaker:`Arlo`,
+   look:`White man of thirty one, wiry, red beard, a knit cap with ear flaps, insulated coveralls with reflective tape, work gloves tucked in a chest pocket.`,
+   sections:[
+    {unlock:4, title:`The storm`, body:[`On the night of April 18, 2061, with the other night technician gone home sick and nobody sent to replace her, Arlo went out alone to clear an iced vent on the oxygen transfer line in a blizzard. He came back in along the cable trench handline, counting stanchions.`]},
+    {unlock:4, title:`Beside Wendell`, body:[`After the storm he was assigned to sit beside Wendell for the valve's life test, with a recorder. He adds causes to fishbones that nobody else thinks of.`]}],
+   quote:{unlock:4, text:`I can't see your lights.`},
+   ties:[{unlock:4,id:`wendell`,text:`Counted him in. Then started teaching him.`},{unlock:4,id:`sam`,text:`Called it in time, or didn't.`}] },
+
+ { id:`peg`, intro:`Peg Sato, contracts and procurement. I read the fine print for fun. Somebody has to, and I'm better at it than the lawyers, who read it for money.`, name:`Peg Sato`, role:`Tallgrass contracts and procurement lead, 49.`, firstChapter:3, speaker:`Peg`,
+   look:`Japanese American woman of forty nine, short silver streaked hair, cat eye reading glasses, a cardigan with a pen in every pocket, a laptop under one arm.`,
+   sections:[
+    {unlock:3, title:`Who she is`, body:[`Peg writes the arrangements that outlast the people who made them: a backup engineer into a supplier's statement of work, a loan agreement for a pump by noon. She once drafted a technical data agreement in forty minutes and called it a personal best.`]}],
+   quote:{unlock:4, text:`That's Aldergrove proprietary.`},
+   ties:[{unlock:3,id:`sam`,text:`Saves him from his own shortcuts, mostly in writing.`},{unlock:4,id:`nell`,text:`The supplier across her table.`}] }
 ];
