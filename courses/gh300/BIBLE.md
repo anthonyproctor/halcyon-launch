@@ -3,7 +3,7 @@
 Read this whole file and `../../full/BIBLE.md` (the PMP bible: voice, answer rules, prop formats, `data-who` speaker tags, file format) before writing anything. This course reuses that format exactly, with the changes below.
 
 ## Goal
-A story-driven retake prep course for **Exam GH-300: GitHub Copilot**. Anthony scored **686 of 700** on attempt 1 (2026-10-05). The course must lift his weakest section first and keep the rest warm. About 6 to 8 hours: 7 chapters, each about 50 to 60 minutes (story, Ruth's Whiteboard lesson, 11 decisions, an exercise or drill, a 15-question quiz), plus a full mock exam.
+A story-driven retake prep course for **Exam GH-300: GitHub Copilot**. It's built for a retake. The course must lift the weakest section first and keep the rest warm. About 6 to 8 hours: 7 chapters, each about 50 to 60 minutes (story, Ruth's Whiteboard lesson, 11 decisions, an exercise or drill, a 15-question quiz), plus a full mock exam.
 
 ## The exam (verified 2026-10-09)
 Source: Microsoft Learn study guide, "Skills measured as of August 7, 2026" (https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/gh-300, page updated 2026-07-09) and the certification page (https://learn.microsoft.com/en-us/credentials/certifications/github-copilot/, updated 2026-09-22).
@@ -12,14 +12,14 @@ Source: Microsoft Learn study guide, "Skills measured as of August 7, 2026" (htt
 - **Preview features:** "Most questions cover features that are generally available. The exam may contain questions on Preview features if those features are commonly used."
 
 ### Skills measured (task codes used in this course)
-| Code | Domain (weight) | Anthony's attempt 1 |
+| Code | Domain (weight) | Course priority |
 |---|---|---|
-| **F** | Use GitHub Copilot features (25 to 30%) | ~60%, WEAKEST and BIGGEST |
-| **R** | Use GitHub Copilot responsibly (15 to 20%) | ~67% |
-| **S** | Configure privacy, content exclusions, and safeguards (10 to 15%) | ~69% |
-| **P** | Apply prompt engineering and context crafting (10 to 15%) | ~70% |
-| **D** | Understand GitHub Copilot data and architecture (10 to 15%) | ~78% |
-| **V** | Improve developer productivity with GitHub Copilot (10 to 15%) | ~81% |
+| **F** | Use GitHub Copilot features (25 to 30%) | 1, biggest weight, most chapters |
+| **R** | Use GitHub Copilot responsibly (15 to 20%) | 2 |
+| **S** | Configure privacy, content exclusions, and safeguards (10 to 15%) | 3 |
+| **P** | Apply prompt engineering and context crafting (10 to 15%) | 4 |
+| **D** | Understand GitHub Copilot data and architecture (10 to 15%) | 5 |
+| **V** | Improve developer productivity with GitHub Copilot (10 to 15%) | 6, keep warm |
 (The study guide lists "GitHub Copilot features (25 to 30%)" twice; treat it as the single Features domain.)
 
 Sub-skills, tagged for decisions and quiz items:
