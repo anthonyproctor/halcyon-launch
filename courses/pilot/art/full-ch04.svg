@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480"><style>@media (prefers-reduced-motion:no-preference){
+.steam{animation:steam 3s ease-in-out infinite}@keyframes steam{0%{opacity:0;transform:translateY(8px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+.glow{animation:glow 2.4s ease-in-out infinite}@keyframes glow{50%{opacity:.6}}
+.blink{animation:blink 1.6s steps(2) infinite}@keyframes blink{50%{opacity:.2}}
+.pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pulse{50%{transform:scale(1.12)}}
+.grow{animation:grow 3.5s ease-out infinite;transform-box:fill-box;transform-origin:left}@keyframes grow{0%{transform:scaleX(0)}40%,100%{transform:scaleX(1)}}
+.draw{stroke-dasharray:1400;animation:draw 5s ease-out infinite}@keyframes draw{0%{stroke-dashoffset:1400}60%,100%{stroke-dashoffset:0}}
+.flash{animation:flash 3s infinite}@keyframes flash{0%,8%,16%,100%{opacity:1}4%,12%{opacity:.1}60%{opacity:.9}}
+.tick{animation:tick 8s steps(8) infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes tick{to{transform:rotate(360deg)}}
+.tilt{animation:tilt 4s ease-in-out infinite;transform-box:view-box;transform-origin:880px 100px}@keyframes tilt{50%{transform:rotate(-4deg)}}
+.flick{animation:flick 4s infinite}@keyframes flick{0%,30%{opacity:.25}35%,100%{opacity:1}}
+.twinkle{animation:twinkle 2.5s ease-in-out infinite}@keyframes twinkle{50%{opacity:.2}}
+.check{animation:check 6s infinite;opacity:0}@keyframes check{0%{opacity:0}15%,90%{opacity:1}100%{opacity:0}}
+.sway{animation:sway 5s ease-in-out infinite;transform-box:view-box;transform-origin:600px 40px}@keyframes sway{50%{transform:rotate(2deg)}}
+.lift{animation:lift 6s ease-in infinite}@keyframes lift{0%,30%{transform:translateY(0)}100%{transform:translateY(-320px)}}
+.flame{animation:flame .3s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top}@keyframes flame{to{transform:scaleY(1.3)}}
+.move1{animation:m 4s linear infinite}@keyframes m{0%{opacity:0}20%,80%{opacity:1}100%{opacity:0}}
+}</style><style>@media (prefers-reduced-motion:no-preference){
+.taxi{animation:taxi 22s linear infinite}@keyframes taxi{0%{transform:translateX(0);opacity:0}6%{opacity:1}90%{opacity:1}100%{transform:translateX(-760px);opacity:0}}
+.sock{animation:sock 2.8s ease-in-out infinite;transform-box:fill-box;transform-origin:0 50%}@keyframes sock{50%{transform:rotate(7deg) scaleX(.93)}}
+.swing{animation:swing 3.4s ease-in-out infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes swing{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-6deg)}}
+.lamp{animation:lamp 6s ease-in-out infinite}@keyframes lamp{0%,100%{opacity:.75}40%{opacity:.6}44%{opacity:.82}48%{opacity:.62}}
+.drift{animation:drift 16s ease-in-out infinite alternate}@keyframes drift{to{transform:translateX(46px)}}
+.drift2{animation:drift 11s ease-in-out infinite alternate-reverse}
+.bolt{animation:bolt 5.5s infinite;opacity:0}@keyframes bolt{0%,58%,63%,67%,100%{opacity:0}59%,61%,65%{opacity:1}}
+.lit{animation:lit 5.5s infinite;opacity:0}@keyframes lit{0%,58%,63%,67%,100%{opacity:0}59%,65%{opacity:.45}}
+.shimmer{animation:shimmer 7s ease-in-out infinite}@keyframes shimmer{50%{opacity:.55}}
+}</style><style>@media (prefers-reduced-motion:no-preference){
+.creep{animation:creep 9s ease-in-out infinite alternate;transform-box:view-box;transform-origin:var(--o)}@keyframes creep{0%,8%{transform:rotate(-72deg)}92%,100%{transform:rotate(0)}}
+.creep2{animation:creep2 9s ease-in-out infinite alternate;transform-box:view-box;transform-origin:var(--o)}@keyframes creep2{0%,8%{transform:rotate(-7.2deg)}92%,100%{transform:rotate(0)}}
+.scrawl{stroke-dasharray:900;animation:scrawl 8s ease-out infinite}@keyframes scrawl{0%,6%{stroke-dashoffset:900}48%,100%{stroke-dashoffset:0}}
+.haze{animation:haze 2.2s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}@keyframes haze{0%{transform:translateX(-14px) scaleY(.6);opacity:.25}100%{transform:translateX(14px) scaleY(1.5);opacity:.7}}
+.wob{animation:wob 1.7s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}@keyframes wob{to{transform:skewX(3deg) scaleY(1.02)}}
+.c2{animation:c2 7.5s infinite}@keyframes c2{0%,31%{opacity:1}33%,100%{opacity:0}}
+.c3{animation:c3 7.5s infinite}@keyframes c3{0%,31%{opacity:0}33%,64%{opacity:1}66%,100%{opacity:0}}
+.c4{animation:c4 7.5s infinite}@keyframes c4{0%,64%{opacity:0}66%,98%{opacity:1}100%{opacity:0}}
+.rock{animation:rock 4.6s ease-in-out infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes rock{0%,100%{transform:rotate(-2deg)}50%{transform:translateY(6px) rotate(2.5deg)}}
+.climb{animation:climb 6s ease-in-out infinite alternate}@keyframes climb{to{transform:translateY(-18px)}}
+.fade{animation:fade 6s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}@keyframes fade{to{transform:scaleX(.82);opacity:.45}}
+.limp{animation:limp 4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 0}@keyframes limp{50%{transform:rotate(-4deg)}}
+}</style><rect width="1200" height="480" fill="#0f2430"/><g transform="rotate(-2.5 400 240)">
+<rect x="-40" y="-30" width="860" height="560" fill="#ece3c2"/>
+<path d="M-40 330Q120 300 260 340T560 320T820 350V530H-40Z" fill="#e2d6a8"/><path d="M-40 430Q200 400 420 440T820 430V530H-40Z" fill="#d9c890"/>
+<path d="M-40 -30H820V120Q640 150 520 110T260 120T-40 90Z" fill="#f2e07a" opacity=".75"/>
+<g stroke="#c9bf9c" stroke-width="1.2"><path d="M-40 60H820M-40 200H820M-40 340H820M-40 480H820M120 -30V530M320 -30V530M520 -30V530M720 -30V530"/></g>
+<g fill="none" stroke="#8a3a6a" stroke-width="3" opacity=".7"><path d="M90 -30Q120 200 150 530"/><path d="M-40 250Q300 230 820 270"/><path d="M600 -30L560 530"/></g>
+<path d="M300 92Q350 70 398 86Q430 104 410 128Q380 150 336 140Q296 128 300 92Z" fill="#8fc0dc" stroke="#3f7fae" stroke-width="2"/>
+<g fill="none" stroke="#2c5fa6"><path d="M-40 175Q380 120 820 190" stroke-width="5"/><path d="M-40 440Q400 390 820 470" stroke-width="5"/><path d="M250 -30Q200 200 230 530" stroke-width="5"/></g>
+<circle cx="350" cy="292" r="72" fill="none" stroke="#2c5fa6" stroke-width="3" stroke-dasharray="12 8"/>
+<g fill="#2c5fa6"><circle cx="350" cy="292" r="20"/></g><g stroke="#ece3c2" stroke-width="4"><path d="M346 276V308M356 276V308M338 296L364 284"/></g>
+<g font-family="Arial" font-weight="700" fill="#2c5fa6"><text x="380" y="330" font-size="15">CENTENNIAL (APA)</text><text x="380" y="348" font-size="13">CT 118.9  5885</text>
+<text x="324" y="120" font-size="12" fill="#3f7fae" font-style="italic">CHERRY CREEK RES</text>
+<g text-anchor="middle"><text x="565" y="218" font-size="30">120</text><path d="M535 226H595" stroke="#2c5fa6" stroke-width="3"/><text x="565" y="256" font-size="30">80</text></g></g>
+<path class="scrawl" d="M521 248a44 25 -6 1 1 88 -6a44 25 -6 1 1 -88 6l-3 -4a49 29 -3 1 1 98 -2a49 29 -3 1 1 -98 2l5 6a42 23 -10 1 1 84 -10a42 23 -10 1 1 -84 10" fill="none" stroke="#c4302b" stroke-width="3.5" stroke-linecap="round"/>
+<text x="632" y="262" font-family="Arial" font-weight="900" font-size="30" fill="#4a4a4a" opacity=".85" transform="rotate(-4 632 262)">80!!!</text>
+<circle cx="140" cy="404" r="40" fill="none" stroke="#9a6a3a" stroke-width="7" opacity=".35"/><circle cx="142" cy="402" r="34" fill="none" stroke="#9a6a3a" stroke-width="2" opacity=".3"/>
+<text x="104" y="408" font-family="Arial" font-weight="700" font-size="12" fill="#5a5040">CASTLE ROCK</text>
+<g stroke="#6a6a6a" stroke-width="1.6" opacity=".55"><path d="M350 292L-40 160M350 292L120 530M350 292L820 60"/></g>
+<path d="M400 -30V530" stroke="#fff" stroke-width="6" opacity=".35"/><path d="M403 -30V530" stroke="#8a7f60" stroke-width="2" opacity=".35"/><path d="M-40 236H820" stroke="#fff" stroke-width="5" opacity=".3"/>
+</g>
+<path d="M792 0H1200V480H760Z" fill="#0f2430"/>
+<circle cx="975" cy="244" r="208" fill="#20262c"/><circle cx="975" cy="244" r="196" fill="#33393f"/><circle cx="975" cy="244" r="184" fill="#0d1114"/>
+<path d="M975.0 88.0L975.0 66.0" stroke="#f3f1ec" stroke-width="5"/><path d="M995.8 79.3L997.3 67.4" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1016.3 83.2L1019.3 71.6" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1036.1 89.7L1040.5 78.5" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1055.0 98.5L1060.8 88.0" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1066.7 117.8L1079.6 100.0" stroke="#f3f1ec" stroke-width="5"/><path d="M1088.6 123.0L1096.8 114.2" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1102.9 138.2L1112.2 130.5" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1115.2 155.1L1125.3 148.6" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1125.2 173.3L1136.1 168.2" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1123.4 195.8L1144.3 189.0" stroke="#f3f1ec" stroke-width="5"/><path d="M1138.1 212.9L1149.8 210.6" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1140.7 233.6L1152.6 232.8" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1140.7 254.4L1152.6 255.2" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1138.1 275.1L1149.8 277.4" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1123.4 292.2L1144.3 299.0" stroke="#f3f1ec" stroke-width="5"/><path d="M1125.2 314.7L1136.1 319.8" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1115.2 332.9L1125.3 339.4" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1102.9 349.8L1112.2 357.5" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1088.6 365.0L1096.8 373.8" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1066.7 370.2L1079.6 388.0" stroke="#f3f1ec" stroke-width="5"/><path d="M1055.0 389.5L1060.8 400.0" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1036.1 398.3L1040.5 409.5" stroke="#f3f1ec" stroke-width="2.5"/><path d="M1016.3 404.8L1019.3 416.4" stroke="#f3f1ec" stroke-width="2.5"/><path d="M995.8 408.7L997.3 420.6" stroke="#f3f1ec" stroke-width="2.5"/><path d="M975.0 400.0L975.0 422.0" stroke="#f3f1ec" stroke-width="5"/><path d="M954.2 408.7L952.7 420.6" stroke="#f3f1ec" stroke-width="2.5"/><path d="M933.7 404.8L930.7 416.4" stroke="#f3f1ec" stroke-width="2.5"/><path d="M913.9 398.3L909.5 409.5" stroke="#f3f1ec" stroke-width="2.5"/><path d="M895.0 389.5L889.2 400.0" stroke="#f3f1ec" stroke-width="2.5"/><path d="M883.3 370.2L870.4 388.0" stroke="#f3f1ec" stroke-width="5"/><path d="M861.4 365.0L853.2 373.8" stroke="#f3f1ec" stroke-width="2.5"/><path d="M847.1 349.8L837.8 357.5" stroke="#f3f1ec" stroke-width="2.5"/><path d="M834.8 332.9L824.7 339.4" stroke="#f3f1ec" stroke-width="2.5"/><path d="M824.8 314.7L813.9 319.8" stroke="#f3f1ec" stroke-width="2.5"/><path d="M826.6 292.2L805.7 299.0" stroke="#f3f1ec" stroke-width="5"/><path d="M811.9 275.1L800.2 277.4" stroke="#f3f1ec" stroke-width="2.5"/><path d="M809.3 254.4L797.4 255.2" stroke="#f3f1ec" stroke-width="2.5"/><path d="M809.3 233.6L797.4 232.8" stroke="#f3f1ec" stroke-width="2.5"/><path d="M811.9 212.9L800.2 210.6" stroke="#f3f1ec" stroke-width="2.5"/><path d="M826.6 195.8L805.7 189.0" stroke="#f3f1ec" stroke-width="5"/><path d="M824.8 173.3L813.9 168.2" stroke="#f3f1ec" stroke-width="2.5"/><path d="M834.8 155.1L824.7 148.6" stroke="#f3f1ec" stroke-width="2.5"/><path d="M847.1 138.2L837.8 130.5" stroke="#f3f1ec" stroke-width="2.5"/><path d="M861.4 123.0L853.2 114.2" stroke="#f3f1ec" stroke-width="2.5"/><path d="M883.3 117.8L870.4 100.0" stroke="#f3f1ec" stroke-width="5"/><path d="M895.0 98.5L889.2 88.0" stroke="#f3f1ec" stroke-width="2.5"/><path d="M913.9 89.7L909.5 78.5" stroke="#f3f1ec" stroke-width="2.5"/><path d="M933.7 83.2L930.7 71.6" stroke="#f3f1ec" stroke-width="2.5"/><path d="M954.2 79.3L952.7 67.4" stroke="#f3f1ec" stroke-width="2.5"/><text x="975.0" y="124.0" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">0</text><text x="1052.6" y="149.2" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">1</text><text x="1100.5" y="215.2" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">2</text><text x="1100.5" y="296.8" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">3</text><text x="1052.6" y="362.8" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">4</text><text x="975.0" y="388.0" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">5</text><text x="897.4" y="362.8" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">6</text><text x="849.5" y="296.8" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">7</text><text x="849.5" y="215.2" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">8</text><text x="897.4" y="149.2" text-anchor="middle" font-family="Arial" font-weight="700" font-size="34" fill="#f3f1ec">9</text>
+<rect x="1027" y="230" width="62" height="28" rx="3" fill="#20262c"/><path d="M1035 238V250M1047 240V248M1059 236V252M1071 240V248M1083 238V250" stroke="#f3f1ec" stroke-width="2"/>
+<g font-family="Arial" font-weight="700" fill="#f3f1ec" text-anchor="middle"><text x="975" y="180" font-size="15">ALT</text><text x="975" y="318" font-size="12">100 FEET</text></g>
+<g transform="rotate(28.08 975 244)"><path d="M975 94L971 118L979 118Z" fill="#f3f1ec"/><path d="M975 118V244" stroke="#f3f1ec" stroke-width="2"/></g>
+<g class="creep2" style="--o:975px 244px"><g transform="rotate(280.8 975 244)"><path d="M975 260L964 214L975 144L986 214Z" fill="#f3f1ec"/></g></g>
+<g class="creep" style="--o:975px 244px"><g transform="rotate(288 975 244)"><path d="M975 274L970 244L972 94L975 84L978 94L980 244Z" fill="#f3f1ec"/></g></g>
+<circle cx="975" cy="244" r="12" fill="#20262c" stroke="#6b6f75" stroke-width="2"/>
+<path d="M825 154Q915 74 1015 74" stroke="#fff" stroke-width="10" fill="none" opacity=".08" stroke-linecap="round"/>
+<path d="M1200 352L1090 330Q1062 324 1060 342Q1060 360 1086 366L1200 400Z" fill="#c98f6c"/><path d="M1200 336L1110 318L1088 330L1200 356Z" fill="#b97f5e"/>
+<path d="M1066 334Q1061 344 1068 353L1082 355Q1078 343 1083 333Z" fill="#e8c8b4"/><path d="M1068 336L1074 340L1072 347" stroke="#c98f6c" stroke-width="2" fill="none"/></svg>
