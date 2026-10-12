@@ -56,6 +56,10 @@ The Library holds five story courses: **The Halcyon Launch** (PMP), **One Chart*
 
 Invite only. Each invite link works once. Progress (chapter, decisions, scores, listening spot, settings) saves to your account in Postgres, so you can pick up on any device. Admins make and revoke invites at `/admin`.
 
-A static front end plus three small serverless functions in `api/` (Neon Postgres, signed session cookie, scrypt password hashes). No build step. Narration is generated from the game text with Kokoro TTS, one voice per character: `tools/pages.mjs` and `tools/render_pages.py` make the per-page clips and word timings, and `tools/episode_full.mjs` with `tools/render_kokoro.py` make the Audiobook files.
+## Mailing list
+
+"Tell me when new books land" sits on Coming next and at the end of each About page. `api/subscribe.js` stores the email, the page it came from, the time, and a random unsubscribe token in `list_signups` (created on first use by `lib/list.js`), with a naive per IP rate limit (5 an hour, hashed IPs in `list_hits`). It answers the same whether or not the email was already there. Nothing is emailed from the site. `/api/unsubscribe?token=...` shows a Remove me button that deletes the row (and accepts one-click unsubscribe POSTs from mail apps). Admins see the list, remove people, and download a CSV with each person's unsubscribe link at `/admin`.
+
+A static front end plus small serverless functions in `api/` (Neon Postgres, signed session cookie, scrypt password hashes). No build step. Narration is generated from the game text with Kokoro TTS, one voice per character: `tools/pages.mjs` and `tools/render_pages.py` make the per-page clips and word timings, and `tools/episode_full.mjs` with `tools/render_kokoro.py` make the Audiobook files.
 
 All companies and people are fictional. Not affiliated with or endorsed by PMI. PMP is a registered mark of the Project Management Institute.

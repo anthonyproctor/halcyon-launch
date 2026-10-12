@@ -538,7 +538,7 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
    <dt>Sign in once</dt><dd>The home screen app keeps its own sign-in, so sign in again the first time you open it. After that your progress and listening spot follow you.</dd>
    <dt>Lock screen</dt><dd>Start the Audiobook, lock the phone, and use the lock screen or CarPlay controls to pause and skip.</dd>
   </dl>
-  <h2>Privacy</h2><p>The site counts anonymous page views, without cookies, to learn which chapters people read. No personal data.</p>
+  <h2>Privacy</h2><p>The site counts anonymous page views, without cookies, to learn which chapters people read. No personal data.</p><p>If you join the list, we store your email to tell you about new books. Ask to be removed anytime. Each email has a leave link at the bottom too.</p>
   <h2>Troubleshooting</h2><label class="chk prog"><input type="checkbox" id="pdbgt" ${PDBG.on?"checked":""}> Show player diagnostics (a log at the top of the screen; screenshot it and send it to Anthony)</label></div>`;
   if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
 function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return["Mock exam",()=>openMock()];const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
@@ -712,6 +712,14 @@ function libTouch(where){if(!COURSE)return;const L=libget();L.last[COURSE.id]={.
 function libWhere(w){return !w?"":w.t==="mock"?"Mock exam":w.t==="book"?`Audiobook, chapter ${w.n}`:`${w.t==="ref"?"Refresher":"Chapter"} ${w.n}`}
 async function libGo(id){const w=libget().last[id];if(!(await useCourse(id)))return;if(!w){renderHome();renderRail();return}if(w.t==="mock")return openMock();if(w.t==="book"){renderBook();return top()}
   if(TRACKS[w.t]&&TRACKS[w.t].list().find(c=>c.num===w.n)){openChapter(w.t,w.n);return top()}renderHome();renderRail()}
+/* "Tell me when new books land": one email field. The server answers the same whether or not the email is already on the list. */
+function signupBox(src){return `<form class="signup" data-src="${esc(src)}" novalidate><h2>Tell me when new books land</h2><div class="sgrow"><label class="sr" for="sg-${esc(src)}">Email</label><input id="sg-${esc(src)}" type="email" autocomplete="email" placeholder="you@example.com" required maxlength="254"><button class="btn" type="submit">Tell me</button></div><p class="sgnote">We'll email you when new books or chapters land. Nothing else, and you can leave anytime.</p><p class="sgmsg" role="status" aria-live="polite"></p></form>`}
+function wireSignup(){document.querySelectorAll("#page form.signup").forEach(f=>{const inp=f.querySelector("input"),btn=f.querySelector("button"),msg=f.querySelector(".sgmsg");
+  f.onsubmit=async e=>{e.preventDefault();const v=inp.value.trim();msg.className="sgmsg";
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){msg.classList.add("bad");msg.textContent="Hmm, that email doesn't look right. Mind checking it?";inp.focus();return}
+    btn.disabled=true;let r;try{r=await api("/api/subscribe",{method:"POST",body:JSON.stringify({email:v,source:f.dataset.src})})}catch(err){r={ok:false}}btn.disabled=false;
+    if(r.ok){f.querySelector(".sgrow").hidden=true;msg.classList.add("ok");msg.textContent="Got it, you're on the list."}
+    else{msg.classList.add("bad");msg.textContent=r.error||"That didn't go through. Give it a minute and retry."}}})}
 async function renderAbout(id){setTimeout(ambSync,0);if(id&&id!==COURSE.id&&!(await useCourse(id)))return;const c=COURSE;TRACK="about";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;
   const ready=TRACKS.full.list().length,hero=c.hero||"the lead",w=libget().last[c.id];
   $("page").innerHTML=`<div class="kicker"><button class="linkbtn" type="button" id="tolib2">Library</button> › About this book</div><h1>${esc(c.full_title||c.title)}</h1>
@@ -719,7 +727,8 @@ async function renderAbout(id){setTimeout(ambSync,0);if(id&&id!==COURSE.id&&!(aw
    <div class="howbox"><h2>Your choices change the story</h2><p>This is a choose-your-path story. You play ${esc(hero)}, and at each decision you make the call. What happens next, how people react, some later scenes, and how each chapter ends all follow from what you choose. After every decision, ${esc(c.mentorFull||MENTOR())} tells you the best answer and why, the way the exam sees it.</p><p>Want just the story? The Audiobook plays the best path from start to finish.</p></div>
    <dl class="facts"><dt>The exam</dt><dd>${esc(c.exam||"")}</dd><dt>Your mentor</dt><dd>${esc(c.mentorRole||MENTOR())}</dd><dt>Length</dt><dd>${esc((c.fullHours||"").replace(/^./,x=>x.toUpperCase()))}, ${c.planned||ready} chapters${c.planned&&ready<c.planned?` (${ready} ready now, more as they're written)`:""}</dd><dt>Each chapter</dt><dd>The story, ${esc(LESSON())}, the decisions, drills, and a quiz</dd>${c.mockShort?`<dt>Practice exam</dt><dd>${esc(c.mockShort)}</dd>`:""}</dl>
    <div class="bar"><button class="btn" id="aboutgo" type="button">${w?"Continue":"Start chapter 1"}</button><button class="btn ghost" id="aboutbook" type="button">🎧 Audiobook</button></div>
-   <p class="prog marks">${esc(marksLine(c))}</p>`;
+   ${signupBox("about:"+c.id)}
+   <p class="prog marks">${esc(marksLine(c))}</p>`;wireSignup();
   $("tolib2").onclick=()=>{renderLibrary();top()};$("aboutgo").onclick=()=>{if(w)libGo(c.id);else{openChapter("full",(TRACKS.full.list()[0]||{num:1}).num);top()}};$("aboutbook").onclick=()=>{renderBook();top()}}
 /* #upcoming: what's coming next. Copy lives in upcoming.js; chapter counts come from the course registry. */
 function readyCount(c){if(c&&c.id==="pmp")return ((window.HALCYON_V2||{}).files||[]).filter(x=>/^ch\d+\.js$/.test(x)).length;return c?(c.scripts||[]).filter(x=>/full\/ch\d+\.js$/.test(x)).length:0}
@@ -738,7 +747,8 @@ function renderUpcoming(){setTimeout(ambSync,0);TRACK="upcoming";CH=null;$("rail
    <section class="upseries"><h2>${esc(S2.title)}</h2><p class="lead">${esc(S2.intro)}</p><ol class="route">${S2.books.map(b=>`<li class="${b.n===1?"now":""}"><span class="rn">${b.n}</span><span class="rt"><span class="rk"><b>${esc(b.place)}</b><span class="tag${b.n===1?" dom":""}">${esc(b.exam)}</span><span class="prog">${esc(b.status)}</span></span><span class="rl">${esc(b.line)}</span></span></li>`).join("")}</ol></section>
    ${upBook(U.rewrite,"redo")}
    ${shelf?`<section class="upsec"><h2>${esc(U.shelf.title)}</h2><p class="lead">${esc(U.shelf.intro)}</p><div class="upgrid">${shelf}</div></section>`:""}
-   <section class="upsec upfinale">${F.art?`<img src="${esc(F.art)}" alt="" loading="lazy">`:""}<div class="uptxt"><div class="kicker">${esc((fc&&fc.exam)||"")}</div><h2>${esc(F.title)}</h2><p class="upstat"><span class="pill">${esc(F.status)}</span>${fc&&fc.planned?`<span class="prog">${fn} of ${fc.planned} chapters out</span>`:""}</p><div class="story">${F.paras.map(p=>`<p>${esc(p)}</p>`).join("")}</div>${fc&&fc.status==="live"?`<button class="btn ghost" type="button" data-upgo="${fc.id}">Open ${esc(F.title)}</button>`:""}</div></section>`;
+   <section class="upsec upfinale">${F.art?`<img src="${esc(F.art)}" alt="" loading="lazy">`:""}<div class="uptxt"><div class="kicker">${esc((fc&&fc.exam)||"")}</div><h2>${esc(F.title)}</h2><p class="upstat"><span class="pill">${esc(F.status)}</span>${fc&&fc.planned?`<span class="prog">${fn} of ${fc.planned} chapters out</span>`:""}</p><div class="story">${F.paras.map(p=>`<p>${esc(p)}</p>`).join("")}</div>${fc&&fc.status==="live"?`<button class="btn ghost" type="button" data-upgo="${fc.id}">Open ${esc(F.title)}</button>`:""}</div></section>
+   ${signupBox("upcoming")}`;wireSignup();
   $("uplib").onclick=()=>{renderLibrary();top()};
   $("page").querySelectorAll("[data-upabout]").forEach(b=>b.onclick=()=>{renderAbout(b.dataset.upabout);top()});
   $("page").querySelectorAll("[data-upgo]").forEach(b=>b.onclick=()=>{libGo(b.dataset.upgo);top()})}

@@ -187,3 +187,54 @@ test("PMP: The Halcyon Launch v2 is the live book (video log card, no preview ba
   expect((await request.get("/full/v2/ch01.js")).status()).toBe(200);
   expect(errs).toEqual([]);
 });
+
+// The email signup posts to /api/subscribe. Tests never reach production: the endpoint is mocked here.
+test("signup: Coming next and About pages post to a mocked /api/subscribe; Guide privacy mentions the list", async ({ page }) => {
+  const errs = watchErrors(page);
+  const posts = [];
+  await page.route("**/api/subscribe", async route => {
+    const req = route.request();
+    posts.push({ method: req.method(), body: req.postDataJSON() });
+    await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) });
+  });
+
+  await page.goto("/#upcoming");
+  await expect(page.locator("#page h1")).toHaveText("Coming next");
+  const form = page.locator("#page form.signup");
+  await expect(form).toContainText("Tell me when new books land");
+  await expect(form).toContainText("We'll email you when new books or chapters land. Nothing else, and you can leave anytime.");
+  // a bad address is caught in the page and never sent
+  await form.locator("input[type=email]").fill("not-an-email");
+  await form.locator("button[type=submit]").click();
+  await expect(form.locator(".sgmsg")).toContainText("doesn't look right");
+  expect(posts).toEqual([]);
+  await form.locator("input[type=email]").fill("test+halcyon-smoke@example.com");
+  await form.locator("button[type=submit]").click();
+  await expect(form.locator(".sgmsg")).toContainText("you're on the list");
+  expect(posts).toEqual([{ method: "POST", body: { email: "test+halcyon-smoke@example.com", source: "upcoming" } }]);
+  await noSideScroll(page, "coming next signup");
+
+  await page.goto("/#pmp/about");
+  await expect(page.locator("#page h1")).toHaveText("The Halcyon Launch");
+  const about = page.locator("#page form.signup");
+  await about.locator("input[type=email]").fill("test+halcyon-smoke@example.com");
+  await about.locator("button[type=submit]").click();
+  await expect(about.locator(".sgmsg")).toContainText("you're on the list");
+  expect(posts[1].body.source).toBe("about:pmp");
+  await noSideScroll(page, "about signup");
+
+  // a server error shows its message and keeps the field
+  await page.unroute("**/api/subscribe");
+  await page.route("**/api/subscribe", route => route.fulfill({ status: 429, contentType: "application/json", body: JSON.stringify({ error: "Too many tries from here. Try again in an hour." }) }));
+  await page.goto("/#cisa/about");
+  await expect(page.locator("#page h1")).toHaveText(COURSES.find(c => c.id === "cisa").full_title || COURSES.find(c => c.id === "cisa").title);
+  const f3 = page.locator("#page form.signup");
+  await f3.locator("input[type=email]").fill("test+halcyon-smoke@example.com");
+  await f3.locator("button[type=submit]").click();
+  await expect(f3.locator(".sgmsg")).toContainText("Too many tries");
+  await expect(f3.locator("input[type=email]")).toBeVisible();
+
+  await page.goto("/#guide");
+  await expect(page.locator("#page")).toContainText("If you join the list, we store your email to tell you about new books. Ask to be removed anytime.");
+  expect(errs.filter(e => !/429/.test(e))).toEqual([]);
+});

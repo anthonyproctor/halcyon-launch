@@ -1,4 +1,5 @@
 import { sql, currentUser, sameOrigin, body, send, newToken } from "../lib/server.js";
+import { ensureListTables } from "../lib/list.js";
 
 export default async function handler(req, res) {
   if (!sameOrigin(req)) return send(res, 403, { error: "Bad origin." });
@@ -13,6 +14,19 @@ export default async function handler(req, res) {
       const invites = await sql()`select i.token,i.note,i.created_at,i.expires_at,i.revoked,i.used_at,u.email as used_by from invites i left join users u on u.id=i.used_by order by i.created_at desc limit 100`;
       return send(res, 200, { users, invites });
     }
+    // the "tell me when new books land" list: JSON for the page, or ?format=csv to download
+    if (action === "list" && req.method === "GET") {
+      await ensureListTables();
+      const rows = await sql()`select email,source,created_at,unsub_token from list_signups order by created_at`;
+      if (new URL(req.url, "http://x").searchParams.get("format") === "csv") {
+        const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+        const csv = "email,source,created_at,unsubscribe_link\n" + rows.map(r => [r.email, r.source, new Date(r.created_at).toISOString(), `https://${req.headers.host}/api/unsubscribe?token=${r.unsub_token}`].map(q).join(",")).join("\n") + (rows.length ? "\n" : "");
+        res.statusCode = 200; res.setHeader("Content-Type", "text/csv; charset=utf-8"); res.setHeader("Cache-Control", "no-store");
+        res.setHeader("Content-Disposition", `attachment; filename="halcyon-list-${new Date().toISOString().slice(0, 10)}.csv"`);
+        return res.end(csv);
+      }
+      return send(res, 200, { signups: rows });
+    }
     if (req.method !== "POST") return send(res, 405, { error: "Method not allowed." });
     const b = await body(req);
     if (action === "invite") {
@@ -20,6 +34,7 @@ export default async function handler(req, res) {
       await sql()`insert into invites(token,note,created_by) values(${token},${note},${u.id})`;
       return send(res, 200, { token });
     }
+    if (action === "listremove") { await ensureListTables(); await sql()`delete from list_signups where email=${String(b.email || "").trim().toLowerCase()}`; return send(res, 200, { ok: true }); }
     if (action === "revoke") { await sql()`update invites set revoked=true where token=${String(b.token || "")} and used_by is null`; return send(res, 200, { ok: true }); }
     if (action === "disable") {
       if (b.id === u.id) return send(res, 400, { error: "You can't disable yourself." });

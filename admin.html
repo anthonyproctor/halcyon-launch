@@ -33,6 +33,8 @@ code{font:13px ui-monospace,Menlo,monospace;word-break:break-all}
 <div id="newlink" style="margin-top:10px"></div><p class="muted" style="margin:8px 0 0">Each link works once and expires in 30 days.</p></div>
 <h2>Players</h2><div class="tw"><table id="users"></table></div>
 <h2>Invites</h2><div class="tw"><table id="invites"></table></div>
+<h2>Tell me when new books land</h2><div class="card"><div class="row" style="justify-content:space-between"><span id="listcount" class="muted"></span><a class="btn" id="listcsv" href="/api/admin?action=list&amp;format=csv" download>Download CSV</a></div><p class="muted" style="margin:8px 0 0">Site doesn't send email. CSV includes each person's leave link for whatever you send.</p></div>
+<div class="tw" style="margin-top:10px"><table id="list"></table></div>
 </div>
 <script>
 const $=id=>document.getElementById(id);
@@ -44,6 +46,10 @@ async function load(){
   if(!r.ok){document.querySelector(".wrap").innerHTML=`<h1>Admins only</h1><p><a href="/">Back to the game</a></p>`;return}
   $("users").innerHTML=`<tr><th>Name</th><th>Email</th><th>Progress</th><th>Joined</th><th></th></tr>`+r.users.map(u=>`<tr><td>${esc(u.name)}${u.is_admin?' <span class="muted">admin</span>':""}</td><td>${esc(u.email)}</td><td>${u.progress.length?u.progress.map(p=>`Ch ${p.chapter}: ${p.step>=10?"done "+p.score+"/30":(p.step<0?"not started":"decision "+(Number(p.step)+1))}`).join("<br>"):'<span class="muted">not started</span>'}</td><td>${d(u.created_at)}</td><td>${u.is_admin?"":`<button class="btn ghost" data-u="${u.id}" data-dis="${!u.disabled}">${u.disabled?"Re-enable":"Disable"}</button>`}</td></tr>`).join("");
   $("invites").innerHTML=`<tr><th>For</th><th>Made</th><th>Status</th><th></th></tr>`+r.invites.map(i=>{const st=i.used_by?`<span class="ok">Used by ${esc(i.used_by)}</span>`:i.revoked?'<span class="bad">Revoked</span>':(new Date(i.expires_at)<new Date()?'<span class="muted">Expired</span>':"Open");return `<tr><td>${esc(i.note)||'<span class="muted">no note</span>'}</td><td>${d(i.created_at)}</td><td>${st}</td><td>${!i.used_by&&!i.revoked?`<button class="btn ghost" data-t="${i.token}">Revoke</button>`:""}</td></tr>`}).join("");
+  const L=await api("/api/admin?action=list");const S=L.ok?L.signups:[];
+  $("listcount").textContent=L.ok?(S.length===1?"1 person on the list":`${S.length} people on the list`):"Couldn't load the list.";
+  $("list").innerHTML=`<tr><th>Email</th><th>From</th><th>Joined</th><th></th></tr>`+(S.length?S.map(s=>`<tr><td>${esc(s.email)}</td><td>${esc(s.source)}</td><td>${d(s.created_at)}</td><td><button class="btn ghost" data-rm="${esc(s.email)}">Remove</button></td></tr>`).join(""):`<tr><td colspan="4" class="muted">No one yet.</td></tr>`);
+  document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{if(!confirm("Remove "+b.dataset.rm+" from the list?"))return;await api("/api/admin?action=listremove",{method:"POST",body:JSON.stringify({email:b.dataset.rm})});load()});
   document.querySelectorAll("[data-t]").forEach(b=>b.onclick=async()=>{await api("/api/admin?action=revoke",{method:"POST",body:JSON.stringify({token:b.dataset.t})});load()});
   document.querySelectorAll("[data-u]").forEach(b=>b.onclick=async()=>{await api("/api/admin?action=disable",{method:"POST",body:JSON.stringify({id:b.dataset.u,disabled:b.dataset.dis==="true"})});load()});
 }
