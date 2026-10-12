@@ -482,6 +482,7 @@ function alignWords(tw,dom){const n=tw.length,m=dom.length,map=new Array(n).fill
   const W=m+1;let prev=new Int32Array(W),cur=new Int32Array(W);const tb=new Uint8Array((n+1)*W);
   for(let i=1;i<=n;i++){cur[0]=0;const ai=a[i-1];for(let j=1;j<=m;j++){let best=prev[j],d=1;if(cur[j-1]>best){best=cur[j-1];d=2}if(ai){const s=sc(ai,b[j-1]);if(s&&prev[j-1]+s>best){best=prev[j-1]+s;d=3}}cur[j]=best;tb[i*W+j]=d}const t=prev;prev=cur;cur=t}
   for(let i=n,j=m;i>0&&j>0;){const d=tb[i*W+j];if(d===3){map[i-1]=j-1;i--;j--}else if(d===1)i--;else j--}
+  map.exact=map.filter(x=>x!=null).length; // words that really matched, before the gap fill below (choosing between two narrations must not count filled words)
   const anc=[[-1,-1]];map.forEach((d,i)=>{if(d!=null)anc.push([i,d])});anc.push([n,m]);
   for(let k=1;k<anc.length;k++){const [i0,d0]=anc[k-1],[i1,d1]=anc[k],ti=i1-i0-1,dj=d1-d0-1;if(ti<=0||dj<=0||(k===1||k===anc.length-1)&&dj>ti*2+2)continue;
     if(dj>ti*4+4||ti>dj*4+4)continue; // not the same stretch of text read two ways
@@ -502,7 +503,7 @@ addEventListener("wheel",narFree,{passive:true});addEventListener("touchmove",na
 addEventListener("keydown",e=>{if(["PageUp","PageDown","ArrowUp","ArrowDown","Home","End"].includes(e.key))narFree()});
 addEventListener("mousedown",e=>{if(e.clientX>=document.documentElement.clientWidth)narFree()});
 function narUI(){const b=$("narbar");if(!b)return;const has=NAR.page==="car"||NAR.page==="book"||!!(NAR.key&&NAR.timings[NAR.key]&&NAR.page&&NAR.timings[NAR.key][NAR.page]);b.hidden=!has;document.body.classList.toggle("withbar",has);if(!has)return;
-  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";b.classList.toggle("book",NAR.page==="book");$("narlabel").textContent=NAR.page==="book"?`Ch ${NAR.book.n} · ${NAR.bsec?pidLabel(NAR.bsec,NAR.book.n):(NAR.book.ed==="story"?"Story only":"Story + lessons")}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:LESSON(),end:"Chapter ending",end_alt:"Chapter ending"}[NAR.page]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
+  $("narplay").textContent=NAR.audio.paused?"▶ Listen":"❚❚ Pause";b.classList.toggle("book",NAR.page==="book");$("narlabel").textContent=NAR.page==="book"?`Ch ${NAR.book.n} · ${NAR.bsec?pidLabel(NAR.bsec,NAR.book.n):(NAR.book.ed==="story"?"Story only":"Story + lessons")}`:NAR.page==="car"?"Car mode · whole chapter":({open:"Opening",lesson:LESSON(),end:"Chapter ending"}[NAR.page.replace(/_(alt|fixed|v\d+)$/,"")]||(NAR.page[0]==="s"?"Decision":"Outcome"));}
 async function narAttach(){
   if(NAR.page==="book"&&!NAR.audio.paused){narUI();return}
   const key0=narKey();
@@ -516,7 +517,9 @@ async function narAttach(){
   const T=await narTimings(key);if(!T||!pid||!T[pid]){NAR.page=null;narUI();return}
   if(NAR.key!==key||NAR.page!==pid)return;
   $("page").querySelectorAll(".episode").forEach(e=>e.hidden=true);NAR.free=false;NAR.lastw=null;narFollowUI(false);NAR.words=wrapWords(sel);NAR.map=alignWords(T[pid].w,NAR.words);
-  if(T[pid+"_alt"]){const m2=alignWords(T[pid+"_alt"].w,NAR.words),hits=m=>m.filter(x=>x!=null).length;if(hits(m2)>hits(NAR.map)){NAR.page=pid+"_alt";NAR.map=m2}} // two narrations (best path, middling run): play the one that matches this page
+  {const alts=Object.keys(T).filter(k=>k===pid+"_alt"||k===pid+"_fixed"||k.startsWith(pid+"_v"));if(alts.length){ // several narrations of a page whose wording depends on the reader (tools/pages.mjs): play one that says nothing that isn't on the screen, and of those the one that covers the most of the page. Every narration of a page shares the spoken header and option letters (never page words), so the fewest unmatched words among them is that baseline; a narration with more than one word over it is reading another reader's text
+    const c=[[pid,NAR.map],...alts.map(k=>[k,alignWords(T[k].w,NAR.words)])],miss=([k,m])=>T[k].w.length-m.exact,base=Math.min(...c.map(miss));
+    const [k,m]=c.filter(x=>miss(x)<=base+1).reduce((a,b)=>b[1].exact>a[1].exact?b:a);NAR.page=k;NAR.map=m}}
   NAR.audio.src=R(V2(`audio/pages/${key}/${NAR.page}.mp3`));NAR.audio.playbackRate=NAR.rate;
   {const P=lget().page;if(P&&P.key===key&&P.pid===NAR.page&&P.t>2)seekTo(Math.max(0,P.t-2))}
   narUI();

@@ -7,7 +7,10 @@ globalThis.window={};
 new Function('window',fs.readFileSync(process.argv[2],'utf8'))(globalThis.window);
 const C=globalThis.window.HALCYON_FULL[0];
 const strip=s=>String(s).replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
-const st={flags:{},score:24,m:{trust:60,conf:60,health:60}},N='narrator',R='ruth',out=[];
+// the Audiobook is the right-answer path: the state is built scene by scene from each best option (picks, score, flags, meters),
+// so every scene text and the closing read the way they do for a reader who picked the best answer every time
+const st={flags:{},score:0,picks:{},m:{trust:50,conf:50,health:50}},N='narrator',R='ruth',out=[];
+const clamp=v=>Math.max(0,Math.min(100,v));
 const say=(v,t)=>{segments(String(t),v).forEach(x=>out.push(x))},pause=s=>out.push({pause:s});
 const W=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen'];
 say(N,`The Halcyon Launch, the full course. ${C.part}. Chapter ${W[C.num]}. ${C.title}.`);pause(1.2);
@@ -22,6 +25,7 @@ C.scenes.forEach((sc,i)=>{
   sc.opts.forEach((o,j)=>{say(N,`${'ABCD'[j]}. ${o.t}`);pause(0.4)});
   say(N,'Pause here and pick one.');pause(4);
   const b=sc.opts.findIndex(o=>o.best),o=sc.opts[b];
+  st.picks[i]=b;st.score+=o.s;if(o.flag)st.flags[o.flag]=true;for(const k in (o.d||{}))st.m[k]=clamp(st.m[k]+o.d[k]);
   say(N,`The best answer is ${'ABCD'[b]}.`);pause(0.4);say(N,o.after);pause(0.6);say(R,o.why);pause(1.4);
 });
 C.closing(st,{},{}).forEach(p=>{say(N,p);pause(0.6)});pause(1);

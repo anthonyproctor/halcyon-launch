@@ -431,7 +431,7 @@
     const camp=re?`the second AR 2207 valve campaign`:bu?`the departure stage's qualification firings`:`the second valve campaign`;
     return [
     `Thursday, April 7. 8:10 PM. The envelope was in the mailbox, long and white, addressed in green ink, with a Golden postmark and no return address. Page three. Sam brought it in with the gas bill and a seed catalog and set it on the kitchen table against the fruit bowl, where it leaned and watched him make a sandwich.`,
-    `He answered Ada first. He sat in his chair, not Nneka's, with the light from the bulb over the table that was still dying, and pressed record.`,
+    `He answered Ada first. He sat in his chair, not Grace's, with the light from the bulb over the table that was still dying, and pressed record.`,
     `<span class="said" data-who="Sam">"I promise to the screen. I won't tell Hollis."</span> He held up his hand to the camera, and felt foolish, and kept it up. <span class="said" data-who="Sam">"I'm also not going to say the thing about the hours. You're right. I'd say it to anybody else."</span> He put the hand down. <span class="said" data-who="Sam">"I'm going to ask you for three numbers instead. How long until Bay D is finished. If everything goes right, what you'd bet on, and if the bad things happen. I won't show anybody. I just want to know where my critical path is."</span> He thought about it. <span class="said" data-who="Sam">"It's you, by the way. It's been you the whole time."</span> He didn't do the voice. He watched it back once, changed nothing, and sent it, and five minutes and fifteen seconds later it was on Mars, waiting for her morning.`,
     (p[2]===3
       ?`The baseline Hale had picked still said February 4. Quinn's version was in a folder called ALTERNATE.`

@@ -11,7 +11,9 @@ const NUM=['oh','one','two','three','four','five','six','seven','eight','nine','
 const TENS={2:'twenty',3:'thirty',4:'forty',5:'fifty'};
 const mm=m=>m===0?'hundred':m<10?'oh '+NUM[m]:m<20?NUM[m]:TENS[Math.floor(m/10)]+(m%10?' '+NUM[m%10]:'');
 const hhmm=t=>{const h=+t.slice(0,2),m=+t.slice(2);return (h<10?'oh ':'')+NUM[h]+' '+mm(m)}; // 0600 oh six hundred, 1730 seventeen thirty
-const lines=b=>b.split(/(?:<br\s*\/?>\s*)+/).map(x=>x.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim()).filter(Boolean).map(x=>/[.!?:"”']$/.test(x)?x:x+'.').join(' ');
+const ENT={nbsp:' ',amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",'#39':"'",mdash:'—',ndash:'–',hellip:'…',rsquo:'’',lsquo:'‘',rdquo:'”',ldquo:'“',deg:'°'};
+const unent=s=>s.replace(/&(#?\w+);/g,(m,k)=>k in ENT?ENT[k]:/^#\d+$/.test(k)?String.fromCharCode(+k.slice(1)):m); // HTML entities in cards (&nbsp; in METAR/TAF columns) are spacing, never words to send to the voice
+const lines=b=>b.split(/(?:<br\s*\/?>\s*)+/).map(x=>unent(x.replace(/<[^>]+>/g,' ')).replace(/\s+/g,' ').trim()).filter(Boolean).map(x=>/[.!?:"”']$/.test(x)?x:x+'.').join(' ');
 const said=(who,t)=>`<span class="said" data-who="${who}">${t}</span>`;
 function propSpeech(html){return html.replace(/<prop\s+([^>]*)>([\s\S]*?)<\/prop>/g,(_,attrs,body)=>{const a={};attrs.replace(/(\w+)="([^"]*)"/g,(m,k,v)=>a[k]=v);
   if(a.type==='doc'&&a.kind==='vlog'){const tp=(a.title||'').split(/\s*·\s*/),who=a.name||(tp[0]?tc(tp[0]):a.from||'someone'),where=a.station||(tp[1]?tc(tp[1]):'');
@@ -29,7 +31,7 @@ function propSpeech(html){return html.replace(/<prop\s+([^>]*)>([\s\S]*?)<\/prop
 export function segments(html, base){
   html=propSpeech(html);
   const out=[];const re=/<span class="said"(?: data-who="([^"]+)")?>([\s\S]*?)<\/span>/g;let last=0,m;
-  const clean=s=>s.replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
+  const clean=s=>unent(s.replace(/<[^>]+>/g,'')).replace(/\s+/g,' ').trim();
   while((m=re.exec(html))){const before=clean(html.slice(last,m.index));if(before)out.push({v:base,t:before});
     const q=clean(m[2]).replace(/^["“]|["”]$/g,'');if(q)out.push({v:m[1]||base,t:q});last=re.lastIndex}
   const rest=clean(html.slice(last));if(rest)out.push({v:base,t:rest});return out;

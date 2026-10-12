@@ -10,7 +10,12 @@ timings keep the SOURCE words (the engine aligns them to the page's words). whis
 RETIME=1: rebuild timings.json for pages already rendered, with no Gemini calls and no audio written: the segment layout comes
 from the cache (it must reproduce the page mp3's length exactly) and the words are aligned on the page mp3 itself.
 Every segment is checked against the transcript: a segment whose words don't come back (a skip, a garble, or spoken stage direction)
-is re-rolled once (GEMINI_REROLL=0 to turn off). Report per run: ~/.cache/halcyon-gemini-tts/reports/<course>-<key>.json"""
+is re-rolled once (GEMINI_REROLL=0 to turn off; GEMINI_REROLL_SKIP=narrator,... spares some speakers).
+Same-speaker runs: a character cast with "run": true has all of their lines on a page synthesized as ONE request and cut apart
+by forced alignment, so a prebuilt voice cannot drift from line to line (details at RUN_OF below).
+Gates (details at "checks, up to ROUNDS rounds"): a coverage gate fails a page that is missing more than 3% of its words or any
+sentence, and a voice gate (tools/voice_gate.py) flags a line far from its character's book voice or pitched as the other gender;
+both re-roll, up to two times, keep the best take, and list what is left in the report under "gate" and per page. Report per run: ~/.cache/halcyon-gemini-tts/reports/<course>-<key>.json"""
 import difflib, json, os, re, subprocess, sys, tempfile, wave
 import numpy as np
 sys.dont_write_bytecode = True; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -46,6 +51,9 @@ CMAP, DMAP = VOICES["courses"].get(course, {}), VOICES["default"]
 def cast(who):
     c = CMAP.get(who) or DMAP.get(who) or DMAP["woman"]
     return c["voice"], c.get("style", "")
+def runs_on(who):  # casting "run": true -> this character's lines on a page go to Gemini as one request (see RUNS below)
+    c = CMAP.get(who) or DMAP.get(who) or DMAP["woman"]
+    return bool(c.get("run")) and os.environ.get("GEMINI_RUNS") != "0"
 
 key = spec.get("outkey") or (("r" if spec["track"] == "ref" else "f") + str(spec["num"]))
 outdir = f"{spec.get('audio', 'audio')}/pages/{key}"; os.makedirs(outdir, exist_ok=True)
@@ -64,12 +72,37 @@ def enc(audio, path, title=None):
     if title: cmd += ["-metadata", "title=" + title]
     subprocess.run(cmd + [path], input=pcm, check=True)
 
-# ---- synthesis: every distinct (voice, style, text) once, in parallel; cached on disk
+# ---- same-speaker runs. One request per line lets a prebuilt voice drift between lines: on 2026-10-11 Imogen Hale's
+# lines in PMP ch1 scored a mean pairwise speaker-embedding similarity (WavLM-SV) of 0.76 to 0.85 synthesized one line per
+# call, against 0.94 (three takes, every take 0.94) with all of her lines on the page sent as ONE request and cut apart
+# again by forced alignment. A character cast with "run": true gets that: every line of theirs on a page, in page order,
+# joined with spaces into one request of at most GEMINI_RUN_MAX_CHARS (a longer page starts a new run). A character with
+# one line on the page sends exactly the request it always did, so its cache entry is unchanged. GEMINI_RUNS=0 turns runs off.
+# A flagged line re-rolls its whole run. Cuts: midway between the last word of a line and the first word of the next.
+RUN_MAX = int(os.environ.get("GEMINI_RUN_MAX_CHARS", "1500"))
+RUN_OF = {}  # (pid, seg index) -> (run request text, piece index, [piece texts])
+for pid, segs in spec["pages"].items():
+    by_who = {}
+    for i, seg in enumerate(segs):
+        if "t" in seg and runs_on(seg["v"]): by_who.setdefault(seg["v"], []).append(i)
+    for idx in by_who.values():
+        chunks = [[]]
+        for i in idx:
+            if chunks[-1] and len(" ".join(say(gem_text(segs[j])) for j in chunks[-1] + [i])) > RUN_MAX: chunks.append([])
+            chunks[-1].append(i)
+        for chunk in chunks:
+            texts = [say(gem_text(segs[j])) for j in chunk]
+            for n, j in enumerate(chunk): RUN_OF[(pid, j)] = (" ".join(texts), n, texts)
+def request_text(pid, i, seg):
+    """what is sent to Gemini for this segment: its own text, or its whole run"""
+    r = RUN_OF.get((pid, i)); return r[0] if r else say(gem_text(seg))
+
+# ---- synthesis: every distinct (voice, style, request text) once, in parallel; cached on disk
 jobs = {}
 for pid, segs in spec["pages"].items():
-    for seg in segs:
+    for i, seg in enumerate(segs):
         if "t" in seg:
-            v, st = cast(seg["v"]); jobs[(v, st, say(gem_text(seg)))] = None
+            v, st = cast(seg["v"]); jobs[(v, st, request_text(pid, i, seg))] = None
 def run_jobs(keys):
     got = G.synth_many([(t, v, st) for (v, st, t) in keys], workers=int(os.environ.get("GEMINI_WORKERS", "4")), log=lambda m: print(m, file=sys.stderr, flush=True))
     for (t, v, st), a in got.items(): jobs[(v, st, t)] = G.clean(a)
@@ -98,8 +131,45 @@ def take_like(text, v, st, page, at):
         if c > bc: best, bc = a, c
     return best
 
+_SPLITS = {}
+def split_run(a, texts):
+    """one run's audio (cleaned) -> one clip per line: the run's words are forced-aligned (align_ctc.py) and each cut falls
+    midway between a line's last word and the next line's first; each clip is then trimmed and leveled like any segment"""
+    words, owner = [], []
+    for n, t in enumerate(texts):
+        ws = [w for w in t.split() if re.search(r"\w", w)]; words += ws; owner += [n] * len(ws)
+    r = None
+    if len(set(owner)) == len(texts):
+        import align_ctc
+        r = align_ctc.align_words(a, SR, words, words)
+    if r is None:  # a line with no words, or more letters than audio frames: cut by character share
+        L = np.cumsum([0] + [len(t) + 1 for t in texts]); cuts = [int(len(a) * x / L[-1]) for x in L]
+    else:
+        cuts = [0] + [int((r[owner.index(n) - 1][1] + r[owner.index(n)][0]) / 2 * SR) for n in range(1, len(texts))] + [len(a)]
+    return [G.clean(a[cuts[n]:cuts[n + 1]]) for n in range(len(texts))]
+def run_piece(run, v, st, page=None, at=0.0):
+    """this line's clip out of its run; RETIME with a page: out of whichever cached take of the run the page mp3 has at `at`"""
+    text, n, texts = run
+    if page is None:
+        a = jobs.get((v, st, text))
+        if a is None: return None
+        k = (text, v, st, id(a))
+        if k not in _SPLITS: _SPLITS[k] = split_run(a, texts)
+        return _SPLITS[k][n]
+    best, bc = None, 0.6
+    for tk in range(G.current_take(text, v, st) + 1):
+        p = G._cache_path(text, v, st, tk)
+        if not os.path.exists(p + ".wav"): continue
+        a = split_run(G.clean(G._wav_to_float(open(p + ".wav", "rb").read())), texts)[n]; i0 = int(at * SR); seg = page[i0:i0 + len(a)]
+        if len(seg) < len(a) * 0.9: continue
+        c = float(np.dot(seg, a[:len(seg)]) / (np.linalg.norm(seg) * np.linalg.norm(a[:len(seg)]) + 1e-9))
+        if c > bc: best, bc = a, c
+    return best
+
+PID_OF = {id(segs): pid for pid, segs in spec["pages"].items()}  # assemble() is handed a page's segment list; runs are keyed by page id
 def assemble(segs, page=None):
     parts, spans, t0, prev = [], [], 0.0, None
+    pid = PID_OF.get(id(segs))
     def sil(s):
         nonlocal t0; a = np.zeros(int(SR * s), np.float32); parts.append(a); t0 += len(a) / SR
     for i, seg in enumerate(segs):
@@ -108,9 +178,11 @@ def assemble(segs, page=None):
         if prev is not None and prev != v: sil(0.18)
         text = gem_text(seg); short = seg["v"] not in MENTORS and len(text.split()) <= 2
         if short: sil(0.12)
-        a = jobs[(v, st, say(text))] if page is None else take_like(say(text), v, st, page, t0)
+        run = RUN_OF.get((pid, i))
+        if run: a = run_piece(run, v, st, page, t0)
+        else: a = jobs[(v, st, say(text))] if page is None else take_like(say(text), v, st, page, t0)
         if a is None: return None, None  # RETIME: this segment isn't in the cache (text changed since the render)
-        spans.append({"i": i, "v": seg["v"], "voice": v, "style": st, "src": text, "sent": say(text), "s": t0, "e": t0 + len(a) / SR})
+        spans.append({"i": i, "v": seg["v"], "voice": v, "style": st, "src": text, "sent": say(text), "req": run[0] if run else say(text), "s": t0, "e": t0 + len(a) / SR})
         parts.append(a); t0 += len(a) / SR
         if short: sil(0.2)
         prev = v
@@ -292,38 +364,148 @@ if RETIME:  # timings only, from the rendered page mp3s; nothing else is written
     print("done", key, "retimed", len(spec["pages"]) - len(miss), "of", len(spec["pages"]), "pages")
     sys.exit(0)
 
+# GEMINI_REROLL_SKIP=narrator,ruth: never re-roll these speakers (a targeted re-voice leaves their audio exactly as it was)
+REROLL_SKIP = {x for x in os.environ.get("GEMINI_REROLL_SKIP", "").split(",") if x}
 tmp = tempfile.mkdtemp(prefix="gemtts-")
 pids = list(spec["pages"])
 clips, timings, report = {}, {}, {}
 todo = pids
-for rnd in range(1 + (0 if os.environ.get("GEMINI_REROLL") == "0" else 1)):
-    built = {pid: assemble(spec["pages"][pid]) for pid in todo}
+# ---- checks, up to ROUNDS rounds (the first take plus two re-rolls). Each round, every page still in play is checked three ways:
+# 1. whisper: a segment whose words don't come back is re-heard alone, then re-rolled if it still fails (as before)
+# 2. coverage gate: the page fails when more than COV_MAX_MISS of its text, or any sentence, is missing from what
+#    whisper hears (suspect segments are always re-heard alone first: whisper on a long page skips stretches that are there).
+#    Missing text is re-rolled for every speaker, the narrator included; GEMINI_REROLL_SKIP does not spare it.
+# 3. voice gate (tools/voice_gate.py, VOICE_GATE=0 to turn off): a line whose voice is far from its character's book centroid, or
+#    whose pitch reads opposite to the cast "gender", has its run re-rolled (not for GEMINI_REROLL_SKIP speakers: those are
+#    reported only).
+# Every request that was re-rolled keeps its best take (passes whisper, then coverage, then voice similarity), not just its last.
+# Whatever still fails after the last round is listed in the report: pages[pid]["coverage_fail"], ["voice_flags"], and "gate".
+import voice_gate as VG
+ROUNDS = 1 if os.environ.get("GEMINI_REROLL") == "0" else int(os.environ.get("GEMINI_ROUNDS", "3"))
+GATE = os.environ.get("VOICE_GATE", "1") != "0"
+COV_MAX_MISS = float(os.environ.get("COVERAGE_MAX_MISS", "0.03"))
+BOOK = VG.Book(G.CACHE, course, spec.get("audio", "audio")) if GATE else None
+def gender_of(who): return (CMAP.get(who) or DMAP.get(who) or DMAP["woman"]).get("gender")
+def cnorm(t):
+    """text as a string of letters and spelled-out numbers, no spaces: coverage is compared on characters, so whisper's spelling
+    ("AR2207" for "AR 2207", "hook for" for "Oh-kuh-for", "B's" for "Bee's") does not count as a missing word"""
+    out = []
+    for w in t.split():
+        for x in ntoks(w):
+            for run in re.findall(r"[a-z']+|\d+", x): out += n2w(int(run)) if run.isdigit() and len(run) < 7 else [run]
+    return "".join(out).replace("'", "")
+def char_cov(src, heard):
+    # codes in the source that mix letters and digits (METAR/TAF groups, part numbers) are not required: whisper writes them back
+    # another way ("33008KT" as "330 at 08") even when they were read right
+    S = cnorm(" ".join(w for w in src.split() if not (re.search(r"\d", w) and re.search(r"[A-Za-z]", re.sub(r"'s$", "", w))))); H = cnorm(heard)
+    if not S: return 1.0
+    return sum(m.size for m in difflib.SequenceMatcher(None, S, H, autojunk=False).get_matching_blocks()) / len(S)
+def sentences(t): return [x for x in re.split(r"(?<=[.!?])\s+", t) if len(cnorm(x)) >= 12]
+def sentence_missing(src, heard):
+    """sentences of src of which fewer than half the characters were heard"""
+    return [x for x in sentences(src) if char_cov(x, heard) < 0.5]
+EMB, HIST = {}, {}  # line key -> (embedding, f0); request key -> {take: score tuple}
+def take_of(sp): return G.current_take(sp["req"], sp["voice"], sp["style"])
+def check_page(pid, rnd, audio, spans, heard):
+    groups, checks = align(audio, spans, heard)
+    for k, c in enumerate(checks): c["miss"] = sentence_missing(c["src"], c["heard"])
+    sus = [k for k, c in enumerate(checks) if c["bad"] or c["miss"] or (c["cov"] < 0.97 and len(c["src"].split()) >= 4)]
+    if sus:
+        iso = {}
+        for k in sus:
+            sp = spans[k]; f = f"{tmp}/{pid}.r{rnd}.seg{k}.wav"; to16(audio[int(sp["s"] * SR):int(sp["e"] * SR)], f); iso[k] = f
+        hi = whisper(list(iso.values()))
+        for k, f in iso.items():
+            sp = spans[k]; sh = [(w, a + sp["s"], b + sp["s"]) for (w, a, b) in hi[f]]
+            g2, c2 = align(audio, [sp], sh); c2[0]["alone"] = True; c2[0]["miss"] = sentence_missing(c2[0]["src"], c2[0]["heard"])
+            if not c2[0]["bad"] or c2[0]["cov"] > checks[k]["cov"]: groups[k], checks[k] = g2[0], c2[0]
+    L = [len(cnorm(c["src"])) for c in checks]; tot = sum(L) or 1
+    heard_tok = sum(char_cov(c["src"], c["heard"]) * n for c, n in zip(checks, L))
+    for c in checks: c["ccov"] = round(char_cov(c["src"], c["heard"]), 2)
+    miss = round(1 - heard_tok / tot, 3)
+    cov_fail = [c for c in checks if c["miss"] or (c["ccov"] < 0.85 and len(c["src"].split()) >= 4)] if (miss > COV_MAX_MISS or any(c["miss"] for c in checks)) else []
+    return groups, checks, miss, cov_fail
+def voice_lines(built_pages):
+    """every judged line of the chapter (>= VG.MIN_S long), embedded once per take"""
+    lines = []
+    for pid, (audio, spans) in built_pages.items():
+        for sp in spans:
+            if sp["e"] - sp["s"] < VG.MIN_S: continue
+            k = (sp["voice"], sp["style"], sp["req"], take_of(sp), sp["src"], round(sp["e"] - sp["s"], 2))
+            if k not in EMB:
+                a = audio[int(sp["s"] * SR):int(sp["e"] * SR)]; EMB[k] = (VG.embed(a, SR), VG.f0(a, SR))
+            lines.append({"who": sp["v"], "gender": gender_of(sp["v"]), "emb": EMB[k][0], "f0": EMB[k][1], "pid": pid, "i": sp["i"], "src": sp["src"],
+                          "req": (sp["voice"], sp["style"], sp["req"]), "take": take_of(sp)})
+    return lines
+built_all = {}; gate_first = None; gate_summary = {}
+todo = pids
+for rnd in range(ROUNDS):
+    built = {pid: assemble(spec["pages"][pid]) for pid in todo}; built_all.update(built)
     paths = {}
     for pid in todo: paths[pid] = f"{tmp}/{pid}.r{rnd}.wav"; to16(built[pid][0], paths[pid])
     heard = whisper(list(paths.values()))
-    redo, bump = [], set()
+    bump, why = set(), {}
     for pid in todo:
-        audio, spans = built[pid]; groups, checks = align(audio, spans, heard[paths[pid]])
-        # a flagged segment is first re-heard on its own (whisper on a long page can drop or misplace a short line);
-        # if it checks out alone, its words are re-timed from that transcript and it is not re-rolled
-        sus = [k for k, c in enumerate(checks) if c["bad"]]
-        if sus:
-            iso = {}
-            for k in sus:
-                sp = spans[k]; f = f"{tmp}/{pid}.r{rnd}.seg{k}.wav"; to16(audio[int(sp["s"] * SR):int(sp["e"] * SR)], f); iso[k] = f
-            hi = whisper(list(iso.values()))
-            for k, f in iso.items():
-                sp = spans[k]; sh = [(w, a + sp["s"], b + sp["s"]) for (w, a, b) in hi[f]]
-                g2, c2 = align(audio, [sp], sh); c2[0]["alone"] = True
-                if not c2[0]["bad"] or c2[0]["cov"] > checks[k]["cov"]: groups[k], checks[k] = g2[0], c2[0]
+        audio, spans = built[pid]; groups, checks, miss, cov_fail = check_page(pid, rnd, audio, spans, heard[paths[pid]])
         words = ctc_words(audio, spans) if ALIGN == "ctc" else sorted((w for g in groups for w in g), key=lambda x: x[1])
         clips[pid] = audio; timings[pid] = {"d": round(len(audio) / SR, 2), "w": words}
-        report[pid] = {"round": rnd, "bad": [c for c in checks if c["bad"]], "low": [c for c in checks if not c["bad"] and c["cov"] < 0.85 and len(c["src"].split()) >= 4]}
-        for c in report[pid]["bad"]:
-            sp = next(s for s in spans if s["i"] == c["i"]); bump.add((sp["voice"], sp["style"], sp["sent"])); redo.append(pid)
-    if not bump or rnd == 1 or os.environ.get("GEMINI_REROLL") == "0": break
+        report[pid] = {"round": rnd, "bad": [c for c in checks if c["bad"]], "low": [c for c in checks if not c["bad"] and c["cov"] < 0.85 and len(c["src"].split()) >= 4],
+                       "missing_words": miss, "coverage_fail": [{"i": c["i"], "v": c["v"], "cov": c["ccov"], "missing": c["miss"], "src": c["src"], "heard": c["heard"]} for c in cov_fail]}
+        for c in checks:
+            sp = next(s for s in spans if s["i"] == c["i"]); rk = (sp["voice"], sp["style"], sp["req"])
+            h = HIST.setdefault(rk, {}).setdefault(take_of(sp), [True, True, 1.0, 1.0])
+            h[0] &= not c["bad"]; h[1] &= c not in cov_fail; h[3] = min(h[3], c["cov"])
+            if c in cov_fail or (c["bad"] and c["v"] not in REROLL_SKIP): bump.add(rk); why.setdefault(rk, set()).add("coverage" if c in cov_fail else "whisper")
+    if GATE:
+        VL = voice_lines(built_all); flagged, gate_summary = VG.judge(VL, BOOK, key)
+        for pid in report: report[pid]["voice_flags"] = []
+        for L in flagged:
+            report[L["pid"]]["voice_flags"].append({"i": L["i"], "v": L["who"], "why": L["why"], "sim": round(L["sim"], 3) if L["sim"] is not None else None,
+                                                    "f0": round(L["f0"]) if L["f0"] else None, "src": L["src"][:80]})
+            if L["who"] not in REROLL_SKIP: bump.add(L["req"]); why.setdefault(L["req"], set()).add("voice")
+        for L in VL:
+            h = HIST.setdefault(L["req"], {}).setdefault(L["take"], [True, True, 1.0, 1.0])
+            if L.get("sim") is not None: h[2] = min(h[2], L["sim"])
+        if gate_first is None: gate_first = sum(len(r.get("voice_flags", [])) for r in report.values())
+    if not bump or rnd == ROUNDS - 1: break
+    print(f"round {rnd}: re-rolling {len(bump)} requests ({', '.join(sorted({w for x in why.values() for w in x}))})", file=sys.stderr, flush=True)
     for (v, st, t) in bump: G.bump_take(t, v, st); jobs[(v, st, t)] = None
-    run_jobs(list(bump)); todo = sorted(set(redo))
+    run_jobs(list(bump))
+    todo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg
+                   and (cast(seg["v"]) + (request_text(pid, i, seg),)) in bump})
+# keep each re-rolled request's best take: passes whisper, then coverage, then the best voice similarity, then coverage share
+pin = {}
+for rk, takes in HIST.items():
+    if len(takes) < 2: continue
+    best = max(takes, key=lambda t: (takes[t][0], takes[t][1], round(takes[t][2], 2), takes[t][3]))
+    if best != G.current_take(rk[2], rk[0], rk[1]): pin[rk] = best
+if pin:
+    with G._lock:
+        tk = G._load_takes()
+        for (v, st, t), k in pin.items(): tk[G.base_hash(t, v, st)] = k
+        tmpf = f"{G._TAKES_P}.{os.getpid()}.tmp"; json.dump(tk, open(tmpf, "w")); os.replace(tmpf, G._TAKES_P)
+    for (v, st, t), k in pin.items():
+        p = G._cache_path(t, v, st, k); jobs[(v, st, t)] = G.clean(G._wav_to_float(open(p + ".wav", "rb").read()))
+    redo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg and (cast(seg["v"]) + (request_text(pid, i, seg),)) in pin})
+    print(f"kept an earlier, better take for {len(pin)} requests on {len(redo)} pages", file=sys.stderr, flush=True)
+    for pid in redo:
+        audio, spans = assemble(spec["pages"][pid]); built_all[pid] = (audio, spans)
+        clips[pid] = audio; timings[pid] = {"d": round(len(audio) / SR, 2), "w": ctc_words(audio, spans)}
+    if GATE:
+        VL = voice_lines(built_all); flagged, gate_summary = VG.judge(VL, BOOK, key)
+        for pid in report: report[pid]["voice_flags"] = []
+        for L in flagged:
+            report[L["pid"]]["voice_flags"].append({"i": L["i"], "v": L["who"], "why": L["why"], "sim": round(L["sim"], 3) if L["sim"] is not None else None,
+                                                    "f0": round(L["f0"]) if L["f0"] else None, "src": L["src"][:80]})
+if GATE:
+    by = {}
+    for L in voice_lines(built_all): by.setdefault(L["who"], []).append(L["emb"])
+    BOOK.save(key, by)
+gate = {"voice_flags_first": gate_first, "voice_flags_final": sum(len(r.get("voice_flags", [])) for r in report.values()),
+        "coverage_fail_pages": sorted(pid for pid, r in report.items() if r.get("coverage_fail")), "characters": gate_summary,
+        "gender_fail": sorted(w for w, x in gate_summary.items() if x.get("gender_fail"))}
+for pid in gate["coverage_fail_pages"]: print(f"COVERAGE FAIL {key} {pid}: " + "; ".join(f"{c['v']} missing {c['missing'] or c['cov']}" for c in report[pid]["coverage_fail"])[:400], file=sys.stderr, flush=True)
+if gate["gender_fail"]: print(f"GENDER FAIL {key}: {gate['gender_fail']} (add \"A woman's voice.\" / \"A man's voice.\" to their style)", file=sys.stderr, flush=True)
 
 for pid in pids: enc(clips[pid], f"{outdir}/{pid}.mp3")
 if os.environ.get("MERGE") and os.path.exists(f"{outdir}/timings.json"):  # MERGE=1: re-render some pages, keep the rest
@@ -331,7 +513,7 @@ if os.environ.get("MERGE") and os.path.exists(f"{outdir}/timings.json"):  # MERG
 json.dump(timings, open(f"{outdir}/timings.json", "w"), separators=(",", ":"))
 os.makedirs(os.path.join(G.CACHE, "reports"), exist_ok=True)
 rp = os.path.join(G.CACHE, "reports", f"{course}-{spec.get('audio', 'audio').replace('/', '_')}-{key}.json")
-json.dump({"course": course, "key": key, "model": G.MODEL, "pages": report}, open(rp, "w"), indent=1, ensure_ascii=False)
+json.dump({"course": course, "key": key, "model": G.MODEL, "gate": gate, "pages": report}, open(rp, "w"), indent=1, ensure_ascii=False)
 nbad = sum(len(r["bad"]) for r in report.values())
 # whole-chapter episode: page clips in plan order; after each decision, a pause to pick
 ep = []
@@ -340,5 +522,5 @@ for pid in spec["plan"]:
 whole = np.concatenate(ep)
 dest = sys.argv[2] if len(sys.argv) > 2 else None
 if dest: enc(whole, dest, title=f"The Halcyon Launch: {spec['title']}")
-print(G.log_usage(f"{course} {key}") + f" flagged_segments={nbad} report={rp}", file=sys.stderr)
+print(G.log_usage(f"{course} {key}") + f" flagged_segments={nbad} voice_flags={gate['voice_flags_first']}->{gate['voice_flags_final']} coverage_fail_pages={len(gate['coverage_fail_pages'])} report={rp}", file=sys.stderr)
 print("done", key, len(clips), "clips", round(len(whole) / SR / 60, 1), "min")

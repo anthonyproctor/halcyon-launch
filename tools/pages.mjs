@@ -5,12 +5,12 @@ import fs from 'fs';
 import {segments} from './voices.mjs';
 const A=process.argv.slice(2);const [track,nArg,outPath]=A;const n=+nArg;const STORY=A.includes('--story');const CID=A.includes('--course')?A[A.indexOf('--course')+1]:null;const V2=A.includes('--v2')&&!CID;
 globalThis.window={};
-let C,CO={};
+let C,CO={},SRC='';
 if(CID){new Function('window',fs.readFileSync('courses.js','utf8'))(globalThis.window);CO=window.HALCYON_COURSES.find(c=>c.id===CID);
-  new Function('window',fs.readFileSync(`courses/${CID}/full/ch${String(n).padStart(2,'0')}.js`,'utf8'))(globalThis.window);C=window.HALCYON_DATA[CID][track].find(c=>c.num===n)}
+  SRC=fs.readFileSync(`courses/${CID}/full/ch${String(n).padStart(2,'0')}.js`,'utf8');new Function('window',SRC)(globalThis.window);C=window.HALCYON_DATA[CID][track].find(c=>c.num===n)}
 else{const file=track==='ref'?`chapters/ch${n}.js`:`full/${V2?'v2/':''}ch${String(n).padStart(2,'0')}.js`;
 if(V2){new Function('window',fs.readFileSync('full/v2/preview.js','utf8'))(globalThis.window);CO={leads:window.HALCYON_V2.course.leads}}
-new Function('window',fs.readFileSync(file,'utf8'))(globalThis.window);
+SRC=fs.readFileSync(file,'utf8');new Function('window',SRC)(globalThis.window);
 C=(track==='ref'?window.HALCYON:window.HALCYON_FULL)[0];}
 const MV=CID?CO.mentor:'ruth'; // mentor's voice
 // must match engine.js order(): balanced placement from order.js
@@ -43,6 +43,40 @@ C.scenes.forEach((sc,i)=>{
 C.scenes.forEach((sc,i)=>{if(!same(sc.text(BEST[i],{},{}),sc.text(st,{},{}))){const {segs,say,pause}=mk();say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);sc.text(st,{},{}).forEach(p=>{say('narrator',p);pause(0.35)});
   say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)});pages['s'+i+'_alt']=segs}});
 if(!same(C.closing(FINAL,{},{}),C.closing(st,{},{}))){const {segs,say,pause}=mk();C.closing(st,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});pages.end_alt=segs}
+// variants: a decision or closing page can read differently for every reader (picks, flags, score, meters, and flags carried over
+// from earlier chapters as G). The best path and the middling run above cover two readers. Playing the chapter through VARIANT_RUNS
+// times (from random picks to nearly all best, earlier-chapter flags set at random) finds the other wordings, and:
+//  - a page with at most VARIANT_MAX wordings gets one narrated page per wording, <pid>_v<k>
+//  - every page that varies also gets <pid>_fixed: only the paragraphs every reader sees, so whatever the picks, there is a
+//    narration that says nothing that isn't on the screen (the branching paragraphs then just aren't voiced or highlighted)
+// The engine plays the narration with no words missing from the screen that covers the most of it (engine.js narAttach).
+// Shared paragraphs are the same segments, so they come from the cache; only the differing wording is new audio. A Halcyon
+// closing page can have 60 to 80 wordings, too many to narrate one by one, so those readers get the full page or _fixed.
+{const GN=[...new Set((SRC.match(/\bG\.([A-Za-z_]\w*)/g)||[]).map(x=>x.slice(2)))],RUNS=+(process.env.VARIANT_RUNS||4000),MAXV=+(process.env.VARIANT_MAX||8);
+ let seed=20261011;const rnd=()=>(seed=(seed*1103515245+12345)%2147483648)/2147483648;
+ const seen={};const key=t=>JSON.stringify(t);
+ const add=(pid,txt)=>{(seen[pid]=seen[pid]||new Map()).set(key(txt),txt)};
+ for(let r=0;r<RUNS;r++){const pb=[0,0.3,0.6,0.85,0.95][r%5];const prev={};GN.forEach(g=>{if(rnd()<0.5)prev[g]=true});
+   let s={flags:{},score:0,m:{trust:50,conf:50,health:50},picks:{}};
+   C.scenes.forEach((sc,i)=>{add('s'+i,sc.text(s,{},{...prev,...s.flags}));
+     const bi=sc.opts.findIndex(o=>o.best),j=rnd()<pb?bi:Math.floor(rnd()*sc.opts.length),o=sc.opts[j];
+     const nx={flags:{...s.flags},score:s.score+o.s,m:{...s.m},picks:{...s.picks,[i]:j}};for(const k in (o.d||{}))nx.m[k]=clamp(nx.m[k]+o.d[k]);if(o.flag)nx.flags[o.flag]=true;s=nx});
+   add('end',C.closing(s,{},{...prev,...s.flags}))}
+ const textOf=(pid,state)=>pid==='end'?C.closing(state,{},{}):C.scenes[+pid.slice(1)].text(state,{},{});
+ const build=(pid,paras)=>{const {segs,say,pause}=mk();
+   if(pid==='end'){paras.forEach(p=>{say('narrator',p);pause(0.5)})}
+   else{const i=+pid.slice(1),sc=C.scenes[i];say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);paras.forEach(p=>{say('narrator',p);pause(0.35)});
+     say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)})}
+   return segs};
+ let nv=0,nf=0;
+ for(const pid in seen){
+   const best=textOf(pid,pid==='end'?FINAL:BEST[+pid.slice(1)]);(seen[pid]).set(key(best),best);(seen[pid]).set(key(textOf(pid,st)),textOf(pid,st));
+   const all=[...seen[pid].values()];if(all.length<2)continue;
+   const known=new Set([key(best),...(pages[pid+'_alt']?[key(textOf(pid,st))]:[])]),extra=all.filter(t=>!known.has(key(t)));
+   if(all.length<=MAXV)extra.forEach((t,v)=>{pages[`${pid}_v${v+1}`]=build(pid,t);nv++});
+   const fixed=best.filter(p=>all.every(t=>t.includes(p)));pages[`${pid}_fixed`]=build(pid,fixed);nf++;
+   if(all.length>MAXV)console.error(`${pid}: ${all.length} wordings, narrated as best path, middling run and fixed paragraphs only (${fixed.length} of ${best.length})`)}
+ if(nv||nf)console.error(`${nv} variant pages, ${nf} fixed pages`)}
 // whole-episode plan: page ids in order, with the best outcome after each decision
 const plan=['open',...(C.lesson?['lesson']:[]),...C.scenes.flatMap((sc,i)=>['s'+i,`o${i}_${sc.opts.findIndex(o=>o.best)}`]),'end'];
 if(STORY){ // novel edition: story only, best path, no options, no lesson, no debriefs
