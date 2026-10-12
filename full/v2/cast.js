@@ -187,5 +187,13 @@ window.HALCYON_CAST=[
     {unlock:9, title:`Who she is`, body:[`Corinne ran crane certifications and clean room schedules in the high bay for years before Sam was drafted to run Halcyon, and she took the building over from him in January 2061. On February 27, 2062 she learned that Tallgrass would merge her 48 people with the 19 of Propulsion Test into one Integration and Test team, effective April 3, with her as its lead.`]},
     {unlock:9, title:`The legal pad`, body:[`She keeps a list of what's broken on a yellow legal pad, two pages a week in the first month of the merger, and brings it to people without saying anything. She learned the stand from Wendell, on his terms.`]}],
    quote:{unlock:9, text:`I can do all of it. I can't do all of it today.`},
-   ties:[{unlock:9,id:`sam`,text:`Her old boss, still sometimes. The building was his.`},{unlock:9,id:`wendell`,text:`Taught her the stand. Or would have, if anyone had asked him.`},{unlock:9,id:`arlo`,text:`Wrote the last line of her team's charter, in capitals.`}] }
+   ties:[{unlock:9,id:`sam`,text:`Her old boss, still sometimes. The building was his.`},{unlock:9,id:`wendell`,text:`Taught her the stand. Or would have, if anyone had asked him.`},{unlock:9,id:`arlo`,text:`Wrote the last line of her team's charter, in capitals.`}] },
+
+ { id:`delphine`, intro:`Delphine Varga, mission manager, Coquina Launch Services. I own the rocket for all three Halcyon launches, and everything about it that isn't your payload. I've flown forty two from this pad. Two of them are written on my whiteboard in red, and I read those two first every morning.`, name:`Delphine Varga`, role:`Mission manager for Coquina Launch Services, Halcyon's launch provider at Cape Canaveral. Fifty.`, firstChapter:10, speaker:`Delphine`,
+   look:`White woman of fifty, sunburned, short dark hair going gray, reading glasses pushed into it, a Coquina polo and cargo pants, a sweating cup of iced coffee in one hand.`,
+   sections:[
+    {unlock:10, title:`Who she is`, body:[`Delphine runs Coquina's side of the Halcyon launch campaign from an office beside the processing facility, with the last forty launches from the pad on a whiteboard in green and two in red. She asked Sam for a waiver of the ARA's thirty day disposal rule for launch 1's upper stage in August 2062, and was glad, in the end, not to get one.`]},
+    {unlock:10, title:`Hester`, body:[`In September 2062 she called the rollback of launch 2's heavy lifter at her own plan's trigger, the night Hurricane Hester was forecast to pass the Cape. She called Sam first.`]}],
+   quote:{unlock:10, text:`I can do the insertion or I can do the disposal burn.`},
+   ties:[{unlock:10,id:`peg`,text:`Sat across Clause 22 from her with coffee.`},{unlock:10,id:`sam`,text:`Her customer. He backed her call, or he didn't.`}] }
 ];
