@@ -320,8 +320,9 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
    <h2>All ${ALLT().length} exam tasks</h2><div class="taskgrid">${ALLT().map(t=>{const p=pctOf(m[t]);return `<button class="taskcell" data-task="${t}" type="button" title="${TASKNAMES[t]}"><span class="tc">${t}</span><span class="tn">${TASKNAMES[t]}</span><span class="mbar"><span style="width:${p||0}%;background:${p===null?"var(--soft)":p>=75?"var(--good)":p>=50?"var(--mid)":"var(--bad)"}"></span></span><span class="prog">${p===null?"no data":p+"% · "+m[t].n+" items"}</span></button>`}).join("")}</div>
    <h2>Full Course</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("full",fullL)}</table></div>
    ${refL.length?`<h2>Refresher</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("ref",refL)}</table></div>`:""}
-   <h2>Mock exams</h2>${H.length?`<div class="tablewrap"><table><tr><th>Date</th><th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td><td>${a.mode}</td><td class="num">${a.right}/${a.total} (${Math.round(a.right/a.total*100)}%)</td><td class="num">${a.mode==="exam"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No mock exams yet.</p>`}`;
-  const pg=$("page");
+   <h2>Mock exams</h2>${H.length?`<div class="tablewrap"><table><tr><th>Date</th><th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td><td>${a.mode}</td><td class="num">${a.right}/${a.total} (${Math.round(a.right/a.total*100)}%)</td><td class="num">${a.mode==="exam"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No mock exams yet.</p>`}
+   ${logSection()}`;
+  const pg=$("page");wireLog();
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
   pg.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>{openChapter("full",+b.dataset.lesson);S.max=Math.max(S.max||0,1);fullGo(1)});
   pg.querySelectorAll("[data-scene]").forEach(b=>b.onclick=()=>{const [n,i]=b.dataset.scene.split(":").map(Number);openChapter("full",n);const p=steps(CH).findIndex(x=>x.k==="scene"&&x.i===i);S.max=Math.max(S.max||0,p);fullGo(p)});
@@ -340,6 +341,86 @@ function renderPractice(){setTimeout(navSync,0);
     const P=store.get("c"+(COURSE.base+902),null)||{tasks:{}};qs.forEach((x,qi)=>{if(PR.v[qi]<0)return;P.tasks[x.task]=P.tasks[x.task]||[0,0];P.tasks[x.task][1]++;if(PR.v[qi]===x.a)P.tasks[x.task][0]++});store.set("c"+(COURSE.base+902),P);if(SYNC)SYNC(COURSE.base+902,P);renderPractice();top()};
   const a=$("again");if(a)a.onclick=()=>startPractice(task);const d=$("todash");if(d)d.onclick=()=>renderDash();
 }
+
+/* ===== study log: real study time per day, per course ===== */
+/* Stored as one small record per course at base+905, synced like every other progress record. Daily totals only, never raw events:
+   {v:1,days:{"2026-10-11":{t:{<device id>:[reading secs, listening secs]},a:["l3","q3","b4","m"]}},at}
+   Each device writes only its own seconds, so merging two copies is a per device max (a day studied on two devices adds up).
+   Reading counts on a study screen (chapter, mock exam, practice set) while the tab is visible and the reader has touched, typed,
+   scrolled or moved the mouse in the last 2 minutes. Listening counts while audio really plays, by the wall clock, checked against how far
+   the audio moved (so 1.5x speed or a seek ahead can't add time). A tick never credits more than 15 seconds of reading, a listening span
+   that can't be checked is capped at 20 minutes, and a device can't log more than 16 hours in a day. When audio plays, that time is
+   listening, never reading too. Activity codes: c story, l lesson, s decisions, d drills, e exercise, q quiz, x labs (each + chapter),
+   b + chapter Audiobook, m mock exam, p practice set. */
+const LOG={idle:120000,tick:5000,last:Date.now(),act:Date.now(),lm:null,lp:0,heard:false,range:{from:"",to:""},timers:{},pend:{}};
+let USERNAME="";
+function ALOGKEY(c){return (c||COURSE).base+905}
+function devId(){let d=store.get("devid",null);if(!d){d=Math.random().toString(36).slice(2,8);store.set("devid",d)}return d}
+function dayKey(t){const d=new Date(t);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+function logGet(c){const L=store.get("c"+ALOGKEY(c),null);return L&&L.days?L:{v:1,days:{}}}
+function logSave(L,now){L.at=Date.now();const k=ALOGKEY();let j=JSON.stringify(L);
+  if(j.length>50000){Object.keys(L.days).sort().some(d=>{L.days[d].a=[];j=JSON.stringify(L);return j.length<=50000})} // the server takes 60000; drop the oldest activity notes first, never the time
+  store.set("c"+k,L);if(!SYNC)return;LOG.pend[k]=JSON.parse(j); // at most one write every 20 seconds while studying, and right away when the tab hides
+  if(now){clearTimeout(LOG.timers[k]);LOG.timers[k]=0;SYNC(k,LOG.pend[k],true)}else if(!LOG.timers[k])LOG.timers[k]=setTimeout(()=>{LOG.timers[k]=0;SYNC(k,LOG.pend[k])},20000)}
+function logMerge(a,b){const out={v:1,days:{}},A=(a&&a.days)||{},B=(b&&b.days)||{};
+  new Set([...Object.keys(A),...Object.keys(B)]).forEach(k=>{const x=A[k]||{},y=B[k]||{},t={};
+    new Set([...Object.keys(x.t||{}),...Object.keys(y.t||{})]).forEach(d=>{const p=(x.t||{})[d]||[0,0],q=(y.t||{})[d]||[0,0];t[d]=[Math.max(p[0],q[0]),Math.max(p[1],q[1])]});
+    out.days[k]={t,a:[...new Set([...(x.a||[]),...(y.a||[])])]}});return out}
+function logWhat(){if(NAR.page==="book"&&NAR.book&&!NAR.audio.paused)return "b"+NAR.book.n;
+  if(TRACK==="ref"&&CH)return "c"+CH.num;
+  if(TRACK==="full"&&CH&&S){const L=steps(CH),x=L[Math.min(S.pos||0,L.length-1)];return (({open:"c",end:"c",lesson:"l",scene:"s",drill:"d",exercise:"e",quiz:"q",labs:"x"})[x.k]||"c")+CH.num}
+  if(TRACK==="mock")return "m";if(TRACK==="practice")return "p";return null}
+function logAdd(sec,kind,what){sec=Math.round(sec);if(!(sec>0)||!COURSE)return;const L=logGet(),k=dayKey(Date.now()),D=L.days[k]||(L.days[k]={t:{},a:[]}),id=devId(),T=D.t[id]||(D.t[id]=[0,0]);
+  sec=Math.min(sec,16*3600-T[0]-T[1]);if(sec<=0)return;T[kind==="l"?1:0]+=sec;if(what&&!D.a.includes(what)&&D.a.length<40)D.a.push(what);logSave(L)}
+/* listening: settle the span since the last mark, then mark again if the audio is still playing */
+function logHear(pos){const a=NAR.audio,now=Date.now(),m=LOG.lm;
+  if(m){const wall=(now-m.t)/1000,p=pos!=null?pos:a.currentTime;let s;
+    if(a.src===m.src){const dp=p-m.p;s=dp>=0?Math.min(wall,dp/(a.playbackRate||1)+2):Math.min(wall,10)}else s=Math.min(wall,1200);
+    if(s>0){logAdd(s,"l",m.what);LOG.heard=true}}
+  LOG.lm=!a.paused&&!a.ended&&a.src?{t:now,p:a.currentTime,src:a.src,what:logWhat()}:null}
+function logInit(){ // called once NAR exists (page narration section below)
+  NAR.audio.addEventListener("playing",()=>{if(!LOG.lm)logHear()});
+  ["pause","ended"].forEach(ev=>NAR.audio.addEventListener(ev,()=>logHear()));
+  NAR.audio.addEventListener("seeking",()=>logHear(LOG.lp));
+  NAR.audio.addEventListener("timeupdate",()=>{if(!NAR.audio.seeking)LOG.lp=NAR.audio.currentTime})}
+function logTick(){const now=Date.now(),dt=Math.min(15,(now-LOG.last)/1000);LOG.last=now;LOG.heard=false;
+  if(LOG.lm)logHear();
+  if(LOG.heard||LOG.lm||document.hidden||now-LOG.act>LOG.idle)return;const w=logWhat();if(w&&dt>0)logAdd(dt,"r",w)}
+setInterval(logTick,LOG.tick);
+["pointerdown","pointermove","keydown","wheel","touchstart","scroll"].forEach(ev=>addEventListener(ev,()=>{LOG.act=Date.now()},{passive:true,capture:true}));
+function logFlush(){if(LOG.lm)logHear();const L=store.get("c"+ALOGKEY(),null);if(L&&L.days&&SYNC)logSave(L,true)}
+document.addEventListener("visibilitychange",()=>{if(document.hidden)logFlush();else{LOG.last=Date.now();LOG.act=Date.now()}});
+addEventListener("pagehide",logFlush);
+/* reading the log */
+function logRows(c,from,to){const L=logGet(c);let run=0;return Object.keys(L.days).sort().filter(d=>(!from||d>=from)&&(!to||d<=to)).map(d=>{const D=L.days[d];let r=0,l=0;Object.values(D.t||{}).forEach(([x,y])=>{r+=x||0;l+=y||0});run+=r+l;return {d,r,l,a:D.a||[],run}}).filter(x=>x.r+x.l>0)}
+function logActText(a){const kinds=[["c","story"],["l","lesson"],["s","decisions"],["d","drills"],["e","exercise"],["q","quiz"],["x","labs"]],ch={},book=[],out=[];
+  a.forEach(code=>{const m=/^([clsdeqxb])(\d+)$/.exec(code);if(!m)return;if(m[1]==="b"){if(!book.includes(+m[2]))book.push(+m[2])}else(ch[m[2]]=ch[m[2]]||new Set()).add(m[1])});
+  Object.keys(ch).map(Number).sort((x,y)=>x-y).forEach(n=>out.push(`Chapter ${n}: ${kinds.filter(([k])=>ch[n].has(k)).map(([,w])=>w).join(", ")}`));
+  if(book.length)out.push(`Audiobook, chapter${book.length>1?"s":""} ${book.sort((x,y)=>x-y).join(", ")}`);
+  if(a.includes("m"))out.push("Mock exam");if(a.includes("p"))out.push("Practice set");return out.join("; ")}
+const hrs=s=>(s/3600).toFixed(1),mins=s=>Math.round(s/60);
+function logDay(d){const [y,m,x]=d.split("-").map(Number);return new Date(y,m-1,x).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}
+function logRangeText(R){if(!R.length)return "No study time logged yet";return R[0].d===R[R.length-1].d?logDay(R[0].d):`${logDay(R[0].d)} to ${logDay(R[R.length-1].d)}`}
+function logTableHTML(R){if(!R.length)return `<p class="prog">Nothing logged for these dates yet. Time you spend reading a chapter, taking a quiz or the mock exam, or listening shows up here.</p>`;
+  const tot=R[R.length-1].run-(R[0].run-R[0].r-R[0].l);
+  return `<div class="tablewrap"><table class="logtable"><tr><th>Date</th><th>Minutes</th><th>What you did</th><th>Total hours</th></tr>${R.map(x=>`<tr><td>${esc(logDay(x.d))}</td><td class="num">${mins(x.r+x.l)}${x.l>=60?` <span class="logl">(${mins(x.l)} listening)</span>`:""}</td><td>${esc(logActText(x.a))}</td><td class="num">${hrs(x.run-(R[0].run-R[0].r-R[0].l))}</td></tr>`).join("")}</table></div><p class="logtotal"><b>Total for these dates: ${hrs(tot)} hours</b> (${mins(tot)} minutes)</p>`}
+function logSection(){const {from,to}=LOG.range;const R=logRows(COURSE,from,to);
+  return `<h2 id="studylog">Study log</h2><p class="prog">The time you've actually spent on this course, day by day. Reading counts while you're active on a chapter, quiz, practice set or mock exam. Listening counts while the audio plays.</p>
+   <div class="logrange"><label for="logfrom">From <input type="date" id="logfrom" value="${esc(from)}"></label><label for="logto">To <input type="date" id="logto" value="${esc(to)}"></label><button class="linkbtn" type="button" id="logall">All time</button></div>
+   <div id="logbody">${logTableHTML(R)}</div>
+   <div class="bar"><button class="btn small" type="button" id="logcsv" ${R.length?"":"disabled"}>Download study log</button><button class="btn small ghost" type="button" id="logprint" ${R.length?"":"disabled"}>Printable page</button></div>`}
+function wireLog(){const f=$("logfrom"),t=$("logto");if(!f)return;const upd=()=>{LOG.range={from:f.value,to:t.value};const R=logRows(COURSE,f.value,t.value);$("logbody").innerHTML=logTableHTML(R);$("logcsv").disabled=$("logprint").disabled=!R.length};
+  f.onchange=upd;t.onchange=upd;$("logall").onclick=()=>{f.value="";t.value="";upd()};$("logcsv").onclick=logCSV;$("logprint").onclick=()=>{renderLogPrint();top()}}
+function logCSV(){const R=logRows(COURSE,LOG.range.from,LOG.range.to);if(!R.length)return;const base=R[0].run-R[0].r-R[0].l,q=v=>{v=String(v);return /[",\n]/.test(v)?`"${v.replace(/"/g,'""')}"`:v};
+  const lines=[["Date","Course","Minutes reading","Minutes listening","Total minutes","What you did","Running total hours"].join(",")];
+  R.forEach(x=>lines.push([x.d,COURSE.full_title||COURSE.title,mins(x.r),mins(x.l),mins(x.r+x.l),logActText(x.a),hrs(x.run-base)].map(q).join(",")));
+  const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`halcyon-study-log-${COURSE.id}-${R[0].d}-to-${R[R.length-1].d}.csv`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
+function renderLogPrint(){setTimeout(ambSync,0);TRACK="logprint";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;const c=COURSE,R=logRows(c,LOG.range.from,LOG.range.to),tot=R.length?R[R.length-1].run-(R[0].run-R[0].r-R[0].l):0;
+  $("page").innerHTML=`<div class="bar noprint" style="margin-top:0"><button class="btn ghost small" type="button" id="logback">Back to progress</button><button class="btn" type="button" id="logdoprint">Print or save as PDF</button></div>
+   <div class="logdoc"><h1>Study log</h1><dl class="facts"><dt>Course</dt><dd>${esc(c.full_title||c.title)}</dd><dt>Exam it prepares for</dt><dd>${esc(c.exam||"")}</dd><dt>Provider</dt><dd>Halcyon</dd><dt>Format</dt><dd>Self-paced online course, read and listened to</dd><dt>Name</dt><dd>${USERNAME?esc(USERNAME):`<span class="logblank"></span>`}</dd><dt>Dates</dt><dd>${esc(logRangeText(R))}</dd><dt>Total time</dt><dd>${hrs(tot)} hours (${mins(tot)} minutes)</dd></dl>
+   ${logTableHTML(R)}<p class="logfoot">${esc(c.logFoot||"Self-reported study record generated by Halcyon, an independent study course.")}</p></div>`;
+  $("logback").onclick=()=>{renderDash();setTimeout(()=>{const e=$("studylog");if(e)e.scrollIntoView()},0)};$("logdoprint").onclick=()=>window.print()}
+function openLog(){renderDash();setTimeout(()=>{const e=$("studylog");if(e)e.scrollIntoView({block:"start"})},30)}
 
 
 /* ===== page narration: sticky player, per-page clips, word highlight ===== */
@@ -453,7 +534,7 @@ function narInit(){
   document.addEventListener("visibilitychange",()=>{if(document.hidden)narSavePos(true);else listenPull()});
   addEventListener("pagehide",()=>narSavePos(true));
 }
-narInit();window.__nar=NAR;
+narInit();logInit();window.__nar=NAR;
 /* lock screen and car controls */
 function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:NAR.bsec?`Ch ${NAR.book.n} · ${pidLabel(NAR.bsec,NAR.book.n)}`:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:NAR.book.ed==="story"?"Audiobook, story only":"Audiobook, story + lessons",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
 if("mediaSession" in navigator){try{
@@ -533,17 +614,22 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
    <dt>Ambience</dt><dd>Quiet background sound that fits each scene, like an office or a data center. The slider sets the volume. It plays under the reading narration, not the Audiobook (that has its own opening and closing music).</dd>
    <dt>Your settings</dt><dd>Focus mode and Ambience follow your account, so they match on every device.</dd>
   </dl>
+  <h2>Your study log</h2><dl>
+   <dt>What counts</dt><dd>Each course keeps a log of the time you spend studying it, day by day. Reading counts while a chapter, quiz, practice set or mock exam is on screen and you've tapped, typed, scrolled or moved the mouse in the last 2 minutes, so a tab left open doesn't add up. Listening counts while the audio is really playing, by the clock, so a faster speed doesn't stretch it. Time on pages like Progress, Cast and this Guide doesn't count.</dd>
+   <dt>Where it is</dt><dd>Open Progress in a course and scroll to Study log. Each day shows minutes and what you worked on, with a running total in hours. Pick From and To dates to total a stretch.</dd>
+   <dt>Export</dt><dd><b>Download study log</b> saves a CSV file for a spreadsheet. <b>Printable page</b> opens a clean copy with the course, your name, the dates and the total. Print it, or save it as a PDF from the print screen.</dd>
+  </dl>
   <h2>Put it on your iPhone</h2><dl>
    <dt>Install</dt><dd>Open the site in <b>Safari</b>, tap the <b>Share</b> button, then <b>Add to Home Screen</b>. It opens full screen like an app.</dd>
    <dt>Sign in once</dt><dd>The home screen app keeps its own sign-in, so sign in again the first time you open it. After that your progress and listening spot follow you.</dd>
    <dt>Lock screen</dt><dd>Start the Audiobook, lock the phone, and use the lock screen or CarPlay controls to pause and skip.</dd>
   </dl>
-  <h2>Privacy</h2><p>The site counts anonymous page views, without cookies, to learn which chapters people read. No personal data.</p><p>If you join the list, we store your email to tell you about new books. Ask to be removed anytime. Each email has a leave link at the bottom too.</p>
+  <h2>Privacy</h2><p>The site counts anonymous page views, without cookies, to learn which chapters people read. No personal data.</p><p>Your study log is stored with your progress in your account, like your saved place. It holds dates, minutes and the parts you studied, nothing more.</p><p>If you join the list, we store your email to tell you about new books. Ask to be removed anytime. Each email has a leave link at the bottom too.</p>
   <h2>Troubleshooting</h2><label class="chk prog"><input type="checkbox" id="pdbgt" ${PDBG.on?"checked":""}> Show player diagnostics (a log at the top of the screen; screenshot it and send it to Anthony)</label></div>`;
   if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
 function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return["Mock exam",()=>openMock()];const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
 /* where you are lives in the address (#pmp/full/3, #guide), so a reload reopens the same screen */
-function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice")?c+"/progress":TRACK==="mock"?c+"/mock":(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
+function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="mock"?c+"/mock":(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
   store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
 /* anonymous page views (Vercel Web Analytics, loaded in index.html): the route only, as a path. Never a name, email, id, or progress. */
 let LASTPV="";function pageview(r){if(!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:"/"+r})}catch(e){}}
@@ -552,10 +638,10 @@ async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filt
   const c=courseById(p[0]);if(!c||c.status!=="live")return false;if(c.id!==COURSE.id&&!(await useCourse(c.id)))return false;if(!c._loaded&&(c.scripts||c.labs))await useCourse(c.id);
   const v=p[1]||"home",n=+p[2];
   if((v==="full"||v==="ref")&&TRACKS[v].list().find(x=>x.num===n)){openChapter(v,n);return true}
-  if(v==="listen"){renderBook();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){renderDash();return true}if(v==="mock"){openMock();return true}
+  if(v==="listen"){renderBook();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock();return true}
   renderHome();renderRail();return true}
 window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
-function navSync(){noteRoute();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+function navSync(){noteRoute();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
@@ -670,7 +756,7 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
 function openChapter(tr,n){libTouch({t:tr,n});store.set("lastplace."+COURSE.id,{t:tr,n});TRACK=tr;store.set("track",tr);store.set("lastch."+COURSE.id+"."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
 function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this chapter will be cleared.`))return;const st=TRACK==="ref"?freshRef():freshFull();if(n===CH.num){S=st;save();render();top()}else{persist(TRACK,n,st);renderRail()}}
 function renderRail(){
-  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","book","library","about","guide","upcoming"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
+  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","book","library","about","guide","upcoming","logprint"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
   $("trackname").textContent=TRACK?TRACKS[TRACK].name:"";
   if(TRACK==="mock"){$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Mock exam</h3><p class="big" id="mocktime">${MS.mode==="exam"?fmtTime(MOCK_LIMIT()-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Mock exam</h3><p class="prog">Pick a mode to start.</p>`;return}
   $("mockcard").hidden=true;if(!TRACK)return;
@@ -689,13 +775,13 @@ function renderRail(){
   $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
 }
 function render(){_render();castStrip();narAttach();navSync();ambSync();handoffOffer()}
-function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
 async function api(path,opts={}){const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
-async function listenPull(){if(!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
-const DEVICE_KEYS=["halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
+async function listenPull(){if(!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
+const DEVICE_KEYS=["halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
 function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.bookEd.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
   document.querySelector(".rail").hidden=true;const signup=mode==="signup";
@@ -728,7 +814,7 @@ async function renderAbout(id){setTimeout(ambSync,0);if(id&&id!==COURSE.id&&!(aw
    <dl class="facts"><dt>The exam</dt><dd>${esc(c.exam||"")}</dd><dt>Your mentor</dt><dd>${esc(c.mentorRole||MENTOR())}</dd><dt>Length</dt><dd>${esc((c.fullHours||"").replace(/^./,x=>x.toUpperCase()))}, ${c.planned||ready} chapters${c.planned&&ready<c.planned?` (${ready} ready now, more as they're written)`:""}</dd><dt>Each chapter</dt><dd>The story, ${esc(LESSON())}, the decisions, drills, and a quiz</dd>${c.mockShort?`<dt>Practice exam</dt><dd>${esc(c.mockShort)}</dd>`:""}</dl>
    <div class="bar"><button class="btn" id="aboutgo" type="button">${w?"Continue":"Start chapter 1"}</button><button class="btn ghost" id="aboutbook" type="button">🎧 Audiobook</button></div>
    ${signupBox("about:"+c.id)}
-   <p class="prog marks">${esc(marksLine(c))}</p>`;wireSignup();
+   <p class="prog marks">${c.independence?esc(c.independence+(c.marks?" "+c.marks:"")).replace("study log",`<button class="linkbtn" type="button" id="aboutlog">study log</button>`):esc(marksLine(c))}</p>`;wireSignup();if($("aboutlog"))$("aboutlog").onclick=()=>openLog();
   $("tolib2").onclick=()=>{renderLibrary();top()};$("aboutgo").onclick=()=>{if(w)libGo(c.id);else{openChapter("full",(TRACKS.full.list()[0]||{num:1}).num);top()}};$("aboutbook").onclick=()=>{renderBook();top()}}
 /* #upcoming: what's coming next. Copy lives in upcoming.js; chapter counts come from the course registry. */
 function readyCount(c){if(c&&c.id==="pmp")return ((window.HALCYON_V2||{}).files||[]).filter(x=>/^ch\d+\.js$/.test(x)).length;return c?(c.scripts||[]).filter(x=>/full\/ch\d+\.js$/.test(x)).length:0}
@@ -790,7 +876,7 @@ async function boot(){
       document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;return}
     return renderAuth("login")}
   clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
-  SYNC=(n,st)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st})}).catch(()=>{});
+  SYNC=(n,st,ka)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st}),keepalive:!!ka}).catch(()=>{});USERNAME=me.user.name||"";
   applyPrefs(lget().prefs);
   document.querySelector(".rail").hidden=false;$("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
   $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();location.href="/"};
