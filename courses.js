@@ -25,7 +25,18 @@ window.HALCYON_COURSES=[
    taskDomain:{P:"People",R:"Process",B:"Business Environment"}, // refArt retired with the v1 Refresher
    fullName:"Full Course",fullHours:"about 15 to 20 hours",mockTitle:"PMP practice exam",mockMinutes:240,mockBreaks:[60,120],
    mockBlurb:"Weighted like the July 2026 exam: People 33 percent, Process 41 percent, Business Environment 26 percent, about 60 percent agile or hybrid. All questions are single answer; the real exam opens with a case study section and also has multiple response, matching, point and click, and graphic-based items.",
-   mockShort:"180 questions in 240 minutes, weighted like the real exam."},
+   mockShort:"180 questions in 240 minutes, weighted like the real exam.",
+   // Final assessment and certificate of completion (2026-10-11). final/pmp.js is the 100 question bank, loaded when the assessment opens.
+   // The wording below is a proposal waiting on Anthony's OK. Never "PMI approved", "accredited", "ATP", "contact hours", or "PMI accepts".
+   // PMI's July 2026 ECO accepts "Self-paced on-demand training courses including an end-of-course assessment" toward the 35 hours,
+   // subject to audit, and PMI decides. Hours on the certificate come only from the study log (base+905), never estimated.
+   final:"final/pmp.js",finalPass:70,
+   certCourse:"The Halcyon Launch",
+   certFormat:"Self-paced online course in project management: 15 chapters of lessons, scenario decisions, drills and quizzes, and an end-of-course assessment",
+   certPrepares:"Project Management Professional (PMP)® certification exam",
+   certStatement:"This certificate documents completion of a self-paced course of project management education, with hours as recorded in the course's study log.",
+   certIndependence:"Halcyon is an independent course. It isn't affiliated with, endorsed by, or approved by Project Management Institute (PMI), and it isn't a PMI Authorized Training Partner. PMI decides whether any training counts toward its requirements.",
+   certMarks:"PMI and PMP are marks of Project Management Institute, Inc."},
   {id:"cphims",listed:false,certBody:"HIMSS",marks:"CPHIMS is a registered mark of HIMSS.",about:["Fourteen years in a Greeley ICU taught Maria Santos to fix things fast. Now she's Vice President of Clinical Systems for eleven hospitals, and the job came with a deadline: three Wyoming hospitals still run a legacy EHR whose vendor ends support in twenty months.", "Moving them onto one chart means an interface engine only one grumpy engineer understands, a surgeon who counts clicks out loud, a vendor rep with suite tickets, a CMIO who wants an alert for every risk, and a CFO who wants numbers, not adjectives.", "Her boss, CIO Raymond Ochoa, is pushing her to think like an executive. Maria is used to fixing things herself at 2 AM. This time she can't."],planned:12,mentorRole:"Dr. Raymond Ochoa, the CIO",hero:"Maria",title:"CPHIMS",scripts:["meta.js","full/ch01.js"],taskDomain:{E:"Environments",C:"Clinical Informatics",S:"Systems Management",L:"Leadership"},
    fullName:"Full Course",fullHours:"about 13 to 16 hours",mockTitle:"CPHIMS practice exam",mockMinutes:120,mockBreaks:[],
    mockBlurb:"Weighted like the HIMSS outline: Environments 25 percent, Clinical Informatics 20 percent, Systems Management 30 percent, Leadership 25 percent. Four options per question at recall, application, and analysis levels.",

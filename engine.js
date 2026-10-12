@@ -145,7 +145,7 @@ function savePrefs(){lput({prefs:prefsNow()})}
 function applyPrefs(p){if(!p)return;if(p.amb!==undefined){AMB.on=!!p.amb;store.set("amb",AMB.on)}if(p.ambvol){AMB.vol=p.ambvol;store.set("ambvol",AMB.vol)}ambUI();if(p.story!==undefined&&!!p.story!==!!STORY())setStoryMode(!!p.story,true);const t=$("storytoggle");if(t)t.checked=STORY()}
 function setStoryMode(on,fromSync){const keyOf=st=>st?st.k+(st.i??st.j??""):"";let cur=null;if(TRACK==="full"&&CH&&S)cur=keyOf(steps(CH)[S.pos]);store.set("storymode",on);
   if(cur!==null){const ns=steps(CH);const idx=ns.findIndex(x=>keyOf(x)===cur);S.pos=Math.max(0,idx);S.max=Math.max(S.max||0,S.pos);save()}if(!fromSync)savePrefs();if(TRACK==="full"||TRACK==="ref")render()}
-function fullGo(p){const L=steps(CH);store.set(`readat.${BID()}.${CH.num}`,Date.now());if(p>=L.length)p=L.findIndex(x=>x.k==="end");S.pos=p;S.max=Math.max(S.max||0,p);save();render();top()}
+function fullGo(p){const L=steps(CH);store.set(`readat.${BID()}.${CH.num}`,Date.now());if(p>=L.length)p=L.findIndex(x=>x.k==="end");S.pos=p;S.max=Math.max(S.max||0,p);if(p>=L.length-1&&!S.doneAt)S.doneAt=new Date().toISOString();save();render();top()} // doneAt: the chapter's completion date, shown on the certificate
 /* chapter sections: names, the lock rule (study items always open, story in order), and the list used by Contents, the side menu and ⏭ */
 function secName(c,pid){if(pid==="open")return "Opening";if(pid==="labs")return "Labs";if(pid==="lesson")return LESSON();if(pid==="end")return "Chapter ending";const i=+String(pid).slice(1),sc=c&&c.scenes[i];return `Decision ${i+1}${sc?": "+(sc.title||sc.task):""}`}
 function secLabel(c,x){return x.k==="scene"?secName(c,"s"+x.i):x.k==="drill"?`Drill: ${c.drills[x.j].title}`:x.k==="exercise"?`Exercise: ${c.exercise.title}`:x.k==="quiz"?"Quiz":x.k==="labs"?`Labs (${labsOf(c).length}, optional)`:secName(c,x.k)}
@@ -189,7 +189,7 @@ function fullRender(){
     h+=`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates(),globalFlags()))}
      <div class="end-grid"><div class="card"><h3>Decisions</h3><div class="big">${S.score}/${n*3}</div></div><div class="card"><h3>Quiz</h3><div class="big">${S.quiz?S.quiz.right+"/"+CH.quiz.length:"·"}</div></div>${dr?`<div class="card"><h3>Drills</h3><div class="big">${drOk}/${dr}</div></div>`:""}${METERS_OF().map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
      <div class="story"><p>Weakest area this chapter: <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent, counting decisions and quiz together.</p></div>
-     ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">${MENTOR()}'s notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`<button class="btn" id="tomock" type="button">Take the mock exam</button>`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
+     ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">${MENTOR()}'s notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`${COURSE.final?`<button class="btn" id="tofinal" type="button">Take the final assessment</button>`:""}<button class="btn${COURSE.final?" ghost":""}" id="tomock" type="button">Take the mock exam</button>`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
   }
   $("page").innerHTML=h;wireVideos();if(cur.k==="labs")labsMount();
   $("page").querySelectorAll(".sdot[data-p]").forEach(b=>b.onclick=()=>fullGo(+b.dataset.p));
@@ -202,7 +202,7 @@ function fullRender(){
   if(cur.k==="exercise"){const e=CH.exercise;const f=$("exform");if(f)f.onsubmit=ev=>{ev.preventDefault();const v=e.items.map((_,ii)=>{const x=$("ex"+ii).value;return x===""?-1:+x});S.ex={v,right:v.filter((x,ii)=>x===e.items[ii].answer).length};save();render()};const r=$("exretry");if(r)r.onclick=()=>{S.ex=null;save();render()}}
   if(cur.k==="quiz"){const q=CH.quiz;const f=$("quizform");if(f)f.onsubmit=ev=>{ev.preventDefault();const v=q.map((_,qi)=>{const c=document.querySelector(`input[name=q${qi}]:checked`);return c?+c.value:-1});const miss=v.filter(x=>x<0).length;if(miss&&!confirm(`${miss} unanswered. Check anyway?`))return;S.quiz={v,right:v.filter((x,qi)=>x===q[qi].a).length};v.forEach((x,qi)=>{const d=q[qi].domain;S.dom[d][1]+=3;if(x===q[qi].a)S.dom[d][0]+=3});save();render();top()};const r=$("qretry");if(r)r.onclick=()=>{S.quiz.v.forEach((x,qi)=>{const d=q[qi].domain;S.dom[d][1]-=3;if(x===q[qi].a)S.dom[d][0]-=3});S.quiz=null;save();render();top()}}
   const nc=$("nextch");if(nc){const nxt=chapters().find(c=>c.num===CH.num+1);nc.onclick=()=>openChapter("full",nxt.num)}
-  const tm=$("tomock");if(tm)tm.onclick=()=>openMock();
+  const tm=$("tomock");if(tm)tm.onclick=()=>openMock();const tf=$("tofinal");if(tf)tf.onclick=()=>openFinal();
   const rp=$("replay");if(rp)rp.onclick=()=>{if(confirm(`Replay chapter ${CH.num} from the start? This clears its decisions, drills, and quiz. Labs you finished stay finished.`)){const lb=S.labs;S=freshFull();if(lb)S.labs=lb;save();render();top()}};
 }
 
@@ -272,6 +272,137 @@ function mockResults(byId){
 }
 
 
+/* ===== final assessment and certificate of completion (PMP, 2026-10-11) =====
+   The end-of-course assessment rides the mock exam's code path: the same question shape (final/pmp.js, like mock/*.js), one question per
+   screen with Back, Next, flags and the question grid, and results by domain with a full review. What's different: no timer, a pass mark
+   (COURSE.finalPass, 70 percent), and a fresh question order and option order for every attempt (order.js perm and build, keyed by the
+   attempt id, so answer positions stay balanced). It opens once every Full Course chapter is done. "Preview it anyway" lets a tester in
+   early, and a preview attempt never earns a certificate.
+   Stored like other progress, at base+906 and synced: {cur: the attempt in progress or null, list: finished attempts (newest last), name}.
+   Each finished attempt keeps the study log total at the moment it was submitted (hours are read from the log at base+905, rounded down to
+   a tenth, never estimated), and a verification code: the first 16 hex digits of SHA-256 over "attempt id|date|hours". */
+let FS=null,FINAL_SHOW=null;
+function FINAL_KEY(){return COURSE.base+906}
+function finalGet(){const F=store.get("c"+FINAL_KEY(),null);return F&&typeof F==="object"?{cur:F.cur||null,list:Array.isArray(F.list)?F.list:[],name:F.name||""}:{cur:null,list:[],name:""}}
+function finalPut(F,now){F.at=Date.now();if(F.list.length>30)F.list=F.list.slice(-30);F.list.forEach((a,i)=>{if(i<F.list.length-3){delete a.order;delete a.ans}}); // the server takes 60000 characters: only the last 3 attempts keep their answers for review
+  store.set("c"+FINAL_KEY(),F);if(SYNC){const k=FINAL_KEY(),c=JSON.parse(JSON.stringify(F));clearTimeout(finalPut.t);finalPut.t=setTimeout(()=>SYNC(k,c,!!now),now?0:600)}}
+function finalQuestions(){const all=[];(window.HALCYON_FINAL||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part.slice(0,3)+i})));return all}
+function finalById(){const m={};finalQuestions().forEach(q=>m[q.id]=q);return m}
+function courseDone(){const L=TRACKS.full.list(),n=Math.max(L.length,COURSE.planned||0),done=L.filter(c=>chapterProgress("full",c)==="done").length;return {done,n,all:n>0&&done===n}}
+async function finalLoad(){if(!COURSE.final)return false;if(!window.HALCYON_FINAL)await loadScripts([R(COURSE.final)]);return !!window.HALCYON_FINAL}
+async function openFinal(){clearInterval(mockTimer);TRACK="final";store.set("track","final");await finalLoad();FS=finalGet().cur;FINAL_SHOW=null;render();top()}
+async function openCert(){clearInterval(mockTimer);TRACK="cert";await finalLoad();render();top()}
+function finalId(){return "HL-"+Date.now().toString(36).toUpperCase()+"-"+Math.random().toString(36).slice(2,5).toUpperCase().padEnd(3,"0")}
+function freshFinal(preview){const qs=finalQuestions(),id=finalId(),O=window.HalcyonOrder;
+  O.build([{key:"final"+id,items:qs.map(q=>({id:"fo"+id+q.id,n:q.opts.length,correct:q.a}))}]);const opt={};qs.forEach(q=>opt[q.id]=O.get("fo"+id+q.id,q.opts.length));
+  return {id,order:O.perm("final"+id,qs.length).map(i=>qs[i].id),opt,ans:{},flagged:{},cur:0,preview:!!preview,startedAt:new Date().toISOString()}}
+function finalSaveCur(){const F=finalGet();F.cur=FS;finalPut(F)}
+/* SHA-256 (FIPS 180-4), small and synchronous so the certificate and the #verify page compute the same code anywhere */
+function sha256(str){const rr=(x,n)=>(x>>>n)|(x<<(32-n)),P=[];for(let c=2;P.length<64;c++)if(P.every(p=>c%p))P.push(c);
+  const frac=x=>((x-Math.floor(x))*4294967296)>>>0,K=P.map(p=>frac(Math.cbrt(p)));let H=P.slice(0,8).map(p=>frac(Math.sqrt(p)));
+  const b=new TextEncoder().encode(str),l=b.length,n=((l+9+63)>>6)<<6,m=new Uint8Array(n);m.set(b);m[l]=0x80;const dv=new DataView(m.buffer);dv.setUint32(n-4,(l*8)>>>0);dv.setUint32(n-8,Math.floor(l*8/4294967296));
+  const w=new Uint32Array(64);for(let o=0;o<n;o+=64){for(let i=0;i<16;i++)w[i]=dv.getUint32(o+i*4);for(let i=16;i<64;i++){const a=w[i-15],c=w[i-2];w[i]=(w[i-16]+(rr(a,7)^rr(a,18)^(a>>>3))+w[i-7]+(rr(c,17)^rr(c,19)^(c>>>10)))>>>0}
+    let [A,B,C,D,E,F,G,J]=H;for(let i=0;i<64;i++){const t1=(J+(rr(E,6)^rr(E,11)^rr(E,25))+((E&F)^(~E&G))+K[i]+w[i])>>>0,t2=((rr(A,2)^rr(A,13)^rr(A,22))+((A&B)^(A&C)^(B&C)))>>>0;J=G;G=F;F=E;E=(D+t1)>>>0;D=C;C=B;B=A;A=(t1+t2)>>>0}
+    H=[A,B,C,D,E,F,G,J].map((x,i)=>(x+H[i])>>>0)}return H.map(x=>x.toString(16).padStart(8,"0")).join("")}
+function finalCode(id,date,hours){return sha256(`${String(id).trim().toUpperCase()}|${date}|${hours}`).slice(0,16).toUpperCase().match(/.{4}/g).join("-")}
+function logHoursNow(){const R=logRows(COURSE),secs=R.length?R[R.length-1].run:0;return {secs,hours:(Math.floor(secs/360)/10).toFixed(1),from:R.length?R[0].d:"",to:R.length?R[R.length-1].d:""}} // rounded down to a tenth of an hour
+function longDay(d){const [y,m,x]=String(d).split("-").map(Number);return new Date(y,m-1,x).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}
+function finalSubmit(){const byId=finalById(),F=finalGet(),pass=COURSE.finalPass||70;let right=0;const dom={},task={};
+  FS.order.forEach(id=>{const q=byId[id];if(!q)return;dom[q.domain]=dom[q.domain]||[0,0];task[q.task]=task[q.task]||[0,0];dom[q.domain][1]++;task[q.task][1]++;if(FS.ans[id]===q.a){right++;dom[q.domain][0]++;task[q.task][0]++}});
+  const total=FS.order.length,date=dayKey(Date.now()),L=logHoursNow();
+  const a={id:FS.id,at:new Date().toISOString(),date,right,total,pass:right*100>=pass*total,preview:!!FS.preview,dom,task,secs:L.secs,hours:L.hours,logFrom:L.from,logTo:L.to,code:finalCode(FS.id,date,L.hours),order:FS.order,ans:FS.ans};
+  F.list.push(a);F.cur=null;finalPut(F,true);FS=null;FINAL_SHOW=a.id;render();top()}
+function finalPct(x){return x&&x[1]?Math.round(x[0]/x[1]*100):0}
+/* chapters to revisit: each missed question's task, mapped to the chapters that teach it (taughtIn), most misses first */
+function finalRevisit(a){const miss={};Object.entries(a.task||{}).forEach(([t,[g,n]])=>{if(n>g)miss[t]=n-g});const ch={};
+  Object.entries(miss).forEach(([t,k])=>taughtIn(t).forEach(({c})=>{const e=ch[c.num]||(ch[c.num]={c,n:0,tasks:[]});e.n+=k;e.tasks.push(t)}));
+  return Object.values(ch).sort((x,y)=>y.n-x.n||x.c.num-y.c.num).slice(0,5)}
+function openLesson(n){openChapter("full",n);const p=steps(CH).findIndex(x=>x.k==="lesson");if(p>=0){S.max=Math.max(S.max||0,p);fullGo(p)}}
+function finalRender(){setTimeout(ambSync,0); // render() runs navSync; a deferred one here could undo a hash change made right after a confirm dialog
+  $("railgame").hidden=true;$("mockcard").hidden=true;
+  const qs=finalQuestions(),byId=finalById(),F=finalGet(),cd=courseDone(),pass=COURSE.finalPass||70;
+  if(!COURSE.final||!qs.length){$("page").innerHTML=`<div class="kicker">Final assessment</div><h1>Final assessment</h1><div class="story"><p>This course doesn't have a final assessment yet.</p></div>`;return}
+  if(FINAL_SHOW){const a=F.list.find(x=>x.id===FINAL_SHOW);if(a)return finalResults(a,byId);FINAL_SHOW=null}
+  if(!FS){const last=F.list[F.list.length-1],cert=certAttempt();
+    $("page").innerHTML=`<div class="kicker">${esc(COURSE.full_title||COURSE.title)} · Final assessment</div><h1>Final assessment</h1>
+     <div class="story"><p>${qs.length} questions, weighted like the PMP exam outline: People, Process, and Business Environment, with predictive, agile, and hybrid situations mixed in. You need ${pass} percent to pass.</p><p>No timer. Retake it as many times as you want, and every attempt mixes up the question order and the answer order. At the end you get a score for each exam area, a list of chapters to go back to, and the reasoning behind every answer.</p></div>
+     ${cd.all?"":`<div class="callout finallock"><b>It opens when you've finished all ${cd.n} chapters.</b> You've finished ${cd.done} so far. <button class="linkbtn" type="button" id="fpreview">Preview it anyway</button> <span class="prog">(a preview attempt doesn't count toward the certificate)</span></div>`}
+     ${cd.all?`<div class="bar"><button class="btn" type="button" id="fstart">${F.list.length?"Take it again":"Start the final assessment"}</button>${last?`<button class="btn ghost" type="button" id="flast">See your last results</button>`:""}${cert?`<button class="btn ghost" type="button" id="fcert">Your certificate</button>`:""}</div>`:last?`<div class="bar"><button class="btn ghost" type="button" id="flast">See your last results</button></div>`:""}
+     ${finalHistHTML(F.list)}`;
+    const st=$("fstart");if(st)st.onclick=()=>{FS=freshFinal(false);finalSaveCur();render();top()};
+    const pv=$("fpreview");if(pv)pv.onclick=()=>{FS=freshFinal(true);finalSaveCur();render();top()};
+    const fl=$("flast");if(fl)fl.onclick=()=>{FINAL_SHOW=last.id;render();top()};const fc=$("fcert");if(fc)fc.onclick=()=>openCert();return}
+  const i=Math.min(FS.cur||0,FS.order.length-1),q=byId[FS.order[i]];if(!q){FS=null;finalSaveCur();return finalRender()}
+  const chosen=FS.ans[q.id],ord=FS.opt[q.id]||[...Array(q.opts.length).keys()];
+  $("page").innerHTML=`<div class="kicker">Final assessment${FS.preview?" · Preview":""} · Question ${i+1} of ${FS.order.length}</div>
+   <fieldset class="qitem" data-qid="${esc(q.id)}"><legend>${q.q}</legend>${ord.map((oi,pos)=>`<label class="qopt"><input type="radio" name="fq" value="${oi}" ${chosen===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${q.opts[oi]}</label>`).join("")}</fieldset>
+   <div class="bar"><button class="btn ghost" id="fprev" type="button" ${i===0?"disabled":""}>Back</button><button class="btn" id="fnextq" type="button">${i+1<FS.order.length?"Next":"Review and submit"}</button><label class="chk"><input type="checkbox" id="fflag" ${FS.flagged[q.id]?"checked":""}> Flag for review</label></div>
+   <details class="navgrid"><summary>All questions (${Object.keys(FS.ans).length} answered, ${Object.values(FS.flagged).filter(Boolean).length} flagged)</summary><div>${FS.order.map((id,k)=>`<button type="button" data-fq="${k}" class="nq ${FS.ans[id]!==undefined?"done":""} ${FS.flagged[id]?"flag":""} ${k===i?"now":""}">${k+1}</button>`).join("")}</div></details>
+   <div class="bar"><button class="btn ghost" id="fsubmit" type="button">Submit the assessment</button><button class="linkbtn" id="fquit" type="button">Save and leave</button></div>`;
+  const left=()=>FS.order.length-Object.keys(FS.ans).length;
+  $("page").querySelectorAll("input[name=fq]").forEach(r=>r.onchange=()=>{FS.ans[q.id]=+r.value;finalSaveCur()});
+  $("fflag").onchange=e=>{FS.flagged[q.id]=e.target.checked;finalSaveCur()};
+  $("fprev").onclick=()=>{FS.cur=Math.max(0,i-1);finalSaveCur();render()};
+  $("fnextq").onclick=()=>{if(i+1>=FS.order.length){if(confirm(left()?`Submit now? ${left()} unanswered.`:"Submit the assessment?"))finalSubmit();return}FS.cur=i+1;finalSaveCur();render();top()};
+  $("page").querySelectorAll("[data-fq]").forEach(b=>b.onclick=()=>{FS.cur=+b.dataset.fq;finalSaveCur();render()});
+  $("fsubmit").onclick=()=>{if(confirm(left()?`Submit now? ${left()} unanswered.`:"Submit the assessment?"))finalSubmit()};
+  $("fquit").onclick=()=>{finalSaveCur();FS=null;render();top()}}
+function finalHistHTML(list){if(!list.length)return "";return `<h2>Your attempts</h2><div class="tablewrap"><table><tr><th>Date</th><th>Score</th><th>Result</th></tr>${list.slice().reverse().map(a=>`<tr><td>${esc(logDay(a.date))}</td><td class="num">${a.right}/${a.total} (${Math.round(a.right/a.total*100)}%)</td><td>${a.pass?"Passed":"Not yet"}${a.preview?" · preview":""}</td></tr>`).join("")}</table></div>`}
+function finalResults(a,byId){const pct=Math.round(a.right/a.total*100),pass=COURSE.finalPass||70,rv=finalRevisit(a),qs=(a.order||[]).map(id=>byId[id]).filter(Boolean),cert=a.pass&&!a.preview;
+  $("page").innerHTML=`<div class="kicker">Final assessment · Results${a.preview?" · Preview":""}</div><h1>${a.pass?"You passed":"Not this time"}: ${a.right} of ${a.total} (${pct} percent)</h1>
+   <div class="story"><p>${a.pass?(cert?`That's at or above the ${pass} percent pass mark. Your certificate of completion is ready.`:`That's at or above the ${pass} percent pass mark. This was a preview attempt, so it doesn't earn the certificate. Finish all the chapters, then take it for real.`):`You need ${pass} percent. Reread the chapters listed below and try again. Next time the questions come in a different order, and so do the answers.`}</p></div>
+   <div class="end-grid">${DOMS.map(d=>`<div class="card"><h3>${esc(d)}</h3><div class="big">${finalPct(a.dom[d])}%</div><p class="prog">${a.dom[d]?a.dom[d][0]+" of "+a.dom[d][1]:""}</p></div>`).join("")}</div>
+   <h2>Chapters to revisit</h2>${rv.length?`<ul class="story finalrv">${rv.map(e=>`<li><button class="linkbtn" type="button" data-flesson="${e.c.num}">Chapter ${e.c.num}, ${esc(e.c.title)}</button>: ${e.n} missed on ${esc([...new Set(e.tasks)].map(t=>t+" "+(TASKNAMES[t]||"")).join(", "))}</li>`).join("")}</ul>`:`<div class="story"><p>You didn't miss anything. Nothing to revisit.</p></div>`}
+   <div class="bar">${cert?`<button class="btn" type="button" id="fcert">See your certificate</button>`:""}<button class="btn${cert?" ghost":""}" type="button" id="fagain">Take it again</button><button class="btn ghost" type="button" id="fback">Back</button></div>
+   ${qs.length?`<h2>Review</h2><details class="finalreview"><summary>Show every question with explanations</summary>${qs.map((q,k)=>`<div class="qitem"><p><b>${k+1}.</b> ${q.q}</p><p class="${a.ans[q.id]===q.a?"qright":"qwrong"}">Your answer: ${a.ans[q.id]!==undefined?q.opts[a.ans[q.id]]:"none"}</p>${a.ans[q.id]===q.a?"":`<p class="qright">Correct: ${q.opts[q.a]}</p>`}<p class="qwhy">${q.why} <span class="tag">${q.task} ${esc(TASKNAMES[q.task]||"")}</span></p></div>`).join("")}</details>`:""}`;
+  $("page").querySelectorAll("[data-flesson]").forEach(b=>b.onclick=()=>openLesson(+b.dataset.flesson));
+  const fc=$("fcert");if(fc)fc.onclick=()=>openCert();
+  $("fagain").onclick=()=>{FINAL_SHOW=null;FS=freshFinal(a.preview&&!courseDone().all);finalSaveCur();render();top()};
+  $("fback").onclick=()=>{FINAL_SHOW=null;render();top()}}
+function certAttempt(){const L=finalGet().list.filter(a=>a.pass&&!a.preview);return L[L.length-1]||null}
+function certNameGet(F){return store.get("certname."+COURSE.id,"")||F.name||USERNAME||""}
+function renderCert(){setTimeout(ambSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;
+  const c=COURSE,a=certAttempt(),F=finalGet();
+  if(!a){$("page").innerHTML=`<div class="kicker">Certificate of completion</div><h1>No certificate yet</h1><div class="story"><p>The certificate comes from passing the final assessment after you've finished every chapter. ${courseDone().all?"You've finished them all, so you're ready.":`You've finished ${courseDone().done} of ${courseDone().n} chapters.`}</p></div><div class="bar"><button class="btn" type="button" id="tofinal">Open the final assessment</button></div>`;$("tofinal").onclick=()=>openFinal();return}
+  const name=certNameGet(F),ver=location.origin+"/#verify",H=+a.hours;
+  const chs=TRACKS.full.list().map(ch=>{const st=load("full",ch.num);return `<li><span>${ch.num}. ${esc(ch.title)}</span><span class="certdate">${st&&st.doneAt?esc(logDay(dayKey(st.doneAt))):"date not recorded"}</span></li>`}).join("");
+  $("page").innerHTML=`<div class="bar noprint" style="margin-top:0"><button class="btn ghost small" type="button" id="certback">Back to progress</button><button class="btn" type="button" id="certprint">Print or save as PDF</button></div>
+   <div class="certform noprint"><label for="certname">Your name, as it should appear on the certificate<input id="certname" autocomplete="name" maxlength="80" value="${esc(name)}"></label>
+    ${SYNC?`<label class="chk"><input type="checkbox" id="certsave" ${F.name?"checked":""}> Save this name with my account</label>`:""}
+    <p class="prog">We save it on this device${SYNC?" (and to your account, if you check the box)":""}. Put the same name you'll use on your PMI application.</p>
+    <p class="prog">PMI's PMP application asks for 35 hours of project management training. Your study log showed <b>${esc(a.hours)} hours</b> when you passed. The hours here come only from that log and are never rounded up. Whether this course counts is PMI's call.</p></div>
+   <article class="certdoc" aria-label="Certificate of completion">
+    <p class="certkick">Halcyon</p><h1 class="certh">Certificate of Completion</h1>
+    <p class="certlead">This documents that</p><p class="certname" id="certnameout">${name?esc(name):`<span class="logblank"></span>`}</p>
+    <p class="certlead">completed the self-paced course</p><p class="certcourse">${esc(c.certCourse||c.full_title||c.title)}</p>
+    <dl class="facts certfacts"><dt>Completed</dt><dd>${esc(longDay(a.date))}, the date of the passing final assessment</dd>
+     <dt>Study hours</dt><dd>${esc(a.hours)} ${H===1?"hour":"hours"}, as recorded in the course's study log${a.logFrom?` (${esc(logDay(a.logFrom))} to ${esc(logDay(a.logTo))})`:""}</dd>
+     <dt>Final assessment</dt><dd>Passed, ${a.right} of ${a.total} (${Math.round(a.right/a.total*100)} percent). The pass mark is ${COURSE.finalPass||70} percent.</dd>
+     ${c.certFormat?`<dt>Format</dt><dd>${esc(c.certFormat)}</dd>`:""}${c.certPrepares?`<dt>Prepares for</dt><dd>${esc(c.certPrepares)}</dd>`:""}<dt>Provider</dt><dd>Halcyon, ${esc(location.host||"halcyon-launch.vercel.app")}</dd></dl>
+    <p class="certstate">${esc(c.certStatement||"This certificate documents completion of a self-paced course, with hours as recorded in the course's study log.")}</p>
+    <h2 class="certh2">Chapters completed</h2><ol class="certch">${chs}</ol>
+    <div class="certver"><p><b>Verification code</b> <span class="certcode">${esc(a.code)}</span></p><p>Attempt ${esc(a.id)} · ${esc(a.date)} · ${esc(a.hours)} hours</p><p>To check it, enter those three values and the code at ${esc(ver)}. A changed date, hours figure or attempt ID won't match.</p></div>
+    <p class="certfine">${esc(c.certIndependence||"")} ${esc(c.certMarks||c.marks||"")}</p>
+   </article>`;
+  const inp=$("certname"),out=$("certnameout");inp.oninput=()=>{const v=inp.value.trim();store.set("certname."+c.id,v);out.innerHTML=v?esc(v):`<span class="logblank"></span>`;const sv=$("certsave");if(sv&&sv.checked){const G=finalGet();G.name=v;finalPut(G)}};
+  const sv=$("certsave");if(sv)sv.onchange=()=>{const G=finalGet();G.name=sv.checked?inp.value.trim():"";finalPut(G,true)};
+  $("certback").onclick=()=>{renderDash();top()};$("certprint").onclick=()=>window.print()}
+/* #verify: anyone with the link can check a certificate's code, signed in or not. It recomputes the hash in the browser, so it catches an
+   edited date, hours figure or attempt ID. It isn't a signature: it can't prove who took the course. */
+function renderVerify(){setTimeout(ambSync,0);TRACK="verify";$("railgame").hidden=true;$("mockcard").hidden=true;
+  $("page").innerHTML=`<div class="kicker">Halcyon</div><h1>Check a certificate</h1><div class="story"><p>Type the attempt ID, the date, the hours, and the verification code exactly as the certificate shows them.</p></div>
+   <form class="certform" id="verform" novalidate><label for="v-id">Attempt ID<input id="v-id" autocomplete="off" placeholder="HL-..."></label><label for="v-date">Date (year-month-day)<input id="v-date" autocomplete="off" placeholder="2026-10-11"></label><label for="v-hours">Hours<input id="v-hours" inputmode="decimal" autocomplete="off"></label><label for="v-code">Verification code<input id="v-code" autocomplete="off"></label><button class="btn" type="submit">Check</button></form>
+   <div id="verout" aria-live="polite"></div><p class="prog">This check catches a changed date, hours figure, or attempt ID. It can't prove who took the course, so it isn't a signature.</p>`;
+  $("verform").onsubmit=e=>{e.preventDefault();const id=$("v-id").value.trim(),d=$("v-date").value.trim(),h=$("v-hours").value.trim(),code=$("v-code").value.trim().toUpperCase().replace(/[^0-9A-F]/g,"");
+    const ok=!!(id&&d&&h&&code)&&finalCode(id,d,(+h).toFixed(1)).replace(/-/g,"")===code;
+    $("verout").innerHTML=ok?`<div class="callout verok"><b>It matches.</b> The code fits that attempt, date, and hours.</div>`:`<div class="callout verbad"><b>It doesn't match.</b> At least one of the four values isn't what was issued. Check for typos first.</div>`};navSync()}
+function finalHomeHTML(){if(!COURSE.final)return "";const cd=courseDone(),F=finalGet(),last=F.list[F.list.length-1],cert=certAttempt();
+  return `<h2>Final assessment</h2><div class="card mockhome"><p>100 questions, ${COURSE.finalPass||70} percent to pass. Pass it to get your certificate of completion. ${cd.all?"":`It opens when you've finished all ${cd.n} chapters (${cd.done} done).`} ${last?`Last attempt: <b>${last.right} of ${last.total}</b>, ${last.pass?"passed":"not yet"}.`:""}</p><button class="btn" type="button" id="finalbtn">Open the final assessment</button>${cert?` <button class="btn ghost" type="button" id="certbtn">Your certificate</button>`:""}</div>`}
+function wireFinalHome(){const b=$("finalbtn");if(b)b.onclick=()=>openFinal();const c=$("certbtn");if(c)c.onclick=()=>openCert()}
+function finalDashHTML(){if(!COURSE.final)return "";const F=finalGet(),cd=courseDone(),cert=certAttempt();
+  const rows=F.list.slice().reverse().map(a=>`<tr><td>${esc(logDay(a.date))}</td><td class="num">${a.right}/${a.total} (${Math.round(a.right/a.total*100)}%)</td><td>${a.pass?"Passed":"Not yet"}${a.preview?" · preview":""}</td><td class="num">${esc(a.hours)}</td></tr>`).join("");
+  return `<h2>Final assessment</h2><p class="prog">${cd.all?`All ${cd.n} chapters done, so it's unlocked. Pass it and you'll get the certificate of completion.`:`It opens when you've finished all ${cd.n} chapters. You've finished ${cd.done}. Pass it and you'll get the certificate of completion.`}</p>${rows?`<div class="tablewrap"><table><tr><th>Date</th><th>Score</th><th>Result</th><th>Logged hours</th></tr>${rows}</table></div>`:""}<div class="bar"><button class="btn small" type="button" id="finalbtn">Open the final assessment</button>${cert?`<button class="btn small ghost" type="button" id="certbtn">Your certificate</button>`:""}</div>`}
+
 /* ===== progress dashboard, practice sets, study plan ===== */
 function ALLT(){return Object.keys(TASKNAMES)}
 function mastery(){
@@ -321,8 +452,8 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
    <h2>Full Course</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("full",fullL)}</table></div>
    ${refL.length?`<h2>Refresher</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("ref",refL)}</table></div>`:""}
    <h2>Mock exams</h2>${H.length?`<div class="tablewrap"><table><tr><th>Date</th><th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td><td>${a.mode}</td><td class="num">${a.right}/${a.total} (${Math.round(a.right/a.total*100)}%)</td><td class="num">${a.mode==="exam"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No mock exams yet.</p>`}
-   ${logSection()}`;
-  const pg=$("page");wireLog();
+   ${finalDashHTML()}${logSection()}`;
+  const pg=$("page");wireLog();wireFinalHome();
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
   pg.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>{openChapter("full",+b.dataset.lesson);S.max=Math.max(S.max||0,1);fullGo(1)});
   pg.querySelectorAll("[data-scene]").forEach(b=>b.onclick=()=>{const [n,i]=b.dataset.scene.split(":").map(Number);openChapter("full",n);const p=steps(CH).findIndex(x=>x.k==="scene"&&x.i===i);S.max=Math.max(S.max||0,p);fullGo(p)});
@@ -369,7 +500,7 @@ function logMerge(a,b){const out={v:1,days:{}},A=(a&&a.days)||{},B=(b&&b.days)||
 function logWhat(){if(NAR.page==="book"&&NAR.book&&!NAR.audio.paused)return "b"+NAR.book.n;
   if(TRACK==="ref"&&CH)return "c"+CH.num;
   if(TRACK==="full"&&CH&&S){const L=steps(CH),x=L[Math.min(S.pos||0,L.length-1)];return (({open:"c",end:"c",lesson:"l",scene:"s",drill:"d",exercise:"e",quiz:"q",labs:"x"})[x.k]||"c")+CH.num}
-  if(TRACK==="mock")return "m";if(TRACK==="practice")return "p";return null}
+  if(TRACK==="mock")return "m";if(TRACK==="practice")return "p";if(TRACK==="final")return "f";return null}
 function logAdd(sec,kind,what){sec=Math.round(sec);if(!(sec>0)||!COURSE)return;const L=logGet(),k=dayKey(Date.now()),D=L.days[k]||(L.days[k]={t:{},a:[]}),id=devId(),T=D.t[id]||(D.t[id]=[0,0]);
   sec=Math.min(sec,16*3600-T[0]-T[1]);if(sec<=0)return;T[kind==="l"?1:0]+=sec;if(what&&!D.a.includes(what)&&D.a.length<40)D.a.push(what);logSave(L)}
 /* listening: settle the span since the last mark, then mark again if the audio is still playing */
@@ -397,7 +528,7 @@ function logActText(a){const kinds=[["c","story"],["l","lesson"],["s","decisions
   a.forEach(code=>{const m=/^([clsdeqxb])(\d+)$/.exec(code);if(!m)return;if(m[1]==="b"){if(!book.includes(+m[2]))book.push(+m[2])}else(ch[m[2]]=ch[m[2]]||new Set()).add(m[1])});
   Object.keys(ch).map(Number).sort((x,y)=>x-y).forEach(n=>out.push(`Chapter ${n}: ${kinds.filter(([k])=>ch[n].has(k)).map(([,w])=>w).join(", ")}`));
   if(book.length)out.push(`Audiobook, chapter${book.length>1?"s":""} ${book.sort((x,y)=>x-y).join(", ")}`);
-  if(a.includes("m"))out.push("Mock exam");if(a.includes("p"))out.push("Practice set");return out.join("; ")}
+  if(a.includes("m"))out.push("Mock exam");if(a.includes("p"))out.push("Practice set");if(a.includes("f"))out.push("Final assessment");return out.join("; ")}
 const hrs=s=>(s/3600).toFixed(1),mins=s=>Math.round(s/60);
 function logDay(d){const [y,m,x]=d.split("-").map(Number);return new Date(y,m-1,x).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}
 function logRangeText(R){if(!R.length)return "No study time logged yet";return R[0].d===R[R.length-1].d?logDay(R[0].d):`${logDay(R[0].d)} to ${logDay(R[R.length-1].d)}`}
@@ -647,19 +778,20 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
   if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
 function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return["Mock exam",()=>openMock()];const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
 /* where you are lives in the address (#pmp/full/3, #guide), so a reload reopens the same screen */
-function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="mock"?c+"/mock":(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
+function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock":(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
   store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
 /* anonymous page views (Vercel Web Analytics, loaded in index.html): the route only, as a path. Never a name, email, id, or progress. */
 let LASTPV="";function pageview(r){if(!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:"/"+r})}catch(e){}}
 async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filter(Boolean);if(!p.length)return false;
+  if(p[0]==="verify"){renderVerify();return true}
   if(p[0]==="library"){renderLibrary();return true}if(p[0]==="guide"){renderGuide();return true}if(p[0]==="upcoming"){renderUpcoming();return true}if(p[0]==="labtest"){await loadScripts(["tools/lab_fixture.js"]);renderLabTest();return true}
   const c=courseById(p[0]);if(!c||c.status!=="live")return false;if(c.id!==COURSE.id&&!(await useCourse(c.id)))return false;if(!c._loaded&&(c.scripts||c.labs))await useCourse(c.id);
   const v=p[1]||"home",n=+p[2];
   if((v==="full"||v==="ref")&&TRACKS[v].list().find(x=>x.num===n)){openChapter(v,n);return true}
-  if(v==="listen"){renderBook();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock();return true}
+  if(v==="listen"){renderBook();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock();return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
   renderHome();renderRail();return true}
 window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
-function navSync(){noteRoute();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+function navSync(){noteRoute();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
@@ -763,8 +895,9 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
    <div class="ctiles">${full.map(c=>tile("full",c)).join("")}</div>
    ${ref.length?`<h2>Refresher <span class="prog">${ref.length} chapters · a fast review</span></h2><div class="ctiles">${ref.map(c=>tile("ref",c)).join("")}</div>`:""}
    <h2>Mock exam</h2><div class="card mockhome"><p>${COURSE.mockShort||"A full practice exam."} ${last?`Last attempt: <b>${last.right} of ${last.total}</b> (${Math.round(last.right/last.total*100)}%) on ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}.`:"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the mock exam</button></div>
+   ${finalHomeHTML()}
    <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the ${ALLT().length}-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>Cast</b><span class="prog">Meet everyone, hear them talk</span></button></div>`;
-  const pg=$("page");wireLabWait();
+  const pg=$("page");wireLabWait();wireFinalHome();
   $("resume").onclick=()=>lp?lp[1]():openChapter("full",1);
   $("hfree").onclick=async()=>{const B=await bookManifest();const lpv=store.get("lastplace."+COURSE.id,null);const ed=store.get("bookEd."+COURSE.id,"story");let n=lpv&&lpv.t==="full"?lpv.n:1;const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);if(!have.length)return renderBook();if(!have.includes(n))n=have.find(k=>k>=n)||have[have.length-1];renderBook();bookPlay(ed,n)};
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
@@ -793,7 +926,7 @@ function renderRail(){
   $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
 }
 function render(){_render();castStrip();narAttach();navSync();ambSync();handoffOffer()}
-function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();if(TRACK==="final")return finalRender();if(TRACK==="cert")return renderCert();if(TRACK==="verify")return renderVerify();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
@@ -889,7 +1022,7 @@ async function boot(){
   if((COURSE.scripts||COURSE.labs)&&!COURSE._loaded)await useCourse(COURSE.id);
   if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;$("username").textContent="";if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
   let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
-  if(!me.user){const inv=new URLSearchParams(location.search).get("invite");
+  if(!me.user){if(/^#verify\b/.test(location.hash)){document.querySelector(".rail").hidden=true;return renderVerify()}const inv=new URLSearchParams(location.search).get("invite");
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
       document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;return}
     return renderAuth("login")}

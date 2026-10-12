@@ -10,5 +10,6 @@
   const ORD={};
   // groups: [{key, items:[{id, n, correct}]}]
   function build(groups){groups.forEach(g=>{if(!g.items.length)return;const mod=Math.max(2,Math.min(4,...g.items.map(it=>it.n)));const T=targets(g.key,g.items.length,mod);g.items.forEach((it,i)=>{ORD[it.id]=arrange(it.id,it.n,it.correct,T[i]%it.n)})})}
-  G.HalcyonOrder={build,get:(id,n)=>ORD[id]||[...Array(n).keys()],_ORD:ORD};
+  // perm: a seeded shuffle of 0..n-1 (the final assessment's question order, a new key per attempt)
+  G.HalcyonOrder={build,get:(id,n)=>ORD[id]||[...Array(n).keys()],perm:(key,n)=>shuffle([...Array(n).keys()],rng(hash(key))),_ORD:ORD};
 })(typeof window!=="undefined"?window:globalThis);

@@ -1,0 +1,38 @@
+/* Final assessment, certificate of completion, and the #verify page (engine.js, "final assessment and certificate" section). */
+.finallock{display:block}
+.finalrv{padding-left:22px}.finalrv li{margin:0 0 8px}
+.finalreview summary{cursor:pointer}
+.certform{display:grid;gap:10px;max-width:560px;margin:4px 0 22px}
+.certform label{display:grid;gap:4px;font-size:14px;color:var(--muted)}
+.certform label.chk{display:flex;gap:8px;align-items:center;color:var(--ink)}
+.certform input:not([type=checkbox]){font:inherit;font-size:16px;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:7px;padding:9px 11px;min-width:0;width:100%}
+.certform .prog{margin:0}
+.certform .btn{justify-self:start}
+.certdoc{border:2px solid var(--ink);outline:1px solid var(--line);outline-offset:4px;border-radius:4px;padding:clamp(18px,4vw,40px);margin:10px 4px 6px;text-align:center;font-family:var(--story);overflow-wrap:anywhere}
+.certkick{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0}
+.certh{font-size:clamp(28px,5vw,42px);margin:6px 0 14px}
+.certlead{margin:6px 0;font-size:17px;color:var(--muted)}
+.certname{font-size:clamp(24px,4.4vw,34px);font-weight:600;margin:4px 0 8px;min-height:1.3em}
+.certname .logblank{min-width:min(320px,80%)}
+.certcourse{font-size:clamp(20px,3.4vw,26px);font-style:italic;margin:4px 0 18px}
+.certfacts{text-align:left;max-width:620px;margin:10px auto 16px;font-family:var(--ui);font-size:15px}
+.certstate{max-width:620px;margin:0 auto 16px;font-size:16px}
+.certh2{font-size:18px;margin:14px 0 8px}
+.certch{list-style:none;padding:0;margin:0 auto 16px;max-width:620px;text-align:left;font-family:var(--ui);font-size:13.5px;columns:2;column-gap:24px}
+.certch li{display:flex;justify-content:space-between;gap:8px;break-inside:avoid;padding:2px 0;border-bottom:1px dotted var(--line)}
+.certver{max-width:620px;margin:0 auto 12px;text-align:left;font-family:var(--ui);font-size:13px;border-top:1px solid var(--line);padding-top:10px}
+.certver p{margin:0 0 4px}
+.certcode{font-family:var(--mono);font-size:14px;letter-spacing:.06em}
+.certfine{max-width:620px;margin:8px auto 0;font-family:var(--ui);font-size:11.5px;color:var(--muted);text-align:left}
+.verok{border-left-color:var(--good)}.verbad{border-left-color:var(--bad)}
+@media (max-width:560px){.certch{columns:1}}
+@media print{
+  @page{size:letter;margin:0.5in}
+  .certdoc{margin:0;padding:28px 34px;outline:0;border:2px solid #000;break-inside:avoid}
+  .certh{font-size:34px}.certname{font-size:28px}.certcourse{font-size:22px}
+  .certch{columns:2;font-size:11.5px}.certfacts{font-size:13px}.certstate{font-size:14px}.certver{font-size:11px}.certfine{font-size:10px}
+}
+.certform .prog{font-family:var(--ui);font-size:14px;line-height:1.45}
+.certdate{white-space:nowrap;color:var(--muted)}
+.certcode{white-space:nowrap}
+.finalrv + .bar + h2,.story + .bar + h2{margin-top:24px}
