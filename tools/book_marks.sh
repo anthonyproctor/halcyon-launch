@@ -1,6 +1,7 @@
 #!/bin/zsh
 # Transcribe audiobook files with whisper (cached in /tmp/claude-501/bm), then write audio/bookmarks.json
 # (where each reading page starts inside each audiobook file). Used to hand off between Audiobook and reading.
+# book_marks.mjs places the marks from the page word timings (forced-aligned) when they match the mp3; whisper is the fallback.
 # usage: tools/book_marks.sh [course-id]   (no id = the PMP course)
 #        tools/book_marks.sh --v2          (the PMP v2 preview: audio/v2/ files, full/v2/ chapters, writes audio/v2/bookmarks.json)
 cd "$(dirname "$0")/.."

@@ -1014,7 +1014,13 @@ async function boot(){
   if($("listenlink"))$("listenlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderBook();top()};
   if($("guidelink"))$("guidelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderGuide();top()};
   /* info bubbles: hover on desktop, tap-and-hold-free toggle on touch */
-  document.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("[data-tip]");document.querySelectorAll(".tipopen").forEach(x=>{if(x!==el)x.classList.remove("tipopen")});if(el&&matchMedia("(hover: none)").matches){if(!el.classList.contains("tipopen")){el.classList.add("tipopen");setTimeout(()=>el.classList.remove("tipopen"),3500)}}},true);
+  // keep the bubble inside the viewport (16px gutter): centred under its element when it fits, slid sideways when it doesn't, so a
+  // tip near the edge of a 390px phone neither runs off screen nor widens the page into a sideways scroll
+  const placeTip=el=>{if(!el||!el.dataset||el.dataset.tip===undefined)return;const r=el.getBoundingClientRect(),vw=document.documentElement.clientWidth,g=16;
+    const w=Math.min(parseFloat(getComputedStyle(el,"::after").width)||260,260,vw-2*g),x=Math.max(g,Math.min(vw-g-w,r.left+r.width/2-w/2));
+    el.style.setProperty("--tipl",Math.round(x-r.left-el.clientLeft)+"px");el.style.setProperty("--tipr","auto");el.style.setProperty("--tipt","none")};
+  for(const ev of ["mouseover","focusin"])document.addEventListener(ev,e=>placeTip(e.target.closest&&e.target.closest("[data-tip]")),true);
+  document.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("[data-tip]");document.querySelectorAll(".tipopen").forEach(x=>{if(x!==el)x.classList.remove("tipopen")});if(el&&matchMedia("(hover: none)").matches){if(!el.classList.contains("tipopen")){el.classList.add("tipopen");placeTip(el);setTimeout(()=>el.classList.remove("tipopen"),3500)}}},true);
   if($("castlink"))$("castlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderCast();top()};
   $("proglink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderDash();top()};
   if($("liblink"))$("liblink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderLibrary();top()};

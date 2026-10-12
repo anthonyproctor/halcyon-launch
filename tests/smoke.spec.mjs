@@ -346,3 +346,28 @@ test("PMP About page: PDU line with a link to the study log; other courses make 
   await expect(page.locator("#page")).toContainText("Your study log is stored with your progress in your account");
   expect(errs).toEqual([]);
 });
+
+test("nav info bubbles stay on screen at 390px with no sideways scroll", async ({ page }) => {
+  const errs = watchErrors(page);
+  await page.goto("/#pmp/about");
+  await expect(page.locator("#usercard")).toBeVisible();
+  const tips = page.locator(".topnav [data-tip]");
+  const n = await tips.count();
+  expect(n).toBeGreaterThan(0);
+  for (let i = 0; i < n; i++) {
+    const el = tips.nth(i);
+    if (!(await el.isVisible())) continue;
+    await el.hover();
+    const r = await el.evaluate(e => {
+      const cs = getComputedStyle(e, "::after"), b = e.getBoundingClientRect(), left = b.left + e.clientLeft + parseFloat(cs.left);
+      return { shown: cs.content !== "none" && cs.content.length > 2, left, right: left + parseFloat(cs.width), vw: document.documentElement.clientWidth,
+        over: document.documentElement.scrollWidth - document.documentElement.clientWidth, tip: e.dataset.tip.slice(0, 30) };
+    });
+    expect(r.shown, `bubble showing for "${r.tip}"`).toBe(true);
+    expect(r.over, `sideways scroll with "${r.tip}" showing`).toBeLessThanOrEqual(0);
+    expect(r.left, `"${r.tip}" bubble off the left edge`).toBeGreaterThanOrEqual(0);
+    expect(r.right, `"${r.tip}" bubble off the right edge`).toBeLessThanOrEqual(r.vw);
+    await page.mouse.move(1, 1);
+  }
+  expect(errs).toEqual([]);
+});
