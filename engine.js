@@ -458,20 +458,35 @@ function fmtT(s){s=Math.max(0,Math.round(s||0));return `${Math.floor(s/60)}:${St
 function bookResumePos(ed,n,dur){const L=lget(),B=L.book;if(B&&B.n===n){if(B.ed===ed)return B.t;if(B.dur&&dur)return Math.max(0,B.t/B.dur*dur-15)}const old=store.get(`bookpos.${BID()}.${ed}.${n}`,0);return old||0}
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
 async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];if(NOAUD())return null;try{const r=await fetch(R(V2(`audio/pages/${key}/timings.json`)),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
+// the narration also reads props (vlog cards, emails, console logs): their headers and bodies are highlight targets too
+const PROPSEL=pre=>[".vh",".vm",".ph",".pm",".pb",".bubble"].map(x=>`${pre}.story .prop ${x}`).join(", ");
 function narPageId(){
-  if(TRACK==="ref"){if(S.step<0)return["open",".story p"];if(S.step>=CH.scenes.length)return["end",".story p"];const i=S.step,p=S.picks[i];return p===undefined?["s"+i,".story p, .choice span:not(.k)"]:[`o${i}_${p}`,".outcome .story p"]}
+  if(TRACK==="ref"){if(S.step<0)return["open",".story p, "+PROPSEL("")];if(S.step>=CH.scenes.length)return["end",".story p, "+PROPSEL("")];const i=S.step,p=S.picks[i];return p===undefined?["s"+i,".story p, .choice span:not(.k), "+PROPSEL("")]:[`o${i}_${p}`,".outcome .story p, "+PROPSEL(".outcome ")]}
   const st=steps(CH)[Math.min(S.pos,steps(CH).length-1)];
-  if(st.k==="open")return["open",".story p"];if(st.k==="lesson")return["lesson","h1, .lesson h2, .lesson .story p, .lesson .examtip"];if(st.k==="end")return["end",".story p"];
-  if(st.k==="scene"){const p=S.picks[st.i];return p===undefined?["s"+st.i,".story p, .choice span:not(.k)"]:[`o${st.i}_${p}`,".outcome .story p"]}
+  if(st.k==="open")return["open","h1, .story p, "+PROPSEL("")];if(st.k==="lesson")return["lesson","h1, .lesson h2, .lesson .story p, .lesson .examtip, "+PROPSEL(".lesson ")];if(st.k==="end")return["end",".story p, "+PROPSEL("")];
+  if(st.k==="scene"){const p=S.picks[st.i];return p===undefined?["s"+st.i,"h2, .story p, .choice span:not(.k), "+PROPSEL("")]:[`o${st.i}_${p}`,".outcome .story p, "+PROPSEL(".outcome ")]}
   return[null,null];
 }
 const norm=w=>w.toLowerCase().normalize("NFD").replace(/[^a-z0-9]/g,"");
-function wrapWords(sel){const els=[...$("page").querySelectorAll(sel)];const words=[];
+function wrapWords(sel){const all=[...$("page").querySelectorAll(sel)],els=all.filter(e=>!all.some(o=>o!==e&&o.contains(e)));const words=[]; // outermost only: a prop body's <p>s are wrapped once
   els.forEach(el=>{const tw=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];while(tw.nextNode())nodes.push(tw.currentNode);
     nodes.forEach(nd=>{if(!nd.nodeValue.trim())return;const frag=document.createDocumentFragment();nd.nodeValue.split(/(\s+)/).forEach(part=>{if(!part)return;if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part));return}const sp=document.createElement("span");sp.className="w";sp.textContent=part;frag.appendChild(sp);words.push(sp)});nd.parentNode.replaceChild(frag,nd)})});
   return words}
-function alignWords(tw,dom){const map=[];let j=0;const dn=dom.map(d=>norm(d.textContent));
-  tw.forEach(([t])=>{const n=norm(t);if(!n||/^[A-D]$/.test(t)){map.push(null);return}const win=n.length<=2?3:12;let hit=null;for(let k=j;k<Math.min(dom.length,j+win);k++){if(dn[k]&&(dn[k]===n||dn[k].startsWith(n)||n.startsWith(dn[k]))){hit=k;break}}if(hit!==null){map.push(hit);j=hit+1}else map.push(null)});return map}
+// Map each narrated word (timings) to a word on the page. A global, order-keeping alignment (weighted LCS): words read aloud
+// but not shown (the "Chapter one" heading, "A log from", spelled-out times) stay unmapped instead of pulling every later word off
+// by one, which the old greedy look-ahead did. Then a run of unmapped narrated words that sits across from a run of unmapped page
+// words (a number read as words, a respelled name) is spread over those page words in order.
+function alignWords(tw,dom){const n=tw.length,m=dom.length,map=new Array(n).fill(null);if(!n||!m)return map;
+  const a=tw.map(([t])=>norm(t)),b=dom.map(d=>norm(d.textContent)); // choice letters ("B. Call Hale") aren't page words: they stay unmapped
+  const sc=(x,y)=>!x||!y?0:x===y?3:(x.length>=3&&y.length>=3&&(x.startsWith(y)||y.startsWith(x)))?2:0;
+  const W=m+1;let prev=new Int32Array(W),cur=new Int32Array(W);const tb=new Uint8Array((n+1)*W);
+  for(let i=1;i<=n;i++){cur[0]=0;const ai=a[i-1];for(let j=1;j<=m;j++){let best=prev[j],d=1;if(cur[j-1]>best){best=cur[j-1];d=2}if(ai){const s=sc(ai,b[j-1]);if(s&&prev[j-1]+s>best){best=prev[j-1]+s;d=3}}cur[j]=best;tb[i*W+j]=d}const t=prev;prev=cur;cur=t}
+  for(let i=n,j=m;i>0&&j>0;){const d=tb[i*W+j];if(d===3){map[i-1]=j-1;i--;j--}else if(d===1)i--;else j--}
+  const anc=[[-1,-1]];map.forEach((d,i)=>{if(d!=null)anc.push([i,d])});anc.push([n,m]);
+  for(let k=1;k<anc.length;k++){const [i0,d0]=anc[k-1],[i1,d1]=anc[k],ti=i1-i0-1,dj=d1-d0-1;if(ti<=0||dj<=0||(k===1||k===anc.length-1)&&dj>ti*2+2)continue;
+    if(dj>ti*4+4||ti>dj*4+4)continue; // not the same stretch of text read two ways
+    for(let i=i0+1;i<i1;i++)if(a[i])map[i]=d0+1+Math.min(dj-1,Math.floor((i-i0-1)*dj/ti))}
+  return map}
 function bookSec(){if(NAR.page!=="book"||!NAR.book)return;const pid=pidAt(NAR.book.n,NAR.book.ed,NAR.audio.currentTime||0);if(pid&&pid!==NAR.bsec){NAR.bsec=pid;const l=$("narlabel");if(l)l.textContent=`Ch ${NAR.book.n} · ${pidLabel(pid,NAR.book.n)}`;narMedia()}}
 ["seeked","timeupdate"].forEach(ev=>NAR.audio.addEventListener(ev,()=>bookSec()));
 function narHighlight(){if(NAR.page==="book"){bookSec();const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];

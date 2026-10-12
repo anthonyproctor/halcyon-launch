@@ -1,8 +1,8 @@
 """Re-render some pages of a chapter after a text edit, re-render the Story only edition, and rebuild both Audiobook files.
-usage: rerender_pages.py <course root or .> <chapter> <pages.json> <story.json or - to skip Story only> <pid,pid,...>"""
+usage: [TTS=gemini] rerender_pages.py <course root or .> <chapter> <pages.json> <story.json or - to skip Story only> <pid,pid,...>"""
 import json, os, subprocess, sys, tempfile
 root, n, spec_p, story_p, pids = sys.argv[1], int(sys.argv[2]), os.path.abspath(sys.argv[3]), (os.path.abspath(sys.argv[4]) if sys.argv[4]!="-" else None), sys.argv[5].split(",")
-HERE = os.path.dirname(os.path.abspath(__file__)); PY = os.path.join(HERE, "..", ".ttsvenv", "bin", "python"); RP = os.path.join(HERE, "render_pages.py")
+HERE = os.path.dirname(os.path.abspath(__file__)); PY = os.path.join(HERE, "..", ".ttsvenv", "bin", "python"); RP = os.path.join(HERE, "render_pages_gemini.py" if os.environ.get("TTS", "kokoro") == "gemini" else "render_pages.py")  # TTS=gemini or kokoro (default)
 os.chdir(root); nn = f"{n:02d}"; tmp = tempfile.mkdtemp()
 spec = json.load(open(spec_p))
 def run(*a, **k): subprocess.run(a, check=True, **k)

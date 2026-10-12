@@ -4,8 +4,10 @@
 cd "$(dirname "$0")/.."
 C=$1; n=$2; nn=$(printf %02d $n); T=/tmp/claude-501/$C; mkdir -p $T
 node tools/pages.mjs full $n $T/p$n.json --course $C >/dev/null && node tools/pages.mjs full $n $T/p${n}s.json --course $C --story >/dev/null || exit 1
+# TTS=gemini uses tools/render_pages_gemini.py (Gemini, casting in tools/gemini_voices.json, its log in $T/tts.log); TTS=kokoro or unset = Kokoro
+TTS=${TTS:-kokoro}; RP=render_pages.py; ERR=/dev/null; [[ $TTS == gemini ]] && RP=render_pages_gemini.py && ERR=$T/tts.log
 cd courses/$C && P=../../.ttsvenv/bin/python
-$P ../../tools/render_pages.py $T/p$n.json audio/full-ch$nn.mp3 2>/dev/null | grep done && $P ../../tools/render_pages.py $T/p${n}s.json audio/story/full-ch$nn.mp3 2>/dev/null | grep done || exit 1
+$P ../../tools/$RP $T/p$n.json audio/full-ch$nn.mp3 2>>$ERR | grep done && $P ../../tools/$RP $T/p${n}s.json audio/story/full-ch$nn.mp3 2>>$ERR | grep done || exit 1
 cd ../.. && for f in courses/$C/audio/full-ch$nn.mp3 courses/$C/audio/story/full-ch$nn.mp3; do ./tools/add_stings.sh $f; done
 python3 - $n $C <<'PY'
 import json,subprocess,sys
