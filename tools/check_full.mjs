@@ -1,16 +1,16 @@
-// Validates Full Course chapter files and mock exam files.
-// PMP v2 drafts: pass files from full/v2/ (or add --v2) and the v2 flags, speakers, approach tags, and case clusters are checked instead.
+// Validates PMP Full Course chapter files and mock exam files against the live v2 book (The Halcyon Launch v2, live 2026-10-11):
+// the v2 flags, speakers, approach tags, case clusters, and vlog attributes from tools/v2meta.mjs. The v1 book is gone (git history only).
+// No arguments: every live chapter listed in full/v2/preview.js plus the mock exam. --v2 is accepted and ignored (it was the preview switch).
 import fs from 'fs';
 globalThis.window={};
-const files=process.argv.slice(2).filter(a=>a!=="--v2");
-const isV2=f=>/(^|\/)full\/v2\//.test(f);
-const V2=process.argv.includes("--v2")||(files.length>0&&files.every(isV2));
-if(!V2&&files.some(isV2)){console.log("ERROR: run full/v2 drafts separately from v1 files");process.exit(1)}
-const V2M=V2?await import('./v2meta.mjs'):null;
+let files=process.argv.slice(2).filter(a=>a!=="--v2");
+if(!files.length){const w={};new Function('window',fs.readFileSync('full/v2/preview.js','utf8'))(w);files=[...(w.HALCYON_V2.files||[]).filter(f=>/^ch\d+\.js$/.test(f)).map(f=>'full/v2/'+f),'mock/people.js','mock/process.js','mock/business.js']}
+const V2=true;
+const V2M=await import('./v2meta.mjs');
 for(const f of files) new Function('window',fs.readFileSync(f,'utf8'))(globalThis.window);
 const TASKS=new Set(["P1","P2","P3","P4","P5","P6","P7","P8","R1","R2","R3","R4","R5","R6","R7","R8","R9","R10","B1","B2","B3","B4","B5","B6","B7","B8"]);
 const DOM={P:"People",R:"Process",B:"Business Environment"};
-const FLAGS=V2?V2M.V2_FLAGS:new Set(["allhands","nocharter","blamedtheo","hidnumbers","publicfight","hiddefect","skippedtest","cutcorners","paddedestimates","noteamcharter","hidfromochoa","sidelineddevin","overrodepo","squeezedlabelforge","forcedrollout","nolessons","nobusinesscase","overloadedpriya"]);
+const FLAGS=V2M.V2_FLAGS;
 let bad=0;const err=(m)=>{console.log("  ERROR "+m);bad++};
 const dash=t=>/[–—]/.test(t);
 function lenCheck(label,texts,right){const L=texts.map(t=>t.length);const others=L.filter((_,k)=>k!==right);

@@ -1,19 +1,26 @@
-# full/v2: The Halcyon Launch, v2 drafts (not live)
-Draft chapters for the rewritten PMP story course: 2061, a Mars colony losing its air, one launch window, and Sam Okafor running the rescue ship with his daughter on the station.
-Written to `full/BIBLE_v2_proposal.md` and its Decisions (2026-10-11). Nothing here is loaded by `index.html` or `courses.js`; the live course is still `full/ch*.js` and `full/cast.js`.
-Files are drop-in shaped (`ch01.js` pushes to `window.HALCYON_FULL`, `cast.js` sets `window.HALCYON_CAST`). The engine and tools now read the v2 fields: `approach` (accepted, not shown), `cases` with quiz `case` (the scenario shows once, before its first question, in the chapter quiz and in practice sets), and doc props with `kind="vlog"` (a recorded log card, narrated in the voice of `from`) and `kind="consolelog"` (a monospace log card, narrated in Ruth's voice).
-`ch01_sample.txt` is a plain text excerpt for test audio.
+# full/v2: The Halcyon Launch v2 (LIVE, read in place)
+The rewritten PMP story course: 2061, a Mars colony losing its air, one launch window, and Sam Okafor running the rescue ship with his daughter on the station.
+Written to `full/BIBLE_v2_proposal.md` and its Decisions (2026-10-11).
 
-## Preview (unlisted)
-Open `/?v2#pmp/full/1` (signed in, on the live site or locally). For that page only, the PMP Full Course loads the files listed in `preview.js` instead of `full/ch*.js` and `full/cast.js`, and takes its course text, meters, leads, and cast fallbacks from `preview.js`. A banner says it's the preview. Progress is kept on that device under its own storage names (`halcyon.v2preview.*`), and the preview never reads from or writes to the account, so a reader's real progress is untouched. It isn't in the Library or Coming next. Art, portraits, and audio come from `art/v2/`, `cast/v2/`, `audio/v2/`; until those exist the preview shows initials and skips narration (`audio:false`), and it hides the v1 labs (`labs:false`). Leave the page through any link without `?v2` to get the live course back.
-When you draft a chapter, add it to `files` in `preview.js`.
+## Live in place since 2026-10-11
+Anthony approved replacing the v1 book. The v1 chapters, `full/cast.js`, v1 chapter audio and page clips, and v1 chapter art were deleted (git history only).
+The engine loads `full/v2/preview.js`, then every file in its `files` list from `full/v2/`, for every reader. Art, portraits, and audio come from `art/v2/`, `cast/v2/`, `audio/v2/`
+(initials and no art until they exist; no audio until `audio:true` in preview.js; the Audiobook lists only chapters in `audio/v2/audiobook.json`).
+Course text is in the `pmp` entry of `courses.js`, the cast fallbacks in `engine.js`. Saved progress for the v2 Full Course is under keys 201 to 215 (v1 used 101 to 115, left on the server unread),
+and Audiobook and page positions and Labs waiting under 904 (v1: 903). The mock (900 to 902) is unchanged. The Refresher (`chapters/`, v1 hospital story) is hidden from the UI, to be rewritten for Mars later.
+The labs in `courses/pmp/labs.js` are set in the v2 world (stakeholders ch1, critical path ch3, earned value ch5).
+When a chapter is ready, add it to `files` in `preview.js`.
 
 ## Checks and narration
 - `node tools/check_full.mjs full/v2/ch01.js` checks a v2 chapter against the v2 flags (the bible's Flags table), speakers (the bible's `speakers` list plus `full/v2/cast.js`), approach tags, case clusters, and vlog attributes. Run v1 files separately; the v1 check is unchanged.
 - `node tools/check_speakers.mjs full/v2/ch01.js` does the same speaker check, including each vlog's `from`.
 - `node tools/pages.mjs full 1 out.json --v2` (add `--story` for the Story only edition) builds the narration spec. Its `audio` field sends `render_pages.py` output to `audio/v2/pages/f1`, so v1 audio is never overwritten. The v2 voices are in the `CAST` maps in `tools/render_pages.py` and `tools/render_kokoro.py`.
 
-## Switch-over plan (not done; one commit when Anthony approves)
+## File move (later, once all 15 chapters exist)
+Already done in place: courses.js fields (step 5), engine cast and lesson intro and ambience (step 6), saved progress (step 7: new key block), refresher retired from the UI (step 8), labs (step 9),
+check_full/check_speakers default to the live v2 chapters (part of step 10), sw.js cache bump (step 11), mock checked (step 12: generic, no v1 story). What's left is the move itself:
+steps 1 to 4, then make `V2()` in engine.js the identity, drop `FULL_BASE`'s PMP special case only if progress keys move too (they shouldn't), and update `readyCount`, sw.js SHELL, and tools/pages.mjs paths.
+Original plan, for reference:
 1. Files: `git mv full/v2/chNN.js full/chNN.js` for all 15 (replacing v1), `full/v2/cast.js` to `full/cast.js`. Keep v1 in git history only. Move `full/BIBLE.md` aside and promote `full/BIBLE_v2_proposal.md`. Replace `full/PORTRAIT_PROMPTS.md`.
 2. Episode paths inside the chapters: each chapter's `episode.src` says `audio/v2/full-chNN.mp3`; change to `audio/full-chNN.mp3` when the files move (the only chapter edit the switch needs).
 3. Audio: move `audio/v2/pages/fN` to `audio/pages/fN`, `audio/v2/full-chNN.mp3` and `audio/v2/story/full-chNN.mp3` to `audio/` and `audio/story/`, and `audio/v2/audiobook.json` and `audio/v2/bookmarks.json` to `audio/`. Re-run `tools/book_marks.sh` if marks were built for the v2 paths.

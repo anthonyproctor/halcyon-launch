@@ -2,11 +2,12 @@
 "use strict";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-/* v2 preview (unlisted): /?v2#pmp/full/1 swaps the PMP Full Course for the drafts in full/v2 for this page session only. Its own local storage namespace, no server writes. */
-const V2P=(()=>{try{return new URLSearchParams(location.search).has("v2")}catch(e){return false}})();
-const SP=V2P?"halcyon.v2preview.":"halcyon.";
-const V2=p=>V2P&&COURSE&&COURSE.id==="pmp"&&!/^(art|cast|audio)\/v2\//.test(p)?p.replace(/^(art|cast|audio)\//,"$1/v2/"):p; // preview reads its own art, portraits, and audio
-const NOAUD=()=>V2("audio/")!=="audio/"&&!(window.HALCYON_V2||{}).audio; // preview before its narration is rendered: don't fetch audio that isn't there
+/* PMP Full Course = The Halcyon Launch v2 (2026-10-11), read in place: chapters from full/v2/ (full/v2/preview.js lists them), art, portraits, and audio from art/v2/, cast/v2/, audio/v2/.
+   At the later file move (full/v2/README.md) these paths go back to full/, art/, cast/, audio/ and V2 becomes the identity. */
+const SP="halcyon.";
+const PMP2=()=>!!(COURSE&&COURSE.id==="pmp");
+const V2=p=>PMP2()&&!/^(art|cast|audio)\/v2\//.test(p)?p.replace(/^(art|cast|audio)\//,"$1/v2/"):p;
+const NOAUD=()=>PMP2()&&!(window.HALCYON_V2||{}).audio; // v2 narration not switched on yet in preview.js: don't fetch audio that isn't there
 const store={get(k,d){try{const v=localStorage.getItem(SP+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(SP+k,JSON.stringify(v))}catch(e){}}};
 const clamp=v=>Math.max(0,Math.min(100,v));
 let DOMS=["People","Process","Business Environment"];
@@ -14,14 +15,17 @@ const PMP_METERS=[["trust","Team trust"],["conf","Stakeholder confidence"],["hea
 const METERS_OF=()=>(COURSE&&COURSE.meters)||PMP_METERS; // per course labels for the three meters
 const RUTH_LEADS={3:["That's the move.","Good. That's what I'd want from a flight director.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best answer.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have stopped you there.","Let's talk about that one."]};
 let TASKNAMES={P1:"Develop a common vision",P2:"Manage conflicts",P3:"Lead the project team",P4:"Engage stakeholders",P5:"Align stakeholder expectations",P6:"Manage stakeholder expectations",P7:"Help ensure knowledge transfer",P8:"Plan and manage communication",R1:"Integrated plan and plan delivery",R2:"Develop and manage scope",R3:"Value-based delivery",R4:"Plan and manage resources",R5:"Plan and manage procurement",R6:"Plan and manage finance",R7:"Plan and optimize quality",R8:"Plan and manage schedule",R9:"Evaluate project status",R10:"Manage project closure",B1:"Project governance",B2:"Project compliance",B3:"Manage and control changes",B4:"Remove impediments, manage issues",B5:"Plan and manage risk",B6:"Continuous improvement",B7:"Support organizational change",B8:"External business environment"};
-let BASE_CAST=[["Sam Okafor","You. Infrastructure ops manager, former Air Force maintenance NCO."],["Ruth Calder","Board member, retired NASA flight director. Your mentor."],["Elena Vasquez","CEO and founder."],["Grant Mercer","Chief Revenue Officer. Closed the Cascade deal."],["Lena Cho","CTO. Brilliant, hates conflict."],["Theo Lindqvist","ML platform lead. Everything runs through him."],["Dr. Raymond Ochoa","CIO, Cascade Valley Health."]];
-let FULL_CAST_EXTRA=[["Dana Okafor","Sam's wife. High school chemistry teacher. Notices when he isn't sleeping."],["Priya Shah","Junior engineer. Shadows Theo."]];
+let BASE_CAST=[["Sam Okafor","You. Tallgrass integration operations manager, former Air Force F-16 crew chief."],["Ruth Calder","Retired ARA flight director on the Independent Readiness Board."],["Ada Okafor","Sam's daughter. Hydroponics engineer on Ares Station. Speaks only in recorded logs."],["Imogen Hale","Director of the Ares Relief Authority. The program's sponsor."],["Garrett Lyle","Founder and CEO of Tallgrass Aerospace."],["Hana Iwasaki","Propulsion lead. Owns the departure stage."],["Rafa Quintero","Flight software lead. Runs the agile side."]];
+let FULL_CAST_EXTRA=[["Ray Mendez","Sam's old flight chief, retired, in Tucson."],["Quinn Abernathy","Scheduler, now Sam's deputy."],["Wendell Price","Test conductor. Reads stand data by feel."]];
 
 const TRACKS={
+  /* the PMP Refresher (chapters/ch1.js to ch6.js) is the v1 hospital story: retired from the UI on 2026-10-11, to be rewritten for Mars later. DATA().ref is empty for PMP. */
   ref:{id:"ref",name:"Refresher",blurb:"6 chapters, about 2.5 hours. Ten decisions per chapter with mentor debriefs. Best for a quick review.",list:()=> (DATA().ref||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>n},
-  full:{id:"full",name:"Full Course",get blurb(){if(!COURSE||COURSE.id==="pmp")return "15 chapters, about 15 to 20 hours. Lessons, decisions, math drills, exercises, and a quiz every chapter. Learn the PMP from the ground up.";const n=COURSE.planned||(DATA().full||[]).length;return `${n} chapters, ${COURSE.fullHours||""}. Lessons, decisions, drills, exercises, and a quiz every chapter.`},list:()=> (DATA().full||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>100+n},
+  full:{id:"full",name:"Full Course",get blurb(){if(!COURSE||COURSE.id==="pmp")return "15 chapters, about 15 to 20 hours. Lessons, decisions, math drills, exercises, and a quiz every chapter. Learn the PMP from the ground up.";const n=COURSE.planned||(DATA().full||[]).length;return `${n} chapters, ${COURSE.fullHours||""}. Lessons, decisions, drills, exercises, and a quiz every chapter.`},list:()=> (DATA().full||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>FULL_BASE()+n},
   mock:{id:"mock",name:"Mock Exam",blurb:"180 questions in 240 minutes with two breaks, weighted like the real exam. Practice mode gives feedback as you go.",key:()=>900}
 };
+/* saved progress: Full Course chapter n is key base+100+n, except PMP v2, which uses 201 to 215 so v1 picks (101 to 115) never land on v2 scenes. v1 rows stay on the server, unread. */
+function FULL_BASE(){return PMP2()?200:100}
 let MOCK_KEY=900;const PMP_META={DOMS,TASKNAMES,BASE_CAST,FULL_CAST_EXTRA};
 /* ===== courses ===== */
 const COURSES=window.HALCYON_COURSES||[{id:"pmp",title:"PMP",base:0,root:"",status:"live",taskDomain:{P:"People",R:"Process",B:"Business Environment"}}];
@@ -35,8 +39,8 @@ function siteFooter(){const f=$("sitefoot");if(!f)return;const b=[...new Set(COU
   f.innerHTML=`<p>These courses are independent study stories. They aren't affiliated with or endorsed by ${esc(b.length?orList(b):"the certifying bodies whose exams they cover")}. ${esc(m.join(" "))}</p>`}
 siteFooter();
 function courseOfKey(k){return COURSES.filter(c=>k>=c.base).sort((a,b)=>b.base-a.base)[0]||COURSES[0]}
-function DATA(){if(COURSE.id==="pmp")return{ref:window.HALCYON,full:window.HALCYON_FULL,mock:window.HALCYON_MOCK,cast:window.HALCYON_CAST};return (window.HALCYON_DATA||{})[COURSE.id]||{}}
-function labsOf(c){if(V2P&&COURSE.id==="pmp"&&!(window.HALCYON_V2||{}).labs)return [];return (c&&c.scenes&&((window.HALCYON_LABS||{})[COURSE.id]||{})[c.num])||[]} // optional hands-on labs, registered per course by chapter number
+function DATA(){if(COURSE.id==="pmp")return{ref:[],full:window.HALCYON_FULL,mock:window.HALCYON_MOCK,cast:window.HALCYON_CAST};return (window.HALCYON_DATA||{})[COURSE.id]||{}}
+function labsOf(c){return (c&&c.scenes&&((window.HALCYON_LABS||{})[COURSE.id]||{})[c.num])||[]} // optional hands-on labs, registered per course by chapter number
 function MENTOR(){return COURSE.mentor||"Ruth"}
 function MENTOR_FULL(){return COURSE.mentorFull||(MENTOR()==="Ruth"?"Ruth Calder":MENTOR())}
 function LEADS(){return COURSE.leads||(MENTOR()==="Ruth"?RUTH_LEADS:{...RUTH_LEADS,3:["That's the move.","Good. That's the call.","Exactly right."]})}
@@ -141,7 +145,7 @@ function savePrefs(){lput({prefs:prefsNow()})}
 function applyPrefs(p){if(!p)return;if(p.amb!==undefined){AMB.on=!!p.amb;store.set("amb",AMB.on)}if(p.ambvol){AMB.vol=p.ambvol;store.set("ambvol",AMB.vol)}ambUI();if(p.story!==undefined&&!!p.story!==!!STORY())setStoryMode(!!p.story,true);const t=$("storytoggle");if(t)t.checked=STORY()}
 function setStoryMode(on,fromSync){const keyOf=st=>st?st.k+(st.i??st.j??""):"";let cur=null;if(TRACK==="full"&&CH&&S)cur=keyOf(steps(CH)[S.pos]);store.set("storymode",on);
   if(cur!==null){const ns=steps(CH);const idx=ns.findIndex(x=>keyOf(x)===cur);S.pos=Math.max(0,idx);S.max=Math.max(S.max||0,S.pos);save()}if(!fromSync)savePrefs();if(TRACK==="full"||TRACK==="ref")render()}
-function fullGo(p){const L=steps(CH);store.set(`readat.${COURSE.id}.${CH.num}`,Date.now());if(p>=L.length)p=L.findIndex(x=>x.k==="end");S.pos=p;S.max=Math.max(S.max||0,p);save();render();top()}
+function fullGo(p){const L=steps(CH);store.set(`readat.${BID()}.${CH.num}`,Date.now());if(p>=L.length)p=L.findIndex(x=>x.k==="end");S.pos=p;S.max=Math.max(S.max||0,p);save();render();top()}
 /* chapter sections: names, the lock rule (study items always open, story in order), and the list used by Contents, the side menu and ⏭ */
 function secName(c,pid){if(pid==="open")return "Opening";if(pid==="labs")return "Labs";if(pid==="lesson")return LESSON();if(pid==="end")return "Chapter ending";const i=+String(pid).slice(1),sc=c&&c.scenes[i];return `Decision ${i+1}${sc?": "+(sc.title||sc.task):""}`}
 function secLabel(c,x){return x.k==="scene"?secName(c,"s"+x.i):x.k==="drill"?`Drill: ${c.drills[x.j].title}`:x.k==="exercise"?`Exercise: ${c.exercise.title}`:x.k==="quiz"?"Quiz":x.k==="labs"?`Labs (${labsOf(c).length}, optional)`:secName(c,x.k)}
@@ -161,7 +165,7 @@ function fullRender(){
   if(cur.k==="open"){
     h+=chapterArt()+`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1>${STORY()?"":`<div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>`}${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">${STORY()?"Continue the story":"Next: the lesson"}</button></div>`;
   }else if(cur.k==="lesson"){
-    const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · The lesson · ${LESSON()}</div><h1>${esc(L.title)}</h1><p class="lessonintro">${COURSE.lessonIntro||(COURSE.id==="pmp"?"Ruth Calder is Sam's mentor, a retired NASA flight director on Halcyon's board. Her whiteboard is the lesson: the PMP ideas behind this chapter, before you make the decisions.":`${esc(LESSON())} is the lesson: the ideas behind this chapter, before you make the decisions.`)}</p>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Next: the decisions</button></div>`;
+    const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · The lesson · ${LESSON()}</div><h1>${esc(L.title)}</h1><p class="lessonintro">${COURSE.lessonIntro||`${esc(LESSON())} is the lesson: the ideas behind this chapter, before you make the decisions.`}</p>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Next: the decisions</button></div>`;
   }else if(cur.k==="scene"){
     const i=cur.i,sc=CH.scenes[i];h+=sceneHTML(sc,i,CH.scenes.length,S.picks[i],S);
   }else if(cur.k==="drill"){
@@ -342,8 +346,10 @@ function renderPractice(){setTimeout(navSync,0);
 const NAR={car:false,audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
 NAR.audio.preload="auto";
 /* listening position: per course, saved to the account so any device picks up where you stopped */
-function LKEY(){return COURSE.base+903}
-function lget(){return store.get("c"+LKEY(),null)||{}}
+/* PMP v2 keeps its Audiobook and page positions and Labs waiting under 904 (v1's were 903); its prefs carry over once */
+function LKEY(){return COURSE.base+(PMP2()?904:903)}
+function BID(){return PMP2()?"pmp2":COURSE.id} // local Audiobook keys (bookpos, bookdone, readat) for this edition
+function lget(){const L=store.get("c"+LKEY(),null);if(!L&&PMP2()){const o=store.get("c"+(COURSE.base+903),null);if(o&&o.prefs)return {prefs:o.prefs}}return L||{}}
 let lsyncT=0,lsaveAt=0;
 function lput(patch,now){const L=Object.assign(lget(),patch,{at:Date.now()});store.set("c"+LKEY(),L);if(SYNC){clearTimeout(lsyncT);const k=LKEY(),c=JSON.parse(JSON.stringify(L));lsyncT=setTimeout(()=>SYNC(k,c),now?0:1500)}}
 /* ⏮ ⏭: scene to scene in the Audiobook (then chapter to chapter), page to page while reading */
@@ -368,7 +374,7 @@ function seekTo(pos){const a=NAR.audio;plog("seekTo "+(+pos).toFixed(1)+" src="+
   const again=()=>{apply();if(++tries<3&&Math.abs(a.currentTime-pos)>1.5)setTimeout(again,250)};
   a.addEventListener("playing",again,{once:true});a.addEventListener("canplay",apply,{once:true})}
 function fmtT(s){s=Math.max(0,Math.round(s||0));return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`}
-function bookResumePos(ed,n,dur){const L=lget(),B=L.book;if(B&&B.n===n){if(B.ed===ed)return B.t;if(B.dur&&dur)return Math.max(0,B.t/B.dur*dur-15)}const old=store.get(`bookpos.${COURSE.id}.${ed}.${n}`,0);return old||0}
+function bookResumePos(ed,n,dur){const L=lget(),B=L.book;if(B&&B.n===n){if(B.ed===ed)return B.t;if(B.dur&&dur)return Math.max(0,B.t/B.dur*dur-15)}const old=store.get(`bookpos.${BID()}.${ed}.${n}`,0);return old||0}
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
 async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];if(NOAUD())return null;try{const r=await fetch(R(V2(`audio/pages/${key}/timings.json`)),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
 function narPageId(){
@@ -420,7 +426,7 @@ async function narAttach(){
   narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
 }
-NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${COURSE.id}.${ed}.${n}`,true);store.set(`bookpos.${COURSE.id}.${ed}.${n}`,0);{const L=lget();if(L.book&&L.book.n===n)lput({book:null},true)}const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
+NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${BID()}.${ed}.${n}`,true);store.set(`bookpos.${BID()}.${ed}.${n}`,0);{const L=lget();if(L.book&&L.book.n===n)lput({book:null},true)}const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
   if(!NAR.auto)return;const pid=NAR.page||"";
   if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>b.click(),700)}
   else if(pid[0]==="o"){const b=$("next");if(b)setTimeout(()=>b.click(),900)}
@@ -540,7 +546,7 @@ function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp
 function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice")?c+"/progress":TRACK==="mock"?c+"/mock":(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
   store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
 /* anonymous page views (Vercel Web Analytics, loaded in index.html): the route only, as a path. Never a name, email, id, or progress. */
-let LASTPV="";function pageview(r){if(!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:(V2P?"/v2/":"/")+r})}catch(e){}}
+let LASTPV="";function pageview(r){if(!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:"/"+r})}catch(e){}}
 async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filter(Boolean);if(!p.length)return false;
   if(p[0]==="library"){renderLibrary();return true}if(p[0]==="guide"){renderGuide();return true}if(p[0]==="upcoming"){renderUpcoming();return true}if(p[0]==="labtest"){await loadScripts(["tools/lab_fixture.js"]);renderLabTest();return true}
   const c=courseById(p[0]);if(!c||c.status!=="live")return false;if(c.id!==COURSE.id&&!(await useCourse(c.id)))return false;if(!c._loaded&&(c.scripts||c.labs))await useCourse(c.id);
@@ -566,7 +572,7 @@ function pidLabel(pid,n){const c=TRACKS.full.list().find(x=>x.num===n);return se
 function stepOfPid(c,pid){const L=steps(c);const k=pid==="open"||pid==="lesson"||pid==="end"?L.findIndex(x=>x.k===pid):L.findIndex(x=>x.k==="scene"&&x.i===+pid.slice(1));return Math.max(0,k)}
 function readPid(){const L=steps(CH);for(let p=Math.min(S.pos,L.length-1);p>=0;p--){const x=L[p];if(x.k==="open"||x.k==="lesson"||x.k==="end")return x.k;if(x.k==="scene")return "s"+x.i}return "open"}
 function markTime(n,ed,pid){const L=MARKS&&MARKS.full[n]&&MARKS.full[n][ed];if(!L)return null;const order=PIDS(TRACKS.full.list().find(x=>x.num===n)||CH);for(let k=order.indexOf(pid);k>=0&&k<order.length;k++){const m=L.find(x=>x[0]===order[k]);if(m)return m[1]}return null}
-const readAt=n=>store.get(`readat.${COURSE.id}.${n}`,0);
+const readAt=n=>store.get(`readat.${BID()}.${n}`,0);
 function readFromBook(){const LB=lget().book;if(!LB)return;const pid=pidAt(LB.n,LB.ed,LB.t)||"open";if(NAR.page==="book")NAR.audio.pause();store.set("handoff.seen",LB.at||0);openChapter("full",LB.n);if(TRACK==="full"&&CH&&CH.num===LB.n)fullGo(stepOfPid(CH,pid))}
 async function handoffOffer(){if(TRACK!=="full"||!CH||!S)return;const LB=lget().book;if(!LB||LB.n!==CH.num||!LB.at||LB.at<=readAt(CH.num)||LB.at<=store.get("handoff.seen",0))return;await bookMarks();if(TRACK!=="full"||!CH||CH.num!==LB.n)return;
   const pid=pidAt(LB.n,LB.ed,LB.t);if(!pid)return;const k=stepOfPid(CH,pid);if(k===S.pos||$("handoff"))return;
@@ -580,7 +586,7 @@ function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;l
 async function renderBook(){setTimeout(ambSync,0);
   TRACK="book";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;const B=await bookManifest();await bookMarks();if(TRACK!=="book")return;
   const ed=store.get("bookEd."+COURSE.id,"story");const full=TRACKS.full.list();
-  const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${COURSE.id}.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
+  const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${BID()}.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
     const dl=M?`<a class="dl prog" href="${esc(R(M.src))}" download title="Download chapter ${c.num} for the car or gym">⬇</a>`:"";
     const mk=(MARKS&&MARKS.full[c.num]&&MARKS.full[c.num][ed])||[];
     const secs=M&&mk.length?`<details class="bsecs"><summary class="prog">Sections</summary><div class="bsecl">${mk.map(([pid,t])=>`<button type="button" class="bsec" data-bn="${c.num}" data-bt="${t}"><span>${esc(secName(c,pid))}</span><span class="prog">${fmtT(t)}</span></button>`).join("")}</div></details>`:"";
@@ -589,7 +595,7 @@ async function renderBook(){setTimeout(ambSync,0);
    <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. ${esc(COURSE.hero||"The lead")} makes the right calls and you hear what happens.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus ${MENTOR()}'s lesson, and each decision read aloud with a pause, then the answer and why. About twice as long.</span></button></div>
    ${(()=>{const LB=lget().book;if(!LB||!(B.full[LB.n]))return "";const same=LB.ed===ed;const c=full.find(x=>x.num===LB.n);return `<button class="handsfree" type="button" id="bresume"><span>▶</span><span><b>Resume chapter ${LB.n}${c?": "+esc(c.title):""}</b><span class="prog">${same?`at ${fmtT(LB.t)}`:`near where you stopped in ${LB.ed==="story"?"Story only":"Story + lessons"}`} · picks up on any device</span></span></button><button class="btn small ghost" type="button" id="bread">📖 Read from here${pidAt(LB.n,LB.ed,LB.t)?": "+esc(pidLabel(pidAt(LB.n,LB.ed,LB.t),LB.n)):""}</button>`})()}
    <p class="prog">Plays chapter to chapter on its own and remembers where you stopped, on any device. Use ⟲ 10 for a quick refresher. The ⬇ next to a chapter downloads it for the car or the gym. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
-   ${labWaitHTML()}<h2>Full Course</h2><div class="brows">${full.map(row).join("")}</div>`;wireLabWait();
+   ${labWaitHTML()}<h2>Full Course</h2>${(()=>{const L=COURSE.bookRecordedOnly?full.filter(c=>B.full[c.num]&&B.full[c.num][ed]):full;return L.length?`<div class="brows">${L.map(row).join("")}</div>`:`<p class="prog">The narration for this edition is being recorded. Chapters show up here as they're ready.</p>`})()}`;wireLabWait();
   $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd."+COURSE.id,b.dataset.ed);renderBook()});
   {const r=$("bresume");if(r)r.onclick=()=>{const LB=lget().book;if(LB)bookPlay(ed,LB.n)}}
   {const r=$("bread");if(r)r.onclick=()=>{readFromBook();top()}}
@@ -621,7 +627,9 @@ function castStrip(){
 const AMB={on:store.get("amb",false),vol:store.get("ambvol",0.25),cur:null,els:[new Audio(),new Audio()],i:0,sting:new Audio(),lastSting:""};
 AMB.els.forEach(a=>{a.loop=true;a.volume=0});
 const AMB_RULES=[["jet",/flight line|F-16|crew chief|jet engine|afterburner|\bjets?\b/i],["servers",/data center|server|rack|GPU|IronPeak|cluster|burn-in/i],["hospital",/hospital|\bICU\b|nurse|clinician|ward|Cheyenne|Greeley|Fort Collins|bedside/i],["rain",/\brain\b|storm|thunder|downpour/i],["night",/midnight|\bnight\b|\bdark\b|stars|11:\d\d PM/i],["morning",/kitchen|6:12|morning|breakfast|sunrise|dawn/i],["coffee",/coffee shop|café|cafe|barista/i],["car",/\bdrove\b|\bdrive\b|\bcar\b|truck|traffic|highway|I-25/i],["boardroom",/board meeting|boardroom|the board|conference room/i]];
-function ambFor(text,kind){if(kind==="lesson")return "boardroom";for(const [k,re] of AMB_RULES)if(re.test(text))return k;return "office"}
+/* PMP v2 settings: mission control and the readiness board, the test stand and the pad, wind on the plains, rain and surf at the Cape. No servers or hospital. */
+const AMB_PMP=[["launch",/hot fire|test stand|\bthe pad\b|launch pad|liftoff|ignition|countdown|\bT minus\b/i],["surf",/\bthe Cape\b|\bsurf\b|\bocean\b|\bbeach\b|Atlantic|Cocoa/i],["mission",/mission control|flight control|blockhouse|\bconsoles?\b|\bon the loop\b|readiness board/i],["jet",/flight line|F-16|crew chief|jet engine|afterburner|\bjets?\b/i],["rain",/\brain\b|storm|thunder|downpour|hurricane/i],["wind",/\bwind\b|\bgusts?\b|plains|prairie|Limon/i],["night",/midnight|\bnight\b|\bdark\b|stars/i],["morning",/kitchen|morning|breakfast|sunrise|dawn/i],["coffee",/coffee shop|café|cafe|barista/i],["car",/\bdrove\b|\bdrive\b|\bcar\b|truck|traffic|highway|I-70|I-25/i],["boardroom",/boardroom|conference room/i]];
+function ambFor(text,kind){if(kind==="lesson")return PMP2()?"mission":"boardroom";for(const [k,re] of (PMP2()?AMB_PMP:AMB_RULES))if(re.test(text))return k;return "office"}
 function fade(a,to,ms){const from=a.volume,t0=performance.now();const step=()=>{const k=Math.min(1,(performance.now()-t0)/ms);a.volume=Math.max(0,Math.min(1,from+(to-from)*k));if(k<1)requestAnimationFrame(step);else if(to===0)a.pause()};requestAnimationFrame(step)}
 function ambSync(){
   const inChapter=(TRACK==="full"||TRACK==="ref")&&CH;if(!AMB.on||!inChapter){AMB.els.forEach(a=>fade(a,0,800));AMB.cur=null;return}
@@ -714,9 +722,9 @@ async function renderAbout(id){setTimeout(ambSync,0);if(id&&id!==COURSE.id&&!(aw
    <p class="prog marks">${esc(marksLine(c))}</p>`;
   $("tolib2").onclick=()=>{renderLibrary();top()};$("aboutgo").onclick=()=>{if(w)libGo(c.id);else{openChapter("full",(TRACKS.full.list()[0]||{num:1}).num);top()}};$("aboutbook").onclick=()=>{renderBook();top()}}
 /* #upcoming: what's coming next. Copy lives in upcoming.js; chapter counts come from the course registry. */
-function readyCount(c){return c?(c.scripts||[]).filter(x=>/full\/ch\d+\.js$/.test(x)).length:0}
+function readyCount(c){if(c&&c.id==="pmp")return ((window.HALCYON_V2||{}).files||[]).filter(x=>/^ch\d+\.js$/.test(x)).length;return c?(c.scripts||[]).filter(x=>/full\/ch\d+\.js$/.test(x)).length:0}
 function upCover(cv,title,cls){return `<div class="upcover ${cls||""}" aria-hidden="true"><span class="upline">${esc(cv.line)}</span><b>${esc(title)}</b><span class="upplace">${esc(cv.place)}</span><span class="upexam">${esc(cv.exam)}</span></div>`}
-function upBook(b,cls){const c=courseById(b.course),live=c&&c.status==="live",n=readyCount(c);const soon=b.soon&&live&&n?(n===1?"Chapter 1 is out now":`${n} chapters out now`):b.soon;
+function upBook(b,cls){const c=courseById(b.course),live=c&&c.status==="live",n=readyCount(c);const soon=b.soon&&live&&n?(n===1?"Chapter 1 is out now":b.ofPlanned&&c.planned?`${n} of ${c.planned} chapters out now`:`${n} chapters out now`):b.soon;
   return `<article class="upbook ${cls||""}">${upCover(b.cover,b.title,cls)}<div class="uptxt"><div class="kicker">${esc(b.kicker)}</div><h2>${esc(b.title)}</h2><p class="upstat"><span class="pill">${esc(b.status)}</span>${soon?`<span class="prog">${esc(soon)}</span>`:""}</p>
    <div class="story">${b.paras.map(p=>`<p>${esc(p)}</p>`).join("")}</div><dl class="facts">${b.facts.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>${b.note?`<p class="prog">${esc(b.note)}</p>`:""}
    ${live&&n&&b.soon?`<div class="bar"><button class="btn" type="button" data-upabout="${c.id}">About this book</button></div>`:""}</div></article>`}
@@ -748,15 +756,11 @@ function renderLibrary(){setTimeout(ambSync,0);TRACK="library";CH=null;$("railga
   $("page").querySelectorAll("[data-about]").forEach(b=>b.onclick=e=>{e.stopPropagation();renderAbout(b.dataset.about);top()});
   $("page").querySelectorAll("[data-pin]").forEach(b=>b.onclick=e=>{e.stopPropagation();const L2=libget(),id=b.dataset.pin;L2.pins=L2.pins.includes(id)?L2.pins.filter(x=>x!==id):[...L2.pins,id];libput(L2);renderLibrary()});
   $("page").querySelectorAll("[data-course]").forEach(b=>b.onclick=async()=>{if(await useCourse(b.dataset.course)){renderHome();renderRail();top()}})}
-function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!==COURSE.id){useCourse(c.id).then(()=>resumeFrom(cur));return}cur=(cur||0)-COURSE.base;if(cur>=900)return openMock();if(cur>100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-100))return openChapter("full",cur-100)}else if(cur>=1){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
-/* v2 preview: full/v2/preview.js lists the draft files and the course and cast values v2 will use; they replace v1 in memory, for this page only */
-async function v2Load(){window.HALCYON_FULL=[];await loadScripts(["full/v2/preview.js"]);const P=window.HALCYON_V2||{};await loadScripts((P.files||[]).map(f=>"full/v2/"+f));
-  const c=courseById("pmp");if(c&&P.course)Object.assign(c,P.course);
-  ["DOMS","TASKNAMES","BASE_CAST","FULL_CAST_EXTRA"].forEach(k=>{if(P.meta&&P.meta[k])PMP_META[k]=P.meta[k]});
-  if(COURSE.id==="pmp"){BASE_CAST=PMP_META.BASE_CAST;FULL_CAST_EXTRA=PMP_META.FULL_CAST_EXTRA;TASKNAMES=PMP_META.TASKNAMES}
-  buildOrders();const b=document.createElement("div");b.className="v2badge";b.setAttribute("role","note");b.textContent="v2 preview · progress stays on this device";document.body.prepend(b)}
+function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!==COURSE.id){useCourse(c.id).then(()=>resumeFrom(cur));return}cur=(cur||0)-COURSE.base;const FB=FULL_BASE();if(cur>=900)return openMock();if(cur>FB&&cur<FB+100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-FB))return openChapter("full",cur-FB)}else if(cur>=1&&cur<100){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
+/* PMP Full Course: full/v2/preview.js lists the live v2 files (cast.js and each chapter as it's written); they load in place from full/v2/ */
+async function pmpLoad(){window.HALCYON_FULL=[];await loadScripts(["full/v2/preview.js"]);const P=window.HALCYON_V2||{};await loadScripts((P.files||[]).map(f=>"full/v2/"+f));buildOrders()}
 async function boot(){
-  if(V2P)await v2Load();
+  await pmpLoad();
   if($("ambtoggle")){ambUI();$("ambtoggle").onchange=e=>{AMB.on=e.target.checked;store.set("amb",AMB.on);AMB.cur=null;AMB.lastSting="";ambSync();savePrefs()};$("ambvol").oninput=e=>{AMB.vol=+e.target.value;store.set("ambvol",AMB.vol);AMB.els[AMB.i].volume=AMB.vol;savePrefs()}}
   if($("storytoggle")){$("storytoggle").checked=STORY();$("storytoggle").onchange=e=>setStoryMode(e.target.checked)}
   document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-sec]");if(b&&!b.disabled&&TRACK==="full"&&CH){const p=+b.dataset.sec;if(p!==S.pos)fullGo(p)}});
@@ -775,12 +779,12 @@ async function boot(){
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
       document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;return}
     return renderAuth("login")}
-  if(!V2P){clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
-  SYNC=(n,st)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st})}).catch(()=>{})} // the v2 preview never hydrates from or writes to the account
+  clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
+  SYNC=(n,st)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st})}).catch(()=>{});
   applyPrefs(lget().prefs);
   document.querySelector(".rail").hidden=false;$("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
   $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();location.href="/"};
-  if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(V2P?store.get("cur",0):me.user.cur||0);
+  if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(me.user.cur||0);
 }
 boot();
 })();

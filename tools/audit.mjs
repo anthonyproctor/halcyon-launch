@@ -1,7 +1,8 @@
 // Whole-course audit: giveaway patterns, task coverage, flags, duplicates.
+// PMP Full Course = the live v2 chapters in full/v2/ (v1 is in git history only). The Refresher (chapters/) is retired from the UI but still audited.
 import fs from 'fs';
 globalThis.window={};
-for(const f of [...fs.readdirSync('full').filter(f=>/^ch\d+\.js$/.test(f)).map(f=>'full/'+f),'mock/people.js','mock/process.js','mock/business.js',...[1,2,3,4,5,6].map(n=>`chapters/ch${n}.js`)])new Function('window',fs.readFileSync(f,'utf8'))(globalThis.window);
+for(const f of [...fs.readdirSync('full/v2').filter(f=>/^ch\d+\.js$/.test(f)).map(f=>'full/v2/'+f),'mock/people.js','mock/process.js','mock/business.js',...[1,2,3,4,5,6].map(n=>`chapters/ch${n}.js`)])new Function('window',fs.readFileSync(f,'utf8'))(globalThis.window);
 const F=window.HALCYON_FULL.sort((a,b)=>a.num-b.num),M=window.HALCYON_MOCK.flatMap(p=>p.questions),R=window.HALCYON;
 const stat=(items)=>{let longest=0,shortest=0,pos=[0,0,0,0];items.forEach(([texts,right,shownPos])=>{const L=texts.map(t=>t.length),o=L.filter((_,k)=>k!==right);if(L[right]>Math.max(...o))longest++;if(L[right]<Math.min(...o))shortest++;if(shownPos!==undefined)pos[shownPos]++});return {n:items.length,longest:+(longest/items.length*100).toFixed(0),shortest:+(shortest/items.length*100).toFixed(0),pos}};
 const scenesF=F.flatMap(c=>c.scenes.map(s=>[s.opts.map(o=>o.t),s.opts.findIndex(o=>o.best)]));

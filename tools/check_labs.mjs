@@ -14,7 +14,7 @@ export function checkLabs(ids){
   const sets=courses.map(c=>{new Function('window',fs.readFileSync(c.root+c.labs,'utf8'))(W);return [c,W.HALCYON_LABS[c.id]||{}]});
   if(!ids.length||ids.includes("__fixture")){new Function('window',fs.readFileSync('tools/lab_fixture.js','utf8'))(W);sets.push([{id:"__fixture",root:""},{1:W.HALCYON_LABS.__fixture}])}
   for(const [c,byCh] of sets){
-    const nums=c.id==="pmp"?fs.readdirSync('full').filter(f=>/^ch\d+\.js$/.test(f)).map(f=>+f.match(/\d+/)[0]):c.id==="__fixture"?[1]:fs.readdirSync(c.root+'full').filter(f=>/^ch\d+\.js$/.test(f)).map(f=>+f.match(/\d+/)[0]);
+    const nums=c.id==="pmp"?(()=>{const w={};new Function('window',fs.readFileSync('full/v2/preview.js','utf8'))(w);return w.HALCYON_V2.files.filter(f=>/^ch\d+\.js$/.test(f)).map(f=>+f.match(/\d+/)[0])})() /* PMP v2: the live chapters listed in full/v2/preview.js */:c.id==="__fixture"?[1]:fs.readdirSync(c.root+'full').filter(f=>/^ch\d+\.js$/.test(f)).map(f=>+f.match(/\d+/)[0]);
     const seen=new Set();
     for(const [ch,labs] of Object.entries(byCh)){
       if(!nums.includes(+ch))err(`${c.id}: labs registered for chapter ${ch}, which doesn't exist`);

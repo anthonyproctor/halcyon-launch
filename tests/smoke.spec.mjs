@@ -1,6 +1,6 @@
 // Halcyon smoke tests. Every live course: About page, chapter 1, the first decision, Contents, a lab where the course has one,
 // the Audiobook, the Guide and Coming next, with no console errors and no sideways scroll at phone width (390px).
-// Plus: the Library hides listed:false books, Coming next still shows them, analytics sends routes only, and the v2 preview renders.
+// Plus: the Library hides listed:false books, Coming next still shows them, analytics sends routes only, and the PMP v2 book is live.
 import { test, expect } from "@playwright/test";
 import fs from "node:fs";
 import vm from "node:vm";
@@ -13,7 +13,7 @@ vm.runInNewContext(fs.readFileSync(path.join(ROOT, "courses.js"), "utf8"), { win
 const COURSES = win.HALCYON_COURSES.filter(c => c.status === "live");
 
 /* Console errors we expect and ignore. The engine probes optional media and falls back on purpose:
-   - cast portraits: cast/<id>.jpg first, then cast/<id>.svg, then initials (avatar() onerror); the v2 preview has few portraits yet
+   - cast portraits: cast/<id>.jpg first, then cast/<id>.svg, then initials (avatar() onerror); PMP v2 has few portraits yet (cast/v2)
    - chapter art: art/full-chNN.jpg first, then the .svg, then no art (chapterArt() onerror)
    - narration: audio/pages/<page>/timings.json and audio/*.json are fetched to see whether a page has been narrated yet;
      courses or chapters that aren't recorded answer 404 and the Listen bar stays hidden
@@ -171,12 +171,19 @@ test("analytics: one page view per screen, routes only, nothing personal", async
   expect(errs).toEqual([]);
 });
 
-test("v2 preview renders the video log card", async ({ page }) => {
+test("PMP: The Halcyon Launch v2 is the live book (video log card, no preview banner, v2 cast, v1 gone)", async ({ page, request }) => {
   const errs = watchErrors(page);
-  await page.goto("/?v2#pmp/full/1");
-  await expect(page.locator(".v2badge")).toBeVisible();
+  await page.goto("/#pmp/about");
+  await expect(page.locator("#page")).toContainText("Ares Station");
+  await page.goto("/#pmp/full/1");
+  await expect(page.locator("#page .chmap")).toBeVisible();
+  await expect(page.locator(".v2badge")).toHaveCount(0);
   await expect(page.locator("#page .prop.pvlog").first()).toBeVisible();
   await expect(page.locator("#page .prop.pvlog .vtag").first()).toHaveText("Recorded");
   await noSideScroll(page, "v2 chapter 1");
+  const st = await page.evaluate(() => ({ keys: Object.keys(localStorage).filter(k => /^halcyon\.c1\d\d$/.test(k)) }));
+  expect(st.keys, "v1 Full Course keys (c101 to c115) are never written").toEqual([]);
+  expect((await request.get("/full/ch01.js")).status()).toBe(404);
+  expect((await request.get("/full/v2/ch01.js")).status()).toBe(200);
   expect(errs).toEqual([]);
 });

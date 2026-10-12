@@ -38,7 +38,7 @@ window.HALCYON_UPCOMING={
   },
 
   rewrite:{
-    course:"pmp", title:"The Halcyon Launch", kicker:"A new version, from the ground up", status:"Being rewritten",
+    course:"pmp", title:"The Halcyon Launch", kicker:"The new edition, from the ground up", status:"New edition live", soon:"New chapters on the way", ofPlanned:true,
     cover:{line:"2061", place:"Ares Station, Mars", exam:"PMP"},
     paras:[
       "It's 2061, and the oxygen plant on Ares Station is failing. That's 212 people on Mars. Earth has one rescue ship, the Halcyon, and one launch window, a bit over two years out. Miss it and the next one's too late.",
@@ -50,8 +50,7 @@ window.HALCYON_UPCOMING={
       ["You play","Sam Okafor. He's never run a project."],
       ["Your teacher","Ruth Calder, through her console log."],
       ["What you'll learn","The PMI PMP exam: leading people, running the work, and keeping a project tied to what it's for, with predictive, agile, and hybrid ways of working."]
-    ],
-    note:"The current Halcyon Launch is still in your Library while the new one is written."
+    ]
   },
 
   shelf:{
