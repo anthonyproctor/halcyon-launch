@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480"><style>@media (prefers-reduced-motion:no-preference){
+.steam{animation:steam 3s ease-in-out infinite}@keyframes steam{0%{opacity:0;transform:translateY(8px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+.glow{animation:glow 2.4s ease-in-out infinite}@keyframes glow{50%{opacity:.6}}
+.blink{animation:blink 1.6s steps(2) infinite}@keyframes blink{50%{opacity:.2}}
+.pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pulse{50%{transform:scale(1.12)}}
+.grow{animation:grow 3.5s ease-out infinite;transform-box:fill-box;transform-origin:left}@keyframes grow{0%{transform:scaleX(0)}40%,100%{transform:scaleX(1)}}
+.draw{stroke-dasharray:1400;animation:draw 5s ease-out infinite}@keyframes draw{0%{stroke-dashoffset:1400}60%,100%{stroke-dashoffset:0}}
+.flash{animation:flash 3s infinite}@keyframes flash{0%,8%,16%,100%{opacity:1}4%,12%{opacity:.1}60%{opacity:.9}}
+.tick{animation:tick 8s steps(8) infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes tick{to{transform:rotate(360deg)}}
+.tilt{animation:tilt 4s ease-in-out infinite;transform-box:view-box;transform-origin:880px 100px}@keyframes tilt{50%{transform:rotate(-4deg)}}
+.flick{animation:flick 4s infinite}@keyframes flick{0%,30%{opacity:.25}35%,100%{opacity:1}}
+.twinkle{animation:twinkle 2.5s ease-in-out infinite}@keyframes twinkle{50%{opacity:.2}}
+.check{animation:check 6s infinite;opacity:0}@keyframes check{0%{opacity:0}15%,90%{opacity:1}100%{opacity:0}}
+.sway{animation:sway 5s ease-in-out infinite;transform-box:view-box;transform-origin:600px 40px}@keyframes sway{50%{transform:rotate(2deg)}}
+.lift{animation:lift 6s ease-in infinite}@keyframes lift{0%,30%{transform:translateY(0)}100%{transform:translateY(-320px)}}
+.flame{animation:flame .3s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top}@keyframes flame{to{transform:scaleY(1.3)}}
+.move1{animation:m 4s linear infinite}@keyframes m{0%{opacity:0}20%,80%{opacity:1}100%{opacity:0}}
+}</style><style>@media (prefers-reduced-motion:no-preference){
+.ring{animation:ring 2.6s ease-out infinite;transform-box:fill-box;transform-origin:center;opacity:0}@keyframes ring{0%{opacity:.8;transform:scale(.6)}100%{opacity:0;transform:scale(1.6)}}
+.ring2{animation:ring 2.6s ease-out .45s infinite}
+.snow{animation:snow 1.6s linear infinite}@keyframes snow{from{transform:translate(0,0)}to{transform:translate(-160px,120px)}}
+.snow2{animation:snow 2.6s linear infinite}
+.drift{animation:drift 14s ease-in-out infinite alternate}@keyframes drift{to{transform:translateX(40px)}}
+.rise{animation:rise 9s ease-in-out infinite}@keyframes rise{0%{transform:translate(0,0);opacity:.0}20%{opacity:.5}100%{transform:translate(30px,-60px);opacity:0}}
+.ping{animation:ping 5s linear infinite;opacity:0}@keyframes ping{0%{transform:translateX(0);opacity:0}10%{opacity:1}55%{opacity:.9}75%,100%{transform:translateX(-300px);opacity:0}}
+.ping2{animation:ping 5s linear 1.7s infinite}.ping3{animation:ping 5s linear 3.4s infinite}
+.roll{animation:roll 24s ease-in-out infinite alternate}@keyframes roll{from{transform:translateX(0)}to{transform:translateX(-70px)}}
+.bend{animation:bend 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}@keyframes bend{50%{transform:rotate(-7deg)}}
+.curtain{animation:curtain 6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 0}@keyframes curtain{50%{transform:skewX(-4deg)}}
+.surf{animation:surf 5s ease-in-out infinite}@keyframes surf{50%{transform:translateY(5px);opacity:.35}}
+.glint{animation:glint 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes glint{0%,60%,100%{opacity:0;transform:scale(.4)}75%{opacity:1;transform:scale(1)}}
+.breathe{animation:breathe 4s ease-in-out infinite}@keyframes breathe{50%{opacity:.78}}
+.dawn{animation:dawn 18s ease-in-out infinite alternate}@keyframes dawn{from{opacity:.25}to{opacity:.85}}
+.trace{stroke-dasharray:900;animation:trace 7s ease-out infinite}@keyframes trace{0%{stroke-dashoffset:900}55%,100%{stroke-dashoffset:0}}
+}</style><defs><linearGradient id="pre2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e1824"/><stop offset="0.75" stop-color="#1d2c3c"/><stop offset="1" stop-color="#3a3f52"/></linearGradient><radialGradient id="halo2"><stop offset="0" stop-color="#fff6dc" stop-opacity="0.22"/><stop offset="1" stop-color="#fff6dc" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="480" fill="#1c252d"/><rect width="1200" height="480" fill="#1c252d"/>
+<rect x="1010" y="30" width="180" height="240" rx="4" fill="#2b333b"/><rect x="1020" y="40" width="160" height="220" fill="url(#pre2)"/>
+<path d="M1020 226q50-8 90-2t70-6V260H1020Z" fill="#141c22"/>
+<path d="M1052 226V60M1112 226V60M1052 100h60M1052 140h60M1052 180h60M1052 60l60 40M1112 100l-60 40" stroke="#6d7b88" stroke-width="2"/>
+<path d="M1070 226V96q12-14 24 0V226z" fill="#e8e6e0"/><path d="M1066 226V172h32V226z" fill="#d6d9de"/><path d="M1066 182h32M1066 196h32M1066 210h32" stroke="#b9bec5" stroke-width="2"/>
+<circle class="twinkle" style="animation-delay:0.00s" cx="1052" cy="70" r="2.4" fill="#fff6dc"/><circle class="twinkle" style="animation-delay:0.37s" cx="1112" cy="70" r="2.4" fill="#fff6dc"/><circle class="twinkle" style="animation-delay:0.74s" cx="1052" cy="112" r="2.4" fill="#fff6dc"/><circle class="twinkle" style="animation-delay:1.11s" cx="1112" cy="112" r="2.4" fill="#fff6dc"/><circle class="twinkle" style="animation-delay:1.48s" cx="1052" cy="154" r="2.4" fill="#fff6dc"/><circle class="twinkle" style="animation-delay:1.85s" cx="1112" cy="154" r="2.4" fill="#fff6dc"/><circle class="twinkle" style="animation-delay:2.22s" cx="1052" cy="196" r="2.4" fill="#fff6dc"/><circle class="twinkle" style="animation-delay:2.59s" cx="1112" cy="196" r="2.4" fill="#fff6dc"/><circle class="glow" cx="1082" cy="130" r="70" fill="url(#halo2)"/>
+<rect x="0" y="0" width="1200" height="26" fill="#151b21"/>
+<rect x="323" y="53" width="164" height="126" rx="6" fill="#2b2f36"/><rect x="330" y="60" width="150" height="112" fill="#0b141b"/><path d="M373.0 172V82q18 -16 36 0V172z" fill="#c9ccd1"/><path d="M371.0 172V127.2h40V172z" fill="#8a96a3"/><path d="M340 172V72M470 172V72M340 98h130M340 134h130" stroke="#596876" stroke-width="2.5"/><rect class="breathe" x="330" y="60" width="150" height="112" fill="#5aa0d8" opacity=".08"/><rect x="493" y="53" width="164" height="126" rx="6" fill="#2b2f36"/><rect x="500" y="60" width="150" height="112" fill="#0b141b"/><path d="M571.0 172V82q14 -16 28 0V172z" fill="#c9ccd1"/><path d="M569.0 172V127.2h32V172z" fill="#8a96a3"/><path d="M510 172V72M640 172V72M510 98h130M510 134h130" stroke="#596876" stroke-width="2.5"/><rect class="breathe" x="500" y="60" width="150" height="112" fill="#5aa0d8" opacity=".08"/><rect x="663" y="53" width="164" height="126" rx="6" fill="#2b2f36"/><rect x="670" y="60" width="150" height="112" fill="#0b141b"/><path d="M727.0 172V82q18 -16 36 0V172z" fill="#c9ccd1"/><path d="M725.0 172V127.2h40V172z" fill="#8a96a3"/><path d="M680 172V72M810 172V72M680 98h130M680 134h130" stroke="#596876" stroke-width="2.5"/><rect x="761.0" y="132" width="20" height="26" rx="6" fill="#9aa4ad"/><path d="M761.0 140h-12M761.0 152h-12M781.0 145h35.0" stroke="#596876" stroke-width="2"/><rect class="pulse" x="754.0" y="125" width="34" height="40" rx="7" fill="none" stroke="#e0b25c" stroke-width="2.5"/><rect class="breathe" x="670" y="60" width="150" height="112" fill="#5aa0d8" opacity=".08"/><rect x="833" y="53" width="164" height="126" rx="6" fill="#2b2f36"/><rect x="840" y="60" width="150" height="112" fill="#0b141b"/><path d="M916.0 172V82q15 -16 30 0V172z" fill="#c9ccd1"/><path d="M914.0 172V127.2h34V172z" fill="#8a96a3"/><path d="M850 172V72M980 172V72M850 98h130M850 134h130" stroke="#596876" stroke-width="2.5"/><rect class="breathe" x="840" y="60" width="150" height="112" fill="#5aa0d8" opacity=".08"/>
+<rect x="300" y="200" width="1200" height="14" fill="#3a434c"/><path d="M300 214H1200V480H300Z" fill="#2b333b"/>
+<g fill="#151b21"><rect x="360" y="228" width="60" height="18" rx="3"/><rect x="470" y="228" width="60" height="18" rx="3"/><rect x="580" y="228" width="60" height="18" rx="3"/><rect x="690" y="228" width="60" height="18" rx="3"/><rect x="800" y="228" width="60" height="18" rx="3"/><rect x="910" y="228" width="60" height="18" rx="3"/><rect x="1020" y="228" width="60" height="18" rx="3"/><rect x="1130" y="228" width="60" height="18" rx="3"/></g>
+<g><circle class="blink" style="animation-delay:0.0s" cx="372" cy="237" r="3.5" fill="#5fa37a"/><circle class="" style="animation-delay:0.3s" cx="482" cy="237" r="3.5" fill="#e0b25c"/><circle class="" style="animation-delay:0.6s" cx="592" cy="237" r="3.5" fill="#5fa37a"/><circle class="blink" style="animation-delay:0.9s" cx="702" cy="237" r="3.5" fill="#5fa37a"/><circle class="" style="animation-delay:1.2s" cx="812" cy="237" r="3.5" fill="#e0b25c"/><circle class="" style="animation-delay:1.5s" cx="922" cy="237" r="3.5" fill="#5fa37a"/><circle class="blink" style="animation-delay:1.8s" cx="1032" cy="237" r="3.5" fill="#5fa37a"/><circle class="" style="animation-delay:2.1s" cx="1142" cy="237" r="3.5" fill="#e0b25c"/></g>
+<rect x="760" y="300" width="40" height="66" rx="10" fill="#4f6b5a"/><rect x="764" y="292" width="32" height="12" rx="4" fill="#2b2b30"/><path d="M770 312v46" stroke="#6a8a74" stroke-width="4" opacity=".6"/>
+<path d="M300 366H1200V480H300Z" fill="#232a31"/><path d="M300 366H1200" stroke="#3a434c" stroke-width="6"/>
+<path d="M300 340h330v14H300z" fill="#59626b"/><path d="M316 340v14" stroke="#454d55" stroke-width="3"/><path d="M342 340v14" stroke="#454d55" stroke-width="3"/><path d="M368 340v14" stroke="#454d55" stroke-width="3"/><path d="M394 340v14" stroke="#454d55" stroke-width="3"/><path d="M420 340v14" stroke="#454d55" stroke-width="3"/><path d="M446 340v14" stroke="#454d55" stroke-width="3"/><path d="M472 340v14" stroke="#454d55" stroke-width="3"/><path d="M498 340v14" stroke="#454d55" stroke-width="3"/><path d="M524 340v14" stroke="#454d55" stroke-width="3"/><path d="M550 340v14" stroke="#454d55" stroke-width="3"/><path d="M576 340v14" stroke="#454d55" stroke-width="3"/><path d="M602 340v14" stroke="#454d55" stroke-width="3"/><path d="M628 340v14" stroke="#454d55" stroke-width="3"/>
+<path d="M326 354v26M604 354v26" stroke="#454d55" stroke-width="6"/>
+<path d="M60 480V340h110v140" fill="none" stroke="#3a3d44" stroke-width="10"/><rect x="50" y="326" width="140" height="18" rx="6" fill="#4a4f57"/><path d="M60 326V230q0-12 12-12h10v108z" fill="#4a4f57"/>
+<path d="M150 336L236 318L336 330" fill="none" stroke="#3e4a5a" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M330 308h28q16 0 18 16l2 14h-56z" fill="#3a2a1e"/><rect x="326" y="334" width="56" height="8" rx="3" fill="#1a1612"/>
+<path d="M116 334L104 238q0-24 28-26h22q24 4 22 30l-6 92z" fill="#b39a6a"/><path d="M124 300l14 0M150 300l14 0" stroke="#8a744a" stroke-width="3"/>
+<path d="M150 252q26 24 44 52" fill="none" stroke="#b39a6a" stroke-width="20" stroke-linecap="round"/><circle cx="198" cy="310" r="9" fill="#6b4a32"/>
+<path d="M224 306l2-18h24l2 18z" fill="#4f6b5a"/><ellipse cx="238" cy="288" rx="12" ry="3" fill="#3a2a1a"/>
+<g class="steam" fill="none" stroke="#8dbcd4" stroke-width="2.5" opacity=".5"><path d="M234 280q-6-10 0-20t0-18"/><path d="M246 280q6-10 0-20"/></g>
+<rect x="128" y="200" width="18" height="16" fill="#6b4a32"/>
+<circle cx="142" cy="182" r="24" fill="#6b4a32"/><path d="M164 178l8 8-7 3z" fill="#6b4a32"/><ellipse cx="136" cy="184" rx="5" ry="7" fill="#5a3e2a"/>
+<path d="M118 206q24 18 50 0" fill="none" stroke="#c0473b" stroke-width="7"/><rect x="110" y="200" width="12" height="16" rx="4" fill="#c0473b"/><rect x="162" y="200" width="12" height="16" rx="4" fill="#c0473b"/></svg>

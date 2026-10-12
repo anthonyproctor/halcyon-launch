@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480"><style>@media (prefers-reduced-motion:no-preference){
+.steam{animation:steam 3s ease-in-out infinite}@keyframes steam{0%{opacity:0;transform:translateY(8px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+.glow{animation:glow 2.4s ease-in-out infinite}@keyframes glow{50%{opacity:.6}}
+.blink{animation:blink 1.6s steps(2) infinite}@keyframes blink{50%{opacity:.2}}
+.pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pulse{50%{transform:scale(1.12)}}
+.grow{animation:grow 3.5s ease-out infinite;transform-box:fill-box;transform-origin:left}@keyframes grow{0%{transform:scaleX(0)}40%,100%{transform:scaleX(1)}}
+.draw{stroke-dasharray:1400;animation:draw 5s ease-out infinite}@keyframes draw{0%{stroke-dashoffset:1400}60%,100%{stroke-dashoffset:0}}
+.flash{animation:flash 3s infinite}@keyframes flash{0%,8%,16%,100%{opacity:1}4%,12%{opacity:.1}60%{opacity:.9}}
+.tick{animation:tick 8s steps(8) infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes tick{to{transform:rotate(360deg)}}
+.tilt{animation:tilt 4s ease-in-out infinite;transform-box:view-box;transform-origin:880px 100px}@keyframes tilt{50%{transform:rotate(-4deg)}}
+.flick{animation:flick 4s infinite}@keyframes flick{0%,30%{opacity:.25}35%,100%{opacity:1}}
+.twinkle{animation:twinkle 2.5s ease-in-out infinite}@keyframes twinkle{50%{opacity:.2}}
+.check{animation:check 6s infinite;opacity:0}@keyframes check{0%{opacity:0}15%,90%{opacity:1}100%{opacity:0}}
+.sway{animation:sway 5s ease-in-out infinite;transform-box:view-box;transform-origin:600px 40px}@keyframes sway{50%{transform:rotate(2deg)}}
+.lift{animation:lift 6s ease-in infinite}@keyframes lift{0%,30%{transform:translateY(0)}100%{transform:translateY(-320px)}}
+.flame{animation:flame .3s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top}@keyframes flame{to{transform:scaleY(1.3)}}
+.move1{animation:m 4s linear infinite}@keyframes m{0%{opacity:0}20%,80%{opacity:1}100%{opacity:0}}
+}</style><style>@media (prefers-reduced-motion:no-preference){
+.ring{animation:ring 2.6s ease-out infinite;transform-box:fill-box;transform-origin:center;opacity:0}@keyframes ring{0%{opacity:.8;transform:scale(.6)}100%{opacity:0;transform:scale(1.6)}}
+.ring2{animation:ring 2.6s ease-out .45s infinite}
+.snow{animation:snow 1.6s linear infinite}@keyframes snow{from{transform:translate(0,0)}to{transform:translate(-160px,120px)}}
+.snow2{animation:snow 2.6s linear infinite}
+.drift{animation:drift 14s ease-in-out infinite alternate}@keyframes drift{to{transform:translateX(40px)}}
+.rise{animation:rise 9s ease-in-out infinite}@keyframes rise{0%{transform:translate(0,0);opacity:.0}20%{opacity:.5}100%{transform:translate(30px,-60px);opacity:0}}
+.ping{animation:ping 5s linear infinite;opacity:0}@keyframes ping{0%{transform:translateX(0);opacity:0}10%{opacity:1}55%{opacity:.9}75%,100%{transform:translateX(-300px);opacity:0}}
+.ping2{animation:ping 5s linear 1.7s infinite}.ping3{animation:ping 5s linear 3.4s infinite}
+.roll{animation:roll 24s ease-in-out infinite alternate}@keyframes roll{from{transform:translateX(0)}to{transform:translateX(-70px)}}
+.bend{animation:bend 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}@keyframes bend{50%{transform:rotate(-7deg)}}
+.curtain{animation:curtain 6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 0}@keyframes curtain{50%{transform:skewX(-4deg)}}
+.surf{animation:surf 5s ease-in-out infinite}@keyframes surf{50%{transform:translateY(5px);opacity:.35}}
+.glint{animation:glint 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes glint{0%,60%,100%{opacity:0;transform:scale(.4)}75%{opacity:1;transform:scale(1)}}
+.breathe{animation:breathe 4s ease-in-out infinite}@keyframes breathe{50%{opacity:.78}}
+.dawn{animation:dawn 18s ease-in-out infinite alternate}@keyframes dawn{from{opacity:.25}to{opacity:.85}}
+.trace{stroke-dasharray:900;animation:trace 7s ease-out infinite}@keyframes trace{0%{stroke-dashoffset:900}55%,100%{stroke-dashoffset:0}}
+}</style><defs><linearGradient id="sky8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a6a7a"/><stop offset="0.7" stop-color="#a6948a"/><stop offset="1" stop-color="#c8a48a"/></linearGradient><radialGradient id="mill8"><stop offset="0" stop-color="#f08a3a" stop-opacity="0.35"/><stop offset="1" stop-color="#f08a3a" stop-opacity="0"/></radialGradient><clipPath id="win8"><rect x="74" y="44" width="812" height="262"/></clipPath></defs><rect width="1200" height="480" fill="#3b3a3e"/><rect width="1200" height="480" fill="#3b3a3e"/>
+<rect x="60" y="30" width="840" height="290" rx="4" fill="#5a5560"/><rect x="74" y="44" width="812" height="262" fill="url(#sky8)"/>
+<path d="M74 236q200-14 420-8t392-4V306H74Z" fill="#6a5a4a"/>
+<rect x="140" y="70" width="20" height="230" fill="#3a3030"/><rect x="190" y="50" width="22" height="250" fill="#3a3030"/><rect x="246" y="84" width="18" height="216" fill="#3a3030"/><rect x="700" y="60" width="24" height="240" fill="#3a3030"/><rect x="760" y="90" width="18" height="210" fill="#3a3030"/><path d="M320 300V200h300v100z" fill="#4a3c38"/><path d="M320 200l60-40h180l60 40z" fill="#3a3030"/>
+<rect class="glow" x="400" y="232" width="140" height="44" fill="#f0a04a" opacity=".85"/><path d="M400 232h140v44H400z" fill="none" stroke="#2a2222" stroke-width="4"/>
+<circle class="glow" cx="470" cy="254" r="130" fill="url(#mill8)"/>
+<path d="M74 280h812" stroke="#2a2a2a" stroke-width="4"/><g clip-path="url(#win8)"><path class="drift" style="animation-delay:0.0s" d="M150 66q12 -12 48 -6q24 0 48 4" fill="none" stroke="#c9c3c0" stroke-width="12" stroke-linecap="round" opacity=".28"/><path class="drift" style="animation-delay:2.1s" d="M201 46q14 -14 56 -7q28 0 56 4" fill="none" stroke="#c9c3c0" stroke-width="14" stroke-linecap="round" opacity=".28"/><path class="drift" style="animation-delay:4.2s" d="M712 56q13 -13 52 -6q26 0 52 4" fill="none" stroke="#c9c3c0" stroke-width="13" stroke-linecap="round" opacity=".28"/><path class="drift" style="animation-delay:6.3s" d="M255 80q9 -9 36 -4q18 0 36 3" fill="none" stroke="#c9c3c0" stroke-width="9" stroke-linecap="round" opacity=".28"/></g>
+<path d="M480 44v262M74 176h812" stroke="#5a5560" stroke-width="8"/>
+<rect x="40" y="316" width="880" height="14" fill="#6a6570"/>
+<path d="M544 330l-4-150q0-36 40-38h24q40 2 40 38l-4 150z" fill="#7a6440"/><path d="M548 200q-20 10-18 40l14 6zM640 200q20 10 18 40l-14 6z" fill="#6a5636"/>
+<path d="M592 150v180" stroke="#5e4c30" stroke-width="2.5"/><rect x="584" y="128" width="16" height="16" fill="#c9a07a"/>
+<ellipse cx="592" cy="108" rx="23" ry="27" fill="#3a302a"/><path d="M580 86q10 20 8 40M600 84q-6 20-4 42M572 100q6 14 10 26" stroke="#8a8478" stroke-width="2.5" fill="none" opacity=".8"/>
+<ellipse cx="592" cy="130" rx="11" ry="8" fill="#332a24"/>
+<path d="M0 340H1200V480H0Z" fill="#2c2420"/><path d="M0 340H1200" stroke="#4a3c34" stroke-width="6"/>
+<g transform="rotate(-3 840 400)"><rect x="700" y="330" width="250" height="140" rx="2" fill="#f3f1ec"/><rect x="740" y="336" width="200" height="124" fill="#cfcdc6"/><path d="M760 346h170" stroke="#7d7f84" stroke-width="2.2"/><path d="M760 357h156" stroke="#7d7f84" stroke-width="2.2"/><path d="M760 368h142" stroke="#7d7f84" stroke-width="2.2"/><path d="M760 379h170" stroke="#7d7f84" stroke-width="2.2"/><path d="M760 390h156" stroke="#7d7f84" stroke-width="2.2"/><path d="M760 401h142" stroke="#7d7f84" stroke-width="2.2"/><path d="M760 412h170" stroke="#7d7f84" stroke-width="2.2"/><path d="M760 423h156" stroke="#7d7f84" stroke-width="2.2"/>
+<rect x="754" y="362" width="172" height="12" fill="none" stroke="#6b6f75" stroke-width="1.6"/>
+<text x="780" y="456" font-family="'Bradley Hand','Segoe Print','Comic Sans MS',cursive" font-weight="700" font-size="24" fill="#2c4a9a">Still asking.</text>
+<path d="M716 330v30h14v-30" fill="none" stroke="#9aa4ad" stroke-width="4"/></g>
+<g transform="rotate(8 1080 410)"><rect x="1010" y="370" width="130" height="90" rx="3" fill="#2a3a52"/><path d="M1020 370v90" stroke="#1a2638" stroke-width="5"/></g></svg>

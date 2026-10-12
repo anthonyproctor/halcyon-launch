@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480"><style>@media (prefers-reduced-motion:no-preference){
+.steam{animation:steam 3s ease-in-out infinite}@keyframes steam{0%{opacity:0;transform:translateY(8px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+.glow{animation:glow 2.4s ease-in-out infinite}@keyframes glow{50%{opacity:.6}}
+.blink{animation:blink 1.6s steps(2) infinite}@keyframes blink{50%{opacity:.2}}
+.pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pulse{50%{transform:scale(1.12)}}
+.grow{animation:grow 3.5s ease-out infinite;transform-box:fill-box;transform-origin:left}@keyframes grow{0%{transform:scaleX(0)}40%,100%{transform:scaleX(1)}}
+.draw{stroke-dasharray:1400;animation:draw 5s ease-out infinite}@keyframes draw{0%{stroke-dashoffset:1400}60%,100%{stroke-dashoffset:0}}
+.flash{animation:flash 3s infinite}@keyframes flash{0%,8%,16%,100%{opacity:1}4%,12%{opacity:.1}60%{opacity:.9}}
+.tick{animation:tick 8s steps(8) infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes tick{to{transform:rotate(360deg)}}
+.tilt{animation:tilt 4s ease-in-out infinite;transform-box:view-box;transform-origin:880px 100px}@keyframes tilt{50%{transform:rotate(-4deg)}}
+.flick{animation:flick 4s infinite}@keyframes flick{0%,30%{opacity:.25}35%,100%{opacity:1}}
+.twinkle{animation:twinkle 2.5s ease-in-out infinite}@keyframes twinkle{50%{opacity:.2}}
+.check{animation:check 6s infinite;opacity:0}@keyframes check{0%{opacity:0}15%,90%{opacity:1}100%{opacity:0}}
+.sway{animation:sway 5s ease-in-out infinite;transform-box:view-box;transform-origin:600px 40px}@keyframes sway{50%{transform:rotate(2deg)}}
+.lift{animation:lift 6s ease-in infinite}@keyframes lift{0%,30%{transform:translateY(0)}100%{transform:translateY(-320px)}}
+.flame{animation:flame .3s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top}@keyframes flame{to{transform:scaleY(1.3)}}
+.move1{animation:m 4s linear infinite}@keyframes m{0%{opacity:0}20%,80%{opacity:1}100%{opacity:0}}
+}</style><style>@media (prefers-reduced-motion:no-preference){
+.ring{animation:ring 2.6s ease-out infinite;transform-box:fill-box;transform-origin:center;opacity:0}@keyframes ring{0%{opacity:.8;transform:scale(.6)}100%{opacity:0;transform:scale(1.6)}}
+.ring2{animation:ring 2.6s ease-out .45s infinite}
+.snow{animation:snow 1.6s linear infinite}@keyframes snow{from{transform:translate(0,0)}to{transform:translate(-160px,120px)}}
+.snow2{animation:snow 2.6s linear infinite}
+.drift{animation:drift 14s ease-in-out infinite alternate}@keyframes drift{to{transform:translateX(40px)}}
+.rise{animation:rise 9s ease-in-out infinite}@keyframes rise{0%{transform:translate(0,0);opacity:.0}20%{opacity:.5}100%{transform:translate(30px,-60px);opacity:0}}
+.ping{animation:ping 5s linear infinite;opacity:0}@keyframes ping{0%{transform:translateX(0);opacity:0}10%{opacity:1}55%{opacity:.9}75%,100%{transform:translateX(-300px);opacity:0}}
+.ping2{animation:ping 5s linear 1.7s infinite}.ping3{animation:ping 5s linear 3.4s infinite}
+.roll{animation:roll 24s ease-in-out infinite alternate}@keyframes roll{from{transform:translateX(0)}to{transform:translateX(-70px)}}
+.bend{animation:bend 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}@keyframes bend{50%{transform:rotate(-7deg)}}
+.curtain{animation:curtain 6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 0}@keyframes curtain{50%{transform:skewX(-4deg)}}
+.surf{animation:surf 5s ease-in-out infinite}@keyframes surf{50%{transform:translateY(5px);opacity:.35}}
+.glint{animation:glint 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes glint{0%,60%,100%{opacity:0;transform:scale(.4)}75%{opacity:1;transform:scale(1)}}
+.breathe{animation:breathe 4s ease-in-out infinite}@keyframes breathe{50%{opacity:.78}}
+.dawn{animation:dawn 18s ease-in-out infinite alternate}@keyframes dawn{from{opacity:.25}to{opacity:.85}}
+.trace{stroke-dasharray:900;animation:trace 7s ease-out infinite}@keyframes trace{0%{stroke-dashoffset:900}55%,100%{stroke-dashoffset:0}}
+}</style><defs><linearGradient id="sea11" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e1724"/><stop offset="0.6" stop-color="#16243a"/><stop offset="1" stop-color="#0a1220"/></linearGradient><radialGradient id="lamp11"><stop offset="0" stop-color="#f6d48a" stop-opacity="0.28"/><stop offset="1" stop-color="#f6d48a" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="480" fill="#2a2f38"/><rect width="1200" height="480" fill="#2a2f38"/>
+<rect x="700" y="30" width="440" height="270" rx="4" fill="#3a404a"/><rect x="714" y="44" width="412" height="242" fill="url(#sea11)"/>
+<circle cx="1050" cy="96" r="22" fill="#e8e6e0" opacity=".85"/>
+<g class="surf" stroke="#e8eef3" stroke-width="2.5" opacity=".55" stroke-linecap="round"><path d="M730 218h120M880 226h140M760 244h170M960 252h150"/></g>
+<path d="M714 44h206v242H714z" fill="#cfe0ea" opacity=".12"/><path d="M920 44l120 40v202l-120-0z" fill="#cfe0ea" opacity=".2"/><path d="M920 44v242" stroke="#3a404a" stroke-width="6"/>
+<path class="curtain" d="M660 20h50q-10 140 6 300h-56z" fill="#6a5a7a"/><path class="curtain" style="animation-delay:1s" d="M1130 20h50v300h-56q16-160 6-300z" fill="#6a5a7a"/>
+<path d="M0 306H1200V480H0Z" fill="#1f232a"/>
+<path d="M30 300H1170L1200 470H0Z" fill="#7a5c48"/><path d="M0 470H1200V480H0Z" fill="#4a382c"/><path d="M30 300H1170" stroke="#8a6a54" stroke-width="4"/>
+<g transform="rotate(-6 470 320)"><rect x="400" y="200" width="140" height="240" rx="16" fill="#111418"/><rect x="408" y="214" width="124" height="212" rx="4" fill="#f3f1ec"/>
+<g transform="rotate(3 470 320)"><rect x="410" y="214" width="16" height="214" fill="#8a8e94"/>
+<text x="434" y="234" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="8.6" fill="#1f2a3a">ANOMALY REPORT</text><text x="436" y="250" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="13" fill="#1f2a3a">AR 2207</text>
+<path d="M436 266h86" stroke="#7d8590" stroke-width="2"/><path d="M436 278h73" stroke="#7d8590" stroke-width="2"/><path d="M436 290h60" stroke="#7d8590" stroke-width="2"/><path d="M436 302h77" stroke="#7d8590" stroke-width="2"/><path d="M436 314h64" stroke="#7d8590" stroke-width="2"/><path d="M436 326h81" stroke="#7d8590" stroke-width="2"/><path d="M436 338h68" stroke="#7d8590" stroke-width="2"/><path d="M436 350h85" stroke="#7d8590" stroke-width="2"/><path d="M436 362h72" stroke="#7d8590" stroke-width="2"/><path d="M436 374h59" stroke="#7d8590" stroke-width="2"/><path d="M436 386h76" stroke="#7d8590" stroke-width="2"/>
+<text x="436" y="412" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="9" fill="#1f2a3a">DISPOSITION: UNR.</text></g>
+<rect class="breathe" x="408" y="214" width="124" height="212" rx="4" fill="#fff" opacity=".08"/></g>
+<g transform="rotate(4 690 330)"><rect x="620" y="250" width="150" height="190" rx="2" fill="#f6f3ea"/><rect x="620" y="250" width="150" height="20" fill="#2a4a6a"/>
+<path d="M636 294h96" stroke="#2a2f38" stroke-width="5" stroke-linecap="square" stroke-dasharray="11 4"/><path d="M636 318h72" stroke="#2a2f38" stroke-width="5" stroke-linecap="square" stroke-dasharray="11 4"/><path d="M636 342h108" stroke="#2a2f38" stroke-width="5" stroke-linecap="square" stroke-dasharray="11 4"/><path d="M636 366h60" stroke="#2a2f38" stroke-width="5" stroke-linecap="square" stroke-dasharray="11 4"/><path d="M636 390h84" stroke="#2a2f38" stroke-width="5" stroke-linecap="square" stroke-dasharray="11 4"/></g>
+<path d="M792 412l90-60" stroke="#c9a35a" stroke-width="6" stroke-linecap="round"/>
+<ellipse cx="80" cy="330" rx="260" ry="90" fill="url(#lamp11)"/><path d="M40 300V160" stroke="#3a3d44" stroke-width="5"/><path d="M10 170l14-50h32l14 50z" fill="#d8c49c"/>
+<path d="M170 330l12-50h136l12 50z" fill="#15181c"/><text x="250" y="318" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="26" fill="#e0553b">11:52</text></svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480"><style>@media (prefers-reduced-motion:no-preference){
+.steam{animation:steam 3s ease-in-out infinite}@keyframes steam{0%{opacity:0;transform:translateY(8px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-14px)}}
+.glow{animation:glow 2.4s ease-in-out infinite}@keyframes glow{50%{opacity:.6}}
+.blink{animation:blink 1.6s steps(2) infinite}@keyframes blink{50%{opacity:.2}}
+.pulse{animation:pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pulse{50%{transform:scale(1.12)}}
+.grow{animation:grow 3.5s ease-out infinite;transform-box:fill-box;transform-origin:left}@keyframes grow{0%{transform:scaleX(0)}40%,100%{transform:scaleX(1)}}
+.draw{stroke-dasharray:1400;animation:draw 5s ease-out infinite}@keyframes draw{0%{stroke-dashoffset:1400}60%,100%{stroke-dashoffset:0}}
+.flash{animation:flash 3s infinite}@keyframes flash{0%,8%,16%,100%{opacity:1}4%,12%{opacity:.1}60%{opacity:.9}}
+.tick{animation:tick 8s steps(8) infinite;transform-box:view-box;transform-origin:var(--o)}@keyframes tick{to{transform:rotate(360deg)}}
+.tilt{animation:tilt 4s ease-in-out infinite;transform-box:view-box;transform-origin:880px 100px}@keyframes tilt{50%{transform:rotate(-4deg)}}
+.flick{animation:flick 4s infinite}@keyframes flick{0%,30%{opacity:.25}35%,100%{opacity:1}}
+.twinkle{animation:twinkle 2.5s ease-in-out infinite}@keyframes twinkle{50%{opacity:.2}}
+.check{animation:check 6s infinite;opacity:0}@keyframes check{0%{opacity:0}15%,90%{opacity:1}100%{opacity:0}}
+.sway{animation:sway 5s ease-in-out infinite;transform-box:view-box;transform-origin:600px 40px}@keyframes sway{50%{transform:rotate(2deg)}}
+.lift{animation:lift 6s ease-in infinite}@keyframes lift{0%,30%{transform:translateY(0)}100%{transform:translateY(-320px)}}
+.flame{animation:flame .3s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top}@keyframes flame{to{transform:scaleY(1.3)}}
+.move1{animation:m 4s linear infinite}@keyframes m{0%{opacity:0}20%,80%{opacity:1}100%{opacity:0}}
+}</style><style>@media (prefers-reduced-motion:no-preference){
+.ring{animation:ring 2.6s ease-out infinite;transform-box:fill-box;transform-origin:center;opacity:0}@keyframes ring{0%{opacity:.8;transform:scale(.6)}100%{opacity:0;transform:scale(1.6)}}
+.ring2{animation:ring 2.6s ease-out .45s infinite}
+.snow{animation:snow 1.6s linear infinite}@keyframes snow{from{transform:translate(0,0)}to{transform:translate(-160px,120px)}}
+.snow2{animation:snow 2.6s linear infinite}
+.drift{animation:drift 14s ease-in-out infinite alternate}@keyframes drift{to{transform:translateX(40px)}}
+.rise{animation:rise 9s ease-in-out infinite}@keyframes rise{0%{transform:translate(0,0);opacity:.0}20%{opacity:.5}100%{transform:translate(30px,-60px);opacity:0}}
+.ping{animation:ping 5s linear infinite;opacity:0}@keyframes ping{0%{transform:translateX(0);opacity:0}10%{opacity:1}55%{opacity:.9}75%,100%{transform:translateX(-300px);opacity:0}}
+.ping2{animation:ping 5s linear 1.7s infinite}.ping3{animation:ping 5s linear 3.4s infinite}
+.roll{animation:roll 24s ease-in-out infinite alternate}@keyframes roll{from{transform:translateX(0)}to{transform:translateX(-70px)}}
+.bend{animation:bend 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}@keyframes bend{50%{transform:rotate(-7deg)}}
+.curtain{animation:curtain 6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 0}@keyframes curtain{50%{transform:skewX(-4deg)}}
+.surf{animation:surf 5s ease-in-out infinite}@keyframes surf{50%{transform:translateY(5px);opacity:.35}}
+.glint{animation:glint 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes glint{0%,60%,100%{opacity:0;transform:scale(.4)}75%{opacity:1;transform:scale(1)}}
+.breathe{animation:breathe 4s ease-in-out infinite}@keyframes breathe{50%{opacity:.78}}
+.dawn{animation:dawn 18s ease-in-out infinite alternate}@keyframes dawn{from{opacity:.25}to{opacity:.85}}
+.trace{stroke-dasharray:900;animation:trace 7s ease-out infinite}@keyframes trace{0%{stroke-dashoffset:900}55%,100%{stroke-dashoffset:0}}
+}</style><defs><linearGradient id="space7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05080d"/><stop offset="1" stop-color="#0f2234"/></linearGradient></defs><rect width="1200" height="480" fill="#0f1a24"/><rect width="1200" height="480" fill="#0f1a24"/>
+<rect x="150" y="40" width="760" height="300" rx="10" fill="#0a1117"/><rect x="160" y="50" width="740" height="280" fill="url(#space7)"/>
+<path d="M160 330Q530 170 900 330Z" fill="#2c6aa0"/><path d="M160 330Q530 200 900 330" fill="none" stroke="#8dd0f0" stroke-width="5" opacity=".7"/>
+<path d="M300 300Q420 230 530 222" fill="none" stroke="#8dbcd4" stroke-width="2.5" stroke-dasharray="6 7" opacity=".7"/>
+<path class="trace" d="M530 222Q640 214 740 150T880 70" fill="none" stroke="#e0b25c" stroke-width="5"/>
+<circle cx="530" cy="222" r="7" fill="#e0b25c"/><circle cx="740" cy="150" r="7" fill="#f3f1ec"/>
+<text x="520" y="250" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="15" fill="#e0b25c">IGNITION</text><text x="752" y="176" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="15" fill="#f3f1ec">CUTOFF</text>
+<rect class="breathe" x="160" y="50" width="740" height="280" fill="#5aa0d8" opacity=".05"/>
+<path d="M90 480L210 300H850L970 480Z" fill="#1c2833"/><path d="M210 300H850" stroke="#3a4a58" stroke-width="10"/>
+<g><rect x="300" y="318" width="50" height="30" rx="3" fill="#0e151c"/><rect x="306" y="324" width="38" height="18" fill="#22405a"/><rect x="370" y="318" width="50" height="30" rx="3" fill="#0e151c"/><rect x="376" y="324" width="38" height="18" fill="#22405a"/><rect x="620" y="318" width="50" height="30" rx="3" fill="#0e151c"/><rect x="626" y="324" width="38" height="18" fill="#22405a"/><rect x="690" y="318" width="50" height="30" rx="3" fill="#0e151c"/><rect x="696" y="324" width="38" height="18" fill="#22405a"/></g>
+<circle class="" style="animation-delay:0.0s" cx="460" cy="334" r="4" fill="#5fa37a"/><circle class="blink" style="animation-delay:0.4s" cx="482" cy="334" r="4" fill="#e0b25c"/><circle class="" style="animation-delay:0.8s" cx="504" cy="334" r="4" fill="#5fa37a"/><circle class="blink" style="animation-delay:1.2s" cx="526" cy="334" r="4" fill="#5fa37a"/><circle class="" style="animation-delay:1.6s" cx="548" cy="334" r="4" fill="#c0473b"/>
+<path d="M300 480V380q0-40 40-44h70q40 4 40 44v100z" fill="#2a3440"/>
+<circle cx="376" cy="350" r="28" fill="#1a1612"/><path d="M342 342q34-34 68 0" fill="none" stroke="#2b2b30" stroke-width="7"/><rect x="338" y="342" width="12" height="22" rx="4" fill="#2b2b30"/><circle class="blink" cx="344" cy="370" r="3" fill="#5fa37a"/>
+<path d="M326 480q0-90 50-96t50 96z" fill="#23314f"/><path d="M420 410l90-40" stroke="#23314f" stroke-width="16" stroke-linecap="round"/><circle cx="512" cy="368" r="9" fill="#1a1612"/>
+<rect x="540" y="372" width="10" height="70" rx="4" fill="#3a3d44"/><circle cx="545" cy="372" r="10" fill="#5b6068"/>
+<rect x="980" y="20" width="200" height="460" fill="#2a3a46"/><rect x="990" y="30" width="180" height="450" fill="#33495a"/><circle cx="1004" cy="270" r="6" fill="#c9ccd1"/>
+<text x="1080" y="140" text-anchor="middle" font-family="'Marker Felt','Chalkboard','Comic Sans MS',cursive" font-weight="700" font-size="74" fill="#0c0f12" transform="rotate(-4 1080 120)">ONCE</text>
+<g font-family="'Marker Felt','Chalkboard','Comic Sans MS',cursive" font-size="22" fill="#0c0f12"><text x="1060" y="204">34</text><text x="1060" y="234">28</text><text x="1060" y="264">31</text><text x="1060" y="294">37</text><text x="1060" y="324">26</text></g></svg>
