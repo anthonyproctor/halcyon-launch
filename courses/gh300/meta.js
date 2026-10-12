@@ -15,7 +15,7 @@ C.meta={
   },
   BASE_CAST:[
     ["Priya Shah","You. Platform lead at Halcyon AI, handed the company's Copilot rollout. Moved Lumen, the hospital product, onto the new platform this summer. Your first project."],
-    ["Asha Shah","Your aunt, your dad's younger sister. Retired ER charge nurse. Writes your shift notes in green ink and asks questions instead of giving answers."],
+    ["Asha Shah","Your aunt, your dad's younger sister. Retired ER charge nurse. Writes your shift notes in purple felt tip and asks questions instead of giving answers."],
     ["Elena Vasquez","CEO and founder. Wants every engineer on Copilot this quarter."],
     ["Lena Cho","CTO. Sponsor of the rollout."],
     ["Anders Lindqvist","Back on contract. Built the ML platform. Priya's old mentor, and the loudest skeptic."],
