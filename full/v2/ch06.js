@@ -25,8 +25,9 @@
 //     performing (Tuckman 1965); adjourning added with Mary Ann Jensen in 1977; teams "revert to earlier stages in certain circumstances", for
 //     example when "a change in leadership" or new people challenge the existing norms; ground rules created in forming.
 //   https://en.wikipedia.org/wiki/Thomas%E2%80%93Kilmann_Conflict_Mode_Instrument : two axes, assertiveness and cooperativeness; five modes:
-//     competing, avoiding, accommodating, collaborating, compromising. The lesson gives PMI's usual exam names beside them (force or direct,
-//     withdraw or avoid, smooth or accommodate, collaborate or problem solve, compromise or reconcile).
+//     competing, avoiding, accommodating, collaborating, compromising. The lesson gives PMI's names beside them, as the PMBOK Guide 8th
+//     ed. (PMI, 2025), Sec. 5, conflict management (p. 156), lists them: withdraw/avoid, smooth/accommodate, compromise/reconcile, force/direct,
+//     collaborate/problem-solve; force is usually the one used in an emergency.
 //   https://open-exam-prep.com/study-guides/pmp/people-domain-part-2/defining-team-ground-rules (read through a fetch summary): "The team charter
 //     defines the 'what' and 'why'; ground rules define the 'how'"; ground rules "created BY the team, not imposed"; specific and measurable
 //     ("Respond to messages within 4 hours"); violations addressed promptly, in good faith, first one on one, as "a learning opportunity rather

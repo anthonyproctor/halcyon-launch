@@ -19,12 +19,11 @@
 //   (proactively and fully disclose real or potential conflicts of interest), 4.3.2 (refrain from influencing outcomes until full disclosure, an
 //   approved mitigation plan, and consent; treat the appearance of a conflict as a conflict), 5.2.3 (accurate information in a timely manner,
 //   including the courage to share bad news), 5.3.1 (no half-truths, information out of context, or withholding that makes statements misleading).
-// PMBOK Guide, Eighth Edition (secondary sources; PMI's own pages return 403 to automated reads): six principles including "adopt a holistic view",
-//   "focus on value", and "lead accountably"; seven performance domains, governance and stakeholders among them; five focus areas; 40
-//   processes. https://pmstudycircle.com/pmbok-guide-8th-edition/ and
-//   https://www.learningtree.com/blog/new-pmbok-guide-sixth-edition-means-future-project-management/ (the two agree on these names; they differ on
-//   the sixth principle's wording, so this chapter doesn't quote it). Every PMBOK 8 detail here is secondary-sourced, and the chapter
-//   claims no order for the principles or the domains.
+// PMBOK Guide 8th ed. (PMI, 2025), checked against the book 2026-10-11 (Std = The Standard for Project Management, bound in the same volume):
+//   project, "a temporary initiative in a unique context undertaken to create value", and project success, value worth the effort and expense
+//   (Std 1.2, pp. 4 to 5); seven performance domains, Governance first, listed "without specific weighting or order" (Guide Sec. 2, p. 7;
+//   Governance 2.1, p. 10); tailoring, the deliberate adaptation of the approach, governance, and processes to the environment (Guide 1.3, p. 5,
+//   and Sec. 3, p. 103). The chapter names no principle and claims no order for the domains.
 // Light time: JPL Horizons, Mars (499) observed from Earth center (500@399), quantity 20, read 2026-10-11:
 //   https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND='499'&CENTER='500@399'&MAKE_EPHEM='YES'&EPHEM_TYPE='OBSERVER'&START_TIME='2061-01-10'&STOP_TIME='2061-02-05'&STEP_SIZE='1%20d'&QUANTITIES='20'
 //   Jan 10 2061 00:00 UT 1.2209 AU; at 12:40 UT (5:40 AM MST) about 1.2156 AU = one way 10 min 7 s. Jan 21: 9 min 15 s. Jan 27: 8 min 46 s.
@@ -125,7 +124,7 @@
           `Predictive suits work where the requirements are well understood early, change is expensive, and the physics or the regulator won't negotiate. You plan it up front, baseline it, and control changes against the baseline. A departure stage is that kind of work. You don't iterate your way to a pressure vessel. Adaptive suits work where you learn what's needed by building and showing it, change is cheap, and feedback is fast. Flight software with an astronaut as the customer is that kind of work, at least until it has to fly.`,
           `Most real projects are hybrid. The trick is the seams. In a hybrid plan the agile teams work in short iterations, and the predictive plan fixes the dates where their work has to meet the hardware: interface freezes, integrated tests, the day the code has to be on the vehicle. Those meeting points live in one integrated plan that everybody can see. If each half picks its own approach and reconciles later, "later" turns out to be the integration test, and that's the most expensive place in the project to find out you disagreed.`,
           `PMI calls fitting the method to the situation tailoring, and it expects you to do it. You tailor the process. You don't tailor away the controls that keep people alive.`],
-        terms: [[`Predictive`,`Plan-driven; scope, schedule, and cost defined early and controlled against a baseline.`],[`Adaptive or agile`,`Iterative and incremental; scope emerges through short cycles and feedback.`],[`Hybrid`,`A mix, chosen per deliverable, joined at agreed integration points in one plan.`],[`Tailoring`,`Adapting the approach, processes, and artifacts to the project's context.`]],
+        terms: [[`Predictive`,`Plan-driven; scope, schedule, and cost defined early and controlled against a baseline.`],[`Adaptive or agile`,`Iterative and incremental; scope emerges through short cycles and feedback.`],[`Hybrid`,`A mix, chosen per deliverable, joined at agreed integration points in one plan.`],[`Tailoring`,`Deliberately adapting the approach, governance, and processes to the project's context.`]],
         exam: `Expect a scenario with stable hardware and changing software. The best answer is usually hybrid, with the integration points defined in the overall plan.` },
       { h: `When the answer takes twenty minutes`,
         body: [`The ECO's P8 is plan and manage communication. Its enablers are a good checklist: define a communication strategy, promote transparency and collaboration, establish a feedback loop, understand reporting requirements, create reports aligned with what sponsors and stakeholders need, and support the reporting and governance processes.`,

@@ -27,10 +27,12 @@
 //   https://en.wikipedia.org/wiki/Schedule_compression : "Any compression must be done in the critical path activities."
 //   https://pmaspirant.com/crashing-vs-fast-tracking : crashing adds resources to critical path tasks and usually raises cost; fast tracking runs
 //     sequential tasks in parallel, adds no direct cost, and adds risk of rework.
-//   https://en.wikipedia.org/wiki/Resource_leveling (PMBOK definition: "start and finish dates are adjusted based on resource limitation"; can push
-//     the finish later) and https://pmaspirant.com/resource-leveling-vs-resource-smoothing (smoothing works inside float and keeps the end date;
-//     leveling may extend it and can change the critical path).
-//   Triangular mean (o + m + p) / 3 is the standard simple average, taught alongside beta for contrast.
+//   PMBOK Guide 8th ed. (PMI, 2025), Sec. 5, resource optimization (p. 193): leveling adjusts start and finish dates for resource constraints
+//     and may affect the critical path; smoothing uses free and total float without moving the critical path. Also
+//     https://pmaspirant.com/resource-leveling-vs-resource-smoothing (smoothing keeps the end date; leveling may extend it).
+//   PMBOK Guide 8th ed. (PMI, 2025): PERT is listed among estimating techniques under Develop Schedule (2.3.2.2, p. 52), and multipoint
+//     estimating (Sec. 5, p. 183) gives only the triangular formula (tO + tM + tP) / 3. The book has no beta formula and states no preference,
+//     so the lesson attributes the PERT listing to the book and gives (O + 4M + P) / 6 as PERT's own formula, the one exam prep drills.
 // Video: PM Aspirant, "Critical Path Method (CPM) Made Simple: A Complete Guide", 24:38, published 2025-03-09; id and title confirmed via
 //   https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=ijZ8AISuYZo
 // PMI Code of Ethics and Professional Conduct (PDF): https://www.pmi.org/-/media/pmi/documents/public/pdf/ethics/pmi-code-of-ethics.pdf
@@ -106,7 +108,7 @@
         exam: `When the question asks who should estimate, pick the people doing the work, with history and expert judgment as checks. A number handed down by management or finance is the trap.` },
       { h: `Three numbers`,
         body: [`A single number is a lie with good manners. Every estimate is a range, and when you ask somebody for one number, what you get is the most likely value with the uncertainty sanded off. The schedule then treats it as fact, and the uncertainty comes back later as a surprise.`,
-          `So ask for three. Optimistic, the duration if things go well. Most likely, the one they'd bet on. Pessimistic, the duration if the plausible bad things happen. Then combine them. The simple average, (O + M + P) / 3, is the triangular estimate. The one PMI likes is the beta or PERT estimate, (O + 4M + P) / 6, which leans toward the most likely value. The standard deviation for one activity is (P minus O) / 6.`,
+          `So ask for three. Optimistic, the duration if things go well. Most likely, the one they'd bet on. Pessimistic, the duration if the plausible bad things happen. Then combine them. The simple average, (O + M + P) / 3, is the triangular estimate, and it's the formula the PMBOK Guide gives for three point estimates. The Guide also lists PERT, and PERT's formula is the beta estimate, (O + 4M + P) / 6, which leans toward the most likely value. The standard deviation for one activity is (P minus O) / 6.`,
           `Work one through, because the exam will make you. The Breather's acceptance test: optimistic 3 weeks, most likely 4, pessimistic 11. PERT: (3 + 16 + 11) / 6 = 30 / 6 = 5.0 weeks. Triangular: (3 + 4 + 11) / 3 = 6.0 weeks. Standard deviation: (11 minus 3) / 6 = 1.33 weeks.`,
           `Look at what that tells you. Most likely was 4. The expected value is a full week longer, because the bad tail is long. When the pessimistic number sits far from the other two, the work has a cliff in it somewhere, and the person estimating knows where. Ask them. About two thirds of the time a duration lands within one standard deviation of the PERT estimate, here 3.67 to 6.33 weeks, and about 95 percent of the time within two, here 2.33 to 7.67. Those percentages assume a normal curve, and nothing on a stand at two in the morning is normal, so treat them as a way of talking about confidence.`,
           `For a whole path, you don't add the standard deviations. You add the variances, which are the standard deviations squared, and take the square root of the sum. Two activities with standard deviations of 3 and 4 weeks give a path standard deviation of 5, the square root of 9 plus 16. A long path is less uncertain than its pieces added up, because the pieces don't all go wrong at once. Usually.`],

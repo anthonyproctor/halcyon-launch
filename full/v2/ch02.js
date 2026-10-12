@@ -17,12 +17,11 @@
 //   uphold the policies, rules, regulations, and laws that govern our work), 2.3.5 (no retaliation for good faith ethical concerns), 3.2.3 (actively
 //   listen to others' points of view), 5.2.1 (earnestly seek to understand the truth), 5.2.5 (an environment where others feel safe to tell the
 //   truth), 5.3.1 (no half-truths, information out of context, or misleading omissions).
-// PMBOK Guide, Eighth Edition (secondary; PMI's own pages return 403 to automated reads; every PMBOK 8 detail here is secondary-sourced, and the
-//   chapter claims no order for the principles or the domains): principles including "adopt a holistic view"; performance
-//   domains governance, scope, schedule, finance, stakeholders, resources, risk; scope domain "define and manage boundaries, deliverables, and
-//   quality expectations"; risk domain "identify and manage uncertainty, threats, and opportunities"; 40 tailorable processes.
-//   https://pmstudycircle.com/pmbok-guide-8th-edition/ (read 2026-10-11; the page doesn't discuss WBS, backlogs, or the integrated plan, so those
-//   are taught from the ECO and standard PMI terms, not quoted from PMBOK 8).
+// PMBOK Guide 8th ed. (PMI, 2025), checked against the book 2026-10-11 (Std = The Standard for Project Management, bound in the same volume):
+//   the principle Adopt a Holistic View, systems thinking about components and their interdependencies (Std 3.3, p. 38); seven performance
+//   domains, Governance, Scope (including quality), Schedule, Finance, Stakeholders, Resources, Risk, with 40 nonprescriptive processes (Guide
+//   Sec. 2, pp. 7 to 8). The chapter claims no order for the domains. WBS, backlog, and integrated plan teaching follows the ECO and standard PMI
+//   terms, not PMBOK 8 wording.
 // Light time: JPL Horizons, Mars (499) observed from Earth center (500@399), quantity 20, read 2026-10-11:
 //   https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND='499'&CENTER='500@399'&MAKE_EPHEM='YES'&EPHEM_TYPE='OBSERVER'&START_TIME='2061-02-05'&STOP_TIME='2061-04-01'&STEP_SIZE='1%20d'&QUANTITIES='20'
 //   Feb 28 2061 00:00 UT 0.78053 AU, Mar 1 0.77349 AU; at 12:40 UT (5:40 AM MST) about 0.77681 AU = one way 387.6 s = 6 min 28 s.
