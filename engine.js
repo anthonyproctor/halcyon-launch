@@ -721,15 +721,15 @@ function alignWords(tw,dom){const n=tw.length,m=dom.length,map=new Array(n).fill
     for(let i=i0+1;i<i1;i++)if(a[i])map[i]=d0+1+Math.min(dj-1,Math.floor((i-i0-1)*dj/ti))}
   return map}
 function bookSec(){if(NAR.page!=="book"||!NAR.book)return;const pid=pidAt(NAR.book.n,NAR.book.ed,NAR.audio.currentTime||0);if(pid&&pid!==NAR.bsec){NAR.bsec=pid;const l=$("narlabel");if(l)l.textContent=`Ch ${NAR.book.n} · ${pidLabel(pid,NAR.book.n)}`;narMedia()}}
-["seeked","timeupdate"].forEach(ev=>NAR.audio.addEventListener(ev,()=>bookSec()));
-function narHighlight(){if(NAR.page==="book"){bookSec();const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
+["seeked","timeupdate"].forEach(ev=>NAR.audio.addEventListener(ev,()=>{bookSec();if(NAR.audio.paused||document.hidden)bfTick()})); // the follow-along text keeps up with lock screen and car seeks too
+function narHighlight(){if(NAR.page==="book"){bookSec();bfTick();const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
   let lo=0,hi=W.length-1,idx=-1;while(lo<=hi){const mid=(lo+hi)>>1;if(W[mid][1]<=t){idx=mid;lo=mid+1}else hi=mid-1}
   const di=idx>=0?NAR.map[idx]:null;if(di!==NAR.cur){if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");if(di!=null&&NAR.words[di]){const w=NAR.words[di];NAR.lastw=w;w.classList.add("hl");const r=w.getBoundingClientRect(),off=r.top<70||r.bottom>innerHeight-110;if(off&&!NAR.free)w.scrollIntoView({block:"center",behavior:"smooth"});narFollowUI(off,r.top<70)}NAR.cur=di}
   const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();
   if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight)}
 // Scrolling by hand while a page reads stops the auto follow; "Follow the reading" brings it back.
 function narFollowUI(off,up){const p=$("narfollow");if(!p)return;p.hidden=!(NAR.free&&off);if(!p.hidden)p.textContent=(up?"↑":"↓")+" Follow the reading"}
-addEventListener("scroll",()=>{const w=NAR.lastw;if(!NAR.free||!w||!w.isConnected)return;const r=w.getBoundingClientRect();narFollowUI(r.top<70||r.bottom>innerHeight-110,r.top<70)},{passive:true});
+addEventListener("scroll",()=>{const w=NAR.lastw;if(NAR.page==="book"||!NAR.free||!w||!w.isConnected)return;const r=w.getBoundingClientRect();narFollowUI(r.top<70||r.bottom>innerHeight-110,r.top<70)},{passive:true});
 function narFree(){if(NAR.page&&NAR.page!=="book"&&NAR.page!=="car"&&!NAR.audio.paused)NAR.free=true}
 addEventListener("wheel",narFree,{passive:true});addEventListener("touchmove",narFree,{passive:true});
 addEventListener("keydown",e=>{if(["PageUp","PageDown","ArrowUp","ArrowDown","Home","End"].includes(e.key))narFree()});
@@ -765,15 +765,20 @@ NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.b
 function foldInit(){document.querySelectorAll("details.fold").forEach(d=>{const k="fold."+d.id;const v=store.get(k,null);if(v!==null)d.open=v;d.addEventListener("toggle",()=>store.set(k,d.open))})}
 foldInit();
 function narInit(){
-  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<button class="btn small" id="narfollow" type="button" hidden>↓ Follow the reading</button><div class="narseekrow"><span class="prog nartime" id="narcur">0:00</span><input type="range" id="narseek" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="prog nartime" id="nardur">0:00</span><span id="narprog" hidden></span></div><div class="narrow"><button class="btn small ghost" id="narprev" type="button" aria-label="Previous section" data-tip="Previous scene in the Audiobook, or previous page while reading.">⏮</button><button class="btn small ghost" id="narback" type="button" aria-label="Back 10 seconds" data-tip="Jump back 10 seconds for a quick refresher.">⟲ 10</button><button class="btn" id="narplay" type="button">▶ Listen</button><button class="btn small ghost" id="narfwd" type="button" aria-label="Forward 30 seconds" data-tip="Skip ahead 30 seconds.">30 ⟳</button><button class="btn small ghost" id="narnext" type="button" aria-label="Next section" data-tip="Next scene in the Audiobook, or next page while reading.">⏭</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate" data-tip="Reading speed. Your choice is remembered.">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto" data-tip="When a page finishes reading, turn to the next page by itself. Decisions still wait for you to choose."><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label><button class="btn small ghost" id="gohf" type="button" data-tip="Switch to the audiobook. It starts at the part you're reading and plays straight through, chapter after chapter.">🎧 Audiobook</button></div>`;
+  const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<button class="btn small" id="narfollow" type="button" hidden>↓ Follow the reading</button><div class="narseekrow"><span class="prog nartime" id="narcur">0:00</span><div class="narseekwrap"><div class="narticks" id="narticks" aria-label="Scenes"></div><span class="narbubble" id="narbubble" hidden></span><input type="range" id="narseek" min="0" max="1000" value="0" step="1" aria-label="Seek"></div><span class="prog nartime" id="nardur">0:00</span><span id="narprog" hidden></span></div><div class="narrow"><button class="btn small ghost" id="narprev" type="button" aria-label="Previous section" data-tip="Previous scene in the Audiobook, or previous page while reading.">⏮</button><button class="btn small ghost" id="narback" type="button" aria-label="Back 10 seconds" data-tip="Jump back 10 seconds for a quick refresher.">⟲ 10</button><button class="btn" id="narplay" type="button">▶ Listen</button><button class="btn small ghost" id="narfwd" type="button" aria-label="Forward 30 seconds" data-tip="Skip ahead 30 seconds.">30 ⟳</button><button class="btn small ghost" id="narnext" type="button" aria-label="Next section" data-tip="Next scene in the Audiobook, or next page while reading.">⏭</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate" data-tip="Reading speed. Your choice is remembered.">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto" data-tip="When a page finishes reading, turn to the next page by itself. Decisions still wait for you to choose."><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label><button class="btn small ghost" id="gohf" type="button" data-tip="Switch to the audiobook. It starts at the part you're reading and plays straight through, chapter after chapter.">🎧 Audiobook</button></div>`;
   document.body.appendChild(bar);
-  $("narfollow").onclick=()=>{NAR.free=false;$("narfollow").hidden=true;const w=NAR.lastw;if(w&&w.isConnected)w.scrollIntoView({block:"center",behavior:"smooth"})};
+  $("narfollow").onclick=()=>{NAR.free=false;$("narfollow").hidden=true;const w=NAR.lastw;if(!w||!w.isConnected)return;if(NAR.page==="book"&&BF.box&&BF.box.contains(w)){const r=BF.box.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight)BF.box.scrollIntoView({block:"nearest",behavior:"smooth"});bfScrollTo(w)}else w.scrollIntoView({block:"center",behavior:"smooth"})};
   $("narplay").onclick=()=>{plog("tap Listen");if(NAR.audio.paused){NAR.listening=true;NAR.free=false;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{plog("play() ok");narUI();narHighlight()}).catch(e=>plog("play() REJECTED "+e.name+": "+e.message))}else{NAR.listening=false;NAR.audio.pause();narUI()}};
   {const sk=$("narseek");let drag=false;
    const show=()=>{const a=NAR.audio,d=a.duration||0;$("narcur").textContent=fmtT(drag?(+sk.value/1000*d):a.currentTime);$("nardur").textContent=d?fmtT(d):"0:00";if(!drag&&d)sk.value=Math.round(a.currentTime/d*1000)};
    ["timeupdate","loadedmetadata","durationchange","seeked","emptied"].forEach(ev=>NAR.audio.addEventListener(ev,show));
-   sk.addEventListener("input",()=>{drag=true;show()});
-   sk.addEventListener("change",()=>{const d=NAR.audio.duration||0;if(d)NAR.audio.currentTime=+sk.value/1000*d;drag=false;narSavePos(true);show();if(NAR.audio.paused)narHighlight()})}
+   const bub=$("narbubble");
+   const bubble=()=>{const d=NAR.audio.duration||0;if(!drag||!d){bub.hidden=true;return}const t=+sk.value/1000*d,W=sk.clientWidth,x=8+(W-16)*(+sk.value/1000);
+     const pid=NAR.page==="book"&&NAR.book?pidAt(NAR.book.n,NAR.book.ed,t):null;bub.textContent=fmtT(t)+(pid?" · "+pidLabel(pid,NAR.book.n).replace(/^(Decision \d+):.*/,"$1"):"");bub.hidden=false;
+     bub.style.left=Math.max(bub.offsetWidth/2,Math.min(W-bub.offsetWidth/2,x)).toFixed(1)+"px"}; // the time (and scene) under the thumb while dragging
+   sk.addEventListener("input",()=>{drag=true;show();bubble()});
+   sk.addEventListener("change",()=>{const d=NAR.audio.duration||0;if(d)NAR.audio.currentTime=+sk.value/1000*d;drag=false;bubble();if(NAR.page==="book")NAR.free=false;narSavePos(true);show();if(NAR.audio.paused)narHighlight()});
+   ["pointerup","pointercancel"].forEach(ev=>sk.addEventListener(ev,()=>setTimeout(()=>{if(drag){drag=false;show()}bubble()},60)))} // a drag that ends where it began fires no change
   $("narprev").onclick=()=>narSkip(-1);$("narnext").onclick=()=>narSkip(1);
   $("narback").onclick=()=>{NAR.audio.currentTime=Math.max(0,NAR.audio.currentTime-10);narSavePos(true);if(NAR.audio.paused)narHighlight()};
   $("narfwd").onclick=()=>{NAR.audio.currentTime=Math.min((NAR.audio.duration||0)-0.5,NAR.audio.currentTime+30);narSavePos(true);if(NAR.audio.paused)narHighlight()};
@@ -921,7 +926,7 @@ async function handoffOffer(){if(TRACK!=="full"||!CH||!S)return;const LB=lget().
   const d=document.createElement("div");d.id="handoff";d.className="handoff";d.innerHTML=`<span>🎧 You were listening at <b>${esc(pidLabel(pid,LB.n))}</b> in the Audiobook (${fmtT(LB.t)}).</span><button class="btn small" type="button" id="hojump">Pick up there</button><button class="btn small ghost" type="button" id="hox" aria-label="Dismiss">✕</button>`;
   $("page").prepend(d);$("hojump").onclick=()=>{store.set("handoff.seen",LB.at);if(NAR.page==="book")NAR.audio.pause();fullGo(k)};$("hox").onclick=()=>{store.set("handoff.seen",LB.at);d.remove()}}
 async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;if(NOAUD())return BOOK={full:{}};const cid=COURSE.id;let M;try{const r=await fetch(R(V2("audio/audiobook.json")),{cache:"no-store"});M=r.ok?await r.json():{full:{}}}catch(e){M={full:{}}}if(COURSE.id!==cid)return BOOK||{full:{}};return BOOK=M}
-function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;libTouch({t:"book",n});labQueue(n);NAR.bsec=null;bookMarks();NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=R(M.src);NAR.audio.playbackRate=NAR.rate;
+function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;libTouch({t:"book",n});labQueue(n);NAR.bsec=null;NAR.free=false;bookMarks().then(()=>narTicks());NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=R(M.src);NAR.audio.playbackRate=NAR.rate;
   if(at!=null){if(at>1)seekTo(at)}else{const LB=lget().book;const sameEd=LB&&LB.n===n&&LB.ed===ed;const pos0=sameEd?LB.t:0;
    if(pos0>5)seekTo(pos0);else NAR.audio.addEventListener("loadedmetadata",()=>{const pos=bookResumePos(ed,n,NAR.audio.duration);if(pos>5&&pos<(NAR.audio.duration-5))seekTo(pos)},{once:true})}
   NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight();narMedia()}).catch(()=>{});narUI();if(TRACK==="book")renderBook()}
@@ -933,17 +938,86 @@ async function renderBook(){setTimeout(ambSync,0);
     const mk=(MARKS&&MARKS.full[c.num]&&MARKS.full[c.num][ed])||[];
     const secs=M&&mk.length?`<details class="bsecs"><summary class="prog">Sections</summary><div class="bsecl">${mk.map(([pid,t])=>`<button type="button" class="bsec" data-bn="${c.num}" data-bt="${t}"><span>${esc(secName(c,pid))}</span><span class="prog">${fmtT(t)}</span></button>`).join("")}</div></details>`:"";
     return `<div class="browwrap"><button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>${dl}</div>${labMention(c)}${secs}`};
-  $("page").innerHTML=`<div class="kicker">Audiobook</div><h1>Audiobook</h1><p class="lead">No tapping needed. It plays the story on the right-answer path, chapter after chapter, and keeps going with your phone locked. Pause or skip with your car or lock-screen controls.</p>
+  $("page").innerHTML=`<div class="kicker">Audiobook</div><h1>Audiobook</h1>${bfChapter()?`<div id="bfslot"></div>`:""}<p class="lead">No tapping needed. It plays the story on the right-answer path, chapter after chapter, and keeps going with your phone locked. Pause or skip with your car or lock-screen controls.</p>
    <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. ${esc(COURSE.hero||"The lead")} makes the right calls and you hear what happens.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus ${MENTOR()}'s lesson, and each decision read aloud with a pause, then the answer and why. About twice as long.</span></button></div>
    ${(()=>{const LB=lget().book;if(!LB||!(B.full[LB.n]))return "";const same=LB.ed===ed;const c=full.find(x=>x.num===LB.n);return `<button class="handsfree" type="button" id="bresume"><span>▶</span><span><b>Resume chapter ${LB.n}${c?": "+esc(c.title):""}</b><span class="prog">${same?`at ${fmtT(LB.t)}`:`near where you stopped in ${LB.ed==="story"?"Story only":"Story + lessons"}`} · picks up on any device</span></span></button><button class="btn small ghost" type="button" id="bread">📖 Read from here${pidAt(LB.n,LB.ed,LB.t)?": "+esc(pidLabel(pidAt(LB.n,LB.ed,LB.t),LB.n)):""}</button>`})()}
    <p class="prog">Plays chapter to chapter on its own and remembers where you stopped, on any device. Use ⟲ 10 for a quick refresher. The ⬇ next to a chapter downloads it for the car or the gym. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
    ${labWaitHTML()}<h2>Full Course</h2>${(()=>{const L=COURSE.bookRecordedOnly?full.filter(c=>B.full[c.num]&&B.full[c.num][ed]):full;return L.length?`<div class="brows">${L.map(row).join("")}</div>`:`<p class="prog">The narration for this edition is being recorded. Chapters show up here as they're ready.</p>`})()}`;wireLabWait();
+  bfMount();
   $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd."+COURSE.id,b.dataset.ed);renderBook()});
   {const r=$("bresume");if(r)r.onclick=()=>{const LB=lget().book;if(LB)bookPlay(ed,LB.n)}}
   {const r=$("bread");if(r)r.onclick=()=>{readFromBook();top()}}
   $("page").querySelectorAll("[data-bn]").forEach(b=>b.onclick=()=>bookPlay(ed,+b.dataset.bn,+b.dataset.bt));
   $("page").querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{const n=+b.dataset.b;if(NAR.page==="book"&&NAR.book&&NAR.book.n===n&&NAR.book.ed===ed){if(NAR.audio.paused){NAR.audio.play();narHighlight()}else NAR.audio.pause();setTimeout(renderBook,50);return}bookPlay(ed,n)});
 }
+
+
+/* ===== audiobook follow-along (approved 2026-10-12) =====
+   While a chapter plays on the Audiobook page, its text shows with the word being read highlighted. The words and their times come from
+   <audio>/episodes/chNN-<ed>.json (tools/book_text.mjs builds them from the page word timings, laid out the way the mp3 was assembled),
+   so what shows is what is read: the right-answer path, and in Story + lessons the lesson, the decisions read aloud and the debriefs.
+   Scene headings come from bookmarks.json. Tap a paragraph or a heading to jump the audio there. Scrolling the text by hand stops the
+   auto follow and "Follow the reading" brings it back, as on chapter pages. The seek bar gets a tick at each scene start. Nothing here
+   writes anywhere but the listening position the player already saves. */
+const BTX={}; // index url -> index, or null when there is none
+function btextUrl(n,ed){const M=BOOK&&BOOK.full[n]&&BOOK.full[n][ed];return M?R(M.src.replace(/(?:story\/)?full-ch(\d+)\.mp3$/,`episodes/ch$1-${ed}.json`)):null}
+function bookText(n,ed){const u=btextUrl(n,ed);if(!u||NOAUD())return Promise.resolve(null);if(u in BTX)return BTX[u]; // null: no index for this chapter; undefined: couldn't load it (offline), asked again next time
+  return BTX[u]=(async()=>{let J,keep=false;try{const r=await fetch(u);if(r.ok){J=await r.json();keep=true}else if(r.status===404){J=null;keep=true}}catch(e){}
+    if(J&&!(J.v===1&&J.n===n&&J.ed===ed&&Array.isArray(J.p)))J=null;if(!keep)delete BTX[u];return J})()}
+const BF={id:null,el:null,box:null,words:[],times:null,cur:-1,scroll:0}; // the panel built for one chapter and edition, kept across renderBook
+function bfChapter(){if(NAR.page==="book"&&NAR.book)return {n:NAR.book.n,ed:NAR.book.ed,live:true};const LB=lget().book;return LB&&BOOK&&BOOK.full[LB.n]&&BOOK.full[LB.n][LB.ed]?{n:LB.n,ed:LB.ed,t:LB.t,live:false}:null}
+function bfBuild(J,c,ed){const L=(MARKS&&MARKS.full[J.n]&&MARKS.full[J.n][ed])||[];const at={};let k=0;
+  for(const [pid,t] of L){while(k<J.p.length&&J.p[k][2][0]<t-0.05)k++;if(k<J.p.length)(at[k]=at[k]||[]).push([pid,t])}
+  if(L.length&&J.p.length&&!at[0]){const f=Object.keys(at).map(Number).sort((a,b)=>a-b)[0];if(f!=null&&f<=2){at[0]=at[f];delete at[f]}} // the chapter title line comes just before the opening mark
+  const html=J.p.map(([pid,words,ts],i)=>{const h=(at[i]||[]).map(([p,t])=>`<button type="button" class="bfh" data-t="${t}">${esc(secName(c,p))}</button>`).join("");
+    const ws=words.split(" ");const cls=pid==="lesson"?" les":pid[0]==="o"?" deb":"";
+    return `${h}<p class="bfp${cls}" data-t="${ts[0]}">${ws.map(w=>`<span class="bw">${esc(w)}</span>`).join(" ")}</p>`}).join("");
+  const sec=document.createElement("section");sec.className="bfollow";sec.id="bfollow";sec.setAttribute("aria-label","Follow along");
+  sec.innerHTML=`<div class="bfhead"><div><b>Chapter ${J.n}${c?": "+esc(c.title):""}</b><span class="prog">Playing ${ed==="story"?"Story only":"Story + lessons"} · Tap a paragraph to jump there</span></div></div><div class="bftext story" id="bftext" tabindex="0" aria-label="Chapter text">${html}</div>`;
+  return sec}
+function bfNote(msg){const s=document.createElement("section");s.className="bfollow";s.id="bfollow";s.innerHTML=`<p class="prog bfnote">${esc(msg)}</p>`;return s}
+async function bfMount(){const slot=$("bfslot");if(!slot)return;const ch=bfChapter();if(!ch){slot.remove();return}
+  const id=`${COURSE.id}|${ch.ed}|${ch.n}`;
+  if(BF.id!==id||!BF.el){const J=await bookText(ch.n,ch.ed);if(!$("bfslot")||TRACK!=="book")return;const now=bfChapter();if(!now||`${COURSE.id}|${now.ed}|${now.n}`!==id)return;
+    const c=TRACKS.full.list().find(x=>x.num===ch.n);
+    if(!J){BF.id=J===null?id:null;BF.el=bfNote(J===null?`The follow-along text for chapter ${ch.n} isn't ready yet. The audio plays as usual.`:`The follow-along text couldn't load. Check your connection; the audio plays as usual.`);BF.box=null;BF.words=[];BF.times=null}
+    else{BF.id=id;BF.el=bfBuild(J,c,ch.ed);BF.dur=J.dur;BF.box=BF.el.querySelector("#bftext");BF.words=[...BF.el.querySelectorAll(".bw")];BF.times=Float64Array.from(J.p.flatMap(p=>p[2]));BF.cur=-1;BF.scroll=0;bfWire()}}
+  const s=$("bfslot");if(!s)return;const fresh=!BF.el.isConnected&&BF.shown!==id;BF.shown=id;s.replaceWith(BF.el);
+  if(fresh&&ch.live){const r=BF.el.getBoundingClientRect();const nb=$("narbar"),bar=nb&&!nb.hidden?nb.getBoundingClientRect().top:innerHeight;if(r.top<0||r.bottom>bar)BF.el.scrollIntoView({block:"start",behavior:"smooth"})} // a chapter just started: bring its text into view
+  if(BF.box){BF.box.scrollTop=BF.scroll;BF.box.querySelectorAll(".bw.hl").forEach(e=>e.classList.remove("hl"));BF.cur=-1;
+    if(!ch.live&&ch.t!=null){bfShow(ch.t,true)}else bfTick(true)}}
+function bfWire(){const box=BF.box,a=NAR.audio;
+  box.addEventListener("scroll",()=>{BF.scroll=box.scrollTop;const w=NAR.lastw;if(NAR.page==="book"&&NAR.free&&w&&w.isConnected&&box.contains(w)){const o=bfOff(w);narFollowUI(o.off,o.up)}},{passive:true});
+  const free=()=>{if(NAR.page==="book"&&!a.paused)NAR.free=true};
+  box.addEventListener("wheel",free,{passive:true});box.addEventListener("touchmove",free,{passive:true});
+  box.addEventListener("keydown",e=>{if(["PageUp","PageDown","ArrowUp","ArrowDown","Home","End"," "].includes(e.key))free()});
+  box.addEventListener("mousedown",e=>{if(e.offsetX>=box.clientWidth)free()}); // dragging the scrollbar
+  BF.el.addEventListener("click",e=>{const p=e.target.closest("[data-t]");if(!p||!BF.el.contains(p))return;const sel=getSelection&&getSelection();if(sel&&!sel.isCollapsed&&String(sel).trim())return; // selecting text, not jumping
+    bfJump(+p.dataset.t)})}
+function bfJump(t){const ch=bfChapter();if(!ch)return;NAR.free=false;narFollowUI(false);
+  if(ch.live){NAR.audio.currentTime=Math.max(0,t);narSavePos(true);bookSec();bfTick(true)}
+  else bookPlay(ch.ed,ch.n,Math.max(0.01,t))}
+// the part of the text box you can see: inside the box, on screen, and above the player bar
+function bfView(){const b=BF.box.getBoundingClientRect(),nb=$("narbar"),bar=nb&&!nb.hidden?nb.getBoundingClientRect().top:innerHeight;const top=Math.max(b.top,0),bot=Math.min(b.bottom,bar);return bot-top<80?{top:b.top,bot:b.bottom,b}:{top,bot,b}}
+function bfOff(w){const r=w.getBoundingClientRect(),v=bfView();return {off:r.top<v.top+4||r.bottom>v.bot-4,up:r.top<v.top+4}}
+function bfScrollTo(w,instant){const box=BF.box;if(!box||!w)return;const r=w.getBoundingClientRect(),v=bfView();const want=box.scrollTop+(r.top-v.top)-(v.bot-v.top)*0.3;
+  box.scrollTo({top:Math.max(0,want),behavior:instant||Math.abs(want-box.scrollTop)>box.clientHeight*2?"auto":"smooth"})}
+// highlight the word at time t (binary search on the word start times), and follow it unless the reader scrolled away
+function bfShow(t,instant){if(!BF.times||!BF.box||!BF.box.isConnected)return;const T=BF.times;let lo=0,hi=T.length-1,i=-1;while(lo<=hi){const m=(lo+hi)>>1;if(T[m]<=t+0.02){i=m;lo=m+1}else hi=m-1}
+  if(i===BF.cur&&!instant)return;if(BF.cur>=0&&BF.words[BF.cur])BF.words[BF.cur].classList.remove("hl");BF.cur=i;const w=BF.words[Math.max(0,i)];if(!w)return;if(i>=0)w.classList.add("hl");NAR.lastw=w;
+  const o=bfOff(w);if(o.off&&(!NAR.free||instant))bfScrollTo(w,instant);if(NAR.page==="book")narFollowUI(o.off&&NAR.free&&!instant,o.up)}
+function bfTick(instant){if(NAR.page!=="book"||!NAR.book||TRACK!=="book"||BF.id!==`${COURSE.id}|${NAR.book.ed}|${NAR.book.n}`)return;
+  const d=NAR.audio.duration;if(BF.box&&d&&BF.dur&&Math.abs(d-BF.dur)>0.5){BF.el.replaceWith(BF.el=bfNote(`The follow-along text for chapter ${NAR.book.n} is being updated to match new audio. The audio plays as usual.`));BF.box=null;BF.times=null;return} // the mp3 was re-rendered after the index was built
+  bfShow(NAR.audio.currentTime||0,instant)}
+/* scene ticks on the seek bar (Audiobook only): one tappable mark per bookmark, dropped where it would crowd the one before it */
+function narTicks(){const box=$("narticks");if(!box)return;const a=NAR.audio,d=a.duration;
+  if(NAR.page!=="book"||!NAR.book||!d||!MARKS){box.innerHTML="";return}
+  const {n,ed}=NAR.book,L=(MARKS.full[n]&&MARKS.full[n][ed])||[],c=TRACKS.full.list().find(x=>x.num===n),W=box.clientWidth||300,TH=8; // TH: half the range thumb, where the track starts and ends
+  let last=-1e9;box.innerHTML=L.filter(([,t])=>t<d).map(([pid,t])=>{const x=TH+(W-2*TH)*t/d;if(x-last<26)return "";last=x;const lab=secName(c,pid);
+    return `<button type="button" class="ntick" style="left:calc(${TH}px + (100% - ${2*TH}px) * ${(t/d).toFixed(5)})" data-t="${t}" aria-label="${esc(lab)}, ${fmtT(t)}" data-tip="${esc(lab)} · ${fmtT(t)}"><i></i></button>`}).join("");
+  box.querySelectorAll(".ntick").forEach(b=>b.onclick=()=>{if(NAR.page!=="book")return;NAR.audio.currentTime=+b.dataset.t;NAR.free=false;narSavePos(true);bookSec();if(NAR.audio.paused)narHighlight()})}
+["loadedmetadata","durationchange"].forEach(ev=>NAR.audio.addEventListener(ev,()=>{narTicks();bfTick(true)}));
+addEventListener("resize",()=>narTicks());
 
 
 /* ===== chapter art + "In this scene" cast strip ===== */

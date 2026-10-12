@@ -15,4 +15,4 @@ for f in ${root}audio/${v}story/full-ch*.mp3 ${root}audio/${v}full-ch*.mp3; do
   ffmpeg -nostdin -loglevel error -y -i $f -ar 16000 -ac 1 $bm/tmp.$$.wav && \
   whisper-cli -m ~/.cache/whisper/ggml-small.en.bin -f $bm/tmp.$$.wav -oj -of $out >/dev/null 2>&1 && echo "transcribed $f"
 done
-node tools/book_marks.mjs ${c:+--course} $c ${v:+--v2}
+node tools/book_marks.mjs ${c:+--course} $c ${v:+--v2} && { node tools/book_text.mjs ${c:+--course} $c ${v:+--v2} --dirty || echo "book_text.mjs failed: Audiobook follow-along text not rebuilt" }
