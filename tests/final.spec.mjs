@@ -81,7 +81,7 @@ test("passing run: domain scores, then the certificate with the logged hours, ch
   await expect(doc).toContainText("Passed, 80 of 100 (80 percent)");
   await expect(doc).toContainText("The Halcyon Launch");
   await expect(doc).toContainText("documents completion of a self-paced course of project management education");
-  await expect(doc).toContainText("isn't affiliated with, endorsed by, or approved by Project Management Institute");
+  await expect(doc).toContainText("isn't affiliated with or endorsed by Project Management Institute");
   await expect(doc).toContainText("PMI and PMP are marks of Project Management Institute, Inc.");
   await expect(doc).not.toContainText(/accredit|PMI approved|PMI-approved|approved by PMI|contact hours|PDU|pre-approved|accepted by PMI/i); // claims the certificate must never make
   await expect(page.locator("#page .certch li")).toHaveCount(15);
@@ -120,9 +120,8 @@ test("empty study log: the certificate says hours weren't recorded, never 0.0 ho
   await expect(page.locator("#page")).not.toContainText("Your study log showed 0.0 hours");
   await expect(page.locator("#page .certform")).toContainText("so the certificate shows no study hours");
   await expect(doc).not.toContainText(/accredit|PMI approved|PMI-approved|approved by PMI|contact hours|PDU|pre-approved|accepted by PMI/i);
-  // "approved" appears only in the independence line, as a denial
-  const approved = (await doc.innerText()).match(/.{0,60}\bapproved\b.{0,30}/gi) || [];
-  for (const a of approved) expect(a).toMatch(/isn't affiliated with, endorsed by, or approved by/);
+  // the word "approved" never appears on the certificate, not even as a denial
+  expect((await doc.innerText()).match(/\bapproved\b/gi) || []).toHaveLength(0);
   await expect(page.locator("#page .certcode")).toHaveText(sha(`${rec.id}|${rec.date}|0.0`));
 });
 

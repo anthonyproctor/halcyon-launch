@@ -52,7 +52,7 @@ for (const c of COURSES) {
     await page.goto(`/#${c.id}/about`);
     await expect(page.locator("#page h1")).toHaveText(c.full_title || c.title);
     const marks = page.locator("#page .marks");
-    await expect(marks).toContainText(c.independence ? "isn't affiliated with, endorsed by, or approved by" : "not affiliated with or endorsed by");
+    await expect(marks).toContainText(c.independence ? "isn't affiliated with or endorsed by" : "not affiliated with or endorsed by");
     if (c.marks) await expect(marks).toContainText(c.marks);
     await expect(page.locator("#sitefoot")).toContainText("independent study stories");
     await noSideScroll(page, "about");
@@ -327,7 +327,7 @@ test("PMP About page: PDU line with a link to the study log; other courses make 
   const errs = watchErrors(page);
   await page.goto("/#pmp/about");
   const marks = page.locator("#page .marks");
-  await expect(marks).toContainText("Halcyon is an independent study course. It isn't affiliated with, endorsed by, or approved by Project Management Institute (PMI), and Halcyon isn't a PMI Authorized Training Partner. If you hold a PMI certification, time you spend in this course may be self-reported as Education PDUs in PMI's Online or Digital Media category, at 1 PDU per hour. PMI decides what qualifies. Keep the study log Halcyon gives you, with dates and time spent, in case you're audited.");
+  await expect(marks).toContainText("Halcyon is an independent study course. It isn't affiliated with or endorsed by Project Management Institute (PMI), and Halcyon isn't a PMI Authorized Training Partner. If you hold a PMI certification, time you spend in this course may be self-reported as Education PDUs in PMI's Online or Digital Media category, at 1 PDU per hour. PMI decides what qualifies. Keep the study log Halcyon gives you, with dates and time spent, in case you're audited.");
   await expect(marks).toContainText("PMP and PMBOK are registered marks of the Project Management Institute, Inc.");
   await expect(marks).not.toContainText("not affiliated with or endorsed by");
   await expect(page.locator("#page")).not.toContainText(/pre-approved|PDU approved/i);
