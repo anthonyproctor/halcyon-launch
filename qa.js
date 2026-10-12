@@ -17,7 +17,7 @@ const QA={on:false,who:store.get("showwho",false)};
 const ST=()=>{try{return window.HalcyonState?window.HalcyonState():{}}catch(e){return {}}};
 
 /* ===== on and off ===== */
-function qaFromURL(){try{const v=new URLSearchParams(location.search).get("qa");if(v==="1"||v==="0")store.set("qa",v==="1")}catch(e){}}
+function qaFromURL(){try{let v=new URLSearchParams(location.search).get("qa");const m=location.hash.match(/[?&]qa=([01])\b/);if(m){v=m[1];const h=location.hash.replace(/[?&]qa=[01]\b/,"").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+location.search+h)}if(v==="1"||v==="0")store.set("qa",v==="1")}catch(e){}}  // ?qa=1 works before or after the #route
 qaFromURL();QA.on=!!store.get("qa",false);
 function applyMode(){document.body.classList.toggle("qa-on",QA.on);document.body.classList.toggle("qa-who",QA.who||QA.on);markSpeakers();barTick();
   const a=$("qatoggle");if(a)a.checked=QA.on;const b=$("whotoggle");if(b)b.checked=QA.who}
