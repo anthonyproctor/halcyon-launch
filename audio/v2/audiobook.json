@@ -19,6 +19,16 @@
     "src": "audio/v2/full-ch02.mp3",
     "min": 77.2
    }
+  },
+  "3": {
+   "story": {
+    "src": "audio/v2/story/full-ch03.mp3",
+    "min": 36.5
+   },
+   "study": {
+    "src": "audio/v2/full-ch03.mp3",
+    "min": 71.8
+   }
   }
  }
 }
