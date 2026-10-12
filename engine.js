@@ -26,7 +26,7 @@ const TRACKS={
 };
 /* saved progress: Full Course chapter n is key base+100+n, except PMP v2, which uses 201 to 215 so v1 picks (101 to 115) never land on v2 scenes. v1 rows stay on the server, unread. */
 function FULL_BASE(){return PMP2()?200:100}
-let MOCK_KEY=900;const PMP_META={DOMS,TASKNAMES,BASE_CAST,FULL_CAST_EXTRA};
+const PMP_META={DOMS,TASKNAMES,BASE_CAST,FULL_CAST_EXTRA};
 /* ===== courses ===== */
 const COURSES=window.HALCYON_COURSES||[{id:"pmp",title:"PMP",base:0,root:"",status:"live",taskDomain:{P:"People",R:"Process",B:"Business Environment"}}];
 let COURSE=COURSES[0];
@@ -51,8 +51,8 @@ function loadScripts(list){return Promise.all(list.map(src=>new Promise(ok=>{if(
 async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")return false;if((c.scripts||c.labs)&&!c._loaded){await loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x));c._loaded=true}
   const changed=COURSE.id!==c.id;COURSE=c;store.set("course",id);
   const meta=c.id==="pmp"?PMP_META:(((window.HALCYON_DATA||{})[id]||{}).meta||{});
-  DOMS=meta.DOMS||PMP_META.DOMS;TASKNAMES=meta.TASKNAMES||{};BASE_CAST=meta.BASE_CAST||[];FULL_CAST_EXTRA=meta.FULL_CAST_EXTRA||[];MOCK_KEY=c.base+900;
-  if(changed){BOOK=null;MARKS=null;NAR.timings={};try{NAR.audio.pause()}catch(e){}NAR.page=null;NAR.listening=false;buildOrders()}return true}
+  DOMS=meta.DOMS||PMP_META.DOMS;TASKNAMES=meta.TASKNAMES||{};BASE_CAST=meta.BASE_CAST||[];FULL_CAST_EXTRA=meta.FULL_CAST_EXTRA||[];
+  if(changed){MS=null;MOCK_FORM=1;clearInterval(mockTimer);BOOK=null;MARKS=null;NAR.timings={};try{NAR.audio.pause()}catch(e){}NAR.page=null;NAR.listening=false;buildOrders()}return true}
 
 /* ===== state ===== */
 let TRACK=null,CH=null,S=null,SYNC=null,syncTimer=null;
@@ -232,30 +232,67 @@ function labWaitHTML(){const W=labsWaiting();if(!W.length)return "";return `<div
 function wireLabWait(){$("page").querySelectorAll("[data-labs]").forEach(b=>b.onclick=()=>openLabs(+b.dataset.labs))}
 function labMention(c){const n=labsOf(c).length;if(!n)return "";const L=`${n} hands-on lab${n>1?"s":""}`;return `<p class="prog blab">🧪 ${labsDone(c,load("full",c.num))?L+", done":(lget().labq||[]).includes(c.num)?L+" in Labs waiting. Not read aloud.":L+". Not read aloud; it waits in Labs waiting."}</p>`}
 
-/* ===== mock exam ===== */
-let MS=null,mockTimer=null;
+/* ===== mock exam =====
+   Forms: a course can carry more than one full practice exam. A mock part belongs to form n when it has form:n, or when its part name
+   starts "Mn:" (CPHIMS "M1: Practice exam 1", "M2: Practice exam 2"). A part with neither is form 1, so a bank split into parts by
+   domain (PMP's People, Process and Business Environment, CISA's five domains) stays one exam. A form's name is the part's formName,
+   or the text after "Mn:", and the picker appears only when there are two or more forms.
+   Saved state: form 1 keeps the keys every course has always used (base+900 the attempt in progress, base+901 finished attempts), so
+   progress saved before forms existed needs no migration. Form n from 2 up uses base+910+2(n-2) and the key after it (form 2: 910 and 911).
+   The server records 901 and up as side records, never as a place to resume, so resume reads lastplace.<course> {t:"mock",f}.
+   Pretest items: an item with scored:false is mixed in unmarked. It doesn't count toward the score, the domain and subdomain breakdown,
+   the task history or readiness, and the results page tags it. Handbook mode, offered only when a form has unscored items, runs just the
+   scored items in the course's mockMinutes, with no breaks. Old history rows have no f (form 1) and no pre. For most courses their total is
+   already the scored count, but CPHIMS rows saved before 2026-10-12 counted all 115 items, pretest included; they stay as saved, and
+   mastery() leaves out the byTask of any row with no pre whose total is above its form's scored count. */
+let MS=null,mockTimer=null,MOCK_FORM=1;
+const MOCK_WEAK=70; // results: an area below this percent gets a reread pointer
 function MOCK_LIMIT(){return (COURSE.mockMinutes||240)*60}
-function mockQuestions(){const all=[];(DATA().mock||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part.slice(0,3)+i})));return all}
+function partForm(p){if(p&&p.form!=null&&Number.isInteger(+p.form)&&+p.form>=1)return +p.form;const m=/^M(\d+):/.exec((p&&p.part)||"");return m&&+m[1]>=1?+m[1]:1}
+function mockQuestions(f){const all=[];(DATA().mock||[]).forEach(p=>{if(!p||!p.questions)return;const pf=partForm(p);if(f!=null&&pf!==f)return;p.questions.forEach((q,i)=>all.push({...q,id:p.part.slice(0,3)+i,form:pf}))});return all}
+function mockForms(){const m=new Map();(DATA().mock||[]).forEach(p=>{if(!p||!p.questions||!p.questions.length)return;const f=partForm(p);if(!m.has(f))m.set(f,{f,label:p.formName||(/^M\d+:\s*(.+)$/.exec(p.part||"")||[])[1]||`Practice exam ${f}`})});return [...m.values()].sort((a,b)=>a.f-b.f)}
+function formLabel(f){const x=mockForms().find(x=>x.f===f);return x?x.label:`Practice exam ${f}`}
+function multiForm(){return mockForms().length>1}
+function mockKey(f){f=f||MOCK_FORM||1;return COURSE.base+(f===1?900:910+2*(f-2))}
+function mockHistKey(f){return mockKey(f)+1}
+function mockHist(f){const H=store.get("c"+mockHistKey(f),null);return H&&Array.isArray(H.list)?H.list:[]}
+function mockHistAll(){const fs=[1,...mockForms().map(x=>x.f).filter(f=>f!==1)];const out=[];fs.forEach(f=>mockHist(f).forEach(a=>out.push({...a,f:a.f||f})));return out.sort((a,b)=>String(a.at).localeCompare(String(b.at)))}
+const scoredQ=q=>q.scored!==false;
+const MODE_NAME={exam:"Exam mode",practice:"Practice mode",handbook:"Handbook mode"};
 function hasMock(){return mockQuestions().length>0} // a course whose bank is still being written offers no mock anywhere: no card button, no chapter end button, no plan line, no readiness card
 const MOCK_SOON="Coming soon. The practice exam for this course is still being written.";
-function freshMock(mode){const qs=mockQuestions();const seed=Date.now()%100000;const ord=window.HalcyonOrder.perm("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
-function persistMock(){if(MS&&MS.order&&!MS.submitted)store.set("lastplace."+COURSE.id,{t:"mock"});store.set("c"+MOCK_KEY,MS);store.set("cur",MOCK_KEY);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(MOCK_KEY,copy),600)}}
-function openMock(){if(hasMock()){libTouch({t:"mock"});store.set("track","mock")}TRACK="mock";MS=store.get("c"+MOCK_KEY,null);render();top()}
+function freshMock(mode){const qs=mockQuestions(MOCK_FORM).filter(q=>mode!=="handbook"||scoredQ(q));const seed=Date.now()%100000;const ord=window.HalcyonOrder.perm("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,form:MOCK_FORM,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
+// a saved attempt, with any question the bank no longer has dropped (an attempt with none left is no attempt)
+function loadMock(f){const st=store.get("c"+mockKey(f),null);if(!st||!Array.isArray(st.order))return null;const ids=new Set(mockQuestions(f).map(q=>q.id));const order=st.order.filter(id=>ids.has(id));if(!order.length)return null;if(order.length!==st.order.length){const keep=new Set(order),prune=o=>Object.fromEntries(Object.entries(o||{}).filter(([k])=>keep.has(k)));st.order=order;st.ans=prune(st.ans);st.flagged=prune(st.flagged);st.cur=Math.min(st.cur||0,order.length-1)}return st}
+function persistMock(){const f=MOCK_FORM||1,k=mockKey(f);if(MS&&MS.order&&!MS.submitted)store.set("lastplace."+COURSE.id,{t:"mock",f});store.set("c"+k,MS);store.set("cur",COURSE.base+900);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(k,copy),600)}}
+// f: the form to open. Left out with two or more forms, it opens the picker; with one form, that form.
+function openMock(f){clearInterval(mockTimer);TRACK="mock";const forms=mockForms();
+  if(!forms.some(x=>x.f===f))f=forms.length>1?null:(forms[0]?forms[0].f:1);if(hasMock()){libTouch(f==null?{t:"mock"}:{t:"mock",f});store.set("track","mock")}MOCK_FORM=f;MS=f==null?null:loadMock(f);render();top()}
 function fmtTime(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return `${h}:${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`}
-function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode!=="exam")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT()-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT()){mockSubmit()}},1000)}
+function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode==="practice")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT()-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT()){mockSubmit()}},1000)}
+function lastLine(last){return last?`Last attempt: <b>${last.right} of ${last.total}</b> (${last.total?Math.round(last.right/last.total*100):0}%) on ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}.`:""}
+function mockPicker(forms){
+  $("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][forms.length]||forms.length} full practice exams. Each one has its own questions and keeps its own history. ${esc(COURSE.mockBlurb||"")}</p></div>
+   <div class="grid2">${forms.map(x=>{const st=loadMock(x.f),inprog=!!(st&&!st.submitted),last=mockHist(x.f).slice(-1)[0];
+     return `<div class="card mockform" data-formcard="${x.f}"><h3>${esc(x.label)}</h3><p>${inprog?"In progress. ":""}${last?lastLine(last):"You haven't taken this one yet."}</p><button class="btn" type="button" data-form="${x.f}">${inprog?"Continue":"Open"} ${esc(x.label)}</button></div>`}).join("")}</div>`;
+  $("page").querySelectorAll("[data-form]").forEach(b=>b.onclick=()=>openMock(+b.dataset.form))}
 function mockRender(){
-  const qs=mockQuestions();const byId={};qs.forEach(q=>byId[q.id]=q);
-  if(!qs.length){$("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${MOCK_SOON}</p></div><div class="bar"><button class="btn ghost" id="mockhome" type="button">Back to the course</button></div>`;$("mockhome").onclick=()=>{TRACK=null;renderHome();renderRail();top()};return}
-  if(!MS){
-    $("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${qs.length} questions. ${COURSE.mockBlurb||""}</p></div>
-    <div class="grid2"><div class="card"><h3>Exam mode</h3><p>${Math.round(MOCK_LIMIT()/60)} minutes, the timer runs${(COURSE.mockBreaks||[]).length?`, optional breaks after questions ${COURSE.mockBreaks.join(" and ")}`:""}, results and explanations at the end.</p><button class="btn" id="exam" type="button">Start exam mode</button></div><div class="card"><h3>Practice mode</h3><p>No timer. See the answer and ${MENTOR()}'s explanation after each question.</p><button class="btn ghost" id="practice" type="button">Start practice mode</button></div></div>`;
-    $("exam").onclick=()=>{MS=freshMock("exam");persistMock();render()};$("practice").onclick=()=>{MS=freshMock("practice");persistMock();render()};return}
+  const forms=mockForms(),multi=forms.length>1;
+  if(!forms.length){$("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${MOCK_SOON}</p></div><div class="bar"><button class="btn ghost" id="mockhome" type="button">Back to the course</button></div>`;$("mockhome").onclick=()=>{TRACK=null;renderHome();renderRail();top()};return}
+  if(!forms.some(x=>x.f===MOCK_FORM)){if(multi){MOCK_FORM=null;MS=null;return mockPicker(forms)}MOCK_FORM=forms[0].f;MS=loadMock(MOCK_FORM)}
+  const qs=mockQuestions(MOCK_FORM);const byId={};qs.forEach(q=>byId[q.id]=q);
+  const label=formLabel(MOCK_FORM),back=multi?`<button class="linkbtn" type="button" id="allforms">All practice exams</button> › `:"";
+  if(!MS){const sc=qs.filter(scoredQ).length,pre=qs.length-sc,mins=Math.round(MOCK_LIMIT()/60),brk=(COURSE.mockBreaks||[]).length?`, optional breaks after questions ${COURSE.mockBreaks.join(" and ")}`:"";
+    $("page").innerHTML=`<div class="kicker">${back}Mock Exam</div><h1>${esc(multi?label:(COURSE.mockTitle||"Practice exam"))}</h1><div class="story"><p>${qs.length} questions${pre?`, ${sc} of them scored`:""}. ${esc(COURSE.mockBlurb||"")}</p></div>
+    <div class="grid2"><div class="card"><h3>Exam mode</h3><p>${mins} minutes, the timer runs${brk}, results and explanations at the end.${pre?` All ${qs.length} questions. ${pre} of them are unscored pretest items mixed in like the ones on the real exam, and the results show which.`:""}</p><button class="btn" id="exam" type="button">Start exam mode</button></div>${pre&&sc?`<div class="card"><h3>Handbook mode</h3><p>Only the ${sc} scored questions in ${mins} minutes, the timer runs. The ${pre} pretest items are left out.</p><button class="btn ghost" id="handbook" type="button">Start handbook mode</button></div>`:""}<div class="card"><h3>Practice mode</h3><p>No timer. See the answer and ${MENTOR()}'s explanation after each question.</p><button class="btn ghost" id="practice" type="button">Start practice mode</button></div></div>`;
+    const go=mode=>()=>{MS=freshMock(mode);persistMock();render()};
+    $("exam").onclick=go("exam");$("practice").onclick=go("practice");if($("handbook"))$("handbook").onclick=go("handbook");if($("allforms"))$("allforms").onclick=()=>openMock();return}
   if(MS.submitted)return mockResults(byId);
   if(MS.onBreak!==null){$("page").innerHTML=`<h1>Break</h1><div class="story"><p>You've finished question ${MS.onBreak}. Take up to 10 minutes. The exam timer is paused. On the real exam you can't go back to earlier questions after a break.</p></div><div class="bar"><button class="btn" id="resume" type="button">Resume the exam</button></div>`;$("resume").onclick=()=>{MS.breaksTaken.push(MS.onBreak);MS.onBreak=null;persistMock();render()};return}
-  const i=MS.cur,q=byId[MS.order[i]],chosen=MS.ans[q.id],showAns=MS.mode==="practice"&&chosen!==undefined;
+  const i=Math.min(MS.cur||0,MS.order.length-1),q=byId[MS.order[i]],chosen=MS.ans[q.id],showAns=MS.mode==="practice"&&chosen!==undefined;
   const ord=order("mq"+q.id,q.opts.length);
-  $("page").innerHTML=`<div class="kicker">Mock exam · ${MS.mode==="exam"?"Exam mode":"Practice mode"} · Question ${i+1} of ${MS.order.length}</div>
-   <fieldset class="qitem"><legend>${q.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${showAns?(oi===q.a?"qright":oi===chosen?"qwrong":""):""}"><input type="radio" name="mq" value="${oi}" ${chosen===oi?"checked":""} ${showAns?"disabled":""}><span class="k">${"ABCD"[pos]}</span> ${q.opts[oi]}</label>`).join("")}
+  $("page").innerHTML=`<div class="kicker">Mock exam · ${multi?esc(label)+" · ":""}${MODE_NAME[MS.mode]||"Exam mode"} · Question ${i+1} of ${MS.order.length}</div>
+   <fieldset class="qitem" data-qid="${esc(q.id)}"><legend>${q.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${showAns?(oi===q.a?"qright":oi===chosen?"qwrong":""):""}"><input type="radio" name="mq" value="${oi}" ${chosen===oi?"checked":""} ${showAns?"disabled":""}><span class="k">${"ABCD"[pos]}</span> ${q.opts[oi]}</label>`).join("")}
    ${showAns?`<p class="qwhy"><b>${chosen===q.a?"Correct.":"Not quite."}</b> ${q.why} <span class="tag">${q.task} ${TASKNAMES[q.task]||""}</span></p>`:""}</fieldset>
    <div class="bar"><button class="btn ghost" id="prev" type="button" ${i===0?"disabled":""}>Back</button><button class="btn" id="nextq" type="button">${i+1<MS.order.length?"Next":"Review and submit"}</button><label class="chk"><input type="checkbox" id="flagq" ${MS.flagged[q.id]?"checked":""}> Flag for review</label></div>
    <details class="navgrid"><summary>All questions (${Object.keys(MS.ans).length} answered, ${Object.values(MS.flagged).filter(Boolean).length} flagged)</summary><div>${MS.order.map((id,k)=>`<button type="button" data-q="${k}" class="nq ${MS.ans[id]!==undefined?"done":""} ${MS.flagged[id]?"flag":""} ${k===i?"now":""}">${k+1}</button>`).join("")}</div></details>
@@ -269,21 +306,44 @@ function mockRender(){
   mockTick();
 }
 function mockSubmit(){clearInterval(mockTimer);MS.submitted=true;MS.finishedAt=new Date().toISOString();persistMock();
-  const byId={};mockQuestions().forEach(q=>byId[q.id]=q);const byTask={};let right=0,ans=0;MS.order.forEach(id=>{const q=byId[id];if(!q)return;if(MS.ans[id]===undefined)return;ans++;byTask[q.task]=byTask[q.task]||[0,0];byTask[q.task][1]++;if(MS.ans[id]===q.a){right++;byTask[q.task][0]++}});
-  const H=store.get("c"+(COURSE.base+901),null)||{list:[]};H.list.push({at:MS.finishedAt,mode:MS.mode,right,answered:ans,total:MS.order.length,byTask,secs:MS.elapsed});store.set("c"+(COURSE.base+901),H);if(SYNC)SYNC(COURSE.base+901,H);
+  const byId={};mockQuestions(MOCK_FORM).forEach(q=>byId[q.id]=q);const byTask={};let right=0,ans=0,total=0,pre=0;
+  MS.order.forEach(id=>{const q=byId[id];if(!q)return;if(!scoredQ(q)){pre++;return}total++;if(MS.ans[id]===undefined)return;ans++;byTask[q.task]=byTask[q.task]||[0,0];byTask[q.task][1]++;if(MS.ans[id]===q.a){right++;byTask[q.task][0]++}});
+  const k=mockHistKey(),H=store.get("c"+k,null)||{list:[]};if(!Array.isArray(H.list))H.list=[];H.list.push({at:MS.finishedAt,mode:MS.mode,f:MOCK_FORM||1,right,answered:ans,total,pre,byTask,secs:MS.elapsed});store.set("c"+k,H);if(SYNC)SYNC(k,H);
   render();top()}
+/* subdomains and reread pointers. An item's subdomain is its sub field, or meta.SUBDOMS keyed by its task code without the trailing number
+   (CPHIMS "SA4" is "SA", Analysis). The chapters for a task are meta.TASK_CHAPTERS[task] when the course lists them (a list can name
+   chapters not written yet), or else the written chapters that teach it (taughtIn: a chapter's tasks list or a decision's task, the way PMP
+   is tagged). */
+function subOf(q){return q.sub||((COURSE_META().SUBDOMS||{})[String(q.task||"").replace(/\d+$/,"")])||null}
+function COURSE_META(){return COURSE.id==="pmp"?PMP_META:(((window.HALCYON_DATA||{})[COURSE.id]||{}).meta||{})}
+function chaptersFor(t){const M=COURSE_META().TASK_CHAPTERS;if(M&&Array.isArray(M[t]))return M[t].slice();return taughtIn(t).map(x=>x.c.num)}
+function rereadFor(missed){const n={};missed.forEach(q=>chaptersFor(q.task).forEach(c=>n[c]=(n[c]||0)+1));return Object.entries(n).map(([c,k])=>[+c,k]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,3).map(([c])=>c)}
 function mockResults(byId){
-  const qs=MS.order.map(id=>byId[id]).filter(Boolean);const right=qs.filter(q=>MS.ans[q.id]===q.a).length;
-  const dom={},task={};qs.forEach(q=>{dom[q.domain]=dom[q.domain]||[0,0];task[q.task]=task[q.task]||[0,0];dom[q.domain][1]++;task[q.task][1]++;if(MS.ans[q.id]===q.a){dom[q.domain][0]++;task[q.task][0]++}});
+  const all=MS.order.map(id=>byId[id]).filter(Boolean),qs=all.filter(scoredQ),pre=all.length-qs.length,ok=q=>MS.ans[q.id]===q.a;const right=qs.filter(ok).length;
+  const dom={},task={},sub={};qs.forEach(q=>{const s=subOf(q),sk=q.domain+"\u0000"+s;dom[q.domain]=dom[q.domain]||[0,0];task[q.task]=task[q.task]||[0,0];dom[q.domain][1]++;task[q.task][1]++;if(s){sub[sk]=sub[sk]||[0,0];sub[sk][1]++}if(ok(q)){dom[q.domain][0]++;task[q.task][0]++;if(s)sub[sk][0]++}});
   const pct=x=>x[1]?Math.round(x[0]/x[1]*100):0;
   const weakTasks=Object.entries(task).sort((a,b)=>pct(a[1])-pct(b[1])).slice(0,5);
-  $("page").innerHTML=`<div class="kicker">Mock exam · Results</div><h1>${right} of ${qs.length} (${Math.round(right/qs.length*100)} percent)</h1>
-   <div class="story"><p>${esc(COURSE.mockPassNote||(COURSE.id==="pmp"?"PMI doesn't publish a passing score. Many instructors treat 75 percent or better on full-length practice exams as a sign you're ready.":"Aim for a comfortable margin on full-length practice exams before you book the real one."))} ${MS.mode==="exam"?`Time used: ${fmtTime(MS.elapsed)}.`:""}</p></div>
+  // subdomains in the order meta.SUBDOMS lists them, then any others in the order they appear
+  const subOrder=Object.values(COURSE_META().SUBDOMS||{});const subsOf=d=>Object.keys(sub).filter(k=>k.split("\u0000")[0]===d).map(k=>k.split("\u0000")[1]).sort((a,b)=>{const ia=subOrder.indexOf(a),ib=subOrder.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib)});
+  const subDoms=DOMS.filter(d=>subsOf(d).length);
+  const areas=[];DOMS.forEach(d=>{if(!dom[d])return;if(subsOf(d).length)subsOf(d).forEach(s=>areas.push({name:s,dom:d,x:sub[d+"\u0000"+s],has:q=>q.domain===d&&subOf(q)===s}));else areas.push({name:d,x:dom[d],has:q=>q.domain===d})});
+  const weak=areas.filter(a=>a.x[1]&&pct(a.x)<MOCK_WEAK).sort((a,b)=>pct(a.x)-pct(b.x));
+  const written=n=>TRACKS.full.list().find(c=>c.num===n);
+  const reread=a=>{const chs=rereadFor(qs.filter(q=>a.has(q)&&!ok(q)));return chs.length?chs.map(n=>{const c=written(n);return c?`<button class="linkbtn" type="button" data-lesson="${n}">Reread chapter ${n}, ${esc(c.title)}</button>`:`<span class="soon">coming in chapter ${n}</span>`}).join("; "):"no chapter covers these tasks yet"};
+  const multi=multiForm(),label=formLabel(MOCK_FORM);
+  $("page").innerHTML=`<div class="kicker">${multi?`<button class="linkbtn" type="button" id="allforms">All practice exams</button> › `:""}Mock exam · ${multi?esc(label)+" · ":""}Results</div><h1>${right} of ${qs.length} (${qs.length?Math.round(right/qs.length*100):0} percent)</h1>
+   <div class="story"><p>${esc(COURSE.mockPassNote||(COURSE.id==="pmp"?"PMI doesn't publish a passing score. Many instructors treat 75 percent or better on full-length practice exams as a sign you're ready.":"Aim for a comfortable margin on full-length practice exams before you book the real one."))} ${MS.mode!=="practice"?`Time used: ${fmtTime(MS.elapsed)}.`:""}</p>
+   ${pre?`<p id="prenote">Your score and the breakdown below count the ${qs.length} scored questions. The other ${pre} were unscored pretest items, tagged in the review below.</p>`:MS.mode==="handbook"?`<p id="prenote">Handbook mode: the ${qs.length} scored questions only.</p>`:""}</div>
    <div class="end-grid">${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${dom[d]?pct(dom[d]):0}%</div><p class="prog">${dom[d]?dom[d][0]+" of "+dom[d][1]:""}</p></div>`).join("")}</div>
+   ${subDoms.map(d=>`<h2>${esc(d)} by subdomain</h2><div class="end-grid subgrid">${subsOf(d).map(s=>{const x=sub[d+"\u0000"+s];return `<div class="card"><h3>${esc(s)}</h3><div class="big">${pct(x)}%</div><p class="prog">${x[0]} of ${x[1]}</p></div>`}).join("")}</div>`).join("")}
+   <h2>What to reread</h2>${weak.length?`<ul class="story reread" style="padding-left:22px">${weak.map(a=>`<li><b>${esc(a.name)}</b>${a.dom?` (${esc(a.dom)})`:""}, ${pct(a.x)} percent: ${reread(a)}.</li>`).join("")}</ul>`:`<div class="story reread"><p>Every area is at ${MOCK_WEAK} percent or better. Keep taking full practice exams to hold it there.</p></div>`}
    <h2>Weakest tasks</h2><ul class="story" style="padding-left:22px">${weakTasks.map(([t,x])=>`<li>${t} ${TASKNAMES[t]||""}: ${x[0]} of ${x[1]}</li>`).join("")}</ul>
-   <h2>Review</h2><details><summary>Show every question with explanations</summary>${qs.map((q,k)=>`<div class="qitem"><p><b>${k+1}.</b> ${q.q}</p><p class="${MS.ans[q.id]===q.a?"qright":"qwrong"}">Your answer: ${MS.ans[q.id]!==undefined?q.opts[MS.ans[q.id]]:"none"}</p>${MS.ans[q.id]===q.a?"":`<p class="qright">Correct: ${q.opts[q.a]}</p>`}<p class="qwhy">${q.why} <span class="tag">${q.task}</span></p></div>`).join("")}</details>
-   <div class="bar"><button class="btn" id="again" type="button">Take a new mock exam</button></div>`;
-  $("again").onclick=()=>{if(confirm("Start a new mock exam? Your results above will be replaced.")){MS=null;store.set("c"+MOCK_KEY,null);if(SYNC)SYNC(MOCK_KEY,{});render()}};
+   <h2>Review</h2><details><summary>Show every question with explanations</summary>${all.map((q,k)=>`<div class="qitem${scoredQ(q)?"":" unscored"}"><p><b>${k+1}.</b> ${scoredQ(q)?"":`<span class="tag pre">Unscored pretest item</span> `}${q.q}</p><p class="${ok(q)?"qright":"qwrong"}">Your answer: ${MS.ans[q.id]!==undefined?q.opts[MS.ans[q.id]]:"none"}</p>${ok(q)?"":`<p class="qright">Correct: ${q.opts[q.a]}</p>`}<p class="qwhy">${q.why} <span class="tag">${q.task}</span></p></div>`).join("")}</details>
+   <div class="bar"><button class="btn" id="again" type="button">Take ${multi?esc(label)+" again":"a new mock exam"}</button>${multi?`<button class="btn ghost" id="allforms2" type="button">All practice exams</button>`:""}</div>`;
+  const pg=$("page");
+  pg.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>openLesson(+b.dataset.lesson));
+  [$("allforms"),$("allforms2")].forEach(b=>{if(b)b.onclick=()=>openMock()});
+  $("again").onclick=()=>{if(confirm("Start a new mock exam? Your results above will be replaced.")){const k=mockKey();MS=null;store.set("c"+k,null);if(SYNC)SYNC(k,{});render()}};
 }
 
 
@@ -426,7 +486,7 @@ function mastery(){
   TRACKS.full.list().forEach(c=>{const st=c.num===(CH&&TRACK==="full"?CH.num:-1)?S:load("full",c.num);if(!st)return;
     c.scenes.forEach((sc,i)=>{const p=(st.picks||{})[i];if(p!==undefined)add(sc.task,sc.opts[p].s,3)});
     if(st.quiz)c.quiz.forEach((q,qi)=>{if(st.quiz.v[qi]>=0)add(q.task,st.quiz.v[qi]===q.a?3:0,3)})});
-  const H=store.get("c"+(COURSE.base+901),null);(H&&H.list||[]).forEach(a=>Object.entries(a.byTask||{}).forEach(([t,[g,n]])=>{if(m[t]){m[t].got+=g*3;m[t].max+=n*3;m[t].n+=n}}));
+  mockHistAll().filter(a=>a.pre!==undefined||!(a.total>mockQuestions(a.f).filter(scoredQ).length&&mockQuestions(a.f).some(q=>!scoredQ(q)))).forEach(a=>Object.entries(a.byTask||{}).forEach(([t,[g,n]])=>{if(m[t]){m[t].got+=g*3;m[t].max+=n*3;m[t].n+=n}}));
   const P=store.get("c"+(COURSE.base+902),null);Object.entries((P&&P.tasks)||{}).forEach(([t,[g,n]])=>{if(m[t]){m[t].got+=g*3;m[t].max+=n*3;m[t].n+=n}});
   return m;
 }
@@ -436,10 +496,10 @@ function videosFor(t){const v=[];taughtIn(t).forEach(({c})=>{if(c.lesson&&c.less
 function weakTasks(m,k){return ALLT().filter(t=>m[t].n>=2).map(t=>[t,pctOf(m[t])]).sort((a,b)=>a[1]-b[1]).slice(0,k)}
 function studyPlan(m){
   const weak=weakTasks(m,3).filter(([,p])=>p<80),plan=[];
-  const nextCh=TRACKS.full.list().find(c=>{const st=load("full",c.num);return !st||(st.pos||0)<steps(c).length-1});
+  const nextCh=TRACKS.full.list().find(c=>{const st=load("full",c.num);return !st||(!st.doneAt&&(st.pos||0)<steps(c).length-1)});
   if(nextCh)plan.push(["Keep the story moving",`Full Course chapter ${nextCh.num}, ${nextCh.title}. Read ${LESSON()} and play the decisions.`,{open:nextCh.num}]);
   weak.forEach(([t,p])=>{const where=taughtIn(t)[0];plan.push([`Shore up ${t} ${TASKNAMES[t]} (${p}%)`,where?`Re-read the chapter ${where.c.num} lesson, then do 10 practice questions on this task.`:`Do 10 practice questions on this task.`,{task:t}])});
-  const H=store.get("c"+(COURSE.base+901),null),done5=()=>TRACKS.full.list().filter(c=>{const st=load("full",c.num);return st&&(st.pos||0)>=steps(c).length-1}).length>=5;
+  const H={list:mockHistAll()},done5=()=>TRACKS.full.list().filter(c=>{const st=load("full",c.num);return st&&(st.doneAt||(st.pos||0)>=steps(c).length-1)}).length>=5;
   if(hasMock()&&(!H||!H.list.length)){if(done5())plan.push(["Take a mock exam","You've finished five chapters. A full timed mock now shows where you really stand.",{mock:1}])}
   else if(hasMock()||done5())plan.push(["Mixed practice","Do 10 mixed practice questions to keep everything warm.",{task:"mixed"}]);
   if(!plan.length)plan.push(["Start here","Open the Full Course and play chapter 1.",{open:1}]);
@@ -447,13 +507,13 @@ function studyPlan(m){
 }
 function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK="dash";$("railgame").hidden=true;$("mockcard").hidden=true;
-  const m=mastery(),H=(store.get("c"+(COURSE.base+901),null)||{list:[]}).list;
+  const m=mastery(),H=mockHistAll(),multi=multiForm();
   const fullL=TRACKS.full.list(),refL=TRACKS.ref.list();
   const rows=(tr,L)=>L.map(c=>{const st=load(tr,c.num);if(!st)return `<tr><td>${c.num}</td><td>${c.title}</td><td class="prog" colspan="3">not started</td></tr>`;const n=c.scenes.length,dec=`${st.score}/${n*3}`;
     const quiz=tr==="full"&&st.quiz?`${st.quiz.right}/${c.quiz.length}`:"·";const drills=tr==="full"&&(c.drills||[]).length?`${Object.values(st.drills||{}).filter(x=>x.ok.every(Boolean)).length}/${c.drills.length}`:"·";
     return `<tr><td>${c.num}</td><td><button class="linkbtn" data-open="${tr}:${c.num}">${c.title}</button></td><td class="num">${dec}</td><td class="num">${quiz}</td><td class="num">${drills}</td></tr>`}).join("");
-  const last=H.filter(a=>a.mode==="exam").slice(-1)[0];
-  const ready=last?Math.round(last.right/last.total*100):null;
+  const last=H.filter(a=>a.mode!=="practice").slice(-1)[0];
+  const ready=last&&last.total?Math.round(last.right/last.total*100):null;
   const domPct=d=>{const ts=ALLT().filter(t=>taskDomain(t)===d);const g=ts.reduce((a,t)=>a+m[t].got,0),x=ts.reduce((a,t)=>a+m[t].max,0);return x?Math.round(g/x*100):null};
   const plan=studyPlan(m),weak=weakTasks(m,5);
   $("page").innerHTML=`<div class="kicker">My progress</div><h1>Scoreboard</h1>
@@ -467,11 +527,11 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
    <h2>All ${ALLT().length} exam tasks</h2><div class="taskgrid">${ALLT().map(t=>{const p=pctOf(m[t]);return `<button class="taskcell" data-task="${t}" type="button" title="${TASKNAMES[t]}"><span class="tc">${t}</span><span class="tn">${TASKNAMES[t]}</span><span class="mbar"><span style="width:${p||0}%;background:${p===null?"var(--soft)":p>=75?"var(--good)":p>=50?"var(--mid)":"var(--bad)"}"></span></span><span class="prog">${p===null?"no data":p+"% · "+m[t].n+" items"}</span></button>`}).join("")}</div>
    <h2>Full Course</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("full",fullL)}</table></div>
    ${refL.length?`<h2>Refresher</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("ref",refL)}</table></div>`:""}
-   ${hasMock()||H.length?`<h2>Mock exams</h2>`:""}${!hasMock()&&!H.length?"":H.length?`<div class="tablewrap"><table><tr><th>Date</th><th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td><td>${a.mode}</td><td class="num">${a.right}/${a.total} (${Math.round(a.right/a.total*100)}%)</td><td class="num">${a.mode==="exam"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No mock exams yet.</p>`}
+   ${hasMock()||H.length?`<h2>Mock exams</h2>`:""}${!hasMock()&&!H.length?"":H.length?`<div class="tablewrap"><table><tr><th>Date</th>${multi?"<th>Exam</th>":""}<th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td>${multi?`<td>${a.f}</td>`:""}<td>${esc((MODE_NAME[a.mode]||a.mode).replace(" mode",""))}</td><td class="num">${a.right}/${a.total} (${a.total?Math.round(a.right/a.total*100):0}%)</td><td class="num">${a.mode!=="practice"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No mock exams yet.</p>`}
    ${finalDashHTML()}${logSection()}`;
   const pg=$("page");wireLog();wireFinalHome();
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
-  pg.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>{openChapter("full",+b.dataset.lesson);S.max=Math.max(S.max||0,1);fullGo(1)});
+  pg.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>openLesson(+b.dataset.lesson));
   pg.querySelectorAll("[data-scene]").forEach(b=>b.onclick=()=>{const [n,i]=b.dataset.scene.split(":").map(Number);openChapter("full",n);const p=steps(CH).findIndex(x=>x.k==="scene"&&x.i===i);S.max=Math.max(S.max||0,p);fullGo(p)});
   pg.querySelectorAll("[data-task]").forEach(b=>b.onclick=()=>startPractice(b.dataset.task));
   pg.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>{const a=plan[+b.dataset.plan][2];if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)});
@@ -806,19 +866,19 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
   <h2>Privacy</h2><p>The site counts anonymous page views, without cookies, to learn which chapters people read. No personal data.</p><p>Your study log is stored with your progress in your account, like your saved place. It holds dates, minutes and the parts you studied, nothing more.</p><p>If you join the list, we store your email to tell you about new books. Ask to be removed anytime. Each email has a leave link at the bottom too.</p>
   <h2>Troubleshooting</h2><label class="chk prog"><input type="checkbox" id="pdbgt" ${PDBG.on?"checked":""}> Show player diagnostics (a log at the top of the screen; screenshot it and send it to Anthony)</label></div>`;
   if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
-function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return hasMock()?["Mock exam",()=>openMock()]:null;const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
+function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return hasMock()?[multiForm()&&mockForms().some(x=>x.f===lp.f)?`Mock exam · ${formLabel(lp.f)}`:"Mock exam",()=>openMock(lp.f)]:null;const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
 /* where you are lives in the address (#pmp/full/3, #guide), so a reload reopens the same screen */
-function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock":(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
+function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock"+(multiForm()&&MOCK_FORM?"/"+MOCK_FORM:""):(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
   store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
 /* anonymous page views (Vercel Web Analytics, loaded in index.html): the route only, as a path. Never a name, email, id, or progress. */
 let LASTPV="";function pageview(r){if(!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:"/"+r})}catch(e){}}
-async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filter(Boolean);if(!p.length)return false;
+async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filter(Boolean);if(!p.length)return false;if(p[1]!=="mock")clearInterval(mockTimer); // the back button or an edited address leaves a timed mock: stop its clock
   if(p[0]==="verify"){renderVerify();return true}
   if(p[0]==="library"){renderLibrary();return true}if(p[0]==="guide"){renderGuide();return true}if(p[0]==="upcoming"){renderUpcoming();return true}if(p[0]==="labtest"){await loadScripts(["tools/lab_fixture.js"]);renderLabTest();return true}
   const c=courseById(p[0]);if(!c||c.status!=="live")return false;if(c.id!==COURSE.id&&!(await useCourse(c.id)))return false;if(!c._loaded&&(c.scripts||c.labs))await useCourse(c.id);
   const v=p[1]||"home",n=+p[2];
   if((v==="full"||v==="ref")&&TRACKS[v].list().find(x=>x.num===n)){openChapter(v,n);return true}
-  if(v==="listen"){renderBook();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock();return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
+  if(v==="listen"){renderBook();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
   renderHome();renderRail();return true}
 window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
 function navSync(){noteRoute();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
@@ -908,10 +968,10 @@ function ambSync(){
 function ambUI(){const t=$("ambtoggle");if(t)t.checked=AMB.on;const v=$("ambvol");if(v)v.value=AMB.vol}
 
 /* ===== home and rail ===== */
-function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return (st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
+function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return st.doneAt||(st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
 function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK=null;CH=null;$("railgame").hidden=true;$("mockcard").hidden=true;
-  const lp=lastPlaceLabel();const m=mastery();const plan=studyPlan(m);const H=(store.get("c"+(COURSE.base+901),null)||{list:[]}).list;const last=H.slice(-1)[0];
+  const lp=lastPlaceLabel();const m=mastery();const plan=studyPlan(m);const H=mockHistAll();const last=H.slice(-1)[0];
   const tile=(tr,c)=>{const st=load(tr,c.num);const lab=chapterProgress(tr,c);const state=lab==="done"||/\d+\/\d+/.test(lab)?"done":lab==="in progress"?"prog":"new";
     const sc=st&&st.score!==undefined&&Object.keys(st.picks||{}).length?`${st.score}/${c.scenes.length*3}`:"";
     return `<button class="ctile ${state}" type="button" data-open="${tr}:${c.num}"><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${state==="done"?"Done"+(sc?" · "+sc:""):state==="prog"?"In progress":"Start"}</span></button>`};
@@ -924,7 +984,7 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
    ${labWaitHTML()}<h2>${esc(COURSE.fullName||"Full Course")} <span class="prog">${fullDone} of ${full.length} chapters done${COURSE.planned&&COURSE.planned>full.length?` (${COURSE.planned} planned, more on the way)`:""}${COURSE.fullHours?" · "+COURSE.fullHours:""}</span></h2>
    <div class="ctiles">${full.map(c=>tile("full",c)).join("")}</div>
    ${ref.length?`<h2>Refresher <span class="prog">${ref.length} chapters · a fast review</span></h2><div class="ctiles">${ref.map(c=>tile("ref",c)).join("")}</div>`:""}
-   <h2>Mock exam</h2><div class="card mockhome">${!hasMock()?`<p id="mocksoon">${MOCK_SOON}</p>`:`<p>${COURSE.mockShort||"A full practice exam."} ${last?`Last attempt: <b>${last.right} of ${last.total}</b> (${Math.round(last.right/last.total*100)}%) on ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}.`:"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the mock exam</button>`}</div>
+   <h2>Mock exam</h2><div class="card mockhome">${!hasMock()?`<p id="mocksoon">${MOCK_SOON}</p>`:`<p>${COURSE.mockShort||"A full practice exam."} ${last?(multiForm()?`${esc(formLabel(last.f))}. `:"")+lastLine(last):"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the mock exam</button>`}</div>
    ${finalHomeHTML()}
    <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the ${ALLT().length}-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>Cast</b><span class="prog">Meet everyone, hear them talk</span></button></div>`;
   const pg=$("page");wireLabWait();wireFinalHome();
@@ -939,7 +999,7 @@ function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this 
 function renderRail(){
   const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","book","library","about","guide","upcoming","logprint"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
   $("trackname").textContent=TRACK?TRACKS[TRACK].name:"";
-  if(TRACK==="mock"){if(!hasMock()){$("mockcard").hidden=true;return}$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Mock exam</h3><p class="big" id="mocktime">${MS.mode==="exam"?fmtTime(MOCK_LIMIT()-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Mock exam</h3><p class="prog">Pick a mode to start.</p>`;return}
+  if(TRACK==="mock"){if(!hasMock()){$("mockcard").hidden=true;return}$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Mock exam</h3><p class="big" id="mocktime">${MS.mode!=="practice"?fmtTime(MOCK_LIMIT()-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Mock exam</h3><p class="prog">${MOCK_FORM==null?"Pick a practice exam.":"Pick a mode to start."}</p>`;return}
   $("mockcard").hidden=true;if(!TRACK)return;
   if($("statetitle"))$("statetitle").textContent=COURSE.stateTitle||"Project state";$("meters").innerHTML=METERS_OF().map(([k,l])=>{const v=S.m[k];const col=v>=60?"var(--good)":v>=40?"var(--mid)":"var(--bad)";return `<div class="meter"><div class="row"><span>${l}</span><span class="num">${v}</span></div><div class="track" role="img" aria-label="${l} ${v} of 100"><span style="width:${v}%;background:${col}"></span></div></div>`}).join("");
   const n=CH.scenes.length,dn=Object.keys(S.picks).length;
@@ -979,7 +1039,7 @@ function libTouch(where){if(!COURSE)return;const L=libget();L.last[COURSE.id]={.
 // a course whose script is loaded and whose mock bank is empty: an old "last played: Mock exam" entry reads as the course home
 function noMockKnown(id){const d=id==="pmp"?{mock:window.HALCYON_MOCK}:(window.HALCYON_DATA||{})[id];return !!(d&&Array.isArray(d.mock)&&!d.mock.some(p=>p&&p.questions&&p.questions.length))}
 function libWhere(w,id){return !w?"":w.t==="mock"?(id&&noMockKnown(id)?"Course home":"Mock exam"):w.t==="book"?`Audiobook, chapter ${w.n}`:`${w.t==="ref"?"Refresher":"Chapter"} ${w.n}`}
-async function libGo(id){const w=libget().last[id];if(!(await useCourse(id)))return;if(!w){renderHome();renderRail();return}if(w.t==="mock"){if(hasMock())return openMock();renderHome();renderRail();return}if(w.t==="book"){renderBook();return top()}
+async function libGo(id){const w=libget().last[id];if(!(await useCourse(id)))return;if(!w){renderHome();renderRail();return}if(w.t==="mock"){if(hasMock())return openMock(w.f);renderHome();renderRail();return}if(w.t==="book"){renderBook();return top()}
   if(TRACKS[w.t]&&TRACKS[w.t].list().find(c=>c.num===w.n)){openChapter(w.t,w.n);return top()}renderHome();renderRail()}
 /* "Tell me when new books land": one email field. The server answers the same whether or not the email is already on the list. */
 function signupBox(src){return `<form class="signup" data-src="${esc(src)}" novalidate><h2>Tell me when new books land</h2><div class="sgrow"><label class="sr" for="sg-${esc(src)}">Email</label><input id="sg-${esc(src)}" type="email" autocomplete="email" placeholder="you@example.com" required maxlength="254"><button class="btn" type="submit">Tell me</button></div><p class="sgnote">We'll email you when new books or chapters land. Nothing else, and you can leave anytime.</p><p class="sgmsg" role="status" aria-live="polite"></p></form>`}
@@ -1035,7 +1095,7 @@ function renderLibrary(){setTimeout(ambSync,0);TRACK="library";CH=null;$("railga
   $("page").querySelectorAll("[data-about]").forEach(b=>b.onclick=e=>{e.stopPropagation();renderAbout(b.dataset.about);top()});
   $("page").querySelectorAll("[data-pin]").forEach(b=>b.onclick=e=>{e.stopPropagation();const L2=libget(),id=b.dataset.pin;L2.pins=L2.pins.includes(id)?L2.pins.filter(x=>x!==id):[...L2.pins,id];libput(L2);renderLibrary()});
   $("page").querySelectorAll("[data-course]").forEach(b=>b.onclick=async()=>{if(await useCourse(b.dataset.course)){renderHome();renderRail();top()}})}
-function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!==COURSE.id){useCourse(c.id).then(()=>resumeFrom(cur));return}cur=(cur||0)-COURSE.base;const FB=FULL_BASE();if(cur>=900&&hasMock())return openMock();if(cur>FB&&cur<FB+100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-FB))return openChapter("full",cur-FB)}else if(cur>=1&&cur<100){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
+function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!==COURSE.id){useCourse(c.id).then(()=>resumeFrom(cur));return}cur=(cur||0)-COURSE.base;const FB=FULL_BASE();if(cur>=900&&hasMock()){const lp=store.get("lastplace."+COURSE.id,null);return openMock(lp&&lp.t==="mock"?lp.f:undefined)}if(cur>FB&&cur<FB+100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-FB))return openChapter("full",cur-FB)}else if(cur>=1&&cur<100){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
 /* PMP Full Course: full/v2/preview.js lists the live v2 files (cast.js and each chapter as it's written); they load in place from full/v2/ */
 async function pmpLoad(){window.HALCYON_FULL=[];await loadScripts(["full/v2/preview.js"]);const P=window.HALCYON_V2||{};await loadScripts((P.files||[]).map(f=>"full/v2/"+f));buildOrders()}
 async function boot(){

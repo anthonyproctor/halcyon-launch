@@ -21,6 +21,13 @@ C.meta={
     "5A1":"Information asset security policies, frameworks, standards, and guidelines","5A2":"Physical and environmental controls","5A3":"Identity and access management","5A4":"Network and endpoint security","5A5":"Data loss prevention","5A6":"Data encryption","5A7":"Public key infrastructure","5A8":"Cloud and virtualized environments","5A9":"Mobile, wireless, and IoT devices",
     "5B1":"Security awareness training and programs","5B2":"Information system attack methods and techniques","5B3":"Security testing tools and techniques","5B4":"Security monitoring logs, tools, and techniques","5B5":"Security incident response management","5B6":"Evidence collection and forensics"
   },
+  // Results page: the chapters that teach each task (BIBLE.md "Book one chapter plan", main tasks column, copied 2026-10-12).
+  // A chapter not written yet shows as "coming in chapter N".
+  TASK_CHAPTERS:{"1A1":[1,12],"1A2":[2],"1A3":[1],"1A4":[1],"1B1":[1],"1B2":[2],"1B3":[1],"1B4":[1,2],"1B5":[1,3,12],"1B6":[2,12],
+    "2A1":[1,12],"2A2":[3],"2A3":[3],"2A4":[4],"2A5":[3,11],"2A6":[4],"2A7":[4],"2B1":[4],"2B2":[4],"2B3":[3],"2B4":[4],
+    "3A1":[5],"3A2":[5],"3A3":[5],"3A4":[5],"3B1":[5],"3B2":[6],"3B3":[6],"3B4":[6],
+    "4A1":[8],"4A2":[8],"4A3":[6],"4A4":[8],"4A5":[8],"4A6":[8],"4A7":[8],"4A8":[6],"4A9":[8],"4A10":[8],"4A11":[2,9],"4B1":[7],"4B2":[7],"4B3":[7],"4B4":[7],"4B5":[7],
+    "5A1":[9],"5A2":[9],"5A3":[9],"5A4":[10],"5A5":[10],"5A6":[10],"5A7":[10],"5A8":[10],"5A9":[10],"5B1":[11],"5B2":[11],"5B3":[11],"5B4":[11],"5B5":[11],"5B6":[1,12]},
   BASE_CAST:[
     ["Henry Ashby","You. 42, a Londoner, ex British Army intelligence. Breach claims investigator for a Lloyd's syndicate, now its man in Denver."],
     ["Dorothy Kessler","Dot. 71, retired federal IT examiner. Taught Henry American audit practice in a diner booth on Colfax. Found dead at the Brown Palace."],

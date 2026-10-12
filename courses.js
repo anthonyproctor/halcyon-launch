@@ -41,7 +41,7 @@ window.HALCYON_COURSES=[
    fullName:"Full Course",fullHours:"about 13 to 16 hours",mockTitle:"CPHIMS practice exam",mockMinutes:120,mockBreaks:[],
    mockBlurb:"Weighted like the HIMSS outline: Environments 25 percent, Clinical Informatics 20 percent, Systems Management 30 percent, Leadership 25 percent. Four options per question at recall, application, and analysis levels.",
    mockShort:"115 questions in 120 minutes, 100 of them scored, weighted like the real exam.",
-   mockPassNote:"HIMSS doesn't publish a passing score; it sets one by the Angoff method. This practice score counts all 115 questions, including the 15 that would be unscored pretest items on the real exam.",
+   mockPassNote:"HIMSS doesn't publish a passing score; it sets one by the Angoff method. Like the real exam, this practice exam mixes in 15 unscored pretest items. They don't count toward your score, and the results show which ones they were.",
    mentor:"Ochoa",lessonName:"Ochoa's Legal Pad",levels:true,options:4,
    flags:["solofix","skippedprivacy","blamedmarcus","dismissedwalt","allalerts","softroi","tookthetickets","nodrtest","skippedregression","sharedlogin"],
    speakers:["Maria","Ochoa","Kiran","Marcus","Aisha","Joan","Brett","Walt","Tasha","Glenn","Nate","Denise","Lucia","Theo","Irene"],
