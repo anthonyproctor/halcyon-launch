@@ -7,7 +7,7 @@ Anthony approved replacing the v1 book. The v1 chapters, `full/cast.js`, v1 chap
 The engine loads `full/v2/preview.js`, then every file in its `files` list from `full/v2/`, for every reader. Art, portraits, and audio come from `art/v2/`, `cast/v2/`, `audio/v2/`
 (initials and no art until they exist; no audio until `audio:true` in preview.js; the Audiobook lists only chapters in `audio/v2/audiobook.json`).
 Course text is in the `pmp` entry of `courses.js`, the cast fallbacks in `engine.js`. Saved progress for the v2 Full Course is under keys 201 to 215 (v1 used 101 to 115, left on the server unread),
-and Audiobook and page positions and Labs waiting under 904 (v1: 903). The mock (900 to 902) is unchanged. The Refresher (`chapters/`, v1 hospital story) is hidden from the UI, to be rewritten for Mars later.
+and Audiobook and page positions and Labs waiting under 904 (v1: 903). The mock (900 to 902) is unchanged. The v1 Refresher was deleted on 2026-10-12 (Anthony's call).
 The labs in `courses/pmp/labs.js` are set in the v2 world (stakeholders ch1, critical path ch3, earned value ch5).
 When a chapter is ready, add it to `files` in `preview.js`.
 
@@ -28,7 +28,7 @@ Original plan, for reference:
 5. courses.js, the `pmp` entry: copy `course` from `preview.js` (about, story, mentorRole, mentor, mentorFull, lessonName, lessonIntro, meters, stateTitle, leads, flags, speakers, mockBlurb). Keep `mockMinutes:240` and `mockBreaks:[60,120]`. Update `full_title` if the book gets a new title. `refArt` follows the refresher decision in step 8.
 6. engine.js: set `BASE_CAST` and `FULL_CAST_EXTRA` to `meta` in `preview.js` (TASKNAMES and DOMS don't change). Replace the hardcoded PMP lesson intro fallback ("Ruth Calder is Sam's mentor, a retired NASA flight director...") with the v2 `lessonIntro`, or drop it since courses.js now sets one. Rewrite `TRACKS.full` blurb only if the hours change. `AMB_RULES`: add mission control, wind on the plains, launch, rain and surf at the Cape; retire servers and hospital for PMP. `RUTH_LEADS` can stay (courses.js `leads` overrides it). The `V2P` preview code can stay (harmless) or come out with `preview.js`.
 7. Saved progress: v1 readers have chapter state under keys `c101` to `c115` (and the Audiobook resume points). v2 chapters reuse those keys, so old picks would land on new scenes. Decide before the flip: clear PMP Full Course progress for everyone (one admin pass over `/api/progress`), or move PMP Full Course to a new key block. The refresher (`c1` to `c6`) and mock (`c900`) are unaffected.
-8. Refresher track (`chapters/ch1.js` to `ch6.js`, `chapters/ARC.md`): still the v1 hospital story. Rewrite as a 6 chapter v2 refresher or retire it (and `refArt`).
+8. Refresher track: deleted on 2026-10-12, not rewritten.
 9. Labs: `courses/pmp/labs.js` teaches against the v1 story. Rewrite or drop per chapter.
 10. Tools: in `tools/check_full.mjs` replace the v1 `FLAGS` list with the v2 flags (after the move, files aren't under `full/v2/`, so path detection won't pick v2 mode; pass `--v2` until then); in `tools/check_speakers.mjs` replace `ALLOWED` with the v2 speakers; point `tools/v2meta.mjs` at the promoted bible. In `tools/pages.mjs` drop the `Ruth's whiteboard.` prefix for PMP (v2 lesson titles name the console log) and retire `--v2`; same prefix in `tools/episode_full.mjs`. Keep the v1 keys in the `CAST` maps until no v1 audio needs re-rendering.
 11. sw.js: bump `CACHE` so phones fetch the new chapters; the SHELL file names don't change.

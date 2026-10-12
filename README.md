@@ -37,20 +37,10 @@ The Library holds five story courses: **The Halcyon Launch** (PMP), **One Chart*
 
 ## PMP tracks
 
-- **Refresher:** 6 chapters, about 2.5 hours of decisions and debriefs.
 - **Full Course:** 15 chapters, about 15 to 20 hours. Each has a story, Ruth's Whiteboard lesson, 12 decisions, math drills, an exercise, and a 15-question quiz, mapped to all 26 tasks of the July 2026 PMP outline. Story bible in `full/BIBLE.md`.
 - **Mock Exam:** 180 questions weighted 33/41/26 like the real exam, timed exam mode or practice mode.
 
 `tools/check_full.mjs` and `tools/audit.mjs` lint content for answer giveaways, coverage, duplicates, and dashes.
-
-## Refresher chapters
-
-1. The Promotion
-2. Burn-In
-3. Storming
-4. The Demo
-5. Go-Live
-6. Closeout
 
 ## Accounts
 
