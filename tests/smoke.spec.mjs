@@ -13,16 +13,13 @@ vm.runInNewContext(fs.readFileSync(path.join(ROOT, "courses.js"), "utf8"), { win
 const COURSES = win.HALCYON_COURSES.filter(c => c.status === "live");
 
 /* Console errors we expect and ignore. The engine probes optional media and falls back on purpose:
-   - cast portraits: cast/<id>.jpg first, then cast/<id>.svg, then initials (avatar() onerror); PMP v2 has few portraits yet (cast/v2)
-   - chapter art: art/full-chNN.jpg first, then the .svg, then no art (chapterArt() onerror)
+   (Portraits and chapter art are no longer probed: assets.js lists the files that exist, so a missing one is never requested.)
    - narration: audio/pages/<page>/timings.json and audio/*.json are fetched to see whether a page has been narrated yet;
      courses or chapters that aren't recorded answer 404 and the Listen bar stays hidden
    - cast voice clips (cast/voice/<id>.mp3), removed from the page when missing
    Each is only ignored as a "Failed to load resource" 404 for that URL shape. Anything else fails the test. */
 const IGNORE_404 = [
-  /\/cast\/(v2\/)?[\w-]+\.(jpg|svg)$/,
   /\/cast\/(v2\/)?voice\/[\w-]+\.mp3$/,
-  /\/art\/(v2\/)?full-ch\d+\.(jpg|svg)$/,
   /\/audio\/(v2\/)?pages\/[\w-]+\/timings\.json$/,
   /\/audio\/(v2\/)?(audiobook|bookmarks)\.json$/,
 ];

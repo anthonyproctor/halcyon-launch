@@ -229,7 +229,7 @@
         `Don't mitigate, since the cost is more than the gain`,
         `Mitigate, since expected value improves by $7,500 net`,
         `Don't mitigate, since the probability is still above zero`],
-  a:0, why:`Before: 0.40 x 25,000 = 10,000 exposure. After: 0.10 x 25,000 = 2,500, plus the 6,000 cost = 8,500. Mitigating lowers expected cost by 10,000 - 8,500 = 1,500, so it is worth doing on expected value.`,
+  a:0, why:`Before: 0.40 x 25,000 = 10,000 exposure. After: 0.10 x 25,000 = 2,500, plus the 6,000 cost = 8,500. Mitigating lowers expected cost by 10,000 minus 8,500 = 1,500, so it is worth doing on expected value.`,
   task:`B5`, domain:`Business Environment`, approach:`predictive` },
 
 { q:`A risk owner reports that a risk trigger has occurred: the vendor missed two status meetings in a row. What should happen next?`,

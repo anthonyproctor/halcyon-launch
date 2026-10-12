@@ -395,11 +395,11 @@
 
 // R4 Plan and manage resources
 { q:`A structural engineer on a predictive project is booked at 150 percent for two weeks. Some of their tasks have float. What should the project manager do first?`,
-  opts:[`Use the float to level the load, then check the critical path`,
+  opts:[`Use the float to smooth the load, then check the critical path`,
         `Ask the engineer to work overtime for the two weeks and bank the hours as time off later`,
         `Hire a second engineer for the two weeks right away`,
         `Remove the tasks with float from the schedule`],
-  a:0, why:`Resource leveling with float is the first move, since it often fixes the overload without changing the end date. Then you check whether the critical path moved. Overtime and new hires cost more and should come after you've tried leveling.`,
+  a:0, why:`Resource smoothing is the first move: it shifts tasks only within their float, so it can fix the overload without changing the end date. Then you check the critical path, since using up float can make other paths critical. Overtime and new hires cost more and should come after you've tried smoothing.`,
   task:`R4`, domain:`Process`, approach:`predictive` },
 
 { q:`Two teams on a hybrid aerospace project both need the same thermal vacuum chamber, and there's only one. Bookings keep clashing. What's the best fix?`,

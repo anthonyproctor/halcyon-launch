@@ -103,6 +103,29 @@ test("passing run: domain scores, then the certificate with the logged hours, ch
   await expect(page.locator("#verout")).toContainText("It doesn't match");
 });
 
+test("empty study log: the certificate says hours weren't recorded, never 0.0 hours, and makes no approval claims", async ({ page }) => {
+  await seed(page, { log: false });
+  await page.goto("/#pmp/final");
+  await page.locator("#fstart").click();
+  accept(page);
+  await answerAll(page, 80);
+  await expect(page.locator("#page h1")).toContainText("You passed: 80 of 100");
+  await page.locator("#fcert").click();
+  const doc = page.locator("#page .certdoc");
+  await expect(page.locator("#page .certh")).toHaveText("Certificate of Completion");
+  const rec = await page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c906")).list.slice(-1)[0]);
+  expect(rec.hours).toBe("0.0"); // the hours still come only from the log; the code is still over "0.0"
+  await expect(doc.locator(".certfacts")).toContainText(rec.secs > 0 ? "Less than a tenth of an hour was recorded in this course's study log" : "Hours weren't recorded in this course's study log");
+  await expect(doc).not.toContainText(/0\.0 hours|log showed 0/);
+  await expect(page.locator("#page")).not.toContainText("Your study log showed 0.0 hours");
+  await expect(page.locator("#page .certform")).toContainText("so the certificate shows no study hours");
+  await expect(doc).not.toContainText(/accredit|PMI approved|PMI-approved|approved by PMI|contact hours|PDU|pre-approved|accepted by PMI/i);
+  // "approved" appears only in the independence line, as a denial
+  const approved = (await doc.innerText()).match(/.{0,60}\bapproved\b.{0,30}/gi) || [];
+  for (const a of approved) expect(a).toMatch(/isn't affiliated with, endorsed by, or approved by/);
+  await expect(page.locator("#page .certcode")).toHaveText(sha(`${rec.id}|${rec.date}|0.0`));
+});
+
 test("failing run: below 70 percent, chapters to revisit, no certificate", async ({ page }) => {
   await seed(page);
   await page.goto("/#pmp/final");
