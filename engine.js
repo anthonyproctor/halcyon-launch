@@ -1159,7 +1159,7 @@ const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhos
 async function api(path,opts={}){if(TESTP&&/^\/api\/progress\b/.test(path))return {ok:false,status:0,error:"test profile"}; // belt and braces: SYNC is never set in the test profile
   const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
 async function listenPull(){if(TESTP||!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
-const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
+const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.qa.ok","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
 function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.bookEd.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
   document.querySelector(".rail").hidden=true;const signup=mode==="signup";
@@ -1267,10 +1267,13 @@ async function boot(){
   if((COURSE.scripts||COURSE.labs)&&!COURSE._loaded)await useCourse(COURSE.id);
   if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;$("username").textContent="";if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
   let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
-  if(!me.user){if(/^#verify\b/.test(location.hash)){document.querySelector(".rail").hidden=true;return renderVerify()}const inv=new URLSearchParams(location.search).get("invite");
+  if(!me.user){if(PROF.signedOut)PROF.signedOut();if(/^#verify\b/.test(location.hash)){document.querySelector(".rail").hidden=true;return renderVerify()}const inv=new URLSearchParams(location.search).get("invite");
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
       document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;return}
     return renderAuth("login")}
+  /* QA mode and the test profile are for admins and testers (profile.js authorize, approved 2026-10-12). Checked before anything is written:
+     a user who may not use QA has the QA flags cleared, and a page that opened in the test profile reloads into the real one untouched. */
+  if(PROF.authorize&&PROF.authorize(!!(me.user.admin||me.user.tester)))return;
   /* test profile (QA): signed in so Flag still works, but the server's progress never lands in local storage and SYNC stays off, so
      nothing reaches /api/progress; the real namespace is left exactly as it was. */
   if(!TESTP){clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));

@@ -12,7 +12,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const MOCK2 = fs.readFileSync(path.join(ROOT, "tests/fixtures/cphims_mock2.js"), "utf8");
 const TP = "halcyon-qa-test:";
 // display and device preferences that both profiles share (profile.js SHARED); every other "halcyon." key is real progress
-const SHARED = ["amb", "ambvol", "rate", "auto2", "storymode", "spoilers", "pdbg", "devid", "qa", "showwho", "qa.tester", "testprofile"];
+const SHARED = ["amb", "ambvol", "rate", "auto2", "storymode", "spoilers", "pdbg", "devid", "qa", "showwho", "qa.tester", "testprofile", "qa.ok"];
 const isShared = k => SHARED.includes(k) || k.startsWith("fold.") || k.startsWith("bookEd.");
 
 async function realKeys(page) {
@@ -125,12 +125,12 @@ test("test profile: signed in online, nothing goes to /api/progress and the serv
   const SERVER = { 201: { pos: 2, max: 2, picks: { srv: 1 }, m: { trust: 50, conf: 50, health: 50 }, score: 0, flags: { servermarker: true }, dom: { People: [0, 0], Process: [0, 0], "Business Environment": [0, 0] }, drills: {}, ex: null, quiz: null } };
   await page.route("http://halcyon.test/**", async r => {
     const u = new URL(r.request().url());
-    if (u.pathname === "/api/auth") return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: { name: "Anthony", cur: 201 }, progress: SERVER }) });
+    if (u.pathname === "/api/auth") return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: { name: "Anthony", admin: true, cur: 201 }, progress: SERVER }) });
     if (u.pathname === "/api/progress") { const b = r.request().postDataJSON(); progressCalls.push(r.request().method() + " " + b.chapter); SERVER[b.chapter] = b.state; return r.fulfill({ status: 200, contentType: "application/json", body: "{}" }) }
     if (u.pathname === "/api/qa-report") { reports.push(r.request().postDataJSON()); return r.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' }) }
     if (u.pathname.startsWith("/api/")) return r.fulfill({ status: 404, body: "" });
-    const res = await r.fetch({ url: "http://localhost:4321" + u.pathname + u.search });
-    r.fulfill({ response: res });
+    // a reload (a profile switch) can drop a request in flight: its response is gone, which isn't a failure
+    try { const res = await r.fetch({ url: "http://localhost:4321" + u.pathname + u.search }); await r.fulfill({ response: res }) } catch (e) {}
   });
   await page.clock.install({ time: new Date("2026-10-12T09:00:00") });
 
@@ -304,10 +304,10 @@ test("switch edge cases: an address edit with ?test=1 leaves the real place alon
   const SERVER = {};
   await page.route("http://halcyon.test/**", async r => {
     const u = new URL(r.request().url());
-    if (u.pathname === "/api/auth") return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: { name: "Anthony", cur: 0 }, progress: SERVER }) });
+    if (u.pathname === "/api/auth") return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: { name: "Anthony", admin: true, cur: 0 }, progress: SERVER }) });
     if (u.pathname === "/api/progress") { const b = r.request().postDataJSON(); puts.push(b.chapter); SERVER[b.chapter] = b.state; return r.fulfill({ status: 200, contentType: "application/json", body: "{}" }) }
     if (u.pathname.startsWith("/api/")) return r.fulfill({ status: 404, body: "" });
-    r.fulfill({ response: await r.fetch({ url: "http://localhost:4321" + u.pathname + u.search }) });
+    try { await r.fulfill({ response: await r.fetch({ url: "http://localhost:4321" + u.pathname + u.search }) }) } catch (e) {} // a reload can drop a request in flight
   });
   // a real decision, then the test profile at once (inside the 400 ms sync delay): the decision still reaches the server
   await page.goto("http://halcyon.test/?qa=1#pmp/full/1");

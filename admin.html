@@ -22,16 +22,18 @@ th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;
 td{padding:8px 10px;border-top:1px solid var(--line);vertical-align:top}
 .muted{color:var(--muted);font-size:13px}.ok{color:var(--good)}.bad{color:var(--bad)}
 code{font:13px ui-monospace,Menlo,monospace;word-break:break-all}
+.tg{display:inline-flex;align-items:center;gap:8px;min-height:24px;cursor:pointer;white-space:nowrap}
+.tg input{width:24px;height:24px;margin:0;accent-color:var(--accent);cursor:pointer}
 </style>
 </head>
 <body><div class="wrap">
 <p class="muted"><a href="/">Back to the game</a></p>
 <h1>Halcyon Admin</h1>
-<div id="msg" class="muted"></div>
+<div id="msg" class="muted" role="status" aria-live="polite"></div>
 <h2>Invite someone</h2>
 <div class="card"><div class="row"><label class="muted" for="note" style="display:flex;flex-direction:column;gap:4px;flex:1">Who it's for (just a note for you)<input id="note" placeholder="e.g. Kelsey"></label><button class="btn" id="make" type="button">Make invite link</button></div>
 <div id="newlink" style="margin-top:10px"></div><p class="muted" style="margin:8px 0 0">Each link works once and expires in 30 days.</p></div>
-<h2>Players</h2><div class="tw"><table id="users"></table></div>
+<h2>Players</h2><p class="muted" style="margin:0 0 8px">Tester turns on QA mode, the Flag button and the test profile for that player. Admins always have them.</p><div class="tw"><table id="users"></table></div>
 <h2>Invites</h2><div class="tw"><table id="invites"></table></div>
 <h2>Tell me when new books land</h2><div class="card"><div class="row" style="justify-content:space-between"><span id="listcount" class="muted"></span><a class="btn" id="listcsv" href="/api/admin?action=list&amp;format=csv" download>Download CSV</a></div><p class="muted" style="margin:8px 0 0">Site doesn't send email. CSV includes each person's leave link for whatever you send.</p></div>
 <div class="tw" style="margin-top:10px"><table id="list"></table></div>
@@ -45,13 +47,16 @@ const d=x=>x?new Date(x).toLocaleDateString("en-US",{month:"short",day:"numeric"
 async function load(){
   const r=await api("/api/admin?action=overview");
   if(!r.ok){document.querySelector(".wrap").innerHTML=`<h1>Admins only</h1><p><a href="/">Back to the game</a></p>`;return}
-  $("users").innerHTML=`<tr><th>Name</th><th>Email</th><th>Progress</th><th>Joined</th><th></th></tr>`+r.users.map(u=>`<tr><td>${esc(u.name)}${u.is_admin?' <span class="muted">admin</span>':""}</td><td>${esc(u.email)}</td><td>${u.progress.length?u.progress.map(p=>`Ch ${p.chapter}: ${p.step>=10?"done "+p.score+"/30":(p.step<0?"not started":"decision "+(Number(p.step)+1))}`).join("<br>"):'<span class="muted">not started</span>'}</td><td>${d(u.created_at)}</td><td>${u.is_admin?"":`<button class="btn ghost" data-u="${u.id}" data-dis="${!u.disabled}">${u.disabled?"Re-enable":"Disable"}</button>`}</td></tr>`).join("");
+  $("users").innerHTML=`<tr><th>Name</th><th>Email</th><th>Progress</th><th>Joined</th><th>Tester</th><th></th></tr>`+r.users.map(u=>`<tr><td>${esc(u.name)}${u.is_admin?' <span class="muted">admin</span>':""}</td><td>${esc(u.email)}</td><td>${u.progress.length?u.progress.map(p=>`Ch ${p.chapter}: ${p.step>=10?"done "+p.score+"/30":(p.step<0?"not started":"decision "+(Number(p.step)+1))}`).join("<br>"):'<span class="muted">not started</span>'}</td><td>${d(u.created_at)}</td><td>${u.is_admin?'<span class="muted">Always (admin)</span>':`<label class="tg"><input type="checkbox" data-tester="${esc(u.id)}" ${u.is_tester?"checked":""} aria-label="Tester: ${esc(u.name||u.email)}"> Tester</label>`}</td><td>${u.is_admin?"":`<button class="btn ghost" data-u="${u.id}" data-dis="${!u.disabled}">${u.disabled?"Re-enable":"Disable"}</button>`}</td></tr>`).join("");
   $("invites").innerHTML=`<tr><th>For</th><th>Made</th><th>Status</th><th></th></tr>`+r.invites.map(i=>{const st=i.used_by?`<span class="ok">Used by ${esc(i.used_by)}</span>`:i.revoked?'<span class="bad">Revoked</span>':(new Date(i.expires_at)<new Date()?'<span class="muted">Expired</span>':"Open");return `<tr><td>${esc(i.note)||'<span class="muted">no note</span>'}</td><td>${d(i.created_at)}</td><td>${st}</td><td>${!i.used_by&&!i.revoked?`<button class="btn ghost" data-t="${i.token}">Revoke</button>`:""}</td></tr>`}).join("");
   const L=await api("/api/admin?action=list");const S=L.ok?L.signups:[];
   $("listcount").textContent=L.ok?(S.length===1?"1 person on the list":`${S.length} people on the list`):"Couldn't load the list.";
   $("list").innerHTML=`<tr><th>Email</th><th>From</th><th>Joined</th><th></th></tr>`+(S.length?S.map(s=>`<tr><td>${esc(s.email)}</td><td>${esc(s.source)}</td><td>${d(s.created_at)}</td><td><button class="btn ghost" data-rm="${esc(s.email)}">Remove</button></td></tr>`).join(""):`<tr><td colspan="4" class="muted">No one yet.</td></tr>`);
   document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{if(!confirm("Remove "+b.dataset.rm+" from the list?"))return;await api("/api/admin?action=listremove",{method:"POST",body:JSON.stringify({email:b.dataset.rm})});load()});
   document.querySelectorAll("[data-t]").forEach(b=>b.onclick=async()=>{await api("/api/admin?action=revoke",{method:"POST",body:JSON.stringify({token:b.dataset.t})});load()});
+  document.querySelectorAll("[data-tester]").forEach(c=>c.onchange=async()=>{const want=c.checked;c.disabled=true;
+    const r=await api("/api/admin?action=tester",{method:"POST",body:JSON.stringify({id:c.dataset.tester,tester:want})});c.disabled=false;
+    if(!r.ok){c.checked=!want;$("msg").textContent=r.error||"Couldn't save that. Try again.";return}$("msg").textContent=want?"Saved. They have QA mode the next time the game loads.":"Saved. QA mode turns off for them the next time the game loads."});
   document.querySelectorAll("[data-u]").forEach(b=>b.onclick=async()=>{await api("/api/admin?action=disable",{method:"POST",body:JSON.stringify({id:b.dataset.u,disabled:b.dataset.dis==="true"})});load()});
 }
 $("make").onclick=async()=>{const r=await api("/api/admin?action=invite",{method:"POST",body:JSON.stringify({note:$("note").value})});

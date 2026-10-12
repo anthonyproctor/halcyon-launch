@@ -1,4 +1,4 @@
-import { sql, currentUser, sameOrigin, body, send, newToken } from "../lib/server.js";
+import { sql, currentUser, sameOrigin, body, send, newToken, ensureUserColumns } from "../lib/server.js";
 import { ensureListTables } from "../lib/list.js";
 
 export default async function handler(req, res) {
@@ -8,7 +8,10 @@ export default async function handler(req, res) {
   const action = new URL(req.url, "http://x").searchParams.get("action");
   try {
     if (action === "overview" && req.method === "GET") {
-      const users = await sql()`select u.id,u.email,u.name,u.is_admin,u.disabled,u.cur,u.created_at,
+      const tcol = await ensureUserColumns(); // is_tester: QA mode, Flag and the test profile (admins always have them)
+      const users = tcol ? await sql()`select u.id,u.email,u.name,u.is_admin,u.is_tester,u.disabled,u.cur,u.created_at,
+        coalesce((select json_agg(json_build_object('chapter',p.chapter,'step',p.state->'step','score',p.state->'score','updated',p.updated_at) order by p.chapter) from progress p where p.user_id=u.id),'[]') as progress
+        from users u order by u.created_at` : await sql()`select u.id,u.email,u.name,u.is_admin,false as is_tester,u.disabled,u.cur,u.created_at,
         coalesce((select json_agg(json_build_object('chapter',p.chapter,'step',p.state->'step','score',p.state->'score','updated',p.updated_at) order by p.chapter) from progress p where p.user_id=u.id),'[]') as progress
         from users u order by u.created_at`;
       const invites = await sql()`select i.token,i.note,i.created_at,i.expires_at,i.revoked,i.used_at,u.email as used_by from invites i left join users u on u.id=i.used_by order by i.created_at desc limit 100`;
@@ -39,6 +42,14 @@ export default async function handler(req, res) {
     if (action === "disable") {
       if (b.id === u.id) return send(res, 400, { error: "You can't disable yourself." });
       await sql()`update users set disabled=${!!b.disabled} where id=${String(b.id || "")}`; return send(res, 200, { ok: true });
+    }
+    // who may use QA mode, the Flag button and the test profile: {id, tester: true|false}. Admins always may, so this is for everyone else.
+    if (action === "tester") {
+      if (typeof b.tester !== "boolean" || typeof b.id !== "string" || !/^[A-Za-z0-9_-]{1,64}$/.test(b.id)) return send(res, 400, { error: "Say which player, and on or off." });
+      if (!(await ensureUserColumns())) return send(res, 500, { error: "The tester setting isn't available yet. Try again in a minute." });
+      const out = await sql()`update users set is_tester=${b.tester} where id=${String(b.id)} returning id,is_tester`;
+      if (!out.length) return send(res, 404, { error: "No such player." });
+      return send(res, 200, { ok: true, id: out[0].id, is_tester: out[0].is_tester });
     }
     return send(res, 404, { error: "Unknown action." });
   } catch (e) { console.error(e); return send(res, 500, { error: "Something went wrong." }); }

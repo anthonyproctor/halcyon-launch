@@ -30,7 +30,7 @@ const good = { type: "wrong_voice", note: "Sam sounds like Garrett here", tester
 
 test("POST stores a valid report, trims the line, keeps the audio path only, drops unknown fields", async () => {
   const db = fakeDB(), r = res();
-  await handler(db, { id: "u1" })(post(good), r);
+  await handler(db, { id: "u1", is_tester: true })(post(good), r);
   assert.equal(r.statusCode, 200, r.body);
   assert.equal(r.json().ok, true);
   assert.equal(db.reports.length, 1);
@@ -46,18 +46,40 @@ test("POST stores a valid report, trims the line, keeps the audio path only, dro
 });
 
 test("POST rejects a bad type, a long note, a missing sign in, a foreign origin", async () => {
-  let r = res(); await handler(fakeDB(), { id: "u1" })(post({ ...good, type: "nope" }), r); assert.equal(r.statusCode, 400);
-  r = res(); await handler(fakeDB(), { id: "u1" })(post({ ...good, note: "x".repeat(501) }), r); assert.equal(r.statusCode, 400);
+  let r = res(); await handler(fakeDB(), { id: "u1", is_tester: true })(post({ ...good, type: "nope" }), r); assert.equal(r.statusCode, 400);
+  r = res(); await handler(fakeDB(), { id: "u1", is_tester: true })(post({ ...good, note: "x".repeat(501) }), r); assert.equal(r.statusCode, 400);
   r = res(); await handler(fakeDB(), null)(post(good), r); assert.equal(r.statusCode, 401);
-  r = res(); await handler(fakeDB(), { id: "u1" })(post({ ...good, type: "text_mismatch" }), r); assert.equal(r.statusCode, 200);
-  r = res(); const p = post(good); p.headers.origin = "https://evil.test"; await handler(fakeDB(), { id: "u1" })(p, r); assert.equal(r.statusCode, 403);
+  r = res(); await handler(fakeDB(), { id: "u1", is_tester: true })(post({ ...good, type: "text_mismatch" }), r); assert.equal(r.statusCode, 200);
+  r = res(); const p = post(good); p.headers.origin = "https://evil.test"; await handler(fakeDB(), { id: "u1", is_tester: true })(p, r); assert.equal(r.statusCode, 403);
 });
 
 test("POST rate limits per IP hash", async () => {
   const db = fakeDB({ minute: 10 }), r = res();
-  await handler(db, { id: "u1" })(post(good), r);
+  await handler(db, { id: "u1", is_tester: true })(post(good), r);
   assert.equal(r.statusCode, 429);
   assert.equal(db.reports.length, 0);
+});
+
+test("POST is for admins and testers only: a signed in player who is neither gets 403 and nothing is stored", async () => {
+  for (const user of [{ id: "p1" }, { id: "p1", is_admin: false, is_tester: false }, { id: "p1", is_admin: null, is_tester: null }]) {
+    const db = fakeDB(), r = res();
+    await handler(db, user)(post(good), r);
+    assert.equal(r.statusCode, 403, r.body);
+    assert.match(r.json().error, /testers/);
+    assert.equal(db.reports.length, 0);
+    assert.ok(!db.calls.some(c => /^insert /.test(c.q)), "no rate limit hit or report written");
+  }
+  for (const user of [{ id: "t1", is_tester: true }, { id: "a1", is_admin: true }, { id: "a2", is_admin: true, is_tester: false }]) {
+    const db = fakeDB(), r = res();
+    await handler(db, user)(post(good), r);
+    assert.equal(r.statusCode, 200, r.body);
+    assert.equal(db.reports.length, 1);
+  }
+});
+
+test("GET export stays admins only: a tester can send reports but not read them", async () => {
+  const r = res(); await handler(fakeDB(), { id: "t1", is_tester: true, is_admin: false })({ method: "GET", url: "/api/qa-report", headers: {} }, r);
+  assert.equal(r.statusCode, 403);
 });
 
 test("GET export is admins only, filters by since, and gives CSV", async () => {

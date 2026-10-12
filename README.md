@@ -44,7 +44,7 @@ The Library holds five story courses: **The Halcyon Launch** (PMP), **One Chart*
 
 ## Accounts
 
-Invite only. Each invite link works once. Progress (chapter, decisions, scores, listening spot, settings) saves to your account in Postgres, so you can pick up on any device. Admins make and revoke invites at `/admin`.
+Invite only. Each invite link works once. Progress (chapter, decisions, scores, listening spot, settings) saves to your account in Postgres, so you can pick up on any device. Admins make and revoke invites at `/admin`. QA mode, the Flag button and the test profile are for admins and the players marked Tester on `/admin` (`users.is_tester`, added by `lib/server.js` on first use); `/api/qa-report` refuses reports from anyone else.
 
 ## Mailing list
 

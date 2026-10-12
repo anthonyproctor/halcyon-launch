@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       if (!u) return send(res, 200, { user: null });
       const rows = await sql()`select chapter,state from progress where user_id=${u.id}`;
       const progress = {}; rows.forEach(r => { progress[r.chapter] = r.state; });
-      return send(res, 200, { user: { email: u.email, name: u.name, admin: u.is_admin, cur: u.cur }, progress });
+      return send(res, 200, { user: { email: u.email, name: u.name, admin: !!u.is_admin, tester: !!u.is_tester, cur: u.cur }, progress });
     }
     if (action === "invite" && req.method === "GET") {
       const token = new URL(req.url, "http://x").searchParams.get("token") || "";
