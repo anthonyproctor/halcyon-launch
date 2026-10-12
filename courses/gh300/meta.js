@@ -14,9 +14,8 @@ C.meta={
     V1:"Productivity and quality",V2:"Testing and security"
   },
   BASE_CAST:[
-    ["Priya Shah","You. Platform lead at Halcyon AI, handed the company's Copilot rollout. Ran her first project last spring."],
-    ["Ruth Calder","Board member, retired NASA flight director. Writes the Whiteboard lessons in green ink."],
-    ["Sam Okafor","Director of Delivery. Priya's coach. Asks questions instead of giving answers."],
+    ["Priya Shah","You. Platform lead at Halcyon AI, handed the company's Copilot rollout. Moved Lumen, the hospital product, onto the new platform last spring. Your first project."],
+    ["Asha Shah","Your aunt, your dad's younger sister. Retired ER charge nurse. Writes your shift notes in green ink and asks questions instead of giving answers."],
     ["Elena Vasquez","CEO and founder. Wants every engineer on Copilot this quarter."],
     ["Lena Cho","CTO. Sponsor of the rollout."],
     ["Theo Lindqvist","Back on contract. Built the ML platform. Priya's old mentor, and the loudest skeptic."],
