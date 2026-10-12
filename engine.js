@@ -223,7 +223,7 @@ function labMention(c){const n=labsOf(c).length;if(!n)return "";const L=`${n} ha
 let MS=null,mockTimer=null;
 function MOCK_LIMIT(){return (COURSE.mockMinutes||240)*60}
 function mockQuestions(){const all=[];(DATA().mock||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part.slice(0,3)+i})));return all}
-function freshMock(mode){const qs=mockQuestions();const seed=Date.now()%100000;const ord=order("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
+function freshMock(mode){const qs=mockQuestions();const seed=Date.now()%100000;const ord=window.HalcyonOrder.perm("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
 function persistMock(){if(MS&&MS.order&&!MS.submitted)store.set("lastplace."+COURSE.id,{t:"mock"});store.set("c"+MOCK_KEY,MS);store.set("cur",MOCK_KEY);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(MOCK_KEY,copy),600)}}
 function openMock(){libTouch({t:"mock"});TRACK="mock";store.set("track","mock");MS=store.get("c"+MOCK_KEY,null);render();top()}
 function fmtTime(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return `${h}:${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`}
@@ -462,7 +462,7 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
 }
 let PR=null;
 function practicePool(t){const pool=[];TRACKS.full.list().forEach(c=>c.quiz.forEach((q,i)=>pool.push({...q,src:`Chapter ${c.num} quiz`,pid:`f${c.num}q${i}`,cases:c.cases})));mockQuestions().forEach(q=>pool.push({...q,src:"Mock bank",pid:"m"+q.id}));return t==="mixed"?pool:pool.filter(q=>q.task===t)}
-function startPractice(t){const pool=practicePool(t);if(!pool.length)return;const seed=Date.now()%9973;const pick=order("pr"+t+seed,pool.length).slice(0,10).map(i=>pool[i]);PR={task:t,qs:pick,v:null};TRACK="practice";renderPractice();top()}
+function startPractice(t){const pool=practicePool(t);if(!pool.length)return;const seed=Date.now()%9973;const pick=window.HalcyonOrder.perm("pr"+t+seed,pool.length).slice(0,10).map(i=>pool[i]);PR={task:t,qs:pick,v:null};TRACK="practice";renderPractice();top()}
 function renderPractice(){setTimeout(navSync,0);
   $("railgame").hidden=true;$("mockcard").hidden=true;const {task,qs,v}=PR;
   $("page").innerHTML=`<div class="kicker">Practice set</div><h1>${task==="mixed"?"Mixed practice":`${task} ${TASKNAMES[task]}`}</h1><p class="prog">${qs.length} questions from the chapter quizzes and the mock bank. Results feed your progress map.</p>
