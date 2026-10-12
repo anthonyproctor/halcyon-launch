@@ -158,6 +158,13 @@ def _load_batches():
     except Exception: return {}
 def _save_batches(b):
     tmp = f"{_BATCHES_P}.{os.getpid()}.tmp"; open(tmp, "w").write(json.dumps(b)); os.replace(tmp, _BATCHES_P)
+def _update_batches(fn):
+    """Read, change and write batches.json under a file lock, so two render jobs running at once don't drop each other's jobs."""
+    import fcntl
+    with open(_BATCHES_P + ".lock", "w") as lk:
+        fcntl.flock(lk, fcntl.LOCK_EX)
+        try: b = _load_batches(); fn(b); _save_batches(b)
+        finally: fcntl.flock(lk, fcntl.LOCK_UN)
 
 
 def _batch_run(items, log):
@@ -178,7 +185,7 @@ def _batch_run(items, log):
                   {"batch": {"display_name": f"halcyon-tts-{int(time.time())}-{i // BATCH_SIZE}", "input_config": {"requests": {"requests": reqs}}}})
         name = r["name"]; mine[name] = [list(c) for c in chunk]
         with _lock:
-            pend = _load_batches(); pend[name] = mine[name]; _save_batches(pend); STATS["batches"] += 1
+            _update_batches(lambda pend: pend.__setitem__(name, mine[name])); STATS["batches"] += 1
     log(f"gemini batch: {len(todo)} new requests in {-(-len(todo) // BATCH_SIZE) if todo else 0} jobs, resuming {len(mine) - (-(-len(todo) // BATCH_SIZE) if todo else 0)} earlier jobs")
     failed, t0 = [], time.time()
     while mine:
@@ -199,7 +206,7 @@ def _batch_run(items, log):
                 p, t, v, sty, tk = row
                 _store(p, base64.b64decode(data["data"]), o["response"].get("usageMetadata", {}), t, v, sty, tk, "batch"); got.add(k)
             failed += [tuple(x) for k, x in rows.items() if k not in got and not os.path.exists(x[0] + ".wav")]
-            with _lock: pend = _load_batches(); pend.pop(name, None); _save_batches(pend)
+            with _lock: _update_batches(lambda pend: pend.pop(name, None))
             log(f"gemini batch {name.split('/')[-1][:10]} {st}: {len(got)}/{len(rows)} ok, {len(mine)} jobs left, {int(time.time() - t0)}s")
     return [it for it in failed if it[0] in want]
 

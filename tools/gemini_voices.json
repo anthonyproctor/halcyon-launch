@@ -51,7 +51,7 @@
   "Wendell": {"voice": "en-us-storyteller-12", "style": "Slow, low, unhurried.", "run": true, "gender": "m"},
   "Quinn": {"voice": "Zephyr", "style": "Quick, bright, a little nervous.", "run": true, "gender": "f"},
   "Yusra": {"voice": "Autonoe", "style": "Bright and precise.", "run": true, "gender": "f"},
-  "Frances": {"voice": "en-us-advisor-3", "style": "A woman's voice. Determined, emotion held in.", "run": true, "gender": "f"},
+  "Frances": {"voice": "Erinome", "style": "A woman's voice. Determined, emotion held in.", "run": true, "gender": "f"},
   "Simon": {"voice": "en-gb-training-10", "style": "Southern English accent. A journalist of forty-seven. Wry, quick, a little needling."},
   "Calvin": {"voice": "en-gb-tutor-14", "style": "Southern English accent, measured and formal."},
   "Peg": {"voice": "Aoede", "style": "General American accent, friendly."},
@@ -99,6 +99,7 @@
    "Precious": {"voice": "en-gb-advisor-6", "style": "Warm, practical, calm.", "run": true},
    "Leonard": {"voice": "Iapetus", "style": "Eager, polished, a bit too cheerful.", "run": true},
    "Laura": {"voice": "Aoede", "style": "General American accent. A woman in her early forties. Tired but civil."},
+   "Priyanka": {"voice": "Erinome", "style": "London accent. A woman in her late thirties on a work call. Brisk, exact, not unkind.", "gender": "f"},
    "man": {"voice": "Schedar", "style": "General American accent, natural and conversational."},
    "woman": {"voice": "Callirrhoe", "style": "General American accent, natural and conversational."}
   },
@@ -111,7 +112,9 @@
    "Tasha": {"voice": "Kore", "style": "General American accent. A service desk manager who lives in ticket data. Direct."},
    "Glenn": {"voice": "Schedar", "style": "General American accent. A CFO. Even, unimpressed by soft numbers."},
    "Nate": {"voice": "Alnilam", "style": "General American accent. A CISO and former Army signal officer. Calm, firm."},
-   "Lucia": {"voice": "Callirrhoe", "style": "General American accent, friendly."}
+   "Lucia": {"voice": "Callirrhoe", "style": "General American accent, friendly."},
+   "Theo": {"voice": "Achird", "style": "General American accent. Warm, easy, a little teasing.", "gender": "m"},
+   "Irene": {"voice": "Gacrux", "style": "General American accent. An older woman. Dry, kind, unhurried.", "gender": "f"}
   },
   "asep": {
    "Wes": {"voice": "en-us-tutor-16", "style": "General American accent. A brilliant chief engineer of fifty-eight who trusts his gut. Gruff, confident."},
@@ -120,12 +123,16 @@
    "Pavel": {"voice": "Sadachbia", "style": "Light Czech accent. A supplier account lead. Proud, overcommitted."},
    "Jun": {"voice": "Zubenelgenubi", "style": "General American accent. A junior systems engineer of twenty-four. Quick, earnest."},
    "Tess": {"voice": "Zephyr", "style": "General American accent, bright."},
-   "Frank": {"voice": "Orus", "style": "General American accent, gruff."}
+   "Frank": {"voice": "Orus", "style": "General American accent, gruff."},
+   "Gail": {"voice": "Kore", "style": "A woman's voice. Dry, kind, exact, unhurried.", "run": true, "gender": "f"},
+   "Beto": {"voice": "Algieba", "style": "General American accent. Easygoing, warm.", "gender": "m"}
   },
   "gh300": {
    "Elena": {"voice": "Callirrhoe", "style": "General American accent. A CEO, confident and friendly."},
    "Lena": {"voice": "Gacrux", "style": "General American accent. A CTO sponsoring the rollout. Composed, decisive."},
-   "Renata": {"voice": "Leda", "style": "General American accent. A junior engineer in her first month. Curious, eager, asks the question everyone else won't."}
+   "Renata": {"voice": "Leda", "style": "General American accent. A junior engineer in her first month. Curious, eager, asks the question everyone else won't."},
+   "Asha": {"voice": "Kore", "style": "An older woman, a retired ER charge nurse. Calm, warm, direct.", "run": true, "gender": "f"},
+   "Anders": {"voice": "Fenrir", "style": "General American accent, a skeptical, sardonic senior engineer.", "gender": "m"}
   }
  }
 }
