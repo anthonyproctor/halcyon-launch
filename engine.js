@@ -25,7 +25,7 @@ const TRACKS={
   /* the PMP Refresher (v1 hospital story) was deleted on 2026-10-12; the ref track stays generic and is empty for PMP. */
   ref:{id:"ref",name:"Refresher",blurb:"6 chapters, about 2.5 hours. Ten decisions per chapter with mentor debriefs. Best for a quick review.",list:()=> (DATA().ref||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>n},
   full:{id:"full",name:"Full Course",get blurb(){if(!COURSE||COURSE.id==="pmp")return "15 chapters, about 15 to 20 hours. Lessons, decisions, math drills, exercises, and a quiz every chapter. Learn the PMP from the ground up.";const n=COURSE.planned||(DATA().full||[]).length;return `${n} chapters, ${COURSE.fullHours||""}. Lessons, decisions, drills, exercises, and a quiz every chapter.`},list:()=> (DATA().full||[]).filter(c=>c&&c.scenes).sort((a,b)=>a.num-b.num),key:n=>FULL_BASE()+n},
-  mock:{id:"mock",name:"Mock Exam",blurb:"180 questions in 240 minutes with two breaks, weighted like the real exam. Practice mode gives feedback as you go.",key:()=>900}
+  mock:{id:"mock",name:"Practice Exam",blurb:"180 questions in 240 minutes with two breaks, weighted like the real exam. Practice mode gives feedback as you go.",key:()=>900}
 };
 /* saved progress: Full Course chapter n is key base+100+n, except PMP v2, which uses 201 to 215 so v1 picks (101 to 115) never land on v2 scenes. v1 rows stay on the server, unread. */
 function FULL_BASE(){return PMP2()?200:100}
@@ -55,7 +55,7 @@ async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")ret
   const changed=COURSE.id!==c.id;COURSE=c;store.set("course",id);
   const meta=c.id==="pmp"?PMP_META:(((window.HALCYON_DATA||{})[id]||{}).meta||{});
   DOMS=meta.DOMS||PMP_META.DOMS;TASKNAMES=meta.TASKNAMES||{};BASE_CAST=meta.BASE_CAST||[];FULL_CAST_EXTRA=meta.FULL_CAST_EXTRA||[];
-  if(changed){MS=null;MOCK_FORM=1;clearInterval(mockTimer);BOOK=null;MARKS=null;NAR.timings={};try{NAR.audio.pause()}catch(e){}NAR.page=null;NAR.listening=false;buildOrders()}return true}
+  if(changed){MS=null;MOCK_FORM=1;clearInterval(mockTimer);BOOK=null;MARKS=null;BP_BOOK=null;BP_WAIT=false;NAR.timings={};try{NAR.audio.pause()}catch(e){}NAR.page=null;NAR.listening=false;buildOrders()}return true}
 
 /* ===== state ===== */
 let TRACK=null,CH=null,S=null,SYNC=null,syncTimer=null;
@@ -208,7 +208,7 @@ function fullRender(){
     h+=`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates(),globalFlags()))}
      <div class="end-grid"><div class="card"><h3>Decisions</h3><div class="big">${S.score}/${n*3}</div></div><div class="card"><h3>Quiz</h3><div class="big">${S.quiz?S.quiz.right+"/"+CH.quiz.length:"·"}</div></div>${dr?`<div class="card"><h3>Drills</h3><div class="big">${drOk}/${dr}</div></div>`:""}${METERS_OF().map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
      <div class="story"><p>Weakest area this chapter: <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent, counting decisions and quiz together.</p></div>
-     ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">${MENTOR()}'s notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`${COURSE.final?`<button class="btn" id="tofinal" type="button">Take the final assessment</button>`:""}${hasMock()?`<button class="btn${COURSE.final?" ghost":""}" id="tomock" type="button">Take the mock exam</button>`:""}`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
+     ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">${MENTOR()}'s notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`${COURSE.final?`<button class="btn" id="tofinal" type="button">Take the final assessment</button>`:""}${hasMock()?`<button class="btn${COURSE.final?" ghost":""}" id="tomock" type="button">Take the practice exam</button>`:""}`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
   }
   $("page").innerHTML=h;wireVideos();if(cur.k==="labs")labsMount();
   $("page").querySelectorAll(".sdot[data-p]").forEach(b=>b.onclick=()=>fullGo(+b.dataset.p));
@@ -278,18 +278,18 @@ function fmtTime(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Mat
 function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode==="practice")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT()-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT()){mockSubmit()}},1000)}
 function lastLine(last){return last?`Last attempt: <b>${last.right} of ${last.total}</b> (${last.total?Math.round(last.right/last.total*100):0}%) on ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}.`:""}
 function mockPicker(forms){
-  $("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][forms.length]||forms.length} full practice exams. Each one has its own questions and keeps its own history. ${esc(COURSE.mockBlurb||"")}</p></div>
+  $("page").innerHTML=`<div class="kicker">Practice Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][forms.length]||forms.length} full practice exams. Each one has its own questions and keeps its own history. ${esc(COURSE.mockBlurb||"")}</p></div>
    <div class="grid2">${forms.map(x=>{const st=loadMock(x.f),inprog=!!(st&&!st.submitted),last=mockHist(x.f).slice(-1)[0];
      return `<div class="card mockform" data-formcard="${x.f}"><h3>${esc(x.label)}</h3><p>${inprog?"In progress. ":""}${last?lastLine(last):"You haven't taken this one yet."}</p><button class="btn" type="button" data-form="${x.f}">${inprog?"Continue":"Open"} ${esc(x.label)}</button></div>`}).join("")}</div>`;
   $("page").querySelectorAll("[data-form]").forEach(b=>b.onclick=()=>openMock(+b.dataset.form))}
 function mockRender(){
   const forms=mockForms(),multi=forms.length>1;
-  if(!forms.length){$("page").innerHTML=`<div class="kicker">Mock Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${MOCK_SOON}</p></div><div class="bar"><button class="btn ghost" id="mockhome" type="button">Back to the course</button></div>`;$("mockhome").onclick=()=>{TRACK=null;renderHome();renderRail();top()};return}
+  if(!forms.length){$("page").innerHTML=`<div class="kicker">Practice Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${MOCK_SOON}</p></div><div class="bar"><button class="btn ghost" id="mockhome" type="button">Back to the course</button></div>`;$("mockhome").onclick=()=>{TRACK=null;renderHome();renderRail();top()};return}
   if(!forms.some(x=>x.f===MOCK_FORM)){if(multi){MOCK_FORM=null;MS=null;return mockPicker(forms)}MOCK_FORM=forms[0].f;MS=loadMock(MOCK_FORM)}
   const qs=mockQuestions(MOCK_FORM);const byId={};qs.forEach(q=>byId[q.id]=q);
   const label=formLabel(MOCK_FORM),back=multi?`<button class="linkbtn" type="button" id="allforms">All practice exams</button> › `:"";
   if(!MS){const sc=qs.filter(scoredQ).length,pre=qs.length-sc,mins=Math.round(MOCK_LIMIT()/60),brk=(COURSE.mockBreaks||[]).length?`, optional breaks after questions ${COURSE.mockBreaks.join(" and ")}`:"";
-    $("page").innerHTML=`<div class="kicker">${back}Mock Exam</div><h1>${esc(multi?label:(COURSE.mockTitle||"Practice exam"))}</h1><div class="story"><p>${qs.length} questions${pre?`, ${sc} of them scored`:""}. ${esc(COURSE.mockBlurb||"")}</p></div>
+    $("page").innerHTML=`<div class="kicker">${back}Practice Exam</div><h1>${esc(multi?label:(COURSE.mockTitle||"Practice exam"))}</h1><div class="story"><p>${qs.length} questions${pre?`, ${sc} of them scored`:""}. ${esc(COURSE.mockBlurb||"")}</p></div>
     <div class="grid2"><div class="card"><h3>Exam mode</h3><p>${mins} minutes, the timer runs${brk}, results and explanations at the end.${pre?` All ${qs.length} questions. ${pre} of them are unscored pretest items mixed in like the ones on the real exam, and the results show which.`:""}</p><button class="btn" id="exam" type="button">Start exam mode</button></div>${pre&&sc?`<div class="card"><h3>Handbook mode</h3><p>Only the ${sc} scored questions in ${mins} minutes, the timer runs. The ${pre} pretest items are left out.</p><button class="btn ghost" id="handbook" type="button">Start handbook mode</button></div>`:""}<div class="card"><h3>Practice mode</h3><p>No timer. See the answer and ${MENTOR()}'s explanation after each question.</p><button class="btn ghost" id="practice" type="button">Start practice mode</button></div></div>`;
     const go=mode=>()=>{MS=freshMock(mode);persistMock();render()};
     $("exam").onclick=go("exam");$("practice").onclick=go("practice");if($("handbook"))$("handbook").onclick=go("handbook");if($("allforms"))$("allforms").onclick=()=>openMock();return}
@@ -297,7 +297,7 @@ function mockRender(){
   if(MS.onBreak!==null){$("page").innerHTML=`<h1>Break</h1><div class="story"><p>You've finished question ${MS.onBreak}. Take up to 10 minutes. The exam timer is paused. On the real exam you can't go back to earlier questions after a break.</p></div><div class="bar"><button class="btn" id="resume" type="button">Resume the exam</button></div>`;$("resume").onclick=()=>{MS.breaksTaken.push(MS.onBreak);MS.onBreak=null;persistMock();render()};return}
   const i=Math.min(MS.cur||0,MS.order.length-1),q=byId[MS.order[i]],chosen=MS.ans[q.id],showAns=MS.mode==="practice"&&chosen!==undefined;
   const ord=order("mq"+q.id,q.opts.length);
-  $("page").innerHTML=`<div class="kicker">Mock exam · ${multi?esc(label)+" · ":""}${MODE_NAME[MS.mode]||"Exam mode"} · Question ${i+1} of ${MS.order.length}</div>
+  $("page").innerHTML=`<div class="kicker">Practice exam · ${multi?esc(label)+" · ":""}${MODE_NAME[MS.mode]||"Exam mode"} · Question ${i+1} of ${MS.order.length}</div>
    <fieldset class="qitem" data-qid="${esc(q.id)}"><legend>${q.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${showAns?(oi===q.a?"qright":oi===chosen?"qwrong":""):""}"><input type="radio" name="mq" value="${oi}" ${chosen===oi?"checked":""} ${showAns?"disabled":""}><span class="k">${"ABCD"[pos]}</span> ${q.opts[oi]}</label>`).join("")}
    ${showAns?`<p class="qwhy"><b>${chosen===q.a?"Correct.":"Not quite."}</b> ${q.why} <span class="tag">${q.task} ${TASKNAMES[q.task]||""}</span></p>`:""}</fieldset>
    <div class="bar"><button class="btn ghost" id="prev" type="button" ${i===0?"disabled":""}>Back</button><button class="btn" id="nextq" type="button">${i+1<MS.order.length?"Next":"Review and submit"}</button><label class="chk"><input type="checkbox" id="flagq" ${MS.flagged[q.id]?"checked":""}> Flag for review</label></div>
@@ -337,7 +337,7 @@ function mockResults(byId){
   const written=n=>TRACKS.full.list().find(c=>c.num===n);
   const reread=a=>{const chs=rereadFor(qs.filter(q=>a.has(q)&&!ok(q)));return chs.length?chs.map(n=>{const c=written(n);return c?`<button class="linkbtn" type="button" data-lesson="${n}">Reread chapter ${n}, ${esc(c.title)}</button>`:`<span class="soon">coming in chapter ${n}</span>`}).join("; "):"no chapter covers these tasks yet"};
   const multi=multiForm(),label=formLabel(MOCK_FORM);
-  $("page").innerHTML=`<div class="kicker">${multi?`<button class="linkbtn" type="button" id="allforms">All practice exams</button> › `:""}Mock exam · ${multi?esc(label)+" · ":""}Results</div><h1>${right} of ${qs.length} (${qs.length?Math.round(right/qs.length*100):0} percent)</h1>
+  $("page").innerHTML=`<div class="kicker">${multi?`<button class="linkbtn" type="button" id="allforms">All practice exams</button> › `:""}Practice exam · ${multi?esc(label)+" · ":""}Results</div><h1>${right} of ${qs.length} (${qs.length?Math.round(right/qs.length*100):0} percent)</h1>
    <div class="story"><p>${esc(COURSE.mockPassNote||(COURSE.id==="pmp"?"PMI doesn't publish a passing score. Many instructors treat 75 percent or better on full-length practice exams as a sign you're ready.":"Aim for a comfortable margin on full-length practice exams before you book the real one."))} ${MS.mode!=="practice"?`Time used: ${fmtTime(MS.elapsed)}.`:""}</p>
    ${pre?`<p id="prenote">Your score and the breakdown below count the ${qs.length} scored questions. The other ${pre} were unscored pretest items, tagged in the review below.</p>`:MS.mode==="handbook"?`<p id="prenote">Handbook mode: the ${qs.length} scored questions only.</p>`:""}</div>
    <div class="end-grid">${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${dom[d]?pct(dom[d]):0}%</div><p class="prog">${dom[d]?dom[d][0]+" of "+dom[d][1]:""}</p></div>`).join("")}</div>
@@ -345,11 +345,11 @@ function mockResults(byId){
    <h2>What to reread</h2>${weak.length?`<ul class="story reread" style="padding-left:22px">${weak.map(a=>`<li><b>${esc(a.name)}</b>${a.dom?` (${esc(a.dom)})`:""}, ${pct(a.x)} percent: ${reread(a)}.</li>`).join("")}</ul>`:`<div class="story reread"><p>Every area is at ${MOCK_WEAK} percent or better. Keep taking full practice exams to hold it there.</p></div>`}
    <h2>Weakest tasks</h2><ul class="story" style="padding-left:22px">${weakTasks.map(([t,x])=>`<li>${t} ${TASKNAMES[t]||""}: ${x[0]} of ${x[1]}</li>`).join("")}</ul>
    <h2>Review</h2><details><summary>Show every question with explanations</summary>${all.map((q,k)=>`<div class="qitem${scoredQ(q)?"":" unscored"}"><p><b>${k+1}.</b> ${scoredQ(q)?"":`<span class="tag pre">Unscored pretest item</span> `}${q.q}</p><p class="${ok(q)?"qright":"qwrong"}">Your answer: ${MS.ans[q.id]!==undefined?q.opts[MS.ans[q.id]]:"none"}</p>${ok(q)?"":`<p class="qright">Correct: ${q.opts[q.a]}</p>`}<p class="qwhy">${q.why} <span class="tag">${q.task}</span></p></div>`).join("")}</details>
-   <div class="bar"><button class="btn" id="again" type="button">Take ${multi?esc(label)+" again":"a new mock exam"}</button>${multi?`<button class="btn ghost" id="allforms2" type="button">All practice exams</button>`:""}</div>`;
+   <div class="bar"><button class="btn" id="again" type="button">Take ${multi?esc(label)+" again":"a new practice exam"}</button>${multi?`<button class="btn ghost" id="allforms2" type="button">All practice exams</button>`:""}</div>`;
   const pg=$("page");
   pg.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>openLesson(+b.dataset.lesson));
   [$("allforms"),$("allforms2")].forEach(b=>{if(b)b.onclick=()=>openMock()});
-  $("again").onclick=()=>{if(confirm("Start a new mock exam? Your results above will be replaced.")){const k=mockKey();MS=null;store.set("c"+k,null);if(SYNC)SYNC(k,{});render()}};
+  $("again").onclick=()=>{if(confirm("Start a new practice exam? Your results above will be replaced.")){const k=mockKey();MS=null;store.set("c"+k,null);if(SYNC)SYNC(k,{});render()}};
 }
 
 
@@ -506,11 +506,21 @@ function studyPlan(m){
   if(nextCh)plan.push(["Keep the story moving",`Full Course chapter ${nextCh.num}, ${nextCh.title}. Read ${LESSON()} and play the decisions.`,{open:nextCh.num}]);
   weak.forEach(([t,p])=>{const where=taughtIn(t)[0];plan.push([`Shore up ${t} ${TASKNAMES[t]} (${p}%)`,where?`Re-read the chapter ${where.c.num} lesson, then do 10 practice questions on this task.`:`Do 10 practice questions on this task.`,{task:t}])});
   const H={list:mockHistAll()},done5=()=>TRACKS.full.list().filter(c=>{const st=load("full",c.num);return st&&(st.doneAt||(st.pos||0)>=steps(c).length-1)}).length>=5;
-  if(hasMock()&&(!H||!H.list.length)){if(done5())plan.push(["Take a mock exam","You've finished five chapters. A full timed mock now shows where you really stand.",{mock:1}])}
+  if(hasMock()&&(!H||!H.list.length)){if(done5())plan.push(["Take a practice exam","You've finished five chapters. A full timed practice exam now shows where you really stand.",{mock:1}])}
   else if(hasMock()||done5())plan.push(["Mixed practice","Do 10 mixed practice questions to keep everything warm.",{task:"mixed"}]);
   if(!plan.length)plan.push(["Start here","Open the Full Course and play chapter 1.",{open:1}]);
   return plan.slice(0,5);
 }
+/* Progress page: the finish line as steps, from existing state only (no scoring changes). Chapters = bookProgress's percent. Practice exam =
+   the best score over every mock attempt, right over total as the history table shows it. Final assessment (courses with one) =
+   locked until every planned chapter is done (courseDone), then unlocked, then passed once a non-preview attempt passes (certAttempt). */
+function finishHTML(){const P=bookProgress(false),H=mockHistAll().filter(a=>a.total>0),rows=[];
+  const partial=P.planned>P.pub;
+  rows.push([P.all&&!partial?"done":P.done?"now":"todo","Chapters",`${bpPctText(P)}${partial?` of what's written (${P.pub} of ${P.planned} chapters written)`:""}`,bpBarHTML(P)]);
+  if(hasMock()||H.length){const best=H.reduce((m,a)=>{const v=a.right/a.total*100;return !m||v>m.v?{v,a}:m},null);
+    rows.push([best?"now":"todo","Practice exam",best?`best score ${Math.round(best.v)}%${best.a.mode==="practice"?" (practice mode)":""}`:"not started",""])}
+  if(COURSE.final){const cd=courseDone(),cert=certAttempt();rows.push([cert?"done":cd.all?"now":"todo","Final assessment",cert?"passed":cd.all?"unlocked":"locked",""])}
+  return `<h2 class="finishh">Finish line</h2><ol class="finish" aria-label="Finish line">${rows.map(([st,h,v,bar])=>`<li class="${st}"><span class="ft"><span class="fh">${h}</span> <span class="fv">${esc(v)}</span></span>${bar}</li>`).join("")}</ol>`}
 function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK="dash";$("railgame").hidden=true;$("mockcard").hidden=true;
   const m=mastery(),H=mockHistAll(),multi=multiForm();
@@ -522,18 +532,18 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   const ready=last&&last.total?Math.round(last.right/last.total*100):null;
   const domPct=d=>{const ts=ALLT().filter(t=>taskDomain(t)===d);const g=ts.reduce((a,t)=>a+m[t].got,0),x=ts.reduce((a,t)=>a+m[t].max,0);return x?Math.round(g/x*100):null};
   const plan=studyPlan(m),weak=weakTasks(m,5);
-  $("page").innerHTML=`<div class="kicker">My progress</div><h1>Scoreboard</h1>
-   <div class="end-grid">${hasMock()?`<div class="card"><h3>Readiness</h3><div class="big">${ready!==null?ready+"%":"·"}</div><p class="prog">${last?`Last timed mock, ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}`:"Take a timed mock to see this"}</p></div>`:""}${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${domPct(d)!==null?domPct(d)+"%":"·"}</div></div>`).join("")}</div>
+  $("page").innerHTML=`<div class="kicker">My progress</div><h1>Scoreboard</h1>${finishHTML()}
+   <div class="end-grid">${hasMock()?`<div class="card"><h3>Readiness</h3><div class="big">${ready!==null?ready+"%":"·"}</div><p class="prog">${last?`Last timed practice exam, ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}`:"Take a timed practice exam to see this"}</p></div>`:""}${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${domPct(d)!==null?domPct(d)+"%":"·"}</div></div>`).join("")}</div>
    <h2>${MENTOR()}'s study plan</h2><div class="story"><p>Built from your weakest tasks and where you are in the course. It updates as you play.</p></div>
-   <ol class="plan">${plan.map(([h,b,a],i)=>`<li><b>${esc(h)}.</b> ${esc(b)} <button class="btn small" data-plan="${i}" type="button">${a.mock?"Open mock exam":a.task?"Practice":"Open"}</button></li>`).join("")}</ol>
+   <ol class="plan">${plan.map(([h,b,a],i)=>`<li><b>${esc(h)}.</b> ${esc(b)} <button class="btn small" data-plan="${i}" type="button">${a.mock?"Open practice exam":a.task?"Practice":"Open"}</button></li>`).join("")}</ol>
    <h2>Where you need help</h2>${weak.length?weak.map(([t,p])=>{const ti=taughtIn(t),vids=videosFor(t);return `<div class="card helpcard"><div class="row"><b>${t} ${TASKNAMES[t]}</b><span class="pill ${p>=75?"p-ok":p>=50?"p-warn":"p-bad"}">${p}%</span></div>
-     <p class="prog">Taught in: ${ti.map(({c,scenes})=>`<button class="linkbtn" data-lesson="${c.num}">Ch ${c.num} lesson</button>${scenes.map(i=>` · <button class="linkbtn" data-scene="${c.num}:${i}">decision ${i+1}</button>`).join("")}`).join(" | ")||(hasMock()?"the mock exam only":"no chapter yet")}</p>
+     <p class="prog">Taught in: ${ti.map(({c,scenes})=>`<button class="linkbtn" data-lesson="${c.num}">Ch ${c.num} lesson</button>${scenes.map(i=>` · <button class="linkbtn" data-scene="${c.num}:${i}">decision ${i+1}</button>`).join("")}`).join(" | ")||(hasMock()?"the practice exam only":"no chapter yet")}</p>
      ${vids.slice(0,2).map(([v,c])=>`<p class="prog">Video: <a href="https://www.youtube.com/watch?v=${esc(v[0])}" target="_blank" rel="noopener">${esc(v[1])}</a> (${esc(v[2])}, ${esc(v[3])})</p>`).join("")}
      <button class="btn small" data-task="${t}" type="button">10 practice questions</button></div>`}).join(""):`<div class="story"><p>Play a few chapters and quizzes first. This fills in once there's enough to judge.</p></div>`}
    <h2>All ${ALLT().length} exam tasks</h2><div class="taskgrid">${ALLT().map(t=>{const p=pctOf(m[t]);return `<button class="taskcell" data-task="${t}" type="button" title="${TASKNAMES[t]}"><span class="tc">${t}</span><span class="tn">${TASKNAMES[t]}</span><span class="mbar"><span style="width:${p||0}%;background:${p===null?"var(--soft)":p>=75?"var(--good)":p>=50?"var(--mid)":"var(--bad)"}"></span></span><span class="prog">${p===null?"no data":p+"% · "+m[t].n+" items"}</span></button>`}).join("")}</div>
    <h2>Full Course</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("full",fullL)}</table></div>
    ${refL.length?`<h2>Refresher</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("ref",refL)}</table></div>`:""}
-   ${hasMock()||H.length?`<h2>Mock exams</h2>`:""}${!hasMock()&&!H.length?"":H.length?`<div class="tablewrap"><table><tr><th>Date</th>${multi?"<th>Exam</th>":""}<th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td>${multi?`<td>${a.f}</td>`:""}<td>${esc((MODE_NAME[a.mode]||a.mode).replace(" mode",""))}</td><td class="num">${a.right}/${a.total} (${a.total?Math.round(a.right/a.total*100):0}%)</td><td class="num">${a.mode!=="practice"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No mock exams yet.</p>`}
+   ${hasMock()||H.length?`<h2>Practice exams</h2>`:""}${!hasMock()&&!H.length?"":H.length?`<div class="tablewrap"><table><tr><th>Date</th>${multi?"<th>Exam</th>":""}<th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td>${multi?`<td>${a.f}</td>`:""}<td>${esc((MODE_NAME[a.mode]||a.mode).replace(" mode",""))}</td><td class="num">${a.right}/${a.total} (${a.total?Math.round(a.right/a.total*100):0}%)</td><td class="num">${a.mode!=="practice"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No practice exams yet.</p>`}
    ${finalDashHTML()}${logSection()}`;
   const pg=$("page");wireLog();wireFinalHome();
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
@@ -543,11 +553,11 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   pg.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>{const a=plan[+b.dataset.plan][2];if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)});
 }
 let PR=null;
-function practicePool(t){const pool=[];TRACKS.full.list().forEach(c=>c.quiz.forEach((q,i)=>pool.push({...q,src:`Chapter ${c.num} quiz`,pid:`f${c.num}q${i}`,cases:c.cases})));mockQuestions().forEach(q=>pool.push({...q,src:"Mock bank",pid:"m"+q.id}));return t==="mixed"?pool:pool.filter(q=>q.task===t)}
+function practicePool(t){const pool=[];TRACKS.full.list().forEach(c=>c.quiz.forEach((q,i)=>pool.push({...q,src:`Chapter ${c.num} quiz`,pid:`f${c.num}q${i}`,cases:c.cases})));mockQuestions().forEach(q=>pool.push({...q,src:"Practice exam bank",pid:"m"+q.id}));return t==="mixed"?pool:pool.filter(q=>q.task===t)}
 function startPractice(t){const pool=practicePool(t);if(!pool.length)return;const seed=Date.now()%9973;const pick=window.HalcyonOrder.perm("pr"+t+seed,pool.length).slice(0,10).map(i=>pool[i]);PR={task:t,qs:pick,v:null};TRACK="practice";renderPractice();top()}
 function renderPractice(){setTimeout(navSync,0);
   $("railgame").hidden=true;$("mockcard").hidden=true;const {task,qs,v}=PR;
-  $("page").innerHTML=`<div class="kicker">Practice set</div><h1>${task==="mixed"?"Mixed practice":`${task} ${TASKNAMES[task]}`}</h1><p class="prog">${qs.length} questions from the chapter quizzes and the mock bank. Results feed your progress map.</p>
+  $("page").innerHTML=`<div class="kicker">Practice set</div><h1>${task==="mixed"?"Mixed practice":`${task} ${TASKNAMES[task]}`}</h1><p class="prog">${qs.length} questions from the chapter quizzes and the practice exam bank. Results feed your progress map.</p>
    <form id="prform" novalidate>${(()=>{const pseen=new Set();return qs.map((x,qi)=>{const ord=order(x.pid.startsWith("m")?"mq"+x.pid.slice(1):x.pid.replace(/^f(\d+)q(\d+)$/,"q$1_$2"),x.opts.length);return `${caseBefore(x.cases,x,pseen,x.src)}<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${v?(oi===x.a?"qright":v[qi]===oi?"qwrong":""):""}"><input type="radio" name="p${qi}" value="${oi}" ${v?"disabled":""} ${v&&v[qi]===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`).join("")}${v?`<p class="qwhy"><b>${v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} · ${x.src}</span></p>`:""}</fieldset>`}).join("")})()}${v?"":`<button class="btn" type="submit">Check my answers</button>`}</form>
    ${v?`<div class="callout"><b>${v.filter((x,i)=>x===qs[i].a).length} of ${qs.length} correct.</b></div><div class="bar"><button class="btn" id="again" type="button">Another set</button><button class="btn ghost" id="todash" type="button">Back to progress</button></div>`:""}`;
   const f=$("prform");if(f)f.onsubmit=e=>{e.preventDefault();PR.v=qs.map((_,qi)=>{const c=document.querySelector(`input[name=p${qi}]:checked`);return c?+c.value:-1});
@@ -610,15 +620,15 @@ function logActText(a){const kinds=[["c","story"],["l","lesson"],["s","decisions
   a.forEach(code=>{const m=/^([clsdeqxb])(\d+)$/.exec(code);if(!m)return;if(m[1]==="b"){if(!book.includes(+m[2]))book.push(+m[2])}else(ch[m[2]]=ch[m[2]]||new Set()).add(m[1])});
   Object.keys(ch).map(Number).sort((x,y)=>x-y).forEach(n=>out.push(`Chapter ${n}: ${kinds.filter(([k])=>ch[n].has(k)).map(([,w])=>w).join(", ")}`));
   if(book.length)out.push(`Audiobook, chapter${book.length>1?"s":""} ${book.sort((x,y)=>x-y).join(", ")}`);
-  if(a.includes("m"))out.push("Mock exam");if(a.includes("p"))out.push("Practice set");if(a.includes("f"))out.push("Final assessment");return out.join("; ")}
+  if(a.includes("m"))out.push("Practice exam");if(a.includes("p"))out.push("Practice set");if(a.includes("f"))out.push("Final assessment");return out.join("; ")}
 const hrs=s=>(s/3600).toFixed(1),mins=s=>Math.round(s/60);
 function logDay(d){const [y,m,x]=d.split("-").map(Number);return new Date(y,m-1,x).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}
 function logRangeText(R){if(!R.length)return "No study time logged yet";return R[0].d===R[R.length-1].d?logDay(R[0].d):`${logDay(R[0].d)} to ${logDay(R[R.length-1].d)}`}
-function logTableHTML(R){if(!R.length)return `<p class="prog">Nothing logged for these dates yet. Time you spend reading a chapter, taking a quiz or the mock exam, or listening shows up here.</p>`;
+function logTableHTML(R){if(!R.length)return `<p class="prog">Nothing logged for these dates yet. Time you spend reading a chapter, taking a quiz or the practice exam, or listening shows up here.</p>`;
   const tot=R[R.length-1].run-(R[0].run-R[0].r-R[0].l);
   return `<div class="tablewrap"><table class="logtable"><tr><th>Date</th><th>Minutes</th><th>What you did</th><th>Total hours</th></tr>${R.map(x=>`<tr><td>${esc(logDay(x.d))}</td><td class="num">${mins(x.r+x.l)}${x.l>=60?` <span class="logl">(${mins(x.l)} listening)</span>`:""}</td><td>${esc(logActText(x.a))}</td><td class="num">${hrs(x.run-(R[0].run-R[0].r-R[0].l))}</td></tr>`).join("")}</table></div><p class="logtotal"><b>Total for these dates: ${hrs(tot)} hours</b> (${mins(tot)} minutes)</p>`}
 function logSection(){const {from,to}=LOG.range;const R=logRows(COURSE,from,to);
-  return `<h2 id="studylog">Study log</h2><p class="prog">The time you've actually spent on this course, day by day. Reading counts while you're active on a chapter, quiz, practice set or mock exam. Listening counts while the audio plays.</p>
+  return `<h2 id="studylog">Study log</h2><p class="prog">The time you've actually spent on this course, day by day. Reading counts while you're active on a chapter, quiz, practice set or practice exam. Listening counts while the audio plays.</p>
    <div class="logrange"><label for="logfrom">From <input type="date" id="logfrom" value="${esc(from)}"></label><label for="logto">To <input type="date" id="logto" value="${esc(to)}"></label><button class="linkbtn" type="button" id="logall">All time</button></div>
    <div id="logbody">${logTableHTML(R)}</div>
    <div class="bar"><button class="btn small" type="button" id="logcsv" ${R.length?"":"disabled"}>Download study log</button><button class="btn small ghost" type="button" id="logprint" ${R.length?"":"disabled"}>Printable page</button></div>`}
@@ -860,7 +870,7 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
    <dt>Your settings</dt><dd>Focus mode and Ambience follow your account, so they match on every device.</dd>
   </dl>
   <h2>Your study log</h2><dl>
-   <dt>What counts</dt><dd>Each course keeps a log of the time you spend studying it, day by day. Reading counts while a chapter, quiz, practice set or mock exam is on screen and you've tapped, typed, scrolled or moved the mouse in the last 2 minutes, so a tab left open doesn't add up. Listening counts while the audio is really playing, by the clock, so a faster speed doesn't stretch it. Time on pages like Progress, Cast and this Guide doesn't count.</dd>
+   <dt>What counts</dt><dd>Each course keeps a log of the time you spend studying it, day by day. Reading counts while a chapter, quiz, practice set or practice exam is on screen and you've tapped, typed, scrolled or moved the mouse in the last 2 minutes, so a tab left open doesn't add up. Listening counts while the audio is really playing, by the clock, so a faster speed doesn't stretch it. Time on pages like Progress, Cast and this Guide doesn't count.</dd>
    <dt>Where it is</dt><dd>Open Progress in a course and scroll to Study log. Each day shows minutes and what you worked on, with a running total in hours. Pick From and To dates to total a stretch.</dd>
    <dt>Export</dt><dd><b>Download study log</b> saves a CSV file for a spreadsheet. <b>Printable page</b> opens a clean copy with the course, your name, the dates and the total. Print it, or save it as a PDF from the print screen.</dd>
   </dl>
@@ -872,7 +882,7 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
   <h2>Privacy</h2><p>The site counts anonymous page views, without cookies, to learn which chapters people read. No personal data.</p><p>Your study log is stored with your progress in your account, like your saved place. It holds dates, minutes and the parts you studied, nothing more.</p><p>If you join the list, we store your email to tell you about new books. Ask to be removed anytime. Each email has a leave link at the bottom too.</p>
   <h2>Troubleshooting</h2><label class="chk prog"><input type="checkbox" id="pdbgt" ${PDBG.on?"checked":""}> Show player diagnostics (a log at the top of the screen; screenshot it and send it to Anthony)</label></div>`;
   if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
-function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return hasMock()?[multiForm()&&mockForms().some(x=>x.f===lp.f)?`Mock exam · ${formLabel(lp.f)}`:"Mock exam",()=>openMock(lp.f)]:null;const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
+function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return hasMock()?[multiForm()&&mockForms().some(x=>x.f===lp.f)?`Practice exam · ${formLabel(lp.f)}`:"Practice exam",()=>openMock(lp.f)]:null;const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
 /* where you are lives in the address (#pmp/full/3, #guide), so a reload reopens the same screen */
 function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock"+(multiForm()&&MOCK_FORM?"/"+MOCK_FORM:""):(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
   store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
@@ -887,7 +897,7 @@ async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filt
   if(v==="listen"){renderBook();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
   renderHome();renderRail();return true}
 window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
-function navSync(){noteRoute();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+function navSync(){noteRoute();try{bookBarSync()}catch(e){console.error(e)}const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
@@ -897,7 +907,7 @@ function navSync(){noteRoute();const map={home:"homelink",library:"liblink",upco
 /* ===== audiobook ===== */
 let BOOK=null;
 let MARKS=null;
-async function bookMarks(){if(MARKS)return MARKS;if(NOAUD())return MARKS={full:{}};try{const r=await fetch(R(V2("audio/bookmarks.json")),{cache:"no-store"});MARKS=r.ok?await r.json():{full:{}}}catch(e){MARKS={full:{}}}return MARKS}
+async function bookMarks(){if(MARKS)return MARKS;if(NOAUD())return MARKS={full:{}};const cid=COURSE.id;let M;try{const r=await fetch(R(V2("audio/bookmarks.json")),{cache:"no-store"});M=r.ok?await r.json():{full:{}}}catch(e){M={full:{}}}if(COURSE.id!==cid)return {full:{}};return MARKS=M} // a reply that lands after a course switch belongs to the old course
 const PIDS=c=>["open",...(c.lesson?["lesson"]:[]),...c.scenes.map((_,i)=>"s"+i),"end"];
 function pidAt(n,ed,t){const L=MARKS&&MARKS.full[n]&&MARKS.full[n][ed];if(!L||!L.length)return null;let p=L[0][0];for(const [id,s] of L)if(s<=t+1)p=id;return p}
 function pidLabel(pid,n){const c=TRACKS.full.list().find(x=>x.num===n);return secName(c,pid)}
@@ -910,7 +920,7 @@ async function handoffOffer(){if(TRACK!=="full"||!CH||!S)return;const LB=lget().
   const pid=pidAt(LB.n,LB.ed,LB.t);if(!pid)return;const k=stepOfPid(CH,pid);if(k===S.pos||$("handoff"))return;
   const d=document.createElement("div");d.id="handoff";d.className="handoff";d.innerHTML=`<span>🎧 You were listening at <b>${esc(pidLabel(pid,LB.n))}</b> in the Audiobook (${fmtT(LB.t)}).</span><button class="btn small" type="button" id="hojump">Pick up there</button><button class="btn small ghost" type="button" id="hox" aria-label="Dismiss">✕</button>`;
   $("page").prepend(d);$("hojump").onclick=()=>{store.set("handoff.seen",LB.at);if(NAR.page==="book")NAR.audio.pause();fullGo(k)};$("hox").onclick=()=>{store.set("handoff.seen",LB.at);d.remove()}}
-async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;if(NOAUD())return BOOK={full:{}};try{const r=await fetch(R(V2("audio/audiobook.json")),{cache:"no-store"});BOOK=r.ok?await r.json():{full:{}}}catch(e){BOOK={full:{}}}return BOOK}
+async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;if(NOAUD())return BOOK={full:{}};const cid=COURSE.id;let M;try{const r=await fetch(R(V2("audio/audiobook.json")),{cache:"no-store"});M=r.ok?await r.json():{full:{}}}catch(e){M={full:{}}}if(COURSE.id!==cid)return BOOK||{full:{}};return BOOK=M}
 function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;libTouch({t:"book",n});labQueue(n);NAR.bsec=null;bookMarks();NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=R(M.src);NAR.audio.playbackRate=NAR.rate;
   if(at!=null){if(at>1)seekTo(at)}else{const LB=lget().book;const sameEd=LB&&LB.n===n&&LB.ed===ed;const pos0=sameEd?LB.t:0;
    if(pos0>5)seekTo(pos0);else NAR.audio.addEventListener("loadedmetadata",()=>{const pos=bookResumePos(ed,n,NAR.audio.duration);if(pos>5&&pos<(NAR.audio.duration-5))seekTo(pos)},{once:true})}
@@ -975,6 +985,52 @@ function ambUI(){const t=$("ambtoggle");if(t)t.checked=AMB.on;const v=$("ambvol"
 
 /* ===== home and rail ===== */
 function chapterProgress(tr,c){const st=load(tr,c.num);if(!st)return "";if(tr==="ref")return st.step>=c.scenes.length?`${st.score}/${c.scenes.length*3}`:(st.step>=0?"in progress":"");const total=steps(c).length;return st.doneAt||(st.pos||0)>=total-1?"done":((st.max||0)>0?"in progress":"")}
+/* ===== book progress (approved 2026-10-12): how far through the Full Course, and about how long is left =====
+   Pages are the chapter's steps (steps(c)) minus the optional Labs step, counted over every published chapter. A finished chapter counts
+   all its pages. Otherwise a decision, drill, exercise or quiz page counts once it's answered (the same test as the ✓ in Contents), and
+   the opening, the lesson and the ending count once the reader has moved past them (index below st.max). Read only: every state comes
+   from load() (the store, so the test profile shows its own), nothing is written.
+   Time left, per page not yet done: a page the reader's audiobook edition narrates (bookEd, "story" by default: opening, decisions, ending;
+   "study" adds the lesson, as in PIDS) gets an equal share of that chapter's real narration minutes from audiobook.json. Every other page
+   (drills, exercise, quiz, a lesson the story edition skips, any chapter without narration) is its on-screen word count at READ_WPM. */
+const READ_WPM=200;
+const BP_WORDS=new WeakMap();
+function bpWords(v){if(v==null||typeof v==="number"||typeof v==="boolean")return 0;if(typeof v==="string")return v.replace(/<[^>]*>/g," ").split(/\s+/).filter(w=>/[A-Za-z0-9]/.test(w)).length;
+  if(typeof v==="function"){try{return bpWords(v(freshFull(),{},{}))}catch(e){return 0}} // scene text and chapter endings are functions of the reader's state: count a fresh run
+  if(Array.isArray(v))return v.reduce((a,x)=>a+bpWords(x),0);return Object.entries(v).reduce((a,[k,x])=>a+(BP_SKIP.has(k)?0:bpWords(x)),0)}
+const BP_SKIP=new Set(["id","after","task","domain","approach","video","src","a","s","d","best","flag"]); // ids, tags and links, not words on the page
+function bpPageWords(c,x){let m=BP_WORDS.get(c);if(!m){m={};BP_WORDS.set(c,m)}const k=x.k+(x.i??x.j??"");if(m[k]!==undefined)return m[k];let w=0;
+  if(x.k==="open")w=bpWords(c.opening);else if(x.k==="lesson")w=c.lesson?bpWords([c.lesson.title,c.lesson.sections]):0;else if(x.k==="end")w=bpWords(c.closing);
+  else if(x.k==="scene"){const sc=c.scenes[x.i],o=sc.opts||[];w=bpWords(sc.text)+bpWords(o.map(y=>y.t))+(o.length?Math.round(o.reduce((a,y)=>a+bpWords([y.after,y.why]),0)/o.length):0)} // the scene, its choices, and one outcome with the mentor's reasoning
+  else if(x.k==="drill")w=bpWords(c.drills[x.j]);else if(x.k==="exercise")w=bpWords(c.exercise);else if(x.k==="quiz")w=bpWords([c.quiz,c.cases]);
+  return m[k]=w}
+function bpPageDone(c,st,x,p){if(!st)return false;if(x.k==="scene")return (st.picks||{})[x.i]!==undefined;if(x.k==="drill")return !!(st.drills&&st.drills[x.j]);if(x.k==="exercise")return !!st.ex;if(x.k==="quiz")return !!st.quiz;return p<(st.max||0)}
+function bookEdition(){return store.get("bookEd."+COURSE.id,"story")}
+/* {pct (0 to 100, unrounded), done, total pages, pub (published chapters), planned, cur (chapter to show), all (every published chapter done), mins left (null without timing)} */
+function bookProgress(withTime){const L=TRACKS.full.list(),ed=bookEdition(),B=withTime&&BOOK&&BOOK.full||{};let done=0,total=0,mins=0;const doneCh=[];
+  L.forEach(c=>{const st=TRACK==="full"&&CH&&S&&CH.num===c.num?S:load("full",c.num);const pg=steps(c).map((x,p)=>[x,p]).filter(([x])=>x.k!=="labs");
+    const fin=!!st&&(!!st.doneAt||(st.pos||0)>=steps(c).length-1);if(fin)doneCh.push(c.num);
+    const A=B[c.num]&&B[c.num][ed],narr=x=>!!A&&(x.k==="open"||x.k==="scene"||x.k==="end"||(x.k==="lesson"&&ed!=="story"&&!!c.lesson));const nn=pg.filter(([x])=>narr(x)).length;
+    pg.forEach(([x,p])=>{total++;if(fin||bpPageDone(c,st,x,p)){done++;return}if(withTime)mins+=narr(x)?A.min/nn:bpPageWords(c,x)/READ_WPM})});
+  // the chapter named: the open one on a chapter page; elsewhere the last chapter played, or when that one's finished the next unfinished one after it
+  const lp=store.get("lastplace."+COURSE.id,null),lpn=lp&&lp.t==="full"&&L.some(c=>c.num===lp.n)?lp.n:0,here=TRACK==="full"&&CH?CH.num:lpn&&!doneCh.includes(lpn)?lpn:null;
+  const left=L.filter(c=>!doneCh.includes(c.num)),next=((left.find(c=>c.num>lpn)||left[0])||{}).num??null;
+  return {pct:total?done/total*100:0,done,total,pub:L.length,planned:Math.max(COURSE.planned||0,L.length),cur:here??next,all:L.length>0&&doneCh.length===L.length,mins:withTime?mins:null}}
+function fmtLeft(m){if(m==null)return "";if(m<0.5)return "less than a minute left";if(m<10){const r=Math.max(1,Math.round(m));return `about ${r} minute${r>1?"s":""} left`}
+  if(m<57.5)return `about ${Math.round(m/5)*5} minutes left`;if(m<600){const h=Math.round(m/30)/2;return `about ${h} hour${h>1?"s":""} left`}return `about ${Math.round(m/60)} hours left`}
+function bpPctText(P){const p=Math.floor(P.pct);return P.done&&!p?"under 1%":p+"%"}
+function bpLabel(P){const partial=P.planned>P.pub;return `${bpPctText(P)} ${partial?"of what's written":"complete"}`}
+function bpLine(P){const partial=P.planned>P.pub,parts=[bpLabel(P)];
+  if(P.all)parts.push(partial?`Every written chapter done (${P.pub} of ${P.planned}), ${P.planned-P.pub} more coming`:`All ${P.pub} chapters done`);
+  else{if(P.cur)parts.push(`Chapter ${P.cur} of ${P.planned}`);if(partial)parts.push(`${P.pub} written so far`);if(P.mins!=null&&P.mins>0)parts.push(fmtLeft(P.mins))}
+  return parts.join(" · ")}
+function bpBarHTML(P,cls,deco){const w=Math.max(0,Math.min(100,P.pct));return `<span class="bpbar${cls?" "+cls:""}" ${deco?`aria-hidden="true"`:`role="progressbar" aria-label="${esc(bpLabel(P))}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.floor(w)}"`}><span style="width:${w.toFixed(2)}%"></span></span>`} // deco: inside a button, where the text beside it says the same thing
+/* the rail card: on the book's home page and its chapter pages, hidden everywhere else */
+let BP_BOOK=null,BP_WAIT=false; // the course whose audiobook manifest this page has asked for (once per course), and whether that request is still out
+function bookBarSync(){const el=$("bookbar");if(!el)return;const on=!!COURSE&&(TRACK===null||TRACK==="full"||TRACK==="ref")&&!!$("page")&&!document.querySelector(".rail").hidden&&TRACKS.full.list().length>0;
+  el.hidden=!on;if(!on)return;
+  if(BP_BOOK!==COURSE.id&&!(BOOK&&Object.keys(BOOK.full||{}).length)){const cid=BP_BOOK=COURSE.id;BP_WAIT=true;bookManifest().then(()=>{if(COURSE.id!==cid)return;BP_WAIT=false;if(!$("bookbar").hidden)bookBarSync()})}
+  const P=bookProgress(true);if(BP_WAIT)P.mins=null;/* no time until the narration minutes are in, so the number doesn't jump on first paint */const parts=bpLine(P).split(" · ");el.innerHTML=`<h3>Your progress</h3>${bpBarHTML(P)}<p class="bpline">${parts.map((x,i)=>`<span class="bpp">${i?"":"<b>"}${esc(x)}${i?"":"</b>"}</span>`).join(" · ")}</p>`} // each part stays whole; lines break only at the separators
 function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK=null;CH=null;$("railgame").hidden=true;$("mockcard").hidden=true;
   const lp=lastPlaceLabel();const m=mastery();const plan=studyPlan(m);const H=mockHistAll();const last=H.slice(-1)[0];
@@ -986,11 +1042,11 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
   $("page").innerHTML=`<div class="kicker"><button class="linkbtn" type="button" id="tolib">Library</button> › ${esc(COURSE.title)} · <button class="linkbtn" type="button" id="toabout">About this book</button></div><h1>${esc(COURSE.full_title||COURSE.title)}</h1>
    ${lp?`<button class="hero" type="button" id="resume"><span class="prog">Pick up where you left off</span><b>${esc(lp[0])}</b><span class="go">Continue ›</span></button>`:`<button class="hero" type="button" id="resume"><span class="prog">New here?</span><b>Start the ${esc(COURSE.fullName||"Full Course")}: Chapter 1${TRACKS.full.list()[0]?", "+esc(TRACKS.full.list()[0].title):""}</b><span class="go">Begin ›</span></button>`}
    <button class="handsfree" type="button" id="hfree"><span>🎧</span><span><b>Play the audiobook</b><span class="prog">Starts at your current chapter. No tapping while you drive.</span></span></button>
-   ${plan[0]?`<div class="nextstep"><span class="prog">${MENTOR()}'s next step for you</span><p><b>${esc(plan[0][0])}.</b> ${esc(plan[0][1])}</p><button class="btn small" type="button" id="planbtn">${plan[0][2].task?"Practice now":plan[0][2].mock?"Open mock exam":"Go"}</button> <button class="linkbtn" type="button" id="seeplan">See the full study plan</button></div>`:""}
+   ${plan[0]?`<div class="nextstep"><span class="prog">${MENTOR()}'s next step for you</span><p><b>${esc(plan[0][0])}.</b> ${esc(plan[0][1])}</p><button class="btn small" type="button" id="planbtn">${plan[0][2].task?"Practice now":plan[0][2].mock?"Open practice exam":"Go"}</button> <button class="linkbtn" type="button" id="seeplan">See the full study plan</button></div>`:""}
    ${labWaitHTML()}<h2>${esc(COURSE.fullName||"Full Course")} <span class="prog">${fullDone} of ${full.length} chapters done${COURSE.planned&&COURSE.planned>full.length?` (${COURSE.planned} planned, more on the way)`:""}${COURSE.fullHours?" · "+COURSE.fullHours:""}</span></h2>
    <div class="ctiles">${full.map(c=>tile("full",c)).join("")}</div>
    ${ref.length?`<h2>Refresher <span class="prog">${ref.length} chapters · a fast review</span></h2><div class="ctiles">${ref.map(c=>tile("ref",c)).join("")}</div>`:""}
-   <h2>Mock exam</h2><div class="card mockhome">${!hasMock()?`<p id="mocksoon">${MOCK_SOON}</p>`:`<p>${COURSE.mockShort||"A full practice exam."} ${last?(multiForm()?`${esc(formLabel(last.f))}. `:"")+lastLine(last):"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the mock exam</button>`}</div>
+   <h2>Practice exam</h2><div class="card mockhome">${!hasMock()?`<p id="mocksoon">${MOCK_SOON}</p>`:`<p>${COURSE.mockShort||"A full practice exam."} ${last?(multiForm()?`${esc(formLabel(last.f))}. `:"")+lastLine(last):"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the practice exam</button>`}</div>
    ${finalHomeHTML()}
    <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the ${ALLT().length}-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>Cast</b><span class="prog">Meet everyone, hear them talk</span></button></div>`;
   const pg=$("page");wireLabWait();wireFinalHome();
@@ -1005,7 +1061,7 @@ function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this 
 function renderRail(){
   const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","book","library","about","guide","upcoming","logprint"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
   $("trackname").textContent=TRACK?TRACKS[TRACK].name:"";
-  if(TRACK==="mock"){if(!hasMock()){$("mockcard").hidden=true;return}$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Mock exam</h3><p class="big" id="mocktime">${MS.mode!=="practice"?fmtTime(MOCK_LIMIT()-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Mock exam</h3><p class="prog">${MOCK_FORM==null?"Pick a practice exam.":"Pick a mode to start."}</p>`;return}
+  if(TRACK==="mock"){if(!hasMock()){$("mockcard").hidden=true;return}$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Practice exam</h3><p class="big" id="mocktime">${MS.mode!=="practice"?fmtTime(MOCK_LIMIT()-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Practice exam</h3><p class="prog">${MOCK_FORM==null?"Pick a practice exam.":"Pick a mode to start."}</p>`;return}
   $("mockcard").hidden=true;if(!TRACK)return;
   if($("statetitle"))$("statetitle").textContent=COURSE.stateTitle||"Project state";$("meters").innerHTML=METERS_OF().map(([k,l])=>{const v=S.m[k];const col=v>=60?"var(--good)":v>=40?"var(--mid)":"var(--bad)";return `<div class="meter"><div class="row"><span>${l}</span><span class="num">${v}</span></div><div class="track" role="img" aria-label="${l} ${v} of 100"><span style="width:${v}%;background:${col}"></span></div></div>`}).join("");
   const n=CH.scenes.length,dn=Object.keys(S.picks).length;
@@ -1045,7 +1101,7 @@ function libput(L){L.at=Date.now();store.set("c"+LIBKEY,L);if(SYNC)SYNC(LIBKEY,J
 function libTouch(where){if(!COURSE)return;const L=libget();L.last[COURSE.id]={...where,at:Date.now()};libput(L)}
 // a course whose script is loaded and whose mock bank is empty: an old "last played: Mock exam" entry reads as the course home
 function noMockKnown(id){const d=id==="pmp"?{mock:window.HALCYON_MOCK}:(window.HALCYON_DATA||{})[id];return !!(d&&Array.isArray(d.mock)&&!d.mock.some(p=>p&&p.questions&&p.questions.length))}
-function libWhere(w,id){return !w?"":w.t==="mock"?(id&&noMockKnown(id)?"Course home":"Mock exam"):w.t==="book"?`Audiobook, chapter ${w.n}`:`${w.t==="ref"?"Refresher":"Chapter"} ${w.n}`}
+function libWhere(w,id){return !w?"":w.t==="mock"?(id&&noMockKnown(id)?"Course home":"Practice exam"):w.t==="book"?`Audiobook, chapter ${w.n}`:`${w.t==="ref"?"Refresher":"Chapter"} ${w.n}`}
 async function libGo(id){const w=libget().last[id];if(!(await useCourse(id)))return;if(!w){renderHome();renderRail();return}if(w.t==="mock"){if(hasMock())return openMock(w.f);renderHome();renderRail();return}if(w.t==="book"){renderBook();return top()}
   if(TRACKS[w.t]&&TRACKS[w.t].list().find(c=>c.num===w.n)){openChapter(w.t,w.n);return top()}renderHome();renderRail()}
 /* "Tell me when new books land": one email field. The server answers the same whether or not the email is already on the list. */
@@ -1088,10 +1144,20 @@ function renderUpcoming(){setTimeout(ambSync,0);TRACK="upcoming";CH=null;$("rail
   $("uplib").onclick=()=>{renderLibrary();top()};
   $("page").querySelectorAll("[data-upabout]").forEach(b=>b.onclick=()=>{renderAbout(b.dataset.upabout);top()});
   $("page").querySelectorAll("[data-upgo]").forEach(b=>b.onclick=()=>{libGo(b.dataset.upgo);top()})}
+/* Library cards: each live book's percent. PMP's chapters are always loaded. Another book's chapters load only when it's opened, so a book
+   with saved Full Course progress loads its scripts (as useCourse does, without switching to it) and the Library redraws; a book with no
+   saved chapter is 0% without loading anything. COURSE is swapped only for the length of one synchronous call. */
+function libBpHTML(bp){return `<span class="libbp">${bpBarHTML(bp,"thin",true)}<span class="prog">${esc(bpLabel(bp))}</span></span>`}
+function withCourse(c,f){const was=COURSE;COURSE=c;try{return f()}finally{COURSE=was}}
+function libStarted(c){return withCourse(c,()=>{for(let n=1;n<=Math.max(c.planned||0,30);n++)if(store.get("c"+keyOf("full",n),null))return true;return false})}
+function libProgress(c){if(c.status!=="live")return null;const ready=c.id==="pmp"||!(c.scripts||c.labs)||c._loaded;
+  if(!ready){if(libStarted(c)){if(!c._bpload){c._bpload=loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x)).then(()=>{c._loaded=true;const t=TRACK==="library"&&document.querySelector(`.libcard[data-course="${c.id}"] .libtxt`),bp=t&&libProgress(c);if(bp&&!t.querySelector(".libbp"))t.insertAdjacentHTML("beforeend",libBpHTML(bp))})}return null}
+    return {pct:0,done:0,total:0,pub:readyCount(c),planned:Math.max(c.planned||0,readyCount(c))}}
+  return withCourse(c,()=>TRACKS.full.list().length?bookProgress(false):null)}
 function renderLibrary(){setTimeout(ambSync,0);TRACK="library";CH=null;$("railgame").hidden=true;$("mockcard").hidden=true;setTimeout(navSync,0);
   const L=libget(),day=t=>new Date(t).toLocaleDateString("en-US",{month:"short",day:"numeric"});
-  const card=c=>{const live=c.status==="live",w=L.last[c.id],pinned=L.pins.includes(c.id);let pr="";const lq=live?((store.get("c"+(c.base+903),null)||{}).labq||[]).length:0;if(live)pr=w?`${pinned?"Pinned · ":""}Last played ${day(w.at)} · ${libWhere(w,c.id)}`:(pinned?"Pinned · Not started":"Not started");
-    return `<div class="libwrap">${live?`<button class="pin${pinned?" on":""}" type="button" data-pin="${c.id}" aria-pressed="${pinned}" aria-label="${pinned?"Unpin":"Pin"} ${esc(c.full_title||c.title)}" data-tip="${pinned?"Unpin":"Pin to the top of your library"}">${pinned?"★":"☆"}</button>`:""}${live?`<button class="linkbtn libabout" type="button" data-about="${c.id}">About this book</button>`:""}<button class="libcard ${live?"live":"soon"}" type="button" data-course="${c.id}" ${live?"":"disabled"}><span class="libart" aria-hidden="true">${({pmp:"🚀",cphims:"🏥",asep:"🛰️",gh300:"🤖",pilot:"✈️",cisa:"🔍"})[c.id]||"📘"}</span><span class="libtxt"><span class="prog">${esc(c.exam||"")}</span><b>${esc(c.full_title||c.title)}</b><span class="libstory">${esc(c.story||"")}</span><span class="libstate">${live?esc(pr):"In production"}${lq?`<span class="lw"> · 🧪 Labs waiting in ${lq} chapter${lq>1?"s":""}</span>`:""}</span></span></button></div>`};
+  const card=c=>{const live=c.status==="live",w=L.last[c.id],pinned=L.pins.includes(c.id);let pr="";const lq=live?((store.get("c"+(c.base+903),null)||{}).labq||[]).length:0;const bp=live?libProgress(c):null;if(live)pr=w?`${pinned?"Pinned · ":""}Last played ${day(w.at)} · ${libWhere(w,c.id)}`:(pinned?"Pinned · Not started":"Not started");
+    return `<div class="libwrap">${live?`<button class="pin${pinned?" on":""}" type="button" data-pin="${c.id}" aria-pressed="${pinned}" aria-label="${pinned?"Unpin":"Pin"} ${esc(c.full_title||c.title)}" data-tip="${pinned?"Unpin":"Pin to the top of your library"}">${pinned?"★":"☆"}</button>`:""}${live?`<button class="linkbtn libabout" type="button" data-about="${c.id}">About this book</button>`:""}<button class="libcard ${live?"live":"soon"}" type="button" data-course="${c.id}" ${live?"":"disabled"}><span class="libart" aria-hidden="true">${({pmp:"🚀",cphims:"🏥",asep:"🛰️",gh300:"🤖",pilot:"✈️",cisa:"🔍"})[c.id]||"📘"}</span><span class="libtxt"><span class="prog">${esc(c.exam||"")}</span><b>${esc(c.full_title||c.title)}</b><span class="libstory">${esc(c.story||"")}</span><span class="libstate">${live?esc(pr):"In production"}${lq?`<span class="lw"> · 🧪 Labs waiting in ${lq} chapter${lq>1?"s":""}</span>`:""}</span>${bp?libBpHTML(bp):""}</span></button></div>`};
   const shown=c=>c.listed!==false; // listed:false (courses.js) keeps a book off the Library; its routes and Coming next card still work
   const order=COURSES.filter(shown).sort((a,b)=>{const pa=L.pins.indexOf(a.id),pb=L.pins.indexOf(b.id);if(pa>=0||pb>=0)return (pa<0?1e9:pa)-(pb<0?1e9:pb);return ((L.last[b.id]||{}).at||0)-((L.last[a.id]||{}).at||0)});
   const recent=Object.entries(L.last).filter(([id])=>{const c=courseById(id);return c&&c.status==="live"&&shown(c)}).sort((a,b)=>b[1].at-a[1].at)[0];

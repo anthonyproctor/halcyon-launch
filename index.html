@@ -82,6 +82,22 @@ body:has(#narbar:not([hidden])) .rail{padding-bottom:var(--narbar-h,112px)}
 .meter .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .track{height:7px;background:var(--soft);border-radius:4px;overflow:hidden;margin-top:4px}
 .track span{display:block;height:100%;border-radius:4px}
+/* book progress (2026-10-12): the rail card, the Library card bar, the Progress page finish line. Fill is --accent on --soft (3:1 or better as a graphic in both themes); text is --ink */
+.bpbar{display:block;height:8px;background:var(--soft);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.bpbar span{display:block;height:100%;background:var(--accent);border-radius:4px;min-width:0}
+.bpbar.thin{height:6px}
+.bookbar{padding:12px 14px}.bookbar h3{margin-bottom:8px}
+.bpline{margin:7px 0 0;font-size:13.5px;line-height:1.4;color:var(--ink);overflow-wrap:anywhere}
+.libbp{display:grid;gap:3px;margin-top:4px;max-width:280px}.libbp .prog{color:var(--ink)}
+.bpline .bpp{white-space:nowrap}
+h2.finishh{margin-top:18px}
+.finish{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:8px;counter-reset:fin}
+.finish li{counter-increment:fin;display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:10px;align-items:center;background:var(--page);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.finish li::before{content:counter(fin);grid-row:1 / span 2;align-self:start;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:13px;border:1px solid var(--line);color:var(--ink)}
+.finish li.now::before{border-color:var(--accent);color:var(--accent)}
+.finish li.done::before{content:"✓";background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.finish .fh{font-weight:600}.finish .fv{color:var(--ink)}
+.finish .bpbar{grid-column:2;margin-top:6px}
 .dom-row{display:grid;grid-template-columns:minmax(0,1fr) auto;font-size:14px;padding:4px 0;border-bottom:1px dashed var(--line)}
 .dom-row:last-child{border-bottom:none}
 .prog{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
@@ -319,6 +335,7 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
 <div class="wrap">
   <main class="page" id="page" aria-live="polite"></main>
   <aside class="rail" aria-label="Status">
+    <div class="card bookbar" id="bookbar" hidden></div>
 
     <div class="card" id="mockcard" hidden></div>
     <div id="railgame">

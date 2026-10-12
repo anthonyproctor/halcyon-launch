@@ -58,7 +58,7 @@ test.describe("a course with no mock question bank (CISA)", () => {
     await open(page, "#cisa/progress");
     await expect(page.locator("#page h1")).toHaveText("Scoreboard");
     await expect(page.locator("#page .end-grid")).not.toContainText("Readiness");
-    await expect(page.locator("#page h2", { hasText: "Mock exams" })).toHaveCount(0);
+    await expect(page.locator("#page h2", { hasText: "Practice exams" })).toHaveCount(0);
     await expect(page.locator("#page .plan")).not.toContainText("mock");
     await expect(page.locator("#page")).not.toContainText("Take a timed mock");
   });

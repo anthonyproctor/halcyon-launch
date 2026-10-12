@@ -107,7 +107,7 @@ function settingsUI(){const d=$("pdbgt");if(!d||$("qatoggle"))return;const lab=d
 
 /* ===== the test profile switch and its reset, under QA mode on the Guide page (shown only while QA mode is on) ===== */
 function testUI(){const q=$("qatoggle");if(!PROF||!q||$("testtoggle"))return;
-  q.closest("label").insertAdjacentHTML("afterend",`<div class="qatpset" id="qatpset"><label class="chk prog"><input type="checkbox" id="testtoggle" ${PROF.test?"checked":""}> Test profile. While it's on, everything you do here lands in a separate scratch profile: your real chapters, mock exams, study log, place and Continue stay exactly as they are, nothing syncs to your account, and no page views are counted. Turn it off to get your real progress back.</label>
+  q.closest("label").insertAdjacentHTML("afterend",`<div class="qatpset" id="qatpset"><label class="chk prog"><input type="checkbox" id="testtoggle" ${PROF.test?"checked":""}> Test profile. While it's on, everything you do here lands in a separate scratch profile: your real chapters, practice exams, study log, place and Continue stay exactly as they are, nothing syncs to your account, and no page views are counted. Turn it off to get your real progress back.</label>
    <div class="bar"><button class="btn ghost" type="button" id="tpreset">Reset test profile</button></div>
    <div class="tpconfirm" id="tpconfirm" hidden><p>Clear all test profile data on this device? Your real progress isn't touched.</p><div class="bar"><button class="btn" type="button" id="tpyes">Clear test data</button><button class="btn ghost" type="button" id="tpno">Keep it</button></div></div>
    <p class="prog" id="tpmsg" role="status" aria-live="polite"></p></div>`);
