@@ -8,7 +8,10 @@ const SP="halcyon.";
 const PMP2=()=>!!(COURSE&&COURSE.id==="pmp");
 const V2=p=>PMP2()&&!/^(art|cast|audio)\/v2\//.test(p)?p.replace(/^(art|cast|audio)\//,"$1/v2/"):p;
 const NOAUD=()=>PMP2()&&!(window.HALCYON_V2||{}).audio; // v2 narration not switched on yet in preview.js: don't fetch audio that isn't there
-const store={get(k,d){try{const v=localStorage.getItem(SP+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(SP+k,JSON.stringify(v))}catch(e){}}};
+/* the test profile (profile.js, QA only) moves every progress key to its own namespace; display preferences stay shared. Without profile.js it's "halcyon."+k */
+const PROF=window.HalcyonProfile||{test:false,key:k=>SP+k};
+const TESTP=!!PROF.test;
+const store={get(k,d){try{const v=localStorage.getItem(PROF.key(k));return v?JSON.parse(v):d}catch(e){return d}},set(k,v){if(PROF.frozen)return;try{localStorage.setItem(PROF.key(k),JSON.stringify(v))}catch(e){}}};
 const clamp=v=>Math.max(0,Math.min(100,v));
 let DOMS=["People","Process","Business Environment"];
 const PMP_METERS=[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Delivery health"]];
@@ -56,11 +59,14 @@ async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")ret
 
 /* ===== state ===== */
 let TRACK=null,CH=null,S=null,SYNC=null,syncTimer=null;
+/* debounced progress writes still waiting to go (chapter, mock, final, listen state): a reload or a closed tab sends them right away with
+   keepalive, so leaving the page (or switching to the test profile, which reloads) never drops a real change */
+let SPEND={};function syncPending(){if(SYNC)Object.values(SPEND).forEach(([k,c])=>SYNC(k,c,true));SPEND={}}addEventListener("pagehide",syncPending);if(PROF.onLeave)PROF.onLeave.push(syncPending);
 function freshRef(){return{step:-1,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:Object.fromEntries(DOMS.map(d=>[d,[0,0]]))}}
 function freshFull(){return{pos:0,max:0,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:Object.fromEntries(DOMS.map(d=>[d,[0,0]])),drills:{},ex:null,quiz:null}}
 function keyOf(tr,n){return COURSE.base+TRACKS[tr].key(n)}
 function load(tr,n){const st=store.get("c"+keyOf(tr,n),null);if(st&&tr==="full")relayout(n,st);return st}
-function persist(tr,n,st){store.set("c"+keyOf(tr,n),st);if(SYNC){const k=keyOf(tr,n),copy=JSON.parse(JSON.stringify(st));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(k,copy),400)}}
+function persist(tr,n,st){store.set("c"+keyOf(tr,n),st);if(SYNC){const k=keyOf(tr,n),copy=JSON.parse(JSON.stringify(st));clearTimeout(syncTimer);syncTimer=setTimeout(()=>{delete SPEND[k];SYNC(k,copy)},400);SPEND[k]=[k,copy]}}
 function save(){if(TRACK==="mock"){persistMock();return}if(TRACK==="full"&&CH&&S)S.lx=labsOf(CH).length?1:0;persist(TRACK,CH.num,S);store.set("cur",keyOf(TRACK,CH.num));store.set("lastplace."+COURSE.id,{t:TRACK,n:CH.num})}
 function chapters(){return TRACKS[TRACK].list()}
 function globalFlags(){const G={};if(TRACK!=="full")return G;chapters().forEach(c=>{if(c.num<CH.num){const st=load("full",c.num);if(st)Object.assign(G,st.flags||{})}});if(S&&S.flags)Object.assign(G,S.flags);return G}
@@ -264,7 +270,7 @@ const MOCK_SOON="Coming soon. The practice exam for this course is still being w
 function freshMock(mode){const qs=mockQuestions(MOCK_FORM).filter(q=>mode!=="handbook"||scoredQ(q));const seed=Date.now()%100000;const ord=window.HalcyonOrder.perm("mock"+seed,qs.length).map(i=>qs[i].id);return{mode,form:MOCK_FORM,order:ord,ans:{},flagged:{},cur:0,elapsed:0,breaksTaken:[],onBreak:null,submitted:false,startedAt:new Date().toISOString()}}
 // a saved attempt, with any question the bank no longer has dropped (an attempt with none left is no attempt)
 function loadMock(f){const st=store.get("c"+mockKey(f),null);if(!st||!Array.isArray(st.order))return null;const ids=new Set(mockQuestions(f).map(q=>q.id));const order=st.order.filter(id=>ids.has(id));if(!order.length)return null;if(order.length!==st.order.length){const keep=new Set(order),prune=o=>Object.fromEntries(Object.entries(o||{}).filter(([k])=>keep.has(k)));st.order=order;st.ans=prune(st.ans);st.flagged=prune(st.flagged);st.cur=Math.min(st.cur||0,order.length-1)}return st}
-function persistMock(){const f=MOCK_FORM||1,k=mockKey(f);if(MS&&MS.order&&!MS.submitted)store.set("lastplace."+COURSE.id,{t:"mock",f});store.set("c"+k,MS);store.set("cur",COURSE.base+900);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>SYNC(k,copy),600)}}
+function persistMock(){const f=MOCK_FORM||1,k=mockKey(f);if(MS&&MS.order&&!MS.submitted)store.set("lastplace."+COURSE.id,{t:"mock",f});store.set("c"+k,MS);store.set("cur",COURSE.base+900);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>{delete SPEND[k];SYNC(k,copy)},600);SPEND[k]=[k,copy]}}
 // f: the form to open. Left out with two or more forms, it opens the picker; with one form, that form.
 function openMock(f){clearInterval(mockTimer);TRACK="mock";const forms=mockForms();
   if(!forms.some(x=>x.f===f))f=forms.length>1?null:(forms[0]?forms[0].f:1);if(hasMock()){libTouch(f==null?{t:"mock"}:{t:"mock",f});store.set("track","mock")}MOCK_FORM=f;MS=f==null?null:loadMock(f);render();top()}
@@ -360,7 +366,7 @@ let FS=null,FINAL_SHOW=null;
 function FINAL_KEY(){return COURSE.base+906}
 function finalGet(){const F=store.get("c"+FINAL_KEY(),null);return F&&typeof F==="object"?{cur:F.cur||null,list:Array.isArray(F.list)?F.list:[],name:F.name||""}:{cur:null,list:[],name:""}}
 function finalPut(F,now){F.at=Date.now();if(F.list.length>30)F.list=F.list.slice(-30);F.list.forEach((a,i)=>{if(i<F.list.length-3){delete a.order;delete a.ans}}); // the server takes 60000 characters: only the last 3 attempts keep their answers for review
-  store.set("c"+FINAL_KEY(),F);if(SYNC){const k=FINAL_KEY(),c=JSON.parse(JSON.stringify(F));clearTimeout(finalPut.t);finalPut.t=setTimeout(()=>SYNC(k,c,!!now),now?0:600)}}
+  store.set("c"+FINAL_KEY(),F);if(SYNC){const k=FINAL_KEY(),c=JSON.parse(JSON.stringify(F));clearTimeout(finalPut.t);finalPut.t=setTimeout(()=>{delete SPEND[k];SYNC(k,c,!!now)},now?0:600);SPEND[k]=[k,c]}}
 function finalQuestions(){const all=[];(window.HALCYON_FINAL||[]).forEach(p=>p.questions.forEach((q,i)=>all.push({...q,id:p.part.slice(0,3)+i})));return all}
 function finalById(){const m={};finalQuestions().forEach(q=>m[q.id]=q);return m}
 function courseDone(){const L=TRACKS.full.list(),n=Math.max(L.length,COURSE.planned||0),done=L.filter(c=>chapterProgress("full",c)==="done").length;return {done,n,all:n>0&&done===n}}
@@ -639,7 +645,7 @@ function LKEY(){return COURSE.base+(PMP2()?904:903)}
 function BID(){return PMP2()?"pmp2":COURSE.id} // local Audiobook keys (bookpos, bookdone, readat) for this edition
 function lget(){const L=store.get("c"+LKEY(),null);if(!L&&PMP2()){const o=store.get("c"+(COURSE.base+903),null);if(o&&o.prefs)return {prefs:o.prefs}}return L||{}}
 let lsyncT=0,lsaveAt=0;
-function lput(patch,now){const L=Object.assign(lget(),patch,{at:Date.now()});store.set("c"+LKEY(),L);if(SYNC){clearTimeout(lsyncT);const k=LKEY(),c=JSON.parse(JSON.stringify(L));lsyncT=setTimeout(()=>SYNC(k,c),now?0:1500)}}
+function lput(patch,now){const L=Object.assign(lget(),patch,{at:Date.now()});store.set("c"+LKEY(),L);if(SYNC){clearTimeout(lsyncT);const k=LKEY(),c=JSON.parse(JSON.stringify(L));lsyncT=setTimeout(()=>{delete SPEND[k];SYNC(k,c)},now?0:1500);SPEND[k]=[k,c]}}
 /* ⏮ ⏭: scene to scene in the Audiobook (then chapter to chapter), page to page while reading */
 async function narSkip(dir){const a=NAR.audio;
   if(NAR.page==="book"&&NAR.book){await bookMarks();const {ed,n}=NAR.book;const L=(MARKS.full[n]&&MARKS.full[n][ed]||[]).map(x=>x[1]);const t=a.currentTime||0;
@@ -871,7 +877,7 @@ function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp
 function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock"+(multiForm()&&MOCK_FORM?"/"+MOCK_FORM:""):(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
   store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
 /* anonymous page views (Vercel Web Analytics, loaded in index.html): the route only, as a path. Never a name, email, id, or progress. */
-let LASTPV="";function pageview(r){if(!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:"/"+r})}catch(e){}}
+let LASTPV="";function pageview(r){if(TESTP||!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:"/"+r})}catch(e){}}
 async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filter(Boolean);if(!p.length)return false;if(p[1]!=="mock")clearInterval(mockTimer); // the back button or an edited address leaves a timed mock: stop its clock
   if(p[0]==="verify"){renderVerify();return true}
   if(p[0]==="library"){renderLibrary();return true}if(p[0]==="guide"){renderGuide();return true}if(p[0]==="upcoming"){renderUpcoming();return true}if(p[0]==="labtest"){await loadScripts(["tools/lab_fixture.js"]);renderLabTest();return true}
@@ -1020,9 +1026,10 @@ function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcom
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
-async function api(path,opts={}){const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
-async function listenPull(){if(!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
-const DEVICE_KEYS=["halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
+async function api(path,opts={}){if(TESTP&&/^\/api\/progress\b/.test(path))return {ok:false,status:0,error:"test profile"}; // belt and braces: SYNC is never set in the test profile
+  const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
+async function listenPull(){if(TESTP||!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
+const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
 function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.bookEd.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
   document.querySelector(".rail").hidden=true;const signup=mode==="signup";
@@ -1124,12 +1131,14 @@ async function boot(){
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
       document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;return}
     return renderAuth("login")}
-  clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
-  SYNC=(n,st,ka)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st}),keepalive:!!ka}).catch(()=>{});USERNAME=me.user.name||"";
-  applyPrefs(lget().prefs);
+  /* test profile (QA): signed in so Flag still works, but the server's progress never lands in local storage and SYNC stays off, so
+     nothing reaches /api/progress; the real namespace is left exactly as it was. */
+  if(!TESTP){clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
+    SYNC=(n,st,ka)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st}),keepalive:!!ka}).catch(()=>{});applyPrefs(lget().prefs)}
+  USERNAME=me.user.name||"";
   document.querySelector(".rail").hidden=false;$("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
-  $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();location.href="/"};
-  if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(me.user.cur||0);
+  $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();if(PROF.testKeys)PROF.testKeys().forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});location.href="/"}; // test profile data goes with the account that made it
+  if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(TESTP?store.get("cur",0):(me.user.cur||0));
 }
 /* ===== QA mode hook: qa.js (speaker chips, the QA bar, Flag a problem) reads where the reader and the player are. Read only. ===== */
 window.HalcyonState=function(){const a=NAR.audio,bk=NAR.page==="book"&&NAR.book,ch=(TRACK==="full"||TRACK==="ref")&&CH?CH:null;

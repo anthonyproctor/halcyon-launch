@@ -4,7 +4,10 @@
            a small bar while a page plays (book, chapter, page id, line, speaker, time) with a Flag button,
            and right click or press and hold on any line to flag that line.
    "Show who's speaking" is the plain reader setting: name chips only, nothing else.
-   Reports go to /api/qa-report (lib/qa.js); tools/qa_pull.mjs pulls them. The engine's read only hook is window.HalcyonState (engine.js). */
+   Reports go to /api/qa-report (lib/qa.js); tools/qa_pull.mjs pulls them. The engine's read only hook is window.HalcyonState (engine.js).
+   Test profile (profile.js, approved 2026-10-12): with QA mode on, a "Test profile" switch on the Guide page and on the QA bar moves all
+   progress to a separate scratch namespace, pauses progress sync and page views, and shows a "Test profile" banner on every screen.
+   "Reset test profile" clears only that namespace, after an in-page confirm. Reports sent from it carry test_profile:true. */
 (function(){
 "use strict";
 const $=id=>document.getElementById(id);
@@ -17,11 +20,12 @@ const QA={on:false,who:store.get("showwho",false)};
 const ST=()=>{try{return window.HalcyonState?window.HalcyonState():{}}catch(e){return {}}};
 
 /* ===== on and off ===== */
-function qaFromURL(){try{let v=new URLSearchParams(location.search).get("qa");const m=location.hash.match(/[?&]qa=([01])\b/);if(m){v=m[1];const h=location.hash.replace(/[?&]qa=[01]\b/,"").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+location.search+h)}if(v==="1"||v==="0")store.set("qa",v==="1")}catch(e){}}  // ?qa=1 works before or after the #route
+const PROF=window.HalcyonProfile||null; // profile.js reads ?qa= and ?test= (before or after the #route) before the engine starts
+function qaFromURL(){if(PROF)return;try{let v=new URLSearchParams(location.search).get("qa");const m=location.hash.match(/[?&]qa=([01])\b/);if(m){v=m[1];const h=location.hash.replace(/[?&]qa=[01]\b/,"").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+location.search+h)}if(v==="1"||v==="0")store.set("qa",v==="1")}catch(e){}}  // ?qa=1 works before or after the #route
 qaFromURL();QA.on=!!store.get("qa",false);
 function applyMode(){document.body.classList.toggle("qa-on",QA.on);document.body.classList.toggle("qa-who",QA.who||QA.on);markSpeakers();barTick();
   const a=$("qatoggle");if(a)a.checked=QA.on;const b=$("whotoggle");if(b)b.checked=QA.who}
-function setQA(on){QA.on=!!on;store.set("qa",QA.on);applyMode()}
+function setQA(on){QA.on=!!on;store.set("qa",QA.on);applyMode();if(PROF)PROF.qaChanged()} // the test profile only counts in QA mode: flipping QA with it on reloads into the other profile
 function setWho(on){QA.who=!!on;store.set("showwho",QA.who);applyMode()}
 
 /* ===== speaker chips: CSS draws the name (::before, attr(data-who)), so no text lands in the page and the narration highlight sees the same words ===== */
@@ -47,8 +51,8 @@ const fmt=t=>t==null?"":`${Math.floor(t/60)}:${(t%60).toFixed(1).padStart(4,"0")
 
 /* ===== the QA bar, while a page plays ===== */
 function bar(){let b=$("qabar");if(b)return b;b=document.createElement("div");b.id="qabar";b.hidden=true;b.setAttribute("role","status");
-  b.innerHTML=`<span class="qainfo" id="qainfo"></span><button type="button" class="qaflag" id="qaflagbtn">Flag</button>`;document.body.appendChild(b);
-  $("qaflagbtn").onclick=()=>openForm(playingLine());return b}
+  b.innerHTML=`<span class="qainfo" id="qainfo"></span>${PROF?`<button type="button" class="qatp" id="qatpbtn" aria-pressed="${PROF.test}" title="Use a separate scratch profile while you test">Test profile</button>`:""}<button type="button" class="qaflag" id="qaflagbtn">Flag</button>`;document.body.appendChild(b);
+  $("qaflagbtn").onclick=()=>openForm(playingLine());if($("qatpbtn"))$("qatpbtn").onclick=()=>PROF.setTest(!PROF.test);return b}
 function barTick(){const st=ST();const show=QA.on&&!!st.src&&st.mode!=="read"&&(!st.paused||st.t>0);const b=$("qabar")||(show?bar():null);if(!b)return;
   b.hidden=!show;if(!show)return;
   const nb=$("narbar");b.style.bottom=((nb&&!nb.hidden?nb.offsetHeight:0)+8)+"px";
@@ -78,7 +82,7 @@ function openForm(li){closeForm();const ctx=context(li);const tester=store.get("
   f.onsubmit=async e=>{e.preventDefault();const type=$("qatype").value,msg=$("qamsg");
     if(!type){msg.textContent="Pick what kind of problem it is.";$("qatype").focus();return}
     const name=$("qatester").value.trim().slice(0,40);store.set("qa.tester",name);
-    const payload={type,note:$("qanote").value.slice(0,500),ctx};if(name)payload.tester=name;
+    const payload={type,note:$("qanote").value.slice(0,500),ctx};if(name)payload.tester=name;if(PROF&&PROF.test){payload.test_profile=true;ctx.test_profile=true}
     $("qasend").disabled=true;msg.textContent="Sending…";
     try{const r=await fetch("/api/qa-report",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});let j={};try{j=await r.json()}catch(x){}
       if(!r.ok)throw new Error(j.error||"That didn't go through. Try again in a minute.");
@@ -99,7 +103,25 @@ function settingsUI(){const d=$("pdbgt");if(!d||$("qatoggle"))return;const lab=d
   const h=lab.previousElementSibling&&lab.previousElementSibling.tagName==="H2"?lab.previousElementSibling:lab;
   h.insertAdjacentHTML("beforebegin",`<h2>Reading</h2><label class="chk prog"><input type="checkbox" id="whotoggle" ${QA.who?"checked":""}> Show who's speaking (a small name tag before each spoken line)</label>`);
   lab.insertAdjacentHTML("afterend",`<label class="chk prog qaset"><input type="checkbox" id="qatoggle" ${QA.on?"checked":""}> QA mode, for testers. It adds name tags with voice details, a bar that shows the exact spot while a page plays, and a Flag button. Right click or press and hold any line to flag it.</label>`);
-  $("whotoggle").onchange=e=>setWho(e.target.checked);$("qatoggle").onchange=e=>setQA(e.target.checked)}
+  $("whotoggle").onchange=e=>setWho(e.target.checked);$("qatoggle").onchange=e=>setQA(e.target.checked);testUI()}
+
+/* ===== the test profile switch and its reset, under QA mode on the Guide page (shown only while QA mode is on) ===== */
+function testUI(){const q=$("qatoggle");if(!PROF||!q||$("testtoggle"))return;
+  q.closest("label").insertAdjacentHTML("afterend",`<div class="qatpset" id="qatpset"><label class="chk prog"><input type="checkbox" id="testtoggle" ${PROF.test?"checked":""}> Test profile. While it's on, everything you do here lands in a separate scratch profile: your real chapters, mock exams, study log, place and Continue stay exactly as they are, nothing syncs to your account, and no page views are counted. Turn it off to get your real progress back.</label>
+   <div class="bar"><button class="btn ghost" type="button" id="tpreset">Reset test profile</button></div>
+   <div class="tpconfirm" id="tpconfirm" hidden><p>Clear all test profile data on this device? Your real progress isn't touched.</p><div class="bar"><button class="btn" type="button" id="tpyes">Clear test data</button><button class="btn ghost" type="button" id="tpno">Keep it</button></div></div>
+   <p class="prog" id="tpmsg" role="status" aria-live="polite"></p></div>`);
+  $("testtoggle").onchange=e=>PROF.setTest(e.target.checked);
+  $("tpreset").onclick=()=>{$("tpconfirm").hidden=false;$("tpreset").hidden=true;$("tpmsg").textContent="";$("tpyes").focus()};
+  $("tpno").onclick=()=>{$("tpconfirm").hidden=true;$("tpreset").hidden=false;$("tpreset").focus()};
+  $("tpyes").onclick=()=>{const n=PROF.testKeys().length;PROF.reset();$("tpconfirm").hidden=true;$("tpreset").hidden=false;$("tpmsg").textContent=n?"Test profile cleared.":"The test profile was already empty."}}
+
+/* ===== the banner: on every screen while the test profile is on, so it's never mistaken for the real profile ===== */
+function badge(){if(!PROF||!PROF.test||$("tpbadge"))return;document.body.classList.add("tp-on");
+  const b=document.createElement("div");b.id="tpbadge";b.setAttribute("role","status");
+  b.innerHTML=`<span><b>Test profile</b><span class="tpwhy"> · your real progress is untouched</span></span><button type="button" class="tpgo" id="tpgo">Turn off</button>`;
+  document.body.prepend(b);$("tpgo").onclick=()=>PROF.setTest(false)}
+badge();
 
 /* the engine redraws #page with innerHTML on every step: mark speakers and add the settings after each redraw */
 function onPage(){markSpeakers();settingsUI();barTick()}
