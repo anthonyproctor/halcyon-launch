@@ -1,5 +1,5 @@
-// Cast wiki for "Exception Noted" (CISA). Each section unlocks after the reader reaches the given chapter. Only chapter 1 is written,
-// so every section here unlocks at 1. Add later sections as chapters land, and never unlock a fact before its chapter.
+// Cast wiki for "Exception Noted" (CISA). Each section unlocks after the reader reaches the given chapter. Chapters 1 and 2 are
+// written. Add later sections as chapters land, and never unlock a fact before its chapter.
 (function(){
 const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.cisa=D.cisa||{};
@@ -42,7 +42,8 @@ C.cast.push(
  { id:`maisie`, intro:`I'm Maisie. I'm fourteen. My science fair project is on Benford's law, which is how you can tell when somebody made numbers up. It's not about my dad.`, name:`Maisie Ashby`, role:`Henry's daughter, 14. Lives in Boulder with her mother.`, firstChapter:1, speaker:`Maisie`,
    look:`Girl, 14, long curly brown hair in a loose ponytail, oversized hoodie, phone in hand, guarded expression.`,
    sections:[
-    {unlock:1, title:`Boulder`, body:[`Maisie lives in Boulder with her mother, Laura, and her stepfather. She hadn't rung her father in six weeks when she called him at 6:47 on Tuesday morning and then texted never mind.`,`Her science fair is Thursday at six. The project is Benford's law: in a lot of real numbers, the first digit is 1 about thirty percent of the time, and made up numbers come out too even.`]}],
+    {unlock:1, title:`Boulder`, body:[`Maisie lives in Boulder with her mother, Laura, and her stepfather. She hadn't rung her father in six weeks when she called him at 6:47 on Tuesday morning and then texted never mind.`,`Her science fair is Thursday at six. The project is Benford's law: in a lot of real numbers, the first digit is 1 about thirty percent of the time, and made up numbers come out too even.`]},
+    {unlock:2, title:`Who Made These Up?`, body:[`Her poster has three charts: every town in Colorado, which fits the law, numbers her classmates made up, which come out too flat, and her mum's electric bills, which don't fit at all. The bills don't fit because they only run from $61 to $148, and Benford needs room.`,`She found an error in her father's analysis of a 300 million dollar claim: his chart added up to 12,401.`]}],
    ties:[{unlock:1,id:`henry`,text:`Her dad. It's complicated.`},{unlock:1,id:`laura`,text:`Her mum.`}] },
 
  { id:`arthur`, intro:`Arthur Ashby. Underwriter. I had a box in the Room for thirty years. They rang the Lutine today, you know. Good news.`, name:`Arthur Ashby`, role:`Henry's father, 79. Retired Lloyd's underwriter with dementia, in a care home in north London.`, firstChapter:1, speaker:`Arthur`,
@@ -67,6 +68,12 @@ C.cast.push(
    look:`American woman, early forties, shoulder length auburn hair, fleece jacket, reading glasses pushed up on her head, patient but tired expression.`,
    sections:[
     {unlock:1, title:`Boulder`, body:[`Laura lives in Boulder with Maisie and her husband. She told Maisie to ask Henry to the science fair.`]}],
-   ties:[{unlock:1,id:`maisie`,text:`Her daughter.`},{unlock:1,id:`henry`,text:`Her ex husband.`}] }
+   ties:[{unlock:1,id:`maisie`,text:`Her daughter.`},{unlock:1,id:`henry`,text:`Her ex husband.`}] },
+
+ { id:`priyanka`, intro:`Priyanka, Vellacott, London. I review the large loss files before anyone outside the building sees them. If I can't re-perform it, it goes back.`, name:`Priyanka`, role:`Senior claims reviewer at Vellacott, One Lime Street.`, firstChapter:2, speaker:`Priyanka`,
+   look:`British South Asian woman, late thirties, dark hair in a low bun, rimless glasses, navy cardigan over a white shirt, a red pen behind one ear, an office window onto a gray London afternoon.`,
+   sections:[
+    {unlock:2, title:`The reviewer`, body:[`Priyanka reads other people's large loss files for the Vellacott syndicate and sends most of them back. She asks two things of every file: can I re-perform this, and does the evidence say what the words say.`]}],
+   ties:[{unlock:2,id:`henry`,text:`Reviews his work.`},{unlock:2,id:`giles`,text:`Works down the corridor from him.`}] }
 );
 })();
