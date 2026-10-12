@@ -195,5 +195,29 @@ window.HALCYON_CAST=[
     {unlock:10, title:`Who she is`, body:[`Delphine runs Coquina's side of the Halcyon launch campaign from an office beside the processing facility, with the last forty launches from the pad on a whiteboard in green and two in red. She asked Sam for a waiver of the ARA's thirty day disposal rule for launch 1's upper stage in August 2062, and was glad, in the end, not to get one.`]},
     {unlock:10, title:`Hester`, body:[`In September 2062 she called the rollback of launch 2's heavy lifter at her own plan's trigger, the night Hurricane Hester was forecast to pass the Cape. She called Sam first.`]}],
    quote:{unlock:10, text:`I can do the insertion or I can do the disposal burn.`},
-   ties:[{unlock:10,id:`peg`,text:`Sat across Clause 22 from her with coffee.`},{unlock:10,id:`sam`,text:`Her customer. He backed her call, or he didn't.`}] }
+   ties:[{unlock:10,id:`peg`,text:`Sat across Clause 22 from her with coffee.`},{unlock:10,id:`sam`,text:`Her customer. He backed her call, or he didn't.`}] },
+ { id:`ilse`, intro:`Ilse Brandvold, Halcyon's pilot. I keep bees in Montana and I fly anything with wings, and a few things without. I'd like to know what the man at the console sees before the trace does. If he can teach me to see it, I'll carry it to Mars on a card.`, name:`Ilse Brandvold`, role:`Halcyon's pilot. One of the crew of four.`, firstChapter:12, speaker:`Ilse`,
+   look:`White woman of thirty nine, sandy hair in a short braid, weathered face, a navy flight suit with the Halcyon patch, a kneeboard strapped to one thigh.`,
+   sections:[
+    {unlock:12, title:`Who she is`, body:[`Brandvold flies the departure burn beside Commander Haddad. In November 2062 she asked the program a question nobody else had: whether Wendell could teach the crew to see what he saw on a trace, or only to follow the steps.`]}],
+   quote:{unlock:12, text:`Can he teach us to see it, or only to follow the steps?`},
+   ties:[{unlock:12,id:`yusra`,text:`Her commander.`},{unlock:12,id:`wendell`,text:`She asked to learn from him in person.`}] },
+ { id:`mateo`, intro:`Mateo Echeverría, flight engineer. I fixed a desalination plant on a ship in a storm once, and wrote a paper about it, and somebody on Mars has apparently read it twice. I asked to learn every valve on the stage. Haddad asked me what I'd do with each one in flight.`, name:`Mateo Echeverría`, role:`Halcyon's flight engineer. One of the crew of four.`, firstChapter:12, speaker:`Mateo`,
+   look:`Man of forty two, stocky, black hair cut close, reading glasses on a cord, a navy flight suit with the sleeves rolled and a pen in every pocket.`,
+   sections:[
+    {unlock:12, title:`Who he is`, body:[`Echeverría will help install the Breather at Ares Station and keep it running. His card on the crew's training board asked for the whole departure stage from the drawings.`]}],
+   quote:{unlock:12, text:`The whole stage. Every valve. From the drawings.`},
+   ties:[{unlock:12,id:`yusra`,text:`His commander.`}] },
+ { id:`anjali`, intro:`Dr. Anjali Rao, the crew's medic. My card on the training board was medical, and short. My list of what I'm bringing to Mars is the longest in the crew, and somebody on Ares Station has already asked if any of it is chocolate.`, name:`Dr. Anjali Rao`, role:`Halcyon's medic. One of the crew of four.`, firstChapter:12, speaker:`Anjali`,
+   look:`South Asian woman of forty six, gray streak in dark hair pulled back, steady eyes, a navy flight suit with a medical patch under the Halcyon one.`,
+   sections:[
+    {unlock:12, title:`Who she is`, body:[`Dr. Rao will be Ares Station's second physician. Her own card on the crew's training board was medical, and short.`]}],
+   quote:{unlock:12, text:`My list is medical, and it's short.`},
+   ties:[{unlock:12,id:`yusra`,text:`Her commander.`}] },
+ { id:`lorna`, intro:`Lorna Whitcombe, flight operations director, ARA. My controllers fly the ship from the minute the program lets go of it until it gets where it's going. I've flown four landers to the Moon's south pole. One of them landed on its side and kept working. Tell me what I'm taking. All of it.`, name:`Lorna Whitcombe`, role:`ARA flight operations director. Takes Halcyon after departure.`, firstChapter:12, speaker:`Lorna`,
+   look:`Black woman of fifty six, close cropped gray hair, rimless glasses, an ARA fleece over a collared shirt, a coffee in each hand.`,
+   sections:[
+    {unlock:12, title:`Who she is`, body:[`Whitcombe's twelve controllers sat in on every Halcyon sim from August 2062. The hand off to her team is planned for departure plus twenty four hours, February 19, 2063.`]}],
+   quote:{unlock:12, text:`Tell me what I'm taking, Mr. Okafor. All of it.`},
+   ties:[{unlock:12,id:`sam`,text:`Takes the ship from him, when it's ready to be taken.`},{unlock:12,id:`wendell`,text:`Asked for his console calls before he went home.`}] }
 ];

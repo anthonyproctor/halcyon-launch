@@ -132,7 +132,7 @@
     [`Ada Okafor`,`Sam's daughter, on Ares Station. Back on the other side of the Sun, with her left arm in a dressing.`],
     [`Corinne Mathers`,`Leads Integration and Test. Owns the stage until somebody signs for it.`],
     [`Hana Iwasaki`,`Propulsion lead and technical authority. Wants every cold cycle she can get on the flight valve.`],
-    [`Wendell Price`,`Test conductor, seventy. Hasn't seen the ocean since 2035 and doesn't plan to look at it.`],
+    [`Wendell Price`,`Test conductor, seventy one. Hasn't seen the ocean since 2035 and doesn't plan to look at it.`],
     [`Quinn Abernathy`,`Sam's deputy. Runs the campaign schedule from a folding table in Florida.`],
     [`Delphine Varga`,`Mission manager for Coquina Launch Services. Owns the rocket. Doesn't own the weather.`],
     [`Peg Sato`,`Contracts and procurement. Reads the weather clause before the weather does.`],

@@ -5,7 +5,7 @@
 // course and meta: copies of what's now live in courses.js (the pmp entry) and engine.js (BASE_CAST, FULL_CAST_EXTRA). The engine no longer reads them;
 //   tools/pages.mjs --v2 still reads course.leads. Keep them in step until the file move in full/v2/README.md retires this file.
 window.HALCYON_V2={
-  files:["cast.js","ch01.js","ch02.js","ch03.js","ch04.js","ch05.js","ch06.js","ch07.js","ch08.js","ch09.js","ch10.js","ch11.js"],
+  files:["cast.js","ch01.js","ch02.js","ch03.js","ch04.js","ch05.js","ch06.js","ch07.js","ch08.js","ch09.js","ch10.js","ch11.js","ch12.js"],
   audio:true,
   course:{
     about:["It's 2061. Ares Station, a Mars colony of 212 people, is losing its oxygen plant. Earth's only rescue is the Halcyon, a relief ship being built on the plains east of Denver, and orbital mechanics give it one window to launch, twenty six months away. Miss it and the next one comes too late.",

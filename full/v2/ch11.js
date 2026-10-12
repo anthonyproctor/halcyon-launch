@@ -121,7 +121,7 @@
     [`Thandi Mokoena`,`Leads the ARA's independent verification of Halcyon's software. Reads every line.`],
     [`Quinn Abernathy`,`Sam's deputy. Keeps the plan, and a wall of things that came from outside it.`],
     [`Delphine Varga`,`Coquina's mission manager. Owns the rocket for launch 3, and the slot.`],
-    [`Wendell Price`,`Test conductor, seventy. Running the workaround on the ground at night.`],
+    [`Wendell Price`,`Test conductor, seventy one. Running the workaround on the ground at night.`],
     [`Ruth Calder`,`On the Independent Readiness Board. Page eleven is the investigation.`]
   ],
   opening: [
@@ -588,7 +588,7 @@
     `Cycle after cycle came back under four milliseconds, with the conditioning cycle ahead of the close and MOIV-2 shutting behind it like a second hand on a door. Twice, on the third cycle after a long soak, the trace showed a small ripple about two milliseconds after the poppet lifted.`+(ct?``:` Sam had seen that ripple once before, at the Cape, in September, beside a seven.`),
     `At 10:52 Wendell stood up from the propulsion console to look at something on the far screen, put his hand out for the back of the chair, and missed it.`,
     `Quinn got to him first. He was on the blockhouse floor on his side, awake, saying he was fine in a voice that wasn't. Arlo called it in from the stand. The ambulance came up the gravel road with its lights on and no siren, because Arlo had told them there was nobody out there to wake, and the pronghorn in the ditch didn't move.`,
-    `At 2:10 AM a doctor at the hospital in Aurora said low blood pressure, and a heart that needed a better look, and that he was fine for tonight. They also said that seventy year old men shouldn't be working nights on a prairie in November. Wendell said he'd been told.`,
+    `At 2:10 AM a doctor at the hospital in Aurora said low blood pressure, and a heart that needed a better look, and that he was fine for tonight. They also said that seventy one year old men shouldn't be working nights on a prairie in November. Wendell said he'd been told.`,
     `Sam sat in the chair by the bed with his jacket still on. Wendell looked at the ceiling for a while.`,
     `<span class="said" data-who="Wendell">"This is the last one, Sam. I'll see it to December. Then I'm done. I've been done since 2035. I kept forgetting."</span>`,
     `Sam didn't argue. He thought about what was in that bed. How a seat sounded when it was lying. Which ripple was ice and which wasn't. The thing Wendell had heard in 2034, and in 2059, and at 10:52 tonight, when he'd stood up to look. Some of it was in procedures now. The part that mattered had never been written down by anybody, because nobody had ever asked him the right way, and he'd never offered.`,
