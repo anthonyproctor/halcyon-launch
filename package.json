@@ -13,6 +13,7 @@
     "@playwright/test": "1.63.0"
   },
   "scripts": {
-    "test:smoke": "playwright test -c tests"
+    "test:smoke": "playwright test -c tests",
+    "test:api": "node --test tests/qa_report.test.mjs"
   }
 }

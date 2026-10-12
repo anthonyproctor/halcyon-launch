@@ -897,5 +897,11 @@ async function boot(){
   $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();location.href="/"};
   if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(me.user.cur||0);
 }
+/* ===== QA mode hook: qa.js (speaker chips, the QA bar, Flag a problem) reads where the reader and the player are. Read only. ===== */
+window.HalcyonState=function(){const a=NAR.audio,bk=NAR.page==="book"&&NAR.book,ch=(TRACK==="full"||TRACK==="ref")&&CH?CH:null;
+  return {course:COURSE?COURSE.id:"",book:COURSE?(COURSE.full_title||COURSE.title||""):"",track:TRACK,story:!!STORY(),
+    chapter:bk?NAR.book.n:ch?ch.num:null,chTitle:ch?ch.title||"":"",key:NAR.key||"",page:bk?(NAR.bsec||""):(NAR.page||""),
+    mode:bk?"audiobook":NAR.page==="car"?"car":NAR.page?"page":"read",ed:bk?NAR.book.ed:"",src:a.currentSrc||a.src||"",t:a.currentTime||0,
+    paused:a.paused,listening:!!NAR.listening,timings:NAR.key&&NAR.timings[NAR.key]||null}};
 boot();
 })();

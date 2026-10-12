@@ -36,6 +36,7 @@ code{font:13px ui-monospace,Menlo,monospace;word-break:break-all}
 <h2>Tell me when new books land</h2><div class="card"><div class="row" style="justify-content:space-between"><span id="listcount" class="muted"></span><a class="btn" id="listcsv" href="/api/admin?action=list&amp;format=csv" download>Download CSV</a></div><p class="muted" style="margin:8px 0 0">Site doesn't send email. CSV includes each person's leave link for whatever you send.</p></div>
 <div class="tw" style="margin-top:10px"><table id="list"></table></div>
 </div>
+<h2>QA reports</h2><div class="card"><div class="row"><a class="btn" href="/api/qa-report?format=csv&amp;since=7d" download>Last 7 days (CSV)</a><a class="btn ghost" href="/api/qa-report?format=csv" download>All (CSV)</a></div><p class="muted" style="margin:8px 0 0">Problems testers flagged in QA mode. Claude pulls these with tools/qa_pull.mjs.</p></div>
 <script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
