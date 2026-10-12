@@ -8,3 +8,6 @@ cast-src
 
 # Story bibles are private (spoilers); kept local only
 BIBLE*.md
+
+# smoke test output
+test-results/

@@ -27,6 +27,13 @@ let MOCK_KEY=900;const PMP_META={DOMS,TASKNAMES,BASE_CAST,FULL_CAST_EXTRA};
 const COURSES=window.HALCYON_COURSES||[{id:"pmp",title:"PMP",base:0,root:"",status:"live",taskDomain:{P:"People",R:"Process",B:"Business Environment"}}];
 let COURSE=COURSES[0];
 function courseById(id){return COURSES.find(c=>c.id===id)}
+/* not affiliated: each course names its certifying body (certBody) and the marks it uses (marks) in courses.js */
+function bodiesOf(c){return [].concat(c.certBody||[]).filter(Boolean)}
+function orList(a){return a.length>1?a.slice(0,-1).join(", ")+(a.length>2?",":"")+" or "+a[a.length-1]:a[0]||""}
+function marksLine(c){const b=bodiesOf(c);return `${c.full_title||c.title} is an independent study story, not affiliated with or endorsed by ${b.length?orList(b):"the certifying body"}.${c.marks?" "+c.marks:""}`}
+function siteFooter(){const f=$("sitefoot");if(!f)return;const b=[...new Set(COURSES.flatMap(bodiesOf))],m=[...new Set(COURSES.map(c=>c.marks).filter(Boolean))];
+  f.innerHTML=`<p>These courses are independent study stories. They aren't affiliated with or endorsed by ${esc(b.length?orList(b):"the certifying bodies whose exams they cover")}. ${esc(m.join(" "))}</p>`}
+siteFooter();
 function courseOfKey(k){return COURSES.filter(c=>k>=c.base).sort((a,b)=>b.base-a.base)[0]||COURSES[0]}
 function DATA(){if(COURSE.id==="pmp")return{ref:window.HALCYON,full:window.HALCYON_FULL,mock:window.HALCYON_MOCK,cast:window.HALCYON_CAST};return (window.HALCYON_DATA||{})[COURSE.id]||{}}
 function labsOf(c){if(V2P&&COURSE.id==="pmp"&&!(window.HALCYON_V2||{}).labs)return [];return (c&&c.scenes&&((window.HALCYON_LABS||{})[COURSE.id]||{})[c.num])||[]} // optional hands-on labs, registered per course by chapter number
@@ -525,12 +532,15 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
    <dt>Sign in once</dt><dd>The home screen app keeps its own sign-in, so sign in again the first time you open it. After that your progress and listening spot follow you.</dd>
    <dt>Lock screen</dt><dd>Start the Audiobook, lock the phone, and use the lock screen or CarPlay controls to pause and skip.</dd>
   </dl>
+  <h2>Privacy</h2><p>The site counts anonymous page views, without cookies, to learn which chapters people read. No personal data.</p>
   <h2>Troubleshooting</h2><label class="chk prog"><input type="checkbox" id="pdbgt" ${PDBG.on?"checked":""}> Show player diagnostics (a log at the top of the screen; screenshot it and send it to Anthony)</label></div>`;
   if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
 function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return["Mock exam",()=>openMock()];const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
 /* where you are lives in the address (#pmp/full/3, #guide), so a reload reopens the same screen */
 function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice")?c+"/progress":TRACK==="mock"?c+"/mock":(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
-  store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}}
+  store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
+/* anonymous page views (Vercel Web Analytics, loaded in index.html): the route only, as a path. Never a name, email, id, or progress. */
+let LASTPV="";function pageview(r){if(!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:(V2P?"/v2/":"/")+r})}catch(e){}}
 async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filter(Boolean);if(!p.length)return false;
   if(p[0]==="library"){renderLibrary();return true}if(p[0]==="guide"){renderGuide();return true}if(p[0]==="upcoming"){renderUpcoming();return true}if(p[0]==="labtest"){await loadScripts(["tools/lab_fixture.js"]);renderLabTest();return true}
   const c=courseById(p[0]);if(!c||c.status!=="live")return false;if(c.id!==COURSE.id&&!(await useCourse(c.id)))return false;if(!c._loaded&&(c.scripts||c.labs))await useCourse(c.id);
@@ -679,7 +689,7 @@ async function api(path,opts={}){const r=await fetch(path,{credentials:"same-ori
 async function listenPull(){if(!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
 const DEVICE_KEYS=["halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
 function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.bookEd.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
-function renderAuth(mode,invite){
+function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
   document.querySelector(".rail").hidden=true;const signup=mode==="signup";
   $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>${signup?"Create your account":"Sign in"}</h1><div class="story"><p>${signup?"You've been invited to The Halcyon Launch, a library of choose-your-path certification courses. Your progress saves to your account so you can pick up anywhere.":"Invite only. Sign in to pick up where you left off."}</p></div>
    <form class="auth" id="authform" novalidate><div id="autherr"></div>${signup?'<label for="a-name">Name<input id="a-name" autocomplete="name" required></label>':""}<label for="a-email">Email<input id="a-email" type="email" autocomplete="email" required></label><label for="a-pw">Password${signup?" (10 characters or more)":""}<input id="a-pw" type="password" autocomplete="${signup?"new-password":"current-password"}" required></label><button class="btn" type="submit">${signup?"Create account":"Sign in"}</button></form>
@@ -700,7 +710,8 @@ async function renderAbout(id){setTimeout(ambSync,0);if(id&&id!==COURSE.id&&!(aw
    <div class="story">${(c.about||[c.story||""]).map(p=>`<p>${esc(p)}</p>`).join("")}</div>
    <div class="howbox"><h2>Your choices change the story</h2><p>This is a choose-your-path story. You play ${esc(hero)}, and at each decision you make the call. What happens next, how people react, some later scenes, and how each chapter ends all follow from what you choose. After every decision, ${esc(c.mentorFull||MENTOR())} tells you the best answer and why, the way the exam sees it.</p><p>Want just the story? The Audiobook plays the best path from start to finish.</p></div>
    <dl class="facts"><dt>The exam</dt><dd>${esc(c.exam||"")}</dd><dt>Your mentor</dt><dd>${esc(c.mentorRole||MENTOR())}</dd><dt>Length</dt><dd>${esc((c.fullHours||"").replace(/^./,x=>x.toUpperCase()))}, ${c.planned||ready} chapters${c.planned&&ready<c.planned?` (${ready} ready now, more as they're written)`:""}</dd><dt>Each chapter</dt><dd>The story, ${esc(LESSON())}, the decisions, drills, and a quiz</dd>${c.mockShort?`<dt>Practice exam</dt><dd>${esc(c.mockShort)}</dd>`:""}</dl>
-   <div class="bar"><button class="btn" id="aboutgo" type="button">${w?"Continue":"Start chapter 1"}</button><button class="btn ghost" id="aboutbook" type="button">🎧 Audiobook</button></div>`;
+   <div class="bar"><button class="btn" id="aboutgo" type="button">${w?"Continue":"Start chapter 1"}</button><button class="btn ghost" id="aboutbook" type="button">🎧 Audiobook</button></div>
+   <p class="prog marks">${esc(marksLine(c))}</p>`;
   $("tolib2").onclick=()=>{renderLibrary();top()};$("aboutgo").onclick=()=>{if(w)libGo(c.id);else{openChapter("full",(TRACKS.full.list()[0]||{num:1}).num);top()}};$("aboutbook").onclick=()=>{renderBook();top()}}
 /* #upcoming: what's coming next. Copy lives in upcoming.js; chapter counts come from the course registry. */
 function readyCount(c){return c?(c.scripts||[]).filter(x=>/full\/ch\d+\.js$/.test(x)).length:0}
@@ -727,8 +738,9 @@ function renderLibrary(){setTimeout(ambSync,0);TRACK="library";CH=null;$("railga
   const L=libget(),day=t=>new Date(t).toLocaleDateString("en-US",{month:"short",day:"numeric"});
   const card=c=>{const live=c.status==="live",w=L.last[c.id],pinned=L.pins.includes(c.id);let pr="";const lq=live?((store.get("c"+(c.base+903),null)||{}).labq||[]).length:0;if(live)pr=w?`${pinned?"Pinned · ":""}Last played ${day(w.at)} · ${libWhere(w)}`:(pinned?"Pinned · Not started":"Not started");
     return `<div class="libwrap">${live?`<button class="pin${pinned?" on":""}" type="button" data-pin="${c.id}" aria-pressed="${pinned}" aria-label="${pinned?"Unpin":"Pin"} ${esc(c.full_title||c.title)}" data-tip="${pinned?"Unpin":"Pin to the top of your library"}">${pinned?"★":"☆"}</button>`:""}${live?`<button class="linkbtn libabout" type="button" data-about="${c.id}">About this book</button>`:""}<button class="libcard ${live?"live":"soon"}" type="button" data-course="${c.id}" ${live?"":"disabled"}><span class="libart" aria-hidden="true">${({pmp:"🚀",cphims:"🏥",asep:"🛰️",gh300:"🤖",pilot:"✈️",cisa:"🔍"})[c.id]||"📘"}</span><span class="libtxt"><span class="prog">${esc(c.exam||"")}</span><b>${esc(c.full_title||c.title)}</b><span class="libstory">${esc(c.story||"")}</span><span class="libstate">${live?esc(pr):"In production"}${lq?`<span class="lw"> · 🧪 Labs waiting in ${lq} chapter${lq>1?"s":""}</span>`:""}</span></span></button></div>`};
-  const order=[...COURSES].sort((a,b)=>{const pa=L.pins.indexOf(a.id),pb=L.pins.indexOf(b.id);if(pa>=0||pb>=0)return (pa<0?1e9:pa)-(pb<0?1e9:pb);return ((L.last[b.id]||{}).at||0)-((L.last[a.id]||{}).at||0)});
-  const recent=Object.entries(L.last).filter(([id])=>{const c=courseById(id);return c&&c.status==="live"}).sort((a,b)=>b[1].at-a[1].at)[0];
+  const shown=c=>c.listed!==false; // listed:false (courses.js) keeps a book off the Library; its routes and Coming next card still work
+  const order=COURSES.filter(shown).sort((a,b)=>{const pa=L.pins.indexOf(a.id),pb=L.pins.indexOf(b.id);if(pa>=0||pb>=0)return (pa<0?1e9:pa)-(pb<0?1e9:pb);return ((L.last[b.id]||{}).at||0)-((L.last[a.id]||{}).at||0)});
+  const recent=Object.entries(L.last).filter(([id])=>{const c=courseById(id);return c&&c.status==="live"&&shown(c)}).sort((a,b)=>b[1].at-a[1].at)[0];
   const cont=recent?`<button class="handsfree" type="button" id="libcont"><span>▶</span><span><b>Continue ${esc(courseById(recent[0]).full_title||courseById(recent[0]).title)}</b><span class="prog">${libWhere(recent[1])} · last played ${day(recent[1].at)}</span></span></button>`:"";
   $("page").innerHTML=`<div class="kicker">Library</div><h1>Your courses</h1><div class="story"><p>Each course is a choose-your-path story. You make the calls and the story changes with them, and there's an exam's worth of lessons and quizzes along the way. Tap a book to open it, or "About this book" to see what it's about.</p></div>${cont}<div class="libgrid">${order.map(card).join("")}</div>${window.HALCYON_UPCOMING?`<button class="upnext" type="button" id="libup"><span class="prog">Coming next</span><b>A seven book cyber thriller series, and more</b><span>New stories, rewrites, and the chapters on their way. No spoilers.</span><span class="go">See what's coming ›</span></button>`:""}`;
   if($("libup"))$("libup").onclick=()=>{renderUpcoming();top()};

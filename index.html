@@ -285,6 +285,14 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 @media (max-width:640px){.upbook{grid-template-columns:minmax(0,1fr);gap:16px}.upcover{aspect-ratio:auto;min-height:0;max-width:none;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 12px;border-radius:10px}.upcover b{display:none}.upcover{justify-content:space-between;padding:12px 16px}.upcover .upplace{border-top:0;padding-top:0;margin-top:0}}
 </style>
 <link rel="stylesheet" href="/lab.css">
+<style>.sitefoot{max-width:1060px;margin:0 auto;padding:16px 18px 32px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;line-height:1.5}.sitefoot p{margin:0;max-width:72ch;overflow-wrap:anywhere}</style>
+<script>
+/* Vercel Web Analytics: anonymous, cookieless page views. engine.js sends one view per screen (#pmp/full/3 counts as /pmp/full/3).
+   beforeSend strips the query string and hash, so invite tokens and the like never leave the page. No user ids, no progress. */
+window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
+window.va("beforeSend",function(e){try{var u=new URL(e.url);u.search="";u.hash="";e.url=u.href}catch(x){}return e});
+if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=document.createElement("script");vs.defer=true;vs.src="/_vercel/insights/script.js";vs.dataset.disableAutoTrack="1";document.head.appendChild(vs)}
+</script>
 </head>
 <body>
 <header class="tophead"><nav class="topnav" id="usercard" hidden aria-label="Main">
@@ -319,6 +327,7 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
     </div>
   </aside>
 </div>
+<footer class="sitefoot" id="sitefoot"><p>These courses are independent study stories. They aren't affiliated with or endorsed by the certifying bodies whose exams they cover.</p></footer>
 
 <script src="chapters/ch1.js"></script>
 <script src="chapters/ch2.js"></script>
