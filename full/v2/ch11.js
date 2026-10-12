@@ -214,7 +214,7 @@
               ?`It was true, and the note didn't know the worst of it. In February 2061 he'd read this page and moved Bea's folder into an archive. It had reopened in April only because the valve did it again on the stand, and Hana had signed the reopening, not him.`
               :`It was true. He'd read the record in his first month and gone carefully around it, and in April Hana had reopened it herself, after the valve did it again on the stand.`)
           +(G.hidnumbers?` And in July of last year the program's numbers to the partners had been rounded, without the notice the ARA's own rule asked for. Greaves would have that by nine as well. He usually had the second thing.`:``),
-        `Two names were on the page. B. KOWAL, who sold paint and hinges at a hardware store in Strasburg now and had asked him once not to make her testify. And PROPULSION, which anybody in the business could read as one person. `+(sac
+        `Two names were on the page. B. KOWAL, who cut keys at a hardware store in Strasburg now and had asked him once not to make her testify. And PROPULSION, which anybody in the business could read as one person. `+(sac
             ?`Hana's name had been in a public statement since March. This would be the second time she read it somewhere she hadn't put it.`
             :`Hana's name wasn't on it. It wouldn't take Greaves long.`),
         `The list on the hotel notepad had six lines. Commander Haddad, asleep in a Houston hotel, with four kids and a husband in Aurora, who'd ride the departure burn on that valve. Frances Odum, with two hundred families and a phone that would start at seven. Hale's office, which opened at seven Mountain, nine his time. The board's duty member, who had a number for nights like this. Hana. Bea.`,
@@ -547,8 +547,8 @@
   //   with 4.0 million of crashing (f11s10 best; f11s10 pick 2 moves it to Nov 30; on picks 1 and 3 the slot is at risk and ch12 states the date); Quinn's PESTLE wall
   //   with owners (f11s11 best); integrated plan version 15 (f11s12 best).
   // EVERY PATH: Greaves aired the AR 2207 closure record at 9 AM Mountain (Fri Oct 6, or Sat Sep 30 if G.crashedtest), with an unsigned cover
-  //   note; who sent it is not known, on every path (Bea is not the source on any path). Bea Kowal, who sells paint and hinges at
-//   a hardware store in Strasburg, had once asked Sam not to make her testify (new canon, f11s1). Commander Haddad was in a Houston hotel that
+  //   note; who sent it is not known, on every path (Bea is not the source on any path). Bea Kowal, who cuts keys at
+//   a hardware store in Strasburg, had once asked Sam not to make her testify (set in ch06, f6s6). Commander Haddad was in a Houston hotel that
 //   night; her husband and four kids are in Aurora (cast.js). Hale's office opens at 7 Mountain. Ada's log 43 (Sol 4135, or 4129): her arm in a sleeve dressing, ribs better, Grace's watch back on her
   //   wrist on Aurora time; Ada 326 (or 332), ARA 333 (or 339), minus nine and minus two. Page eleven reached Sam's house Sat Oct 7 (Sat Sep 30 with crashedtest), the day he flew home; with crashedtest he flew home
 //   and read it Sun Oct 1. The readiness

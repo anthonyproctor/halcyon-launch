@@ -627,7 +627,7 @@ SC=[
     `He read it until the words came apart into letters, the way he'd read her 0810 line in 2062. He put his thumb under the green line and left it there.`,
     (p[10]===1?`She'd said it was his. He put the binder on the shelf over the coffee maker, beside the sticky note with nine, fourteen, and twenty two on it, and didn't frame anything.`
       :`She'd given it to him at the door on Saturday anyway, after everything, with two fingers, the way you'd slide a cup to somebody, and said it was his. He put it on the shelf over the coffee maker, beside the sticky note with nine, fourteen, and twenty two on it.`),
-    `At 10:15 he called Tucson. Ray picked up on the second ring, the way he had for twenty two years. `+rayPoll,
+    `At 10:15 he called Tucson. Ray picked up on the second ring, the way he had for twenty one years. `+rayPoll,
     outcome,
     `Sam read him the line. Ray was quiet so long Sam checked the screen to see if the call had dropped.`,
     `<span class="said" data-who="Ray">"You know how you signed this one,"</span> Ray said. <span class="said" data-who="Ray">"That's the one you get to keep. Doc's the one you carry."</span> A screen door, and something that creaked when Ray sat on it. <span class="said" data-who="Ray">"The jet doesn't care how you feel."</span>`,

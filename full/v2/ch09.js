@@ -117,7 +117,7 @@
   tasks: [`B7`,`P2`,`B4`,`P1`,`B8`,`R8`,`B1`,`P6`,`P5`],
   cast: [
     [`Hana Iwasaki`,`Propulsion lead. Runs AR 2207's root cause. Asked him out to the stand to tell him something.`],
-    [`Corinne Mathers`,`Took over Sam's high bay in 2061. Now leads a team twice its size that didn't ask to be one.`],
+    [`Corinne Mathers`,`Took over Sam's high bay in 2061. Now leads sixty seven people who didn't ask to be one team.`],
     [`Wendell Price`,`Test conductor, seventy, a contractor. Had a third attempt on the stand schedule in September 2059.`],
     [`Arlo Dunn`,`Stand technician, nights. Has opinions about who gets to sit at the console.`],
     [`Garrett Lyle`,`Tallgrass CEO. Has a way to make AR 2207's history simpler.`],
@@ -380,7 +380,7 @@
         {t:`Set it aside, since a commercial company's press release isn't a requirement and Halcyon's scope was baselined long ago.`, s:1, d:{trust:-1,conf:-2,health:0},
           after:`Halcyon's scope doesn't change, which is correct. But nobody answers the petition, and nobody tells the ARA whether the relay matters for 2064, and in June Hale's office asks why the program never looked.`,
           why:`Not every external change touches your scope, and protecting the baseline is right, which is why this isn't a zero. But the ECO asks you to assess each change, not ignore it, and to put opportunities in front of the people who can act on them.`},
-        {t:`Ask Hana to find mass in the cargo module for a small relay, since forty thousand families want it and Halcyon has a little margin.`, s:0, d:{trust:-3,conf:1,health:-5},
+        {t:`Ask Hana to find mass in the cargo module for a small relay, since forty thousand people want it and Halcyon has a little margin.`, s:0, d:{trust:-3,conf:1,health:-5},
           after:`Hana finds the margin she has left after the bridge stacks, and it's the margin she was saving for things nobody has thought of yet. A relay would also need power, pointing, a software interface, and an orbit Halcyon doesn't fly. The study takes two weeks of her team before it says no.`,
           why:`Adding scope because stakeholders want it, without assessing whether it would even work, spends real margin on an expectation. Evaluate the external change's impact before acting on it.`}
       ]},
