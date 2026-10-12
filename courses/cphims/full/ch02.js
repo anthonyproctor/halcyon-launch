@@ -154,7 +154,7 @@
           after:`Maria calls Joan Whitfield that night. Joan answers on the second ring and asks three questions Maria hadn't thought of. The plan they agree on carries the MedaLink opt out list into the new agreement, keeps the clinic's Part 2 records out unless a patient consents, and moves the feeds two weeks later than Marcus wanted.`,
           why:`HIE consent depends on state law, the exchange's rules, the patient's recorded choice, and for substance use treatment, 42 CFR Part 2. That's a privacy decision. Bring the privacy officer in before you build, not after.`},
         {t:`Turn off the Wyoming feeds to the HIE until One Chart is live and settles it.`, s:0, d:{trust:-2,conf:-1,health:-4},
-          after:`For eighteen months, an ED in Fort Collins can't see a Rawlins patient's medication list. Continuity of care was the reason the HIE existed.`,
+          after:`For a year, an ED in Fort Collins can't see a Rawlins patient's medication list. Continuity of care was the reason the HIE existed.`,
           why:`Stopping exchange to avoid a hard question just moves the harm to the next caregiver. And cutting off a feed without a good reason can look a lot like information blocking.`}
       ]},
     { id:`f2s8`, domain:`Environments`, task:`E4`, title:`Seventy-two hours`,
