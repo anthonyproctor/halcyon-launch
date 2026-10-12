@@ -52,6 +52,7 @@ function R(p){return /^(https?:|\/)/.test(p)?p:COURSE.root+p}
 function taskDomain(t){const TD=COURSE.taskDomain||{};return TD[t]||TD[t.split(".")[0]]||TD[t[0]]||DOMS[0]}
 function loadScripts(list){return Promise.all(list.map(src=>new Promise(ok=>{if(document.querySelector(`script[data-c="${src}"]`))return ok();const el=document.createElement("script");el.src=src;el.dataset.c=src;el.onload=ok;el.onerror=ok;document.head.appendChild(el)})))}
 async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")return false;if((c.scripts||c.labs)&&!c._loaded){await loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x));c._loaded=true}
+  if(c.recaps&&c._recaps===undefined)await recapsLoad(c);
   const changed=COURSE.id!==c.id;COURSE=c;store.set("course",id);
   const meta=c.id==="pmp"?PMP_META:(((window.HALCYON_DATA||{})[id]||{}).meta||{});
   DOMS=meta.DOMS||PMP_META.DOMS;TASKNAMES=meta.TASKNAMES||{};BASE_CAST=meta.BASE_CAST||[];FULL_CAST_EXTRA=meta.FULL_CAST_EXTRA||[];
@@ -179,10 +180,10 @@ function fullRender(){
   const curPhase=STORY()?({open:"Story",scene:"Story",end:"Story",lesson:MENTOR()+"'s notes",drill:MENTOR()+"'s notes",exercise:MENTOR()+"'s notes",labs:MENTOR()+"'s notes",quiz:MENTOR()+"'s notes"})[cur.k]:phase(cur.k);const PH=STORY()?["Story",MENTOR()+"'s notes"]:["Story","Lesson","Decisions","Quiz","Debrief"];
   const phOf=k=>STORY()?({open:"Story",scene:"Story",end:"Story"}[k]||MENTOR()+"'s notes"):phase(k);const phStart=ph=>{const a=st.map((x,p)=>p).filter(p=>phOf(st[p].k)===ph&&secOpen(p));return a.length?(a.includes(S.pos)?S.pos:a.filter(p=>p<=S.max).pop()??a[0]):-1};
   const chmap=`<ol class="chmap" aria-label="Chapter steps">${PH.map((p,i)=>{const idx=PH.indexOf(curPhase),to=phStart(p);return `<li class="${p===curPhase?"now":i<idx?"done":""}"><button type="button" class="phbtn" data-ph="${to}" ${to<0?"disabled":""}>${p}</button></li>`}).join("")}</ol>`;
-  const nav=chmap+`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${esc(secLabel(CH,x))}" aria-label="${esc(secLabel(CH,x))}" ${secOpen(i)?"":"disabled"}></button>`).join("")}</div><details class="contents"><summary>Contents · ${esc(secLabel(CH,cur))}</summary>${secListHTML()}</details>`;
-  let h=nav;
+  const nav=chmap+`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${esc(secLabel(CH,x))}" aria-label="${esc(secLabel(CH,x))}" ${secOpen(i)?"":"disabled"}></button>`).join("")}</div><div class="chtools"><details class="contents"><summary>Contents · ${esc(secLabel(CH,cur))}</summary>${secListHTML()}</details>${recapCh()?`<button type="button" class="btn ghost small wherebtn" id="wherebtn" aria-haspopup="dialog">Where am I?</button>`:""}</div>`;
+  let h=nav+recapBackHTML()+recapNotesHTML();
   if(cur.k==="open"){
-    h+=chapterArt()+`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1>${STORY()?"":`<div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>`}${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">${STORY()?"Continue the story":"Next: the lesson"}</button></div>`;
+    h+=recapCardHTML()+chapterArt()+`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1>${STORY()?"":`<div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>`}${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">${STORY()?"Continue the story":"Next: the lesson"}</button></div>`;
   }else if(cur.k==="lesson"){
     const L=CH.lesson;h+=`<div class="kicker">Chapter ${CH.num} · The lesson · ${LESSON()}</div><h1>${esc(L.title)}</h1><p class="lessonintro">${COURSE.lessonIntro||`${esc(LESSON())} is the lesson: the ideas behind this chapter, before you make the decisions.`}</p>`+L.sections.map(s=>`<section class="lesson"><h2>${esc(s.h)}</h2>${paras(s.body)}${s.terms&&s.terms.length?`<dl class="terms">${s.terms.map(([t,d])=>`<dt>${t}</dt><dd>${d}</dd>`).join("")}</dl>`:""}${s.exam?`<div class="examtip"><b>How the exam asks it.</b> ${s.exam}</div>`:""}</section>`).join("")+videoCard(L.video,"Lesson video")+`<div class="bar"><button class="btn" id="fnext" type="button">Next: the decisions</button></div>`;
   }else if(cur.k==="scene"){
@@ -210,7 +211,7 @@ function fullRender(){
      <div class="story"><p>Weakest area this chapter: <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent, counting decisions and quiz together.</p></div>
      ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">${MENTOR()}'s notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`${COURSE.final?`<button class="btn" id="tofinal" type="button">Take the final assessment</button>`:""}${hasMock()?`<button class="btn${COURSE.final?" ghost":""}" id="tomock" type="button">Take the practice exam</button>`:""}`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
   }
-  $("page").innerHTML=h;wireVideos();if(cur.k==="labs")labsMount();
+  $("page").innerHTML=h;wireVideos();if(cur.k==="labs")labsMount();recapWire();
   $("page").querySelectorAll(".sdot[data-p]").forEach(b=>b.onclick=()=>fullGo(+b.dataset.p));
   $("page").querySelectorAll("[data-ph]").forEach(b=>b.onclick=()=>{const p=+b.dataset.ph;if(p>=0&&p!==S.pos)fullGo(p)});
   const nx=$("fnext");if(nx)nx.onclick=()=>fullGo(S.pos+1);
@@ -224,6 +225,121 @@ function fullRender(){
   const tm=$("tomock");if(tm)tm.onclick=()=>openMock();const tf=$("tofinal");if(tf)tf.onclick=()=>openFinal();
   const rp=$("replay");if(rp)rp.onclick=()=>{if(confirm(`Replay chapter ${CH.num} from the start? This clears its decisions, drills, and quiz. Labs you finished stay finished.`)){const lb=S.labs;S=freshFull();if(lb)S.labs=lb;save();render();top()}};
 }
+
+/* ===== Story so far (approved 2026-10-12): "Previously on", "Where am I?", and orientation notes =====
+   For readers who lose the thread, mostly at the start of a book or after time away. The words come from a course's recaps file
+   (PMP: full/v2/recaps.js, one of the v2 files in full/v2/preview.js, which sets window.HALCYON_RECAPS; see its header for the shape).
+   Another course adds one with recaps:"full/recaps.js" (relative to its root) in courses.js: useCourse loads it and keeps its
+   window.HALCYON_RECAPS as that course's own (c._recaps), so two books never share recaps. A course without one shows none of this.
+   What shows where (Full Course chapter pages only):
+   - the opening page starts with a "Previously on <book>" card (chapter 1: "Before you start"), one line when collapsed. It opens by
+     itself the first time a chapter's card is shown, and when the reader comes back after 3 or more days away (the newest of this
+     course's readat times, its Library "last played" time, and its study log days, read once at boot before this visit touches them);
+     otherwise it keeps the reader's own open or closed choice for that chapter. Study log days count only when there's no exact time.
+     A tab brought back after 3 or more days hidden counts as a return too.
+   - back after 3 or more days on any other chapter page: a one line "Been a while?" prompt with a Where am I? button, once per visit.
+   - "Where am I?" (next to Contents, and in the rail) opens a panel: the "you are here" line, the short recap with More for the full one,
+     and who's in the scene. On the opening page, where the full recap is the card's text, More is swapped for a button that opens the
+     card instead, so the same text never shows twice in a row.
+   - orientation notes (chapters 1 to 3) show once, at the top of the page the reader reaches after the page they name, until Got it or
+     the reader moves on. One note per page: a reader who skipped past several gets the next one on the following page.
+   Spoiler safety: every recap is keyed to a page id (PIDS) and the recaps file only uses what was seen before that page starts. The
+   page used is the furthest story page (opening, lesson, decision, ending) at or before the reader's current step that the reader has
+   actually read: a decision once answered (or while it's the page on screen), the ending once every decision is answered and it has been
+   opened. So a drill, the quiz or the lesson opened early from Contents never borrows a page (its here line or cast) not yet read.
+   Orientation notes for a decision wait until it's answered.
+   Nothing for a page the reader hasn't reached is ever put in the DOM.
+   Saved state, all through store (so the test profile keeps its own, and frozen pages write nothing), local to this device and never sent
+   to the server: recap.<edition>.<n> {open, seen} per chapter card, and recapnote.<edition> {"<n>.<pid>": time} for notes shown. The
+   "halcyon.recap" keys survive sign in like readat (clearLocal keep), so a device doesn't replay notes after signing in again.
+   Narration hook (not built, needs TTS): if window.HalcyonRecapVoice.speak exists, the card shows a Listen button that calls
+   speak({course, chapter, title, lines}). Nothing else is needed from the engine. */
+const RECAP={t0:Date.now(),last:{},auto:new Set(),shown:{},gone:new Set(),view:"",open:false,at:"",ret:null,inert:null,back:false};
+function recapsLoad(c){const keep=window.HALCYON_RECAPS;window.HALCYON_RECAPS=undefined;
+  return loadScripts([c.root+c.recaps]).then(()=>{c._recaps=window.HALCYON_RECAPS||null;window.HALCYON_RECAPS=keep})}
+function recapsOf(c){c=c||COURSE;if(!c)return null;const r=c._recaps||(c.id==="pmp"?window.HALCYON_RECAPS:null);return r&&r.ch&&typeof r.recap==="function"?r:null}
+function recapCh(){if(TRACK!=="full"||!CH||!S)return null;const RC=recapsOf();return RC&&RC.ch[CH.num]?RC:null}
+/* the last time this reader was in each course before this visit (0 = never), read once at boot after the server's copy lands */
+function recapSnap(){const now=Date.now();RECAP.t0=now;COURSES.forEach(c=>{let t=0;const bid=c.id==="pmp"?"pmp2":c.id,see=v=>{v=+v;if(v>t&&v<=now)t=v};
+  try{const pre=PROF.key(`readat.${bid}.`);Object.keys(localStorage).forEach(k=>{if(k.startsWith(pre))try{see(JSON.parse(localStorage.getItem(k)))}catch(e){}})}catch(e){}
+  try{const l=libget().last[c.id];if(l)see(l.at)}catch(e){}
+  if(!t)try{Object.keys(logGet(c).days||{}).forEach(d=>{const [y,m,x]=d.split("-").map(Number);if(y&&m&&x)see(new Date(y,m-1,x,12).getTime())})}catch(e){} // the log only has days: used (as midday) when there's no exact time
+  RECAP.last[c.id]=t})}
+function recapAwayDays(){const t=RECAP.last[COURSE.id]||0;return t?(RECAP.t0-t)/864e5:0}
+/* page ids: the furthest story page at or before the current step that the reader has reached */
+function recapPidOf(x){return x.k==="open"||x.k==="lesson"||x.k==="end"?x.k:x.k==="scene"?"s"+x.i:null}
+function recapReached(pid){if(pid==="open"||pid==="lesson")return true;const L=steps(CH),cur=recapPidOf(L[Math.min(S.pos||0,L.length-1)]||{});if(pid===cur)return true;
+  if(pid==="end")return CH.scenes.every((_,i)=>S.picks[i]!==undefined)&&(S.max||0)>=L.findIndex(x=>x.k==="end");return S.picks[+pid.slice(1)]!==undefined}
+/* a note shows after its page is finished: a decision once answered, the ending once the reader has moved past it */
+function recapDone(pid){return pid==="open"||pid==="lesson"||pid==="end"?recapReached(pid):S.picks[+pid.slice(1)]!==undefined}
+function recapPid(){const L=steps(CH),order=PIDS(CH);let best="open",bi=0;
+  for(let p=0;p<=Math.min(S.pos||0,L.length-1);p++){const pid=recapPidOf(L[p]);if(!pid||!recapReached(pid))continue;const o=order.indexOf(pid);if(o>bi){bi=o;best=pid}}return best}
+function recapArgs(){return [S,allStates(),globalFlags()]}
+const recapP=a=>a.map(t=>`<p>${esc(t)}</p>`).join("");
+function recapTitle(n){return n===1?"Before you start":`Previously on ${COURSE.full_title||COURSE.title}`}
+/* the opening page card */
+function recapCardHTML(){const RC=recapCh();if(!RC)return "";const n=CH.num,lines=RC.previously(n,...recapArgs());if(!lines||!lines.length)return "";
+  const k=`recap.${BID()}.${n}`,rec=store.get(k,null);let open;
+  if(RECAP.auto.has(n))open=true;
+  else if(!rec||(recapAwayDays()>=3&&(rec.seen||0)<RECAP.t0)){open=true;RECAP.auto.add(n);store.set(k,{open:rec?rec.open:null,seen:Date.now()})}
+  else open=!!rec.open;
+  const V=window.HalcyonRecapVoice,voice=V&&typeof V.speak==="function"?`<button type="button" class="btn ghost small" id="rcvoice">▶ Listen</button>`:"";
+  return `<div class="recap${open?" open":""}" id="recapcard"><button type="button" class="rchead" id="rctoggle" aria-expanded="${open}" aria-controls="rcbody" aria-label="${esc(recapTitle(n))}"><span class="rct">${esc(recapTitle(n))}</span><span class="rcpre">${esc(lines[0])}</span><span class="rcact" aria-hidden="true">${open?"Hide":"Show"}</span></button><div class="rcbody" id="rcbody"${open?"":" hidden"}>${recapP(lines)}${voice}</div></div>`}
+function recapCardSet(open,focus){const c=$("recapcard");if(!c)return;const b=$("rctoggle");c.classList.toggle("open",open);b.setAttribute("aria-expanded",String(open));$("rcbody").hidden=!open;b.querySelector(".rcact").textContent=open?"Hide":"Show";
+  RECAP.auto.delete(CH.num);store.set(`recap.${BID()}.${CH.num}`,{open,seen:Date.now()});if(focus){b.focus();c.scrollIntoView({block:"start",behavior:"smooth"})}}
+/* orientation notes: shown at the top of the page after the one they name, once */
+/* back after 3 or more days and not on the opening page (where the card does this job): one line pointing at Where am I?, once per visit */
+function recapBackHTML(){const RC=recapCh();if(!RC||RECAP.back===true||recapAwayDays()<3)return "";const L=steps(CH);if((L[Math.min(S.pos||0,L.length-1)]||{}).k==="open"){RECAP.back=true;return ""}
+  if(RECAP.back!==CH.num+":"+S.pos){if(RECAP.back)return (RECAP.back=true,"");RECAP.back=CH.num+":"+S.pos}
+  return `<div class="rback" id="rback"><span>Been a while? Here's where you are in the story.</span><button type="button" class="btn ghost small" id="rbackgo" aria-haspopup="dialog">Where am I?</button></div>`}
+function recapNotesHTML(){const RC=recapCh();if(!RC)return "";const v=CH.num+":"+S.pos;if(RECAP.view!==v){RECAP.view=v;Object.keys(RECAP.shown).forEach(k=>RECAP.shown[k]=false)} // a note stays only while its page is on screen
+  const N=RC.ch[CH.num].notes;if(!N)return "";const L=steps(CH),k0=`recapnote.${BID()}`;let seen=null,out="";
+  RC.pids.filter(pid=>N[pid]).forEach(pid=>{const key=CH.num+"."+pid,nt=N[pid];
+    if(RECAP.shown[key]===undefined){if(out||Object.keys(RECAP.shown).some(k=>RECAP.shown[k]===true))return; // one note per page: a reader who skipped ahead gets the rest on the pages after
+      const idx=L.findIndex(x=>recapPidOf(x)===pid);seen=seen||store.get(k0,{});if(seen[key]||idx<0||idx>=(S.pos||0)||!recapDone(pid))return;
+      seen[key]=Date.now();store.set(k0,seen);RECAP.shown[key]=true}
+    if(!RECAP.shown[key]||RECAP.gone.has(key))return;
+    out+=`<aside class="rnote" aria-labelledby="rn-${esc(key.replace(".","-"))}"><div class="rnk">Getting your bearings</div><h3 class="rnh" id="rn-${esc(key.replace(".","-"))}">${esc(nt.title)}</h3>${recapP(nt.text||[])}<button type="button" class="btn ghost small" data-rngo="${esc(key)}" aria-label="Got it, hide this note">Got it</button></aside>`});
+  return out}
+function recapWire(){const t=$("rctoggle");if(t)t.onclick=()=>recapCardSet(t.getAttribute("aria-expanded")!=="true");
+  const v=$("rcvoice");if(v)v.onclick=()=>{try{window.HalcyonRecapVoice.speak({course:COURSE.id,chapter:CH.num,title:recapTitle(CH.num),lines:recapsOf().previously(CH.num,...recapArgs())})}catch(e){}};
+  const w=$("wherebtn");if(w)w.onclick=()=>whereOpen(w);const bk=$("rbackgo");if(bk)bk.onclick=()=>whereOpen(bk);
+  $("page").querySelectorAll("[data-rngo]").forEach(b=>b.onclick=()=>{RECAP.gone.add(b.dataset.rngo);const a=b.closest(".rnote"),nx=a.nextElementSibling;a.remove();
+    const f=nx&&nx.matches(".rnote")?nx.querySelector("button"):$("page").querySelector("h1, h2");if(f){if(!f.matches("button"))f.tabIndex=-1;f.focus({preventScroll:true})}})}
+function recapRail(){const el=$("wherecard");if(!el)return;const RC=recapCh();el.hidden=!RC;if(!RC){el.innerHTML="";return}
+  el.innerHTML=`<button type="button" class="btn ghost small" id="railwhere" aria-haspopup="dialog">Where am I?</button><p class="prog whereline">${esc(RC.here(CH.num,recapPid(),...recapArgs()))}</p>`;
+  $("railwhere").onclick=()=>whereOpen($("railwhere"))}
+/* the "Where am I?" panel: a modal sheet over the page (a side panel on desktop, a bottom sheet on a phone) */
+function whereOpen(from){const RC=recapCh();if(!RC)return;whereClose(false);const n=CH.num,pid=recapPid(),A=recapArgs(),x=RC.recap(n,pid,...A);if(!x)return;
+  const dup=pid==="open"&&!!$("recapcard")&&JSON.stringify(x.full)===JSON.stringify(RC.previously(n,...A));
+  const byId={};castList().forEach(c=>byId[c.id]=c);
+  const who=x.who.map(o=>`<li>${avatar(byId[o.id]||{id:o.id,name:o.name},40)}<span><b>${esc(o.name)}</b><span class="wwl">${esc(o.line)}</span></span></li>`).join("");
+  const back=document.createElement("div");back.className="wback";back.id="wback";back.onclick=()=>whereClose(true);
+  const el=document.createElement("section");el.className="wpanel";el.id="wpanel";el.dataset.pid=pid;el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-labelledby","wtitle");el.tabIndex=-1;
+  el.innerHTML=`<div class="whead"><h2 id="wtitle" tabindex="-1">Where am I?</h2><button type="button" class="btn ghost small" id="wclose">Close</button></div>
+    <p class="where" id="wherehere">${esc(x.here)}</p>
+    <h3 class="wsub">The story so far</h3><div class="wshort" id="wshort">${recapP(x.short)}</div>
+    ${dup?`<button type="button" class="linkbtn wmore" id="wcard">Read the full recap at the top of this page</button>`
+      :x.full.length?`<button type="button" class="linkbtn wmore" id="wmore" aria-expanded="false" aria-controls="wfull">More</button><div class="wfull" id="wfull" hidden>${recapP(x.full)}</div>`:""}
+    ${who?`<h3 class="wsub">Who's in this scene</h3><ul class="wwho" id="wwho">${who}</ul>`:""}`;
+  RECAP.inert=[...document.body.children].filter(e=>!e.inert&&!/^(SCRIPT|STYLE|LINK)$/.test(e.tagName));RECAP.inert.forEach(e=>e.inert=true);
+  document.body.append(back,el);RECAP.open=true;RECAP.at=n+":"+S.pos;RECAP.ret=from&&from.id||null;
+  $("wclose").onclick=()=>whereClose(true);
+  const m=$("wmore");if(m)m.onclick=()=>{const f=$("wfull"),on=f.hidden;f.hidden=!on;m.setAttribute("aria-expanded",String(on));m.textContent=on?"Less":"More"};
+  const cd=$("wcard");if(cd)cd.onclick=()=>{whereClose(false);recapCardSet(true,true)};
+  el.addEventListener("keydown",e=>{if(e.key==="Tab"){const f=[...el.querySelectorAll("button:not([hidden]),a[href]")].filter(b=>b.offsetParent!==null);if(!f.length)return;const a=f[0],z=f[f.length-1];
+      if(e.shiftKey&&(document.activeElement===a||document.activeElement===$("wtitle"))){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+  $("wtitle").focus()}
+function whereClose(restore){const p=$("wpanel"),b=$("wback");if(!p&&!b)return;if(p)p.remove();if(b)b.remove();RECAP.open=false;
+  (RECAP.inert||[]).forEach(e=>e.inert=false);RECAP.inert=null;
+  const r=RECAP.ret;RECAP.ret=null;if(restore){const t=(r&&$(r))||$("wherebtn")||$("railwhere");if(t)t.focus()}}
+/* a redraw for another page (or leaving the chapter) closes the panel, so it never describes a page the reader has left */
+function whereSync(){if(RECAP.open&&(TRACK!=="full"||!CH||RECAP.at!==CH.num+":"+S.pos))whereClose(false)}
+addEventListener("hashchange",()=>whereClose(false));
+/* a phone tab left in memory and brought back days later counts as a return too */
+let recapHid=0;document.addEventListener("visibilitychange",()=>{if(document.hidden){recapHid=Date.now();return}
+  if(recapHid&&Date.now()-recapHid>=3*864e5&&COURSE){RECAP.t0=Date.now();RECAP.last[COURSE.id]=recapHid;RECAP.auto.clear();RECAP.back=false;if(TRACK==="full"&&CH&&S&&!RECAP.open)render()}recapHid=0});
+addEventListener("keydown",e=>{if(RECAP.open&&e.key==="Escape"){e.preventDefault();whereClose(true)}});
 
 /* ===== labs: the Labs step's lab cards (lab.js draws them), completion, and the Labs waiting list ===== */
 function labsDone(c,st){const L=labsOf(c);return !L.length||(!!window.HalcyonLab&&L.every(l=>HalcyonLab.done(l,((st||{}).labs||{})[l.id])))}
@@ -1150,8 +1266,9 @@ function renderRail(){
   $("chapters").querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>resetChapter(+b.dataset.r));
   const cast=[...BASE_CAST,...(TRACK==="full"?FULL_CAST_EXTRA:[])];chapters().filter(c=>c.num<=CH.num&&c.cast).forEach(c=>c.cast.forEach(x=>cast.push(x)));const seen=new Map();cast.forEach(([n,d])=>seen.set(n,d));
   $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
+  recapRail();
 }
-function render(){_render();castStrip();narAttach();navSync();ambSync();handoffOffer()}
+function render(){_render();castStrip();narAttach();navSync();ambSync();handoffOffer();whereSync()}
 function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();if(TRACK==="final")return finalRender();if(TRACK==="cert")return renderCert();if(TRACK==="verify")return renderVerify();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
@@ -1160,7 +1277,7 @@ async function api(path,opts={}){if(TESTP&&/^\/api\/progress\b/.test(path))retur
   const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
 async function listenPull(){if(TESTP||!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
 const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.qa.ok","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
-function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.bookEd.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
+function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.recap")||k.startsWith("halcyon.bookEd.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
   document.querySelector(".rail").hidden=true;const signup=mode==="signup";
   $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>${signup?"Create your account":"Sign in"}</h1><div class="story"><p>${signup?"You've been invited to The Halcyon Launch, a library of choose-your-path certification courses. Your progress saves to your account so you can pick up anywhere.":"Invite only. Sign in to pick up where you left off."}</p></div>
@@ -1244,7 +1361,8 @@ function renderLibrary(){setTimeout(ambSync,0);TRACK="library";CH=null;$("railga
   $("page").querySelectorAll("[data-course]").forEach(b=>b.onclick=async()=>{if(await useCourse(b.dataset.course)){renderHome();renderRail();top()}})}
 function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!==COURSE.id){useCourse(c.id).then(()=>resumeFrom(cur));return}cur=(cur||0)-COURSE.base;const FB=FULL_BASE();if(cur>=900&&hasMock()){const lp=store.get("lastplace."+COURSE.id,null);return openMock(lp&&lp.t==="mock"?lp.f:undefined)}if(cur>FB&&cur<FB+100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-FB))return openChapter("full",cur-FB)}else if(cur>=1&&cur<100){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
 /* PMP Full Course: full/v2/preview.js lists the live v2 files (cast.js and each chapter as it's written); they load in place from full/v2/ */
-async function pmpLoad(){window.HALCYON_FULL=[];await loadScripts(["full/v2/preview.js"]);const P=window.HALCYON_V2||{};await loadScripts((P.files||[]).map(f=>"full/v2/"+f));buildOrders()}
+async function pmpLoad(){window.HALCYON_FULL=[];await loadScripts(["full/v2/preview.js"]);const P=window.HALCYON_V2||{};await loadScripts((P.files||[]).map(f=>"full/v2/"+f));buildOrders();
+  const pc=courseById("pmp");if(pc&&window.HALCYON_RECAPS&&!pc._recaps)pc._recaps=window.HALCYON_RECAPS} // full/v2/recaps.js ("Story so far") is one of the v2 files
 async function boot(){
   await pmpLoad();
   if($("ambtoggle")){ambUI();$("ambtoggle").onchange=e=>{AMB.on=e.target.checked;store.set("amb",AMB.on);AMB.cur=null;AMB.lastSting="";ambSync();savePrefs()};$("ambvol").oninput=e=>{AMB.vol=+e.target.value;store.set("ambvol",AMB.vol);AMB.els[AMB.i].volume=AMB.vol;savePrefs()}}
@@ -1265,7 +1383,7 @@ async function boot(){
   if($("liblink"))$("liblink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderLibrary();top()};
   $("homelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderHome();renderRail()};
   if((COURSE.scripts||COURSE.labs)&&!COURSE._loaded)await useCourse(COURSE.id);
-  if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;$("username").textContent="";if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
+  if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;$("username").textContent="";recapSnap();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
   let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
   if(!me.user){if(PROF.signedOut)PROF.signedOut();if(/^#verify\b/.test(location.hash)){document.querySelector(".rail").hidden=true;return renderVerify()}const inv=new URLSearchParams(location.search).get("invite");
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
@@ -1281,7 +1399,7 @@ async function boot(){
   USERNAME=me.user.name||"";
   document.querySelector(".rail").hidden=false;$("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
   $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();if(PROF.testKeys)PROF.testKeys().forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});location.href="/"}; // test profile data goes with the account that made it
-  if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(TESTP?store.get("cur",0):(me.user.cur||0));
+  recapSnap();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(TESTP?store.get("cur",0):(me.user.cur||0));
 }
 /* ===== QA mode hook: qa.js (speaker chips, the QA bar, Flag a problem) reads where the reader and the player are. Read only. ===== */
 window.HalcyonState=function(){const a=NAR.audio,bk=NAR.page==="book"&&NAR.book,ch=(TRACK==="full"||TRACK==="ref")&&CH?CH:null;

@@ -339,6 +339,38 @@ window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};
 window.va("beforeSend",function(e){try{var u=new URL(e.url);u.search="";u.hash="";e.url=u.href}catch(x){}return e});
 if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=document.createElement("script");vs.defer=true;vs.src="/_vercel/insights/script.js";vs.dataset.disableAutoTrack="1";document.head.appendChild(vs)}
 </script>
+<style>
+/* Story so far (2026-10-12): the "Previously on" card, the "Where am I?" panel, and orientation notes. Text is --ink or --muted on --page
+   or --soft (4.5:1 or better in both themes); no class here is one the narration highlight or the QA line count reads (.story, h1, h2 in #page) */
+.chtools{display:flex;flex-wrap:wrap;align-items:flex-start;gap:4px 10px;margin:6px 0 14px}.chtools .contents{flex:1 1 220px;min-width:0;margin:0}
+.wherebtn{margin:0;min-height:32px;flex:0 0 auto}
+.recap{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--soft);margin:0 0 16px;min-width:0}
+.rchead{display:flex;align-items:center;gap:10px;width:100%;font:inherit;text-align:left;color:var(--ink);background:none;border:0;border-radius:8px;padding:10px 14px;cursor:pointer;min-height:44px;min-width:0}
+.rchead:hover{background:var(--accent-soft)}.rct{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);font-weight:600;flex:0 0 auto;max-width:60%}
+.rcpre{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:14.5px}
+.recap.open .rcpre{visibility:hidden}.rcact{flex:0 0 auto;margin-left:auto;font-size:13.5px;font-weight:600;color:var(--accent);text-decoration:underline}
+.rcbody{padding:0 16px 12px}.rcbody p{margin:0 0 10px;font-family:var(--story);font-size:17px;line-height:1.55;color:var(--ink);max-width:68ch}
+@media (max-width:520px){.rchead{flex-wrap:wrap;gap:2px 10px}.rct{max-width:none}.rcpre{order:3;flex-basis:100%}.recap.open .rcpre{display:none}}
+.rnote{border:1px solid var(--line);border-radius:8px;background:var(--page);padding:10px 14px 12px;margin:0 0 14px;box-shadow:inset 3px 0 0 var(--muted)}
+.rnk{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rnote .rnh{font-family:var(--ui);font-size:15.5px;letter-spacing:0;text-transform:none;color:var(--ink);font-weight:600;margin:2px 0 6px}
+.rnote p{margin:0 0 6px;font-size:15px;color:var(--ink)}.rnote .btn{margin:4px 0 0;min-height:32px}
+.rback{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--soft);padding:8px 12px;margin:0 0 14px;font-size:15px;color:var(--ink)}.rback span{flex:1 1 200px}.rback .btn{margin:0;min-height:32px}
+.wpanel:focus{outline:none}
+.wherecard{display:grid;gap:6px;justify-items:start}.wherecard .btn{margin:0;min-height:32px}.whereline{margin:0;color:var(--ink);overflow-wrap:anywhere}
+.wback{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.4)}
+.wpanel{position:fixed;z-index:61;top:0;right:0;bottom:0;width:min(440px,100vw);overflow-y:auto;overscroll-behavior:contain;background:var(--page);color:var(--ink);border-left:1px solid var(--line);box-shadow:-8px 0 24px rgba(0,0,0,.18);padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px))}
+@media (max-width:640px){.wpanel{top:auto;left:0;width:auto;max-height:86vh;max-height:86dvh;border-left:0;border-top:1px solid var(--line);border-radius:14px 14px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.18);padding:14px 16px calc(18px + env(safe-area-inset-bottom,0px))}}
+.whead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}.whead h2{margin:0;font-size:20px}.whead h2:focus{outline:none}.whead h2:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.whead .btn{margin:0;min-height:36px}
+.where{font-family:var(--mono);font-size:13px;line-height:1.5;color:var(--ink);background:var(--soft);border-radius:6px;padding:8px 10px;margin:0 0 12px;overflow-wrap:anywhere}
+.wpanel .wsub{margin:16px 0 6px;color:var(--muted)}
+.wshort p,.wfull p{margin:0 0 8px;font-family:var(--story);font-size:17px;line-height:1.5}.wfull{border-left:3px solid var(--line);padding-left:10px;margin-top:6px}
+.wmore{display:inline-flex;align-items:center;min-height:32px;font-size:14.5px}
+.wwho{list-style:none;margin:0;padding:0;display:grid;gap:10px}.wwho li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;align-items:start}
+.wwho b{display:block;font-size:15px}.wwl{display:block;font-size:14px;line-height:1.4;color:var(--muted)}
+@media print{.rback,.recap,.rnote,.wherebtn,.wherecard,.wpanel,.wback{display:none!important}}
+</style>
 <link rel="stylesheet" href="qa.css">
 <link rel="stylesheet" href="final.css">
 </head>
@@ -354,6 +386,7 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
 
     <div class="card" id="mockcard" hidden></div>
     <div id="railgame">
+    <div class="card wherecard" id="wherecard" hidden></div>
     <div class="card">
       <h3 id="statetitle">Project state</h3>
       <div id="meters"></div>

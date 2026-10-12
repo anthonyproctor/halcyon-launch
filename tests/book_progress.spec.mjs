@@ -76,20 +76,21 @@ test("time left: real narration minutes for the reader's edition, word counts wh
   await open(page, "/#pmp/home");
   await expect(page.locator("#bookbar .bpline")).toContainText(fmtLeft(AUDIO[1].study.min / (ch1.scenes + 3) * studyLeft));
 
-  // a chapter without narration: only chapter 4's quiz left, timed at 200 words a minute
-  expect(AUDIO[4]).toBeUndefined();
+  // a chapter without narration (the last one not yet narrated): only its quiz left, timed at 200 words a minute
+  const NA = Object.keys(P).map(Number).filter(n => !AUDIO[n]).pop();
+  test.skip(!NA, "every chapter is narrated now");
   all.c201 = doneCh(1);
-  all.c204 = fresh({ pos: 3, max: 30, picks: Object.fromEntries([...Array(30).keys()].map(i => [i, 0])), drills: Object.fromEntries([...Array(10).keys()].map(j => [j, { ok: [true] }])), ex: { done: true } });
+  all["c" + (200 + NA)] = fresh({ pos: 3, max: 30, picks: Object.fromEntries([...Array(30).keys()].map(i => [i, 0])), drills: Object.fromEntries([...Array(10).keys()].map(j => [j, { ok: [true] }])), ex: { done: true } });
   await seed(page, all);
-  const quizWords = await page.evaluate(() => {
-    const c = window.HALCYON_FULL.find(x => x && x.num === 4), out = [];
+  const quizWords = await page.evaluate((NA) => {
+    const c = window.HALCYON_FULL.find(x => x && x.num === NA), out = [];
     const skip = new Set(["id", "after", "task", "domain", "approach", "video", "src"]); // tags and ids, not words on the page
     const walk = v => { if (v == null || typeof v === "number" || typeof v === "boolean") return; if (typeof v === "string") return out.push(v); if (Array.isArray(v)) return v.forEach(walk); Object.entries(v).forEach(([k, x]) => skip.has(k) || walk(x)) };
     walk([c.quiz, c.cases]);
     return out.join(" ").replace(/<[^>]*>/g, " ").split(/\s+/).filter(w => /[A-Za-z0-9]/.test(w)).length;
-  });
+  }, NA);
   await open(page, "/#pmp/home");
-  await expect(page.locator("#bookbar .bpline")).toContainText(`Chapter 4 of 15 · ${fmtLeft(quizWords / 200)}`);
+  await expect(page.locator("#bookbar .bpline")).toContainText(`Chapter ${NA} of 15 · ${fmtLeft(quizWords / 200)}`);
 
   // a fresh book is many hours
   await page.evaluate(() => Object.keys(localStorage).filter(k => /^halcyon\.c2\d\d$/.test(k)).forEach(k => localStorage.removeItem(k)));
