@@ -2,13 +2,16 @@
 # Transcribe audiobook files with whisper (cached in /tmp/claude-501/bm), then write audio/bookmarks.json
 # (where each reading page starts inside each audiobook file). Used to hand off between Audiobook and reading.
 # usage: tools/book_marks.sh [course-id]   (no id = the PMP course)
+#        tools/book_marks.sh --v2          (the PMP v2 preview: audio/v2/ files, full/v2/ chapters, writes audio/v2/bookmarks.json)
 cd "$(dirname "$0")/.."
-c=$1; root=${c:+courses/$c/}; bm=/tmp/claude-501/bm${c:+-$c}
+v=; [[ $1 == --v2 ]] && { v=v2/; shift }
+c=$1; root=${c:+courses/$c/}; bm=/tmp/claude-501/bm${c:+-$c}${v:+-v2}
 mkdir -p $bm
-for f in ${root}audio/story/full-ch*.mp3 ${root}audio/full-ch*.mp3; do
+setopt null_glob
+for f in ${root}audio/${v}story/full-ch*.mp3 ${root}audio/${v}full-ch*.mp3; do
   id=${${f#$root}//\//_}; out=$bm/${id%.mp3}
   [ -s $out.json ] && [ $out.json -nt $f ] && continue
-  ffmpeg -nostdin -loglevel error -y -i $f -ar 16000 -ac 1 $bm/tmp.wav && \
-  whisper-cli -m ~/.cache/whisper/ggml-small.en.bin -f $bm/tmp.wav -oj -of $out >/dev/null 2>&1 && echo "transcribed $f"
+  ffmpeg -nostdin -loglevel error -y -i $f -ar 16000 -ac 1 $bm/tmp.$$.wav && \
+  whisper-cli -m ~/.cache/whisper/ggml-small.en.bin -f $bm/tmp.$$.wav -oj -of $out >/dev/null 2>&1 && echo "transcribed $f"
 done
-node tools/book_marks.mjs ${c:+--course} $c
+node tools/book_marks.mjs ${c:+--course} $c ${v:+--v2}

@@ -1,0 +1,24 @@
+{
+ "full": {
+  "1": {
+   "story": {
+    "src": "audio/v2/story/full-ch01.mp3",
+    "min": 40.5
+   },
+   "study": {
+    "src": "audio/v2/full-ch01.mp3",
+    "min": 75.1
+   }
+  },
+  "2": {
+   "story": {
+    "src": "audio/v2/story/full-ch02.mp3",
+    "min": 41.2
+   },
+   "study": {
+    "src": "audio/v2/full-ch02.mp3",
+    "min": 77.2
+   }
+  }
+ }
+}
