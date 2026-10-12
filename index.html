@@ -370,6 +370,28 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
 .wwho{list-style:none;margin:0;padding:0;display:grid;gap:10px}.wwho li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;align-items:start}
 .wwho b{display:block;font-size:15px}.wwl{display:block;font-size:14px;line-height:1.4;color:var(--muted)}
 @media print{.rback,.recap,.rnote,.wherebtn,.wherecard,.wpanel,.wback{display:none!important}}
+/* bookmarks and notes (2026-10-12): a small toggle at the end of the Contents row and in the Audiobook text header, a one line row under it, My notes */
+.bmbtn{flex:0 0 auto;display:inline-grid;place-items:center;width:32px;height:32px;margin:0 0 0 auto;padding:0;background:transparent;color:var(--accent);border:1px solid var(--line);border-radius:7px;cursor:pointer}
+.bmbtn svg path{fill:none}.bmbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}.bmbtn[aria-pressed="true"] svg path{fill:currentColor}
+.bmbtn:hover{border-color:var(--accent)}
+.bmrow{margin:-8px 0 14px;font-size:14px;line-height:1.45;color:var(--ink);overflow-wrap:anywhere}.bmrow[hidden]{display:none}
+.bmrow .linkbtn{font-size:14px}.bmnoteline{color:var(--ink)}
+.bmform{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.bminput{font:inherit;font-size:16px;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:7px;padding:7px 10px;width:100%;min-width:0;box-sizing:border-box}
+.bminput:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.bmform .bmrev{flex:1 1 auto;min-height:24px}.bmformbtns{display:flex;align-items:center;gap:12px}.bmformbtns .btn.small{margin:0}
+.bmrev input,.bmacts input{width:18px;height:18px;margin:0}
+.bfhead{display:flex;align-items:flex-start;gap:10px}.bfhead>div{flex:1 1 auto;min-width:0}.bfhead .bmbtn{background:var(--page)}.bfhead .bmbtn[aria-pressed="true"]{background:var(--accent-soft)}
+.bfollow>.bmrow{margin:0;padding:8px 14px;border-bottom:1px solid var(--line)}
+.notescard{padding:10px 16px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}.notescard[hidden]{display:none}#bmbody{margin-bottom:24px}.notescard .linkbtn{font-size:14px}
+.bmlink{margin:4px 0 18px}ol.plan li{overflow-wrap:anywhere}
+.bmbook h2 .prog{font-weight:400}.bmch{font-size:15px;margin:16px 0 8px}
+.bmlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.bmitem{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;gap:8px;min-width:0}
+.bmtop{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;min-width:0}.bmtop .linkbtn{text-align:left;font-size:15px;overflow-wrap:anywhere}
+.bmacts{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px}.bmacts .chk{min-height:24px}
+.bmstatus{min-height:0;font-size:14px;color:var(--ink)}.bmstatus:not(:empty){margin:0 0 12px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
+@media print{.bmbtn,.bmrow,.notescard{display:none!important}}
 </style>
 <link rel="stylesheet" href="qa.css">
 <link rel="stylesheet" href="final.css">
@@ -407,6 +429,7 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
       <dl class="cast" style="margin:0" id="cast"></dl>
     </details>
     </div>
+    <div class="card notescard" id="notescard" hidden></div>
   </aside>
 </div>
 <footer class="sitefoot" id="sitefoot"><p>These courses are independent study stories. They aren't affiliated with or endorsed by the certifying bodies whose exams they cover.</p></footer>

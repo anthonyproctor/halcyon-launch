@@ -180,7 +180,7 @@ function fullRender(){
   const curPhase=STORY()?({open:"Story",scene:"Story",end:"Story",lesson:MENTOR()+"'s notes",drill:MENTOR()+"'s notes",exercise:MENTOR()+"'s notes",labs:MENTOR()+"'s notes",quiz:MENTOR()+"'s notes"})[cur.k]:phase(cur.k);const PH=STORY()?["Story",MENTOR()+"'s notes"]:["Story","Lesson","Decisions","Quiz","Debrief"];
   const phOf=k=>STORY()?({open:"Story",scene:"Story",end:"Story"}[k]||MENTOR()+"'s notes"):phase(k);const phStart=ph=>{const a=st.map((x,p)=>p).filter(p=>phOf(st[p].k)===ph&&secOpen(p));return a.length?(a.includes(S.pos)?S.pos:a.filter(p=>p<=S.max).pop()??a[0]):-1};
   const chmap=`<ol class="chmap" aria-label="Chapter steps">${PH.map((p,i)=>{const idx=PH.indexOf(curPhase),to=phStart(p);return `<li class="${p===curPhase?"now":i<idx?"done":""}"><button type="button" class="phbtn" data-ph="${to}" ${to<0?"disabled":""}>${p}</button></li>`}).join("")}</ol>`;
-  const nav=chmap+`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${esc(secLabel(CH,x))}" aria-label="${esc(secLabel(CH,x))}" ${secOpen(i)?"":"disabled"}></button>`).join("")}</div><div class="chtools"><details class="contents"><summary>Contents · ${esc(secLabel(CH,cur))}</summary>${secListHTML()}</details>${recapCh()?`<button type="button" class="btn ghost small wherebtn" id="wherebtn" aria-haspopup="dialog">Where am I?</button>`:""}</div>`;
+  const nav=chmap+`<div class="stepnav">${st.map((x,i)=>`<button type="button" class="sdot ${i===S.pos?"now":""} ${i<=S.max?"seen":""}" data-p="${i}" title="${esc(secLabel(CH,x))}" aria-label="${esc(secLabel(CH,x))}" ${secOpen(i)?"":"disabled"}></button>`).join("")}</div><div class="chtools"><details class="contents"><summary>Contents · ${esc(secLabel(CH,cur))}</summary>${secListHTML()}</details>${recapCh()?`<button type="button" class="btn ghost small wherebtn" id="wherebtn" aria-haspopup="dialog">Where am I?</button>`:""}${bmBtnHTML("bmbtn",false,"Bookmark this page")}</div>`;
   let h=nav+recapBackHTML()+recapNotesHTML();
   if(cur.k==="open"){
     h+=recapCardHTML()+chapterArt()+`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · ${esc(CH.weeks)}</div><h1>${CH.title}</h1>${STORY()?"":`<div class="tags" style="margin-bottom:12px">${(CH.tasks||[]).map(t=>`<span class="tag dom">${t} ${TASKNAMES[t]||""}</span>`).join("")}</div>`}${paras(CH.opening.map(p=>p))}${episodeCard(CH)}<div class="bar"><button class="btn" id="fnext" type="button">${STORY()?"Continue the story":"Next: the lesson"}</button></div>`;
@@ -211,7 +211,7 @@ function fullRender(){
      <div class="story"><p>Weakest area this chapter: <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent, counting decisions and quiz together.</p></div>
      ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">${MENTOR()}'s notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`${COURSE.final?`<button class="btn" id="tofinal" type="button">Take the final assessment</button>`:""}${hasMock()?`<button class="btn${COURSE.final?" ghost":""}" id="tomock" type="button">Take the practice exam</button>`:""}`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
   }
-  $("page").innerHTML=h;wireVideos();if(cur.k==="labs")labsMount();recapWire();
+  $("page").innerHTML=h;wireVideos();if(cur.k==="labs")labsMount();recapWire();bmWireChapter();
   $("page").querySelectorAll(".sdot[data-p]").forEach(b=>b.onclick=()=>fullGo(+b.dataset.p));
   $("page").querySelectorAll("[data-ph]").forEach(b=>b.onclick=()=>{const p=+b.dataset.ph;if(p>=0&&p!==S.pos)fullGo(p)});
   const nx=$("fnext");if(nx)nx.onclick=()=>fullGo(S.pos+1);
@@ -625,7 +625,10 @@ function studyPlan(m){
   if(hasMock()&&(!H||!H.list.length)){if(done5())plan.push(["Take a practice exam","You've finished five chapters. A full timed practice exam now shows where you really stand.",{mock:1}])}
   else if(hasMock()||done5())plan.push(["Mixed practice","Do 10 mixed practice questions to keep everything warm.",{task:"mixed"}]);
   if(!plan.length)plan.push(["Start here","Open the Full Course and play chapter 1.",{open:1}]);
-  return plan.slice(0,5);
+  const out=plan.slice(0,5);
+  // bookmarks marked "Review this" (bookmarks and notes, 2026-10-12): after the plan's own items, so its first step never changes
+  bmReviews().slice(0,3).forEach(b=>out.push([b.tr==="book"?`Review chapter ${b.n} in the Audiobook at ${fmtT(b.t)}`:`Review ${b.x}`,`${b.tr==="book"?`${bmTitle(b)} Chapter ${b.n}`:`Chapter ${b.n}`}${b.ct?", "+b.ct:""}.${b.note?" Your note: "+b.note:" You marked it to review."}`,{bm:b.id}]));
+  return out;
 }
 /* Progress page: the finish line as steps, from existing state only (no scoring changes). Chapters = bookProgress's percent. Practice exam =
    the best score over every mock attempt, right over total as the history table shows it. Final assessment (courses with one) =
@@ -651,7 +654,7 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   $("page").innerHTML=`<div class="kicker">My progress</div><h1>Scoreboard</h1>${finishHTML()}
    <div class="end-grid">${hasMock()?`<div class="card"><h3>Readiness</h3><div class="big">${ready!==null?ready+"%":"·"}</div><p class="prog">${last?`Last timed practice exam, ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}`:"Take a timed practice exam to see this"}</p></div>`:""}${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${domPct(d)!==null?domPct(d)+"%":"·"}</div></div>`).join("")}</div>
    <h2>${MENTOR()}'s study plan</h2><div class="story"><p>Built from your weakest tasks and where you are in the course. It updates as you play.</p></div>
-   <ol class="plan">${plan.map(([h,b,a],i)=>`<li><b>${esc(h)}.</b> ${esc(b)} <button class="btn small" data-plan="${i}" type="button">${a.mock?"Open practice exam":a.task?"Practice":"Open"}</button></li>`).join("")}</ol>
+   <ol class="plan">${plan.map(([h,b,a],i)=>`<li><b>${esc(h)}.</b> ${esc(b)} <button class="btn small" data-plan="${i}" type="button"${a.bm?` aria-label="Open the bookmark to review"`:""}>${a.mock?"Open practice exam":a.task?"Practice":"Open"}</button></li>`).join("")}</ol>${bmLinkHTML("dashnotes")}
    <h2>Where you need help</h2>${weak.length?weak.map(([t,p])=>{const ti=taughtIn(t),vids=videosFor(t);return `<div class="card helpcard"><div class="row"><b>${t} ${TASKNAMES[t]}</b><span class="pill ${p>=75?"p-ok":p>=50?"p-warn":"p-bad"}">${p}%</span></div>
      <p class="prog">Taught in: ${ti.map(({c,scenes})=>`<button class="linkbtn" data-lesson="${c.num}">Ch ${c.num} lesson</button>${scenes.map(i=>` · <button class="linkbtn" data-scene="${c.num}:${i}">decision ${i+1}</button>`).join("")}`).join(" | ")||(hasMock()?"the practice exam only":"no chapter yet")}</p>
      ${vids.slice(0,2).map(([v,c])=>`<p class="prog">Video: <a href="https://www.youtube.com/watch?v=${esc(v[0])}" target="_blank" rel="noopener">${esc(v[1])}</a> (${esc(v[2])}, ${esc(v[3])})</p>`).join("")}
@@ -666,8 +669,143 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   pg.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>openLesson(+b.dataset.lesson));
   pg.querySelectorAll("[data-scene]").forEach(b=>b.onclick=()=>{const [n,i]=b.dataset.scene.split(":").map(Number);openChapter("full",n);const p=steps(CH).findIndex(x=>x.k==="scene"&&x.i===i);S.max=Math.max(S.max||0,p);fullGo(p)});
   pg.querySelectorAll("[data-task]").forEach(b=>b.onclick=()=>startPractice(b.dataset.task));
-  pg.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>{const a=plan[+b.dataset.plan][2];if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)});
+  if($("dashnotes"))$("dashnotes").onclick=()=>openNotes();
+  pg.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>{const a=plan[+b.dataset.plan][2];if(a.bm)return bmJump(bmFind(a.bm));if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)});
 }
+/* ===== bookmarks and notes (approved 2026-10-12, a light feature: most readers follow the study plan, friends may want notes) =====
+   What shows where:
+   - chapter pages (Full Course: opening, lesson, decisions, drills, exercise, labs, quiz, ending): a small bookmark toggle at the end of the
+     Contents row (#bmbtn, aria-pressed). Tapping it on adds the page and offers "Add a note" in one line under the row (#bmrow); the note
+     form is in the page, never a browser dialog: a one line note (200 characters at most) and "Review this in my study plan". Tapping it
+     off removes the bookmark with an in-page Undo. A bookmarked page with a note shows the note in that line.
+   - the Audiobook follow-along: the same toggle in the text panel's header (#bfbm) bookmarks the paragraph being read, at its start time.
+   - My notes (route <course>/notes, TRACK "notes"): every book's bookmarks, the open book first, grouped by chapter in reading order. Each
+     has a jump link (opens the page, or plays the Audiobook from the saved time), its note (edited in place), a review switch, and Delete
+     with an in-page Undo. Export downloads Markdown or plain text, built in the browser.
+   - links to My notes only once the reader has a bookmark: a one line card in the rail (#notescard), a line under the study plan on
+     Progress, and a button in the Guide's "Bookmarks and notes" entry (the entry itself always shows).
+   - "Review this" bookmarks of the open book join the study plan as review items (after the plan's own items, at most 3), with an Open
+     button back to the page; clearing the switch drops them.
+   Saved state: one small record per course at base+907, through store (the test profile keeps its own, frozen pages write nothing) and
+   synced like other progress (the server keeps 901 and up as side records, never a place to resume): {v:1, at, list:[{id, co (course),
+   tr ("full" or "book"), n (chapter), p (page id: open, lesson, sN decision, dN drill, ex, labs, quiz, end; for the Audiobook the section
+   being read), x (title or opening words, 90 characters), ct (chapter title), c (created, ms), note?, r? (1 = review), ed? and t? (the
+   Audiobook edition and time in seconds)}]}. At most BM_MAX bookmarks per course, so the record stays well under the server's 60 KB. */
+const BM_MAX=120,BM_NOTE=200;
+const bmClip=(s,n)=>{s=String(s||"").replace(/\s+/g," ").trim();return s.length>n?s.slice(0,n-1).replace(/\s+\S*$/,"")+"…":s};
+function BMKEY(c){return (c||COURSE).base+907}
+function bmGet(c){const B=store.get("c"+BMKEY(c),null);return B&&Array.isArray(B.list)?B:{v:1,list:[]}}
+const BMT={};
+function bmPut(B,c,now){c=c||COURSE;B.v=1;B.at=Date.now();const k=BMKEY(c);store.set("c"+k,B);
+  if(SYNC){const copy=JSON.parse(JSON.stringify(B));clearTimeout(BMT[k]);BMT[k]=setTimeout(()=>{delete SPEND[k];SYNC(k,copy)},now?0:800);SPEND[k]=[k,copy]}bmRail()}
+function bmCourses(){return COURSES.filter(c=>c.status==="live")}
+function bmTotal(){return bmCourses().reduce((a,c)=>a+bmGet(c).list.length,0)}
+function bmCourseOf(id){return courseById(id)||COURSE}
+function bmFind(id,co){const c=bmCourseOf(co),B=bmGet(c);return B.list.find(b=>b.id===id)||null}
+/* page ids for chapter steps, stable across Focus mode (which reorders the steps) */
+function bmPid(x){return x.k==="scene"?"s"+x.i:x.k==="drill"?"d"+x.j:x.k==="exercise"?"ex":x.k}
+function bmStep(c,pid){return steps(c).findIndex(x=>bmPid(x)===pid)}
+/* reading order inside a chapter, the same for every reader: opening, lesson, decisions (an Audiobook outcome sits with its decision), drills, exercise, labs, quiz, ending */
+function bmRank(b){const p=String(b.p||"");const m=/^[so](\d+)/.exec(p);const r=p==="open"?0:p==="lesson"?1:m?2+(+m[1])/100+(p[0]==="o"?.001:0):p[0]==="d"?3+(+p.slice(1)||0)/100:p==="ex"?4:p==="labs"?5:p==="quiz"?6:p==="end"?7:8;return r}
+function bmSort(L){return L.slice().sort((a,b)=>a.n-b.n||bmRank(a)-bmRank(b)||(a.tr==="book")-(b.tr==="book")||(a.t||0)-(b.t||0)||a.c-b.c)}
+function bmEdName(ed){return ed==="study"?"Story + lessons":"Story only"}
+function bmWhere(b){return b.tr==="book"?`Audiobook, ${bmEdName(b.ed)}, at ${fmtT(b.t)}`:""}
+function bmTitle(b){return b.tr==="book"?`“${b.x}”`:b.x}
+const BM_ICON=`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6.5 3.5h11v17l-5.5-4.2-5.5 4.2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`;
+function bmBtnHTML(id,on,label){return `<button type="button" class="bmbtn" id="${id}" aria-pressed="${on?"true":"false"}" aria-label="${esc(label)}" title="${esc(label)}">${BM_ICON}</button>`}
+/* add, remove (with undo) and edit, for the page in front of the reader */
+const BM_BYTES=50000; // the server refuses a record over 60000 characters, and a refused write would be lost at the next sign in
+const bmFits=B=>JSON.stringify(B).length<=BM_BYTES;
+function bmAdd(b){const B=bmGet();if(B.list.some(x=>x.id===b.id))return true;if(B.list.length>=BM_MAX)return false;B.list.push({...b,c:Date.now()});if(!bmFits(B))return false;bmPut(B);return true}
+function bmRemove(id,co){const c=bmCourseOf(co),B=bmGet(c),i=B.list.findIndex(x=>x.id===id);if(i<0)return null;const [b]=B.list.splice(i,1);bmPut(B,c);return {b,i,co:c.id}}
+function bmRestore(u){if(!u)return;const c=bmCourseOf(u.co),B=bmGet(c);if(!B.list.some(x=>x.id===u.b.id))B.list.splice(Math.min(u.i,B.list.length),0,u.b);bmPut(B,c)}
+function bmEdit(id,co,patch,now){const c=bmCourseOf(co),B=bmGet(c),b=B.list.find(x=>x.id===id);if(!b)return;
+  if("note" in patch){const v=String(patch.note||"").replace(/\s+/g," ").trim().slice(0,BM_NOTE);if(v)b.note=v;else delete b.note}
+  if("r" in patch){if(patch.r)b.r=1;else delete b.r}if(!bmFits(B))return false;bmPut(B,c,now);return true}
+/* the one line under the Contents row (chapter pages) or under the Audiobook text header: states added, note, removed, full, shown */
+function bmRowHTML(st,b){
+  if(st==="added")return `<span>Bookmarked.</span> <button type="button" class="linkbtn" data-bm="note">Add a note</button> <span class="prog" aria-hidden="true">·</span> <button type="button" class="linkbtn" data-bm="list">My notes</button>`;
+  if(st==="saved")return `<span>Saved.</span> <button type="button" class="linkbtn" data-bm="list">My notes</button>`;
+  if(st==="removed")return `<span>Bookmark removed.</span> <button type="button" class="linkbtn" data-bm="undo">Undo</button>`;
+  if(st==="full")return `<span>This book has as many bookmarks and notes as it can keep. Delete a few on</span> <button type="button" class="linkbtn" data-bm="list">My notes</button>`;
+  if(st==="note")return `<form class="bmform" data-bm="form" novalidate><label class="sr" for="${b.fid}">Note for this bookmark</label><input type="text" id="${b.fid}" class="bminput" maxlength="${BM_NOTE}" placeholder="A one line note (optional)" value="${esc(b.note||"")}" autocomplete="off"><label class="chk prog bmrev"><input type="checkbox" data-bm="rev" ${b.r?"checked":""}> Review this in my study plan</label><span class="bmformbtns"><button class="btn small" type="submit">Save</button><button class="linkbtn" type="button" data-bm="cancel">Cancel</button></span></form>`;
+  if(st==="shown"&&b&&b.note)return `<span class="bmnoteline"><span class="prog">Your note:</span> ${esc(b.note)}</span> <button type="button" class="linkbtn" data-bm="note" aria-label="Edit your note">Edit</button>`;
+  return ""}
+/* one controller for both places: here() describes the bookmark for what is on screen now, btn and row are its elements */
+/* one polite live region for short confirmations, so the line under the toggle (which can hold the note form) isn't announced whole */
+function bmSay(msg){let el=$("bmlive");if(!el){el=document.createElement("div");el.id="bmlive";el.className="sr";el.setAttribute("role","status");document.body.appendChild(el)}el.textContent="";setTimeout(()=>{el.textContent=msg},50)}
+const BM_SAY={added:"Bookmarked.",saved:"Note saved.",removed:"Bookmark removed.",full:"This book can't keep more bookmarks."};
+function bmControl(btn,row,here){if(!btn||!row)return;let undo=null,pin=null; // pin: the bookmark the line is about, so Add a note and Undo act on it even after the Audiobook moves on
+  const sync=st=>{if(!st)pin=null;const h=pin||here();const b=h&&bmFind(h.id,h.co);btn.setAttribute("aria-pressed",b?"true":"false");
+    if(st==="note"&&b){row.innerHTML=bmRowHTML("note",{...b,fid:row.id+"in"});row.hidden=false;row.dataset.st="note";const inp=row.querySelector("input[type=text]");inp.focus();wireForm(b,inp);return}
+    const s=st||(b?"shown":"");row.innerHTML=bmRowHTML(s,b);row.hidden=!row.innerHTML;row.dataset.st=s;row.dataset.at=Date.now();if(BM_SAY[s])bmSay(BM_SAY[s]);
+    row.querySelectorAll("[data-bm]").forEach(e=>{const a=e.dataset.bm;if(e.tagName!=="BUTTON")return;e.onclick=()=>{
+      if(a==="note")sync("note");else if(a==="list"){openNotes()}else if(a==="undo"){bmRestore(undo);undo=null;sync("");bmSay("Bookmark restored.");btn.focus()}}})};
+  const wireForm=(b,inp)=>{const f=row.querySelector("form"),rev=row.querySelector("[data-bm=rev]");
+    f.onsubmit=e=>{e.preventDefault();sync(bmEdit(b.id,b.co,{note:inp.value,r:rev.checked},true)===false?"full":"saved");btn.focus()};
+    row.querySelector("[data-bm=cancel]").onclick=()=>{sync("");btn.focus()};
+    f.addEventListener("keydown",e=>{if(e.key==="Escape"){e.preventDefault();e.stopPropagation();sync("");btn.focus()}})};
+  btn.onclick=()=>{const h=here();if(!h)return;pin=h;const b=bmFind(h.id,h.co);
+    if(b){undo=bmRemove(h.id,h.co);sync("removed")}else if(bmAdd(h))sync("added");else sync("full")};
+  btn._bmsync=sync;sync("")}
+/* chapter pages */
+function bmChapterHere(){if(TRACK!=="full"||!CH||!S)return null;const st=steps(CH),x=st[Math.min(S.pos,st.length-1)];if(!x)return null;const p=bmPid(x);
+  const title=x.k==="lesson"?`${LESSON()}: ${CH.lesson&&CH.lesson.title||""}`:x.k==="labs"?"Labs":secLabel(CH,x);
+  return {id:`full:${CH.num}:${p}`,co:COURSE.id,tr:"full",n:CH.num,p,x:bmClip(title,90),ct:bmClip(CH.title,60)}}
+function bmWireChapter(){const tools=$("page").querySelector(".chtools"),btn=$("bmbtn");if(!tools||!btn)return;
+  const row=document.createElement("div");row.className="bmrow";row.id="bmrow";row.hidden=true;tools.after(row);bmControl(btn,row,bmChapterHere)}
+/* the Audiobook follow-along: the paragraph being read (or the saved spot when nothing plays), at the paragraph's start time */
+function bfPara(){if(!BF.box)return null;const w=BF.words[Math.max(0,BF.cur)];return (w&&w.closest(".bfp"))||BF.box.querySelector(".bfp")}
+function bmBookHere(){const ch=bfChapter(),p=bfPara();if(!ch||!p)return null;const t=+(+p.dataset.t||0).toFixed(1);const c=TRACKS.full.list().find(x=>x.num===ch.n);
+  return {id:`book:${ch.ed}:${ch.n}:${t}`,co:COURSE.id,tr:"book",n:ch.n,ed:ch.ed,t,p:pidAt(ch.n,ch.ed,t)||"open",x:bmClip(p.textContent,90),ct:bmClip(c?c.title:"",60)}}
+function bmWireBook(){if(!BF.el)return;bmControl(BF.el.querySelector("#bfbm"),BF.el.querySelector("#bfbmrow"),bmBookHere)}
+function bmBookSync(){const p=bfPara();if(p===BF.bmp)return;const btn=BF.el&&BF.el.querySelector("#bfbm"),row=BF.el&&BF.el.querySelector("#bfbmrow");if(!btn)return;
+  // the line just confirmed a tap (Bookmarked, Saved, Removed with its Undo) or holds the note form: leave it, and the toggle, for 10 seconds
+  // after the tap (the form until it closes), so the reading moving on doesn't make the bookmark look like it failed
+  if(row&&(row.dataset.st==="note"||(["added","saved","removed","full"].includes(row.dataset.st)&&Date.now()-(+row.dataset.at||0)<10000)))return;BF.bmp=p;const h=bmBookHere();btn.setAttribute("aria-pressed",h&&bmFind(h.id,h.co)?"true":"false");
+  if(row&&btn._bmsync)btn._bmsync("")} // a new paragraph: the line shows that paragraph's own note, unless a note is being typed
+/* go back to a bookmark: the chapter page, or the Audiobook from the saved time */
+async function bmJump(b){if(!b)return;if(b.co&&b.co!==COURSE.id&&!(await useCourse(b.co)))return;
+  if(b.tr==="book"){store.set("bookEd."+COURSE.id,b.ed);const B=await bookManifest();await renderBook();top();if(B.full[b.n]&&B.full[b.n][b.ed])bookPlay(b.ed,b.n,Math.max(0.01,b.t||0));return}
+  if(!TRACKS.full.list().some(x=>x.num===b.n)){renderNotes();$("bmstatus").textContent="That chapter isn't in this book anymore.";return}openChapter("full",b.n);const p=bmStep(CH,b.p);if(p>=0&&p!==S.pos){S.max=Math.max(S.max||0,p);fullGo(p)}}
+function bmReviews(){return bmSort(bmGet().list.filter(b=>b.r))}
+function bmRail(){const el=$("notescard");if(!el)return;const n=bmTotal();const on=n>0&&TRACK!=="notes"&&!document.querySelector(".rail").hidden;el.hidden=!on;if(!on){el.innerHTML="";return}
+  el.innerHTML=`<button type="button" class="linkbtn" id="railnotes">My notes</button> <span class="prog">${n} bookmark${n>1?"s":""}</span>`;$("railnotes").onclick=()=>openNotes()}
+function bmLinkHTML(id){const n=bmGet().list.length;if(!n)return "";const r=bmReviews().length;return `<p class="bmlink"><button type="button" class="linkbtn" id="${id}">My notes</button> <span class="prog">${n} bookmark${n>1?"s":""}${r?`, ${r} to review`:""}</span></p>`}
+function openNotes(){if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderNotes();top()}
+/* My notes */
+const BMN={undo:null};
+function bmGroups(){const out=[];const cs=[COURSE,...bmCourses().filter(c=>c.id!==COURSE.id)];cs.forEach(c=>{const L=bmSort(bmGet(c).list);if(L.length)out.push({c,L})});return out}
+function bmItemHTML(b,k){const w=bmWhere(b),d=new Date(b.c||Date.now()).toLocaleDateString("en-US",{month:"short",day:"numeric"});
+  return `<li class="bmitem" data-id="${esc(b.id)}" data-co="${esc(b.co)}"><div class="bmtop"><button type="button" class="linkbtn bmjump" data-bm="jump" id="bmj${k}">${esc(bmTitle(b))}</button><span class="prog">${w?esc(w)+" · ":""}${esc(d)}</span></div>
+   <label class="sr" for="bmn${k}">Note for ${esc(b.x)}</label><input type="text" class="bminput" id="bmn${k}" data-bm="note" maxlength="${BM_NOTE}" placeholder="Add a note" value="${esc(b.note||"")}" autocomplete="off">
+   <div class="bmacts"><label class="chk prog"><input type="checkbox" data-bm="rev" aria-describedby="bmj${k}" ${b.r?"checked":""}> Review in my study plan</label><button type="button" class="linkbtn bmdel" data-bm="del" aria-label="Delete bookmark: ${esc(b.x)}">Delete</button></div></li>`}
+function bmListHTML(){const G=bmGroups();if(!G.length)return `<div class="story"><p>No bookmarks yet. On any chapter page, tap the bookmark at the end of the Contents row. In the Audiobook, tap the one above the text to save the spot you're hearing.</p></div>`;let k=0;
+  return G.map(({c,L})=>{const by=new Map();L.forEach(b=>{if(!by.has(b.n))by.set(b.n,[]);by.get(b.n).push(b)});
+    return `<section class="bmbook"><h2>${esc(c.full_title||c.title)}${c.full_title&&c.title?` <span class="prog">${esc(c.title)}</span>`:""}</h2>${[...by].map(([n,l])=>`<h3 class="bmch">Chapter ${n}${l[0].ct?": "+esc(l[0].ct):""}</h3><ul class="bmlist">${l.map(b=>bmItemHTML(b,k++)).join("")}</ul>`).join("")}</section>`}).join("")}
+function bmExport(kind){const G=bmGroups();if(!G.length)return;const md=kind==="md",day=new Date(),L=[];const q=v=>md?String(v).replace(/[\\`*_[\]#<>|]/g,"\\$&").replace(/^([-+]|\d+\.)(\s)/,"\\$1$2"):String(v);
+  L.push(md?"# My notes":"MY NOTES",`Exported ${day.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}`,"");
+  G.forEach(({c,L:list})=>{L.push(md?`## ${c.full_title||c.title}${c.full_title&&c.title?` (${c.title})`:""}`:`${(c.full_title||c.title).toUpperCase()}${c.full_title&&c.title?` (${c.title})`:""}`,"");let ch=null;
+    list.forEach(b=>{if(b.n!==ch){ch=b.n;L.push(md?`### Chapter ${b.n}${b.ct?": "+b.ct:""}`:`Chapter ${b.n}${b.ct?": "+b.ct:""}`,"")}
+      L.push(`${md?"- ":"* "}${q(b.tr==="book"?`${bmWhere(b)}: ${bmTitle(b)}`:b.x)}${b.r?" (review)":""}`);if(b.note)L.push(md?`    - Note: ${q(b.note)}`:`    Note: ${b.note}`)});L.push("")});
+  const blob=new Blob([L.join("\n")],{type:md?"text/markdown":"text/plain"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download=`halcyon-notes-${day.toISOString().slice(0,10)}.${md?"md":"txt"}`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
+function renderNotes(){setTimeout(ambSync,0);TRACK="notes";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;BMN.undo=null;
+  $("page").innerHTML=`<div class="kicker">My notes</div><h1>Bookmarks and notes</h1><p class="lead">Pages you bookmarked, in reading order. Tap one to go back to it. Mark one to review and it joins the study plan on your Progress page.</p>
+   <div class="bmstatus" id="bmstatus" role="status"></div><div id="bmbody">${bmListHTML()}</div>
+   <h2>Export</h2><div class="bar"><button class="btn small" type="button" id="bmexmd">Download as Markdown</button><button class="btn small ghost" type="button" id="bmextxt">Download as text</button></div>`;
+  $("bmexmd").onclick=()=>bmExport("md");$("bmextxt").onclick=()=>bmExport("txt");bmNotesWire()}
+function bmNotesSync(){const n=bmTotal();["bmexmd","bmextxt"].forEach(id=>{const b=$(id);if(b)b.disabled=!n})}
+function bmNotesWire(){const body=$("bmbody");if(!body)return;bmNotesSync();const status=$("bmstatus");
+  const itemOf=e=>{const li=e.closest(".bmitem");return li?{li,id:li.dataset.id,co:li.dataset.co}:null};
+  body.querySelectorAll("[data-bm=jump]").forEach(e=>e.onclick=()=>{const it=itemOf(e);bmJump(bmFind(it.id,it.co))});
+  body.querySelectorAll("[data-bm=note]").forEach(e=>{const it=itemOf(e);let last=e.value;const put=now=>{if(bmEdit(it.id,it.co,{note:e.value},now)===false){e.value=last;status.textContent="This book has as many notes as it can keep. Shorten or delete a few."}else last=e.value};
+    e.oninput=()=>put(false);e.onchange=()=>put(true); // saved locally on every keystroke (bmPut debounces the sync and a closing tab sends it)
+    e.onkeydown=ev=>{if(ev.key==="Enter"){ev.preventDefault();put(true);status.textContent="Note saved."}}});
+  body.querySelectorAll("[data-bm=rev]").forEach(e=>e.onchange=()=>{const it=itemOf(e);bmEdit(it.id,it.co,{r:e.checked},true);status.textContent=e.checked?"Added to your study plan.":"Taken off your study plan."});
+  body.querySelectorAll("[data-bm=del]").forEach(e=>e.onclick=()=>{const it=itemOf(e),b=bmFind(it.id,it.co);if(!b)return;BMN.undo=bmRemove(it.id,it.co);body.innerHTML=bmListHTML();bmNotesWire();
+    status.innerHTML=`<span>Deleted ${esc(b.x.length>40?b.x.slice(0,39)+"…":b.x)}.</span> <button type="button" class="linkbtn" id="bmundo">Undo</button>`;
+    $("bmundo").onclick=()=>{const u=BMN.undo;BMN.undo=null;bmRestore(u);body.innerHTML=bmListHTML();bmNotesWire();status.textContent="Bookmark restored.";const li=u&&[...body.querySelectorAll(".bmitem")].find(x=>x.dataset.id===u.b.id&&x.dataset.co===u.co);if(li)li.querySelector("[data-bm=jump]").focus()};$("bmundo").focus()})}
 let PR=null;
 function practicePool(t){const pool=[];TRACKS.full.list().forEach(c=>c.quiz.forEach((q,i)=>pool.push({...q,src:`Chapter ${c.num} quiz`,pid:`f${c.num}q${i}`,cases:c.cases})));mockQuestions().forEach(q=>pool.push({...q,src:"Practice exam bank",pid:"m"+q.id}));return t==="mixed"?pool:pool.filter(q=>q.task===t)}
 function startPractice(t){const pool=practicePool(t);if(!pool.length)return;const seed=Date.now()%9973;const pick=window.HalcyonOrder.perm("pr"+t+seed,pool.length).slice(0,10).map(i=>pool[i]);PR={task:t,qs:pick,v:null};TRACK="practice";renderPractice();top()}
@@ -968,6 +1106,7 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
    <dt>Contents</dt><dd>Tap Contents under the chapter steps, or use the list under the chapter in the side menu, to jump to any part. The lesson, drills, labs and quiz are always open. Decisions open in order as you answer them, so the story doesn't spoil.</dd>
    <dt>⏮ and ⏭</dt><dd>Previous and next page. In the Audiobook they jump scene to scene.</dd>
    <dt>Keep going</dt><dd>When a page finishes, it turns to the next one on its own. Decisions still wait for you to pick.</dd>
+   <dt>Bookmarks and notes</dt><dd>Tap the bookmark at the end of the Contents row to save a page, or the one above the text in the Audiobook to save the spot you're hearing. Add a one line note if you like, or mark it to review and it shows up in the study plan on the Progress page. Your bookmarks follow your account. ${bmTotal()?`<button class="linkbtn" type="button" id="guidenotes">Open My notes</button>`:"My notes appears once you have one."}</dd>
   </dl>
   <h2>Labs</h2><dl>
    <dt>What they are</dt><dd>Some chapters have hands-on labs after the exercise: a real chart, a live weather report, a calculator, or cards to sort. They're optional. They never lock the story and they don't change your score.</dd>
@@ -1002,10 +1141,10 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
   </dl>
   <h2>Privacy</h2><p>The site counts anonymous page views, without cookies, to learn which chapters people read. No personal data.</p><p>Your study log is stored with your progress in your account, like your saved place. It holds dates, minutes and the parts you studied, nothing more.</p><p>If you join the list, we store your email to tell you about new books. Ask to be removed anytime. Each email has a leave link at the bottom too.</p>
   <h2>Troubleshooting</h2><label class="chk prog"><input type="checkbox" id="pdbgt" ${PDBG.on?"checked":""}> Show player diagnostics (a log at the top of the screen; screenshot it and send it to Anthony)</label></div>`;
-  if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
+  if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};if($("guidenotes"))$("guidenotes").onclick=()=>openNotes();$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
 function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return hasMock()?[multiForm()&&mockForms().some(x=>x.f===lp.f)?`Practice exam · ${formLabel(lp.f)}`:"Practice exam",()=>openMock(lp.f)]:null;const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
 /* where you are lives in the address (#pmp/full/3, #guide), so a reload reopens the same screen */
-function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock"+(multiForm()&&MOCK_FORM?"/"+MOCK_FORM:""):(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
+function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="notes"?c+"/notes":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock"+(multiForm()&&MOCK_FORM?"/"+MOCK_FORM:""):(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
   store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
 /* anonymous page views (Vercel Web Analytics, loaded in index.html): the route only, as a path. Never a name, email, id, or progress. */
 let LASTPV="";function pageview(r){if(TESTP||!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:"/"+r})}catch(e){}}
@@ -1015,14 +1154,14 @@ async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filt
   const c=courseById(p[0]);if(!c||c.status!=="live")return false;if(c.id!==COURSE.id&&!(await useCourse(c.id)))return false;if(!c._loaded&&(c.scripts||c.labs))await useCourse(c.id);
   const v=p[1]||"home",n=+p[2];
   if((v==="full"||v==="ref")&&TRACKS[v].list().find(x=>x.num===n)){openChapter(v,n);return true}
-  if(v==="listen"){renderBook();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
+  if(v==="listen"){renderBook();return true}if(v==="notes"){renderNotes();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
   renderHome();renderRail();return true}
 window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
-function navSync(){noteRoute();try{bookBarSync()}catch(e){console.error(e)}const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+function navSync(){noteRoute();try{bookBarSync()}catch(e){console.error(e)}bmRail();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink",notes:"proglink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
-  if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="dash"||TRACK==="practice"||TRACK==="book"||TRACK==="guide")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
+  if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="dash"||TRACK==="practice"||TRACK==="book"||TRACK==="guide"||TRACK==="notes")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
 
 
 /* ===== audiobook ===== */
@@ -1089,7 +1228,7 @@ function bfBuild(J,c,ed){const L=(MARKS&&MARKS.full[J.n]&&MARKS.full[J.n][ed])||
     const ws=words.split(" ");const cls=pid==="lesson"?" les":pid[0]==="o"?" deb":"";
     return `${h}<p class="bfp${cls}" data-t="${ts[0]}">${ws.map(w=>`<span class="bw">${esc(w)}</span>`).join(" ")}</p>`}).join("");
   const sec=document.createElement("section");sec.className="bfollow";sec.id="bfollow";sec.setAttribute("aria-label","Follow along");
-  sec.innerHTML=`<div class="bfhead"><div><b>Chapter ${J.n}${c?": "+esc(c.title):""}</b><span class="prog">Playing ${ed==="story"?"Story only":"Story + lessons"} · Tap a paragraph to jump there</span></div></div><div class="bftext story" id="bftext" tabindex="0" aria-label="Chapter text">${html}</div>`;
+  sec.innerHTML=`<div class="bfhead"><div><b>Chapter ${J.n}${c?": "+esc(c.title):""}</b><span class="prog">Playing ${ed==="story"?"Story only":"Story + lessons"} · Tap a paragraph to jump there</span></div>${bmBtnHTML("bfbm",false,"Bookmark this spot")}</div><div class="bmrow" id="bfbmrow" hidden></div><div class="bftext story" id="bftext" tabindex="0" aria-label="Chapter text">${html}</div>`;
   return sec}
 function bfNote(msg){const s=document.createElement("section");s.className="bfollow";s.id="bfollow";s.innerHTML=`<p class="prog bfnote">${esc(msg)}</p>`;return s}
 async function bfMount(){const slot=$("bfslot");if(!slot)return;const ch=bfChapter();if(!ch){slot.remove();return}
@@ -1097,11 +1236,11 @@ async function bfMount(){const slot=$("bfslot");if(!slot)return;const ch=bfChapt
   if(BF.id!==id||!BF.el){const J=await bookText(ch.n,ch.ed);if(!$("bfslot")||TRACK!=="book")return;const now=bfChapter();if(!now||`${COURSE.id}|${now.ed}|${now.n}`!==id)return;
     const c=TRACKS.full.list().find(x=>x.num===ch.n);
     if(!J){BF.id=J===null?id:null;BF.el=bfNote(J===null?`The follow-along text for chapter ${ch.n} isn't ready yet. The audio plays as usual.`:`The follow-along text couldn't load. Check your connection; the audio plays as usual.`);BF.box=null;BF.words=[];BF.times=null}
-    else{BF.id=id;BF.el=bfBuild(J,c,ch.ed);BF.dur=J.dur;BF.box=BF.el.querySelector("#bftext");BF.words=[...BF.el.querySelectorAll(".bw")];BF.times=Float64Array.from(J.p.flatMap(p=>p[2]));BF.cur=-1;BF.scroll=0;bfWire()}}
+    else{BF.id=id;BF.el=bfBuild(J,c,ch.ed);BF.dur=J.dur;BF.box=BF.el.querySelector("#bftext");BF.words=[...BF.el.querySelectorAll(".bw")];BF.times=Float64Array.from(J.p.flatMap(p=>p[2]));BF.cur=-1;BF.scroll=0;bfWire();bmWireBook()}}
   const s=$("bfslot");if(!s)return;const fresh=!BF.el.isConnected&&BF.shown!==id;BF.shown=id;s.replaceWith(BF.el);
   if(fresh&&ch.live){const r=BF.el.getBoundingClientRect();const nb=$("narbar"),bar=nb&&!nb.hidden?nb.getBoundingClientRect().top:innerHeight;if(r.top<0||r.bottom>bar)BF.el.scrollIntoView({block:"start",behavior:"smooth"})} // a chapter just started: bring its text into view
   if(BF.box){BF.box.scrollTop=BF.scroll;BF.box.querySelectorAll(".bw.hl").forEach(e=>e.classList.remove("hl"));BF.cur=-1;
-    if(!ch.live&&ch.t!=null){bfShow(ch.t,true)}else bfTick(true)}}
+    if(!ch.live&&ch.t!=null){bfShow(ch.t,true)}else bfTick(true);BF.bmp=undefined;bmBookSync()}}
 function bfWire(){const box=BF.box,a=NAR.audio;
   box.addEventListener("scroll",()=>{BF.scroll=box.scrollTop;const w=NAR.lastw;if(NAR.page==="book"&&NAR.free&&w&&w.isConnected&&box.contains(w)){const o=bfOff(w);narFollowUI(o.off,o.up)}},{passive:true});
   const free=()=>{if(NAR.page==="book"&&!a.paused)NAR.free=true};
@@ -1120,7 +1259,7 @@ function bfScrollTo(w,instant){const box=BF.box;if(!box||!w)return;const r=w.get
   box.scrollTo({top:Math.max(0,want),behavior:instant||Math.abs(want-box.scrollTop)>box.clientHeight*2?"auto":"smooth"})}
 // highlight the word at time t (binary search on the word start times), and follow it unless the reader scrolled away
 function bfShow(t,instant){if(!BF.times||!BF.box||!BF.box.isConnected)return;const T=BF.times;let lo=0,hi=T.length-1,i=-1;while(lo<=hi){const m=(lo+hi)>>1;if(T[m]<=t+0.02){i=m;lo=m+1}else hi=m-1}
-  if(i===BF.cur&&!instant)return;if(BF.cur>=0&&BF.words[BF.cur])BF.words[BF.cur].classList.remove("hl");BF.cur=i;const w=BF.words[Math.max(0,i)];if(!w)return;if(i>=0)w.classList.add("hl");NAR.lastw=w;
+  if(i===BF.cur&&!instant)return;if(BF.cur>=0&&BF.words[BF.cur])BF.words[BF.cur].classList.remove("hl");BF.cur=i;const w=BF.words[Math.max(0,i)];if(!w)return;if(i>=0)w.classList.add("hl");NAR.lastw=w;bmBookSync();
   const o=bfOff(w);if(o.off&&(!NAR.free||instant))bfScrollTo(w,instant);if(NAR.page==="book")narFollowUI(o.off&&NAR.free&&!instant,o.up)}
 function bfTick(instant){if(NAR.page!=="book"||!NAR.book||TRACK!=="book"||BF.id!==`${COURSE.id}|${NAR.book.ed}|${NAR.book.n}`)return;
   const d=NAR.audio.duration;if(BF.box&&d&&BF.dur&&Math.abs(d-BF.dur)>0.5){BF.el.replaceWith(BF.el=bfNote(`The follow-along text for chapter ${NAR.book.n} is being updated to match new audio. The audio plays as usual.`));BF.box=null;BF.times=null;return} // the mp3 was re-rendered after the index was built
@@ -1244,12 +1383,12 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
   $("hfree").onclick=async()=>{const B=await bookManifest();const lpv=store.get("lastplace."+COURSE.id,null);const ed=store.get("bookEd."+COURSE.id,"story");let n=lpv&&lpv.t==="full"?lpv.n:1;const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);if(!have.length)return renderBook();if(!have.includes(n))n=have.find(k=>k>=n)||have[have.length-1];renderBook();bookPlay(ed,n)};
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
   $("tolib").onclick=()=>renderLibrary();$("toabout").onclick=()=>{renderAbout();top()};if($("mockbtn"))$("mockbtn").onclick=()=>openMock();$("qprog").onclick=()=>{renderDash();top()};$("qcast").onclick=()=>{renderCast();top()};
-  if($("planbtn")){const a=plan[0][2];$("planbtn").onclick=()=>{if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)};$("seeplan").onclick=()=>{renderDash();top()}}
+  if($("planbtn")){const a=plan[0][2];$("planbtn").onclick=()=>{if(a.bm)return bmJump(bmFind(a.bm));if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)};$("seeplan").onclick=()=>{renderDash();top()}}
 }
 function openChapter(tr,n){libTouch({t:tr,n});store.set("lastplace."+COURSE.id,{t:tr,n});TRACK=tr;store.set("track",tr);store.set("lastch."+COURSE.id+"."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));render();top()}
 function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this chapter will be cleared.`))return;const st=TRACK==="ref"?freshRef():freshFull();if(n===CH.num){S=st;save();render();top()}else{persist(TRACK,n,st);renderRail()}}
 function renderRail(){
-  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","book","library","about","guide","upcoming","logprint"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
+  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","book","library","about","guide","upcoming","logprint","notes"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
   $("trackname").textContent=TRACK?TRACKS[TRACK].name:"";
   if(TRACK==="mock"){if(!hasMock()){$("mockcard").hidden=true;return}$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Practice exam</h3><p class="big" id="mocktime">${MS.mode!=="practice"?fmtTime(MOCK_LIMIT()-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Practice exam</h3><p class="prog">${MOCK_FORM==null?"Pick a practice exam.":"Pick a mode to start."}</p>`;return}
   $("mockcard").hidden=true;if(!TRACK)return;
@@ -1269,13 +1408,15 @@ function renderRail(){
   recapRail();
 }
 function render(){_render();castStrip();narAttach();navSync();ambSync();handoffOffer();whereSync()}
-function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();if(TRACK==="final")return finalRender();if(TRACK==="cert")return renderCert();if(TRACK==="verify")return renderVerify();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="notes")return renderNotes();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();if(TRACK==="final")return finalRender();if(TRACK==="cert")return renderCert();if(TRACK==="verify")return renderVerify();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
 async function api(path,opts={}){if(TESTP&&/^\/api\/progress\b/.test(path))return {ok:false,status:0,error:"test profile"}; // belt and braces: SYNC is never set in the test profile
   const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
-async function listenPull(){if(TESTP||!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
+async function listenPull(){if(TESTP||!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");
+  // bookmarks: a newer record from another device replaces this one unless a write from here is still waiting (newest record wins)
+  bmCourses().forEach(c=>{const k=BMKEY(c),r=me.progress&&me.progress[k];if(r&&Array.isArray(r.list)&&(r.at||0)>(bmGet(c).at||0)&&!SPEND[k]){store.set("c"+k,r);bmRail();if(TRACK==="notes"&&$("bmbody")&&!$("bmbody").contains(document.activeElement)){$("bmbody").innerHTML=bmListHTML();bmNotesWire()}}});{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
 const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.qa.ok","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
 function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.recap")||k.startsWith("halcyon.bookEd.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
