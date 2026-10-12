@@ -549,7 +549,7 @@
   // EVERY PATH: Greaves aired the AR 2207 closure record at 9 AM Mountain (Fri Oct 6, or Sat Sep 30 if G.crashedtest), with an unsigned cover
   //   note; who sent it is not known, on every path (Bea is not the source on any path). Bea Kowal, who sells paint and hinges at
 //   a hardware store in Strasburg, had once asked Sam not to make her testify (new canon, f11s1). Commander Haddad was in a Houston hotel that
-//   night; her husband and four kids are in Aurora (cast.js). Hale's office opens at 7 Mountain. Ada's log 43 (Sol 4135, or 4129): her arm in a sleeve dressing, ribs better, Nneka's watch back on her
+//   night; her husband and four kids are in Aurora (cast.js). Hale's office opens at 7 Mountain. Ada's log 43 (Sol 4135, or 4129): her arm in a sleeve dressing, ribs better, Grace's watch back on her
   //   wrist on Aurora time; Ada 326 (or 332), ARA 333 (or 339), minus nine and minus two. Page eleven reached Sam's house Sat Oct 7 (Sat Sep 30 with crashedtest), the day he flew home; with crashedtest he flew home
 //   and read it Sun Oct 1. The readiness
   //   board's session Thu Oct 19 decided CR 62-311: workaround developed and ground verified, Aldergrove's lot started so the spacewalk stays

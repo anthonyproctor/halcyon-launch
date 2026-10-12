@@ -15,7 +15,7 @@ window.HALCYON_CAST=[
  { id:`ada`, intro:`Hi. Ada Okafor, hydroponics, Ares Station. I grow food and a little extra air in a crater on Mars, and I trade video logs with my dad because a phone call would take twenty minutes per sentence. He's running the ship that's supposed to save us now. I've asked him one thing: don't do the voice.`, name:`Ada Okafor`, role:`Hydroponics engineer on Ares Station, 24. Sam's daughter. Speaks only in recorded logs.`, firstChapter:1, speaker:`Ada`,
    look:`Black woman of twenty four, hair in short twists under a station headband, a faded orange station coverall with the sleeves pushed up, a woman's steel wristwatch a little too big for her wrist.`,
    sections:[
-    {unlock:1, title:`Who she is`, body:[`Ada left Earth in the December 2058 window, at twenty one, against her father's wishes. The last thing he said to her at the Cape was the wrong thing, and they both know it. She's been on Ares Station, in Jezero crater's old delta, ever since.`,`Her mother, Nneka, died of cancer when Ada was thirteen. Ada wears her mother's watch and has never changed it off Aurora time.`]},
+    {unlock:1, title:`Who she is`, body:[`Ada left Earth in the December 2058 window, at twenty one, against her father's wishes. The last thing he said to her at the Cape was the wrong thing, and they both know it. She's been on Ares Station, in Jezero crater's old delta, ever since.`,`Her mother, Grace, died of cancer when Ada was thirteen. Ada wears her mother's watch and has never changed it off Aurora time.`]},
     {unlock:1, title:`Her number`, body:[`Ada runs the stack degradation curve herself, off the plant's own cell voltages, three different ways. In January 2061 she gets 952 days of margin. The station director's official reports say 1,012. She isn't sure yet whether to tell him. She told her father.`]},
     {unlock:1, title:`How she talks`, body:[`Her logs are funny, exact, and honest about the numbers. Every one states the sol, the light time, and the margin. She grows basil in cut down sample tubes over her bunk, which medical says is a fire code violation.`]}],
    quote:{unlock:1, text:`I'm an engineer on a planet that's trying to kill me. I can take a number.`},
@@ -219,5 +219,19 @@ window.HALCYON_CAST=[
    sections:[
     {unlock:12, title:`Who she is`, body:[`Whitcombe's twelve controllers sat in on every Halcyon sim from August 2062. The hand off to her team is planned for departure plus twenty four hours, February 19, 2063.`]}],
    quote:{unlock:12, text:`Tell me what I'm taking, Mr. Okafor. All of it.`},
-   ties:[{unlock:12,id:`sam`,text:`Takes the ship from him, when it's ready to be taken.`},{unlock:12,id:`wendell`,text:`Asked for his console calls before he went home.`}] }
+   ties:[{unlock:12,id:`sam`,text:`Takes the ship from him, when it's ready to be taken.`},{unlock:12,id:`wendell`,text:`Asked for his console calls before he went home.`}] },
+ { id:`esther`, intro:`Esther Quayle. I chair the Independent Readiness Board. I spent thirty years on a range safety console, where the only question is whether it's safe to fly, and the only acceptable answer is one you can write down. I keep time in my hearings. I'll also give you all of it you need.`, name:`Esther Quayle`, role:`Chair of the ARA's Independent Readiness Board, 68. Former range safety officer.`, firstChapter:13, speaker:`Esther`,
+   look:`White woman of sixty eight, iron gray hair cut short, half glasses on a chain, a dark blazer with a small range safety pin on the lapel, a level unhurried gaze.`,
+   sections:[
+    {unlock:13, title:`Who she is`, body:[`Quayle ran range safety for thirty years before she chaired the readiness board. She runs a hearing by its rules and its clock, and on December 14, 2062, she heard item one: Tallgrass's Request for Waiver 62-14 for Halcyon's MOIV-1.`]},
+    {unlock:13, title:`Rule 11`, body:[`Under the board's rules, residual risk to a crew is accepted by the board, in writing, or it isn't accepted. On December 19 the board said no other party could accept it, and deferred the valve's choice to a final test on orbit on January 30, 2063.`]}],
+   quote:{unlock:13, text:`I asked what the program thinks, Mr. Okafor.`},
+   ties:[{unlock:13,id:`ruth`,text:`A member of her board. Disclosed, minuted, and sitting.`},{unlock:13,id:`sam`,text:`The program manager of record. Asked to say what he thinks.`}] },
+ { id:`leo`, intro:`Captain Leo Marchetti. They called me Doc, because I carried a little black bag patch on my cap and never once fixed anybody. I flew F-16s out of Arizona. My crew chief was the best one on the line, and I told him so, and he never believed me.`, name:`Leo Marchetti`, role:`F-16 pilot, call sign Doc. Sam's friend. Lost in Arizona in 2041. Memory only.`, firstChapter:13, speaker:`Leo`,
+   look:`Man in his early thirties in a 2040s photograph, a flight suit with the sleeves pushed up, dark hair under a squadron cap with a black doctor's bag patch and the word DOC, crouched and laughing at something out of frame.`,
+   sections:[
+    {unlock:13, title:`Who he was`, body:[`Captain Marchetti flew F-16s in Arizona. On a Thursday in April 2041, during a surge week, he walked out to a jet Crew Chief Sam Okafor had signed off, asked him whether she was good, and didn't come home. The mishap board named a different cause. Sam will never know.`]},
+    {unlock:13, title:`The photograph`, body:[`Sam kept one photograph: a hangar in April light, Ada at four on an upturned helmet bag, and Leo crouched beside her with his cap on her head. Ada remembered the patch for twenty years and thought it was a dream.`]}],
+   quote:{unlock:13, text:`Is she good, Chief?`},
+   ties:[{unlock:13,id:`sam`,text:`His crew chief. Signed the form.`},{unlock:13,id:`ada`,text:`Called her Captain, once, in a hangar.`},{unlock:13,id:`ray`,text:`Ray was the flight chief that week.`}] }
 ];

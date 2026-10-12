@@ -522,7 +522,7 @@
   //   release plan: 38 on Dec 15, 17 on Jan 12, 12 through Feb 23 (whether it was kept is path dependent). Hand off to ARA flight operations
   //   (Lorna Whitcombe) is planned at departure plus 24 hours, Feb 19 2063; I-62-117's risk acceptance stays with the board. Crew quarantine starts
   //   Dec 26. Ada's log 54 (Sol 4200, heard Tue Dec 12, one way 15 min 8 s): the crew's files, Yusra's bunk in C ring nearest the galley, the
-  //   station's own lessons log ("the confession book") with two entries read aloud; her arm out of the sleeve, Nneka's watch on Aurora time;
+  //   station's own lessons log ("the confession book") with two entries read aloud; her arm out of the sleeve, Grace's watch on Aurora time;
   //   Ada 259, ARA 266, arrival day 268 (minus nine, minus two). At 11:40 PM Wed Dec 13 the board's docket for Thu Dec 14 posted with R. Calder
   //   sitting, a request that the test conductor of record and his successor attend, and Tallgrass's REQUEST FOR WAIVER 62-14 (filed 6:12 PM):
   //   fly MOIV-1 with the CR 62-311 workaround, root cause to continue in cruise, no spacewalk, with S. OKAFOR, PROGRAM MANAGER typed under an

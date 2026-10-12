@@ -551,7 +551,7 @@
   //   3); the harness revision found at closeout (f10s1 best; otherwise found at the Cape in August); the letter modification to Clause 22
   //   (f10s4 best); the commit criteria with MOIV-1 under 10 ms written Sep 11 (f10s9 best); issue I-62-117 and its log (f10s11 best); whether the
   //   families heard about the on orbit event from Sam the next day (f10s12 best), late, or from the feed.
-  // EVERY PATH: Ada's log 25 (Sol 4027, Jun 17): scald on her left forearm and hand, two cracked ribs, Nneka's watch safe in her chest pocket,
+  // EVERY PATH: Ada's log 25 (Sol 4027, Jun 17): scald on her left forearm and hand, two cracked ribs, Grace's watch safe in her chest pocket,
   //   437 and minus nine; Okonkwo's packet (stack 3 manifold replaced Sol 4013 to 4016, decline unchanged). Page ten reached Sam Jun 17 and he
   //   read it Jul 17 in Cocoa Beach. The board's July 19 session: the ARA adopts the rebuilt model, 412 days as of Jul 19 (runs out Sep 4 2063),
   //   footnote off; Ada's 405 by subtraction (Aug 28 2063); arrival day 414. The stage shipped Jul 13 and launch 1 (habitat and cargo) flew Aug 18
