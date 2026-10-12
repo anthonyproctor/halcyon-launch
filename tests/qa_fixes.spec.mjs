@@ -28,7 +28,9 @@ async function seedBest(page, course, n, base, upTo) {
 test.describe("a course with no mock question bank (CISA)", () => {
   test("offers no mock exam: home says coming soon with no open button, and no chapter end, plan, progress or About line offers one", async ({ page }) => {
     // force an empty bank, so this keeps testing the no-bank case after CISA gets questions
+    // (CISA's bank lives in courses/cisa/mock.js, which loads after meta.js, so serve it empty too)
     await page.route("**/courses/cisa/meta.js", async r => { const res = await r.fetch(); r.fulfill({ response: res, body: (await res.text()) + "\n;window.HALCYON_DATA.cisa.mock=[];" }) });
+    await page.route("**/courses/cisa/mock.js", r => r.fulfill({ status: 200, contentType: "application/javascript", body: "/* emptied by the no-bank test */" }));
     await page.goto("/#cisa/home");
     await expect(page.locator("#page h1")).toBeVisible();
     expect(await page.evaluate(() => window.HALCYON_DATA.cisa.mock.length)).toBe(0);
