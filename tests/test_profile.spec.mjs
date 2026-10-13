@@ -63,8 +63,8 @@ test("test profile: real progress, mocks, study log, place and Continue stay unt
   await page.goto("/#library");
   const cont = await page.locator("#libcont").textContent();
   let before = await realKeys(page);
-  for (const k of ["halcyon.c201", "halcyon.c905", "halcyon.c900", "halcyon.c10910", "halcyon.lastplace.pmp", "halcyon.cur", "halcyon.route", "halcyon.c99990"])
-    expect(before[k], k).toBeTruthy();
+  for (const k of ["halcyon.c201", "halcyon.c905", "halcyon.c900", "halcyon.c10910", "halcyon.lastplace.pmp", "halcyon.cur", "halcyon.route", "halcyon.c99990", "halcyon.c908"])
+    expect(before[k], k).toBeTruthy(); // c908: the badges record (badges.js), written by the first badge check
 
   // QA mode on, then the Test profile switch on the Guide page (it reloads into the test profile)
   await page.goto("/?qa=1#guide");
@@ -91,7 +91,11 @@ test("test profile: real progress, mocks, study log, place and Continue stay unt
   await mockAnswer(page, "/?qa=1#cphims/mock/1");
   await page.evaluate(() => { document.dispatchEvent(new Event("visibilitychange")); window.dispatchEvent(new Event("pagehide")) });
   const tk = await testKeys(page);
-  for (const k of ["c201", "c905", "c900", "c10900", "c10910", "lastplace.pmp", "lastplace.cphims", "cur", "route", "c99990"]) expect(tk, k).toContain(TP + k);
+  for (const k of ["c201", "c905", "c900", "c10900", "c10910", "lastplace.pmp", "lastplace.cphims", "cur", "route", "c99990", "c908", "c10908"]) expect(tk, k).toContain(TP + k);
+  // the test profile's badges record is its own: started fresh (a silent backfill), never the real one
+  const tb = JSON.parse(await page.evaluate(tp => localStorage.getItem(tp + "c908"), TP));
+  expect(tb.got && typeof tb.got).toBe("object");
+  expect(tb.since).not.toBe(JSON.parse(before["halcyon.c908"]).since);
   expect(await pageviews(page), "no page views from the test profile").toBe(0);
   expect(await realKeys(page), "real keys after test play").toEqual(before);
   // the test profile's Continue points at test state
@@ -113,7 +117,7 @@ test("test profile: real progress, mocks, study log, place and Continue stay unt
   await page.goto("/?qa=1#pmp/full/1");
   await expect(page.locator("#page .chmap")).toBeVisible();
   const after = await realKeys(page);
-  for (const k of ["halcyon.c201", "halcyon.c905", "halcyon.c900", "halcyon.c10910", "halcyon.bookpos.pmp.3", "halcyon.carpos.f1-open"]) expect(after[k], k).toBe(before[k]);
+  for (const k of ["halcyon.c201", "halcyon.c905", "halcyon.c900", "halcyon.c10910", "halcyon.bookpos.pmp.3", "halcyon.carpos.f1-open", "halcyon.c908"]) expect(after[k], k).toBe(before[k]);
   // the real chapter state is the real decision
   expect(JSON.parse(after["halcyon.c201"]).picks).toEqual(JSON.parse(before["halcyon.c201"]).picks);
   expect(await testKeys(page), "test data is kept for next time").toContain(TP + "c201");

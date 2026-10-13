@@ -90,7 +90,7 @@ async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")ret
   const changed=COURSE.id!==c.id;COURSE=c;store.set("course",id);
   const meta=c.id==="pmp"?PMP_META:(((window.HALCYON_DATA||{})[id]||{}).meta||{});
   DOMS=meta.DOMS||PMP_META.DOMS;TASKNAMES=meta.TASKNAMES||{};BASE_CAST=meta.BASE_CAST||[];FULL_CAST_EXTRA=meta.FULL_CAST_EXTRA||[];
-  if(changed){MS=null;MOCK_FORM=1;clearInterval(mockTimer);BOOK=null;MARKS=null;BP_BOOK=null;BP_WAIT=false;NAR.timings={};try{NAR.audio.pause()}catch(e){}NAR.page=null;NAR.listening=false;buildOrders()}return true}
+  if(changed){MS=null;MOCK_FORM=1;clearInterval(mockTimer);BOOK=null;MARKS=null;BP_BOOK=null;BP_WAIT=false;NAR.timings={};try{NAR.audio.pause()}catch(e){}NAR.page=null;NAR.listening=false;buildOrders();BDG.queue=[];badgeSoon()}return true}
 
 /* ===== state ===== */
 let TRACK=null,CH=null,S=null,SYNC=null,syncTimer=null;
@@ -102,7 +102,7 @@ function freshFull(){return{pos:0,max:0,picks:{},m:{trust:50,conf:50,health:50},
 function keyOf(tr,n){return COURSE.base+TRACKS[tr].key(n)}
 function load(tr,n){const st=store.get("c"+keyOf(tr,n),null);if(st&&tr==="full")relayout(n,st);return st}
 function persist(tr,n,st){store.set("c"+keyOf(tr,n),st);if(SYNC){const k=keyOf(tr,n),copy=JSON.parse(JSON.stringify(st));clearTimeout(syncTimer);syncTimer=setTimeout(()=>{delete SPEND[k];SYNC(k,copy)},400);SPEND[k]=[k,copy]}}
-function save(){if(TRACK==="mock"){persistMock();return}if(TRACK==="full"&&CH&&S)S.lx=labsOf(CH).length?1:0;persist(TRACK,CH.num,S);store.set("cur",keyOf(TRACK,CH.num));store.set("lastplace."+COURSE.id,{t:TRACK,n:CH.num})}
+function save(){if(TRACK==="mock"){persistMock();return}if(TRACK==="full"&&CH&&S)S.lx=labsOf(CH).length?1:0;persist(TRACK,CH.num,S);store.set("cur",keyOf(TRACK,CH.num));store.set("lastplace."+COURSE.id,{t:TRACK,n:CH.num});badgeSoon()}
 function chapters(){return TRACKS[TRACK].list()}
 function globalFlags(){const G={};if(TRACK!=="full")return G;chapters().forEach(c=>{if(c.num<CH.num){const st=load("full",c.num);if(st)Object.assign(G,st.flags||{})}});if(S&&S.flags)Object.assign(G,S.flags);return G}
 function allStates(){const o={};chapters().forEach(c=>{o[c.num]=c.num===CH.num?S:load(TRACK,c.num)});return o}
@@ -189,7 +189,7 @@ function refRender(){
   if(S.step>=n)return refEnd();
   const i=S.step,sc=CH.scenes[i];$("page").innerHTML=sceneHTML(sc,i,n,S.picks[i],S);wireVideos();
   if(S.picks[i]===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>{applyPick(S,sc,i,+b.dataset.j);save();render();const o=document.querySelector(".outcome");if(o){scrMine(700);o.scrollIntoView({behavior:"smooth",block:"start"})}});
-  else{$("next").textContent=i+1<n?"Next":"Finish the chapter";$("next").onclick=()=>{S.step=i+1;save();render();top()};$("redo").onclick=()=>{const p={...S.picks};delete p[i];const st=freshRef();Object.keys(p).map(Number).sort((a,b)=>a-b).forEach(k=>applyPick(st,CH.scenes[k],k,p[k]));st.step=i;S=st;save();render();top()}}
+  else{$("next").textContent=i+1<n?"Next":"Finish the chapter";$("next").onclick=()=>{S.step=i+1;save();render();top()};$("redo").onclick=()=>{const p={...S.picks};delete p[i];const st=freshRef();Object.keys(p).map(Number).sort((a,b)=>a-b).forEach(k=>applyPick(st,CH.scenes[k],k,p[k]));st.step=i;st.rd=(S.rd||0)+1;if(S.doneAt)st.doneAt=S.doneAt;S=st;save();render();top()}}
 }
 function refEnd(){
   const n=CH.scenes.length,weak=DOMS.map(d=>[d,S.dom[d][1]?S.dom[d][0]/S.dom[d][1]:1]).sort((a,b)=>a[1]-b[1])[0];
@@ -268,13 +268,13 @@ function fullRender(){
   const nx=$("fnext");if(nx)nx.onclick=()=>fullGo(S.pos+1);
   if(cur.k==="scene"){const i=cur.i,sc=CH.scenes[i];
     if(S.picks[i]===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>{applyPick(S,sc,i,+b.dataset.j);save();render();const o=document.querySelector(".outcome");if(o){scrMine(700);o.scrollIntoView({behavior:"smooth",block:"start"})}});
-    else{$("next").onclick=()=>fullGo(S.pos+1);$("redo").onclick=()=>{const p={...S.picks};delete p[i];const keep={pos:S.pos,max:S.max,drills:S.drills,ex:S.ex,quiz:S.quiz,labs:S.labs,lx:S.lx};const st=freshFull();Object.keys(p).map(Number).sort((a,b)=>a-b).forEach(k=>applyPick(st,CH.scenes[k],k,p[k]));Object.assign(st,keep);if(st.quiz)st.quiz.v.forEach((v,qi)=>{const x=CH.quiz[qi];st.dom[x.domain][1]+=3;if(v===x.a)st.dom[x.domain][0]+=3});S=st;save();render();top()}}}
+    else{$("next").onclick=()=>fullGo(S.pos+1);$("redo").onclick=()=>{const p={...S.picks};delete p[i];const keep={pos:S.pos,max:S.max,drills:S.drills,ex:S.ex,quiz:S.quiz,labs:S.labs,lx:S.lx,rd:(S.rd||0)+1};if(S.doneAt)keep.doneAt=S.doneAt;const st=freshFull();Object.keys(p).map(Number).sort((a,b)=>a-b).forEach(k=>applyPick(st,CH.scenes[k],k,p[k]));Object.assign(st,keep);if(st.quiz)st.quiz.v.forEach((v,qi)=>{const x=CH.quiz[qi];st.dom[x.domain][1]+=3;if(v===x.a)st.dom[x.domain][0]+=3});S=st;save();render();top()}}}
   if(cur.k==="drill"){const d=CH.drills[cur.j];const f=$("drillform");if(f)f.onsubmit=e=>{e.preventDefault();const vals=d.fields.map((_,fi)=>$("df"+fi).value.replace(/[$,%\s]/g,""));const ok=d.fields.map((fl,fi)=>{const v=parseFloat(vals[fi]);return !isNaN(v)&&Math.abs(v-fl.answer)<=(fl.tol??0.01)});S.drills[cur.j]={vals,ok};save();render()};const r=$("dretry");if(r)r.onclick=()=>{delete S.drills[cur.j];save();render()}}
   if(cur.k==="exercise"){const e=CH.exercise;const f=$("exform");if(f)f.onsubmit=ev=>{ev.preventDefault();const v=e.items.map((_,ii)=>{const x=$("ex"+ii).value;return x===""?-1:+x});S.ex={v,right:v.filter((x,ii)=>x===e.items[ii].answer).length};save();render()};const r=$("exretry");if(r)r.onclick=()=>{S.ex=null;save();render()}}
   if(cur.k==="quiz"){const q=CH.quiz;const f=$("quizform");if(f)f.onsubmit=ev=>{ev.preventDefault();const v=q.map((_,qi)=>{const c=document.querySelector(`input[name=q${qi}]:checked`);return c?+c.value:-1});const miss=v.filter(x=>x<0).length;if(miss&&!confirm(`${miss} unanswered. Check anyway?`))return;S.quiz={v,right:v.filter((x,qi)=>x===q[qi].a).length};v.forEach((x,qi)=>{const d=q[qi].domain;S.dom[d][1]+=3;if(x===q[qi].a)S.dom[d][0]+=3});save();render();top()};const r=$("qretry");if(r)r.onclick=()=>{S.quiz.v.forEach((x,qi)=>{const d=q[qi].domain;S.dom[d][1]-=3;if(x===q[qi].a)S.dom[d][0]-=3});S.quiz=null;save();render();top()}}
   const nc=$("nextch");if(nc){const nxt=chapters().find(c=>c.num===CH.num+1);nc.onclick=()=>openChapter("full",nxt.num)}
   const tm=$("tomock");if(tm)tm.onclick=()=>openMock();const tf=$("tofinal");if(tf)tf.onclick=()=>openFinal();
-  const rp=$("replay");if(rp)rp.onclick=()=>{if(confirm(`Replay chapter ${CH.num} from the start? This clears its decisions, drills, and quiz. Labs you finished stay finished.`)){const lb=S.labs;S=freshFull();if(lb)S.labs=lb;save();render();top()}};
+  const rp=$("replay");if(rp)rp.onclick=()=>{if(confirm(`Replay chapter ${CH.num} from the start? This clears its decisions, drills, and quiz. Labs you finished stay finished.`)){const lb=S.labs,da=S.doneAt,rd=(S.rd||0)+1;S=freshFull();if(lb)S.labs=lb;if(da)S.doneAt=da;S.rd=rd;save();render();top()}}; // a replay keeps the completion date (the certificate reads it) and counts as a redo (rd)
 }
 
 /* ===== Story so far (approved 2026-10-12): "Previously on", "Where am I?", and orientation notes =====
@@ -481,7 +481,7 @@ function mockRender(){
 function mockSubmit(){clearInterval(mockTimer);MS.submitted=true;MS.finishedAt=new Date().toISOString();persistMock();
   const byId={};mockQuestions(MOCK_FORM).forEach(q=>byId[q.id]=q);const byTask={};let right=0,ans=0,total=0,pre=0;
   MS.order.forEach(id=>{const q=byId[id];if(!q)return;if(!scoredQ(q)){pre++;return}total++;if(MS.ans[id]===undefined)return;ans++;byTask[q.task]=byTask[q.task]||[0,0];byTask[q.task][1]++;if(MS.ans[id]===q.a){right++;byTask[q.task][0]++}});
-  const k=mockHistKey(),H=store.get("c"+k,null)||{list:[]};if(!Array.isArray(H.list))H.list=[];H.list.push({at:MS.finishedAt,mode:MS.mode,f:MOCK_FORM||1,right,answered:ans,total,pre,byTask,secs:MS.elapsed});store.set("c"+k,H);if(SYNC)SYNC(k,H);
+  const k=mockHistKey(),H=store.get("c"+k,null)||{list:[]};if(!Array.isArray(H.list))H.list=[];H.list.push({at:MS.finishedAt,mode:MS.mode,f:MOCK_FORM||1,right,answered:ans,total,pre,byTask,secs:MS.elapsed});store.set("c"+k,H);if(SYNC)SYNC(k,H);badgeSoon();
   render();top()}
 /* subdomains and reread pointers. An item's subdomain is its sub field, or meta.SUBDOMS keyed by its task code without the trailing number
    (CPHIMS "SA4" is "SA", Analysis). The chapters for a task are meta.TASK_CHAPTERS[task] when the course lists them (a list can name
@@ -559,7 +559,7 @@ function finalSubmit(){const byId=finalById(),F=finalGet(),pass=COURSE.finalPass
   FS.order.forEach(id=>{const q=byId[id];if(!q)return;dom[q.domain]=dom[q.domain]||[0,0];task[q.task]=task[q.task]||[0,0];dom[q.domain][1]++;task[q.task][1]++;if(FS.ans[id]===q.a){right++;dom[q.domain][0]++;task[q.task][0]++}});
   const total=FS.order.length,date=dayKey(Date.now()),L=logHoursNow();
   const a={id:FS.id,at:new Date().toISOString(),date,right,total,pass:right*100>=pass*total,preview:!!FS.preview,dom,task,secs:L.secs,hours:L.hours,logFrom:L.from,logTo:L.to,code:finalCode(FS.id,date,L.hours),order:FS.order,ans:FS.ans};
-  F.list.push(a);F.cur=null;finalPut(F,true);FS=null;FINAL_SHOW=a.id;render();top()}
+  F.list.push(a);F.cur=null;finalPut(F,true);FS=null;FINAL_SHOW=a.id;badgeSoon();render();top()}
 function finalPct(x){return x&&x[1]?Math.round(x[0]/x[1]*100):0}
 /* chapters to revisit: each missed question's task, mapped to the chapters that teach it (taughtIn), most misses first */
 function finalRevisit(a){const miss={};Object.entries(a.task||{}).forEach(([t,[g,n]])=>{if(n>g)miss[t]=n-g});const ch={};
@@ -698,14 +698,12 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
   const rows=(tr,L)=>L.map(c=>{const st=load(tr,c.num);if(!st)return `<tr><td>${c.num}</td><td>${c.title}</td><td class="prog" colspan="3">not started</td></tr>`;const n=c.scenes.length,dec=`${st.score}/${n*3}`;
     const quiz=tr==="full"&&st.quiz?`${st.quiz.right}/${c.quiz.length}`:"·";const drills=tr==="full"&&(c.drills||[]).length?`${Object.values(st.drills||{}).filter(x=>x.ok.every(Boolean)).length}/${c.drills.length}`:"·";
     return `<tr><td>${c.num}</td><td><button class="linkbtn" data-open="${tr}:${c.num}">${c.title}</button></td><td class="num">${dec}</td><td class="num">${quiz}</td><td class="num">${drills}</td></tr>`}).join("");
-  const last=H.filter(a=>a.mode!=="practice").slice(-1)[0];
-  const ready=last&&last.total?Math.round(last.right/last.total*100):null;
   const domPct=d=>{const ts=ALLT().filter(t=>taskDomain(t)===d);const g=ts.reduce((a,t)=>a+m[t].got,0),x=ts.reduce((a,t)=>a+m[t].max,0);return x?Math.round(g/x*100):null};
   const plan=studyPlan(m),weak=weakTasks(m,5);
-  $("page").innerHTML=`<div class="kicker">My progress</div><h1>Scoreboard</h1>${finishHTML()}
-   <div class="end-grid">${hasMock()?`<div class="card"><h3>Readiness</h3><div class="big">${ready!==null?ready+"%":"·"}</div><p class="prog">${last?`Last timed practice exam, ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}`:"Take a timed practice exam to see this"}</p></div>`:""}${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${domPct(d)!==null?domPct(d)+"%":"·"}</div></div>`).join("")}</div>
+  $("page").innerHTML=`<div class="kicker">My progress</div><h1>Scoreboard</h1>${finishHTML()}${readyCardHTML()}
+   <div class="end-grid">${DOMS.map(d=>`<div class="card"><h3>${d}</h3><div class="big">${domPct(d)!==null?domPct(d)+"%":"·"}</div></div>`).join("")}</div>
    <h2>${MENTOR()}'s study plan</h2><div class="story"><p>Built from your weakest tasks and where you are in the course. It updates as you play.</p></div>
-   <ol class="plan">${plan.map(([h,b,a],i)=>`<li><b>${esc(h)}.</b> ${esc(b)} <button class="btn small" data-plan="${i}" type="button"${a.bm?` aria-label="Open the bookmark to review"`:""}>${a.mock?"Open practice exam":a.task?"Practice":"Open"}</button></li>`).join("")}</ol>${bmLinkHTML("dashnotes")}
+   <ol class="plan">${plan.map(([h,b,a],i)=>`<li><b>${esc(h)}.</b> ${esc(b)} <button class="btn small" data-plan="${i}" type="button"${a.bm?` aria-label="Open the bookmark to review"`:""}>${a.mock?"Open practice exam":a.task?"Practice":"Open"}</button></li>`).join("")}</ol>${bmLinkHTML("dashnotes")}${shelfHTML()}
    <h2>Where you need help</h2>${weak.length?weak.map(([t,p])=>{const ti=taughtIn(t),vids=videosFor(t);return `<div class="card helpcard"><div class="row"><b>${t} ${TASKNAMES[t]}</b><span class="pill ${p>=75?"p-ok":p>=50?"p-warn":"p-bad"}">${p}%</span></div>
      <p class="prog">Taught in: ${ti.map(({c,scenes})=>`<button class="linkbtn" data-lesson="${c.num}">Ch ${c.num} lesson</button>${scenes.map(i=>` · <button class="linkbtn" data-scene="${c.num}:${i}">decision ${i+1}</button>`).join("")}`).join(" | ")||(hasMock()?"the practice exam only":"no chapter yet")}</p>
      ${vids.slice(0,2).map(([v,c])=>`<p class="prog">Video: <a href="https://www.youtube.com/watch?v=${esc(v[0])}" target="_blank" rel="noopener">${esc(v[1])}</a> (${esc(v[2])}, ${esc(v[3])})</p>`).join("")}
@@ -715,7 +713,7 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
    ${refL.length?`<h2>Refresher</h2><div class="tablewrap"><table><tr><th>Ch</th><th>Title</th><th>Decisions</th><th>Quiz</th><th>Drills</th></tr>${rows("ref",refL)}</table></div>`:""}
    ${hasMock()||H.length?`<h2>Practice exams</h2>`:""}${!hasMock()&&!H.length?"":H.length?`<div class="tablewrap"><table><tr><th>Date</th>${multi?"<th>Exam</th>":""}<th>Mode</th><th>Score</th><th>Time</th></tr>${H.slice().reverse().map(a=>`<tr><td>${new Date(a.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</td>${multi?`<td>${a.f}</td>`:""}<td>${esc((MODE_NAME[a.mode]||a.mode).replace(" mode",""))}</td><td class="num">${a.right}/${a.total} (${a.total?Math.round(a.right/a.total*100):0}%)</td><td class="num">${a.mode!=="practice"?fmtTime(a.secs):"·"}</td></tr>`).join("")}</table></div>`:`<p class="prog">No practice exams yet.</p>`}
    ${finalDashHTML()}${logSection()}`;
-  const pg=$("page");wireLog();wireFinalHome();
+  const pg=$("page");wireLog();wireFinalHome();bdgDashLater();
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
   pg.querySelectorAll("[data-lesson]").forEach(b=>b.onclick=()=>openLesson(+b.dataset.lesson));
   pg.querySelectorAll("[data-scene]").forEach(b=>b.onclick=()=>{const [n,i]=b.dataset.scene.split(":").map(Number);openChapter("full",n);const p=steps(CH).findIndex(x=>x.k==="scene"&&x.i===i);S.max=Math.max(S.max||0,p);fullGo(p)});
@@ -866,7 +864,7 @@ function renderPractice(){setTimeout(navSync,0);
    <form id="prform" novalidate>${(()=>{const pseen=new Set();return qs.map((x,qi)=>{const ord=order(x.pid.startsWith("m")?"mq"+x.pid.slice(1):x.pid.replace(/^f(\d+)q(\d+)$/,"q$1_$2"),x.opts.length);return `${caseBefore(x.cases,x,pseen,x.src)}<fieldset class="qitem"><legend><span class="qn">${qi+1}.</span> ${x.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${v?(oi===x.a?"qright":v[qi]===oi?"qwrong":""):""}"><input type="radio" name="p${qi}" value="${oi}" ${v?"disabled":""} ${v&&v[qi]===oi?"checked":""}><span class="k">${"ABCD"[pos]}</span> ${x.opts[oi]}</label>`).join("")}${v?`<p class="qwhy"><b>${v[qi]===x.a?"Correct.":"Not quite."}</b> ${x.why} <span class="tag">${x.task} · ${x.src}</span></p>`:""}</fieldset>`}).join("")})()}${v?"":`<button class="btn" type="submit">Check my answers</button>`}</form>
    ${v?`<div class="callout"><b>${v.filter((x,i)=>x===qs[i].a).length} of ${qs.length} correct.</b></div><div class="bar"><button class="btn" id="again" type="button">Another set</button><button class="btn ghost" id="todash" type="button">Back to progress</button></div>`:""}`;
   const f=$("prform");if(f)f.onsubmit=e=>{e.preventDefault();PR.v=qs.map((_,qi)=>{const c=document.querySelector(`input[name=p${qi}]:checked`);return c?+c.value:-1});
-    const P=store.get("c"+(COURSE.base+902),null)||{tasks:{}};qs.forEach((x,qi)=>{if(PR.v[qi]<0)return;P.tasks[x.task]=P.tasks[x.task]||[0,0];P.tasks[x.task][1]++;if(PR.v[qi]===x.a)P.tasks[x.task][0]++});store.set("c"+(COURSE.base+902),P);if(SYNC)SYNC(COURSE.base+902,P);renderPractice();top()};
+    const P=store.get("c"+(COURSE.base+902),null)||{tasks:{}};qs.forEach((x,qi)=>{if(PR.v[qi]<0)return;P.tasks[x.task]=P.tasks[x.task]||[0,0];P.tasks[x.task][1]++;if(PR.v[qi]===x.a)P.tasks[x.task][0]++});store.set("c"+(COURSE.base+902),P);if(SYNC)SYNC(COURSE.base+902,P);badgeSoon();renderPractice();top()};
   const a=$("again");if(a)a.onclick=()=>startPractice(task);const d=$("todash");if(d)d.onclick=()=>renderDash();
 }
 
@@ -899,7 +897,7 @@ function logWhat(){if(NAR.page==="book"&&NAR.book&&!NAR.audio.paused)return "b"+
   if(TRACK==="full"&&CH&&S){const L=steps(CH),x=L[Math.min(S.pos||0,L.length-1)];return (({open:"c",end:"c",lesson:"l",scene:"s",drill:"d",exercise:"e",quiz:"q",labs:"x"})[x.k]||"c")+CH.num}
   if(TRACK==="mock")return hasMock()?"m":null;if(TRACK==="practice")return "p";if(TRACK==="final")return "f";return null}
 function logAdd(sec,kind,what){sec=Math.round(sec);if(!(sec>0)||!COURSE)return;const L=logGet(),k=dayKey(Date.now()),D=L.days[k]||(L.days[k]={t:{},a:[]}),id=devId(),T=D.t[id]||(D.t[id]=[0,0]);
-  sec=Math.min(sec,16*3600-T[0]-T[1]);if(sec<=0)return;T[kind==="l"?1:0]+=sec;if(what&&!D.a.includes(what)&&D.a.length<40)D.a.push(what);logSave(L)}
+  sec=Math.min(sec,16*3600-T[0]-T[1]);if(sec<=0)return;T[kind==="l"?1:0]+=sec;if(what&&!D.a.includes(what)&&D.a.length<40)D.a.push(what);logSave(L);if(kind==="l"&&Date.now()-BDG.heard>60000){BDG.heard=Date.now();badgeSoon()}}
 /* listening: settle the span since the last mark, then mark again if the audio is still playing */
 function logHear(pos){const a=NAR.audio,now=Date.now(),m=LOG.lm;
   if(m){const wall=(now-m.t)/1000,p=pos!=null?pos:a.currentTime;let s;
@@ -950,6 +948,97 @@ function renderLogPrint(){setTimeout(ambSync,0);TRACK="logprint";setTimeout(navS
   $("logback").onclick=()=>{renderDash();setTimeout(()=>{const e=$("studylog");if(e)e.scrollIntoView()},0)};$("logdoprint").onclick=()=>window.print()}
 function openLog(){renderDash();setTimeout(()=>{const e=$("studylog");if(e)e.scrollIntoView({block:"start"})},30)}
 
+
+/* ===== badges and readiness (Phase 1, 2026-10-13) =====
+   badges.js (window.HalcyonBadges) holds the rules and the art; badges/<course>.js holds each book's badges (courses.js badges). Here:
+   - courseFacts(): one course's facts from what's already stored (chapters, picks, redos, quizzes, mock history, mastery, final, study log).
+   - badgeCheck(): evaluates the open course, adds what's newly earned to the badges record and queues a toast for it. Triggers: save()
+     (every chapter step, pick, quiz, redo), a practice exam submit, a practice set, the final assessment, listening time (at most once a
+     minute), a course switch, and boot. The first check for a course with no record on this device (and none from the server) is a silent
+     backfill: everything already earned is marked back:1 and never toasted.
+   - the record: base+908, through store (the test profile keeps its own, frozen pages write nothing) and synced like other progress
+     (the server keeps 901 and up as side records, never a place to resume). listenPull merges the server's copy in as a union (HalcyonBadges.merge).
+   - toasts: one at a time in #toast (role=status, polite), 6 seconds each, no sound, never in the way of a tap (pointer-events none). They wait
+     anywhere in the practice exam flow until it is submitted or left and while Focus mode is on a chapter page, and show on the next screen that isn't. A toast that
+     has shown is marked seen in the record, so another device doesn't show it again.
+   - the Progress page: the readiness card (replacing the old Readiness card, which was the last timed exam alone) and the shelf: earned
+     badges in color, locked ones as an outline with what earns them, hidden ones as a blank shape with a question mark. Pending badges never show. */
+const BDG={ready:false,timer:0,heard:0,loading:{},items:{},queue:[],showing:null,put:{}};
+function BKEY(c){return (c||COURSE).base+908}
+function bdgDefs(c){c=c||COURSE;return c&&(window.HALCYON_BADGES||{})[c.id]||null}
+function bdgLoad(c){c=c||COURSE;if(!c||!c.badges||!window.HalcyonBadges)return Promise.resolve(null);const d=bdgDefs(c);if(d)return Promise.resolve(d);
+  return BDG.loading[c.id]||(BDG.loading[c.id]=loadScripts([c.badges]).then(()=>bdgDefs(c)))}
+function bdgGet(c){const r=store.get("c"+BKEY(c),null);return r&&typeof r==="object"&&r.got&&typeof r.got==="object"?r:null}
+function bdgPut(r,c,now){c=c||COURSE;const k=BKEY(c);store.set("c"+k,r);
+  if(SYNC){const copy=JSON.parse(JSON.stringify(r));clearTimeout(BDG.put[k]);BDG.put[k]=setTimeout(()=>{delete SPEND[k];SYNC(k,copy)},now?0:800);SPEND[k]=[k,copy]}}
+function courseFacts(){const L=TRACKS.full.list(),cur=TRACK==="full"&&CH&&S?CH.num:-1,flags={};
+  const chapters=L.map(c=>{const st=c.num===cur?S:load("full",c.num);if(st&&st.flags)Object.assign(flags,st.flags);
+    return {n:c.num,title:c.title,done:!!st&&(!!st.doneAt||(st.pos||0)>=steps(c).length-1),picks:(st&&st.picks)||{},ids:c.scenes.map(x=>x.id),
+      best:c.scenes.map(x=>x.opts.findIndex(o=>o.best)),rd:(st&&st.rd)||0,quiz:st&&st.quiz?[st.quiz.right,c.quiz.length]:null}});
+  const m=mastery(),tasks={};Object.entries(m).forEach(([t,x])=>tasks[t]={got:x.got,max:x.max,n:x.n,d:taskDomain(t)});
+  const listen={};Object.entries(logGet().days||{}).forEach(([d,D])=>{let l=0;Object.values((D&&D.t)||{}).forEach(x=>{l+=(x&&x[1])||0});listen[d]=l});
+  return {course:COURSE.id,planned:Math.max(COURSE.planned||0,L.length),chapters,flags,exams:mockHistAll().map(a=>({at:a.at,mode:a.mode,right:a.right,total:a.total})),
+    final:!!(COURSE.final&&certAttempt()),tasks,doms:DOMS.slice(),weights:COURSE.examWeights||{},hasMock:hasMock(),listen,today:dayKey(Date.now())}}
+function badgeSoon(){if(!BDG.ready)return;clearTimeout(BDG.timer);BDG.timer=setTimeout(()=>{badgeCheck().catch(e=>console.error(e))},300)}
+function bdgBoot(){BDG.ready=true;badgeSoon()}
+async function badgeCheck(){const c=COURSE,HB=window.HalcyonBadges;if(!BDG.ready||!c||!HB||!c.badges)return;
+  if((c.scripts||c.labs)&&!c._loaded)return; // its chapters aren't in yet: the facts would read as nothing done
+  const def=await bdgLoad(c);if(!def||COURSE!==c||!TRACKS.full.list().length)return;
+  const F=courseFacts(),ev=HB.evaluate(def,F,c.target),now=Date.now();BDG.items[c.id]=ev.items;
+  const res=HB.apply(bdgGet(c),ev.got,now),rec=res.rec;let changed=res.changed;
+  const snap={ready:ev.ready.value,parts:HB.parts(ev.ready),ch:[F.chapters.filter(x=>x.done).length,F.planned]},was=rec.snap||{};
+  if(!HB.same({ready:was.ready,parts:was.parts,ch:was.ch},snap)){rec.snap={...snap,at:now};changed=true} // only a real change is written, so a visit that earns nothing sends nothing
+  if(changed){bdgPut(rec,c);if(TRACK==="dash")bdgDashFill()}
+  bdgQueue()}
+/* the toast queue: badges earned live and not shown on any device yet, for the open course */
+function bdgQueue(){const c=COURSE,HB=window.HalcyonBadges;if(!c||!HB)return;const rec=bdgGet(c);
+  BDG.queue=HB.unseen(rec,BDG.items[c.id]||[]).filter(id=>id!==BDG.showing).map(id=>({c:c.id,id}));bdgToastNext()}
+function bdgHold(){return (TRACK==="mock"&&!(MS&&MS.submitted))||((TRACK==="full"||TRACK==="ref")&&!!STORY())}
+function bdgToastNext(){const el=$("toast"),HB=window.HalcyonBadges;if(!el||!HB||BDG.showing||!BDG.queue.length||bdgHold())return;
+  const q=BDG.queue.shift(),def=bdgDefs(),it=(BDG.items[q.c]||[]).find(x=>x.id===q.id);if(!def||q.c!==COURSE.id||!it)return bdgToastNext();
+  const rec=bdgGet();if(!rec||!rec.got[q.id]||rec.got[q.id].seen)return bdgToastNext();
+  rec.got[q.id].seen=1;rec.at=Date.now();bdgPut(rec);BDG.showing=q.id;
+  const d=document.createElement("div");d.className="tcard";d.dataset.id=q.id;
+  d.innerHTML=`${HB.art(it,def,"got",44)}<span class="ttxt"><span class="tkick">${it.hidden?`Hidden ${esc(def.one)} found`:`New ${esc(def.one)}`}</span><b class="tname">${esc(it.name)}</b><span class="tline">${esc(it.line)}</span></span>`;
+  el.appendChild(d);requestAnimationFrame(()=>d.classList.add("on"));
+  setTimeout(()=>{d.classList.remove("on");setTimeout(()=>{d.remove();BDG.showing=null;bdgToastNext()},300)},6000)}
+/* listenPull: the server's copy (another device) merged in as a union; this copy goes back up if it has something the server's lacks */
+function bdgPull(P){const HB=window.HalcyonBadges;if(!HB)return;let mine=false;
+  COURSES.filter(c=>c.status==="live").forEach(c=>{const k=BKEY(c),r=P[k];if(!r||!r.got)return;const loc=bdgGet(c),M=HB.merge(loc,r);if(!M)return;
+    if(!HB.same(M,loc)){store.set("c"+k,M);if(c===COURSE)mine=true}
+    if(!HB.same(M,r)&&!SPEND[k])bdgPut(M,c)});
+  if(mine){bdgQueue();if(TRACK==="dash")bdgDashFill()}}
+/* the Progress page */
+function bdgPct(v){return v==null?"·":v+"%"}
+function readyCardHTML(){const HB=window.HalcyonBadges;if(!HB)return "";const def=bdgDefs(),F=courseFacts(),r=HB.readiness(F),t=COURSE.target||75;
+  const name=def&&def.readiness?def.readiness.name:"Readiness",explain=def&&def.readiness?def.readiness.explain.replace(/\{target\}/g,t):"";
+  const how=r.basis==="exam"?"It blends your last three timed practice exams with how much of the exam you've covered and how often you get it right."
+    :r.basis==="study"?"It comes from how much of the exam you've covered and how often you get it right. Until you take a timed practice exam, it tops out at 80."
+    :"It comes from how much of the exam you've covered and how often you get it right.";
+  const v=r.value,fill=v==null?0:v;
+  return `<section class="card readycard" id="readycard" aria-labelledby="readyh"><div class="rdtop"><h2 id="readyh">${esc(name)}</h2><span class="rdval${v==null?" none":""}" id="rdval">${v==null?"Not enough yet":v}</span></div>
+   <div class="rdbar" role="img" aria-label="${esc(name)} ${v==null?"not enough yet":v+" of 100"}, target ${t}"><span style="width:${fill}%"></span><i style="left:${t}%"></i></div>
+   <p class="rdtarget"><b>Target ${t}.</b> ${esc(explain)}</p>
+   ${v==null?`<p class="rdhow">Answer at least 15 decisions and questions, or take a timed practice exam, and this fills in. You've answered ${r.items} so far.</p>`:`<p class="rdhow">${esc(how)}</p>`}
+   <dl class="rdparts">${F.hasMock?`<div><dt>Timed practice exams</dt><dd>${r.timed?bdgPct(Math.round(r.X*100)):"none yet"}</dd></div>`:""}<div><dt>Tasks covered</dt><dd>${bdgPct(Math.round(r.K*100))}</dd></div><div><dt>Accuracy</dt><dd>${r.items?bdgPct(Math.round(r.A*100)):"·"}</dd></div></dl>
+   <p class="rdfoot">A study meter built from your own answers in this course. It doesn't predict your exam score.</p></section>`}
+function shelfHTML(){const HB=window.HalcyonBadges,def=bdgDefs();if(!HB||!def)return `<div id="shelf"></div>`;
+  const F=courseFacts(),items=HB.expand(def,F),rec=bdgGet()||{got:{}},got=rec.got,day=t=>new Date(t).toLocaleDateString("en-US",{month:"short",day:"numeric"});
+  const ctx={planned:F.planned,hasMock:F.hasMock,meter:def.readiness&&def.readiness.name,target:COURSE.target||75};
+  const tile=it=>{const g=got[it.id],k=HB.kind(it),n=it.rule&&it.rule.ch;
+    if(g){const many=g.ch&&g.ch.length>1?` · ${g.ch.length} chapters`:"";
+      return `<li class="bdg got${k==="hidden"?" hid":""}" data-badge="${esc(it.id)}">${HB.art(it,def,"got",56)}<span class="btxt"><b class="bname">${esc(it.name)}</b><span class="bline">${esc(it.line)}</span><span class="bdate">${k==="hidden"?"Hidden · ":""}Earned ${esc(day(g.at))}${many}</span></span></li>`}
+    if(k==="hidden")return `<li class="bdg hidden" data-badge="hidden">${HB.art(it,def,"hidden",56)}<span class="btxt"><b class="bname">Hidden</b><span class="bline">It shows up when you earn it.</span></span></li>`;
+    if(k==="chapter")return `<li class="bdg locked chl" data-badge="${esc(it.id)}" title="${esc(HB.need(it,ctx))}">${HB.art(it,def,"locked",40)}<span class="sr"><b class="bname">Chapter ${n}</b>, locked. ${esc(HB.need(it,ctx))}</span></li>`; // a locked chapter badge: its frame and number only
+    return `<li class="bdg locked" data-badge="${esc(it.id)}">${HB.art(it,def,"locked",56)}<span class="btxt"><b class="bname">${esc(it.name)}</b><span class="bline">${esc(HB.need(it,ctx))}</span></span></li>`};
+  const grp=(h,L)=>L.length?`<h3 class="shsub">${h}</h3><ul class="shgrid">${L.map(tile).join("")}</ul>`:"";
+  const chs=items.filter(it=>HB.kind(it)==="chapter"),chOn=chs.filter(it=>got[it.id]),chOff=chs.filter(it=>!got[it.id]);
+  const chGrp=chs.length?`<h3 class="shsub">Chapters</h3>${chOn.length?`<ul class="shgrid">${chOn.map(tile).join("")}</ul>`:""}${chOff.length?`<ul class="shchips" aria-label="Chapters still to earn">${chOff.map(tile).join("")}</ul>`:""}`:"";
+  const earned=items.filter(it=>got[it.id]).length;
+  return `<section class="shelf" id="shelf" aria-labelledby="shelfh"><h2 id="shelfh">${esc(def.shelf)} <span class="prog">${earned} of ${items.length}</span></h2>
+   ${chGrp}${grp("Milestones",items.filter(it=>HB.kind(it)==="milestone"))}${grp("Hidden",items.filter(it=>HB.kind(it)==="hidden"))}</section>`}
+function bdgDashFill(){if(TRACK!=="dash")return;const a=$("readycard"),b=$("shelf");if(a)a.outerHTML=readyCardHTML();if(b)b.outerHTML=shelfHTML()}
+function bdgDashLater(){if(bdgDefs())return;const c=COURSE;bdgLoad(c).then(d=>{if(d&&COURSE===c&&TRACK==="dash")bdgDashFill()}).catch(()=>{})} // offline first visit: the shelf just stays empty
 
 /* ===== page narration: sticky player, per-page clips, word highlight ===== */
 const NAR={car:false,audio:audioGuard(new Audio()),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
@@ -1209,7 +1298,7 @@ async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filt
   if(v==="listen"){renderBook();return true}if(v==="notes"){renderNotes();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
   renderHome();renderRail();return true}
 window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
-function navSync(){noteRoute();try{bookBarSync()}catch(e){console.error(e)}bmRail();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink",notes:"proglink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+function navSync(){noteRoute();setTimeout(bdgToastNext,0);try{bookBarSync()}catch(e){console.error(e)}bmRail();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink",notes:"proglink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
@@ -1459,7 +1548,7 @@ function renderRail(){
   $("cast").innerHTML=[...seen].map(([n,d])=>{const w=castList().find(c=>c.name===n||c.name.split(" ")[0]===n.split(" ")[0]);return `<dt>${w?`<button class="linkbtn" data-castid="${w.id}" type="button">${n}</button>`:n}</dt><dd>${d}</dd>`}).join("");$("cast").querySelectorAll("[data-castid]").forEach(b=>b.onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();renderCast(b.dataset.castid);top()});
   recapRail();
 }
-function render(){_render();castStrip();narAttach();navSync();ambSync();handoffOffer();whereSync()}
+function render(){_render();castStrip();narAttach();navSync();ambSync();handoffOffer();whereSync();bdgToastNext()}
 function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="notes")return renderNotes();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();if(TRACK==="final")return finalRender();if(TRACK==="cert")return renderCert();if(TRACK==="verify")return renderVerify();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
@@ -1468,7 +1557,7 @@ async function api(path,opts={}){if(TESTP&&/^\/api\/progress\b/.test(path))retur
   const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
 async function listenPull(){if(TESTP||!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");
   // bookmarks: a newer record from another device replaces this one unless a write from here is still waiting (newest record wins)
-  bmCourses().forEach(c=>{const k=BMKEY(c),r=me.progress&&me.progress[k];if(r&&Array.isArray(r.list)&&(r.at||0)>(bmGet(c).at||0)&&!SPEND[k]){store.set("c"+k,r);bmRail();if(TRACK==="notes"&&$("bmbody")&&!$("bmbody").contains(document.activeElement)){$("bmbody").innerHTML=bmListHTML();bmNotesWire()}}});{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
+  bdgPull(me.progress||{});bmCourses().forEach(c=>{const k=BMKEY(c),r=me.progress&&me.progress[k];if(r&&Array.isArray(r.list)&&(r.at||0)>(bmGet(c).at||0)&&!SPEND[k]){store.set("c"+k,r);bmRail();if(TRACK==="notes"&&$("bmbody")&&!$("bmbody").contains(document.activeElement)){$("bmbody").innerHTML=bmListHTML();bmNotesWire()}}});{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
 const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.qa.ok","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
 function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.recap")||k.startsWith("halcyon.bookEd.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
@@ -1577,7 +1666,7 @@ async function boot(){
   if($("liblink"))$("liblink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderLibrary();top()};
   $("homelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderHome();renderRail()};
   if((COURSE.scripts||COURSE.labs)&&!COURSE._loaded)await useCourse(COURSE.id);
-  if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;$("username").textContent="";recapSnap();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
+  if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;$("username").textContent="";recapSnap();bdgBoot();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
   let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
   if(!me.user){if(PROF.signedOut)PROF.signedOut();if(/^#verify\b/.test(location.hash)){document.querySelector(".rail").hidden=true;return renderVerify()}const inv=new URLSearchParams(location.search).get("invite");
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
@@ -1593,7 +1682,7 @@ async function boot(){
   USERNAME=me.user.name||"";
   document.querySelector(".rail").hidden=false;$("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
   $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();if(PROF.testKeys)PROF.testKeys().forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});location.href="/"}; // test profile data goes with the account that made it
-  recapSnap();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(TESTP?store.get("cur",0):(me.user.cur||0));
+  recapSnap();bdgBoot();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(TESTP?store.get("cur",0):(me.user.cur||0));
 }
 /* ===== QA mode hook: qa.js (speaker chips, the QA bar, Flag a problem) reads where the reader and the player are. Read only. ===== */
 window.HalcyonState=function(){const a=NAR.audio,bk=NAR.page==="book"&&NAR.book,ch=(TRACK==="full"||TRACK==="ref")&&CH?CH:null;

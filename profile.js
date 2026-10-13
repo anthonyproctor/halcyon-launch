@@ -6,7 +6,8 @@
    While the test profile is on:
    - every progress key the engine reads or writes lives under "halcyon-qa-test:" instead of "halcyon." (chapter progress, mock attempts and
      history for every form, the study log, lastplace, lastch, route, cur, course, track, the library's last played list and pins, audiobook
-     and car positions, readat, bookdone, handoff.seen, the final assessment and certificate name, labs). The prefix does not start with
+     and car positions, readat, bookdone, handoff.seen, the final assessment and certificate name, labs, and the badges record at base+908,
+     so badges earned and toasts seen in the test profile stay there). The prefix does not start with
      "halcyon." on purpose, so the engine's clearLocal() (sign in and sign out) never touches it and the real namespace never sees it.
    - nothing is written to /api/progress, and the server's copy of progress is never read into local storage (engine.js boot and listenPull).
    - "Continue", resume and lastPlaceLabel read the test namespace only, so they point at test state.

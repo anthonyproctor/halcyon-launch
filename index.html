@@ -97,6 +97,37 @@ h2.finishh{margin-top:18px}
 .finish li.now::before{border-color:var(--accent);color:var(--accent)}
 .finish li.done::before{content:"✓";background:var(--good-soft);border-color:var(--good);color:var(--good)}
 .finish .fh{font-weight:600}.finish .fv{color:var(--ink)}
+/* badges and readiness (2026-10-13): the Progress page's readiness card and badge shelf, and the badge toast. Badge art keeps its own
+   colors in both themes (a patch or a stamp is an object); locked and hidden frames are drawn in currentColor, which is --muted here */
+.readycard{margin:0 0 14px;padding:16px 18px}
+.rdtop{display:flex;align-items:baseline;justify-content:space-between;gap:6px 12px;flex-wrap:wrap}
+.rdtop h2{margin:0;font-size:20px}
+.rdval{font-family:var(--mono);font-size:30px;font-weight:500;line-height:1;color:var(--ink)}
+.rdval.none{font-family:var(--ui);font-size:16px;font-weight:600;color:var(--muted)}
+.rdbar{position:relative;display:block;height:10px;margin:12px 0 10px;background:var(--soft);border:1px solid var(--line);border-radius:6px}
+.rdbar span{display:block;height:100%;background:var(--accent);border-radius:5px}
+.rdbar i{position:absolute;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--ink);border-radius:1px}
+.rdtarget{margin:0 0 4px;font-size:15px}.rdhow{margin:0 0 10px;font-size:14px;line-height:1.45;color:var(--muted)}
+.rdparts{display:flex;flex-wrap:wrap;gap:8px 24px;margin:0 0 10px}.rdparts div{display:flex;flex-direction:column}
+.rdparts dt{font-size:12.5px;color:var(--muted)}.rdparts dd{margin:0;font-family:var(--mono);font-size:15px;color:var(--ink)}
+.rdfoot{margin:0;padding-top:8px;border-top:1px dashed var(--line);font-size:13px;color:var(--muted)}
+.shelf{margin:24px 0 8px}.shelf h2{margin-bottom:2px}
+.shsub{font-family:var(--ui);font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+.shgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:8px}
+.bdg{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;align-items:start;background:var(--page);border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--muted)}
+.bdg .bdgart{display:block}.bdg.got{border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.btxt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.bname{font-size:14.5px;line-height:1.3;color:var(--ink);overflow-wrap:anywhere}
+.bline{font-size:13px;line-height:1.4;color:var(--ink)}.bdg.locked .bline,.bdg.hidden .bline{color:var(--muted)}
+.bdate{font-size:12px;color:var(--muted)}
+.shchips{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}.bdg.chl{display:block;padding:4px;border-style:dashed}.bdg.chl .bdgart{width:40px;height:40px}
+.toast{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;justify-content:center;padding:0 16px;pointer-events:none} /* never in the way of a tap */
+body.withbar .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+.tcard{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:center;width:100%;max-width:380px;background:var(--page);color:var(--ink);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.2);padding:12px 14px;opacity:0;transform:translateY(8px)}
+.tcard.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:no-preference){.tcard{transition:opacity .25s ease,transform .25s ease}}
+.ttxt{display:flex;flex-direction:column;min-width:0}.tkick{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.tname{font-size:15px;line-height:1.3}.tline{font-size:13px;line-height:1.4}
 .finish .bpbar{grid-column:2;margin-top:6px}
 .dom-row{display:grid;grid-template-columns:minmax(0,1fr) auto;font-size:14px;padding:4px 0;border-bottom:1px dashed var(--line)}
 .dom-row:last-child{border-bottom:none}
@@ -330,7 +361,7 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 <style>
 .logrange{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:10px 0}.logrange label{font-size:14px;color:var(--muted);display:flex;gap:6px;align-items:center}.logrange input{font:inherit;font-size:15px;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:7px;padding:5px 8px}
 .logtable td:first-child{white-space:nowrap}.logtable td:nth-child(3){min-width:160px}.logl{color:var(--muted);font-size:13px}.logtotal{margin:6px 0 0}.logfoot{margin-top:22px;font-size:13px;color:var(--muted)}.logblank{display:inline-block;min-width:240px;max-width:100%;border-bottom:1px solid var(--ink);height:1.2em}
-@media print{:root{--bg:#fff;--page:#fff;--ink:#000;--muted:#333;--line:#999;--soft:#eee;color-scheme:light}body{background:#fff;color:#000}.tophead,.rail,#narbar,.sitefoot,.noprint,.backlink,.xray,#handoff{display:none!important}.wrap{display:block;padding:0;max-width:none}.page{border:0;padding:0}.tablewrap{overflow:visible}.logtable{width:100%}.logtable tr{break-inside:avoid}}
+@media print{:root{--bg:#fff;--page:#fff;--ink:#000;--muted:#333;--line:#999;--soft:#eee;color-scheme:light}body{background:#fff;color:#000}.tophead,.rail,#narbar,.toast,.sitefoot,.noprint,.backlink,.xray,#handoff{display:none!important}.wrap{display:block;padding:0;max-width:none}.page{border:0;padding:0}.tablewrap{overflow:visible}.logtable{width:100%}.logtable tr{break-inside:avoid}}
 </style>
 <style>.sitefoot{max-width:1060px;margin:0 auto;padding:16px 18px 32px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;line-height:1.5}.sitefoot p{margin:0;max-width:72ch;overflow-wrap:anywhere}</style>
 <script>
@@ -433,6 +464,7 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
     <div class="card notescard" id="notescard" hidden></div>
   </aside>
 </div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div><!-- badge toasts (engine.js bdgToastNext) -->
 <footer class="sitefoot" id="sitefoot"><p>These courses are independent study stories. They aren't affiliated with or endorsed by the certifying bodies whose exams they cover.</p></footer>
 
 <!-- PMP: the Full Course (The Halcyon Launch v2) loads from full/v2/ at boot, listed in full/v2/preview.js; the v1 Refresher was deleted on 2026-10-12 -->
@@ -445,6 +477,7 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
 <script src="upcoming.js"></script>
 <script src="lab.js"></script>
 <script src="assets.js"></script>
+<script src="badges.js"></script><!-- badge and readiness rules (pure logic); each book's badges load from badges/<course>.js -->
 <script src="profile.js"></script>
 <script src="engine.js"></script>
 <script src="qa.js"></script>
