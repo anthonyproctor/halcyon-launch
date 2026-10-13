@@ -9,60 +9,322 @@
 :root[data-theme="dark"]{--bg:#121417;--page:#1a1d21;--ink:#e7e5e0;--muted:#a0a5ab;--line:#2e3238;--soft:#23272c;--accent:#8dbcd4;--on:#121417;--good:#74c69a;--bad:#ec8b80;color-scheme:dark}
 *{box-sizing:border-box}html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
-.wrap{max-width:980px;margin:0 auto;padding-inline:18px;padding-block:24px 48px}
-h1{font:600 28px Georgia,serif;margin:0 0 4px}h2{font:600 19px Georgia,serif;margin:26px 0 8px}
+a{color:var(--accent)}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:24px 48px}
+h1{font:600 28px Georgia,serif;margin:0 0 4px}h2{font:600 19px Georgia,serif;margin:0 0 8px}
+h3{font:600 15px Georgia,serif;margin:14px 0 4px}
+section{margin-top:28px;scroll-margin-top:12px}
+.top{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;justify-content:space-between}
+.jump{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:14px}.jump a{display:inline-block;min-height:24px;padding-block:2px}
 .card{background:var(--page);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
-input{font:inherit;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-width:0}
-.btn{font:inherit;font-weight:600;background:var(--accent);color:var(--on);border:1px solid var(--accent);border-radius:6px;padding:8px 13px;cursor:pointer}
+input,select{font:inherit;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-width:0}
+.btn{font:inherit;font-weight:600;background:var(--accent);color:var(--on);border:1px solid var(--accent);border-radius:6px;padding:8px 13px;cursor:pointer;text-decoration:none;display:inline-block;white-space:nowrap}
 .btn.ghost{background:transparent;color:var(--accent)}
+.btn.sm{font-size:13px;padding:3px 10px;min-height:28px}
+.btn:disabled{opacity:.5;cursor:default}
 .tw{overflow-x:auto;background:var(--page);border:1px solid var(--line);border-radius:8px}
-table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+table{border-collapse:collapse;width:100%;font-size:14px}
 th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:var(--soft);padding:8px 10px}
-td{padding:8px 10px;border-top:1px solid var(--line);vertical-align:top}
+td{padding:8px 10px;border-top:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 .muted{color:var(--muted);font-size:13px}.ok{color:var(--good)}.bad{color:var(--bad)}
+.hint{margin:6px 0 10px}
 code{font:13px ui-monospace,Menlo,monospace;word-break:break-all}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .tg{display:inline-flex;align-items:center;gap:8px;min-height:24px;cursor:pointer;white-space:nowrap}
 .tg input{width:24px;height:24px;margin:0;accent-color:var(--accent);cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#msg:not(:empty){margin-top:8px;padding:8px 12px;background:var(--soft);border-radius:6px;color:var(--ink)}
+
+/* summary strip */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin-bottom:12px}
+.stat{background:var(--page);border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+.stat b{display:block;font:600 22px/1.2 Georgia,serif}.stat span{font-size:12px;color:var(--muted)}
+
+/* toolbar */
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.tools .find{flex:1 1 200px;display:flex}.tools .find input{flex:1;min-height:36px}
+.tools label.sort{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.tools select{padding:6px 8px;min-height:36px}
+.tools .btn.sm{min-height:36px}
+
+/* players: one compact line each, details on demand */
+.plist{background:var(--page);border:1px solid var(--line);border-radius:8px}
+.pr{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,2fr) 6rem 4.2rem 6.4rem 5.4rem;gap:4px 12px;align-items:center;padding:7px 12px}
+.ph{background:var(--soft);border-radius:8px 8px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;padding-block:6px}
+.pl{border-top:1px solid var(--line)}
+.pl.off .nm{text-decoration:line-through;color:var(--muted)}
+.who{min-width:0;display:flex;flex-direction:column}
+.exp{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:7px;min-height:24px;font-weight:600;max-width:100%;border-radius:4px}
+.exp:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.exp .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.exp:hover .nm{text-decoration:underline}
+.chev{flex:none;width:0;height:0;border-block:5px solid transparent;border-inline-start:7px solid var(--muted);transition:transform .15s}
+.exp[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.em{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-inline-start:14px}
+.badge{flex:none;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;border:1px solid currentColor;border-radius:4px;padding:0 4px;line-height:1.5;color:var(--accent)}
+.badge.off{color:var(--bad)}
+.prog{display:flex;flex-wrap:wrap;gap:4px 6px;min-width:0}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;background:var(--soft);border-radius:999px;padding:1px 9px;white-space:nowrap}
+.mini{display:inline-flex;width:28px;height:5px;border-radius:3px;background:var(--line);overflow:hidden}
+.mini i{display:block;height:100%;background:var(--good)}.mini i.go{background:var(--accent);opacity:.6}
+.when{font-size:13.5px;white-space:nowrap}
+.meta{display:contents}
+.cell-l{display:none}
+.det{padding:2px 12px 14px 33px;font-size:14px}
+.facts{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:2px 14px;margin:0 0 4px}
+.facts dt{color:var(--muted);font-size:13px}.facts dd{margin:0;overflow-wrap:anywhere}
+.chs{list-style:none;margin:0;padding:0}
+.chs li{display:grid;grid-template-columns:minmax(0,1fr) auto 5.8rem;gap:2px 12px;padding:4px 0;border-top:1px dashed var(--line);align-items:baseline}
+.chs li:first-child{border-top:0}
+.chs .cn{color:var(--muted);font-size:13px;margin-inline-end:6px}
+.chs .cs{white-space:nowrap;font-size:13.5px}.chs .cs.done{color:var(--good)}
+.chs .cu{white-space:nowrap;font-size:13px;color:var(--muted);text-align:end}
+.empty{padding:14px 12px;color:var(--muted)}
+details summary{cursor:pointer;min-height:24px;padding-block:4px;color:var(--accent);font-weight:600}
+
+@media (max-width:759px){
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .stat{padding:5px 9px}.stat b{font-size:18px}.stat span{font-size:11.5px;line-height:1.3;display:block}
+  .ph{display:none}
+  .pr{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"who la" "prog prog" "meta act";padding:10px 12px}
+  .who{grid-area:who}.prog{grid-area:prog;padding-inline-start:14px}.c-la{grid-area:la;text-align:end}
+  .meta{grid-area:meta;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding-inline-start:14px}
+  .c-act{grid-area:act;text-align:end}
+  .cell-l{display:inline;color:var(--muted);font-size:12px;margin-inline-end:5px}
+  .det{padding-inline-start:26px}
+  .chs li{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t u" "s s"}
+  .chs .ct{grid-area:t}.chs .cu{grid-area:u}.chs .cs{grid-area:s;white-space:normal}
+}
 </style>
 </head>
 <body><div class="wrap">
-<p class="muted"><a href="/">Back to the game</a></p>
+<div class="top"><p class="muted" style="margin:0"><a href="/">Back to the game</a></p>
+<nav class="jump" aria-label="Sections"><a href="#players">Players</a><a href="#invites-sec">Invites</a><a href="#list-sec">Book list</a><a href="#qa-sec">QA reports</a></nav></div>
 <h1>Halcyon Admin</h1>
 <div id="msg" class="muted" role="status" aria-live="polite"></div>
-<h2>Invite someone</h2>
-<div class="card"><div class="row"><label class="muted" for="note" style="display:flex;flex-direction:column;gap:4px;flex:1">Who it's for (just a note for you)<input id="note" placeholder="e.g. Kelsey"></label><button class="btn" id="make" type="button">Make invite link</button></div>
-<div id="newlink" style="margin-top:10px"></div><p class="muted" style="margin:8px 0 0">Each link works once and expires in 30 days.</p></div>
-<h2>Players</h2><p class="muted" style="margin:0 0 8px">Tester turns on QA mode, the Flag button and the test profile for that player. Admins always have them.</p><div class="tw"><table id="users"></table></div>
-<h2>Invites</h2><div class="tw"><table id="invites"></table></div>
-<h2>Tell me when new books land</h2><div class="card"><div class="row" style="justify-content:space-between"><span id="listcount" class="muted"></span><a class="btn" id="listcsv" href="/api/admin?action=list&amp;format=csv" download>Download CSV</a></div><p class="muted" style="margin:8px 0 0">Site doesn't send email. CSV includes each person's leave link for whatever you send.</p></div>
-<div class="tw" style="margin-top:10px"><table id="list"></table></div>
+
+<section id="players" aria-labelledby="players-h">
+<h2 id="players-h">Players</h2>
+<div id="stats" class="stats" role="group" aria-label="Summary"></div>
+<div class="tools">
+  <label class="find"><span class="sr">Find a player by name or email</span><input id="q" type="search" placeholder="Find by name or email" autocomplete="off"></label>
+  <label class="sort">Sort <select id="sort"><option value="active">Last active</option><option value="name">Name</option><option value="joined">Joined, newest first</option></select></label>
+  <button class="btn ghost sm" id="expall" type="button">Expand all</button>
 </div>
-<h2>QA reports</h2><div class="card"><div class="row"><a class="btn" href="/api/qa-report?format=csv&amp;since=7d" download>Last 7 days (CSV)</a><a class="btn ghost" href="/api/qa-report?format=csv" download>All (CSV)</a></div><p class="muted" style="margin:8px 0 0">Problems testers flagged in QA mode. Claude pulls these with tools/qa_pull.mjs.</p></div>
+<p class="muted hint">Tap a name for every chapter. Tester turns on QA mode, the Flag button and the test profile for that player. Admins always have them.</p>
+<div class="plist"><div class="pr ph" aria-hidden="true"><span>Player</span><span>Progress</span><span>Last active</span><span>Joined</span><span>Tester</span><span></span></div><div id="users" role="list" aria-label="Players"></div></div>
+</section>
+
+<section id="invites-sec" aria-labelledby="invites-h">
+<h2 id="invites-h">Invites</h2>
+<div class="card"><div class="row"><label class="muted" for="note" style="display:flex;flex-direction:column;gap:4px;flex:1 1 220px">Who it's for (just a note for you)<input id="note" placeholder="e.g. a friend from work"></label><button class="btn" id="make" type="button">Make invite link</button></div>
+<div id="newlink" style="margin-top:10px"></div><p class="muted" style="margin:8px 0 0">Each link works once and expires in 30 days.</p></div>
+<div id="invites" style="margin-top:10px"></div>
+</section>
+
+<section id="list-sec" aria-labelledby="list-h">
+<h2 id="list-h">Tell me when new books land</h2>
+<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><span id="listcount" class="muted"></span><a class="btn" id="listcsv" href="/api/admin?action=list&amp;format=csv" download>Download CSV</a></div><p class="muted" style="margin:8px 0 0">Site doesn't send email. CSV includes each person's leave link for whatever you send.</p></div>
+<div class="tw" style="margin-top:10px"><table id="list"></table></div>
+</section>
+
+<section id="qa-sec" aria-labelledby="qa-h">
+<h2 id="qa-h">QA reports</h2>
+<div class="card"><div class="row" style="align-items:center"><a class="btn" href="/api/qa-report?format=csv&amp;since=7d" download>Last 7 days (CSV)</a><a class="btn ghost" href="/api/qa-report?format=csv" download>All (CSV)</a><span id="qacount" class="muted"></span></div><p class="muted" style="margin:8px 0 0">Problems testers flagged in QA mode. Claude pulls these with tools/qa_pull.mjs.</p></div>
+</section>
+</div>
+<script src="courses.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-async function api(path,opts={}){const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return{ok:r.ok,...j}}
-const d=x=>x?new Date(x).toLocaleDateString("en-US",{month:"short",day:"numeric"}):"";
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+async function api(path,opts={}){try{const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return{ok:r.ok,...j}}catch(e){return{ok:false}}}
+// per viewer conveniences only (open rows, sort): wrapped, so a private window or blocked storage just forgets them
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ===== times: relative on the page, the exact Mountain time in the tooltip ===== */
+const TZ="America/Denver";
+const fmtExact=new Intl.DateTimeFormat("en-US",{timeZone:TZ,month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit",timeZoneName:"short"});
+const fmtDay=new Intl.DateTimeFormat("en-US",{timeZone:TZ,month:"short",day:"numeric"});
+const fmtDayY=new Intl.DateTimeFormat("en-US",{timeZone:TZ,month:"short",day:"numeric",year:"numeric"});
+const fmtYear=new Intl.DateTimeFormat("en-US",{timeZone:TZ,year:"numeric"});
+const toDate=x=>{if(!x)return null;const t=new Date(x);return isNaN(t)?null:t};
+const exact=x=>{const t=toDate(x);return t?fmtExact.format(t):""};
+function day(x){const t=toDate(x);if(!t)return "";return fmtYear.format(t)===fmtYear.format(new Date())?fmtDay.format(t):fmtDayY.format(t)}
+function rel(x){const t=toDate(x);if(!t)return "Never";const s=Math.max(0,(Date.now()-t)/1000);
+  if(s<60)return "just now";if(s<3600)return `${Math.floor(s/60)} min ago`;if(s<86400)return `${Math.floor(s/3600)}h ago`;
+  const d=Math.floor(s/86400);if(d<2)return "yesterday";if(d<31)return `${d} days ago`;return day(t)}
+const when=(x,never="Never")=>{const t=toDate(x);return t?`<time datetime="${t.toISOString()}" title="${esc(exact(t))}">${esc(rel(t))}</time>`:never?`<span class="muted">${esc(never)}</span>`:""};
+
+/* ===== progress keys, decoded the way engine.js and courses.js write them. Each course owns base to base+9999 (courses.js):
+   PMP: 201 to 299 are Full Course chapter n-200 (the live v2 book); 101 to 199 and 1 to 99 are the retired first edition's Full Course and Refresher.
+   Other courses: 101 to 199 are Full Course chapter n-100, 1 to 99 Refresher chapter n.
+   Side records (api/progress.js never resumes at 901 and up): 900 practice exam 1 attempt, 901 its results; practice exam n from 2 up is
+   910+2(n-2) and the key after it; 902 practice sets; 903 Audiobook place and Labs waiting (PMP: the first edition's; v2 uses 904);
+   905 study log; 906 final assessment; 907 bookmarks. 99990 is the Library (pins and last played) for every course. Anything else is "other". */
+const COURSES=window.HALCYON_COURSES||[];
+const byId=Object.fromEntries(COURSES.map(c=>[c.id,c]));
+const LIBKEY=99990;
+function decode(k){k=Number(k);
+  if(k===LIBKEY)return {kind:"lib",label:"Library (pins and last played)"};
+  const c=COURSES.find(c=>Number.isInteger(c.base)&&k>=c.base&&k<c.base+10000);if(!c)return {kind:"other"};
+  const r=k-c.base,pmp=c.id==="pmp";
+  if(pmp&&r>=201&&r<=299)return {kind:"full",c,n:r-200};
+  if(!pmp&&r>=101&&r<=199)return {kind:"full",c,n:r-100};
+  if(pmp&&r>=101&&r<=199)return {kind:"old",c,n:r-100,label:"Full Course, first edition (retired)"};
+  if(r>=1&&r<=99)return {kind:"ref",c,n:r,label:pmp?"Refresher, first edition (retired)":"Refresher"};
+  if(r===900||r===901)return {kind:r===900?"mock":"mockres",c,f:1};
+  if(r>=910&&r<=999)return {kind:(r-910)%2?"mockres":"mock",c,f:2+Math.floor((r-910)/2)};
+  if(pmp&&r===904)return {kind:"side",c,label:"Audiobook place and Labs waiting"};
+  const side={902:"Practice sets",903:pmp?"Audiobook place, first edition (retired)":"Audiobook place and Labs waiting",905:"Study log",906:"Final assessment",907:"Bookmarks"};
+  if(side[r])return {kind:r===906?"final":r===907?"marks":"side",c,label:side[r]};
+  return {kind:"other",c};
+}
+const short=c=>c.title||c.id;
+const longName=c=>c.full_title&&c.full_title!==c.title?`${c.title}: ${c.full_title}`:(c.title||c.id);
+
+/* published chapters per course: PMP's live list is full/v2/preview.js; the other courses list their chapter files in courses.js scripts */
+function chapterFiles(c){if(c.id==="pmp")return ((window.HALCYON_V2||{}).files||[]).filter(f=>/^ch\d+\.js$/.test(f)).map(f=>"full/v2/"+f);
+  return (c.scripts||[]).filter(f=>/^full\/ch\d+\.js$/.test(f)).map(f=>(c.root||"")+f)}
+function total(c){return chapterFiles(c).length||c.planned||0}
+/* chapter titles and step counts come from the chapter files themselves, loaded after the first paint for the courses someone has played */
+const CHAP={},loading={};
+function loadScript(src){return new Promise(ok=>{const s=document.createElement("script");s.src=src;s.onload=s.onerror=()=>ok();document.head.appendChild(s)})}
+function chapterData(c){return c.id==="pmp"?window.HALCYON_FULL||[]:((window.HALCYON_DATA||{})[c.id]||{}).full||[]}
+function loadChapters(c){return loading[c.id]||=Promise.all(chapterFiles(c).map(loadScript)).then(()=>{const m={};chapterData(c).forEach(x=>{if(x&&x.num!=null)m[x.num]=x});CHAP[c.id]=m})}
+const preview=loadScript("full/v2/preview.js");
+/* a Full Course chapter's step count, as engine.js steps() builds it (the same count in Focus mode): opening, lesson, each decision, each drill
+   placed after a decision, the exercise, Labs when the saved place was laid out with them (lx), the quiz and the ending. The last step is done. */
+function stepCount(ch,lx){const ids=new Set((ch.scenes||[]).map(s=>s.id));return 4+(ch.scenes||[]).length+(ch.drills||[]).filter(d=>ids.has(d.after)).length+(ch.exercise?1:0)+(lx?1:0)}
+const num=v=>typeof v==="number"&&isFinite(v)?v:null;
+function fullStatus(p,c,n){const ch=(CHAP[c.id]||{})[n],sc=ch?(ch.scenes||[]).length:0,picks=num(p.picks)||0,pos=num(p.pos)||0;
+  const quiz=num(p.qr)!=null&&num(p.qn)?`, quiz ${p.qr}/${p.qn}`:"";
+  if(p.done||(ch&&pos>=stepCount(ch,p.lx)-1))return {done:true,text:"Done"+quiz,title:p.done?"Finished "+exact(p.done):""};
+  if(picks)return {text:sc?`${Math.min(picks,sc)} of ${sc} decisions${quiz}`:`${picks} decision${picks>1?"s":""} made${quiz}`};
+  if(pos>0)return {text:"Started"+quiz};
+  return {text:"Not started"}}
+// the retired PMP Refresher: step is the decision index (-1 before Begin), ten decisions a chapter (engine.js TRACKS.ref), three points each
+function refStatus(p){const st=num(p.step);if(st==null||st<0)return {text:"Not started"};if(st>=10)return {done:true,text:`Done, ${num(p.score)??0}/30`};return {text:`Decision ${st+1}`}}
+function sideStatus(d,p){const n=num(p.n),last=num(p.lr)!=null&&num(p.lt)?`last ${p.lr}/${p.lt}`:"";
+  if(d.kind==="mock")return p.sub?"Submitted":"In progress";
+  if(d.kind==="mockres"||d.kind==="final"){if(!n)return "No attempts";return `${n} attempt${n>1?"s":""}${last?", "+last:""}${d.kind==="final"&&p.lp!=null?(p.lp?", passed":", not passed"):""}`}
+  if(d.kind==="marks")return n!=null?`${n} saved`:"Saved";
+  return "Saved"}
+const mockLabel=d=>d.kind==="mock"?(d.f===1?"Practice exam, attempt":`Practice exam ${d.f}, attempt`):(d.f===1?"Practice exam results":`Practice exam ${d.f} results`);
+
+/* one player's progress, grouped by course, and when they last saved anything */
+function summarize(u){const groups=new Map(),other=[];let last=null;
+  (u.progress||[]).forEach(p=>{const t=toDate(p.updated);if(t&&(!last||t>last))last=t;const d=decode(p.chapter);
+    if(!d.c){other.push({d,p});return}
+    if(!groups.has(d.c.id))groups.set(d.c.id,{c:d.c,full:[],old:[],side:[],done:0,going:0});const g=groups.get(d.c.id);
+    if(d.kind==="full"){const s=fullStatus(p,d.c,d.n);g.full.push({d,p,s});if(s.done)g.done++;else if(s.text!=="Not started")g.going++}
+    else if(d.kind==="old"||d.kind==="ref")g.old.push({d,p});else g.side.push({d,p})});
+  return {groups:[...groups.values()].sort((a,b)=>a.c.base-b.c.base),other,last}}
+
+/* ===== players ===== */
+let DATA=null,QA7=null,PASTOPEN=false;
+const OPEN=new Set((()=>{const v=ls.get("halcyon.admin.open",[]);return Array.isArray(v)?v.map(String):[]})());
+const saveOpen=()=>ls.set("halcyon.admin.open",[...OPEN]);
+{const s=ls.get("halcyon.admin.sort","active");$("sort").value=["active","name","joined"].includes(s)?s:"active"}
+
+function chipHTML(g){const T=Math.max(total(g.c),...g.full.map(x=>x.d.n)),w=x=>T?Math.min(100,x/T*100).toFixed(1):0;
+  const tip=`${longName(g.c)}: ${g.done} of ${T} chapter${T===1?"":"s"} done${g.going?`, ${g.going} in progress`:""}`;
+  return `<span class="chip" title="${esc(tip)}"><span class="sr">${esc(tip)}</span><span aria-hidden="true">${esc(short(g.c))} ${g.done}/${T}</span><span class="mini" aria-hidden="true"><i style="width:${w(g.done)}%"></i><i class="go" style="width:${w(g.going)}%"></i></span></span>`}
+const li=(label,sub,s,p)=>`<li><span class="ct">${sub?`<span class="cn">${esc(sub)}</span>`:""}${esc(label)}</span><span class="cs${s.done?" done":""}"${s.title?` title="${esc(s.title)}"`:""}>${esc(s.text)}</span><span class="cu">${when(p.updated,"")}</span></li>`;
+function resumeText(u){if(!u.cur)return "Nothing yet";const d=decode(u.cur);if(!d.c)return "other";
+  if(d.kind==="full"){const ch=(CHAP[d.c.id]||{})[d.n];return `${short(d.c)}, chapter ${d.n}${ch?": "+ch.title:""}`}
+  return `${short(d.c)}, ${d.kind==="mock"?"practice exam":d.label?d.label.charAt(0).toLowerCase()+d.label.slice(1)+(d.n?`, chapter ${d.n}`:""):"other"}`}
+function detailHTML(u,S){
+  let h=`<dl class="facts"><dt>Email</dt><dd>${esc(u.email)}</dd><dt>Last sign in</dt><dd>${u.last_login_at?when(u.last_login_at):'<span class="muted">not recorded yet</span>'}</dd><dt>Last active</dt><dd>${when(S.last)}</dd><dt>Joined</dt><dd>${when(u.created_at,"")}</dd><dt>Picks up at</dt><dd>${esc(resumeText(u))}</dd>${u.disabled?`<dt>Account</dt><dd class="bad">Disabled. They can't sign in.</dd>`:""}</dl>`;
+  if(!S.groups.length&&!S.other.length)return h+`<p class="muted" style="margin:6px 0 0">No progress saved yet.</p>`;
+  S.groups.forEach(g=>{h+=`<h3>${esc(longName(g.c))}</h3><ul class="chs">`;
+    g.full.sort((a,b)=>a.d.n-b.d.n).forEach(x=>{const ch=(CHAP[g.c.id]||{})[x.d.n];h+=li(ch?ch.title:"",`Ch ${x.d.n}`,x.s,x.p)});
+    g.old.sort((a,b)=>(a.d.kind===b.d.kind?0:a.d.kind==="old"?-1:1)||a.d.n-b.d.n).forEach(x=>h+=li(x.d.label,`Ch ${x.d.n}`,x.d.kind==="ref"?refStatus(x.p):fullStatus(x.p,{id:""},x.d.n),x.p));
+    g.side.sort((a,b)=>a.p.chapter-b.p.chapter).forEach(x=>h+=li(x.d.kind==="mock"||x.d.kind==="mockres"?mockLabel(x.d):x.d.label,"",{text:sideStatus(x.d,x.p)},x.p));
+    h+=`</ul>`});
+  if(S.other.length){h+=`<h3>Everything else</h3><ul class="chs">`;S.other.forEach(x=>h+=li(x.d.label||"other","",{text:"Saved"},x.p));h+=`</ul>`}
+  return h}
+
+function userRow(u){const S=summarize(u),uid=String(u.id),open=OPEN.has(uid),id=esc(uid),who=esc(u.name||u.email);
+  const badges=(u.is_admin?`<span class="badge">admin</span>`:u.is_tester?`<span class="badge">tester</span>`:"")+(u.disabled?`<span class="badge off">disabled</span>`:"");
+  const tester=u.is_admin?'<span class="muted">Always (admin)</span>':`<label class="tg"><input type="checkbox" data-tester="${id}" ${u.is_tester?"checked":""} aria-label="Tester: ${who}"> Tester</label>`;
+  const act=u.is_admin?"":`<button class="btn ghost sm" type="button" data-u="${id}" data-dis="${!u.disabled}" data-who="${who}">${u.disabled?"Re-enable":"Disable"}</button>`;
+  return `<div class="pl${u.disabled?" off":""}" role="listitem" data-id="${id}"><div class="pr">
+<div class="who"><button class="exp" type="button" aria-expanded="${open}" aria-controls="det-${id}" data-exp="${id}"><span class="chev" aria-hidden="true"></span><span class="nm">${esc(u.name||"(no name)")}</span>${badges}</button><span class="em">${esc(u.email)}</span></div>
+<div class="prog">${S.groups.length?S.groups.map(chipHTML).join(""):'<span class="muted">Not started</span>'}</div>
+<div class="c-la when"><span class="cell-l">Active</span>${when(S.last)}</div>
+<div class="meta"><div class="c-jn when"><span class="cell-l">Joined</span>${u.created_at?`<span title="${esc(exact(u.created_at))}">${esc(day(u.created_at))}</span>`:""}</div><div class="c-tst">${tester}</div></div>
+<div class="c-act">${act}</div></div>
+<div class="det" id="det-${id}"${open?"":" hidden"}>${open?detailHTML(u,S):""}</div></div>`}
+
+function visibleUsers(){const q=$("q").value.trim().toLowerCase(),by=$("sort").value;
+  const L=DATA.users.map(u=>({u,last:summarize(u).last})).filter(({u})=>!q||String(u.name||"").toLowerCase().includes(q)||String(u.email||"").toLowerCase().includes(q));
+  const name=x=>String(x.u.name||x.u.email||"").toLowerCase(),joined=x=>+(toDate(x.u.created_at)||0);
+  L.sort(by==="name"?(a,b)=>name(a).localeCompare(name(b)):by==="joined"?(a,b)=>joined(b)-joined(a):(a,b)=>(+(b.last||0)-+(a.last||0))||joined(b)-joined(a));
+  return L.map(x=>x.u)}
+const rowOf=id=>[...document.querySelectorAll("#users [data-id]")].find(r=>r.dataset.id===id);
+function syncExpAll(V=visibleUsers()){$("expall").textContent=V.length&&V.every(u=>OPEN.has(String(u.id)))?"Collapse all":"Expand all";$("expall").disabled=!V.length}
+function renderPlayers(){if(!DATA)return;
+  const f=document.activeElement,fr=f&&f.closest?f.closest("#users [data-id]"):null,fk=fr?(f.matches(".exp")?".exp":f.matches("[data-tester]")?"[data-tester]":f.matches("[data-u]")?"[data-u]":null):null;
+  const V=visibleUsers();
+  $("users").innerHTML=V.length?V.map(userRow).join(""):`<div class="empty" role="listitem">${DATA.users.length?"No players match that.":"No players yet."}</div>`;
+  syncExpAll(V);wirePlayers();
+  if(fr&&fk){const r=rowOf(fr.dataset.id),el=r&&r.querySelector(fk);if(el)el.focus()}} // a redraw keeps focus where it was
+function toggleRow(id,open){const row=rowOf(id),u=DATA.users.find(x=>String(x.id)===id);if(!row||!u)return;
+  const b=row.querySelector(".exp"),d=row.querySelector(".det");if(open===undefined)open=b.getAttribute("aria-expanded")!=="true";
+  b.setAttribute("aria-expanded",String(open));if(open){OPEN.add(id);d.innerHTML=detailHTML(u,summarize(u));d.hidden=false}else{OPEN.delete(id);d.hidden=true;d.innerHTML=""}}
+function wirePlayers(){
+  document.querySelectorAll("#users .exp").forEach(b=>b.onclick=()=>{toggleRow(b.dataset.exp);saveOpen();syncExpAll()});
+  document.querySelectorAll("[data-tester]").forEach(c=>c.onchange=async()=>{const want=c.checked;c.disabled=true;
+    const r=await api("/api/admin?action=tester",{method:"POST",body:JSON.stringify({id:c.dataset.tester,tester:want})});c.disabled=false;
+    if(!r.ok){c.checked=!want;$("msg").textContent=r.error||"Couldn't save that. Try again.";return}
+    const u=DATA.users.find(x=>String(x.id)===c.dataset.tester);if(u)u.is_tester=want;renderStats();
+    $("msg").textContent=want?"Saved. They have QA mode the next time the game loads.":"Saved. QA mode turns off for them the next time the game loads."});
+  document.querySelectorAll("[data-u]").forEach(b=>b.onclick=async()=>{const dis=b.dataset.dis==="true";
+    if(dis&&!confirm(`Disable ${b.dataset.who}? They can't sign in until you turn them back on.`))return;
+    const r=await api("/api/admin?action=disable",{method:"POST",body:JSON.stringify({id:b.dataset.u,disabled:dis})});
+    $("msg").textContent=r.ok?(dis?`Disabled ${b.dataset.who}.`:`${b.dataset.who} can sign in again.`):(r.error||"Couldn't save that. Try again.");load()});
+}
+
+/* ===== summary strip and invites ===== */
+const openInvite=i=>!i.used_by&&!i.revoked&&!(new Date(i.expires_at)<new Date());
+function renderStats(){if(!DATA)return;const U=DATA.users,wk=Date.now()-7*864e5;
+  const active=U.filter(u=>{const l=summarize(u).last;return l&&+l>=wk}).length,testers=U.filter(u=>u.is_tester&&!u.is_admin).length,inv=DATA.invites.filter(openInvite).length;
+  const s=[[U.length,U.length===1?"player":"players"],[active,"active, last 7 days"],[testers,testers===1?"tester":"testers"],[inv,inv===1?"open invite":"open invites"]];
+  if(QA7!=null)s.push([QA7,QA7===1?"QA report, last 7 days":"QA reports, last 7 days"]);
+  $("stats").innerHTML=s.map(([n,l])=>`<div class="stat"><b>${n}</b><span>${esc(l)}</span></div>`).join("")}
+function renderInvites(){const I=DATA.invites,open=I.filter(openInvite),past=I.filter(i=>!openInvite(i));
+  const left=i=>{const d=Math.ceil((new Date(i.expires_at)-Date.now())/864e5);return d<=1?"within a day":`in ${d} days`};
+  const st=i=>i.used_by?`<span class="ok">Used by ${esc(i.used_by)}</span>`:i.revoked?'<span class="bad">Revoked</span>':'<span class="muted">Expired</span>';
+  const note=i=>esc(i.note)||'<span class="muted">no note</span>',made=i=>`<td title="${esc(exact(i.created_at))}">${esc(day(i.created_at))}</td>`;
+  let h=open.length?`<div class="tw"><table><tr><th>Open invite for</th><th>Made</th><th>Expires</th><th><span class="sr">Revoke</span></th></tr>${open.map(i=>`<tr><td>${note(i)}</td>${made(i)}<td title="${esc(exact(i.expires_at))}">${left(i)}</td><td><button class="btn ghost sm" type="button" data-t="${esc(i.token)}">Revoke</button></td></tr>`).join("")}</table></div>`:`<p class="muted" style="margin:0">No open invites.</p>`;
+  if(past.length)h+=`<details id="pastinv" style="margin-top:8px"${PASTOPEN?" open":""}><summary>Used, expired and revoked (${past.length})</summary><div class="tw" style="margin-top:6px"><table><tr><th>For</th><th>Made</th><th>Status</th></tr>${past.map(i=>`<tr><td>${note(i)}</td>${made(i)}<td>${st(i)}</td></tr>`).join("")}</table></div></details>`;
+  $("invites").innerHTML=h;const pd=$("pastinv");if(pd)pd.ontoggle=()=>{PASTOPEN=pd.open};
+  document.querySelectorAll("[data-t]").forEach(b=>b.onclick=async()=>{await api("/api/admin?action=revoke",{method:"POST",body:JSON.stringify({token:b.dataset.t})});load()})}
+
 async function load(){
   const r=await api("/api/admin?action=overview");
   if(!r.ok){document.querySelector(".wrap").innerHTML=`<h1>Admins only</h1><p><a href="/">Back to the game</a></p>`;return}
-  $("users").innerHTML=`<tr><th>Name</th><th>Email</th><th>Progress</th><th>Joined</th><th>Tester</th><th></th></tr>`+r.users.map(u=>`<tr><td>${esc(u.name)}${u.is_admin?' <span class="muted">admin</span>':""}</td><td>${esc(u.email)}</td><td>${u.progress.length?u.progress.map(p=>`Ch ${p.chapter}: ${p.step>=10?"done "+p.score+"/30":(p.step<0?"not started":"decision "+(Number(p.step)+1))}`).join("<br>"):'<span class="muted">not started</span>'}</td><td>${d(u.created_at)}</td><td>${u.is_admin?'<span class="muted">Always (admin)</span>':`<label class="tg"><input type="checkbox" data-tester="${esc(u.id)}" ${u.is_tester?"checked":""} aria-label="Tester: ${esc(u.name||u.email)}"> Tester</label>`}</td><td>${u.is_admin?"":`<button class="btn ghost" data-u="${u.id}" data-dis="${!u.disabled}">${u.disabled?"Re-enable":"Disable"}</button>`}</td></tr>`).join("");
-  $("invites").innerHTML=`<tr><th>For</th><th>Made</th><th>Status</th><th></th></tr>`+r.invites.map(i=>{const st=i.used_by?`<span class="ok">Used by ${esc(i.used_by)}</span>`:i.revoked?'<span class="bad">Revoked</span>':(new Date(i.expires_at)<new Date()?'<span class="muted">Expired</span>':"Open");return `<tr><td>${esc(i.note)||'<span class="muted">no note</span>'}</td><td>${d(i.created_at)}</td><td>${st}</td><td>${!i.used_by&&!i.revoked?`<button class="btn ghost" data-t="${i.token}">Revoke</button>`:""}</td></tr>`}).join("");
+  DATA={users:r.users||[],invites:r.invites||[]};
+  renderStats();renderPlayers();renderInvites();
+  // QA reports in the last 7 days, from the same export the CSV button uses; left off the strip if it can't be read
+  api("/api/qa-report?since=7d").then(q=>{QA7=q.ok&&Array.isArray(q.reports)?q.reports.length:null;$("qacount").textContent=QA7==null?"":QA7===1?"1 report in the last 7 days.":`${QA7} reports in the last 7 days.`;renderStats()});
   const L=await api("/api/admin?action=list");const S=L.ok?L.signups:[];
   $("listcount").textContent=L.ok?(S.length===1?"1 person on the list":`${S.length} people on the list`):"Couldn't load the list.";
-  $("list").innerHTML=`<tr><th>Email</th><th>From</th><th>Joined</th><th></th></tr>`+(S.length?S.map(s=>`<tr><td>${esc(s.email)}</td><td>${esc(s.source)}</td><td>${d(s.created_at)}</td><td><button class="btn ghost" data-rm="${esc(s.email)}">Remove</button></td></tr>`).join(""):`<tr><td colspan="4" class="muted">No one yet.</td></tr>`);
+  $("list").innerHTML=`<tr><th>Email</th><th>From</th><th>Joined</th><th><span class="sr">Remove</span></th></tr>`+(S.length?S.map(s=>`<tr><td>${esc(s.email)}</td><td>${esc(s.source)}</td><td title="${esc(exact(s.created_at))}">${esc(day(s.created_at))}</td><td><button class="btn ghost sm" type="button" data-rm="${esc(s.email)}">Remove</button></td></tr>`).join(""):`<tr><td colspan="4" class="muted">No one yet.</td></tr>`);
   document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{if(!confirm("Remove "+b.dataset.rm+" from the list?"))return;await api("/api/admin?action=listremove",{method:"POST",body:JSON.stringify({email:b.dataset.rm})});load()});
-  document.querySelectorAll("[data-t]").forEach(b=>b.onclick=async()=>{await api("/api/admin?action=revoke",{method:"POST",body:JSON.stringify({token:b.dataset.t})});load()});
-  document.querySelectorAll("[data-tester]").forEach(c=>c.onchange=async()=>{const want=c.checked;c.disabled=true;
-    const r=await api("/api/admin?action=tester",{method:"POST",body:JSON.stringify({id:c.dataset.tester,tester:want})});c.disabled=false;
-    if(!r.ok){c.checked=!want;$("msg").textContent=r.error||"Couldn't save that. Try again.";return}$("msg").textContent=want?"Saved. They have QA mode the next time the game loads.":"Saved. QA mode turns off for them the next time the game loads."});
-  document.querySelectorAll("[data-u]").forEach(b=>b.onclick=async()=>{await api("/api/admin?action=disable",{method:"POST",body:JSON.stringify({id:b.dataset.u,disabled:b.dataset.dis==="true"})});load()});
+  // chapter titles and step counts for every course someone has played, then one redraw
+  await preview;const need=new Set();DATA.users.forEach(u=>(u.progress||[]).forEach(p=>{const d=decode(p.chapter);if(d.c&&!CHAP[d.c.id])need.add(d.c.id)}));
+  if(need.size){await Promise.all([...need].map(id=>loadChapters(byId[id])));renderStats();renderPlayers()}
+  document.body.dataset.ready="1"; // titles are in: tests wait for this before measuring
 }
+$("q").oninput=renderPlayers;
+$("sort").onchange=()=>{ls.set("halcyon.admin.sort",$("sort").value);renderPlayers()};
+$("expall").onclick=()=>{const V=visibleUsers(),close=V.every(u=>OPEN.has(String(u.id)));V.forEach(u=>toggleRow(String(u.id),!close));saveOpen();syncExpAll(V)};
 $("make").onclick=async()=>{const r=await api("/api/admin?action=invite",{method:"POST",body:JSON.stringify({note:$("note").value})});
   if(!r.ok){$("newlink").textContent=r.error||"Couldn't make a link.";return}
-  const link=location.origin+"/?invite="+r.token;
-  $("newlink").innerHTML=`<code id="lk">${link}</code> <button class="btn ghost" id="cp" type="button">Copy</button>`;
+  const link=location.origin+"/?invite="+encodeURIComponent(r.token);
+  $("newlink").innerHTML=`<code id="lk">${esc(link)}</code> <button class="btn ghost sm" id="cp" type="button">Copy</button>`;
   $("cp").onclick=()=>navigator.clipboard.writeText(link).then(()=>$("cp").textContent="Copied").catch(()=>{const g=document.createRange();g.selectNodeContents($("lk"));getSelection().removeAllRanges();getSelection().addRange(g)});
   $("note").value="";load()};
 load();

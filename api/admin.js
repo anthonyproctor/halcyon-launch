@@ -1,4 +1,4 @@
-import { sql, currentUser, sameOrigin, body, send, newToken, ensureUserColumns } from "../lib/server.js";
+import { sql, currentUser, sameOrigin, body, send, newToken, ensureUserColumns, hasLastLogin } from "../lib/server.js";
 import { ensureListTables } from "../lib/list.js";
 
 export default async function handler(req, res) {
@@ -9,13 +9,26 @@ export default async function handler(req, res) {
   try {
     if (action === "overview" && req.method === "GET") {
       const tcol = await ensureUserColumns(); // is_tester: QA mode, Flag and the test profile (admins always have them)
-      const users = tcol ? await sql()`select u.id,u.email,u.name,u.is_admin,u.is_tester,u.disabled,u.cur,u.created_at,
-        coalesce((select json_agg(json_build_object('chapter',p.chapter,'step',p.state->'step','score',p.state->'score','updated',p.updated_at) order by p.chapter) from progress p where p.user_id=u.id),'[]') as progress
-        from users u order by u.created_at` : await sql()`select u.id,u.email,u.name,u.is_admin,false as is_tester,u.disabled,u.cur,u.created_at,
-        coalesce((select json_agg(json_build_object('chapter',p.chapter,'step',p.state->'step','score',p.state->'score','updated',p.updated_at) order by p.chapter) from progress p where p.user_id=u.id),'[]') as progress
-        from users u order by u.created_at`;
+      const users = tcol ? await sql()`select u.id,u.email,u.name,u.is_admin,u.is_tester,u.disabled,u.cur,u.created_at from users u order by u.created_at`
+        : await sql()`select u.id,u.email,u.name,u.is_admin,false as is_tester,u.disabled,u.cur,u.created_at from users u order by u.created_at`;
+      // last sign in, when the column exists (lib/server.js adds it); null until someone signs in after it's added
+      const logins = (await hasLastLogin()) ? await sql()`select id,last_login_at from users` : [];
+      // each progress row, cut down to what the admin page shows (never the whole saved state): a chapter's place, its picks and quiz,
+      // the finished date, and for history records (practice exam results, final assessment, bookmarks) how many and the newest one's score
+      const rows = await sql()`select p.user_id,p.chapter,p.updated_at as updated,
+        p.state->'step' as step, p.state->'score' as score, p.state->'pos' as pos, p.state->'lx' as lx, p.state->'doneAt' as done,
+        case when jsonb_typeof(p.state->'picks')='object' then (select count(*) from jsonb_object_keys(p.state->'picks'))::int end as picks,
+        p.state->'quiz'->'right' as qr,
+        case when jsonb_typeof(p.state->'quiz'->'v')='array' then jsonb_array_length(p.state->'quiz'->'v') end as qn,
+        p.state->'submitted' as sub,
+        case when jsonb_typeof(p.state->'list')='array' then jsonb_array_length(p.state->'list') end as n,
+        p.state->'list'-> -1 ->'right' as lr, p.state->'list'-> -1 ->'total' as lt, p.state->'list'-> -1 ->'pass' as lp
+        from progress p order by p.user_id,p.chapter`;
+      const byUser = new Map(), seen = new Map(logins.map(r => [r.id, r.last_login_at]));
+      for (const r of rows) { const { user_id, ...rest } = r; if (!byUser.has(user_id)) byUser.set(user_id, []); byUser.get(user_id).push(rest); }
+      users.forEach(x => { x.progress = byUser.get(x.id) || []; x.last_login_at = seen.get(x.id) ?? null; });
       const invites = await sql()`select i.token,i.note,i.created_at,i.expires_at,i.revoked,i.used_at,u.email as used_by from invites i left join users u on u.id=i.used_by order by i.created_at desc limit 100`;
-      return send(res, 200, { users, invites });
+      return send(res, 200, { users, invites, lastLogin: await hasLastLogin() });
     }
     // the "tell me when new books land" list: JSON for the page, or ?format=csv to download
     if (action === "list" && req.method === "GET") {

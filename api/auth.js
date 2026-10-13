@@ -1,4 +1,4 @@
-import { sql, hashPassword, verifyPassword, startSession, endSession, currentUser, sameOrigin, body, send, cleanEmail } from "../lib/server.js";
+import { sql, hashPassword, verifyPassword, startSession, noteLogin, endSession, currentUser, sameOrigin, body, send, cleanEmail } from "../lib/server.js";
 
 export default async function handler(req, res) {
   const action = new URL(req.url, "http://x").searchParams.get("action");
@@ -31,6 +31,7 @@ export default async function handler(req, res) {
       const claimed = await sql()`update invites set used_by=${u.id},used_at=now() where token=${inv[0].token} and used_by is null returning token`;
       if (!claimed.length) { await sql()`delete from users where id=${u.id}`; return send(res, 409, { error: "This invite was just used. Ask for a new one." }); }
       await startSession(res, u);
+      await noteLogin(u.id); // fails soft
       return send(res, 200, { ok: true });
     }
     if (action === "login") {
@@ -45,6 +46,7 @@ export default async function handler(req, res) {
       }
       await sql()`update users set failed=0,locked_until=null where id=${u.id}`;
       await startSession(res, u);
+      await noteLogin(u.id); // fails soft
       return send(res, 200, { ok: true });
     }
     if (action === "logout") { endSession(res); return send(res, 200, { ok: true }); }
