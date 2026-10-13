@@ -51,6 +51,29 @@ CMAP, DMAP = VOICES["courses"].get(course, {}), VOICES["default"]
 def cast(who):
     c = CMAP.get(who) or DMAP.get(who) or DMAP["woman"]
     return c["voice"], c.get("style", "")
+# ---- per-line delivery cues. A said span can carry data-tone="Angry, clipped, controlled." (tools/voices.mjs puts it on the
+# segment as "tone"). A toned line keeps its character's voice and identity and swaps the delivery: tone_style() below. Toned lines
+# are their own run (grouped by character AND tone), so one angry line doesn't drag the character's other lines on the page with
+# it. A line with no tone is sent, cached and gated exactly as before.
+TONE_MODE = os.environ.get("GEMINI_TONE_MODE", "replace")
+_IDENT = re.compile(r"accent|voice\b|\bwoman\b|\bman\b|\bgirl\b|\bboy\b|\bage\b|\d|year-old|in (?:her|his) (?:\w+ies)|^A |^An ", re.I)
+_GSENT = {"f": "A woman's voice.", "m": "A man's voice."}  # the same wording the casting file uses as a gender pin
+def tone_style(st, tone, gender=None):
+    """base style + tone -> the style sent for a toned line. replace (default): keep the base style's identity sentences (accent,
+    "A woman's voice.", who the character is) and replace the delivery adjectives with the tone. append: base style, then the tone.
+    A tone must never drop the gender pin: when the character has a cast "gender" and the kept identity says nothing about it,
+    "A woman's voice." / "A man's voice." goes first (2026-10-12: Yusra, "Bright and precise.", toned "Even, cold, hurt." read at
+    158 Hz and failed the chapter gender check)."""
+    if not tone: return st
+    if TONE_MODE == "append": return (st + " " + tone).strip()
+    keep = [x for x in re.split(r"(?<=\.)\s+", st.strip()) if x and _IDENT.search(x)]
+    if gender in _GSENT and not re.search(r"\b(?:woman|man|girl|boy)\b", " ".join(keep), re.I): keep = [_GSENT[gender]] + keep
+    return " ".join(keep + [tone]).strip()
+def cast_seg(seg):
+    v, st = cast(seg["v"])
+    if not seg.get("tone"): return v, st
+    c = CMAP.get(seg["v"]) or DMAP.get(seg["v"]) or DMAP["woman"]
+    return v, tone_style(st, seg["tone"], c.get("gender"))
 def runs_on(who):  # casting "run": true -> this character's lines on a page go to Gemini as one request (see RUNS below)
     c = CMAP.get(who) or DMAP.get(who) or DMAP["woman"]
     return bool(c.get("run")) and os.environ.get("GEMINI_RUNS") != "0"
@@ -81,6 +104,10 @@ def enc(audio, path, title=None):
 # A flagged line re-rolls its whole run. Cuts: midway between the last word of a line and the first word of the next.
 RUN_MAX = int(os.environ.get("GEMINI_RUN_MAX_CHARS", "1500"))
 RUN_OF = {}  # (pid, seg index) -> (run request text, piece index, [piece texts])
+# Toned lines (data-tone) never change the runs of the untoned lines around them: runs are cut exactly as if no line had a tone,
+# so an untoned line keeps the request text, cache entry and pinned take it always had (2026-10-12: grouping by tone instead
+# dropped the toned lines out of Garrett's and Quinn's ch2 story runs, which re-synthesized those runs and lost takes Anthony had
+# approved). The toned lines of a run are then sent as their own run, one per tone, in page order.
 for pid, segs in spec["pages"].items():
     by_who = {}
     for i, seg in enumerate(segs):
@@ -92,7 +119,13 @@ for pid, segs in spec["pages"].items():
             chunks[-1].append(i)
         for chunk in chunks:
             texts = [say(gem_text(segs[j])) for j in chunk]
-            for n, j in enumerate(chunk): RUN_OF[(pid, j)] = (" ".join(texts), n, texts)
+            by_tone = {}
+            for n, j in enumerate(chunk):
+                if segs[j].get("tone"): by_tone.setdefault(segs[j]["tone"], []).append(j)
+                else: RUN_OF[(pid, j)] = (" ".join(texts), n, texts)
+            for tj in by_tone.values():
+                tt = [say(gem_text(segs[j])) for j in tj]
+                for n, j in enumerate(tj): RUN_OF[(pid, j)] = (" ".join(tt), n, tt)
 def request_text(pid, i, seg):
     """what is sent to Gemini for this segment: its own text, or its whole run"""
     r = RUN_OF.get((pid, i)); return r[0] if r else say(gem_text(seg))
@@ -102,7 +135,7 @@ jobs = {}
 for pid, segs in spec["pages"].items():
     for i, seg in enumerate(segs):
         if "t" in seg:
-            v, st = cast(seg["v"]); jobs[(v, st, request_text(pid, i, seg))] = None
+            v, st = cast_seg(seg); jobs[(v, st, request_text(pid, i, seg))] = None
 def run_jobs(keys):
     got = G.synth_many([(t, v, st) for (v, st, t) in keys], workers=int(os.environ.get("GEMINI_WORKERS", "4")), log=lambda m: print(m, file=sys.stderr, flush=True))
     for (t, v, st), a in got.items(): jobs[(v, st, t)] = G.clean(a)
@@ -174,7 +207,7 @@ def assemble(segs, page=None):
         nonlocal t0; a = np.zeros(int(SR * s), np.float32); parts.append(a); t0 += len(a) / SR
     for i, seg in enumerate(segs):
         if "pause" in seg: sil(seg["pause"]); prev = None; continue
-        v, st = cast(seg["v"])
+        v, st = cast_seg(seg)
         if prev is not None and prev != v: sil(0.18)
         text = gem_text(seg); short = seg["v"] not in MENTORS and len(text.split()) <= 2
         if short: sil(0.12)
@@ -182,7 +215,7 @@ def assemble(segs, page=None):
         if run: a = run_piece(run, v, st, page, t0)
         else: a = jobs[(v, st, say(text))] if page is None else take_like(say(text), v, st, page, t0)
         if a is None: return None, None  # RETIME: this segment isn't in the cache (text changed since the render)
-        spans.append({"i": i, "v": seg["v"], "voice": v, "style": st, "src": text, "sent": say(text), "req": run[0] if run else say(text), "s": t0, "e": t0 + len(a) / SR})
+        spans.append({"i": i, "v": seg["v"], "voice": v, "style": st, "src": text, "sent": say(text), "req": run[0] if run else say(text), "tone": seg.get("tone"), "s": t0, "e": t0 + len(a) / SR})
         parts.append(a); t0 += len(a) / SR
         if short: sil(0.2)
         prev = v
@@ -435,7 +468,7 @@ def voice_lines(built_pages):
             if k not in EMB:
                 a = audio[int(sp["s"] * SR):int(sp["e"] * SR)]; EMB[k] = (VG.embed(a, SR), VG.f0(a, SR))
             lines.append({"who": sp["v"], "gender": gender_of(sp["v"]), "emb": EMB[k][0], "f0": EMB[k][1], "pid": pid, "i": sp["i"], "src": sp["src"],
-                          "req": (sp["voice"], sp["style"], sp["req"]), "take": take_of(sp)})
+                          "req": (sp["voice"], sp["style"], sp["req"]), "take": take_of(sp), "tone": sp.get("tone")})
     return lines
 built_all = {}; gate_first = None; gate_summary = {}
 todo = pids
@@ -472,7 +505,7 @@ for rnd in range(ROUNDS):
     for (v, st, t) in bump: G.bump_take(t, v, st); jobs[(v, st, t)] = None
     run_jobs(list(bump))
     todo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg
-                   and (cast(seg["v"]) + (request_text(pid, i, seg),)) in bump})
+                   and (cast_seg(seg) + (request_text(pid, i, seg),)) in bump})
 # keep each re-rolled request's best take: passes whisper, then coverage, then the best voice similarity, then coverage share
 pin = {}
 for rk, takes in HIST.items():
@@ -486,7 +519,7 @@ if pin:
         tmpf = f"{G._TAKES_P}.{os.getpid()}.tmp"; json.dump(tk, open(tmpf, "w")); os.replace(tmpf, G._TAKES_P)
     for (v, st, t), k in pin.items():
         p = G._cache_path(t, v, st, k); jobs[(v, st, t)] = G.clean(G._wav_to_float(open(p + ".wav", "rb").read()))
-    redo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg and (cast(seg["v"]) + (request_text(pid, i, seg),)) in pin})
+    redo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg and (cast_seg(seg) + (request_text(pid, i, seg),)) in pin})
     print(f"kept an earlier, better take for {len(pin)} requests on {len(redo)} pages", file=sys.stderr, flush=True)
     for pid in redo:
         audio, spans = assemble(spec["pages"][pid]); built_all[pid] = (audio, spans)
@@ -499,7 +532,8 @@ if pin:
                                                     "f0": round(L["f0"]) if L["f0"] else None, "src": L["src"][:80]})
 if GATE:
     by = {}
-    for L in voice_lines(built_all): by.setdefault(L["who"], []).append(L["emb"])
+    for L in voice_lines(built_all):
+        if not L.get("tone"): by.setdefault(L["who"], []).append(L["emb"])  # toned lines don't move the book voice
     BOOK.save(key, by)
 gate = {"voice_flags_first": gate_first, "voice_flags_final": sum(len(r.get("voice_flags", [])) for r in report.values()),
         "coverage_fail_pages": sorted(pid for pid, r in report.items() if r.get("coverage_fail")), "characters": gate_summary,

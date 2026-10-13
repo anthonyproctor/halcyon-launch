@@ -19,7 +19,7 @@ window.HALCYON_COURSES=[
    meters:[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Halcyon readiness"]],stateTitle:"Mission state",
    leads:{3:["That's a go.","Good. That's what I'd want on my loop.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best call.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have called a hold there.","Let's talk about that one."]},
    flags:["rosylog","nocharter","buriedar","r_reopened","trustedai","pushedstand","r_testarticle","hidnumbers","r_reserve","exposedada","cutregression","r_autonomy","squeezedaldergrove","sacrificedhana","crashedtest","r_protectedtest","spunmedia","r_wendell","skippedwendell"],
-   speakers:["Sam","Ada","Ruth","Imogen","Garrett","Hana","Rafa","Wendell","Quinn","Yusra","Frances","Simon","Calvin","Peg","Nell","Hollis","Bea","Ray","Leo","Paloma","Chiamaka","Arlo","Corinne","man","woman"],
+   speakers:["Sam","Ada","Ruth","Imogen","Garrett","Hana","Rafa","Wendell","Quinn","Yusra","Frances","Simon","Calvin","Peg","Nell","Hollis","Bea","Ray","Leo","Paloma","Chiamaka","Arlo","Corinne","Owen","man","woman"],
    bookRecordedOnly:true, // the Audiobook lists only chapters with v2 narration
    labs:"courses/pmp/labs.js",
    taskDomain:{P:"People",R:"Process",B:"Business Environment"}, // refArt retired with the v1 Refresher

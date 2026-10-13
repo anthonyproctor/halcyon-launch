@@ -118,6 +118,13 @@ window.HALCYON_CAST=[
    quote:{unlock:2, text:`I signed up for one way in 2059.`},
    ties:[{unlock:2,id:`sam`,text:`Her program lead. He sat at her kitchen table for an hour, or he put her husband on page eleven.`},{unlock:2,id:`rafa`,text:`She's the customer in his demos.`}] },
 
+ { id:`owen`, intro:`Owen Talbot. I lead the electrochemistry team on the Breather, eleven of us in the lab at the far end of the high bay. We build the part that makes the air. I'd rather show you than tell you.`, name:`Owen Talbot`, role:`Breather electrochemistry lead. Soft spoken.`, firstChapter:2, speaker:`Owen`,
+   look:`Man in his forties, a short trimmed beard, safety glasses pushed up on his head, a lab fleece over a collared shirt, a quiet careful expression.`,
+   sections:[
+    {unlock:2, title:`Who he is`, body:[`Owen leads the eleven people who build the Breather's stacks, water, power, and controls. He brought Bea his own breakdown of the work, organized by who sat where. Nobody's box held the last four hundred meters, from the lander to the plant room.`]},
+    {unlock:2, title:`The beard`, body:[`He trims his beard a little shorter as the winter goes on. Quinn noticed first, and she reads it the way other people read a status report.`]}],
+   quote:{unlock:2, text:`That's the work.`},
+   ties:[{unlock:2,id:`quinn`,text:`She drew his four boxes on the whiteboard, then the line nobody owned.`},{unlock:2,id:`bea`,text:`His breakdown went into her WBS.`}] },
  { id:`paloma`, intro:`Paloma Benavidez, test engineer at Rio Puerco Electrochemical in Albuquerque. We build the Breather's stacks, and I run them at Mars pressure in a chamber you can stand up in. For two years I was the only one who could. Ask me about Pump 2.`, name:`Paloma Benavidez`, role:`Test engineer at Rio Puerco Electrochemical, the Breather's stack supplier, 34. Runs the acceptance test chamber.`, firstChapter:3, speaker:`Paloma`,
    look:`Latina woman of thirty four, dark hair in a low knot, safety glasses pushed up on her head, a fleece vest over a lab shirt with the cuffs rolled, a pen behind one ear.`,
    sections:[

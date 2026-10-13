@@ -30,9 +30,11 @@ function propSpeech(html){return html.replace(/<prop\s+([^>]*)>([\s\S]*?)<\/prop
   return b})}
 export function segments(html, base){
   html=propSpeech(html);
-  const out=[];const re=/<span class="said"(?: data-who="([^"]+)")?>([\s\S]*?)<\/span>/g;let last=0,m;
+  // optional data-tone="Angry, clipped, controlled." on a said span: a per-line delivery cue (never spoken or shown; the engine
+  // ignores the attribute). The segment carries it as `tone`; a span without one gives exactly the segment it always did.
+  const out=[];const re=/<span class="said"(?: data-who="([^"]+)")?(?: data-tone="([^"]+)")?>([\s\S]*?)<\/span>/g;let last=0,m;
   const clean=s=>unent(s.replace(/<[^>]+>/g,'')).replace(/\s+/g,' ').trim();
   while((m=re.exec(html))){const before=clean(html.slice(last,m.index));if(before)out.push({v:base,t:before});
-    const q=clean(m[2]).replace(/^["“]|["”]$/g,'');if(q)out.push({v:m[1]||base,t:q});last=re.lastIndex}
+    const q=clean(m[3]).replace(/^["“]|["”]$/g,'');if(q)out.push(m[2]?{v:m[1]||base,t:q,tone:unent(m[2]).trim()}:{v:m[1]||base,t:q});last=re.lastIndex}
   const rest=clean(html.slice(last));if(rest)out.push({v:base,t:rest});return out;
 }

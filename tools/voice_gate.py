@@ -4,7 +4,8 @@ wrong gender, so nobody has to catch it by ear.
 - f0(audio): median pitch in Hz of the voiced frames (autocorrelation), None when there is too little voiced speech
 - Book centroids: every rendered chapter adds its per-character mean embedding to <cache>/voices/<course>-<audio>.json, keyed by
   chapter, so a line is compared with how that character sounds across the whole book, not just the page.
-- flags(lines, key): a line is flagged when its similarity to its character's book centroid is below SIM_MIN (0.88,
+- flags(lines, key): a line is flagged when its similarity to its character's book centroid is below the character's "sim_min"
+  in gemini_voices.json if set (main characters: 0.92), else SIM_MIN (0.88,
   calibrated 2026-10-11 on the run-mode renders of Halcyon ch1 and ch2: the 5th percentile of character lines' similarity to
   their centroid, 123 lines), or when its pitch
   reads opposite to the character's cast gender ("gender": "f"/"m" in gemini_voices.json; no field = no pitch check).
@@ -15,12 +16,31 @@ import numpy as np
 SR16 = 16000
 MIN_S = float(os.environ.get("VOICE_GATE_MIN_S", "1.0"))
 SIM_MIN = float(os.environ.get("VOICE_GATE_SIM_MIN", "0.88"))
+# a line with a delivery cue (data-tone: angry, grieving, frightened) is meant to sound different, and WavLM-SV similarity drops a
+# little with strong emotion; the identity bar for those lines is TONE_SIM_MIN. Lines without a tone keep SIM_MIN.
+TONE_SIM_MIN = float(os.environ.get("VOICE_GATE_TONE_SIM_MIN", "0.85"))
 # a line reads male below F_LOW Hz (cast "f") or female above M_HIGH Hz (cast "m"). A character whose median over the chapter is
 # below F_CHAR_LOW (f) or above M_CHAR_HIGH (m) fails the gender check as a whole; the fix is a "A woman's voice." / "A man's
 # voice." style prefix. Calibrated 2026-10-11 on Halcyon ch1-2: men 94 to 178 Hz, women 140 to 232 Hz, and Imogen on Gacrux
 # at 147 to 153 Hz was heard as a man.
 F_LOW, M_HIGH, F_CHAR_LOW, M_CHAR_HIGH = 140.0, 200.0, 160.0, 185.0
-_m = {}
+# Per-character bars, optional, in the character's entry in gemini_voices.json (courses[course][who], then default[who]):
+#   "sim_min": 0.92        identity bar for that character's untoned lines (default SIM_MIN). Main characters carry 0.92: they are
+#                          heard on page after page, so drift that 0.88 lets through is audible across pages (2026-10-12: Abby's
+#                          "keep my mouth shut. Mostly." on ch1 s4 vs "Most people read the bold parts." on o4_1, both above 0.88)
+#   "tone_sim_min": 0.88   the same for their toned lines (default TONE_SIM_MIN)
+#   "pitch_max_st": 2      an untoned line whose pitch is more than this many semitones from the character's median over the
+#                          chapter's untoned lines (5+ pitched lines) is flagged too; no field = no such check
+# A character without these fields is judged exactly as before.
+_m, _cast = {}, {}
+
+
+def char_cfg(course, who):
+    if "v" not in _cast:
+        try: _cast["v"] = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "gemini_voices.json")))
+        except Exception: _cast["v"] = {}
+    V = _cast["v"]
+    return (V.get("courses", {}).get(course or "", {}).get(who) or V.get("default", {}).get(who) or {}) if who else {}
 
 
 def _load():
@@ -62,6 +82,7 @@ class Book:
     """per-character centroids across the chapters of one book (one file per course + audio root)"""
     def __init__(self, cache, course, audio):
         os.makedirs(os.path.join(cache, "voices"), exist_ok=True)
+        self.course = course
         self.p = os.path.join(cache, "voices", f"{course}-{audio.replace('/', '_')}.json")
         try: self.d = json.load(open(self.p))
         except Exception: self.d = {}
@@ -76,9 +97,19 @@ class Book:
         c = np.average(np.array(vs), axis=0, weights=ws); return c / np.linalg.norm(c)
 
     def save(self, key, by_who):
+        """writes only this chapter's entries, merged into the file as it is now (two renders running at once each keep
+        the other's chapters instead of overwriting them with the copy they loaded at start)"""
+        import fcntl
+        mine = {}
         for who, E in by_who.items():
-            if len(E): m = np.mean(E, 0); self.d.setdefault(who, {})[key] = [(m / np.linalg.norm(m)).tolist(), len(E)]
-        tmp = self.p + f".{os.getpid()}.tmp"; json.dump(self.d, open(tmp, "w")); os.replace(tmp, self.p)
+            if len(E): m = np.mean(E, 0); mine[who] = [(m / np.linalg.norm(m)).tolist(), len(E)]
+        with open(self.p + ".lock", "w") as lk:
+            fcntl.flock(lk, fcntl.LOCK_EX)
+            try: cur = json.load(open(self.p))
+            except Exception: cur = {}
+            for who, v in mine.items(): cur.setdefault(who, {})[key] = v
+            self.d = cur
+            tmp = self.p + f".{os.getpid()}.tmp"; json.dump(cur, open(tmp, "w")); os.replace(tmp, self.p)
 
 
 def judge(lines, book, key):
@@ -90,15 +121,24 @@ def judge(lines, book, key):
     for L in lines: by.setdefault(L["who"], []).append(L)
     flagged, summary = [], {}
     for who, Ls in by.items():
-        c = book.centroid(who, key, [L["emb"] for L in Ls])
+        plain = [L["emb"] for L in Ls if not L.get("tone")]  # the centroid is the character's ordinary voice when there is one
+        c = book.centroid(who, key, plain)
+        if c is None: c = book.centroid(who, key, [L["emb"] for L in Ls])
         g = Ls[0].get("gender"); f0s = [L["f0"] for L in Ls if L["f0"]]
         med = float(np.median(f0s)) if f0s else None
+        cfg = char_cfg(getattr(book, "course", None), who)
+        smin, tmin, pst = float(cfg.get("sim_min", SIM_MIN)), float(cfg.get("tone_sim_min", TONE_SIM_MIN)), cfg.get("pitch_max_st")
+        pf = [L["f0"] for L in Ls if L["f0"] and not L.get("tone")]
+        pmed = float(np.median(pf)) if pst is not None and len(pf) >= 5 else None
         for L in Ls:
             L["sim"] = float(L["emb"] @ c) if c is not None and len(Ls) + len(book.d.get(who, {})) > 1 else None
             why = []
-            if L["sim"] is not None and L["sim"] < SIM_MIN: why.append(f"voice {L['sim']:.2f} < {SIM_MIN}")
+            lo = tmin if L.get("tone") else smin
+            if L["sim"] is not None and L["sim"] < lo: why.append(f"voice {L['sim']:.2f} < {lo}")
             if g == "f" and L["f0"] and L["f0"] < F_LOW: why.append(f"pitch {L['f0']:.0f} Hz reads male")
             if g == "m" and L["f0"] and L["f0"] > M_HIGH: why.append(f"pitch {L['f0']:.0f} Hz reads female")
+            if pmed and L["f0"] and not L.get("tone") and abs(12 * np.log2(L["f0"] / pmed)) > float(pst):
+                why.append(f"pitch {L['f0']:.0f} Hz is {12 * np.log2(L['f0'] / pmed):+.1f} st from {who}'s {pmed:.0f}")
             if why: L["why"] = why; flagged.append(L)
         sims = [L["sim"] for L in Ls if L["sim"] is not None]
         summary[who] = {"lines": len(Ls), "mean_sim": round(float(np.mean(sims)), 3) if sims else None,
