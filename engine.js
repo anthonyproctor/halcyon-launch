@@ -117,7 +117,24 @@ function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><d
 function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
 function episodeCard(c){return ""}  // whole-chapter file now lives on the Listen page as a download link (10/10)
 function episodeCardOld(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Whole chapter as one audio file · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">For the car or the gym. In the app, use the Listen button at the bottom of the screen instead.</p><audio controls preload="metadata" src="${esc(R(c.episode.src))}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
-function top(){window.scrollTo({top:0,behavior:"smooth"})}
+/* Page scrolls the app starts itself (page turn to the top, the narration's follow-the-reading) wait while the reader is scrolling by hand.
+   On iOS a window scroll started from script during a finger or momentum scroll, or one long smooth scroll cut off by another, can leave
+   position:fixed layers (the player bar) drawn at a stale offset, mid-screen, until the scroll settles (2026-10-12 bug report). */
+const SCR={touch:false,tAt:0,user:0,mine:0,later:null,timer:0,auto:false};
+function scrHand(){const n=performance.now();if(SCR.touch&&n-SCR.tAt>5000)SCR.touch=false;return SCR.touch||n-SCR.user<400} // a lost touchend never blocks for good
+function scrBusy(){return scrHand()||!!SCR.later||performance.now()<SCR.mine} // a page turn still waiting goes first
+function scrMine(ms){SCR.mine=performance.now()+ms}
+function scrIdle(){clearTimeout(SCR.timer);if(!SCR.later)return;if(scrHand()){SCR.timer=setTimeout(scrIdle,150);return}const f=SCR.later;SCR.later=null;f()}
+function pageScroll(f,wait){if(wait&&scrHand()){SCR.later=f;scrIdle();return false}SCR.later=null;f();return true}
+addEventListener("touchstart",()=>{SCR.touch=true;SCR.tAt=performance.now()},{passive:true,capture:true});
+["touchend","touchcancel"].forEach(ev=>addEventListener(ev,e=>{SCR.touch=!!(e.touches&&e.touches.length);scrIdle()},{passive:true,capture:true}));
+["touchmove","wheel"].forEach(ev=>addEventListener(ev,()=>{SCR.tAt=performance.now();SCR.mine=0},{passive:true,capture:true})); // the reader took over: the scrolls that follow are theirs
+// only a real window scroll under a finger (and the momentum after it) counts as a hand scroll: a tap, or a scroll inside the rail or a panel, never does
+addEventListener("scroll",()=>{const n=performance.now();if(n>=SCR.mine&&(SCR.touch||n-SCR.user<1500))SCR.user=n},{passive:true});
+addEventListener("hashchange",()=>{SCR.later=null});
+window.__scr=SCR; // for the iPhone tests
+// a page turn: a short hop glides, a long one jumps (a long smooth scroll to the top is the kind iOS can leave the bar behind on)
+function top(){const auto=SCR.auto;SCR.auto=false;pageScroll(()=>{const far=scrollY>innerHeight*1.5;scrMine(far?150:700);window.scrollTo({top:0,behavior:far?"auto":"smooth"})},auto)} // only a Keep going turn waits for the hand; a tapped Next scrolls at once
 function applyPick(st,sc,i,j){const o=sc.opts[j];st.picks[i]=j;st.score+=o.s;for(const k in (o.d||{}))st.m[k]=clamp(st.m[k]+o.d[k]);st.dom[sc.domain][0]+=o.s;st.dom[sc.domain][1]+=3;if(o.flag)st.flags[o.flag]=true;if(TRACK==="ref"&&CH.num===1&&i===0&&j===1)st.flags.allhands=true}
 function sceneHTML(sc,i,n,picked,stateForText){
   const SM=TRACK==="full"&&STORY();let h=`<div class="kicker">Chapter ${CH.num} · ${SM?"What do you do?":`Decision ${i+1} of ${n}${sc.task&&TASKNAMES[sc.task]?` · ${sc.task} ${TASKNAMES[sc.task]}`:""}`}</div><h2>${esc(sc.title||sc.task)}</h2>${paras(sc.text(stateForText,allStates(),globalFlags()))}<div class="choices" role="group" aria-label="Choices">`;
@@ -137,7 +154,7 @@ function refRender(){
     $("go").onclick=()=>{S.step=0;save();render()};return}
   if(S.step>=n)return refEnd();
   const i=S.step,sc=CH.scenes[i];$("page").innerHTML=sceneHTML(sc,i,n,S.picks[i],S);wireVideos();
-  if(S.picks[i]===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>{applyPick(S,sc,i,+b.dataset.j);save();render();const o=document.querySelector(".outcome");if(o)o.scrollIntoView({behavior:"smooth",block:"start"})});
+  if(S.picks[i]===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>{applyPick(S,sc,i,+b.dataset.j);save();render();const o=document.querySelector(".outcome");if(o){scrMine(700);o.scrollIntoView({behavior:"smooth",block:"start"})}});
   else{$("next").textContent=i+1<n?"Next":"Finish the chapter";$("next").onclick=()=>{S.step=i+1;save();render();top()};$("redo").onclick=()=>{const p={...S.picks};delete p[i];const st=freshRef();Object.keys(p).map(Number).sort((a,b)=>a-b).forEach(k=>applyPick(st,CH.scenes[k],k,p[k]));st.step=i;S=st;save();render();top()}}
 }
 function refEnd(){
@@ -216,7 +233,7 @@ function fullRender(){
   $("page").querySelectorAll("[data-ph]").forEach(b=>b.onclick=()=>{const p=+b.dataset.ph;if(p>=0&&p!==S.pos)fullGo(p)});
   const nx=$("fnext");if(nx)nx.onclick=()=>fullGo(S.pos+1);
   if(cur.k==="scene"){const i=cur.i,sc=CH.scenes[i];
-    if(S.picks[i]===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>{applyPick(S,sc,i,+b.dataset.j);save();render();const o=document.querySelector(".outcome");if(o)o.scrollIntoView({behavior:"smooth",block:"start"})});
+    if(S.picks[i]===undefined)$("page").querySelectorAll(".choice").forEach(b=>b.onclick=()=>{applyPick(S,sc,i,+b.dataset.j);save();render();const o=document.querySelector(".outcome");if(o){scrMine(700);o.scrollIntoView({behavior:"smooth",block:"start"})}});
     else{$("next").onclick=()=>fullGo(S.pos+1);$("redo").onclick=()=>{const p={...S.picks};delete p[i];const keep={pos:S.pos,max:S.max,drills:S.drills,ex:S.ex,quiz:S.quiz,labs:S.labs,lx:S.lx};const st=freshFull();Object.keys(p).map(Number).sort((a,b)=>a-b).forEach(k=>applyPick(st,CH.scenes[k],k,p[k]));Object.assign(st,keep);if(st.quiz)st.quiz.v.forEach((v,qi)=>{const x=CH.quiz[qi];st.dom[x.domain][1]+=3;if(v===x.a)st.dom[x.domain][0]+=3});S=st;save();render();top()}}}
   if(cur.k==="drill"){const d=CH.drills[cur.j];const f=$("drillform");if(f)f.onsubmit=e=>{e.preventDefault();const vals=d.fields.map((_,fi)=>$("df"+fi).value.replace(/[$,%\s]/g,""));const ok=d.fields.map((fl,fi)=>{const v=parseFloat(vals[fi]);return !isNaN(v)&&Math.abs(v-fl.answer)<=(fl.tol??0.01)});S.drills[cur.j]={vals,ok};save();render()};const r=$("dretry");if(r)r.onclick=()=>{delete S.drills[cur.j];save();render()}}
   if(cur.k==="exercise"){const e=CH.exercise;const f=$("exform");if(f)f.onsubmit=ev=>{ev.preventDefault();const v=e.items.map((_,ii)=>{const x=$("ex"+ii).value;return x===""?-1:+x});S.ex={v,right:v.filter((x,ii)=>x===e.items[ii].answer).length};save();render()};const r=$("exretry");if(r)r.onclick=()=>{S.ex=null;save();render()}}
@@ -286,7 +303,7 @@ function recapCardHTML(){const RC=recapCh();if(!RC)return "";const n=CH.num,line
   const V=window.HalcyonRecapVoice,voice=V&&typeof V.speak==="function"?`<button type="button" class="btn ghost small" id="rcvoice">▶ Listen</button>`:"";
   return `<div class="recap${open?" open":""}" id="recapcard"><button type="button" class="rchead" id="rctoggle" aria-expanded="${open}" aria-controls="rcbody" aria-label="${esc(recapTitle(n))}"><span class="rct">${esc(recapTitle(n))}</span><span class="rcpre">${esc(lines[0])}</span><span class="rcact" aria-hidden="true">${open?"Hide":"Show"}</span></button><div class="rcbody" id="rcbody"${open?"":" hidden"}>${recapP(lines)}${voice}</div></div>`}
 function recapCardSet(open,focus){const c=$("recapcard");if(!c)return;const b=$("rctoggle");c.classList.toggle("open",open);b.setAttribute("aria-expanded",String(open));$("rcbody").hidden=!open;b.querySelector(".rcact").textContent=open?"Hide":"Show";
-  RECAP.auto.delete(CH.num);store.set(`recap.${BID()}.${CH.num}`,{open,seen:Date.now()});if(focus){b.focus();c.scrollIntoView({block:"start",behavior:"smooth"})}}
+  RECAP.auto.delete(CH.num);store.set(`recap.${BID()}.${CH.num}`,{open,seen:Date.now()});if(focus){b.focus();scrMine(700);c.scrollIntoView({block:"start",behavior:"smooth"})}}
 /* orientation notes: shown at the top of the page after the one they name, once */
 /* back after 3 or more days and not on the opening page (where the card does this job): one line pointing at Where am I?, once per visit */
 function recapBackHTML(){const RC=recapCh();if(!RC||RECAP.back===true||recapAwayDays()<3)return "";const L=steps(CH);if((L[Math.min(S.pos||0,L.length-1)]||{}).k==="open"){RECAP.back=true;return ""}
@@ -978,13 +995,13 @@ function bookSec(){if(NAR.page!=="book"||!NAR.book)return;const pid=pidAt(NAR.bo
 ["seeked","timeupdate"].forEach(ev=>NAR.audio.addEventListener(ev,()=>{bookSec();if(NAR.audio.paused||document.hidden)bfTick()})); // the follow-along text keeps up with lock screen and car seeks too
 function narHighlight(){if(NAR.page==="book"){bookSec();bfTick();const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}if(NAR.page==="car"){const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";if(Math.round(NAR.audio.currentTime)%5===0)store.set("carpos."+NAR.key,NAR.audio.currentTime);narTick();if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight);return}const T=NAR.timings[NAR.key];const t=NAR.audio.currentTime;const W=T&&T[NAR.page]?T[NAR.page].w:[];
   let lo=0,hi=W.length-1,idx=-1;while(lo<=hi){const mid=(lo+hi)>>1;if(W[mid][1]<=t){idx=mid;lo=mid+1}else hi=mid-1}
-  const di=idx>=0?NAR.map[idx]:null;if(di!==NAR.cur){if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");if(di!=null&&NAR.words[di]){const w=NAR.words[di];NAR.lastw=w;w.classList.add("hl");const r=w.getBoundingClientRect(),off=r.top<70||r.bottom>innerHeight-110;if(off&&!NAR.free)w.scrollIntoView({block:"center",behavior:"smooth"});narFollowUI(off,r.top<70)}NAR.cur=di}
+  const di=idx>=0?NAR.map[idx]:null;if(di!==NAR.cur){if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");if(di!=null&&NAR.words[di]){const w=NAR.words[di];NAR.lastw=w;w.classList.add("hl");const r=w.getBoundingClientRect(),off=r.top<70||r.bottom>innerHeight-110;if(off&&!NAR.free&&!scrBusy()){scrMine(700);w.scrollIntoView({block:"center",behavior:"smooth"})}narFollowUI(off,r.top<70)}NAR.cur=di}
   const pr=$("narprog");if(pr&&NAR.audio.duration)pr.style.width=(NAR.audio.currentTime/NAR.audio.duration*100)+"%";narTick();
   if(!NAR.audio.paused)NAR.raf=requestAnimationFrame(narHighlight)}
 // Scrolling by hand while a page reads stops the auto follow; "Follow the reading" brings it back.
-function narFollowUI(off,up){const p=$("narfollow");if(!p)return;p.hidden=!(NAR.free&&off);if(!p.hidden)p.textContent=(up?"↑":"↓")+" Follow the reading"}
+function narFollowUI(off,up){const p=$("narfollow");if(!p)return;const h=!(NAR.free&&off),t=(up?"↑":"↓")+" Follow the reading";if(p.hidden!==h)p.hidden=h;if(!h&&p.textContent!==t)p.textContent=t} // write only on a change: no churn on the bar during a scroll
 addEventListener("scroll",()=>{const w=NAR.lastw;if(NAR.page==="book"||!NAR.free||!w||!w.isConnected)return;const r=w.getBoundingClientRect();narFollowUI(r.top<70||r.bottom>innerHeight-110,r.top<70)},{passive:true});
-function narFree(){if(NAR.page&&NAR.page!=="book"&&NAR.page!=="car"&&!NAR.audio.paused)NAR.free=true}
+function narFree(e){if(e&&e.target&&e.target.closest&&e.target.closest("#narbar"))return;if(NAR.page&&NAR.page!=="book"&&NAR.page!=="car"&&!NAR.audio.paused)NAR.free=true}
 addEventListener("wheel",narFree,{passive:true});addEventListener("touchmove",narFree,{passive:true});
 addEventListener("keydown",e=>{if(["PageUp","PageDown","ArrowUp","ArrowDown","Home","End"].includes(e.key))narFree()});
 addEventListener("mousedown",e=>{if(e.clientX>=document.documentElement.clientWidth)narFree()});
@@ -1013,15 +1030,15 @@ async function narAttach(){
 }
 NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${BID()}.${ed}.${n}`,true);store.set(`bookpos.${BID()}.${ed}.${n}`,0);{const L=lget();if(L.book&&L.book.n===n)lput({book:null},true)}const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
   if(!NAR.auto)return;const pid=NAR.page||"";
-  if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>b.click(),700)}
-  else if(pid[0]==="o"){const b=$("next");if(b)setTimeout(()=>b.click(),900)}
+  if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>{SCR.auto=true;b.click();SCR.auto=false},700)}
+  else if(pid[0]==="o"){const b=$("next");if(b)setTimeout(()=>{SCR.auto=true;b.click();SCR.auto=false},900)}
   else NAR.listening=pid[0]==="s"?NAR.listening:false;});
 function foldInit(){document.querySelectorAll("details.fold").forEach(d=>{const k="fold."+d.id;const v=store.get(k,null);if(v!==null)d.open=v;d.addEventListener("toggle",()=>store.set(k,d.open))})}
 foldInit();
 function narInit(){
   const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<button class="btn small" id="narfollow" type="button" hidden>↓ Follow the reading</button><div class="narseekrow"><span class="prog nartime" id="narcur">0:00</span><div class="narseekwrap"><div class="narticks" id="narticks" aria-label="Scenes"></div><span class="narbubble" id="narbubble" hidden></span><input type="range" id="narseek" min="0" max="1000" value="0" step="1" aria-label="Seek"></div><span class="prog nartime" id="nardur">0:00</span><span id="narprog" hidden></span></div><div class="narrow"><button class="btn small ghost" id="narprev" type="button" aria-label="Previous section" data-tip="Previous scene in the Audiobook, or previous page while reading.">⏮</button><button class="btn small ghost" id="narback" type="button" aria-label="Back 10 seconds" data-tip="Jump back 10 seconds for a quick refresher.">⟲ 10</button><button class="btn" id="narplay" type="button">▶ Listen</button><button class="btn small ghost" id="narfwd" type="button" aria-label="Forward 30 seconds" data-tip="Skip ahead 30 seconds.">30 ⟳</button><button class="btn small ghost" id="narnext" type="button" aria-label="Next section" data-tip="Next scene in the Audiobook, or next page while reading.">⏭</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate" data-tip="Reading speed. Your choice is remembered.">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto" data-tip="When a page finishes reading, turn to the next page by itself. Decisions still wait for you to choose."><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label><button class="btn small ghost" id="gohf" type="button" data-tip="Switch to the audiobook. It starts at the part you're reading and plays straight through, chapter after chapter.">🎧 Audiobook</button></div>`;
   document.body.appendChild(bar);
-  $("narfollow").onclick=()=>{NAR.free=false;$("narfollow").hidden=true;const w=NAR.lastw;if(!w||!w.isConnected)return;if(NAR.page==="book"&&BF.box&&BF.box.contains(w)){const r=BF.box.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight)BF.box.scrollIntoView({block:"nearest",behavior:"smooth"});bfScrollTo(w)}else w.scrollIntoView({block:"center",behavior:"smooth"})};
+  $("narfollow").onclick=()=>{NAR.free=false;$("narfollow").hidden=true;const w=NAR.lastw;if(!w||!w.isConnected)return;if(NAR.page==="book"&&BF.box&&BF.box.contains(w)){const r=BF.box.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight)BF.box.scrollIntoView({block:"nearest",behavior:"smooth"});bfScrollTo(w)}else{scrMine(700);w.scrollIntoView({block:"center",behavior:"smooth"})}};
   $("narplay").onclick=()=>{plog("tap Listen");if(NAR.audio.paused){NAR.listening=true;NAR.free=false;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{plog("play() ok");narUI();narHighlight()}).catch(e=>plog("play() REJECTED "+e.name+": "+e.message))}else{NAR.listening=false;NAR.audio.pause();narUI()}};
   {const sk=$("narseek");let drag=false;
    const show=()=>{const a=NAR.audio,d=a.duration||0;$("narcur").textContent=fmtT(drag?(+sk.value/1000*d):a.currentTime);$("nardur").textContent=d?fmtT(d):"0:00";if(!drag&&d)sk.value=Math.round(a.currentTime/d*1000)};
@@ -1238,7 +1255,7 @@ async function bfMount(){const slot=$("bfslot");if(!slot)return;const ch=bfChapt
     if(!J){BF.id=J===null?id:null;BF.el=bfNote(J===null?`The follow-along text for chapter ${ch.n} isn't ready yet. The audio plays as usual.`:`The follow-along text couldn't load. Check your connection; the audio plays as usual.`);BF.box=null;BF.words=[];BF.times=null}
     else{BF.id=id;BF.el=bfBuild(J,c,ch.ed);BF.dur=J.dur;BF.box=BF.el.querySelector("#bftext");BF.words=[...BF.el.querySelectorAll(".bw")];BF.times=Float64Array.from(J.p.flatMap(p=>p[2]));BF.cur=-1;BF.scroll=0;bfWire();bmWireBook()}}
   const s=$("bfslot");if(!s)return;const fresh=!BF.el.isConnected&&BF.shown!==id;BF.shown=id;s.replaceWith(BF.el);
-  if(fresh&&ch.live){const r=BF.el.getBoundingClientRect();const nb=$("narbar"),bar=nb&&!nb.hidden?nb.getBoundingClientRect().top:innerHeight;if(r.top<0||r.bottom>bar)BF.el.scrollIntoView({block:"start",behavior:"smooth"})} // a chapter just started: bring its text into view
+  if(fresh&&ch.live){const r=BF.el.getBoundingClientRect();const nb=$("narbar"),bar=nb&&!nb.hidden?nb.getBoundingClientRect().top:innerHeight;if(r.top<0||r.bottom>bar)pageScroll(()=>{if(!BF.el.isConnected)return;const q=BF.el.getBoundingClientRect(),t=nb&&!nb.hidden?nb.getBoundingClientRect().top:innerHeight;if(q.top<0||q.bottom>t){scrMine(700);BF.el.scrollIntoView({block:"start",behavior:"smooth"})}},true)} // a chapter just started: bring its text into view
   if(BF.box){BF.box.scrollTop=BF.scroll;BF.box.querySelectorAll(".bw.hl").forEach(e=>e.classList.remove("hl"));BF.cur=-1;
     if(!ch.live&&ch.t!=null){bfShow(ch.t,true)}else bfTick(true);BF.bmp=undefined;bmBookSync()}}
 function bfWire(){const box=BF.box,a=NAR.audio;

@@ -16,6 +16,11 @@ export default defineConfig({
     viewport: { width: 390, height: 844 },
     serviceWorkers: "block",
   },
+  projects: [
+    { name: "chromium", testIgnore: /narbar_ios\.spec\.mjs/, use: { launchOptions: { args: ["--mute-audio"] } } },
+    // the player bar on an iPhone: WebKit with the iPhone 15 profile (touch, mobile viewport), only for that spec
+    { name: "webkit-iphone", testMatch: /narbar_ios\.spec\.mjs/, use: { ...devices["iPhone 15"], serviceWorkers: "block" } }, // WebKit can't be muted by a switch: the spec mutes every media element itself
+  ],
   webServer: {
     command: "node tests/serve.mjs",
     cwd: "..",
