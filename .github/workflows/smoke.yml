@@ -16,7 +16,7 @@ concurrency:
 jobs:
   smoke:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30   # the first run after new audio downloads it from R2; later runs use the cache
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.0.0
@@ -26,17 +26,28 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium webkit
       - run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg   # ffprobe, used by the follow-along tests
-      - uses: actions/cache@v6.1.0
+      - uses: actions/cache/restore@v6.1.0
+        id: audio
         with:
           path: |
-            audio
-            courses/*/audio
-            courses/*/cast/voice
-            cast
-            voice-samples
+            audio/**/*.mp3
+            courses/*/audio/**/*.mp3
+            courses/*/cast/voice/*.mp3
+            cast/**/*.mp3
+            voice-samples/*.mp3
           key: r2-audio-${{ hashFiles('audio-manifest.json') }}
           restore-keys: r2-audio-
       - run: python3 tools/r2_sync.py --pull   # only fetches files the cache doesn't already have
+      - uses: actions/cache/save@v6.1.0   # saved right after the pull, so a failing test run still keeps the audio
+        if: always() && steps.audio.outputs.cache-hit != 'true'
+        with:
+          path: |
+            audio/**/*.mp3
+            courses/*/audio/**/*.mp3
+            courses/*/cast/voice/*.mp3
+            cast/**/*.mp3
+            voice-samples/*.mp3
+          key: r2-audio-${{ hashFiles('audio-manifest.json') }}
       - run: npm run test:smoke
         env:
           CI: "1"

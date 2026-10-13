@@ -306,7 +306,7 @@ def cmd_pull(args):
             return rel, type(e).__name__ + ": " + str(e)[:120]
     bad = 0
     if not args.dry_run:
-        with cf.ThreadPoolExecutor(8) as ex:
+        with cf.ThreadPoolExecutor(16) as ex:
             for rel, err in ex.map(one, need):
                 if err: bad += 1; warn(f"FAIL {rel}: {err}")
     save_md5_cache(cache)
