@@ -81,6 +81,20 @@ code{font:13px ui-monospace,Menlo,monospace;word-break:break-all}
 .chs .cs{white-space:nowrap;font-size:13.5px}.chs .cs.done{color:var(--good)}
 .chs .cu{white-space:nowrap;font-size:13px;color:var(--muted);text-align:end}
 .empty{padding:14px 12px;color:var(--muted)}
+/* study and badges (2026-10-14): the small marks on a collapsed row, and each book's line in the details */
+.c-la{display:flex;flex-direction:column;min-width:0}
+.xs{display:flex;gap:9px;font-size:12px;color:var(--muted);line-height:1.3;white-space:nowrap}
+.xs span{display:inline-flex;align-items:center;gap:3px}
+.xs svg,.bk svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.av{display:inline-flex;align-items:center;gap:8px;vertical-align:middle}
+.av img{width:30px;height:36px;object-fit:cover;border-radius:4px;border:1px solid var(--line);background:var(--soft)}
+.av .sw{width:30px;height:19px;border-radius:3px;border:1px solid var(--line);flex:none}
+.bk{margin:0 0 6px}
+.facts{grid-template-columns:minmax(7.5rem,max-content) minmax(0,1fr)}
+.bdl{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 6px}
+.bdl li{font-size:12.5px;background:var(--soft);border:1px solid transparent;border-radius:6px;padding:1px 8px;max-width:100%;overflow-wrap:anywhere}
+.bdl li.back{border:1px dashed var(--muted);background:transparent}
+.bdl time,.bdl .d{color:var(--muted);margin-inline-start:5px;white-space:nowrap}
 details summary{cursor:pointer;min-height:24px;padding-block:4px;color:var(--accent);font-weight:600}
 
 @media (max-width:759px){
@@ -91,6 +105,8 @@ details summary{cursor:pointer;min-height:24px;padding-block:4px;color:var(--acc
   .who{grid-area:who}.prog{grid-area:prog;padding-inline-start:14px}.c-la{grid-area:la;text-align:end}
   .meta{grid-area:meta;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;padding-inline-start:14px}
   .c-act{grid-area:act;text-align:end}
+  .c-la{align-items:flex-end}
+  .facts{grid-template-columns:minmax(0,7.5rem) minmax(0,1fr)}
   .cell-l{display:inline;color:var(--muted);font-size:12px;margin-inline-end:5px}
   .det{padding-inline-start:26px}
   .chs li{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t u" "s s"}
@@ -135,6 +151,8 @@ details summary{cursor:pointer;min-height:24px;padding-block:4px;color:var(--acc
 </section>
 </div>
 <script src="courses.js"></script>
+<script src="assets.js"></script><!-- which cast portraits exist, for the picture a player picked -->
+<script src="badges.js"></script><!-- badge rules; each played book's badge names load from badges/<course>.js -->
 <script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -161,7 +179,7 @@ const when=(x,never="Never")=>{const t=toDate(x);return t?`<time datetime="${t.t
    Other courses: 101 to 199 are Full Course chapter n-100, 1 to 99 Refresher chapter n.
    Side records (api/progress.js never resumes at 901 and up): 900 practice exam 1 attempt, 901 its results; practice exam n from 2 up is
    910+2(n-2) and the key after it; 902 practice sets; 903 Audiobook place and Labs waiting (PMP: the first edition's; v2 uses 904);
-   905 study log; 906 final assessment; 907 bookmarks. 99990 is the Library (pins and last played) for every course. Anything else is "other". */
+   905 study log; 906 final assessment; 907 bookmarks; 908 badges and readiness. 99990 is the Library (pins and last played) for every course. Anything else is "other". */
 const COURSES=window.HALCYON_COURSES||[];
 const byId=Object.fromEntries(COURSES.map(c=>[c.id,c]));
 const LIBKEY=99990;
@@ -176,8 +194,8 @@ function decode(k){k=Number(k);
   if(r===900||r===901)return {kind:r===900?"mock":"mockres",c,f:1};
   if(r>=910&&r<=999)return {kind:(r-910)%2?"mockres":"mock",c,f:2+Math.floor((r-910)/2)};
   if(pmp&&r===904)return {kind:"side",c,label:"Audiobook place and Labs waiting"};
-  const side={902:"Practice sets",903:pmp?"Audiobook place, first edition (retired)":"Audiobook place and Labs waiting",905:"Study log",906:"Final assessment",907:"Bookmarks"};
-  if(side[r])return {kind:r===906?"final":r===907?"marks":"side",c,label:side[r]};
+  const side={902:"Practice sets",903:pmp?"Audiobook place, first edition (retired)":"Audiobook place and Labs waiting",905:"Study log",906:"Final assessment",907:"Bookmarks",908:"Badges and readiness"};
+  if(side[r])return {kind:({905:"log",906:"final",907:"marks",908:"bdg"})[r]||"side",c,label:side[r]};
   return {kind:"other",c};
 }
 const short=c=>c.title||c.id;
@@ -205,7 +223,9 @@ function fullStatus(p,c,n){const ch=(CHAP[c.id]||{})[n],sc=ch?(ch.scenes||[]).le
   return {text:"Not started"}}
 // the retired PMP Refresher: step is the decision index (-1 before Begin), ten decisions a chapter (engine.js TRACKS.ref), three points each
 function refStatus(p){const st=num(p.step);if(st==null||st<0)return {text:"Not started"};if(st>=10)return {done:true,text:`Done, ${num(p.score)??0}/30`};return {text:`Decision ${st+1}`}}
-function sideStatus(d,p){const n=num(p.n),last=num(p.lr)!=null&&num(p.lt)?`last ${p.lr}/${p.lt}`:"";
+function sideStatus(d,p,B){const n=num(p.n),last=num(p.lr)!=null&&num(p.lt)?`last ${p.lr}/${p.lt}`:"";
+  if(d.kind==="log")return B?`${dur(B.listen)} listened, ${dur(B.read)} read`:"Saved";
+  if(d.kind==="bdg")return B?`${gotN(B)} earned`:"Saved";
   if(d.kind==="mock")return p.sub?"Submitted":"In progress";
   if(d.kind==="mockres"||d.kind==="final"){if(!n)return "No attempts";return `${n} attempt${n>1?"s":""}${last?", "+last:""}${d.kind==="final"&&p.lp!=null?(p.lp?", passed":", not passed"):""}`}
   if(d.kind==="marks")return n!=null?`${n} saved`:"Saved";
@@ -221,6 +241,49 @@ function summarize(u){const groups=new Map(),other=[];let last=null;
     else if(d.kind==="old"||d.kind==="ref")g.old.push({d,p});else g.side.push({d,p})});
   return {groups:[...groups.values()].sort((a,b)=>a.c.base-b.c.base),other,last}}
 
+/* ===== study and badges (2026-10-14), from the overview's avatar, study and books (lib/me.js attachStudy) =====
+   study: every book's 905 study log summed on the server: the listening streak now and the best one (a day counts at 10 minutes of audio,
+   every book added up, the same rule as badges.js and the profile page), seconds listened and read, and listened in the last 7 days.
+   books, per course base: that book's seconds, and its 908 badges record cut down to got {id: {at, back}} and the readiness snapshot
+   {ready, ch, at}. Badge names come from badges/<course>.js, loaded for the books someone has played. */
+const HB=window.HalcyonBadges,DEFS=()=>window.HALCYON_BADGES||{},ASSET=new Set(Array.isArray(window.HALCYON_ASSETS)?window.HALCYON_ASSETS:[]);
+const bookOf=(u,c)=>((u.books||{})[c.base])||null;
+const gotN=B=>B&&B.got&&typeof B.got==="object"?Object.keys(B.got).length:0;
+const badgeCount=u=>Object.values(u.books||{}).reduce((n,B)=>n+gotN(B),0);
+const days=n=>`${n} day${n===1?"":"s"}`;
+function dur(s){s=num(s)||0;if(!s)return "none";if(s<60)return "under a minute";if(s<3600)return `${Math.round(s/60)} min`;const h=s/3600;return `${h<100?h.toFixed(1):Math.round(h)} hours`}
+const loadingB={};
+function loadBadges(c){return loadingB[c.id]||=(c&&c.badges?loadScript(c.badges):Promise.resolve())}
+/* a book's badges by id, names and all (the shared chapter pattern takes its names from the chapter titles loaded above) */
+function badgeItems(c){const def=DEFS()[c.id];if(!def||!HB)return {def:null,items:new Map()};
+  const L=HB.expand(def,{planned:total(c),chapters:Object.values(CHAP[c.id]||{}).map(x=>({n:x.num,title:x.title}))});return {def,items:new Map(L.map(it=>[it.id,it]))}}
+const IC={streak:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15v-3a7 7 0 0 1 14 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>',
+  badge:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2l4 7M17 2l-4 7"/><circle cx="12" cy="15" r="6"/><path d="M12 12.5v5"/></svg>'};
+/* the collapsed row's marks: the listening streak while it's running, and badges earned across every book */
+function marksHTML(u){const st=u.study,cur=(st&&num(st.current))||0,n=badgeCount(u);let h="";
+  if(cur)h+=`<span title="Listening streak ${days(cur)}, best ${days(num(st.best)||cur)}">${IC.streak}${cur}<span class="sr"> day listening streak</span></span>`;
+  if(n)h+=`<span title="${n} badge${n===1?"":"s"} earned">${IC.badge}${n}<span class="sr"> badge${n===1?"":"s"} earned</span></span>`;
+  return h?`<span class="xs">${h}</span>`:""}
+function castSrc(c,id){if(!c||!/^[a-z][a-z0-9_-]{0,39}$/.test(String(id||"")))return "";const stem=(c.root||"")+"cast/"+(c.id==="pmp"?"v2/":"")+id;return [".jpg",".svg"].map(x=>stem+x).find(f=>ASSET.has(f))||""}
+/* the picture they picked on their profile: a cast portrait (shown) or a book's ID card (its color and the book, in words) */
+function avatarHTML(a){if(!a||typeof a!=="object")return '<span class="muted">None picked</span>';const c=byId[a.course],book=c?short(c):String(a.course||"");
+  if(a.kind==="card"){const col=(DEFS()[a.course]||{}).color||{},bg=col.bg||col.paper;
+    return `<span class="av">${bg&&/^#[0-9a-f]{3,8}$/i.test(bg)?`<span class="sw" style="background:${bg}" aria-hidden="true"></span>`:""}<span>ID card, ${esc(book)}</span></span>`}
+  const src=castSrc(c,a.id),nm=String(a.id||"").replace(/^./,x=>x.toUpperCase());
+  return `<span class="av">${src?`<img src="${esc(src)}" alt="" width="30" height="36">`:""}<span>Cast portrait, ${esc(nm)}, ${esc(book)}</span></span>`}
+const dayTag=x=>{const t=toDate(x);return t?`<time datetime="${t.toISOString()}" title="${esc(exact(t))}">${esc(day(t))}</time>`:""};
+/* one book in the details: readiness from the badges record's snapshot (as of its date), chapters done, time, and the badges earned */
+function bookHTML(u,g,T){const B=bookOf(u,g.c),{def,items}=badgeItems(g.c),sn=B&&B.snap;if(!B&&!g.full.length)return "";
+  const meter=(def&&def.readiness&&def.readiness.name)||"Readiness",asOf=sn&&sn.at?`, as of ${dayTag(sn.at)}`:"";
+  const ready=!sn?'<span class="muted">Not checked yet</span>':sn.ready==null?`Not enough yet${asOf}`:`${esc(sn.ready)}, target ${esc(g.c.target||75)}${asOf}`;
+  const done=g.full.length?g.done:(sn&&Array.isArray(sn.ch)?sn.ch[0]:0);
+  const got=B?Object.entries(B.got||{}).sort((a,b)=>(a[1].at||0)-(b[1].at||0)):[],back=got.some(([,x])=>x.back);
+  const shelf=def&&def.shelf?def.shelf:"Badges";
+  const list=got.length?`${got.length}${items.size?` of ${items.size}`:""}<ul class="bdl">${got.map(([id,x])=>{const it=items.get(id);
+      return `<li${x.back?' class="back" title="Backfilled: counted from progress made before badges arrived"':""}>${it?esc(it.name):`<span class="muted">${esc(id)}</span>`}${x.at?`<span class="d">${esc(day(x.at))}</span>`:""}${x.back?'<span class="sr">, backfilled</span>':""}</li>`}).join("")}</ul>${back?'<span class="muted">Dashed ones were backfilled: counted from progress made before badges arrived.</span>':""}`
+    :'<span class="muted">None yet</span>';
+  return `<dl class="facts bk"><dt>${esc(meter)}</dt><dd>${ready}</dd><dt>Chapters done</dt><dd>${done} of ${T}</dd>${B?`<dt>Time</dt><dd>${dur(B.listen)} listened, ${dur(B.read)} read</dd>`:""}<dt>${esc(shelf)}</dt><dd>${list}</dd></dl>`}
+
 /* ===== players ===== */
 let DATA=null,QA7=null,PASTOPEN=false;
 const OPEN=new Set((()=>{const v=ls.get("halcyon.admin.open",[]);return Array.isArray(v)?v.map(String):[]})());
@@ -234,13 +297,15 @@ const li=(label,sub,s,p)=>`<li><span class="ct">${sub?`<span class="cn">${esc(su
 function resumeText(u){if(!u.cur)return "Nothing yet";const d=decode(u.cur);if(!d.c)return "other";
   if(d.kind==="full"){const ch=(CHAP[d.c.id]||{})[d.n];return `${short(d.c)}, chapter ${d.n}${ch?": "+ch.title:""}`}
   return `${short(d.c)}, ${d.kind==="mock"?"practice exam":d.label?d.label.charAt(0).toLowerCase()+d.label.slice(1)+(d.n?`, chapter ${d.n}`:""):"other"}`}
+function studyFacts(u){if(!("study" in u))return "";const st=u.study;if(!st)return `<dt>Study time</dt><dd class="muted">None logged yet</dd>`;
+  return `<dt>Listening streak</dt><dd>${days(num(st.current)||0)} now, best ${days(num(st.best)||0)}</dd><dt>Time</dt><dd>${dur(st.listen)} listened, ${dur(st.read)} read</dd>`}
 function detailHTML(u,S){
-  let h=`<dl class="facts"><dt>Email</dt><dd>${esc(u.email)}</dd><dt>Last sign in</dt><dd>${u.last_login_at?when(u.last_login_at):'<span class="muted">not recorded yet</span>'}</dd><dt>Last active</dt><dd>${when(S.last)}</dd><dt>Joined</dt><dd>${when(u.created_at,"")}</dd><dt>Picks up at</dt><dd>${esc(resumeText(u))}</dd>${u.disabled?`<dt>Account</dt><dd class="bad">Disabled. They can't sign in.</dd>`:""}</dl>`;
+  let h=`<dl class="facts"><dt>Email</dt><dd>${esc(u.email)}</dd><dt>Last sign in</dt><dd>${u.last_login_at?when(u.last_login_at):'<span class="muted">not recorded yet</span>'}</dd><dt>Last active</dt><dd>${when(S.last)}</dd><dt>Joined</dt><dd>${when(u.created_at,"")}</dd><dt>Picks up at</dt><dd>${esc(resumeText(u))}</dd>${"avatar" in u?`<dt>Picture</dt><dd>${avatarHTML(u.avatar)}</dd>`:""}${studyFacts(u)}${u.disabled?`<dt>Account</dt><dd class="bad">Disabled. They can't sign in.</dd>`:""}</dl>`;
   if(!S.groups.length&&!S.other.length)return h+`<p class="muted" style="margin:6px 0 0">No progress saved yet.</p>`;
-  S.groups.forEach(g=>{h+=`<h3>${esc(longName(g.c))}</h3><ul class="chs">`;
+  S.groups.forEach(g=>{h+=`<h3>${esc(longName(g.c))}</h3>${bookHTML(u,g,Math.max(total(g.c),...g.full.map(x=>x.d.n)))}<ul class="chs">`;
     g.full.sort((a,b)=>a.d.n-b.d.n).forEach(x=>{const ch=(CHAP[g.c.id]||{})[x.d.n];h+=li(ch?ch.title:"",`Ch ${x.d.n}`,x.s,x.p)});
     g.old.sort((a,b)=>(a.d.kind===b.d.kind?0:a.d.kind==="old"?-1:1)||a.d.n-b.d.n).forEach(x=>h+=li(x.d.label,`Ch ${x.d.n}`,x.d.kind==="ref"?refStatus(x.p):fullStatus(x.p,{id:""},x.d.n),x.p));
-    g.side.sort((a,b)=>a.p.chapter-b.p.chapter).forEach(x=>h+=li(x.d.kind==="mock"||x.d.kind==="mockres"?mockLabel(x.d):x.d.label,"",{text:sideStatus(x.d,x.p)},x.p));
+    g.side.sort((a,b)=>a.p.chapter-b.p.chapter).forEach(x=>h+=li(x.d.kind==="mock"||x.d.kind==="mockres"?mockLabel(x.d):x.d.label,"",{text:sideStatus(x.d,x.p,bookOf(u,g.c))},x.p));
     h+=`</ul>`});
   if(S.other.length){h+=`<h3>Everything else</h3><ul class="chs">`;S.other.forEach(x=>h+=li(x.d.label||"other","",{text:"Saved"},x.p));h+=`</ul>`}
   return h}
@@ -252,7 +317,7 @@ function userRow(u){const S=summarize(u),uid=String(u.id),open=OPEN.has(uid),id=
   return `<div class="pl${u.disabled?" off":""}" role="listitem" data-id="${id}"><div class="pr">
 <div class="who"><button class="exp" type="button" aria-expanded="${open}" aria-controls="det-${id}" data-exp="${id}"><span class="chev" aria-hidden="true"></span><span class="nm">${esc(u.name||"(no name)")}</span>${badges}</button><span class="em">${esc(u.email)}</span></div>
 <div class="prog">${S.groups.length?S.groups.map(chipHTML).join(""):'<span class="muted">Not started</span>'}</div>
-<div class="c-la when"><span class="cell-l">Active</span>${when(S.last)}</div>
+<div class="c-la when"><span><span class="cell-l">Active</span>${when(S.last)}</span>${marksHTML(u)}</div>
 <div class="meta"><div class="c-jn when"><span class="cell-l">Joined</span>${u.created_at?`<span title="${esc(exact(u.created_at))}">${esc(day(u.created_at))}</span>`:""}</div><div class="c-tst">${tester}</div></div>
 <div class="c-act">${act}</div></div>
 <div class="det" id="det-${id}"${open?"":" hidden"}>${open?detailHTML(u,S):""}</div></div>`}
@@ -290,7 +355,9 @@ function wirePlayers(){
 const openInvite=i=>!i.used_by&&!i.revoked&&!(new Date(i.expires_at)<new Date());
 function renderStats(){if(!DATA)return;const U=DATA.users,wk=Date.now()-7*864e5;
   const active=U.filter(u=>{const l=summarize(u).last;return l&&+l>=wk}).length,testers=U.filter(u=>u.is_tester&&!u.is_admin).length,inv=DATA.invites.filter(openInvite).length;
-  const s=[[U.length,U.length===1?"player":"players"],[active,"active, last 7 days"],[testers,testers===1?"tester":"testers"],[inv,inv===1?"open invite":"open invites"]];
+  const s=[[U.length,U.length===1?"player":"players"],[active,"active, last 7 days"]];
+  if(U.some(u=>"study" in u)){const wkL=U.reduce((n,u)=>n+((u.study&&num(u.study.week))||0),0);s.push([(wkL/3600).toFixed(1)+"h","listened, last 7 days"])} // from the study logs, summed on the server
+  s.push([testers,testers===1?"tester":"testers"],[inv,inv===1?"open invite":"open invites"]);
   if(QA7!=null)s.push([QA7,QA7===1?"QA report, last 7 days":"QA reports, last 7 days"]);
   $("stats").innerHTML=s.map(([n,l])=>`<div class="stat"><b>${n}</b><span>${esc(l)}</span></div>`).join("")}
 function renderInvites(){const I=DATA.invites,open=I.filter(openInvite),past=I.filter(i=>!openInvite(i));
@@ -314,8 +381,10 @@ async function load(){
   $("list").innerHTML=`<tr><th>Email</th><th>From</th><th>Joined</th><th><span class="sr">Remove</span></th></tr>`+(S.length?S.map(s=>`<tr><td>${esc(s.email)}</td><td>${esc(s.source)}</td><td title="${esc(exact(s.created_at))}">${esc(day(s.created_at))}</td><td><button class="btn ghost sm" type="button" data-rm="${esc(s.email)}">Remove</button></td></tr>`).join(""):`<tr><td colspan="4" class="muted">No one yet.</td></tr>`);
   document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{if(!confirm("Remove "+b.dataset.rm+" from the list?"))return;await api("/api/admin?action=listremove",{method:"POST",body:JSON.stringify({email:b.dataset.rm})});load()});
   // chapter titles and step counts for every course someone has played, then one redraw
-  await preview;const need=new Set();DATA.users.forEach(u=>(u.progress||[]).forEach(p=>{const d=decode(p.chapter);if(d.c&&!CHAP[d.c.id])need.add(d.c.id)}));
-  if(need.size){await Promise.all([...need].map(id=>loadChapters(byId[id])));renderStats();renderPlayers()}
+  // and each played book's badge names and meter name (or the book whose ID card someone picked)
+  await preview;const need=new Set(),needB=new Set();DATA.users.forEach(u=>{(u.progress||[]).forEach(p=>{const d=decode(p.chapter);if(d.c&&!CHAP[d.c.id])need.add(d.c.id);if(d.c)needB.add(d.c.id)});
+    Object.entries(u.books||{}).forEach(([b,B])=>{const c=COURSES.find(c=>c.base===Number(b));if(c&&gotN(B))needB.add(c.id)});if(u.avatar&&byId[u.avatar.course])needB.add(u.avatar.course)});
+  if(need.size||needB.size){await Promise.all([...[...need].map(id=>loadChapters(byId[id])),...[...needB].map(id=>loadBadges(byId[id]))]);renderStats();renderPlayers()}
   document.body.dataset.ready="1"; // titles are in: tests wait for this before measuring
 }
 $("q").oninput=renderPlayers;

@@ -14,6 +14,6 @@
   },
   "scripts": {
     "test:smoke": "playwright test -c tests",
-    "test:api": "node --test tests/qa_report.test.mjs tests/me_api.test.mjs"
+    "test:api": "node --test tests/qa_report.test.mjs tests/me_api.test.mjs tests/admin_overview.test.mjs"
   }
 }

@@ -1,5 +1,8 @@
 import { sql, currentUser, sameOrigin, body, send, newToken, ensureUserColumns, hasLastLogin } from "../lib/server.js";
 import { ensureListTables } from "../lib/list.js";
+import { makeEnsureMe, attachStudy } from "../lib/me.js";
+
+const ensureMe = makeEnsureMe(sql); // user_profiles, made on first use like the profile page does
 
 export default async function handler(req, res) {
   if (!sameOrigin(req)) return send(res, 403, { error: "Bad origin." });
@@ -27,6 +30,9 @@ export default async function handler(req, res) {
       const byUser = new Map(), seen = new Map(logins.map(r => [r.id, r.last_login_at]));
       for (const r of rows) { const { user_id, ...rest } = r; if (!byUser.has(user_id)) byUser.set(user_id, []); byUser.get(user_id).push(rest); }
       users.forEach(x => { x.progress = byUser.get(x.id) || []; x.last_login_at = seen.get(x.id) ?? null; });
+      // per player: avatar, study time and listening streaks (summed from the 905 study logs on the server, never the logs themselves),
+      // and per book the 908 badges record's small parts (lib/me.js attachStudy)
+      await attachStudy(users, { sql, ensure: ensureMe });
       const invites = await sql()`select i.token,i.note,i.created_at,i.expires_at,i.revoked,i.used_at,u.email as used_by from invites i left join users u on u.id=i.used_by order by i.created_at desc limit 100`;
       return send(res, 200, { users, invites, lastLogin: await hasLastLogin() });
     }
