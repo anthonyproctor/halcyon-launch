@@ -6,4 +6,4 @@
 // This is the single switch. Flip it only after tools/r2_sync.py has uploaded the files and written audio-manifest.json.
 window.HALCYON_AUDIO_BASE = "https://audio.strakesystems.com";
 // HALCYON_AUDIO_REMOTE_ONLY: set to true only at step 5 of the doc, when the mp3s leave git and this site has no copy to fall back to.
-window.HALCYON_AUDIO_REMOTE_ONLY = false;
+window.HALCYON_AUDIO_REMOTE_ONLY = true;

@@ -12,11 +12,11 @@ BIBLE*.md
 # smoke test output
 test-results/
 
-# Narration audio moves to Cloudflare R2 (docs/AUDIO_HOSTING.md). NOT ACTIVE YET: these lines stay commented until step 5 of that doc,
-# after R2 is verified live and HALCYON_AUDIO_BASE is set. Turning them on early would leave new chapters' mp3s out of git while the
-# live site still plays from Vercel. Small JSON (timings, audiobook.json, bookmarks.json, episodes, samples.json) stays in git either way.
-# audio/**/*.mp3
-# courses/*/audio/**/*.mp3
-# cast/voice/*.mp3
-# cast/v2/voice/*.mp3
-# courses/*/cast/voice/*.mp3
+# Narration audio lives on Cloudflare R2 (docs/AUDIO_HOSTING.md), not in git, since 2026-10-12. tools/r2_sync.py uploads it;
+# `python3 tools/r2_sync.py --pull` fills a fresh clone. Small JSON (timings, audiobook.json, bookmarks.json, episodes, samples.json) stays in git either way.
+audio/**/*.mp3
+courses/*/audio/**/*.mp3
+cast/voice/*.mp3
+cast/v2/voice/*.mp3
+courses/*/cast/voice/*.mp3
+*.mp3
