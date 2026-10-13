@@ -30,6 +30,7 @@ Courses: pmp = audio/ (v2 pages, both Audiobook editions, ambience, stings) + ca
 Nothing is ever deleted from the bucket without --prune; more than 25 deletions also needs --yes.
 Test-only overrides: HALCYON_R2_ROOT, HALCYON_R2_MD5_CACHE, HALCYON_R2_LIVE_MANIFEST (tests/r2_sync.spec.mjs).
 """
+import time
 import argparse, base64, concurrent.futures as cf, hashlib, json, os, random, re, subprocess, sys, threading, urllib.error, urllib.parse, urllib.request
 
 ROOT = os.environ.get("HALCYON_R2_ROOT") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -133,7 +134,7 @@ def head_manifest():
 def live_manifest():
     """The manifest the live site serves, or None if it can't be read (then --prune refuses)."""
     try:
-        with urllib.request.urlopen(urllib.request.Request(LIVE_MANIFEST, headers={"Cache-Control": "no-cache"}), timeout=20) as r:
+        with urllib.request.urlopen(urllib.request.Request(LIVE_MANIFEST, headers={"Cache-Control": "no-cache", "User-Agent": "halcyon-r2-sync/1.0"}), timeout=20) as r:
             return parse_manifest(json.loads(r.read()))
     except urllib.error.HTTPError as e: return {} if e.code == 404 else None  # no manifest deployed yet: the live site names no take
     except Exception: return None
@@ -286,11 +287,17 @@ def cmd_pull(args):
         p = os.path.join(ROOT, rel)
         if not (os.path.isfile(p) and md5_of(p, cache)[:HASH_LEN] == h): need.append(rel)
     say(f"{len(files)} manifest mp3s, {len(need)} to download")
-    def one(rel):
+    def one(rel):  # retries: a file's first read from R2 can be slow before Cloudflare caches it
+        for attempt in range(4):
+            rel_, err = one_try(rel)
+            if not err: return rel_, None
+            time.sleep(2 * (attempt + 1))
+        return rel_, err
+    def one_try(rel):
         p = os.path.join(ROOT, rel); tmp = p + ".part"
         try:
             os.makedirs(os.path.dirname(p), exist_ok=True); h = hashlib.md5()
-            with urllib.request.urlopen(_url(base, rel, files[rel]), timeout=60) as r, open(tmp, "wb") as f:
+            with urllib.request.urlopen(urllib.request.Request(_url(base, rel, files[rel]), headers={"User-Agent": "halcyon-r2-sync/1.0"}), timeout=180) as r, open(tmp, "wb") as f:
                 for b in iter(lambda: r.read(1 << 20), b""): h.update(b); f.write(b)
             if h.hexdigest()[:HASH_LEN] != files[rel]: os.remove(tmp); return rel, "content doesn't match the manifest hash"
             os.replace(tmp, p); return rel, None
