@@ -128,6 +128,137 @@ body.withbar .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 @media (prefers-reduced-motion:no-preference){.tcard{transition:opacity .25s ease,transform .25s ease}}
 .ttxt{display:flex;flex-direction:column;min-width:0}.tkick{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .tname{font-size:15px;line-height:1.3}.tline{font-size:13px;line-height:1.4}
+/* the private profile page (#me, 2026-10-14): the ID card header, the name form, the picture picker, stats and a card per book.
+   The ID cards keep their own colors in both themes (a badge or a business card is an object, like the badge art). Inside a card,
+   sizes are in cqw (the card's own width), so one card works as the header at 390 and 1280 and as a picker thumbnail. */
+.mebtn{max-width:18ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mehead{display:grid;gap:18px;align-items:center}
+@media (min-width:980px){.mehead{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:30px}}
+.mecap{font-size:13px;color:var(--muted);margin:10px 2px 0}
+.metxt{min-width:0}.metxt h1.mename{margin:4px 0 12px;overflow-wrap:anywhere}
+.meacts{display:flex;flex-wrap:wrap;gap:8px}
+.mepriv{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;line-height:1.4;color:var(--muted);margin:14px 0 0}
+.mepriv svg{flex:none;width:16px;height:16px;margin-top:1px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.meform label{display:block;font-size:14px;color:var(--muted);margin:8px 0 4px}
+.merow{display:flex;flex-wrap:wrap;gap:8px}
+.merow input{flex:1 1 140px;min-width:0;font:inherit;font-size:16px;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:7px;padding:8px 11px}
+.merow input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.meerr{color:var(--bad);background:var(--bad-soft);border-radius:6px;padding:6px 10px;font-size:14px;margin:8px 0 0}.meerr:empty{display:none}
+#menote{font-size:13px;margin:6px 0 0}
+/* the cards */
+.idwrap{container-type:inline-size;width:100%;max-width:440px}
+.idcard{position:relative;aspect-ratio:1.586;border-radius:4.4cqw;overflow:hidden;display:flex;flex-direction:column;gap:2.4cqw;padding:5cqw 5.6cqw 4.4cqw;font-family:var(--ui);line-height:1.15;isolation:isolate;
+  box-shadow:0 1px 2px rgb(0 0 0/.16),0 12px 30px -12px rgb(0 0 0/.5)}
+.idcard::before{content:"";position:absolute;pointer-events:none;z-index:-1}
+.idcard svg{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.idtop{display:flex;align-items:center;gap:2cqw;font-size:2.8cqw;letter-spacing:.14em;text-transform:uppercase;font-weight:600;white-space:nowrap;min-width:0}
+.idlogo{width:6.6cqw;height:6.6cqw;flex:none}
+.idmain{flex:1;display:flex;align-items:center;gap:5cqw;min-height:0}
+.idphoto{position:relative;flex:none;width:23cqw;aspect-ratio:4/5;border-radius:2cqw;overflow:hidden;display:grid;place-items:center}
+.idphoto .idimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.idini{font-family:var(--story);font-size:9.6cqw;font-weight:600;letter-spacing:.02em}
+.idcard .idsil{width:72%;margin-top:22%;fill:currentColor;stroke:none;opacity:.55}
+.idtxt{display:flex;flex-direction:column;gap:1.3cqw;min-width:0}
+.idname{font-family:var(--story);font-size:7.2cqw;font-weight:600;line-height:1.06;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.idblank{opacity:.6;font-style:italic;font-weight:500}
+.idrole{font-family:var(--mono);font-size:2.9cqw;letter-spacing:.13em;text-transform:uppercase}
+.idno{font-family:var(--mono);font-size:2.6cqw;letter-spacing:.08em;opacity:.85}
+.idfoot{display:flex;align-items:center;justify-content:space-between;gap:3cqw;font-family:var(--mono);font-size:2.6cqw;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+/* PMP: the Halcyon program badge, navy and gold, a lanyard slot, a row of patch slots */
+.id-pmp{background:radial-gradient(120% 95% at 88% -5%,#33508a 0%,#1f2f55 46%,#121c37 100%);color:#efe6c8;padding-top:7.4cqw}
+.id-pmp::before{inset:2.2cqw;border:.45cqw solid rgb(201 163 58/.7);border-radius:3cqw}
+.id-pmp::after{content:"";position:absolute;top:2.9cqw;left:50%;width:15cqw;height:2.2cqw;margin-left:-7.5cqw;border-radius:2cqw;background:#0b1229;box-shadow:inset 0 .4cqw .8cqw rgb(0 0 0/.7),0 .2cqw 0 rgb(255 255 255/.12)}
+.id-pmp .idtop{color:#d4b158;font-size:2.4cqw}.id-pmp .idlogo{color:#d4b158}
+.iddot{width:1cqw;height:1cqw;border-radius:50%;background:currentColor;opacity:.7;flex:none}
+.id-pmp .idphoto{background:linear-gradient(160deg,#2b3f70,#1a2748);color:#f1dc9a;box-shadow:0 0 0 .55cqw #c9a33a}
+.idprog{font-family:var(--mono);font-size:2.9cqw;letter-spacing:.24em;text-transform:uppercase;color:#d4b158}
+.id-pmp .idname{color:#fbf3dc}.id-pmp .idrole{color:#f1dc9a}
+.id-pmp .idfoot{color:#e7cf86;border-top:.3cqw solid rgb(201 163 58/.45);padding-top:2.4cqw}
+.idslots{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.9cqw}
+.idslots i{display:block;width:2.5cqw;height:2.5cqw;border-radius:50%;box-shadow:inset 0 0 0 .35cqw #c9a33a;opacity:.8}.idslots i.on{background:#c9a33a;opacity:1}
+/* CISA: the Vellacott card, Henry's business card, with Dot's green ticks */
+.id-cisa{background:#f7f1df linear-gradient(180deg,rgb(255 255 255/.55),rgb(255 255 255/0) 45%);color:#1d2836;gap:1cqw}
+.id-cisa::before{inset:2.6cqw;border:.25cqw solid #c9bc97;border-radius:2cqw}
+.id-cisa .idtop{color:#22344d;gap:2.4cqw}.id-cisa .idlogo{width:7.6cqw;height:7.6cqw;color:#2b4569}
+.id-cisa .idorg{font-family:var(--story);font-size:4.2cqw;letter-spacing:.32em;font-weight:600}
+.id-cisa .idphoto{margin-left:auto;width:12.5cqw;aspect-ratio:1;border-radius:50%;background:#e9dfc4;color:#2b4569;box-shadow:0 0 0 .3cqw #c9bc97}.id-cisa .idphoto .idini{font-size:5cqw}
+.id-cisa .idmain{justify-content:center;text-align:center}.id-cisa .idtxt{align-items:center;gap:2cqw}
+.id-cisa .idname{font-size:7.6cqw;font-weight:500;letter-spacing:.01em;color:#141c27}
+.id-cisa .idrole{color:#5b6472;font-size:2.6cqw;letter-spacing:.3em}
+.id-cisa .idfoot{font-family:var(--story);text-transform:none;letter-spacing:.01em;font-size:2.8cqw;color:#47505d;align-items:flex-end}
+.idaddr{display:flex;flex-direction:column;gap:.7cqw}
+.idticks{display:grid;grid-template-columns:repeat(6,3.4cqw);gap:1cqw 1.1cqw}
+.idticks i{display:block;width:3.4cqw;height:3.4cqw;border-radius:50%;background:rgb(47 125 74/.1)}
+.idticks i.on{background:none}.idticks i.on::after{content:"";display:block;width:1.5cqw;height:2.7cqw;margin:-.2cqw auto 0;border:solid #2f7d4a;border-width:0 .55cqw .55cqw 0;transform:rotate(42deg)}
+/* the pilot: your own logbook, blue leatherette, a stitched edge, a name plate with the first entry and total time */
+.id-pilot{background:radial-gradient(140% 120% at 20% 0%,#2a3d62 0%,#1b2a46 55%,#131e33 100%);color:#d9b968;gap:2.6cqw}
+.id-pilot::before{inset:2.4cqw;border:.35cqw dashed rgb(217 185 104/.5);border-radius:3cqw}
+.id-pilot .idtop{justify-content:space-between}
+.idfoil{font-family:var(--story);font-size:4.8cqw;letter-spacing:.2em;font-weight:600;color:#e2c477;text-shadow:0 .2cqw 0 rgb(0 0 0/.35)}
+.id-pilot .idlogo{width:13cqw;height:6.5cqw;color:#d9b968}
+.id-pilot .idphoto{width:17cqw;aspect-ratio:1;border-radius:50%;background:#2a3d62;color:#e2c477;box-shadow:0 0 0 .5cqw #d9b968}.id-pilot .idphoto .idini{font-size:6.4cqw}
+.idplate{flex:1;min-width:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center;gap:.6cqw;background:#f2ead6;color:#24508f;border-radius:1.6cqw;padding:2.4cqw 3.6cqw;box-shadow:inset 0 0 0 .35cqw #b9a57e,0 .5cqw 1.2cqw rgb(0 0 0/.35)}
+.id-pilot .idname{font-style:italic;font-weight:500;font-size:6.6cqw;color:#1f4a87}
+.idlbl{font-family:var(--mono);font-size:2.2cqw;letter-spacing:.12em;text-transform:uppercase;color:#7a6a48;font-style:normal}
+.idrule{display:block;height:.25cqw;background:#b9a57e;margin:.2cqw 0 .9cqw}
+.idrow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6cqw 2.4cqw;font-size:3cqw}.idrow b{font-family:var(--mono);font-weight:500;color:#1f4a87}
+.id-pilot .idfoot{color:rgb(217 185 104/.85);justify-content:flex-start}.idremark{flex:1;height:.25cqw;background:rgb(217 185 104/.35)}
+/* CPHIMS: the Cascade Valley Health badge, a teal band, a badge buddy with the readiness number */
+.id-cphims{background:#fff;color:#14343a;padding:0;gap:0}
+.id-cphims .idtop{background:#1d6a72;color:#fff;padding:3.4cqw 5.6cqw;font-size:2.9cqw}.id-cphims .idlogo{color:#bfe3e5;width:7cqw}
+.id-cphims .idmain{padding:3.2cqw 5.6cqw}
+.id-cphims .idphoto{background:#e2f1f2;color:#1d6a72;box-shadow:inset 0 0 0 .45cqw #7fb1b5}
+.id-cphims .idname{color:#0f2e33}.id-cphims .idrole{color:#1d6a72}.id-cphims .idno{color:#4c6a6e}
+.id-cphims .idfoot{gap:0;align-items:stretch;height:12.5cqw}
+.idbuddy{width:31%;display:grid;place-items:center;background:#0f4b52;color:#fff;font-family:var(--ui);font-weight:700;font-size:6.6cqw;letter-spacing:.06em}
+.idbtxt{flex:1;display:flex;justify-content:space-between;align-items:center;gap:2cqw;background:#e6f2f2;color:#1d6a72;padding:0 5.6cqw}.idbtxt b{font-size:5.4cqw;font-weight:500;letter-spacing:0}
+/* ASEP: the Front Range Orbital badge, high bay access stripes and a purple QA stamp */
+.id-asep{background:linear-gradient(160deg,#2c2d38,#1a1b22);color:#ece8f5;padding-bottom:0}
+.id-asep::before{inset:0 0 auto 0;height:1.4cqw;background:#6a3d9a}
+.id-asep .idtop{color:#cdb6ea}.id-asep .idlogo{color:#b58ee0}
+.id-asep .idphoto{background:#3a3550;color:#dccbf3;box-shadow:inset 0 0 0 .45cqw #6a3d9a}
+.id-asep .idtxt{padding-right:15cqw}.id-asep .idrole{color:#cdb6ea}
+.id-asep .idfoot{margin:0 -5.6cqw;padding:2.2cqw 5.6cqw;background:repeating-linear-gradient(-45deg,#e9b92c 0 2.6cqw,#1a1b22 2.6cqw 5.2cqw)}
+.idhb{background:#1a1b22;color:#f0c84a;padding:.9cqw 2.4cqw;border-radius:1cqw;font-weight:600}
+.idqa{position:absolute;right:5cqw;top:25cqw;width:17cqw;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2cqw;transform:rotate(-12deg);
+  color:#b58ee0;box-shadow:inset 0 0 0 .6cqw #b58ee0,inset 0 0 0 1.5cqw transparent,inset 0 0 0 1.85cqw #b58ee0;font-family:var(--mono);opacity:.92}
+.idqa span{font-size:2.5cqw;letter-spacing:.2em}.idqa b{font-size:4.6cqw;font-weight:600}
+/* GH-300: the Halcyon AI badge, a purple index card clipped to it where the earned cards stack up */
+.id-gh300{background:linear-gradient(135deg,#ffffff 0%,#f4eefb 100%);color:#2b2140}
+.id-gh300::before{inset:auto 0 0 0;height:1.6cqw;background:#7b3fa0}
+.id-gh300 .idtop{color:#7b3fa0}.id-gh300 .idorg{font-family:var(--story);font-size:5.2cqw;letter-spacing:.02em;text-transform:none}
+.id-gh300 .idphoto{width:21cqw;aspect-ratio:1;border-radius:50%;background:#ece2f6;color:#7b3fa0;box-shadow:0 0 0 .5cqw #c9b0de}
+.id-gh300 .idname{color:#24193a}.id-gh300 .idrole{color:#7b3fa0}.id-gh300 .idtxt{padding-right:12cqw}
+.id-gh300 .idfoot{color:#6b5a85;padding-bottom:1cqw}
+.idclip{position:absolute;right:5.6cqw;top:4.2cqw;width:20cqw;height:14cqw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3cqw;transform:rotate(6deg);color:#7b3fa0;border-radius:1cqw;
+  background:#fbf6e6 repeating-linear-gradient(180deg,transparent 0 3.1cqw,rgb(184 196 221/.7) 3.1cqw 3.35cqw);box-shadow:inset 0 0 0 .25cqw #d8d0b6,0 .8cqw 1.6cqw rgb(0 0 0/.16)}
+.idclip::before{content:"";position:absolute;top:-1.6cqw;left:50%;width:6cqw;height:3.4cqw;margin-left:-3cqw;border-radius:.8cqw;background:linear-gradient(#c9ccd3,#9aa0aa);box-shadow:0 .3cqw .5cqw rgb(0 0 0/.25)}
+.idclip b{font-family:var(--story);font-style:italic;font-size:6cqw;line-height:1}.idclip span{font-family:var(--story);font-style:italic;font-size:2.8cqw}
+/* the picture picker */
+.mepick{margin:20px 0 6px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.mepick h2{margin-bottom:4px}.mepick .shsub{margin-top:14px}
+.pkcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,128px),1fr));gap:10px}.pkcards .pkopt:first-child{grid-column:1/-1}
+.pkopt{font:inherit;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:10px;padding:8px;cursor:pointer;display:flex;flex-direction:column;gap:3px;text-align:left;min-width:0}
+.pkopt:hover{border-color:var(--accent)}.pkopt[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);background:var(--accent-soft)}
+.pkthumb{display:block;margin-bottom:4px}.pkthumb .idcard{box-shadow:0 1px 3px rgb(0 0 0/.3)}
+.pkname{font-size:13.5px;font-weight:600;line-height:1.3}.pkopt .medim{font-size:12.5px;line-height:1.35}
+.pkbook{margin:6px 0 12px}.pkfaces{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.pkfaces .pkopt{align-items:center;width:84px;padding:8px 6px 6px;text-align:center}.pkfaces .av span{font-size:22px}
+/* stats and the books */
+.mestats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:10px;margin:24px 0 0}
+.mestats div{background:var(--page);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.mestats dt{font-size:12.5px;color:var(--muted)}.mestats dd{margin:0;font-family:var(--mono);font-size:21px;color:var(--ink)}
+.medim{color:var(--muted);font-size:14px;line-height:1.45}.mestats dd.medate{font-family:var(--ui);font-size:18px;font-weight:600;line-height:1.3}
+.msub{font-size:12.5px;color:var(--muted);font-family:var(--ui)}.mehint{font-size:13px;margin:8px 0 0}
+.mebooks{margin-top:26px}
+.mbgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:12px}
+.mbook{background:var(--page);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.mbhead h3{font-family:var(--story);font-size:19px;line-height:1.25;margin:2px 0 0;font-weight:600}
+.mbrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14px}.mbrow .num{font-family:var(--mono);white-space:nowrap;text-align:right}
+.mbasof{margin:-5px 0 0;font-size:12.5px;color:var(--muted)}
+.mbshelf{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;align-items:flex-start;gap:8px}.mbshelf .mbrow{align-self:stretch}
+.mbmini{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}.mbmini li{display:block}.mbmini .bdgart{display:block}
+.mbnone{margin:0;font-size:13px}
 .finish .bpbar{grid-column:2;margin-top:6px}
 .dom-row{display:grid;grid-template-columns:minmax(0,1fr) auto;font-size:14px;padding:4px 0;border-bottom:1px dashed var(--line)}
 .dom-row:last-child{border-bottom:none}
@@ -431,7 +562,7 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
 <body>
 <header class="tophead"><nav class="topnav" id="usercard" hidden aria-label="Main">
   <div class="navl"><button class="navbtn" id="liblink" type="button">Library</button><button class="navbtn" id="homelink" type="button">Home</button><button class="navbtn" id="proglink" type="button">Progress</button><button class="navbtn" id="listenlink" type="button" data-tip="Plays chapter after chapter with no tapping, even with your phone locked. Good for the car or the gym.">Audiobook</button><button class="navbtn" id="castlink" type="button">Cast</button><button class="navbtn" id="guidelink" type="button" data-tip="How listening, the Audiobook, Focus mode and Ambience work, plus installing on your phone.">Guide</button><button class="navbtn cont" id="contlink" type="button" hidden></button></div>
-  <div class="navr"><label class="chk prog storyt" for="ambtoggle" data-tip="Quiet background sound that matches each scene, like a busy office or a data center hum. Use the slider for volume."><input type="checkbox" id="ambtoggle"> Ambience</label><input type="range" id="ambvol" min="0.05" max="1" step="0.05" aria-label="Ambience volume" class="ambvol"><label class="chk prog storyt" for="storytoggle" data-tip="Hide scores, lessons at the end. Reads like a novel and you still make every decision. Follows you to every device."><input type="checkbox" id="storytoggle"> Focus mode</label><span id="username" class="prog"></span><a id="adminlink" class="navbtn" href="/admin" hidden>Admin</a><button class="navbtn" id="signout" type="button">Sign out</button></div>
+  <div class="navr"><label class="chk prog storyt" for="ambtoggle" data-tip="Quiet background sound that matches each scene, like a busy office or a data center hum. Use the slider for volume."><input type="checkbox" id="ambtoggle"> Ambience</label><input type="range" id="ambvol" min="0.05" max="1" step="0.05" aria-label="Ambience volume" class="ambvol"><label class="chk prog storyt" for="storytoggle" data-tip="Hide scores, lessons at the end. Reads like a novel and you still make every decision. Follows you to every device."><input type="checkbox" id="storytoggle"> Focus mode</label><button class="navbtn mebtn" id="username" type="button"></button><a id="adminlink" class="navbtn" href="/admin" hidden>Admin</a><button class="navbtn" id="signout" type="button">Sign out</button></div>
 </nav></header>
 <div class="wrap">
   <main class="page" id="page" aria-live="polite"></main>

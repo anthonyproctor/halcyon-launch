@@ -1040,6 +1040,145 @@ function shelfHTML(){const HB=window.HalcyonBadges,def=bdgDefs();if(!HB||!def)re
 function bdgDashFill(){if(TRACK!=="dash")return;const a=$("readycard"),b=$("shelf");if(a)a.outerHTML=readyCardHTML();if(b)b.outerHTML=shelfHTML()}
 function bdgDashLater(){if(bdgDefs())return;const c=COURSE;bdgLoad(c).then(d=>{if(d&&COURSE===c&&TRACK==="dash")bdgDashFill()}).catch(()=>{})} // offline first visit: the shelf just stays empty
 
+/* ===== the player's profile (#me, Phase 2 of badges and profiles, 2026-10-14) =====
+   Private: only the player and the site admin see it. No public URL, no share links, no leaderboard.
+   - The header is the player's in-world ID card (badges/<course>.js idCard) for the book with the most progress (share of its chapters
+     finished, then badges earned, then the last one played), or for the book whose card they picked.
+   - The picture is that card's photo slot: their initials, or a main cast portrait (someone met in chapter 1 of a book they've started,
+     so nothing spoils). Picking another book's ID card makes that card the header. No photo uploads.
+   - Online in the real profile, the name (users.name) and the picture (user_profiles.avatar) live on the server: GET and POST /api/me
+     (lib/me.js). On localhost and in the test profile they stay on this device in store "me" ({name, avatar}), which the test profile
+     keeps apart; api() refuses any write to /api/me from the test profile.
+   - Stats come from every book's study log (905: hours read and listened, the listening streak, a day counts at 10 minutes of audio across
+     books) and badges record (908). Readiness is live for the open book and the record's snapshot ("as of" its date) for the others. */
+const ME={srv:null,asked:false,pick:false,edit:false,err:"",busy:false};
+const ME_SERVER=()=>ONLINE&&!TESTP;
+function meLocal(){const m=store.get("me",null);return m&&typeof m==="object"?m:{}}
+function meName(){return (ME_SERVER()?(ME.srv&&ME.srv.name):meLocal().name)||USERNAME||""}
+function meAvatar(){const a=ME_SERVER()?(ME.srv&&ME.srv.avatar):meLocal().avatar;return a&&typeof a==="object"&&(a.kind==="card"||a.kind==="cast")&&courseById(a.course)?a:null}
+function meNav(){const b=$("username");if(b)b.textContent=meName()||"Profile"}
+// the same rule as lib/me.js cleanName: control characters out, invisible format characters dropped, spaces folded, 1 to 60 characters
+function meCleanName(v){const n=String(v||"").replace(/[\p{Cc}\p{Zl}\p{Zp}]/gu," ").replace(/\p{Cf}/gu,"").replace(/\s+/g," ").trim();
+  if(!n)return {error:"Type a name."};if([...n].length>60)return {error:"Keep it to 60 characters or fewer."};return {name:n}}
+function meStarted(c){if(libStarted(c))return true;const r=bdgGet(c);if(r&&Object.keys(r.got).length)return true;return logRows(c).length>0}
+function meLoad(c){const jobs=[bdgLoad(c).catch(()=>null)];
+  if(c.id!=="pmp"&&(c.scripts||c.labs)&&!c._loaded)jobs.push(c._bpload||(c._bpload=loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x)).then(()=>{c._loaded=true})));
+  return Promise.all(jobs)}
+/* one started book: chapters finished, readiness, badges earned, time spent */
+function meBook(c,cur){const HB=window.HalcyonBadges,rec=bdgGet(c),got=(rec&&rec.got)||{},def=bdgDefs(c);
+  return withCourse(c,()=>{const L=TRACKS.full.list(),planned=Math.max(c.planned||0,L.length);
+    let done=L.filter(ch=>{const st=load("full",ch.num);return !!st&&(!!st.doneAt||(st.pos||0)>=steps(ch).length-1)}).length;
+    if(!L.length&&rec&&rec.snap&&Array.isArray(rec.snap.ch))done=rec.snap.ch[0]||0; // its chapters didn't load (offline): the last snapshot
+    const items=def&&HB?HB.expand(def,{planned,chapters:L.map(ch=>({n:ch.num,title:ch.title}))}):[];
+    const earned=items.filter(it=>got[it.id]).sort((a,b)=>(got[b.id].at||0)-(got[a.id].at||0));
+    let ready=null,asOf=null;
+    if(c===cur&&def&&HB&&L.length)ready=HB.readiness(courseFacts()).value;else if(rec&&rec.snap){ready=rec.snap.ready??null;asOf=rec.snap.at||null}
+    let read=0,listen=0;logRows(c).forEach(x=>{read+=x.r;listen+=x.l});
+    return {c,def,planned,done,pct:planned?done/planned:0,items,earned,got,ready,asOf,read,listen,last:(libget().last[c.id]||{}).at||0,since:rec&&rec.since}})}
+/* main cast for the picture picker: people met in chapter 1 who have a portrait, at most 6 a book */
+function meCast(c){const d=c.id==="pmp"?window.HALCYON_CAST:((window.HALCYON_DATA||{})[c.id]||{}).cast,seen=new Set();
+  return (Array.isArray(d)?d:[]).filter(x=>x&&x.firstChapter===1&&/^[a-z][a-z0-9_-]{0,39}$/.test(x.id)&&!seen.has(x.id)&&seen.add(x.id)&&withCourse(c,()=>!!imgOf("cast/"+x.id))).slice(0,6)}
+function meHash(s){let h=2166136261;for(const ch of String(s))h=Math.imul(h^ch.codePointAt(0),16777619)>>>0;return h}
+function meInitials(n){return String(n||"").split(/\s+/).filter(Boolean).map(w=>[...w][0]).slice(0,2).join("").toUpperCase()}
+function mePhoto(av,name){let img="";if(av&&av.kind==="cast"){const c=courseById(av.course);if(c&&/^[a-z][a-z0-9_-]{0,39}$/.test(av.id))img=withCourse(c,()=>imgTag("cast/"+av.id,'alt="" class="idimg"',"this.remove()"))}
+  const ini=meInitials(name);return `<span class="idphoto">${ini?`<span class="idini">${esc(ini)}</span>`:`<svg class="idsil" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="4.2"/><path d="M3.5 22c1-5 4.4-7.5 8.5-7.5s7.5 2.5 8.5 7.5z"/></svg>`}${img}</span>`}
+const ME_LOGO={
+  pmp:'<svg class="idlogo" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 22V2.5" stroke-width="1.8"/><path d="M4.6 4.2l15.4 2.6v5.4L4.6 14.8z" fill="currentColor" fill-opacity=".18"/><path d="M9.6 5.1v8.8M14.6 6v7.1"/></svg>',
+  cisa:'<svg class="idlogo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.8l8.4 3v6.4c0 5.4-3.6 9.3-8.4 11-4.8-1.7-8.4-5.6-8.4-11V4.8z"/><path d="M8 7.5l4 9 4-9" stroke-width="1.6"/><path d="M5.6 6.4h12.8" opacity=".55"/></svg>',
+  pilot:'<svg class="idlogo" viewBox="0 0 48 24" aria-hidden="true"><circle cx="24" cy="11" r="3.6"/><path d="M20 10H3M28 10h17M6 13.5h14M28 13.5h14M10 17h11M27 17h11"/><path d="M24 14.6v6"/></svg>',
+  cphims:'<svg class="idlogo" viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 19.5l6.5-10 4 5.5 3.2-4.2 7.3 8.7z" fill="currentColor" stroke="none"/><path d="M8 9.5l1.6 2.4M15.2 10.8l1.4 1.7" stroke="#ffffff" stroke-width="1.2" opacity=".85"/></svg>',
+  asep:'<svg class="idlogo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2" fill="currentColor"/><ellipse cx="12" cy="12" rx="10.5" ry="4.2" transform="rotate(-24 12 12)"/><circle cx="20.6" cy="8.2" r="1.3" fill="currentColor"/></svg>',
+  gh300:'<svg class="idlogo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.2 6.8 6.8 2.7-6.8 2.7L12 21.5l-2.2-6.8L3 12l6.8-2.7z" fill="currentColor" stroke="none"/></svg>'};
+/* the ID card itself. Drawn in HTML so the name is real text; sized in container units (cqw), so the same card works as the header, at
+   390 and 1280, and as a picker thumbnail. Each card keeps its own colors in dark mode too (it's an object, like the badge art). */
+function meCardHTML(b,name,av,thumb){const c=b.c,id=c.id,nm=name?esc(name):`<span class="idblank">Your name</span>`,ph=mePhoto(av,name),no=meHash(id+"|"+(b.since||"halcyon"));
+  const slots=(n,on,cls)=>`<span class="${cls}" aria-hidden="true">${Array.from({length:Math.max(0,n)},(_,i)=>`<i${i<on?' class="on"':""}></i>`).join("")}</span>`;
+  const chGot=b.items.filter(it=>it.rule&&it.rule.type==="chapter"&&b.got[it.id]).length,t=c.full_title||c.title,card=(b.def&&b.def.idCard)||{};
+  let inner="";
+  if(id==="pmp")inner=`<div class="idtop">${ME_LOGO.pmp}<span>Tallgrass Aerospace</span><span class="iddot"></span><span>Ares Relief Authority</span></div>
+    <div class="idmain">${ph}<div class="idtxt"><span class="idprog">Halcyon Program</span><b class="idname">${nm}</b><span class="idrole">Program Team</span><span class="idno">Badge HX ${String(no%9000+1000)}</span></div></div>
+    <div class="idfoot"><span class="idcount">Logs from Ares: ${b.done}</span>${slots(b.planned,chGot,"idslots")}</div>`;
+  else if(id==="cisa")inner=`<div class="idtop">${ME_LOGO.cisa}<span class="idorg">Vellacott</span>${av&&av.kind==="cast"?ph:""}</div>
+    <div class="idmain"><div class="idtxt"><b class="idname">${nm}</b><span class="idrole">Claims Investigator</span></div></div>
+    <div class="idfoot"><span class="idaddr"><span>One Lime Street, London</span><span>Wazee Street, Denver</span></span>${slots(b.planned,b.done,"idticks")}</div>`;
+  else if(id==="pilot")inner=`<div class="idtop"><span class="idfoil">Pilot Logbook</span>${ME_LOGO.pilot}</div>
+    <div class="idmain">${av&&av.kind==="cast"?ph:""}<div class="idplate"><span class="idlbl">Name</span><b class="idname">${nm}</b><span class="idrule"></span>
+     <span class="idrow"><span><span class="idlbl">First entry</span> <b>N4791E</b></span><span><span class="idlbl">Total time</span> <b>${hrs(b.listen)}</b></span></span></div></div>
+    <div class="idfoot"><span class="idlbl">Remarks</span><span class="idremark"></span></div>`;
+  else if(id==="cphims")inner=`<div class="idtop">${ME_LOGO.cphims}<span>Cascade Valley Health</span></div>
+    <div class="idmain">${ph}<div class="idtxt"><b class="idname">${nm}</b><span class="idrole">VP Clinical Systems, RN</span><span class="idno">ID ${String(no%900000+100000)}</span></div></div>
+    <div class="idfoot"><span class="idbuddy">RN</span><span class="idbtxt"><span>${esc((b.def&&b.def.readiness&&b.def.readiness.name)||"Survey ready")}</span><b>${b.ready==null?"Not yet":b.ready}</b></span></div>`;
+  else if(id==="asep")inner=`<div class="idtop">${ME_LOGO.asep}<span>Front Range Orbital</span></div>
+    <div class="idmain">${ph}<div class="idtxt"><b class="idname">${nm}</b><span class="idrole">Systems Engineer</span><span class="idno">Traveler stamps: ${chGot}</span></div></div>
+    <div class="idfoot"><span class="idhb">High bay access</span></div><span class="idqa" aria-hidden="true"><span>QA</span><b>${String(no%900+100)}</b></span>`;
+  else inner=`<div class="idtop">${ME_LOGO.gh300}<span class="idorg">Halcyon</span></div>
+    <div class="idmain">${ph}<div class="idtxt"><b class="idname">${nm}</b><span class="idrole">Rollout Lead</span></div></div>
+    <div class="idfoot"><span class="idcount">Good catch cards</span></div><span class="idclip" aria-hidden="true"><b>${b.earned.length}</b><span>${b.earned.length===1?"card":"cards"}</span></span>`;
+  return `<div class="idwrap"${thumb?' aria-hidden="true"':` role="group" aria-label="${esc((card.title||"ID card")+", "+t)}"`}><div class="idcard id-${id}">${inner}</div></div>`}
+function meStatsHTML(books){const HB=window.HalcyonBadges,listen={};let read=0,heard=0,first="";
+  COURSES.filter(c=>c.status==="live").forEach(c=>Object.entries(logGet(c).days||{}).forEach(([d,D])=>{let r=0,l=0;Object.values((D&&D.t)||{}).forEach(x=>{r+=(x&&x[0])||0;l+=(x&&x[1])||0});
+    if(r+l>0&&(!first||d<first))first=d;listen[d]=(listen[d]||0)+l;read+=r;heard+=l}));
+  const st=HB?HB.streak(listen,dayKey(Date.now())):{current:0,best:0},days=n=>`${n} day${n===1?"":"s"}`;
+  const joined=ME.srv&&ME.srv.joined?["Joined",new Date(ME.srv.joined).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})]:first?["Studying since",logDay(first)]:null;
+  return `<dl class="mestats">${joined?`<div><dt>${joined[0]}</dt><dd class="medate">${esc(joined[1])}</dd></div>`:""}
+   <div><dt>Listening streak</dt><dd>${days(st.current)}</dd><span class="msub">Best ${days(st.best)}</span></div>
+   <div><dt>Hours listened</dt><dd>${hrs(heard)}</dd></div><div><dt>Hours read</dt><dd>${hrs(read)}</dd></div></dl>
+   <p class="medim mehint">A listening day is 10 minutes or more of audio, every book added up.</p>`}
+function meBookHTML(b){const HB=window.HalcyonBadges,c=b.c,def=b.def,t=c.full_title||c.title,day=x=>new Date(x).toLocaleDateString("en-US",{month:"short",day:"numeric"});
+  const meter=(def&&def.readiness&&def.readiness.name)||"Readiness";
+  return `<article class="mbook" data-book="${esc(c.id)}"><div class="mbhead"><span class="prog">${esc(c.exam||"")}</span><h3>${esc(t)}</h3></div>
+   <div class="mbrow"><span>Chapters done</span><span class="num">${b.done} of ${b.planned}</span></div>${bpBarHTML({pct:b.pct*100},"thin",true)}
+   <div class="mbrow"><span>${esc(meter)}</span><span class="num">${b.ready==null?"Not enough yet":`${b.ready} <span class="msub">target ${c.target||75}</span>`}</span></div>
+   ${b.asOf?`<p class="mbasof">Last updated ${esc(day(b.asOf))}</p>`:""}
+   ${def&&HB?`<div class="mbshelf"><div class="mbrow"><span>${esc(def.shelf)}</span><span class="num">${b.earned.length} of ${b.items.length}</span></div>
+    ${b.earned.length?`<ul class="mbmini">${b.earned.slice(0,6).map(it=>`<li title="${esc(it.name)}">${HB.art(it,def,"got",40)}<span class="sr">${esc(it.name)}</span></li>`).join("")}</ul>`:`<p class="medim mbnone">None yet. Finish a chapter for your first.</p>`}
+    <button class="linkbtn" type="button" data-seeall="${esc(c.id)}">See all<span class="sr"> ${esc(def.shelf.toLowerCase())} in ${esc(t)}</span></button></div>`:""}</article>`}
+function mePickHTML(books,name,av){const opt=(key,on,body,label)=>`<button class="pkopt" type="button" data-av="${esc(key)}" aria-pressed="${on}"${label?` aria-label="${esc(label)}"`:""}>${body}</button>`;
+  const auto=!av,lead=books[0];
+  const cards=books.map(b=>opt("card:"+b.c.id,!!av&&av.kind==="card"&&av.course===b.c.id,`<span class="pkthumb">${meCardHTML(b,name,null,true)}</span><span class="pkname">${esc((b.def&&b.def.idCard&&b.def.idCard.title)||"ID card")}</span><span class="medim">${esc(b.c.full_title||b.c.title)}</span>`)).join("");
+  const casts=books.map(b=>{const L=meCast(b.c);if(!L.length)return "";return `<div class="pkbook"><span class="medim">${esc(b.c.full_title||b.c.title)}</span><div class="pkfaces">${L.map(x=>opt(`cast:${b.c.id}:${x.id}`,!!av&&av.kind==="cast"&&av.course===b.c.id&&av.id===x.id,`${withCourse(b.c,()=>avatar(x,64))}<span class="pkname">${esc(x.name.split(" ")[0])}</span>`,x.name)).join("")}</div></div>`}).join("");
+  return `<section class="mepick" id="mepick" aria-labelledby="mepickh"><h2 id="mepickh">Your picture</h2>
+   <p class="medim">Pick the ID card from any book you've started, or someone from its main cast. Nobody from later chapters shows up here.</p>
+   <h3 class="shsub">ID cards</h3><div class="pkcards">${opt("auto",auto,`<span class="pkname">The book you're furthest in</span><span class="medim">${lead?esc(((lead.def&&lead.def.idCard&&lead.def.idCard.title)||"ID card")+" for now. It changes as you go."):"It changes as you go."}</span>`)}${cards}</div>
+   ${casts?`<h3 class="shsub">Main cast</h3>${casts}`:""}
+   <p class="meerr" id="mepickerr" role="alert">${esc(ME.pick&&ME.err||"")}</p>
+   <div class="bar"><button class="btn small" type="button" id="mepickdone">Done</button></div></section>`}
+async function meSave(patch){if(ME.busy)return false;ME.err="";
+  if(!ME_SERVER()){const m={...meLocal(),...patch};if(m.avatar===null)delete m.avatar;store.set("me",m);meNav();return true}
+  ME.busy=true;let r;try{r=await api("/api/me",{method:"POST",body:JSON.stringify(patch)})}catch(e){r={ok:false}}ME.busy=false;
+  if(!r.ok||!r.me){ME.err=r.error||"That didn't save. Give it a minute and try again.";return false}
+  ME.srv=r.me;USERNAME=r.me.name||USERNAME;meNav();return true}
+async function renderMe(){setTimeout(ambSync,0);TRACK="me";CH=null;$("railgame").hidden=true;$("mockcard").hidden=true;setTimeout(navSync,0);
+  const cur=COURSE,live=COURSES.filter(c=>c.status==="live"),started=live.filter(meStarted);
+  if(!$("mepage"))$("page").innerHTML=`<div id="mepage"><div class="kicker">Profile</div><h1>${esc(meName()||"Your profile")}</h1><p class="medim">Loading your books.</p></div>`;
+  const ask=ONLINE&&!ME.asked?(ME.asked=true,api("/api/me").then(r=>{if(r&&r.ok&&r.me)ME.srv=r.me}).catch(()=>{})):null;
+  await Promise.all([...started.map(meLoad),ask]);
+  if(TRACK!=="me")return;
+  const books=started.map(c=>meBook(c,cur)).sort((a,b)=>(b.pct-a.pct)||(b.earned.length-a.earned.length)||(b.last-a.last));
+  const name=meName(),av=meAvatar(),pickB=av&&av.kind==="card"&&books.find(b=>b.c.id===av.course),head=pickB||books[0]||meBook(courseById("pmp")||cur,cur);
+  const t=head.c.full_title||head.c.title,card=(head.def&&head.def.idCard)||{};
+  $("page").innerHTML=`<div id="mepage"><div class="mehead"><div class="mecard">${meCardHTML(head,name,av)}<p class="mecap">${esc(card.title||"ID card")}, ${esc(t)}${pickB?"":books.length>1?". The book you're furthest in.":""}</p></div>
+   <div class="metxt"><div class="kicker">Profile</div>
+    ${ME.edit?`<form class="meform" id="meform" novalidate><label for="mename">Your name</label><div class="merow"><input id="mename" maxlength="60" autocomplete="name" value="${esc(name)}" aria-describedby="menote meerr"><button class="btn small" type="submit">Save</button><button class="btn small ghost" type="button" id="mecancel">Cancel</button></div>
+      <p class="meerr" id="meerr" role="alert">${esc(ME.err)}</p><p class="medim" id="menote">It goes on every ID card here${ME_SERVER()?" and on your account":""}.</p></form>`
+     :`<h1 class="mename">${esc(name||"Your profile")}</h1><div class="meacts"><button class="btn small ghost" type="button" id="meedit">${name?"Edit name":"Add your name"}</button><button class="btn small ghost" type="button" id="mepickbtn" aria-expanded="${ME.pick}" aria-controls="mepick">Change picture</button></div>`}
+    <p class="mepriv"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>Only you and the site admin can see this page.</p></div></div>
+   ${ME.pick?mePickHTML(books,name,av):""}
+   ${meStatsHTML(books)}
+   <section class="mebooks" aria-labelledby="mebooksh"><h2 id="mebooksh">Your books</h2>${books.length?`<div class="mbgrid">${books.map(meBookHTML).join("")}</div>`:`<p class="medim">You haven't started a book yet. <button class="linkbtn" type="button" id="melib">Open the Library</button></p>`}</section></div>`;
+  const P=$("page"),again=()=>renderMe();
+  if($("meedit"))$("meedit").onclick=()=>{ME.edit=true;ME.pick=false;ME.err="";again().then(()=>{const i=$("mename");if(i){i.focus();i.select()}})};
+  if($("mepickbtn"))$("mepickbtn").onclick=()=>{ME.pick=!ME.pick;ME.err="";again().then(()=>{const s=$("mepick");if(s)s.scrollIntoView({block:"nearest"})})};
+  const f=$("meform");if(f){const close=()=>{ME.edit=false;ME.err="";again().then(()=>{const b=$("meedit");if(b)b.focus()})};
+    f.onsubmit=async e=>{e.preventDefault();const v=meCleanName($("mename").value);if(v.error){$("meerr").textContent=v.error;$("mename").focus();return}
+      if(await meSave({name:v.name}))close();else $("meerr").textContent=ME.err};
+    $("mecancel").onclick=close;f.onkeydown=e=>{if(e.key==="Escape"){e.preventDefault();close()}}}
+  P.querySelectorAll("#mepick [data-av]").forEach(b=>b.onclick=async()=>{const k=b.dataset.av.split(":"),a=k[0]==="auto"?null:k[0]==="card"?{kind:"card",course:k[1]}:{kind:"cast",course:k[1],id:k[2]};
+    const ok=await meSave({avatar:a});await again();if(!ok){const e=$("mepickerr");if(e)e.textContent=ME.err}const n=document.querySelector(`#mepick [data-av="${CSS.escape(b.dataset.av)}"]`);if(n)n.focus()});
+  if($("mepickdone"))$("mepickdone").onclick=()=>{ME.pick=false;ME.err="";again().then(()=>{const b=$("mepickbtn");if(b)b.focus()})};
+  P.querySelectorAll("[data-seeall]").forEach(b=>b.onclick=async()=>{if(!(await useCourse(b.dataset.seeall)))return;renderDash();setTimeout(()=>{const e=$("shelf");if(e)e.scrollIntoView({block:"start"})},40)});
+  if($("melib"))$("melib").onclick=()=>{renderLibrary();top()}}
+
 /* ===== page narration: sticky player, per-page clips, word highlight ===== */
 const NAR={car:false,audio:audioGuard(new Audio()),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
 NAR.audio.preload="auto";
@@ -1285,20 +1424,20 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
   if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};if($("guidenotes"))$("guidenotes").onclick=()=>openNotes();$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
 function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return hasMock()?[multiForm()&&mockForms().some(x=>x.f===lp.f)?`Practice exam · ${formLabel(lp.f)}`:"Practice exam",()=>openMock(lp.f)]:null;const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
 /* where you are lives in the address (#pmp/full/3, #guide), so a reload reopens the same screen */
-function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="notes"?c+"/notes":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock"+(multiForm()&&MOCK_FORM?"/"+MOCK_FORM:""):(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
+function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="me"?"me":TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="notes"?c+"/notes":TRACK==="cast"?c+"/cast":(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock"+(multiForm()&&MOCK_FORM?"/"+MOCK_FORM:""):(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
   store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
 /* anonymous page views (Vercel Web Analytics, loaded in index.html): the route only, as a path. Never a name, email, id, or progress. */
 let LASTPV="";function pageview(r){if(TESTP||!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:"/"+r})}catch(e){}}
 async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filter(Boolean);if(!p.length)return false;if(p[1]!=="mock")clearInterval(mockTimer); // the back button or an edited address leaves a timed mock: stop its clock
   if(p[0]==="verify"){renderVerify();return true}
-  if(p[0]==="library"){renderLibrary();return true}if(p[0]==="guide"){renderGuide();return true}if(p[0]==="upcoming"){renderUpcoming();return true}if(p[0]==="labtest"){await loadScripts(["tools/lab_fixture.js"]);renderLabTest();return true}
+  if(p[0]==="me"){ME.edit=false;ME.pick=false;await renderMe();return true}if(p[0]==="library"){renderLibrary();return true}if(p[0]==="guide"){renderGuide();return true}if(p[0]==="upcoming"){renderUpcoming();return true}if(p[0]==="labtest"){await loadScripts(["tools/lab_fixture.js"]);renderLabTest();return true}
   const c=courseById(p[0]);if(!c||c.status!=="live")return false;if(c.id!==COURSE.id&&!(await useCourse(c.id)))return false;if(!c._loaded&&(c.scripts||c.labs))await useCourse(c.id);
   const v=p[1]||"home",n=+p[2];
   if((v==="full"||v==="ref")&&TRACKS[v].list().find(x=>x.num===n)){openChapter(v,n);return true}
   if(v==="listen"){renderBook();return true}if(v==="notes"){renderNotes();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
   renderHome();renderRail();return true}
 window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
-function navSync(){noteRoute();setTimeout(bdgToastNext,0);try{bookBarSync()}catch(e){console.error(e)}bmRail();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink",notes:"proglink"};["liblink","homelink","proglink","castlink","listenlink","guidelink"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
+function navSync(){noteRoute();setTimeout(bdgToastNext,0);try{bookBarSync()}catch(e){console.error(e)}bmRail();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",book:"listenlink",guide:"guidelink",notes:"proglink",me:"username"};["liblink","homelink","proglink","castlink","listenlink","guidelink","username"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
@@ -1549,11 +1688,12 @@ function renderRail(){
   recapRail();
 }
 function render(){_render();castStrip();narAttach();navSync();ambSync();handoffOffer();whereSync();bdgToastNext()}
-function _render(){if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="notes")return renderNotes();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();if(TRACK==="final")return finalRender();if(TRACK==="cert")return renderCert();if(TRACK==="verify")return renderVerify();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function _render(){if(TRACK==="me")return renderMe();if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="dash")return renderDash();if(TRACK==="notes")return renderNotes();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();if(TRACK==="final")return finalRender();if(TRACK==="cert")return renderCert();if(TRACK==="verify")return renderVerify();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
 async function api(path,opts={}){if(TESTP&&/^\/api\/progress\b/.test(path))return {ok:false,status:0,error:"test profile"}; // belt and braces: SYNC is never set in the test profile
+  if(TESTP&&/^\/api\/me\b/.test(path)&&String(opts.method||"GET").toUpperCase()!=="GET")return {ok:false,status:0,error:"test profile"}; // the test profile keeps its name and picture on this device (renderMe)
   const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
 async function listenPull(){if(TESTP||!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");
   // bookmarks: a newer record from another device replaces this one unless a write from here is still waiting (newest record wins)
@@ -1665,8 +1805,9 @@ async function boot(){
   $("proglink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderDash();top()};
   if($("liblink"))$("liblink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderLibrary();top()};
   $("homelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderHome();renderRail()};
+  if($("username"))$("username").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);ME.edit=false;ME.pick=false;renderMe();top()}; // the player's own name opens their private profile (#me)
   if((COURSE.scripts||COURSE.labs)&&!COURSE._loaded)await useCourse(COURSE.id);
-  if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;$("username").textContent="";recapSnap();bdgBoot();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
+  if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;meNav();recapSnap();bdgBoot();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
   let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
   if(!me.user){if(PROF.signedOut)PROF.signedOut();if(/^#verify\b/.test(location.hash)){document.querySelector(".rail").hidden=true;return renderVerify()}const inv=new URLSearchParams(location.search).get("invite");
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
@@ -1680,7 +1821,7 @@ async function boot(){
   if(!TESTP){clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
     SYNC=(n,st,ka)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st}),keepalive:!!ka}).catch(()=>{});applyPrefs(lget().prefs)}
   USERNAME=me.user.name||"";
-  document.querySelector(".rail").hidden=false;$("usercard").hidden=false;$("username").textContent=me.user.name;$("adminlink").hidden=!me.user.admin;
+  document.querySelector(".rail").hidden=false;$("usercard").hidden=false;meNav();$("adminlink").hidden=!me.user.admin;
   $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();if(PROF.testKeys)PROF.testKeys().forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});location.href="/"}; // test profile data goes with the account that made it
   recapSnap();bdgBoot();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(TESTP?store.get("cur",0):(me.user.cur||0));
 }
