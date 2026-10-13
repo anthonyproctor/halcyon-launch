@@ -19,6 +19,8 @@ export default defineConfig({
   projects: [
     { name: "chromium", testIgnore: /narbar_ios\.spec\.mjs/, use: { launchOptions: { args: ["--mute-audio"] } } },
     // the player bar on an iPhone: WebKit with the iPhone 15 profile (touch, mobile viewport), only for that spec
+    // the off-site audio fallback on the iPhone's engine too (WebKit orders media errors and play() rejections its own way); the spec mutes every element
+    { name: "webkit-audio", testMatch: /audio_hosting\.spec\.mjs/, use: { ...devices["iPhone 15"], serviceWorkers: "block" } },
     { name: "webkit-iphone", testMatch: /narbar_ios\.spec\.mjs/, use: { ...devices["iPhone 15"], serviceWorkers: "block" } }, // WebKit can't be muted by a switch: the spec mutes every media element itself
   ],
   webServer: {

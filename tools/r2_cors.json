@@ -1,0 +1,14 @@
+[
+  {
+    "AllowedOrigins": [
+      "https://halcyon-launch.vercel.app",
+      "http://localhost:4321",
+      "http://127.0.0.1:4321",
+      "http://localhost:3000"
+    ],
+    "AllowedMethods": ["GET", "HEAD"],
+    "AllowedHeaders": ["Range"],
+    "ExposeHeaders": ["Content-Length", "Content-Range", "Accept-Ranges", "ETag"],
+    "MaxAgeSeconds": 86400
+  }
+]

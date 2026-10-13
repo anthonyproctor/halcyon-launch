@@ -35,6 +35,7 @@ M["full"]=dict(sorted(M["full"].items(),key=lambda kv:int(kv[0])))
 json.dump(M,open(m,"w"),indent=1);print("manifest",n,M["full"][n])
 PY
   zsh tools/book_marks.sh --v2 || exit 1
+  python3 tools/r2_sync.py --if-configured --quiet --course pmp --chapter $n || true # copy this chapter's mp3s to R2 (docs/AUDIO_HOSTING.md); silent no-op without keychain credentials
   grep -qx "$n" $S/pmp-v2.done || echo $n >> $S/pmp-v2.done; echo "ch$n: done"
 done
 echo "all requested chapters done"

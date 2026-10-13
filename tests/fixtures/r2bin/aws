@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+# Fake AWS CLI for tests/r2_sync.spec.mjs: the four s3api calls tools/r2_sync.py makes, against a folder ($FAKE_R2_DIR) instead of R2.
+# Logs every argv to $FAKE_R2_DIR/argv.log (the test checks no secret ever reaches a command line) and checks the keys arrive by environment.
+import base64, hashlib, json, os, shutil, sys
+D = os.environ["FAKE_R2_DIR"]; OBJ = os.path.join(D, "objects"); os.makedirs(OBJ, exist_ok=True)
+a = sys.argv[1:]
+open(os.path.join(D, "argv.log"), "a").write(json.dumps(a) + "\n")
+def opt(n, d=None): return a[a.index(n) + 1] if n in a else d
+if os.environ.get("AWS_ACCESS_KEY_ID") != os.environ.get("FAKE_EXPECT_KEY") or os.environ.get("AWS_SECRET_ACCESS_KEY") != os.environ.get("FAKE_EXPECT_SECRET"):
+    print("An error occurred (InvalidAccessKeyId)", file=sys.stderr); sys.exit(255)
+if "--endpoint-url" in a or os.environ.get("AWS_ENDPOINT_URL_S3") != os.environ.get("FAKE_EXPECT_ENDPOINT") or opt("--bucket") != "halcyon-audio":
+    print("endpoint must come by AWS_ENDPOINT_URL_S3, never the command line; bucket must be halcyon-audio", file=sys.stderr); sys.exit(255)
+if os.environ.get("FAKE_FAIL_WITH_HOST"):  # a host-only network error, like urllib3's NameResolutionError, to prove the account id is scrubbed
+    host = os.environ["AWS_ENDPOINT_URL_S3"].split("//")[1]
+    print(f"Could not connect to the endpoint URL: Failed to resolve '{host}' ({host.split('.')[0]})", file=sys.stderr); sys.exit(255)
+op = a[1]
+path = lambda k: os.path.join(OBJ, k)
+meta = lambda k: path(k) + ".meta.json"
+if op == "list-objects-v2":
+    pre = opt("--prefix", ""); out = []
+    for dp, _, fns in os.walk(OBJ):
+        for f in fns:
+            if f.endswith(".meta.json"): continue
+            k = os.path.relpath(os.path.join(dp, f), OBJ).replace(os.sep, "/")
+            if k.startswith(pre): m = json.load(open(meta(k))); out.append({"Key": k, "ETag": '"%s"' % m["etag"], "Size": os.path.getsize(path(k))})
+    print(json.dumps({"Contents": sorted(out, key=lambda o: o["Key"])} if out else {}))
+elif op == "put-object":
+    k, body = opt("--key"), opt("--body"); data = open(body, "rb").read(); md5 = hashlib.md5(data).hexdigest()
+    if base64.b64decode(opt("--content-md5")).hex() != md5: print("BadDigest", file=sys.stderr); sys.exit(255)
+    os.makedirs(os.path.dirname(path(k)), exist_ok=True); shutil.copyfile(body, path(k))
+    md = dict(x.split("=", 1) for x in opt("--metadata", "").split(",") if x)
+    json.dump({"etag": md5, "ContentType": opt("--content-type"), "CacheControl": opt("--cache-control"), "ContentDisposition": opt("--content-disposition"), "Metadata": md}, open(meta(k), "w"))
+    print(json.dumps({"ETag": '"%s"' % md5}))
+elif op == "head-object":
+    k = opt("--key")
+    if not os.path.exists(meta(k)): print("Not Found", file=sys.stderr); sys.exit(255)
+    print(json.dumps(json.load(open(meta(k)))))
+elif op == "delete-object":
+    k = opt("--key")
+    for p in (path(k), meta(k)):
+        if os.path.exists(p): os.remove(p)
+    print("{}")
+else: print("unsupported " + op, file=sys.stderr); sys.exit(2)

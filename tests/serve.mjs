@@ -19,6 +19,10 @@ function resolve(urlPath) {
 }
 
 http.createServer((req, res) => {
+  if (req.url.split("?")[0] === "/config.js") { // tests play audio from this server: the live R2 base is blanked unless TEST_AUDIO_BASE is set
+    const body = fs.readFileSync(path.join(ROOT, "config.js"), "utf8").replace(/^window\.HALCYON_AUDIO_BASE = ".*";$/m, `window.HALCYON_AUDIO_BASE = ${JSON.stringify(process.env.TEST_AUDIO_BASE || "")};`);
+    res.writeHead(200, { "Content-Type": TYPES[".js"], "Content-Length": Buffer.byteLength(body) }); return res.end(body);
+  }
   const f = resolve(req.url);
   if (!f) { res.writeHead(404, { "Content-Type": "text/plain" }); res.end("not found"); return }
   const size = fs.statSync(f).size, type = TYPES[path.extname(f).toLowerCase()] || "application/octet-stream";

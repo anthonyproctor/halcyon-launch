@@ -18,4 +18,5 @@ M=json.load(open(r+"audio/audiobook.json")) if os.path.exists(r+"audio/audiobook
 M["full"][n]={"story":{"src":f"audio/story/full-ch{nn}.mp3","min":d(f"audio/story/full-ch{nn}.mp3")},"study":{"src":f"audio/full-ch{nn}.mp3","min":d(f"audio/full-ch{nn}.mp3")}}
 json.dump(M,open(r+"audio/audiobook.json","w"),indent=1);print("manifest",n,M["full"][n])
 PY
+python3 tools/r2_sync.py --if-configured --quiet --course $C --chapter $n || true # copy this chapter's mp3s to R2 (docs/AUDIO_HOSTING.md); silent no-op without keychain credentials
 zsh tools/book_marks.sh $C

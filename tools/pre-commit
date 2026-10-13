@@ -1,0 +1,8 @@
+#!/bin/zsh
+# Git pre-commit hook (docs/AUDIO_HOSTING.md): when a commit stages an mp3 or audio-manifest.json, every manifest entry must still match its
+# local file, so a re-render made by a tool with no sync hook can't ship with the old take's hash. Install once:
+#   ln -sf ../../tools/pre-commit .git/hooks/pre-commit
+cd "$(git rev-parse --show-toplevel)" || exit 0
+[[ -f audio-manifest.json ]] || exit 0
+git diff --cached --name-only | grep -qE '(\.mp3|^audio-manifest\.json)$' || exit 0
+python3 tools/r2_sync.py --check --quiet || { echo "pre-commit: run python3 tools/r2_sync.py --course <id> (with R2 credentials) first, then commit audio-manifest.json too"; exit 1 }

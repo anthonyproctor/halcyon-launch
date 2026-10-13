@@ -49,6 +49,40 @@ function MENTOR_FULL(){return COURSE.mentorFull||(MENTOR()==="Ruth"?"Ruth Calder
 function LEADS(){return COURSE.leads||(MENTOR()==="Ruth"?RUTH_LEADS:{...RUTH_LEADS,3:["That's the move.","Good. That's the call.","Exactly right."]})}
 function LESSON(){return COURSE.lessonName||"Ruth's whiteboard"}
 function R(p){return /^(https?:|\/)/.test(p)?p:COURSE.root+p}
+/* ===== where the mp3s come from (docs/AUDIO_HOSTING.md) =====
+   AU(p) is the one place an mp3 URL is made: p is the path the engine has always used (after R() and V2(), relative to the site root).
+   config.js HALCYON_AUDIO_BASE empty: p comes back unchanged, so the site plays exactly what it always has. Set: an mp3 that audio-manifest.json lists
+   (tools/r2_sync.py writes an entry only after it has uploaded that take and checked the copy) comes back as AUDIO_BASE/<same path with the take's
+   hash before .mp3>, e.g. audio/v2/pages/f1/open.0123456789ab.mp3. Each take has its own key and is never overwritten, so a re-render can't change
+   what an older deploy (or a rollback) plays, and every cache may keep a file forever. An mp3 the manifest doesn't list plays from this site.
+   audioGuard(el) sends an element back to this site, once per file per visit, if the remote copy fails to load (a 404 from a partial upload, a network error).
+   HALCYON_AUDIO_REMOTE_ONLY (set once the mp3s have left git, step 5 of the doc): the manifest is waited for, since this site has no copy to fall back to.
+   JSON (timings, audiobook.json, bookmarks.json, episodes) never goes through AU: it stays on this site with the code. */
+const AUDIO_BASE=(()=>{const b=String(window.HALCYON_AUDIO_BASE||"").trim();if(!b)return "";try{const u=new URL(b);return /^https?:$/.test(u.protocol)?u.href.replace(/\/+$/,""):""}catch(e){return ""}})(); // normalized the way the browser writes el.src
+const AUDIO_REMOTE_ONLY=!!AUDIO_BASE&&window.HALCYON_AUDIO_REMOTE_ONLY===true;
+const AUD={map:null,bad:new Set(),log:null,at:0};
+const audRel=p=>String(p||"").replace(/[?#].*$/,"").replace(/^\/+/,"");
+const audKey=(rel,h)=>rel.replace(/\.mp3$/i,`.${h}.mp3`); // R2 key of one take: tools/r2_sync.py key_of() builds the same
+function AU(p){if(!AUDIO_BASE||!AUD.map||typeof p!=="string"||/^[a-z][a-z0-9+.-]*:/i.test(p))return p;const rel=audRel(p),h=AUD.map[rel];
+  if(typeof h!=="string"||!/^[0-9a-f]{12}$/.test(h)||!/\.mp3$/i.test(rel)||AUD.bad.has(rel))return p;return `${AUDIO_BASE}/${encodeURI(audKey(rel,h))}`}
+const audRemote=u=>!!AUDIO_BASE&&String(u||"").startsWith(AUDIO_BASE+"/");
+const audLocalRel=u=>{let r=audRel(String(u).slice(AUDIO_BASE.length+1));try{r=decodeURI(r)}catch(e){}return r.replace(/\.[0-9a-f]{12}\.mp3$/i,".mp3")}; // the take's key back to its repo path
+function audioLocal(u){return audRemote(u)?new URL(audLocalRel(u),document.baseURI).href:u} // the same file's address on this site (QA reports, comparisons)
+function audioGuard(el){if(!el||el.__aud)return el;el.__aud=true;const P=HTMLMediaElement.prototype;
+  el.addEventListener("error",e=>{const s=el.currentSrc||el.src;if(!audRemote(s))return;e.stopImmediatePropagation(); // the page never sees a remote failure it can recover from
+    const rel=audLocalRel(s),t=el.currentTime,rate=el.playbackRate,was=!el.paused;AUD.bad.add(rel);
+    el.__fb=new URL(rel,document.baseURI).href;el.src=el.__fb;el.playbackRate=rate; // a new src resets the rate; keep the reader's
+    if(t>1)el.addEventListener("loadedmetadata",()=>{try{el.currentTime=t}catch(x){}},{once:true}); // failed mid-file: pick up where it stopped
+    if(AUD.log)AUD.log("audio fallback "+rel);if(was)P.play.call(el).catch(()=>{})});
+  // a play() that the failed remote load rejected is retried once on this site's copy, so callers see one promise that plays
+  el.play=function(){return P.play.call(el).catch(err=>{if(el.__fb&&el.__fb===el.src){el.__fb=null;return P.play.call(el)}throw err})};
+  return el}
+function audLoad(){AUD.at=Date.now();return fetch("audio-manifest.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.files&&typeof j.files==="object")AUD.map=j.files}).catch(()=>{})}
+const audWait=(p,ms)=>Promise.race([p,new Promise(ok=>setTimeout(ok,ms))]);
+// boot waits at most 1 s for the manifest (until it lands, mp3s play from this site); remote-only waits up to 10 s, since there's nothing else to play
+AUD.ready=!AUDIO_BASE?Promise.resolve():audWait(audLoad(),AUDIO_REMOTE_ONLY?10000:1000);
+// a tab left open across a deploy re-reads the manifest (at most once a minute) before it fetches a page's timings, so take and timings match
+function audFresh(){return AUDIO_BASE&&Date.now()-AUD.at>60000?audWait(audLoad(),AUDIO_REMOTE_ONLY?10000:1000):Promise.resolve()}
 function taskDomain(t){const TD=COURSE.taskDomain||{};return TD[t]||TD[t.split(".")[0]]||TD[t[0]]||DOMS[0]}
 function loadScripts(list){return Promise.all(list.map(src=>new Promise(ok=>{if(document.querySelector(`script[data-c="${src}"]`))return ok();const el=document.createElement("script");el.src=src;el.dataset.c=src;el.onload=ok;el.onerror=ok;document.head.appendChild(el)})))}
 async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")return false;if((c.scripts||c.labs)&&!c._loaded){await loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x));c._loaded=true}
@@ -116,7 +150,7 @@ function paras(arr){return `<div class="story">${arr.map(p=>/^<prop\s/.test(p)?p
 function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${esc(v[1])}</b><span class="prog">${esc(v[2])} · ${esc(v[3])}</span></div><div class="vframe"><button type="button" data-vid="${esc(v[0])}" aria-label="Play video: ${esc(v[1])}" style="background-image:url('https://i.ytimg.com/vi/${esc(v[0])}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
 function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
 function episodeCard(c){return ""}  // whole-chapter file now lives on the Listen page as a download link (10/10)
-function episodeCardOld(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Whole chapter as one audio file · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">For the car or the gym. In the app, use the Listen button at the bottom of the screen instead.</p><audio controls preload="metadata" src="${esc(R(c.episode.src))}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
+function episodeCardOld(c){if(!c.episode)return "";return `<div class="episode"><div class="prog">Whole chapter as one audio file · ${esc(c.episode.len)}</div><p class="prog" style="margin:4px 0 0">For the car or the gym. In the app, use the Listen button at the bottom of the screen instead.</p><audio controls preload="metadata" src="${esc(AU(R(c.episode.src)))}" onerror="this.closest('.episode').hidden=true"></audio></div>`}
 /* Page scrolls the app starts itself (page turn to the top, the narration's follow-the-reading) wait while the reader is scrolling by hand.
    On iOS a window scroll started from script during a finger or momentum scroll, or one long smooth scroll cut off by another, can leave
    position:fixed layers (the player bar) drawn at a stale offset, mid-screen, until the scroll settles (2026-10-12 bug report). */
@@ -918,7 +952,7 @@ function openLog(){renderDash();setTimeout(()=>{const e=$("studylog");if(e)e.scr
 
 
 /* ===== page narration: sticky player, per-page clips, word highlight ===== */
-const NAR={car:false,audio:new Audio(),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
+const NAR={car:false,audio:audioGuard(new Audio()),timings:{},key:null,page:null,listening:false,auto:store.get("auto2",false),rate:store.get("rate",1),map:[],words:[],raf:0,cur:-1};
 NAR.audio.preload="auto";
 /* listening position: per course, saved to the account so any device picks up where you stopped */
 /* PMP v2 keeps its Audiobook and page positions and Labs waiting under 904 (v1's were 903); its prefs carry over once */
@@ -943,6 +977,7 @@ function narTick(){if(Date.now()-lsaveAt>5000){lsaveAt=Date.now();narSavePos(fal
 const PDBG={on:store.get("pdbg",false),lines:[]};
 function plog(m){if(!PDBG.on)return;const a=NAR.audio;const s=`${new Date().toISOString().slice(14,23)} ${m} | t=${(a.currentTime||0).toFixed(1)} rs=${a.readyState} ns=${a.networkState} p=${a.paused?1:0} sk=${a.seekable&&a.seekable.length?a.seekable.end(0).toFixed(0):"-"}`;PDBG.lines.push(s);PDBG.lines=PDBG.lines.slice(-40);let el=$("pdbg");if(!el){el=document.createElement("pre");el.id="pdbg";el.style.cssText="position:fixed;top:0;left:0;right:0;max-height:45vh;overflow:auto;z-index:99;margin:0;padding:6px;font:10px/1.3 monospace;background:rgba(0,0,0,.85);color:#9f9;white-space:pre-wrap";document.body.appendChild(el)}el.textContent=PDBG.lines.join("\n");el.scrollTop=1e9}
 ["loadstart","loadedmetadata","loadeddata","canplay","canplaythrough","play","playing","pause","waiting","stalled","suspend","seeking","seeked","ended","error","abort","emptied"].forEach(ev=>NAR.audio.addEventListener(ev,()=>plog(ev+(ev==="error"&&NAR.audio.error?" code="+NAR.audio.error.code:""))));
+AUD.log=plog; // a remote mp3 that fell back to this site shows in the player diagnostics
 function seekTo(pos){const a=NAR.audio;plog("seekTo "+(+pos).toFixed(1)+" src="+String(a.src).split("/").slice(-2).join("/"));if(!(pos>0))return;let tries=0;
   const apply=()=>{if(!a.duration||pos>=a.duration-1)return;if(Math.abs(a.currentTime-pos)>1.5){try{a.currentTime=pos}catch(e){}}};
   a.addEventListener("loadedmetadata",apply,{once:true});
@@ -951,7 +986,7 @@ function seekTo(pos){const a=NAR.audio;plog("seekTo "+(+pos).toFixed(1)+" src="+
 function fmtT(s){s=Math.max(0,Math.round(s||0));return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`}
 function bookResumePos(ed,n,dur){const L=lget(),B=L.book;if(B&&B.n===n){if(B.ed===ed)return B.t;if(B.dur&&dur)return Math.max(0,B.t/B.dur*dur-15)}const old=store.get(`bookpos.${BID()}.${ed}.${n}`,0);return old||0}
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
-async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];if(NOAUD())return null;try{const r=await fetch(R(V2(`audio/pages/${key}/timings.json`)),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
+async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];if(NOAUD())return null;await audFresh();try{const r=await fetch(R(V2(`audio/pages/${key}/timings.json`)),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
 // the narration also reads props (vlog cards, emails, console logs): their headers and bodies are highlight targets too
 const PROPSEL=pre=>[".vh",".vm",".ph",".pm",".pb",".bubble"].map(x=>`${pre}.story .prop ${x}`).join(", ");
 function narPageId(){
@@ -1011,7 +1046,7 @@ async function narAttach(){
   if(NAR.page==="book"&&!NAR.audio.paused){narUI();return}
   const key0=narKey();
   if(NAR.car&&key0&&CH.episode){ // car mode: one continuous track per chapter, page changes don't interrupt it
-    NAR.key=key0;NAR.page="car";const src=new URL(R(CH.episode.src),location.href).href;
+    NAR.key=key0;NAR.page="car";const src=new URL(AU(R(CH.episode.src)),location.href).href;
     if(NAR.audio.src!==src){NAR.audio.pause();NAR.audio.src=src;NAR.audio.playbackRate=NAR.rate;const pos=store.get("carpos."+key0,0);NAR.audio.addEventListener("loadedmetadata",()=>{if(pos>5)NAR.audio.currentTime=pos},{once:true});if(NAR.listening)NAR.audio.play().then(narUI).catch(()=>{})}
     $("page").querySelectorAll(".episode").forEach(e=>e.hidden=true);narUI();return}
   NAR.audio.pause();cancelAnimationFrame(NAR.raf);NAR.cur=-1;
@@ -1023,7 +1058,7 @@ async function narAttach(){
   {const alts=Object.keys(T).filter(k=>k===pid+"_alt"||k===pid+"_fixed"||k.startsWith(pid+"_v"));if(alts.length){ // several narrations of a page whose wording depends on the reader (tools/pages.mjs): play one that says nothing that isn't on the screen, and of those the one that covers the most of the page. Every narration of a page shares the spoken header and option letters (never page words), so the fewest unmatched words among them is that baseline; a narration with more than one word over it is reading another reader's text
     const hdr=propHeaders(),c=[[pid,NAR.map],...alts.map(k=>[k,alignWords(T[k].w,NAR.words)])],miss=([k,m])=>narMiss(T[k].w,m,hdr),base=Math.min(...c.map(miss));
     const [k,m]=c.filter(x=>miss(x)<=base+1).reduce((a,b)=>b[1].exact>a[1].exact?b:a);NAR.cands=c.map(x=>[x[0],miss(x),x[1].exact]);NAR.cands_for=k;NAR.page=k;NAR.map=m}}
-  NAR.audio.src=R(V2(`audio/pages/${key}/${NAR.page}.mp3`));NAR.audio.playbackRate=NAR.rate;
+  NAR.audio.src=AU(R(V2(`audio/pages/${key}/${NAR.page}.mp3`)));NAR.audio.playbackRate=NAR.rate;
   {const P=lget().page;if(P&&P.key===key&&P.pid===NAR.page&&P.t>2)seekTo(Math.max(0,P.t-2))}
   narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
@@ -1097,7 +1132,7 @@ function renderCast(id){setTimeout(ambSync,0);setTimeout(navSync,0);
     ${c.quote&&c.quote.unlock<=reach+1?`<blockquote class="castquote">${c.quote.text}</blockquote>`:""}
     ${c.sections.map(sec=>sec.unlock<=Math.max(1,reach)||(sec.unlock===1)?`<section class="lesson"><h2>${esc(sec.title)}</h2>${paras(sec.body)}</section>`:`<section class="locked"><h2>${esc(sec.title)}</h2><p class="prog">Unlocks after chapter ${sec.unlock}.</p></section>`).join("")}
     ${(c.ties||[]).filter(t=>t.unlock<=Math.max(1,reach)).length?`<h2>Connections</h2><ul class="ties">${c.ties.filter(t=>t.unlock<=Math.max(1,reach)).map(t=>`<li><button class="linkbtn" data-c="${t.id}" type="button">${esc((byId[t.id]||{}).name||t.id)}</button>: ${esc(t.text)}</li>`).join("")}</ul>`:""}`;
-  if(window.__castAudio)window.__castAudio.pause();const h=$("hear");if(h){const a=new Audio(R(V2(`cast/voice/${c.id}.mp3`)));window.__castAudio=a;a.onended=()=>h.textContent=`▶ Hear ${c.name.split(" ")[0]}`;a.onerror=()=>h.remove();h.onclick=()=>{if(a.paused){a.play().catch(()=>{});h.textContent="❚❚ Pause"}else{a.pause();h.textContent=`▶ Hear ${c.name.split(" ")[0]}`}}}
+  if(window.__castAudio)window.__castAudio.pause();const h=$("hear");if(h){const a=audioGuard(new Audio(AU(R(V2(`cast/voice/${c.id}.mp3`)))));window.__castAudio=a;a.onended=()=>h.textContent=`▶ Hear ${c.name.split(" ")[0]}`;a.onerror=()=>h.remove();h.onclick=()=>{if(a.paused){a.play().catch(()=>{});h.textContent="❚❚ Pause"}else{a.pause();h.textContent=`▶ Hear ${c.name.split(" ")[0]}`}}}
   $("castback").onclick=()=>{if(window.__castAudio)window.__castAudio.pause();renderCast();top()};$("page").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{renderCast(b.dataset.c);top()});
 }
 
@@ -1197,8 +1232,8 @@ async function handoffOffer(){if(TRACK!=="full"||!CH||!S)return;const LB=lget().
   const pid=pidAt(LB.n,LB.ed,LB.t);if(!pid)return;const k=stepOfPid(CH,pid);if(k===S.pos||$("handoff"))return;
   const d=document.createElement("div");d.id="handoff";d.className="handoff";d.innerHTML=`<span>🎧 You were listening at <b>${esc(pidLabel(pid,LB.n))}</b> in the Audiobook (${fmtT(LB.t)}).</span><button class="btn small" type="button" id="hojump">Pick up there</button><button class="btn small ghost" type="button" id="hox" aria-label="Dismiss">✕</button>`;
   $("page").prepend(d);$("hojump").onclick=()=>{store.set("handoff.seen",LB.at);if(NAR.page==="book")NAR.audio.pause();fullGo(k)};$("hox").onclick=()=>{store.set("handoff.seen",LB.at);d.remove()}}
-async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;if(NOAUD())return BOOK={full:{}};const cid=COURSE.id;let M;try{const r=await fetch(R(V2("audio/audiobook.json")),{cache:"no-store"});M=r.ok?await r.json():{full:{}}}catch(e){M={full:{}}}if(COURSE.id!==cid)return BOOK||{full:{}};return BOOK=M}
-function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;libTouch({t:"book",n});labQueue(n);NAR.bsec=null;NAR.free=false;bookMarks().then(()=>narTicks());NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=R(M.src);NAR.audio.playbackRate=NAR.rate;
+async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;if(NOAUD())return BOOK={full:{}};const cid=COURSE.id;await audFresh();let M;try{const r=await fetch(R(V2("audio/audiobook.json")),{cache:"no-store"});M=r.ok?await r.json():{full:{}}}catch(e){M={full:{}}}if(COURSE.id!==cid)return BOOK||{full:{}};return BOOK=M}
+function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;libTouch({t:"book",n});labQueue(n);NAR.bsec=null;NAR.free=false;bookMarks().then(()=>narTicks());NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=AU(R(M.src));NAR.audio.playbackRate=NAR.rate;
   if(at!=null){if(at>1)seekTo(at)}else{const LB=lget().book;const sameEd=LB&&LB.n===n&&LB.ed===ed;const pos0=sameEd?LB.t:0;
    if(pos0>5)seekTo(pos0);else NAR.audio.addEventListener("loadedmetadata",()=>{const pos=bookResumePos(ed,n,NAR.audio.duration);if(pos>5&&pos<(NAR.audio.duration-5))seekTo(pos)},{once:true})}
   NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight();narMedia()}).catch(()=>{});narUI();if(TRACK==="book")renderBook()}
@@ -1206,7 +1241,7 @@ async function renderBook(){setTimeout(ambSync,0);
   TRACK="book";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;const B=await bookManifest();await bookMarks();if(TRACK!=="book")return;
   const ed=store.get("bookEd."+COURSE.id,"story");const full=TRACKS.full.list();
   const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${BID()}.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
-    const dl=M?`<a class="dl prog" href="${esc(R(M.src))}" download title="Download chapter ${c.num} for the car or gym">⬇</a>`:"";
+    const dl=M?`<a class="dl prog" href="${esc(AU(R(M.src)))}" download title="Download chapter ${c.num} for the car or gym">⬇</a>`:"";
     const mk=(MARKS&&MARKS.full[c.num]&&MARKS.full[c.num][ed])||[];
     const secs=M&&mk.length?`<details class="bsecs"><summary class="prog">Sections</summary><div class="bsecl">${mk.map(([pid,t])=>`<button type="button" class="bsec" data-bn="${c.num}" data-bt="${t}"><span>${esc(secName(c,pid))}</span><span class="prog">${fmtT(t)}</span></button>`).join("")}</div></details>`:"";
     return `<div class="browwrap"><button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>${dl}</div>${labMention(c)}${secs}`};
@@ -1312,7 +1347,7 @@ function castStrip(){
 
 
 /* ===== soundscapes and stings ===== */
-const AMB={on:store.get("amb",false),vol:store.get("ambvol",0.25),cur:null,els:[new Audio(),new Audio()],i:0,sting:new Audio(),lastSting:""};
+const AMB={on:store.get("amb",false),vol:store.get("ambvol",0.25),cur:null,els:[audioGuard(new Audio()),audioGuard(new Audio())],i:0,sting:audioGuard(new Audio()),lastSting:""};
 AMB.els.forEach(a=>{a.loop=true;a.volume=0});
 const AMB_RULES=[["jet",/flight line|F-16|crew chief|jet engine|afterburner|\bjets?\b/i],["servers",/data center|server|rack|GPU|IronPeak|cluster|burn-in/i],["hospital",/hospital|\bICU\b|nurse|clinician|ward|Cheyenne|Greeley|Fort Collins|bedside/i],["rain",/\brain\b|storm|thunder|downpour/i],["night",/midnight|\bnight\b|\bdark\b|stars|11:\d\d PM/i],["morning",/kitchen|6:12|morning|breakfast|sunrise|dawn/i],["coffee",/coffee shop|café|cafe|barista/i],["car",/\bdrove\b|\bdrive\b|\bcar\b|truck|traffic|highway|I-25/i],["boardroom",/board meeting|boardroom|the board|conference room/i]];
 /* PMP v2 settings: mission control and the readiness board, the test stand and the pad, wind on the plains, rain and surf at the Cape. No servers or hospital. */
@@ -1322,10 +1357,10 @@ function fade(a,to,ms){const from=a.volume,t0=performance.now();const step=()=>{
 function ambSync(){
   const inChapter=(TRACK==="full"||TRACK==="ref")&&CH;if(!AMB.on||!inChapter){AMB.els.forEach(a=>fade(a,0,800));AMB.cur=null;return}
   const pg=$("page");const text=[...pg.querySelectorAll(".story p, .prop")].map(e=>e.textContent).join(" ");const kind=pg.querySelector(".lesson")?"lesson":"";
-  const want=ambFor(text,kind);if(want!==AMB.cur){const old=AMB.els[AMB.i];AMB.i=1-AMB.i;const nw=AMB.els[AMB.i];nw.src=`audio/amb/${want}.mp3?v=2`;nw.volume=0;nw.play().then(()=>fade(nw,AMB.vol,1500)).catch(()=>{});fade(old,0,1500);AMB.cur=want}
+  const want=ambFor(text,kind);if(want!==AMB.cur){const old=AMB.els[AMB.i];AMB.i=1-AMB.i;const nw=AMB.els[AMB.i];nw.src=AU(`audio/amb/${want}.mp3?v=2`);nw.volume=0;nw.play().then(()=>fade(nw,AMB.vol,1500)).catch(()=>{});fade(old,0,1500);AMB.cur=want}
   // chapter stings
   const isOpen=!!pg.querySelector(".chart")&&(TRACK==="full"?S.pos===0:S.step<0);const isEnd=pg.querySelector(".end-grid");const tag=`${TRACK}${CH.num}${isOpen?"o":isEnd?"e":""}`;
-  if((isOpen||isEnd)&&AMB.lastSting!==tag){AMB.lastSting=tag;AMB.sting.src=isOpen?"audio/sting-open.mp3":"audio/sting-close.mp3";AMB.sting.volume=Math.min(1,AMB.vol*2.4);AMB.sting.play().catch(()=>{})}
+  if((isOpen||isEnd)&&AMB.lastSting!==tag){AMB.lastSting=tag;AMB.sting.src=AU(isOpen?"audio/sting-open.mp3":"audio/sting-close.mp3");AMB.sting.volume=Math.min(1,AMB.vol*2.4);AMB.sting.play().catch(()=>{})}
 }
 function ambUI(){const t=$("ambtoggle");if(t)t.checked=AMB.on;const v=$("ambvol");if(v)v.value=AMB.vol}
 
@@ -1522,6 +1557,7 @@ function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!
 async function pmpLoad(){window.HALCYON_FULL=[];await loadScripts(["full/v2/preview.js"]);const P=window.HALCYON_V2||{};await loadScripts((P.files||[]).map(f=>"full/v2/"+f));buildOrders();
   const pc=courseById("pmp");if(pc&&window.HALCYON_RECAPS&&!pc._recaps)pc._recaps=window.HALCYON_RECAPS} // full/v2/recaps.js ("Story so far") is one of the v2 files
 async function boot(){
+  await AUD.ready; // instant when HALCYON_AUDIO_BASE is empty
   await pmpLoad();
   if($("ambtoggle")){ambUI();$("ambtoggle").onchange=e=>{AMB.on=e.target.checked;store.set("amb",AMB.on);AMB.cur=null;AMB.lastSting="";ambSync();savePrefs()};$("ambvol").oninput=e=>{AMB.vol=+e.target.value;store.set("ambvol",AMB.vol);AMB.els[AMB.i].volume=AMB.vol;savePrefs()}}
   if($("storytoggle")){$("storytoggle").checked=STORY();$("storytoggle").onchange=e=>setStoryMode(e.target.checked)}
@@ -1563,7 +1599,7 @@ async function boot(){
 window.HalcyonState=function(){const a=NAR.audio,bk=NAR.page==="book"&&NAR.book,ch=(TRACK==="full"||TRACK==="ref")&&CH?CH:null;
   return {course:COURSE?COURSE.id:"",book:COURSE?(COURSE.full_title||COURSE.title||""):"",track:TRACK,story:!!STORY(),
     chapter:bk?NAR.book.n:ch?ch.num:null,chTitle:ch?ch.title||"":"",key:NAR.key||"",page:bk?(NAR.bsec||""):(NAR.page||""),
-    mode:bk?"audiobook":NAR.page==="car"?"car":NAR.page?"page":"read",ed:bk?NAR.book.ed:"",src:a.currentSrc||a.src||"",t:a.currentTime||0,
+    mode:bk?"audiobook":NAR.page==="car"?"car":NAR.page?"page":"read",ed:bk?NAR.book.ed:"",src:audioLocal(a.currentSrc||a.src||""),t:a.currentTime||0,
     paused:a.paused,listening:!!NAR.listening,timings:NAR.key&&NAR.timings[NAR.key]||null}};
 boot();
 })();
