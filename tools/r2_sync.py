@@ -282,6 +282,7 @@ def cmd_pull(args):
     if not base: return 2
     files = load_manifest()
     if args.course: files = {k: v for k, v in files.items() if any(k.startswith(r) for c in args.course for r in roots_of(c))}
+    if args.match: files = {k: v for k, v in files.items() if any(re.search(m, k) for m in args.match)}
     cache = load_md5_cache(); need = []
     for rel, h in sorted(files.items()):
         p = os.path.join(ROOT, rel)
@@ -412,6 +413,7 @@ def main():
     ap.add_argument("--verify", action="store_true", help="check the public URLs")
     ap.add_argument("--base", help="public base URL for --verify/--pull (default: config.js HALCYON_AUDIO_BASE)")
     ap.add_argument("--all", action="store_true", help="--verify every manifest entry")
+    ap.add_argument("--match", action="append", help="--pull only files whose repo path matches this regex (repeatable); CI uses it to fetch just what the tests play")
     ap.add_argument("--pull", action="store_true", help="download the manifest's mp3s from the public base into this tree (fresh clones, CI)")
     a = ap.parse_args()
     QUIET = a.quiet

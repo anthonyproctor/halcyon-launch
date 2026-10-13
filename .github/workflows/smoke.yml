@@ -37,7 +37,14 @@ jobs:
             voice-samples/*.mp3
           key: r2-audio-${{ hashFiles('audio-manifest.json') }}
           restore-keys: r2-audio-
-      - run: python3 tools/r2_sync.py --pull   # only fetches files the cache doesn't already have
+      - name: Pull the audio the tests play from R2 (cache first)
+        run: >
+          python3 tools/r2_sync.py --pull
+          --match '^audio/(amb/|sting-)'
+          --match '^audio/v2/(pages/f[12]s?/|full-ch0[12]\.mp3|story/full-ch0[12]\.mp3)'
+          --match '^courses/(pilot|cisa)/audio/(pages/f1s?/|full-ch01\.mp3|story/full-ch01\.mp3)'
+          --match '^courses/pilot/audio/pages/f[2-4]s?/'
+          --match '/cast/|^cast/|^voice-samples/'
       - uses: actions/cache/save@v6.1.0   # saved right after the pull, so a failing test run still keeps the audio
         if: always() && steps.audio.outputs.cache-hit != 'true'
         with:
