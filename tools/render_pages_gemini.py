@@ -20,6 +20,7 @@ import difflib, json, os, re, subprocess, sys, tempfile, wave
 import numpy as np
 sys.dont_write_bytecode = True; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gemini_tts as G
+import pace_gate as PG
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SR = G.SR
@@ -71,9 +72,10 @@ def tone_style(st, tone, gender=None):
     return " ".join(keep + [tone]).strip()
 def cast_seg(seg):
     v, st = cast(seg["v"])
-    if not seg.get("tone"): return v, st
+    hint = seg.get("pace_hint")  # set only by the pace pass on a re-roll (see "pace" below); a line without one is sent as always
+    if not seg.get("tone"): return (v, PG.with_hint(st, hint)) if hint else (v, st)
     c = CMAP.get(seg["v"]) or DMAP.get(seg["v"]) or DMAP["woman"]
-    return v, tone_style(st, seg["tone"], c.get("gender"))
+    return v, tone_style(st, PG.with_hint(seg["tone"], hint) if hint else seg["tone"], c.get("gender"))
 def runs_on(who):  # casting "run": true -> this character's lines on a page go to Gemini as one request (see RUNS below)
     c = CMAP.get(who) or DMAP.get(who) or DMAP["woman"]
     return bool(c.get("run")) and os.environ.get("GEMINI_RUNS") != "0"
@@ -411,11 +413,47 @@ todo = pids
 # 3. voice gate (tools/voice_gate.py, VOICE_GATE=0 to turn off): a line whose voice is far from its character's book centroid, or
 #    whose pitch reads opposite to the cast "gender", has its run re-rolled (not for GEMINI_REROLL_SKIP speakers: those are
 #    reported only).
-# Every request that was re-rolled keeps its best take (passes whisper, then coverage, then voice similarity), not just its last.
+# 4. pace gate (tools/pace_gate.py, GEMINI_PACE=0 to turn off): a line read much quicker or slower than its scene and its
+#    character (Sam's rushed "All day." after Wendell's slow lines, PMP v2 ch3) is re-rolled with a pace hint added to its style
+#    ("Unhurried, matching the room." / "Keep it moving, at the pace of the room."), appended to its own tone if it has one. The
+#    hinted line becomes its own request (out of its run, like a toned line), so the take it had stays in the cache and lines
+#    that pass keep exactly the request they always had. A tone cue that asks for the pace (quick, slow) suppresses that flag.
+#    GEMINI_REROLL_SKIP speakers are reported only. Flags land in pages[pid]["pace_flags"] and gate["pace_flags_*"].
+# Every request that was re-rolled keeps its best take (passes whisper, then coverage, then pace, then voice similarity:
+# pace_gate.take_rank), not just its last; a hinted line goes back to its unhinted request when that take ranks higher.
 # Whatever still fails after the last round is listed in the report: pages[pid]["coverage_fail"], ["voice_flags"], and "gate".
 import voice_gate as VG
 ROUNDS = 1 if os.environ.get("GEMINI_REROLL") == "0" else int(os.environ.get("GEMINI_ROUNDS", "3"))
 GATE = os.environ.get("VOICE_GATE", "1") != "0"
+PACE = os.environ.get("GEMINI_PACE", "1") != "0"
+PACE_LINES = {}  # pid -> (the built audio array, lines), so a page that wasn't rebuilt isn't re-measured (held, not id(): ids get reused)
+PACE_ORIG = {}   # (pid, seg index) -> (request key before the hint, its RUN_OF entry), for hinted lines
+def pace_lines(built_pages):
+    out = {}
+    for pid, (audio, spans) in built_pages.items():
+        c = PACE_LINES.get(pid)
+        if c is None or c[0] is not audio:
+            lines, _ = PG.lines_from_words(spec["pages"][pid], timings[pid]["w"], pid)
+            if lines: PG.refine_with_array(lines, audio, SR)
+            PACE_LINES[pid] = c = (audio, lines or [])
+        out[pid] = c[1]
+    return out
+def seg_key(pid, i, seg): return cast_seg(seg) + (request_text(pid, i, seg),)
+def pace_hint(rk, src, hint):
+    """put the hint on every segment that sends request rk with text src (the same line on variant pages) -> its new request key"""
+    hit = [(pid, i) for pid, segs in spec["pages"].items() for i, seg in enumerate(segs)
+           if "t" in seg and not seg.get("pace_hint") and gem_text(seg) == src and seg_key(pid, i, seg) == rk]
+    new = None
+    for pid, i in hit:
+        PACE_ORIG[(pid, i)] = (rk, RUN_OF.pop((pid, i), None)); spec["pages"][pid][i]["pace_hint"] = hint
+        new = seg_key(pid, i, spec["pages"][pid][i])
+    return new
+def pace_report(flags):
+    for pid in report: report[pid]["pace_flags"] = []
+    for f in flags:
+        if f["pid"] in report:
+            report[f["pid"]]["pace_flags"].append({"i": f["i"], "v": f["v"], "flag": f["flag"], "why": f["why"], "src": f["src"][:80],
+                                                   "hinted": bool(spec["pages"][f["pid"]][f["i"]].get("pace_hint"))})
 COV_MAX_MISS = float(os.environ.get("COVERAGE_MAX_MISS", "0.03"))
 BOOK = VG.Book(G.CACHE, course, spec.get("audio", "audio")) if GATE else None
 def gender_of(who): return (CMAP.get(who) or DMAP.get(who) or DMAP["woman"]).get("gender")
@@ -439,6 +477,7 @@ def sentence_missing(src, heard):
     return [x for x in sentences(src) if char_cov(x, heard) < 0.5]
 EMB, HIST = {}, {}  # line key -> (embedding, f0); request key -> {take: score tuple}
 def take_of(sp): return G.current_take(sp["req"], sp["voice"], sp["style"])
+pace_first = None
 def check_page(pid, rnd, audio, spans, heard):
     groups, checks = align(audio, spans, heard)
     for k, c in enumerate(checks): c["miss"] = sentence_missing(c["src"], c["heard"])
@@ -486,7 +525,7 @@ for rnd in range(ROUNDS):
                        "missing_words": miss, "coverage_fail": [{"i": c["i"], "v": c["v"], "cov": c["ccov"], "missing": c["miss"], "src": c["src"], "heard": c["heard"]} for c in cov_fail]}
         for c in checks:
             sp = next(s for s in spans if s["i"] == c["i"]); rk = (sp["voice"], sp["style"], sp["req"])
-            h = HIST.setdefault(rk, {}).setdefault(take_of(sp), [True, True, 1.0, 1.0])
+            h = HIST.setdefault(rk, {}).setdefault(take_of(sp), PG.new_hist())
             h[0] &= not c["bad"]; h[1] &= c not in cov_fail; h[3] = min(h[3], c["cov"])
             if c in cov_fail or (c["bad"] and c["v"] not in REROLL_SKIP): bump.add(rk); why.setdefault(rk, set()).add("coverage" if c in cov_fail else "whisper")
     if GATE:
@@ -497,29 +536,58 @@ for rnd in range(ROUNDS):
                                                     "f0": round(L["f0"]) if L["f0"] else None, "src": L["src"][:80]})
             if L["who"] not in REROLL_SKIP: bump.add(L["req"]); why.setdefault(L["req"], set()).add("voice")
         for L in VL:
-            h = HIST.setdefault(L["req"], {}).setdefault(L["take"], [True, True, 1.0, 1.0])
+            h = HIST.setdefault(L["req"], {}).setdefault(L["take"], PG.new_hist())
             if L.get("sim") is not None: h[2] = min(h[2], L["sim"])
         if gate_first is None: gate_first = sum(len(r.get("voice_flags", [])) for r in report.values())
-    if not bump or rnd == ROUNDS - 1: break
-    print(f"round {rnd}: re-rolling {len(bump)} requests ({', '.join(sorted({w for x in why.values() for w in x}))})", file=sys.stderr, flush=True)
+    fresh = set()  # new requests: a line's first take with a pace hint
+    if PACE:
+        flags, scores = PG.check_pages(pace_lines(built_all), {pid: sp for pid, (_, sp) in built_all.items()}, REROLL_SKIP)
+        pace_report(flags)
+        if pace_first is None: pace_first = len(flags)
+        for pid, i, ok, d in scores:
+            sp = next(s for s in built_all[pid][1] if s["i"] == i)
+            h = HIST.setdefault((sp["voice"], sp["style"], sp["req"]), {}).setdefault(take_of(sp), PG.new_hist())
+            h[4] &= ok; h[5] = max(h[5], d)
+        if rnd < ROUNDS - 1:
+            for f in flags:
+                if f["report_only"]: continue
+                seg = spec["pages"][f["pid"]][f["i"]]
+                if seg.get("pace_hint"): bump.add(f["req"]); why.setdefault(f["req"], set()).add("pace"); continue  # hinted already: re-roll it
+                new = pace_hint(f["req"], f["src"], f["hint"])
+                if new: fresh.add(new); jobs[new] = None; why.setdefault(new, set()).add("pace")
+    if not (bump or fresh) or rnd == ROUNDS - 1: break
+    print(f"round {rnd}: re-rolling {len(bump)} requests, {len(fresh)} with a pace hint ({', '.join(sorted({w for x in why.values() for w in x}))})", file=sys.stderr, flush=True)
     for (v, st, t) in bump: G.bump_take(t, v, st); jobs[(v, st, t)] = None
-    run_jobs(list(bump))
+    run_jobs(list(bump | fresh))
     todo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg
-                   and (cast_seg(seg) + (request_text(pid, i, seg),)) in bump})
-# keep each re-rolled request's best take: passes whisper, then coverage, then the best voice similarity, then coverage share
+                   and seg_key(pid, i, seg) in (bump | fresh)})
+# keep each re-rolled request's best take: passes whisper, then coverage, then pace, then pace distance, then the best voice
+# similarity, then coverage share (pace_gate.take_rank)
 pin = {}
 for rk, takes in HIST.items():
     if len(takes) < 2: continue
-    best = max(takes, key=lambda t: (takes[t][0], takes[t][1], round(takes[t][2], 2), takes[t][3]))
+    best = max(takes, key=lambda t: PG.take_rank(takes[t]))
     if best != G.current_take(rk[2], rk[0], rk[1]): pin[rk] = best
-if pin:
-    with G._lock:
-        tk = G._load_takes()
-        for (v, st, t), k in pin.items(): tk[G.base_hash(t, v, st)] = k
-        tmpf = f"{G._TAKES_P}.{os.getpid()}.tmp"; json.dump(tk, open(tmpf, "w")); os.replace(tmpf, G._TAKES_P)
+# a pace hinted line goes back to its unhinted request when that request's best take ranks higher than the hinted one's
+reverted = set()
+for (pid, i), (rk0, run0) in list(PACE_ORIG.items()):
+    seg = spec["pages"][pid][i]
+    if not seg.get("pace_hint"): continue
+    rk1 = seg_key(pid, i, seg); h0, h1 = HIST.get(rk0, {}), HIST.get(rk1, {})
+    if h0 and h1 and max(map(PG.take_rank, h0.values())) > max(map(PG.take_rank, h1.values())):
+        del seg["pace_hint"]
+        if run0: RUN_OF[(pid, i)] = run0
+        reverted.add(pid)
+if reverted: print(f"pace: kept the unhinted take on {len(reverted)} pages", file=sys.stderr, flush=True)
+if pin or reverted:
+    if pin:
+        with G._lock:
+            tk = G._load_takes()
+            for (v, st, t), k in pin.items(): tk[G.base_hash(t, v, st)] = k
+            tmpf = f"{G._TAKES_P}.{os.getpid()}.tmp"; json.dump(tk, open(tmpf, "w")); os.replace(tmpf, G._TAKES_P)
     for (v, st, t), k in pin.items():
         p = G._cache_path(t, v, st, k); jobs[(v, st, t)] = G.clean(G._wav_to_float(open(p + ".wav", "rb").read()))
-    redo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg and (cast_seg(seg) + (request_text(pid, i, seg),)) in pin})
+    redo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg and seg_key(pid, i, seg) in pin} | reverted)
     print(f"kept an earlier, better take for {len(pin)} requests on {len(redo)} pages", file=sys.stderr, flush=True)
     for pid in redo:
         audio, spans = assemble(spec["pages"][pid]); built_all[pid] = (audio, spans)
@@ -530,12 +598,15 @@ if pin:
         for L in flagged:
             report[L["pid"]]["voice_flags"].append({"i": L["i"], "v": L["who"], "why": L["why"], "sim": round(L["sim"], 3) if L["sim"] is not None else None,
                                                     "f0": round(L["f0"]) if L["f0"] else None, "src": L["src"][:80]})
+if PACE:
+    flags, _ = PG.check_pages(pace_lines(built_all), {pid: sp for pid, (_, sp) in built_all.items()}, REROLL_SKIP); pace_report(flags)
 if GATE:
     by = {}
     for L in voice_lines(built_all):
         if not L.get("tone"): by.setdefault(L["who"], []).append(L["emb"])  # toned lines don't move the book voice
     BOOK.save(key, by)
 gate = {"voice_flags_first": gate_first, "voice_flags_final": sum(len(r.get("voice_flags", [])) for r in report.values()),
+        "pace_flags_first": pace_first, "pace_flags_final": sum(len(r.get("pace_flags", [])) for r in report.values()),
         "coverage_fail_pages": sorted(pid for pid, r in report.items() if r.get("coverage_fail")), "characters": gate_summary,
         "gender_fail": sorted(w for w, x in gate_summary.items() if x.get("gender_fail"))}
 for pid in gate["coverage_fail_pages"]: print(f"COVERAGE FAIL {key} {pid}: " + "; ".join(f"{c['v']} missing {c['missing'] or c['cov']}" for c in report[pid]["coverage_fail"])[:400], file=sys.stderr, flush=True)

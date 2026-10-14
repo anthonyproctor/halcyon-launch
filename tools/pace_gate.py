@@ -182,12 +182,19 @@ def lines_from_words(segs, words, pid):
 # threshold (render_pages_gemini.py align()), followed until TRIM_GAP_S of silence or the neighbouring line. Read only.
 TRIM_GAP_S = 0.15
 def refine_with_audio(lines, mp3):
+    """the page mp3 on disk -> refine_with_array"""
     try:
         import numpy as np
         raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", mp3, "-f", "s16le", "-ac", "1", "-ar", "16000", "-"], capture_output=True, check=True).stdout
     except Exception:
         return False
-    a = np.frombuffer(raw, "<i2").astype(np.float32) / 32768; hop = 160; H = hop / 16000; n = len(a) // hop
+    return refine_with_array(lines, np.frombuffer(raw, "<i2").astype(np.float32) / 32768, 16000)
+
+def refine_with_array(lines, a, sr):
+    """lines of one page + that page's audio (float samples at sr, as render_pages_gemini.py builds it) -> start and end pushed
+    out to the voiced audio, then finish()"""
+    import numpy as np
+    hop = sr // 100; H = hop / sr; n = len(a) // hop
     if n < 2: return False
     env = np.sqrt((a[:n * hop].reshape(n, hop) ** 2).mean(1) + 1e-12); V = env > max(0.006, float(np.percentile(env, 90)) * 0.06)
     gap = int(TRIM_GAP_S / H); ctc = [(L["start"], L["end"]) for L in lines]
@@ -233,6 +240,7 @@ def judge(pages, char_base):
     flagged = []
     for pid, lines in pages.items():
         for n, L in enumerate(lines):
+            for k in ("flag", "why", "expected", "vs_scene", "vs_char"): L.pop(k, None)  # judged again each render round
             short = L["words"] < LONG_MIN_WORDS
             if skip_reason(L): continue
             sc = scene_baseline(lines, n, SHORT_SCENE_K if short else SCENE_K); ch = char_base.get(L["who"])
@@ -266,6 +274,57 @@ def judge(pages, char_base):
 def severity(L):
     if L["words"] >= LONG_MIN_WORDS: return abs(math.log(min(L["vs_scene"], L["vs_char"]) if L["flag"] == "fast" else max(L["vs_scene"], L["vs_char"])))
     return abs(math.log(L["dur"] / L["expected"]))
+
+# ---- used by render_pages_gemini.py (the pace pass in its check rounds). Pure functions, no audio, no Gemini.
+PACE_HINT = {"fast": "Unhurried, matching the room.", "slow": "Keep it moving, at the pace of the room."}
+def hint_for(flag): return PACE_HINT[flag]
+def with_hint(text, hint):
+    """a style or tone with a pace hint added at the end: "Slow, tired." + hint -> "Slow, tired. Unhurried, matching the room." """
+    text = (text or "").strip()
+    if not text: return hint
+    return text + ("" if re.search(r"[.!?]$", text) else ".") + " " + hint
+
+def pace_distance(L):
+    """how far a judged line is from what its scene predicts (0 = right on it), or None when it wasn't judged"""
+    if L.get("scene") is None or skip_reason(L): return None
+    if L["words"] >= LONG_MIN_WORDS: return abs(math.log(L["pace"] / L["scene"]))
+    if L.get("expected"): return abs(math.log(L["dur"] / L["expected"]))
+    return None
+
+def new_hist():
+    """one take's record in render_pages_gemini.py HIST: [whisper ok, coverage ok, worst voice sim, worst coverage share,
+    pace ok, worst pace distance]"""
+    return [True, True, 1.0, 1.0, True, 0.0]
+def take_rank(h):
+    """sort key for keep best (higher is better): whisper, then coverage, then pace ok, then pace distance (to 0.1, so takes
+    that pace alike fall through), then voice similarity (to 0.01), then coverage share"""
+    h = list(h) + new_hist()[len(h):]
+    return (h[0], h[1], h[4], -round(h[5], 1), round(h[2], 2), h[3])
+
+def check_pages(pages, spans, skip=()):
+    """the pace pass of a render round. pages: {pid: lines (lines_from_words + refine_with_array)}, spans: {pid: the page's
+    spans from assemble()} -> (flags, scores).
+    flags: one per flagged line: {pid, i, v, flag, why, src, req: (voice, style, request text), hint, report_only}
+    scores: (pid, i, ok, distance) for every judged line, for HIST"""
+    seen, uniq = set(), []
+    for ls in pages.values():
+        for L in ls:
+            k = (L["who"], L["text"], round(L["dur"], 2))
+            if k not in seen: seen.add(k); uniq.append(L)
+    base = char_baselines(uniq)
+    flagged = {(L["pid"], L["i"]) for L in judge(pages, base)}
+    flags, scores = [], []
+    for pid, ls in pages.items():
+        by_i = {sp["i"]: sp for sp in spans.get(pid, [])}
+        for L in ls:
+            d = pace_distance(L); sp = by_i.get(L["i"])
+            if sp is None: continue
+            if d is not None: scores.append((pid, L["i"], (pid, L["i"]) not in flagged, d))
+            if (pid, L["i"]) in flagged:
+                flags.append({"pid": pid, "i": L["i"], "v": L["who"], "flag": L["flag"], "why": L["why"], "src": sp["src"],
+                              "req": (sp["voice"], sp["style"], sp["req"]), "hint": hint_for(L["flag"]), "report_only": L["who"] in skip,
+                              "dur": L["dur"], "scene": L["scene"], "expected": L.get("expected")})
+    return flags, scores
 
 # ---- loading a course
 def audio_dir(course): return os.path.join(ROOT, "audio/v2") if course in ("pmp", "pmp-v2", "v2") else os.path.join(ROOT, "courses", course, "audio")

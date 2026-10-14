@@ -7,6 +7,10 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(
 import pace_gate as P
 
 
+def load_fixture():
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "pace_ch3_open_all_day.json")) as f: return json.load(f)
+
+
 def page(lines, gap=0.6):
     """lines: [(who, text, words per second)] -> (segments, timings words), each word spread evenly over its line"""
     segs, words, t = [], [], 0.2
@@ -107,7 +111,7 @@ class PaceGate(unittest.TestCase):
 class RealData(unittest.TestCase):
     """PMP v2 ch3, page open: the rushed "All day." heard by ear on 2026-10-13, frozen as text and timings (no audio)."""
     def test_all_day_on_ch3_open_is_flagged(self):
-        fx = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "pace_ch3_open_all_day.json")))
+        fx = load_fixture()
         segs, words = [], []
         for x in fx["lines"]:
             segs.append({"v": x["who"], "t": x["text"], **({"tone": x["tone"]} if x["tone"] else {})}); words += x["words"]
@@ -120,6 +124,74 @@ class RealData(unittest.TestCase):
         self.assertEqual(hit[0]["flag"], "fast")
         self.assertGreaterEqual(hit[0]["expected"] / hit[0]["dur"], 2.0)  # well over the SHORT_FAST_X bar, not scraping it
         self.assertEqual([x["text"] for x in P.judge({"open": L}, fx["character_baselines"])], ["All day."])  # and nothing else here
+
+
+class RenderHooks(unittest.TestCase):
+    """the pure pieces render_pages_gemini.py uses for its pace pass (no TTS, no audio)"""
+    def fixture_page(self, tone=None):
+        fx = load_fixture()
+        segs, words = [], []
+        for x in fx["lines"]:
+            t = tone if (tone is not None and x["text"] == "All day.") else x["tone"]
+            segs.append({"v": x["who"], "t": x["text"], **({"tone": t} if t else {})}); words += x["words"]
+        L, why = P.lines_from_words(segs, words, "open")
+        for line, x in zip(L, fx["lines"]): line["start"], line["end"] = x["start"], x["end"]
+        P.finish(L)
+        # the spans assemble() would hand the loop: one per said segment, keyed like the renderer's request keys
+        spans = [{"i": line["i"], "v": line["who"], "voice": "V_" + line["who"], "style": "style of " + line["who"],
+                  "src": line["text"], "req": line["text"]} for line in L]
+        return {"open": L}, {"open": spans}
+
+    def test_refine_with_array_finds_the_voiced_audio(self):
+        try: import numpy as np
+        except ImportError: self.skipTest("numpy")
+        sr = 24000; a = np.zeros(sr * 3, np.float32)
+        a[int(0.9 * sr):int(1.6 * sr)] = 0.3 * np.sin(np.arange(int(0.7 * sr)) * 2 * np.pi * 180 / sr)  # speech from 0.9 to 1.6 s
+        segs, words = [{"v": "Sam", "t": "All day."}], [["All", 0.95, 1.05], ["day", 1.1, 1.3]]
+        L, _ = P.lines_from_words(segs, words, "open")
+        self.assertTrue(P.refine_with_array(L, a, sr))
+        self.assertAlmostEqual(L[0]["start"], 0.9, delta=0.02); self.assertAlmostEqual(L[0]["end"], 1.6, delta=0.02)
+
+    def test_hint_builder(self):
+        self.assertEqual(P.hint_for("fast"), "Unhurried, matching the room.")
+        self.assertEqual(P.with_hint("", P.hint_for("fast")), "Unhurried, matching the room.")
+        self.assertEqual(P.with_hint("Slow, tired, a little rueful.", P.hint_for("fast")), "Slow, tired, a little rueful. Unhurried, matching the room.")
+        self.assertEqual(P.with_hint("Dry and calm", P.hint_for("slow")), "Dry and calm. Keep it moving, at the pace of the room.")
+
+    def test_keep_best_order(self):
+        H = P.new_hist
+        def h(**k):
+            x = H(); names = ["whisper", "cov", "sim", "share", "pace", "dist"]
+            for n, v in k.items(): x[names.index(n)] = v
+            return x
+        # whisper and coverage come first, then pace ok, then pace distance, then voice similarity
+        self.assertGreater(P.take_rank(h(whisper=True, pace=False)), P.take_rank(h(whisper=False, pace=True)))
+        self.assertGreater(P.take_rank(h(cov=True, pace=False)), P.take_rank(h(cov=False, pace=True)))
+        self.assertGreater(P.take_rank(h(pace=True, sim=0.90)), P.take_rank(h(pace=False, sim=0.99)))
+        self.assertGreater(P.take_rank(h(dist=0.1, sim=0.90)), P.take_rank(h(dist=0.6, sim=0.99)))
+        self.assertGreater(P.take_rank(h(dist=0.12, sim=0.97)), P.take_rank(h(dist=0.08, sim=0.93)))  # same pace to 0.1: voice decides
+        self.assertEqual(P.take_rank([True, True, 0.95, 1.0]), P.take_rank([True, True, 0.95, 1.0, True, 0.0]))  # old 4 field records
+
+    def test_loop_bumps_all_day_with_a_pace_hint(self):
+        pages, spans = self.fixture_page()
+        flags, scores = P.check_pages(pages, spans)
+        self.assertEqual([f["src"] for f in flags], ["All day."])
+        f = flags[0]
+        self.assertEqual((f["flag"], f["hint"], f["report_only"]), ("fast", "Unhurried, matching the room.", False))
+        self.assertEqual(f["req"], ("V_Sam", "style of Sam", "All day."))
+        self.assertIn(("open", f["i"], False), [(p, i, ok) for p, i, ok, _ in scores])
+        self.assertTrue(all(ok for p, i, ok, _ in scores if i != f["i"]))
+
+    def test_reroll_skip_speaker_is_report_only(self):
+        pages, spans = self.fixture_page()
+        flags, _ = P.check_pages(pages, spans, skip={"Sam"})
+        self.assertTrue(flags[0]["report_only"])
+
+    def test_tone_asking_for_quick_suppresses_the_flag(self):
+        pages, spans = self.fixture_page(tone="Clipped, quick.")
+        flags, scores = P.check_pages(pages, spans)
+        self.assertEqual(flags, [])
+        self.assertTrue(all(ok for *_, ok, _ in scores))
 
 
 if __name__ == "__main__":
