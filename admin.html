@@ -4,9 +4,9 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
 <title>Halcyon Admin</title>
 <style>
-:root{--bg:#f3f1ec;--page:#fbfaf7;--ink:#1d2024;--muted:#5d636b;--line:#dcd8cf;--soft:#ece9e2;--accent:#28536b;--on:#fff;--good:#2e7350;--bad:#a63c32;color-scheme:light}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121417;--page:#1a1d21;--ink:#e7e5e0;--muted:#a0a5ab;--line:#2e3238;--soft:#23272c;--accent:#8dbcd4;--on:#121417;--good:#74c69a;--bad:#ec8b80;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#121417;--page:#1a1d21;--ink:#e7e5e0;--muted:#a0a5ab;--line:#2e3238;--soft:#23272c;--accent:#8dbcd4;--on:#121417;--good:#74c69a;--bad:#ec8b80;color-scheme:dark}
+:root{--bg:#f3f1ec;--page:#fbfaf7;--ink:#1d2024;--muted:#5d636b;--line:#dcd8cf;--soft:#ece9e2;--accent:#28536b;--on:#fff;--good:#2e7350;--bad:#a63c32;--warn:#94660c;color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121417;--page:#1a1d21;--ink:#e7e5e0;--muted:#a0a5ab;--line:#2e3238;--soft:#23272c;--accent:#8dbcd4;--on:#121417;--good:#74c69a;--bad:#ec8b80;--warn:#e0ab48;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121417;--page:#1a1d21;--ink:#e7e5e0;--muted:#a0a5ab;--line:#2e3238;--soft:#23272c;--accent:#8dbcd4;--on:#121417;--good:#74c69a;--bad:#ec8b80;--warn:#e0ab48;color-scheme:dark}
 *{box-sizing:border-box}html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
 a{color:var(--accent)}
@@ -113,11 +113,36 @@ details summary{cursor:pointer;min-height:24px;padding-block:4px;color:var(--acc
   .chs li{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t u" "s s"}
   .chs .ct{grid-area:t}.chs .cu{grid-area:u}.chs .cs{grid-area:s;white-space:normal}
 }
+/* production board (lib/board.js): book summaries, the ear list, and a chapter grid per book */
+.psum{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:14px}
+.psum .card{display:grid;gap:6px;min-width:0}
+.psum h3{margin:0;font-size:16px}.psum .cert{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.pbar{display:grid;grid-template-columns:58px 1fr 44px;gap:8px;align-items:center;font-size:12.5px;color:var(--muted)}
+.ptrack{height:6px;border-radius:3px;background:var(--soft);overflow:hidden}.pfill{height:100%;background:var(--good)}
+.pnum{font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;white-space:nowrap}
+.st i{width:9px;height:9px;border-radius:50%;background:var(--muted);opacity:.45;flex:none}
+.st.done i{background:var(--good);opacity:1}.st.partial i{background:var(--warn);opacity:1}.st.running i{background:var(--accent);opacity:1}
+.st.queued i{background:transparent;border:2px solid var(--accent);opacity:1;width:7px;height:7px}.st.todo,.st.na{color:var(--muted)}
+.pbook{margin-top:16px}.pbook h3{margin:0 0 4px;font-size:17px}
+.pgrid{min-width:640px}.pgrid td{vertical-align:top}.pgrid td.n{font-variant-numeric:tabular-nums;color:var(--muted);width:30px}
+.pgrid .cn{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.ears{display:grid;gap:10px}
+.ear{border-left:4px solid var(--line);display:grid;gap:6px;min-width:0}
+.ear.ok{border-left-color:var(--good)}.ear.redo{border-left-color:var(--bad)}
+.ear .ln{font-size:16px;margin:0;font-weight:600}
+.ear .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ear audio{max-width:100%;height:36px}
+.ear .vb{min-height:36px;min-width:64px}
+.ear .vb[aria-pressed="true"].okb{background:var(--good);border-color:var(--good);color:var(--on)}
+.ear .vb[aria-pressed="true"].redob{background:var(--bad);border-color:var(--bad);color:var(--on)}
+.ear textarea{width:100%;box-sizing:border-box;min-height:38px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;resize:vertical}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin:6px 0 2px}
 </style>
 </head>
 <body><div class="wrap">
 <div class="top"><p class="muted" style="margin:0"><a href="/" class="backgame">Back to the game</a></p>
-<nav class="jump" aria-label="Sections"><a href="#players">Players</a><a href="#invites-sec">Invites</a><a href="#list-sec">Book list</a><a href="#qa-sec">QA reports</a></nav></div>
+<nav class="jump" aria-label="Sections"><a href="#players">Players</a><a href="#prod-sec">Production</a><a href="#invites-sec">Invites</a><a href="#list-sec">Book list</a><a href="#qa-sec">QA reports</a></nav></div>
 <h1>Halcyon Admin</h1>
 <div id="msg" class="muted" role="status" aria-live="polite"></div>
 
@@ -131,6 +156,18 @@ details summary{cursor:pointer;min-height:24px;padding-block:4px;color:var(--acc
 </div>
 <p class="muted hint">Tap a name for every chapter. Tester turns on QA mode, the Flag button and the test profile for that player. Admins always have them.</p>
 <div class="plist"><div class="pr ph" aria-hidden="true"><span>Player</span><span>Progress</span><span>Last active</span><span>Joined</span><span>Tester</span><span></span></div><div id="users" role="list" aria-label="Players"></div></div>
+</section>
+
+<section id="prod-sec" aria-labelledby="prod-h">
+<h2 id="prod-h">Production</h2>
+<p id="produpd" class="muted" style="margin:0 0 10px"></p>
+<div id="prodsum" class="psum"></div>
+<h3 style="margin:4px 0 8px;font-size:17px">Ear list</h3>
+<p class="muted" style="margin:0 0 8px">Play the line, then mark it. OK keeps the take. Redo means Claude re-records just that line. Notes are optional.</p>
+<div id="ears" class="ears"></div>
+<details id="earsdone-w" style="margin-top:10px" hidden><summary id="earsdone-s">Already marked</summary><div id="earsdone" class="ears" style="margin-top:8px"></div></details>
+<div class="legend muted" aria-label="What the dots mean"><span class="st done"><i></i>Done</span><span class="st partial"><i></i>Partly</span><span class="st running"><i></i>Running now</span><span class="st queued"><i></i>Queued</span><span class="st todo"><i></i>Not yet</span></div>
+<div id="prodbooks"></div>
 </section>
 
 <section id="invites-sec" aria-labelledby="invites-h">
@@ -398,6 +435,38 @@ $("make").onclick=async()=>{const r=await api("/api/admin?action=invite",{method
   $("newlink").innerHTML=`<code id="lk">${esc(link)}</code> <button class="btn ghost sm" id="cp" type="button">Copy</button>`;
   $("cp").onclick=()=>navigator.clipboard.writeText(link).then(()=>$("cp").textContent="Copied").catch(()=>{const g=document.createRange();g.selectNodeContents($("lk"));getSelection().removeAllRanges();getSelection().addRange(g)});
   $("note").value="";load()};
+/* ===== production board (lib/board.js via /api/admin?action=board) ===== */
+const PSTAGES=[["text","Written"],["exam","Exam checked"],["audio","Audio"],["heard","Heard"],["live","Live"]];
+const PLAB={done:"Done",partial:"Partly",running:"Running",queued:"Queued",todo:"Not yet",na:"Not needed"};
+let BOARD=null;
+const pst=v=>{v=PLAB[v]?v:"todo";return `<span class="st ${v}"><i></i>${PLAB[v]}</span>`};
+function earHTML(e){const v=e.verdict||"",id=esc(e.id);return `<div class="card ear ${esc(v)}" data-ear="${id}">
+<div class="muted">${esc(e.book)} · ${esc(e.where)}</div><p class="ln">${esc(e.line)}</p><div>Listen for: ${esc(e.listen_for)}</div>
+${e.url?`<audio controls preload="none" src="${esc(e.url)}"></audio>`:""}
+<div class="row">${e.url?`<a class="btn ghost sm" href="${esc(e.url)}" target="_blank" rel="noopener">Open audio</a>`:""}<button class="btn ghost vb okb" type="button" data-v="ok" aria-pressed="${v==="ok"}">OK</button><button class="btn ghost vb redob" type="button" data-v="redo" aria-pressed="${v==="redo"}">Redo</button></div>
+<label class="muted" for="en-${id}">Note (optional)</label><textarea id="en-${id}" data-note="${id}" placeholder="What sounded off?">${esc(e.note||"")}</textarea></div>`}
+function renderEars(){if(!BOARD)return;document.querySelectorAll("textarea[data-note]").forEach(t=>{const e=BOARD.ears.find(x=>x.id===t.dataset.note);if(e)e.note=t.value}); // keep a note being typed through a redraw
+  const open=BOARD.ears.filter(e=>!e.verdict),done=BOARD.ears.filter(e=>e.verdict);
+  $("ears").innerHTML=open.length?open.map(earHTML).join(""):`<div class="card muted">Nothing to hear right now. When a recording finishes, the lines that need your ear show up here.</div>`;
+  $("earsdone").innerHTML=done.map(earHTML).join("");$("earsdone-w").hidden=!done.length;$("earsdone-s").textContent=`Already marked (${done.length})`}
+function renderBoard(){if(!BOARD)return;const B=BOARD.books;
+  $("produpd").textContent=BOARD.updated?`Updated ${BOARD.updated}.`:"Not filled in yet.";
+  $("prodsum").innerHTML=B.map(b=>{const n=b.planned||b.chapters.length,c=k=>b.chapters.filter(x=>x[k]==="done").length;
+    return `<div class="card" data-book="${esc(b.id)}"><div><div class="cert">${esc(b.cert)}</div><h3>${esc(b.title)}</h3></div>${[["text","Written"],["audio","Audio"],["heard","Heard"],["live","Live"]].map(([k,l])=>{const d=c(k);return `<div class="pbar"><span>${l}</span><div class="ptrack"><div class="pfill" style="width:${n?Math.round(100*d/n):0}%"></div></div><span class="pnum" data-count="${k}">${d}/${n}</span></div>`}).join("")}</div>`}).join("");
+  $("prodbooks").innerHTML=B.map(b=>`<div class="pbook"><h3>${esc(b.title)}</h3>${b.note?`<p class="muted" style="margin:0 0 6px">${esc(b.note)}</p>`:""}<div class="tw"><table class="pgrid"><tr><th>Ch</th><th>Chapter</th>${PSTAGES.map(s=>`<th>${s[1]}</th>`).join("")}</tr>${
+    b.chapters.map(c=>`<tr><td class="n">${esc(c.n)}</td><td><b>${esc(c.title)}</b>${c.note?`<span class="cn">${esc(c.note)}</span>`:""}</td>${PSTAGES.map(s=>`<td>${pst(c[s[0]])}</td>`).join("")}</tr>`).join("")}</table></div></div>`).join("");
+  renderEars()}
+async function loadBoard(){const r=await api("/api/admin?action=board");if(!$("produpd"))return; // not an admin: load() has replaced the page
+  if(!r.ok){$("produpd").textContent="Couldn't load the production board.";return}
+  BOARD={books:r.books||[],ears:r.ears||[],updated:r.updated||null};renderBoard()}
+document.addEventListener("click",async ev=>{const b=ev.target.closest(".ear .vb");if(!b||!BOARD)return;const id=b.closest("[data-ear]").dataset.ear,e=BOARD.ears.find(x=>x.id===id);if(!e)return;
+  const v=e.verdict===b.dataset.v?"":b.dataset.v;b.disabled=true;
+  const r=await api("/api/admin?action=ear_verdict",{method:"POST",body:JSON.stringify({id,verdict:v})});
+  if(r.ok){e.verdict=r.verdict;renderEars()}else{b.disabled=false;$("msg").textContent=r.error||"Couldn't save that. Try again."}});
+const NOTE_T={};document.addEventListener("input",ev=>{const t=ev.target.closest("textarea[data-note]");if(!t||!BOARD)return;const id=t.dataset.note;
+  clearTimeout(NOTE_T[id]);NOTE_T[id]=setTimeout(async()=>{const r=await api("/api/admin?action=ear_note",{method:"POST",body:JSON.stringify({id,note:t.value})});
+    const e=BOARD.ears.find(x=>x.id===id);if(r.ok&&e)e.note=r.note;else if(!r.ok)$("msg").textContent=r.error||"Couldn't save that note."},700)});
+loadBoard();
 load();
 </script>
 </body></html>

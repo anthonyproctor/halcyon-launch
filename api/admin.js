@@ -1,8 +1,10 @@
 import { sql, currentUser, sameOrigin, body, send, newToken, ensureUserColumns, hasLastLogin } from "../lib/server.js";
 import { ensureListTables } from "../lib/list.js";
 import { makeEnsureMe, attachStudy } from "../lib/me.js";
+import { makeBoard } from "../lib/board.js";
 
 const ensureMe = makeEnsureMe(sql); // user_profiles, made on first use like the profile page does
+const board = makeBoard(sql); // the production board (lib/board.js): chapter stages and the ear list, tables made on first use
 
 export default async function handler(req, res) {
   if (!sameOrigin(req)) return send(res, 403, { error: "Bad origin." });
@@ -49,8 +51,13 @@ export default async function handler(req, res) {
       }
       return send(res, 200, { signups: rows });
     }
+    // the production board: every book's chapters by stage, and the ear list with the admin's OK or Redo
+    if (action === "board" && req.method === "GET") return send(res, 200, await board.get());
     if (req.method !== "POST") return send(res, 405, { error: "Method not allowed." });
     const b = await body(req);
+    if (action === "board_put") return send(res, 200, await board.put(b));
+    if (action === "ear_verdict") { const r = await board.verdict(b); return send(res, r.status, r.body); }
+    if (action === "ear_note") { const r = await board.note(b); return send(res, r.status, r.body); }
     if (action === "invite") {
       const token = newToken(), note = String(b.note || "").slice(0, 80);
       await sql()`insert into invites(token,note,created_by) values(${token},${note},${u.id})`;
