@@ -1711,6 +1711,13 @@ function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
 const LIBKEY=99990;
 function libget(){const L=store.get("c"+LIBKEY,null)||{};return {pins:L.pins||[],last:L.last||{}}}
 function libput(L){L.at=Date.now();store.set("c"+LIBKEY,L);if(SYNC)SYNC(LIBKEY,JSON.parse(JSON.stringify(L)))}
+/* account settings (99991, approved 2026-10-13): reader settings that follow the player to every device, like the Library record above.
+   Today just showwho ("Show who's speaking", on by default). qa.js keeps the device copy (halcyon.showwho) and calls HalcyonSetting on a change;
+   at sign in the account's value wins and qa.js hears about it through the "halcyon-settings" event. The test profile never syncs (SYNC stays null). */
+const SETKEY=99991;
+window.HalcyonSetting=function(k,v){const S=store.get("c"+SETKEY,null)||{};S[k]=v;S.at=Date.now();store.set("c"+SETKEY,S);if(SYNC)SYNC(SETKEY,JSON.parse(JSON.stringify(S)))};
+function settingsPull(){const S=store.get("c"+SETKEY,null);if(S&&typeof S.showwho==="boolean"){try{localStorage.setItem("halcyon.showwho",JSON.stringify(S.showwho))}catch(e){}}
+  try{document.dispatchEvent(new CustomEvent("halcyon-settings"))}catch(e){}}
 function libTouch(where){if(!COURSE)return;const L=libget();L.last[COURSE.id]={...where,at:Date.now()};libput(L)}
 // a course whose script is loaded and whose mock bank is empty: an old "last played: Mock exam" entry reads as the course home
 function noMockKnown(id){const d=id==="pmp"?{mock:window.HALCYON_MOCK}:(window.HALCYON_DATA||{})[id];return !!(d&&Array.isArray(d.mock)&&!d.mock.some(p=>p&&p.questions&&p.questions.length))}
@@ -1819,7 +1826,7 @@ async function boot(){
   /* test profile (QA): signed in so Flag still works, but the server's progress never lands in local storage and SYNC stays off, so
      nothing reaches /api/progress; the real namespace is left exactly as it was. */
   if(!TESTP){clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
-    SYNC=(n,st,ka)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st}),keepalive:!!ka}).catch(()=>{});applyPrefs(lget().prefs)}
+    SYNC=(n,st,ka)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st}),keepalive:!!ka}).catch(()=>{});applyPrefs(lget().prefs);settingsPull()}
   USERNAME=me.user.name||"";
   document.querySelector(".rail").hidden=false;$("usercard").hidden=false;meNav();$("adminlink").hidden=!me.user.admin;
   $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();if(PROF.testKeys)PROF.testKeys().forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});location.href="/"}; // test profile data goes with the account that made it

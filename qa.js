@@ -3,7 +3,7 @@
    QA on:  a name chip before every spoken line (plus the Gemini voice id when the page's timings.json carries a "_voices" map),
            a small bar while a page plays (book, chapter, page id, line, speaker, time) with a Flag button,
            and right click or press and hold on any line to flag that line.
-   "Show who's speaking" is the plain reader setting: name chips only, nothing else.
+   "Show who's speaking" is the plain reader setting: name chips only, nothing else. On by default and synced to the account (2026-10-13).
    Reports go to /api/qa-report (lib/qa.js); tools/qa_pull.mjs pulls them. The engine's read only hook is window.HalcyonState (engine.js).
    Test profile (profile.js, approved 2026-10-12): with QA mode on, a "Test profile" switch on the Guide page and on the QA bar moves all
    progress to a separate scratch namespace, pauses progress sync and page views, and shows a "Test profile" banner on every screen.
@@ -20,7 +20,7 @@ const SP="halcyon.";
 const store={get(k,d){try{const v=localStorage.getItem(SP+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(SP+k,JSON.stringify(v))}catch(e){}}};
 const TYPES=[["wrong_voice","Wrong voice"],["text_mismatch","Text doesn't match audio"],["voice_changed","Voice changed mid-scene"],["mispronounced","Mispronounced"],["highlight_off","Highlight off"],["audio_glitch","Audio glitch"],["typo","Typo"],["story","Story or fact"],["other","Other"]];
 const LINESEL="h1, h2, .story p, .choice"; // a "line" is a heading, a story paragraph or a choice, counted in page order
-const QA={on:false,who:store.get("showwho",false)};
+const QA={on:false,who:store.get("showwho",true)}; // name tags are on unless this player turned them off (2026-10-13); the choice follows the account (engine.js 99991)
 const ST=()=>{try{return window.HalcyonState?window.HalcyonState():{}}catch(e){return {}}};
 
 /* ===== on and off ===== */
@@ -33,7 +33,8 @@ QA.on=CAN&&!!store.get("qa",false);
 function applyMode(){document.body.classList.toggle("qa-on",QA.on);document.body.classList.toggle("qa-who",QA.who||QA.on);markSpeakers();barTick();
   const a=$("qatoggle");if(a)a.checked=QA.on;const b=$("whotoggle");if(b)b.checked=QA.who}
 function setQA(on){if(on&&!CAN)return;QA.on=!!on;store.set("qa",QA.on);applyMode();if(PROF)PROF.qaChanged()} // the test profile only counts in QA mode: flipping QA with it on reloads into the other profile
-function setWho(on){QA.who=!!on;store.set("showwho",QA.who);applyMode()}
+function setWho(on){QA.who=!!on;store.set("showwho",QA.who);applyMode();try{if(window.HalcyonSetting)window.HalcyonSetting("showwho",QA.who)}catch(e){}}
+document.addEventListener("halcyon-settings",()=>{QA.who=!!store.get("showwho",true);applyMode()}); // the account's choice arrived at sign in
 
 /* ===== speaker chips: CSS draws the name (::before, attr(data-who)), so no text lands in the page and the narration highlight sees the same words ===== */
 function voiceMap(st){const T=st.timings,V=T&&(T._voices||T.voices);if(!V||typeof V!=="object")return null;return V[st.page]&&typeof V[st.page]==="object"?V[st.page]:V}

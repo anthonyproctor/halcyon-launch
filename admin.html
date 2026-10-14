@@ -179,12 +179,13 @@ const when=(x,never="Never")=>{const t=toDate(x);return t?`<time datetime="${t.t
    Other courses: 101 to 199 are Full Course chapter n-100, 1 to 99 Refresher chapter n.
    Side records (api/progress.js never resumes at 901 and up): 900 practice exam 1 attempt, 901 its results; practice exam n from 2 up is
    910+2(n-2) and the key after it; 902 practice sets; 903 Audiobook place and Labs waiting (PMP: the first edition's; v2 uses 904);
-   905 study log; 906 final assessment; 907 bookmarks; 908 badges and readiness. 99990 is the Library (pins and last played) for every course. Anything else is "other". */
+   905 study log; 906 final assessment; 907 bookmarks; 908 badges and readiness. 99990 is the Library (pins and last played) for every course; 99991 is the reading settings (name tags). Anything else is "other". */
 const COURSES=window.HALCYON_COURSES||[];
 const byId=Object.fromEntries(COURSES.map(c=>[c.id,c]));
 const LIBKEY=99990;
 function decode(k){k=Number(k);
   if(k===LIBKEY)return {kind:"lib",label:"Library (pins and last played)"};
+  if(k===99991)return {kind:"lib",label:"Reading settings (name tags)"};
   const c=COURSES.find(c=>Number.isInteger(c.base)&&k>=c.base&&k<c.base+10000);if(!c)return {kind:"other"};
   const r=k-c.base,pmp=c.id==="pmp";
   if(pmp&&r>=201&&r<=299)return {kind:"full",c,n:r-200};
