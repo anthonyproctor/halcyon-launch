@@ -164,7 +164,7 @@ test("CPHIMS results: Systems Management by subdomain, and reread pointers for w
   await expect(items).toHaveCount(2);
   const an = items.filter({ hasText: "Analysis" });
   await expect(an).toContainText("(Systems Management), 0 percent");
-  await expect(an).toContainText("coming in chapter 6"); // ch6 teaches most SA tasks and isn't written yet
+  await expect(an.locator("button", { hasText: "Reread chapter 6," })).toBeVisible(); // ch6 teaches most SA tasks
   const env = items.filter({ hasText: "Environments" });
   await expect(env).toContainText("0 percent");
   await expect(env.locator("button", { hasText: "Reread chapter 1," })).toBeVisible();
