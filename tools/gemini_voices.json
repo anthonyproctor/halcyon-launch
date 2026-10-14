@@ -91,7 +91,7 @@
    "Walt": {"voice": "en-us-podcaster-1", "style": "A man's voice. Deliberate, dry, careful.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Marisol": {"voice": "Kore", "style": "A woman's voice. Blunt, warm underneath.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Lourdes": {"voice": "en-us-zali", "style": "A woman's voice. Firm, worried, protective.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
-   "Claire": {"voice": "Vindemiatrix", "style": "A woman's voice. Tired, gentle.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Claire": {"voice": "Vindemiatrix", "style": "A woman's voice. Gentle, honest, plainspoken.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Ellie": {"voice": "Leda", "style": "A young girl. Curious, bright, quick questions.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Russ": {"voice": "Iapetus", "style": "General American accent. A 50-year-old who travels for work. Upbeat, busy, friendly."},
    "Danny": {"voice": "Puck", "style": "General American accent. A 41-year-old pilot. Easygoing, a wide grin in his voice, warm."},
@@ -115,7 +115,7 @@
   },
   "cphims": {
    "Ochoa": {"voice": "Charon", "style": "General American accent. A hospital CIO teaching his vice president. Measured, warm, conversational, first person."},
-   "Kiran": {"voice": "Pulcherrima", "style": "General American accent. A senior EHR analyst, a perfectionist who never says no."},
+   "Kiran": {"voice": "Sadaltager", "style": "A man's voice. General American accent. A senior EHR analyst. Quick, precise, eager to help.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Aisha": {"voice": "Autonoe", "style": "General American accent, bright and professional."},
    "Brett": {"voice": "Puck", "style": "General American accent. A vendor account executive. Charming, generous, under quota pressure."},
    "Walt": {"voice": "Orus", "style": "General American accent, an older man, dry and deliberate."},
