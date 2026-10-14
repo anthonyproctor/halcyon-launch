@@ -1,0 +1,20 @@
+{
+ "world": "testworld", "note": "Fictional fixture for tests/canon_check.test.mjs. Not story canon.",
+ "characters": {
+  "pell": {"name": "Wren Pell", "tag": {"tbook": "Pell", "tpre": "Pell"}, "pronouns": "she/her", "age_at": {"2030-03-04": 40}},
+  "quill": {"name": "Otto Quill", "tag": {"tbook": "Quill", "tpre": "Quill"}, "born": "2025"},
+  "rook": {"name": "Rook", "tag": {"tbook": "Rook"}}
+ },
+ "knowledge": [
+  {"id": "vault", "who": ["pell"], "fact": "the vault code", "levels": [{"ch": 2, "level": "hint"}, {"ch": 4, "level": "told"}],
+   "markers": [{"all": ["vault", "code is"], "not_before": {"story": "book", "ch": 3}, "severity": "error"}]}
+ ],
+ "timeline": [{"date": "2030-03-04", "weekday": "Monday", "event": "book opens"}],
+ "stories": {
+  "book": {"kind": "book", "course": "tbook", "range": ["2030-03-04", "2030-12-31"], "allow": ["Pell was nineteen"],
+   "chapters": [{"n": 1, "start": "2030-03-04", "end": "2030-03-10"}, {"n": 2, "start": "2030-04-01", "end": "2030-04-30"}, {"n": 3, "start": "2030-06-01", "end": "2030-06-30"}],
+   "rules": [{"text": "no dragons", "markers": [{"any": ["dragon"], "severity": "error"}]}]},
+  "pre": {"kind": "side story", "course": "tpre", "range": ["2020-01-01", "2020-12-31"],
+   "chapters": [{"n": 1, "start": "2020-05-01", "end": "2020-05-31"}]}
+ }
+}
