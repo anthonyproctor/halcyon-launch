@@ -200,7 +200,7 @@ test("art: every form and mark draws in every state", () => {
 });
 
 test("the real definitions: counts, pending badges dropped, targets from courses.js", () => {
-  const want = { pmp: [25, 0], cisa: [22, 2], pilot: [22, 0], cphims: [21, 1], asep: [21, 2], gh300: [15, 1] };
+  const want = { pmp: [25, 0], cisa: [22, 2], pilot: [22, 0], cphims: [21, 0], asep: [21, 2], gh300: [15, 1] };
   for (const [id, [total, pending]] of Object.entries(want)) {
     const c = course(id), def = DEFS[id], planned = c.planned;
     const items = HB.expand(def, { planned, chapters: [] });
