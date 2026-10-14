@@ -29,6 +29,8 @@ test("dates: a weekday that doesn't match is an error; with no year, any year of
   assert.equal(sev(run("tbook", 1, "`Fri Mar 4 at nine.`"), "error").length, 1);
   assert.equal(sev(run("tbook", 1, "`THURSDAY, MAY 26, 0900 hours`"), "error").length, 1); // 0900 is a time, not a year: no Thursday May 26 in 2030
   assert.equal(sev(run("tbook", 1, "`// comment: Tuesday, March 4, 2030\n`ok`"), "error").length, 0); // code comments are ignored
+  assert.equal(sev(run("tbook", 1, "`Monday and Tuesday, March 4 and 5, 2030.`"), "error").length, 0); // a pair: each day goes with its own date
+  assert.equal(sev(run("tbook", 1, "`Monday and Tuesday, March 5 and 6, 2030.`"), "error").length, 2);
 });
 
 test("ages: off by more than a year warns; a flashback year nearby or an allow entry clears it", () => {

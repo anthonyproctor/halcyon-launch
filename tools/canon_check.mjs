@@ -89,7 +89,11 @@ export function checkChapter({ world, id, story, course }, n, src) {
     const ok = ys.some(yy => new Date(Date.UTC(yy, mi, +d)).getUTCDay() === want);
     if (!ok) add("error", `"${raw.trim()}" isn't a ${DAYS[want]} in ${ys.join(" or ")}`);
   };
-  for (const m of text.matchAll(reFull)) dayCheck(m[1], m[2], m[3], m[4], m[0]);
+  // a pair ("Monday and Tuesday, September 20 and 21"): the first day goes with the first date, the second with the second
+  const rePair = new RegExp(`\\b(${DAYS.join("|")})\\s+(?:and|or|to|through)\\s+(${DAYS.join("|")}),?\\s+(${MONTHS.join("|")})\\s+(\\d{1,2})(?:st|nd|rd|th)?\\s+(?:and|or|to|through)\\s+(\\d{1,2})(?:st|nd|rd|th)?(?:,?\\s+((?:19|20|21)\\d{2})\\b)?`, "gi");
+  const paired = new Set();
+  for (const m of text.matchAll(rePair)) { dayCheck(m[1], m[3], m[4], m[6], `${m[1]}, ${m[3]} ${m[4]}`); dayCheck(m[2], m[3], m[5], m[6], `${m[2]}, ${m[3]} ${m[5]}`); paired.add(m.index + m[0].indexOf(m[2])); }
+  for (const m of text.matchAll(reFull)) { if (paired.has(m.index)) continue; dayCheck(m[1], m[2], m[3], m[4], m[0]); }
   for (const m of text.matchAll(reShort)) dayCheck(m[1], m[2], m[3], m[4], m[0]);
   // ages
   for (const c of chars) {
