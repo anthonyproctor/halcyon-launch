@@ -995,6 +995,7 @@ function bdgQueue(){const c=COURSE,HB=window.HalcyonBadges;if(!c||!HB)return;con
   BDG.queue=HB.unseen(rec,BDG.items[c.id]||[]).filter(id=>id!==BDG.showing).map(id=>({c:c.id,id}));bdgToastNext()}
 function bdgHold(){return (TRACK==="mock"&&!(MS&&MS.submitted))||((TRACK==="full"||TRACK==="ref")&&!!STORY())}
 function bdgToastNext(){const el=$("toast"),HB=window.HalcyonBadges;if(!el||!HB||BDG.showing||!BDG.queue.length||bdgHold())return;
+  {const nb=$("narbar"),r=nb&&!nb.hidden&&document.body.classList.contains("withbar")?nb.getBoundingClientRect():null;el.style.bottom=r&&r.height?`calc(${Math.ceil(window.innerHeight-r.top)+12}px + 0px)`:""} // sit above the player bar whatever its height (it wraps to two rows on a phone)
   const q=BDG.queue.shift(),def=bdgDefs(),it=(BDG.items[q.c]||[]).find(x=>x.id===q.id);if(!def||q.c!==COURSE.id||!it)return bdgToastNext();
   const rec=bdgGet();if(!rec||!rec.got[q.id]||rec.got[q.id].seen)return bdgToastNext();
   rec.got[q.id].seen=1;rec.at=Date.now();bdgPut(rec);BDG.showing=q.id;

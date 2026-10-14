@@ -1,4 +1,4 @@
-// CPHIMS course: "One Chart". Domains, task codes (HIMSS 2025 Candidate Handbook outline), and base cast.
+// CPHIMS course: "One Chart". Domains, task codes (HIMSS CPHIMS Candidate Handbook outline, effective May 1, 2024; the 2025 posting of it), and base cast.
 (function(){
 const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.cphims=D.cphims||{};

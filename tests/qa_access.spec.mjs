@@ -10,7 +10,7 @@ const LOCAL = "http://localhost:4321";
 const TP = "halcyon-qa-test:";
 const NON = { email: "p@x.test", name: "Pat", admin: false, tester: false, cur: 0 };
 const TESTER = { ...NON, name: "Tess", tester: true };
-const ADMIN = { ...NON, name: "Anthony", admin: true };
+const ADMIN = { ...NON, name: "Test Admin", admin: true };
 
 // every request to halcyon.test: the API mocked, everything else from the local static server
 async function online(page, user, { progress = {} } = {}) {
@@ -165,7 +165,7 @@ test("admin page: a Tester switch per player (admins always), saved through /api
     if (u.pathname === "/api/admin") {
       const a = u.searchParams.get("action");
       if (a === "overview") return route.fulfill({ json: { users: [
-        { id: "a1", email: "a@x.test", name: "Anthony", is_admin: true, is_tester: false, disabled: false, progress: [], created_at: "2026-10-01" },
+        { id: "a1", email: "a@x.test", name: "Test Admin", is_admin: true, is_tester: false, disabled: false, progress: [], created_at: "2026-10-01" },
         { id: "p1", email: "p@x.test", name: "Pat", is_admin: false, is_tester: false, disabled: false, progress: [], created_at: "2026-10-02" },
         { id: "t1", email: "t@x.test", name: "Tess", is_admin: false, is_tester: true, disabled: false, progress: [], created_at: "2026-10-03" }], invites: [] } });
       if (a === "list") return route.fulfill({ json: { signups: [] } });

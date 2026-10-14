@@ -250,3 +250,19 @@ test("a hidden badge isn't awarded on a redo: fishing for the right option in ch
   await page.waitForTimeout(800);
   expect(Object.keys((await rec(page)).got)).not.toContain("pmp-manifest");
 });
+
+test("on a phone the badge toast sits above the player bar, even when the bar wraps to two rows", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.clock.install({ time: new Date("2026-10-13T09:00:00") });
+  await page.goto("/#guide");
+  await expect(page.locator("#page h1")).toBeVisible();
+  await seed(page, { c908: { v: 1, since: 1, at: 1, got: {} }, c201: await chapterState(page, 1, { done: false }) });
+  await page.goto("/#pmp/full/1");
+  await page.reload();
+  await expect(page.locator("#narbar")).toBeVisible();
+  await page.clock.runFor(1500);
+  const t = page.locator("#toast .tcard");
+  await expect(t).toHaveCount(1);
+  const [tb, nb] = await Promise.all([t.boundingBox(), page.locator("#narbar").boundingBox()]);
+  expect(tb.y + tb.height, "toast bottom above the player bar top").toBeLessThanOrEqual(nb.y);
+});

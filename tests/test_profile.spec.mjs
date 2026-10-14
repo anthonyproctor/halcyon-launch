@@ -129,7 +129,7 @@ test("test profile: signed in online, nothing goes to /api/progress and the serv
   const SERVER = { 201: { pos: 2, max: 2, picks: { srv: 1 }, m: { trust: 50, conf: 50, health: 50 }, score: 0, flags: { servermarker: true }, dom: { People: [0, 0], Process: [0, 0], "Business Environment": [0, 0] }, drills: {}, ex: null, quiz: null } };
   await page.route("http://halcyon.test/**", async r => {
     const u = new URL(r.request().url());
-    if (u.pathname === "/api/auth") return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: { name: "Anthony", admin: true, cur: 201 }, progress: SERVER }) });
+    if (u.pathname === "/api/auth") return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: { name: "Test Admin", admin: true, cur: 201 }, progress: SERVER }) });
     if (u.pathname === "/api/progress") { const b = r.request().postDataJSON(); progressCalls.push(r.request().method() + " " + b.chapter); SERVER[b.chapter] = b.state; return r.fulfill({ status: 200, contentType: "application/json", body: "{}" }) }
     if (u.pathname === "/api/qa-report") { reports.push(r.request().postDataJSON()); return r.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' }) }
     if (u.pathname.startsWith("/api/")) return r.fulfill({ status: 404, body: "" });
@@ -140,7 +140,7 @@ test("test profile: signed in online, nothing goes to /api/progress and the serv
 
   // real profile online: the server copy lands in halcyon.c201 and a decision syncs (the interception sees real syncs)
   await page.goto("http://halcyon.test/#pmp/full/1");
-  await expect(page.locator("#username")).toHaveText("Anthony");
+  await expect(page.locator("#username")).toHaveText("Test Admin");
   expect(JSON.parse(await page.evaluate(() => localStorage.getItem("halcyon.c201"))).flags.servermarker).toBe(true);
   await page.goto("http://halcyon.test/#pmp/full/2");
   await decide(page, 0);
@@ -154,7 +154,7 @@ test("test profile: signed in online, nothing goes to /api/progress and the serv
   const before = await realKeys(page);
   expect(new URL(page.url()).hash).toBe("#pmp/full/1"); // the flag is stripped from the address
   await expect(page.locator("body.qa-on")).toHaveCount(1);
-  await expect(page.locator("#username")).toHaveText("Anthony"); // still signed in, so Flag works
+  await expect(page.locator("#username")).toHaveText("Test Admin"); // still signed in, so Flag works
   expect(await page.evaluate(tp => localStorage.getItem(tp + "c201"), TP)).toBe(null);
   await decide(page, 1);
   expect(await page.evaluate(tp => localStorage.getItem(tp + "c201"), TP)).not.toContain("servermarker");
@@ -308,14 +308,14 @@ test("switch edge cases: an address edit with ?test=1 leaves the real place alon
   const SERVER = {};
   await page.route("http://halcyon.test/**", async r => {
     const u = new URL(r.request().url());
-    if (u.pathname === "/api/auth") return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: { name: "Anthony", admin: true, cur: 0 }, progress: SERVER }) });
+    if (u.pathname === "/api/auth") return r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: { name: "Test Admin", admin: true, cur: 0 }, progress: SERVER }) });
     if (u.pathname === "/api/progress") { const b = r.request().postDataJSON(); puts.push(b.chapter); SERVER[b.chapter] = b.state; return r.fulfill({ status: 200, contentType: "application/json", body: "{}" }) }
     if (u.pathname.startsWith("/api/")) return r.fulfill({ status: 404, body: "" });
     try { await r.fulfill({ response: await r.fetch({ url: "http://localhost:4321" + u.pathname + u.search }) }) } catch (e) {} // a reload can drop a request in flight
   });
   // a real decision, then the test profile at once (inside the 400 ms sync delay): the decision still reaches the server
   await page.goto("http://halcyon.test/?qa=1#pmp/full/1");
-  await expect(page.locator("#username")).toHaveText("Anthony");
+  await expect(page.locator("#username")).toHaveText("Test Admin");
   await decide(page, 0);
   const picks = JSON.parse(await page.evaluate(() => localStorage.getItem("halcyon.c201"))).picks;
   expect(Object.keys(picks).length).toBeGreaterThan(0);
