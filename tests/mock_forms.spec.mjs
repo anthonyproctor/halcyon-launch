@@ -8,13 +8,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const MOCK2 = fs.readFileSync(path.join(ROOT, "tests/fixtures/cphims_mock2.js"), "utf8");
 const accept = page => page.on("dialog", d => d.accept());
 
-// adds the dummy second CPHIMS form to mock1.js as it's served
-async function withMock2(page) {
-  await page.route("**/courses/cphims/mock/mock1.js", async r => { const res = await r.fetch(); r.fulfill({ response: res, body: (await res.text()) + "\n;" + MOCK2 }) });
-}
 // every question of a course's mock bank, with the id the engine gives it
 async function bank(page, course) {
   await page.goto(`/#${course}/home`);
@@ -37,7 +32,7 @@ test("pretest items: unscored items don't count, and the results reveal which th
   expect(qs.filter(q => !q.scored).length).toBe(15);
   // every scored item right, every pretest item wrong: the score is 100 of 100, not 100 of 115
   await seedAttempt(page, 10900, qs, q => q.scored ? q.a : wrong(q));
-  await page.goto("/#cphims/mock"); await page.reload();
+  await page.goto("/#cphims/mock/1"); await page.reload(); // two forms ship, so /mock alone is the picker
   await expect(page.locator("#page .kicker")).toContainText("Question 1 of 115");
   await expect(page.locator("#page")).not.toContainText("Unscored");
   await page.locator("#submitnow").click();
@@ -57,7 +52,7 @@ test("pretest items: unscored items don't count, and the results reveal which th
 
 test("handbook mode runs only the 100 scored items on the timer; exam and practice modes still run all 115", async ({ page }) => {
   const qs = (await bank(page, "cphims")).filter(q => q.part.startsWith("M1:"));
-  await page.goto("/#cphims/mock");
+  await page.goto("/#cphims/mock/1");
   await expect(page.locator("#handbook")).toBeVisible();
   await expect(page.locator("#exam")).toBeVisible();
   await expect(page.locator("#practice")).toBeVisible();
@@ -72,7 +67,7 @@ test("handbook mode runs only the 100 scored items on the timer; exam and practi
   expect(st.order.filter(id => unscored.has(id))).toEqual([]);
   // exam and practice modes: all 115
   await page.evaluate(() => localStorage.removeItem("halcyon.c10900"));
-  await page.goto("/#cphims/home"); await page.goto("/#cphims/mock"); await page.reload();
+  await page.goto("/#cphims/home"); await page.goto("/#cphims/mock/1"); await page.reload();
   await page.locator("#exam").click();
   await expect(page.locator("#page .kicker")).toContainText("Exam mode · Question 1 of 115");
   await page.evaluate(() => localStorage.removeItem("halcyon.c10900"));
@@ -82,10 +77,10 @@ test("handbook mode runs only the 100 scored items on the timer; exam and practi
 });
 
 test("two CPHIMS forms appear separately, each with its own attempt and history; saved form 1 progress still loads", async ({ page }) => {
-  await withMock2(page);
+  // the real second form ships in courses/cphims/mock/mock2.js (2026-10-14)
   const all = await bank(page, "cphims");
   const f1 = all.filter(q => q.part.startsWith("M1:")), f2 = all.filter(q => q.part.startsWith("M2:"));
-  expect(f2.length).toBe(20);
+  expect(f2.length).toBe(115);
   // progress saved before forms existed: an attempt in progress at 10900 (no form field) and one finished attempt at 10901
   await seedAttempt(page, 10900, f1, q => q.a, { cur: 7 });
   await page.evaluate(() => localStorage.setItem("halcyon.c10901", JSON.stringify({ list: [{ at: "2026-10-10T15:00:00.000Z", mode: "exam", right: 80, answered: 100, total: 100, byTask: {}, secs: 5000 }] })));
@@ -103,9 +98,9 @@ test("two CPHIMS forms appear separately, each with its own attempt and history;
   // form 2 is its own exam with its own key
   await page.goto("/#cphims/mock/2"); await page.reload();
   await expect(page.locator("#page h1")).toHaveText("Practice exam 2");
-  await expect(page.locator("#page .story").first()).toContainText("20 questions, 18 of them scored");
+  await expect(page.locator("#page .story").first()).toContainText("115 questions, 100 of them scored");
   await page.locator("#practice").click();
-  await expect(page.locator("#page .kicker")).toContainText("Practice exam 2 · Practice mode · Question 1 of 20");
+  await expect(page.locator("#page .kicker")).toContainText("Practice exam 2 · Practice mode · Question 1 of 115");
   const s2 = await page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c10910")));
   expect(s2.order.every(id => id.startsWith("M2:"))).toBe(true);
   const s1 = await page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c10900")));
@@ -118,9 +113,9 @@ test("two CPHIMS forms appear separately, each with its own attempt and history;
   await seedAttempt(page, 10910, f2, q => q.a, { mode: "practice" });
   await page.reload();
   await page.locator("#submitnow").click();
-  await expect(page.locator("#page h1")).toHaveText("18 of 18 (100 percent)");
+  await expect(page.locator("#page h1")).toHaveText("100 of 100 (100 percent)");
   const h2 = await page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c10911")));
-  expect(h2.list.length).toBe(1); expect(h2.list[0]).toMatchObject({ f: 2, total: 18, pre: 2 });
+  expect(h2.list.length).toBe(1); expect(h2.list[0]).toMatchObject({ f: 2, total: 100, pre: 15 });
   const h1 = await page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c10901")));
   expect(h1.list.length).toBe(1);
   // progress shows both, with the exam named
@@ -147,12 +142,12 @@ for (const [course, n] of [["pmp", 180], ["cisa", 150]]) {
   });
 }
 
-test("CPHIMS results: Systems Management by subdomain, and reread pointers for weak areas (written chapters link, later ones say coming)", async ({ page }) => {
+test("CPHIMS results: Systems Management by subdomain, and reread pointers for weak areas (every chapter is written, so every pointer links)", async ({ page }) => {
   const errs = []; page.on("pageerror", e => errs.push(e.message));
   const qs = (await bank(page, "cphims")).filter(q => q.part.startsWith("M1:"));
   // miss every Analysis (SA) item and every Environments item; the rest right
   await seedAttempt(page, 10900, qs, q => /^SA\d/.test(q.task) || q.domain === "Environments" ? wrong(q) : q.a, { submitted: true, finishedAt: "2026-10-12T16:00:00.000Z" });
-  await page.goto("/#cphims/mock"); await page.reload();
+  await page.goto("/#cphims/mock/1"); await page.reload();
   await expect(page.locator("#page h2", { hasText: "Systems Management by subdomain" })).toBeVisible();
   const sub = page.locator("#page .subgrid .card");
   await expect(sub).toHaveCount(5);
@@ -177,7 +172,7 @@ test("CPHIMS results: Systems Management by subdomain, and reread pointers for w
   await page.evaluate(() => { localStorage.setItem("halcyon.storymode", "true");
     const st = JSON.parse(localStorage.getItem("halcyon.c10101") || "null") || { pos: 0, max: 0, picks: {}, m: { trust: 50, conf: 50, health: 50 }, score: 0, flags: {}, dom: Object.fromEntries(window.HALCYON_DATA.cphims.meta.DOMS.map(d => [d, [0, 0]])), drills: {}, ex: null, quiz: null };
     st.pos = 999; st.max = 999; st.doneAt = "2026-10-11T15:00:00.000Z"; localStorage.setItem("halcyon.c10101", JSON.stringify(st)) });
-  await page.goto("/#cphims/mock"); await page.reload();
+  await page.goto("/#cphims/mock/1"); await page.reload();
   await page.locator("#page ul.reread li", { hasText: "Environments" }).locator("button", { hasText: "Reread chapter 1," }).click();
   await expect(page).toHaveURL(/#cphims\/full\/1$/);
   await expect(page.locator("#page .lesson").first()).toBeVisible();

@@ -1,13 +1,16 @@
 // CPHIMS course "One Chart": practice exam 1 (115 items: 100 scored plus 15 unscored pretest items marked scored:false).
 // Built 2026-10-12 from courses/cphims/BIBLE.md "Mock exam plan". Scored mix: Environments 25, Clinical Informatics 20,
 // Systems Management 30 (Analysis 9, Design 6, Selection and implementation 6, Testing 4, Privacy and security 5), Leadership 25.
-// Pretest: 4, 3, 4, 4. Levels (scored): RE 20, AP 45, AN 35. All 71 outline tasks appear at least once.
+// Pretest: 4, 3, 4, 4. Levels (scored): RE 20, AP 45, AN 35. All 71 outline tasks appear at least once. Environments has 29 items
+// for 7 tasks, so one task (E2) has to appear 5 times. SA10, SE3, SE6 are pretest only here and scored in mock2; every task is
+// scored in at least one form.
 // Item shape {q, opts, a, why, task, domain, level, scored}. Settings are Cascade Valley Health; no story knowledge needed.
-// Original items, not copied from HIMSS or third-party banks, and none repeat the chapter quizzes.
-// Rules checked 2026-10-12: HIMSS 2025 CPHIMS Candidate Handbook outline (see BIBLE.md); Joint Commission National Performance
-// Goals replacing NPSGs for hospitals on 1/1/2026 (Accreditation 360); HIPAA Security Rule NPRM of 1/6/2025 still not final, so no
-// item rests on the addressable distinction; HTI-5 (12/2025) is a proposed rule, so no item rests on the manner, TEFCA manner, or
-// infeasibility exceptions; 42 CFR Part 2 final rule of 2024 (single TPO consent, HIPAA redisclosure, legal proceedings limit).
+// Original items, not copied from HIMSS or third-party banks, and none repeat the chapter quizzes (re-checked 2026-10-14).
+// Rules checked 2026-10-12: HIMSS CPHIMS Candidate Handbook outline, effective May 1, 2024 (see BIBLE.md); no item rests on the
+// Joint Commission's 2026 renaming of its hospital safety goals, since exam items may use either name; HIPAA Security Rule NPRM of
+// 1/6/2025 still not final, so no item rests on the addressable distinction; HTI-5 (12/2025) is a proposed rule, so no item rests
+// on the manner, TEFCA manner, or infeasibility exceptions; 42 CFR Part 2 final rule of 2024 (single TPO consent, HIPAA
+// redisclosure, legal proceedings limit).
 // The engine reads parts by part.slice(0,3) for question ids, so this file's part starts "M1:" and mock2 should start "M2:".
 (function(){
 const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
@@ -28,7 +31,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   opts:[`An inpatient rehab facility stay`,
         `A long-term care hospital admission`,
         `A hospice program with home visits`,
-        `A Medicare certified home health agency`],
+        `A Medicare home health agency`],
   a:3, why:`Intermittent skilled nursing and therapy for a homebound patient is exactly what home health covers. An inpatient rehab facility is a hospital level stay with intensive daily therapy, which this patient doesn't need, and hospice is for comfort care at the end of life. A long-term care hospital is for patients who need extended acute hospital care, such as prolonged ventilation, not visits at home.`,
   task:`E1`, domain:`Environments`, level:`AP`, scored:true },
 
@@ -58,7 +61,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
 
 { q:`Cascade's regional HIE wants nationwide record query without signing separate agreements with every other network. Under TEFCA, how would the HIE get that?`,
   opts:[`Sign a business associate agreement with each hospital`,
-        `Connect through a QHIN, since QHINs exchange with each other`,
+        `Connect through a QHIN, which links networks`,
         `Register each clinician's Direct address with CMS`,
         `Send a monthly bulk FHIR export to every other network`],
   a:1, why:`TEFCA works through Qualified Health Information Networks that sign the Common Agreement and exchange with each other, so a participant connects once through its QHIN. An HIE can also apply to become a QHIN itself. Signing a BAA with every hospital is the point-to-point patchwork TEFCA was built to replace, and a monthly bulk export is still point to point and can't answer a query at the time of care.`,
@@ -161,7 +164,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   task:`E5`, domain:`Environments`, level:`AP`, scored:true },
 
 { q:`Which system handles specimen accessioning, instrument interfaces, and result verification?`,
-  opts:[`The laboratory information system`,
+  opts:[`The lab information system`,
         `The radiology information system`,
         `The pharmacy information system`,
         `The enterprise data warehouse`],
@@ -272,12 +275,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:3, why:`FHIR exposes discrete resources like MedicationRequest and AllergyIntolerance through RESTful APIs, and SMART on FHIR handles the patient's authorization. An HL7 v2 ADT feed pushes registration events, not on-demand clinical data, and sending it to a vendor shares far more than the patient asked for.`,
   task:`C2`, domain:`Clinical Informatics`, level:`AN`, scored:true },
 
-{ q:`A medical unit recorded 1,860 inpatient days in June, a 30-day month. What was its average daily census?`,
-  opts:[`62`,
-        `60`,
-        `64`,
-        `58`],
-  a:0, why:`Average daily census is total inpatient days divided by days in the period: 1,860 / 30 = 62. Dividing by 31, as if June had 31 days, gives 60, which is the most common slip.`,
+{ q:`A unit admitted 300 patients in a 30-day month, and their average length of stay was 4 days. Assuming every stay fell inside the month, what was the unit's average daily census?`,
+  opts:[`40`,
+        `10`,
+        `75`,
+        `120`],
+  a:0, why:`Patient days = admissions x average length of stay = 300 x 4 = 1,200. Average daily census = patient days / days in the period = 1,200 / 30 = 40. 10 divides admissions by days and forgets length of stay, and 75 divides admissions by length of stay.`,
   task:`C3`, domain:`Clinical Informatics`, level:`AP`, scored:true },
 
 { q:`In one week a hospital gave 4,800 medication doses. Both the patient and the medication were scanned for 4,368 of them. What was the BCMA scan compliance rate?`,
@@ -337,7 +340,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   task:`C5`, domain:`Clinical Informatics`, level:`AP`, scored:true },
 
 { q:`A control chart of monthly inpatient fall rates shows March above the upper control limit. Every other month is inside the limits with no pattern. What's the BEST interpretation?`,
-  opts:[`Special cause in March; find out what was different`,
+  opts:[`Special cause; find what changed in March`,
         `Common cause variation that needs no follow-up`,
         `The whole process is unstable and needs redesign`,
         `The limits are wrong and should include March`],
@@ -352,12 +355,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:2, why:`A drop like this after an input changed is model drift, so the model needs to be revalidated and recalibrated or retrained on post-migration data, with clinical governance deciding when it's fit to use. Raising the threshold just hides the drop in accuracy.`,
   task:`C5`, domain:`Clinical Informatics`, level:`AN`, scored:true },
 
-{ q:`The five rights of clinical decision support say to deliver the right information, to the right person, in the right format, through the right channel, at the right what?`,
-  opts:[`Frequency of display`,
-        `Reading level`,
-        `Level of clinician seniority`,
-        `Point in the workflow`],
-  a:3, why:`The fifth right is the right point in the workflow, which is when the information can change the decision. The five are information, person, intervention format, channel, and point in workflow. How often an alert displays matters for alert fatigue, but it isn't one of the five rights.`,
+{ q:`A critical potassium alert fires on time with the right message, but it goes to the unit secretary, who can't act on it, instead of the ordering clinician. Which of the five rights of clinical decision support does it miss?`,
+  opts:[`Right format`,
+        `Right channel`,
+        `Right information`,
+        `Right person`],
+  a:3, why:`The five rights are the right information, to the right person, in the right format, through the right channel, at the right point in the workflow. Here the message and timing were fine, but it reached someone who can't change the order, so it missed the right person. The channel is the medium, like an alert or an inbox, and that wasn't the problem.`,
   task:`C6`, domain:`Clinical Informatics`, level:`RE`, scored:true },
 
 { q:`A drug interaction alert is overridden 96 percent of the time. What's the BEST next step?`,
@@ -412,7 +415,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   opts:[`Use the quality figure, since quality owns the metric`,
         `Average the two rates and report 13.0 percent`,
         `Rerun both reports to see if the numbers change`,
-        `Compare how each report defines the rate and its sources`],
+        `Compare how each report defines the rate`],
   a:3, why:`Different numbers for the same period usually come from different definitions: denominators, exclusions, planned readmissions, time windows, or source systems. Picking the quality figure may land on the right number, but without knowing why they differ you can't defend it.`,
   task:`SA5`, domain:`Systems Management`, level:`AN`, scored:true },
 
@@ -424,12 +427,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:0, why:`Scoring each alternative against the same criteria, such as five-year cost, patient safety, risk, and strategic fit, makes the comparison fair and defensible. First-year cost ignores what each option costs over its life.`,
   task:`SA6`, domain:`Systems Management`, level:`AN`, scored:true },
 
-{ q:`A project costs $1,000,000 up front and returns $400,000 a year in net benefits for three years. At a 10 percent discount rate, what's its NPV, and what does that mean?`,
-  opts:[`About positive $200,000, so it clears the 10 percent return easily`,
-        `About negative $5,260, so it falls just short of the 10 percent return`,
-        `About positive $94,700, so it clears the 10 percent return comfortably`,
-        `About negative $105,000, so it falls far short of the 10 percent return`],
-  a:1, why:`NPV = 400,000/1.1 + 400,000/1.21 + 400,000/1.331 minus 1,000,000 = 363,636 + 330,579 + 300,526 minus 1,000,000 = negative 5,259, or about negative $5,260. Positive $200,000 is the undiscounted gain, which ignores the time value of money.`,
+{ q:`Two options each cost $500,000 today and each return $600,000 in total. Option A returns $500,000 in year 1 and $100,000 in year 3. Option B returns $100,000 in year 1 and $500,000 in year 3. At a 10 percent discount rate, which is the better investment?`,
+  opts:[`They tie, since both return $100,000 more than they cost`,
+        `A, at about positive $29,700, since its cash comes sooner`,
+        `B, at about positive $29,700, since its cash comes later`,
+        `B, since the larger payment arrives once the system is mature`],
+  a:1, why:`NPV discounts each year's cash to today. A = 500,000 / 1.1 + 100,000 / 1.331 minus 500,000 = 454,545 + 75,131 minus 500,000 = about 29,677. B = 100,000 / 1.1 + 500,000 / 1.331 minus 500,000 = 90,909 + 375,657 minus 500,000 = about negative 33,434. The undiscounted tie is the trap: money that arrives sooner is worth more, so A clears the 10 percent return and B doesn't.`,
   task:`SA8`, domain:`Systems Management`, level:`AN`, scored:true },
 
 { q:`A system costs $600,000. It saves $150,000 in year 1, $250,000 in year 2, and $300,000 in year 3. What's the payback period?`,
@@ -438,7 +441,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `Exactly 3.0 years`,
         `Exactly 2.0 years`],
   a:0, why:`Cumulative savings reach $400,000 after year 2, leaving $200,000 to recover. Year 3 saves $300,000, so that takes 200,000 / 300,000 = 0.67 of a year, for a payback of about 2.67 years. 2.4 years divides the cost by year 2's savings alone, which ignores the uneven cash flows.`,
-  task:`SA8`, domain:`Systems Management`, level:`AP`, scored:true },
+  task:`SA8`, domain:`Systems Management`, level:`AP`, scored:false },
 
 { q:`Cascade wants to learn what FHIR integration platforms exist and what they can generally do before it writes detailed requirements. Which document should it send?`,
   opts:[`A request for proposal`,
@@ -446,7 +449,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `A statement of work`,
         `A service level agreement`],
   a:1, why:`An RFI gathers general information about the market and vendors' capabilities early, before requirements are firm. An RFP asks for specific proposals and pricing against detailed requirements, which Cascade doesn't have yet.`,
-  task:`SA10`, domain:`Systems Management`, level:`RE`, scored:true },
+  task:`SA10`, domain:`Systems Management`, level:`RE`, scored:false },
 
 { q:`Cascade wants bedside monitor vital signs to flow into nursing flowsheets automatically. What's the BEST design?`,
   opts:[`File every reading straight into the chart without nurse review`,
@@ -467,16 +470,16 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
 { q:`Departments keep buying new digital tools on their own, and IT later finds it can't support them. What's the BEST fix?`,
   opts:[`Have the IT steering committee ban purchases outside IT`,
         `Let departments support the tools themselves`,
-        `Set up an intake process that reviews tools before purchase`,
+        `An intake process that reviews tools first`,
         `Review each tool only after it causes trouble`],
   a:2, why:`A standing intake process screens new tools for strategic fit, security, integration, and support before purchase, so useful trends get adopted on purpose. A ban stops the problem, but it also shuts out the clinicians who spot useful new tools first.`,
   task:`SB3`, domain:`Systems Management`, level:`AN`, scored:true },
 
 { q:`The EHR's recovery targets are an RTO of 4 hours and an RPO of 15 minutes. Which design meets both at the LOWEST cost?`,
   opts:[`Hot active-active sites with real-time replication`,
-        `Warm site, replication every 5 minutes, and a 2-hour failover`,
+        `Warm site, 5-minute replication, 2-hour failover`,
         `Nightly backups shipped to a cold site a hundred miles away`,
-        `Cold site restored from daily cloud snapshots`],
+        `Cold site restored from the daily cloud snapshots`],
   a:1, why:`Five-minute replication beats the 15-minute RPO and a 2-hour failover beats the 4-hour RTO. Active-active also meets both targets, but at a much higher cost than the requirement calls for. Nightly or daily copies can lose up to a day of data, far past the RPO.`,
   task:`SB4`, domain:`Systems Management`, level:`AN`, scored:true },
 
@@ -484,11 +487,11 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   opts:[`Roll it out at once to every physician`,
         `Rely on the vendor's published results`,
         `Wait until competitors have adopted it`,
-        `Pilot it with set measures and a baseline`],
+        `Pilot it with measures and a baseline`],
   a:3, why:`A pilot in a few clinics, with a baseline and defined measures like documentation time, note accuracy, edit burden, and patient consent, shows whether it works here. The vendor's results come from other organizations and other workflows.`,
   task:`SB5`, domain:`Systems Management`, level:`AP`, scored:true },
 
-{ q:`Before migrating three hospitals onto the system-wide EHR, Cascade finds about 8 percent of their patient records are probable duplicates. What should happen?`,
+{ q:`Before migrating three hospitals onto the system-wide EHR, Cascade finds about 3 percent of their patient records are probable duplicates. What should happen?`,
   opts:[`Clean up the master patient index under data governance first`,
         `Convert everything now and merge duplicates later on`,
         `Let the conversion tool pick which record to keep`,
@@ -530,7 +533,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
 
 { q:`The EHR vendor releases an upgrade with a security patch and a redesigned medication administration screen. What's the BEST plan?`,
   opts:[`Install the whole upgrade in production right away`,
-        `Test it, train users, and schedule it through change control`,
+        `Test, train, and schedule it via change control`,
         `Skip this one and wait for the vendor's next major release`,
         `Install only the security patch and drop the rest`],
   a:1, why:`Regression testing of the medication workflows, training on the changed screen, and a scheduled change with a rollback plan protect patients and keep the patch moving. Installing it right away closes the security gap but surprises nurses with a new screen mid-shift. Pulling out only the patch leaves an untested configuration the vendor may not support, and the screen change still has to come eventually.`,
@@ -544,12 +547,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:2, why:`Ticket data showing a policy-driven trend belongs with the people who own the policy, together with options such as self-service reset and a review of the change interval. Current NIST guidance (SP 800-63B Revision 4) says systems must not require periodic password changes unless there's evidence of compromise. More staff treats the symptom, not the cause.`,
   task:`SC6`, domain:`Systems Management`, level:`AN`, scored:true },
 
-{ q:`After patching the interface engine, the team reruns test scripts that passed before to make sure nothing else broke. What kind of testing is this?`,
-  opts:[`Regression testing`,
-        `Unit testing`,
+{ q:`Each night a new build lands in the test environment. Before deeper testing starts, a tester confirms the system opens, users can sign in, and the main screens load. What's this quick check called?`,
+  opts:[`Smoke testing`,
+        `Regression testing`,
         `Stress testing`,
-        `Acceptance testing`],
-  a:0, why:`Regression testing reruns earlier tests after a change to confirm existing functions still work. Unit testing checks a single new component in isolation, not the effect of a change on everything else.`,
+        `Parallel testing`],
+  a:0, why:`A smoke test is a fast check that a build is stable enough to be worth testing further. Regression testing reruns the earlier test set to catch side effects of a change, which takes far longer than a few minutes of sign-ins and screens.`,
   task:`SD1`, domain:`Systems Management`, level:`RE`, scored:true },
 
 { q:`During testing, the developer who wrote a fix also wants to approve it and move it into production. Which internal control does this break?`,
@@ -561,19 +564,19 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   task:`SD2`, domain:`Systems Management`, level:`RE`, scored:true },
 
 { q:`The contract requires response times under 2 seconds for 95 percent of transactions at 1,500 concurrent users. A payment milestone depends on acceptance. What's the BEST step?`,
-  opts:[`Run a documented load test at the contracted volume before sign-off`,
+  opts:[`Run a documented load test at contracted volume`,
         `Accept now if users in the pilot unit say it feels fast enough`,
         `Accept it based on the vendor's own performance test report`,
         `Accept it now and measure response time after go-live`],
   a:0, why:`Acceptance should be validated against the contract, so test at 1,500 concurrent users, compare to the spec, and withhold acceptance if it fails. The vendor's own report may be accurate, but it isn't independent proof that the system meets Cascade's contract.`,
   task:`SD3`, domain:`Systems Management`, level:`AN`, scored:true },
 
-{ q:`A system delivered $1.5 million in benefits over three years and cost $1.2 million. What's its ROI?`,
-  opts:[`125 percent`,
-        `20 percent`,
-        `25 percent`,
-        `80 percent`],
-  a:2, why:`ROI = (benefits minus costs) / costs = (1.5 minus 1.2) / 1.2 = 0.25, or 25 percent. 20 percent divides the gain by benefits instead of costs.`,
+{ q:`The business case promised a 40 percent ROI. Three years in, the system has delivered $1.5 million in benefits on $1.2 million in costs. How did it do against plan?`,
+  opts:[`It beat the plan, at 125 percent`,
+        `It met the plan, at 40 percent`,
+        `It fell short, at 25 percent`,
+        `It fell short, at 20 percent`],
+  a:2, why:`ROI = (benefits minus costs) / costs = (1.5 minus 1.2) / 1.2 = 0.3 / 1.2 = 0.25, or 25 percent, below the promised 40. 20 percent divides the gain by benefits instead of costs, and 125 percent is benefits divided by costs, not ROI.`,
   task:`SD4`, domain:`Systems Management`, level:`AP`, scored:true },
 
 { q:`A scan finds a critical vulnerability on a CT scanner that runs an old operating system the vendor won't let Cascade patch. What's the BEST response?`,
@@ -590,7 +593,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `Give all ED nurses standing access to every chart`,
         `Share a supervisor's login for use only in these emergencies`],
   a:1, why:`Break-the-glass grants access right away in an emergency, records the reason, and triggers an audit review afterward. Calling the privacy officer for each case delays care when minutes matter.`,
-  task:`SE3`, domain:`Systems Management`, level:`AP`, scored:true },
+  task:`SE3`, domain:`Systems Management`, level:`AP`, scored:false },
 
 { q:`Under the HIPAA Security Rule's categories, automatic logoff of an unattended workstation is which kind of safeguard?`,
   opts:[`Physical`,
@@ -606,7 +609,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `The CIO, as the head of IT`,
         `The registry's data owner, with IRB approval as needed`],
   a:3, why:`The data owner decides who may use the data, and research use may also need IRB approval. IT is the custodian that grants access once it's approved. The DBA has the technical ability, but that isn't the authority to say yes, and the department chair may know the study but has no authority over the registry's data.`,
-  task:`SE6`, domain:`Systems Management`, level:`AN`, scored:true },
+  task:`SE6`, domain:`Systems Management`, level:`AN`, scored:false },
 
 { q:`Which activity BEST confirms that former employees no longer have access to clinical systems?`,
   opts:[`Regular access reviews against HR's termination list`,
@@ -640,12 +643,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:0, why:`Compound growth is 120 x 1.2 x 1.2 x 1.2 = 207.36 TB. 192 TB adds 20 percent of today's 120 TB each year, which is simple growth, not compound.`,
   task:`L3`, domain:`Leadership`, level:`AP`, scored:true },
 
-{ q:`How should an IT strategic plan relate to the organization's strategic plan?`,
-  opts:[`It's written first, and the organization adapts its goals`,
-        `It runs separately, focused on infrastructure and technology refresh cycles`,
-        `It replaces it during years with major system projects`,
-        `It's derived from it, and each IT initiative traces to a goal`],
-  a:3, why:`The IT strategic plan exists to carry out the organization's strategy, so every initiative should trace back to an organizational goal. A plan focused only on refresh cycles may keep the lights on but can drift away from what the business needs.`,
+{ q:`Who should give final approval to Cascade's IT strategic plan?`,
+  opts:[`The IT department's managers`,
+        `The EHR vendor's account team`,
+        `The CIO alone, as its author`,
+        `Executive leaders, via governance`],
+  a:3, why:`The IT plan commits money and sets priorities for the whole organization, so executive leadership approves it through IT governance, such as a steering committee or the board. The CIO writes and champions it, but approving it alone would let IT set the organization's direction.`,
   task:`L4`, domain:`Leadership`, level:`RE`, scored:true },
 
 { q:`A hosting vendor's SLA promises 99.9 percent monthly availability. Last month, a 30-day month, the EHR was down for 52 minutes. Was the SLA met?`,
@@ -696,12 +699,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:1, why:`Disclosure and recusal under the conflict of interest policy protect the integrity of the decision while letting the bid compete on its merits. Disqualifying the firm outright penalizes a bidder for a conflict the process can manage, and disclosure alone doesn't help if the board member still votes.`,
   task:`L10`, domain:`Leadership`, level:`AN`, scored:true },
 
-{ q:`Cascade's IT operating spend is 2.1 percent of revenue, against a peer median of 3.5 percent. How should leaders use this benchmark?`,
-  opts:[`Raise IT spending to the peer median within the next two years`,
-        `Treat the low figure as proof that Cascade's IT department is efficient`,
-        `Ignore it, because no two health systems are ever comparable`,
-        `Check that peers count the same costs before concluding`],
-  a:3, why:`A benchmark is a starting point for questions, so first confirm that the peer group counts the same costs, such as outsourced services or IT spending inside departments. Calling the low figure efficiency assumes too much, since it could also mean deferred investment.`,
+{ q:`Cascade spends 2.6 percent of revenue on IT against a peer median of 3.1 percent, and the peers count costs the same way. Which conclusion does this benchmark support on its own?`,
+  opts:[`Cascade's IT department is the most efficient of its peers`,
+        `Cascade underinvests and should raise spending to the median`,
+        `Cascade's clinicians are less satisfied with IT than peers`,
+        `Cascade spends less than peers, and outcomes must show why`],
+  a:3, why:`A spending benchmark shows where Cascade stands, not whether that's good. Lower spending could be efficiency or deferred investment, so leaders pair it with outcomes like uptime, project backlog, and user satisfaction before deciding. Raising spend to the median just because it's the median skips that step.`,
   task:`L11`, domain:`Leadership`, level:`AN`, scored:true },
 
 { q:`Maria must brief the board on a cyber incident at a clinic. What should the briefing lead with?`,
@@ -744,16 +747,16 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:1, why:`A personal development plan targets the skills the role needs and uses continuing education to build them, which also supports certification renewal. Free vendor conferences can be useful, but the agenda is set by the vendor, not by the leader's needs.`,
   task:`L16`, domain:`Leadership`, level:`AP`, scored:true },
 
-{ q:`Cascade buys cyber insurance to cover the cost of a breach. Which risk response is this?`,
+{ q:`A control would cost $200,000 a year to address a risk whose expected annual loss is $20,000. Leaders decide to live with the risk and document why. Which risk response is this?`,
   opts:[`Avoid`,
         `Mitigate`,
-        `Accept`,
-        `Transfer`],
-  a:3, why:`Buying insurance shifts the financial impact to another party, which is risk transfer. Mitigation lowers the likelihood or impact, for example with backups or MFA, but insurance doesn't change whether the breach happens.`,
+        `Transfer`,
+        `Accept`],
+  a:3, why:`Acceptance is a documented decision to keep a risk, often because controlling it costs more than the expected loss, here $200,000 a year to prevent $20,000. Transfer would shift the impact to a third party, such as an insurer.`,
   task:`L17`, domain:`Leadership`, level:`RE`, scored:true },
 
 { q:`While Cascade has an open RFP, a bidding vendor offers to pay Maria's travel to its user conference. What should she do?`,
-  opts:[`Decline the offer and follow the conflict of interest policy`,
+  opts:[`Decline it and follow the conflict policy`,
         `Accept it and share what she learns with the team`,
         `Accept it, as long as every bidder makes the same offer`,
         `Accept it and pay back the cost after the award`],
@@ -784,12 +787,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:2, why:`A job description defines the role's purpose, responsibilities, required qualifications and competencies, and reporting line, so it outlasts any one person. Personal goals belong in the employee's own performance plan.`,
   task:`L21`, domain:`Leadership`, level:`RE`, scored:true },
 
-{ q:`Only one engineer understands how the interface engine is built, and he plans to retire in two years. What should the leader do?`,
-  opts:[`Cross-train two staff and have him document it`,
-        `Ask him to stay on as a contractor after he retires`,
-        `Buy a vendor managed engine so nobody needs to know it`,
-        `Wait until he gives notice and hire a replacement then`],
-  a:0, why:`Cross-training and documentation spread the knowledge while he's still there to teach it, which removes the single point of failure. Keeping him as a contractor buys time, but the knowledge still lives in one person.`,
+{ q:`Cascade's interface team takes on FHIR API work next year. The manager wants to know where the team's skills are thin. What should the manager do FIRST?`,
+  opts:[`Map each person's skills against what the work needs`,
+        `Send the whole team to the same FHIR course right away`,
+        `Hire two FHIR developers before looking at current staff`,
+        `Ask the vendor to rate the team after the first project`],
+  a:0, why:`A skills inventory compared with the competencies the new work requires shows the gaps person by person, so training goes where it's needed. Sending everyone to one course spends money on skills some already have and may miss others.`,
   task:`L22`, domain:`Leadership`, level:`AN`, scored:true },
 
 { q:`Cascade manages its EHR migration, HIE upgrade, and portal relaunch together because they share benefits and dependencies. What is this grouping called?`,
@@ -832,13 +835,13 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:0, why:`HIM owns the legal health record, its completeness, and release of information. The CMIO shapes clinical documentation in the EHR, but doesn't own the legal record or disclosures.`,
   task:`E3`, domain:`Environments`, level:`RE`, scored:false },
 
-{ q:`Starting January 1, 2026, The Joint Commission organized its core hospital safety requirements under what name?`,
-  opts:[`National Patient Safety Goals`,
-        `Accreditation Participation Requirements`,
-        `Sentinel Event Measures`,
-        `National Performance Goals`],
-  a:3, why:`With its Accreditation 360 changes effective January 1, 2026, The Joint Commission replaced the National Patient Safety Goals for hospitals with National Performance Goals. The older name is the tempting answer, but it was retired for hospitals. Accreditation Participation Requirements is a real Joint Commission chapter, but it covers participation rules, not the safety goals.`,
-  task:`E4`, domain:`Environments`, level:`RE`, scored:false },
+{ q:`In a health information exchange, what does a record locator service do?`,
+  opts:[`Stores a full copy of every patient's chart`,
+        `Assigns a new record number to each patient`,
+        `Encrypts records before they leave a hospital`,
+        `Finds which organizations hold a patient's records`],
+  a:3, why:`A record locator service indexes where a patient has records, so a query goes to the right sources. In a federated HIE the records stay with each organization instead of in one central copy.`,
+  task:`E2`, domain:`Environments`, level:`RE`, scored:false },
 
 { q:`What protects data in transit between a patient's app and a web-based FHIR API?`,
   opts:[`A DICOM wrapper`,
@@ -873,12 +876,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   task:`C6`, domain:`Clinical Informatics`, level:`RE`, scored:false },
 
 { q:`Cascade's strategic plan makes rural access its top priority this year. Which project should rank HIGHEST in the portfolio review?`,
-  opts:[`A new lobby kiosk at the Denver office`,
+  opts:[`A new lobby kiosk at the Fort Collins office`,
         `Telehealth expansion at the Wyoming clinics`,
         `A data center hardware refresh in Greeley`,
         `An upgrade to the finance reporting tool`],
   a:1, why:`The telehealth expansion advances the stated top priority directly. A hardware refresh may be necessary to keep systems running, but it doesn't advance rural access.`,
-  task:`SA7`, domain:`Systems Management`, level:`AP`, scored:false },
+  task:`SA7`, domain:`Systems Management`, level:`AP`, scored:true },
 
 { q:`In a benefits realization plan, what should each expected benefit have?`,
   opts:[`A vendor quote and a contract number`,
@@ -886,7 +889,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `A baseline, target, measure, owner, and date`,
         `A risk score and a mitigation plan`],
   a:2, why:`Benefits realization depends on knowing where you started, what you're aiming for, how you'll measure it, who's accountable, and when. A risk score and mitigation plan belong in the risk register, not the benefits plan.`,
-  task:`SA9`, domain:`Systems Management`, level:`RE`, scored:false },
+  task:`SA9`, domain:`Systems Management`, level:`RE`, scored:true },
 
 { q:`An interface silently changes the units on glucose results from mg/dL to mmol/L without converting the values. Which security objective is MOST at risk?`,
   opts:[`Confidentiality`,
@@ -894,7 +897,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `Availability`,
         `Non-repudiation`],
   a:1, why:`Integrity means data stays accurate and unaltered, and a result with the wrong units is inaccurate data a clinician may act on. Availability isn't the issue, since the result still arrives.`,
-  task:`SE1`, domain:`Systems Management`, level:`AP`, scored:false },
+  task:`SE1`, domain:`Systems Management`, level:`AP`, scored:true },
 
 { q:`A server running a clinical application can't be patched for a known vulnerability for three months. Who should decide whether to accept that risk until then?`,
   opts:[`The system's business owner, advised by security`,
@@ -902,7 +905,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `The vendor's support team for the clinical application`,
         `The help desk technician assigned the ticket`],
   a:0, why:`The business owner is accountable for the system and the operations it supports, so they formally accept or reject the risk, with the CISO's team advising on its severity and options. The analyst who found it identifies and reports, but doesn't own the risk.`,
-  task:`SE5`, domain:`Systems Management`, level:`AN`, scored:false },
+  task:`SE5`, domain:`Systems Management`, level:`AN`, scored:true },
 
 { q:`Which KPI BEST measures service desk effectiveness from the user's point of view?`,
   opts:[`Number of tickets opened each month`,
@@ -928,12 +931,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:3, why:`An SLA sets measurable service levels and the remedies, usually service credits, when they're missed. Indemnification covers third-party claims and losses, not missed uptime.`,
   task:`L24`, domain:`Leadership`, level:`RE`, scored:false },
 
-{ q:`A system has a $500,000 one-time license, $300,000 for implementation, $100,000 a year for support, and $50,000 a year in internal labor. What's its five-year total cost of ownership?`,
+{ q:`A system has a $400,000 one-time license, $150,000 for implementation, $80,000 a year for support, and a required $120,000 upgrade in year 3. What's its five-year total cost of ownership?`,
   opts:[`$950,000`,
-        `$1,550,000`,
-        `$1,300,000`,
-        `$1,050,000`],
-  a:1, why:`TCO = 500,000 + 300,000 + (100,000 x 5) + (50,000 x 5) = 1,550,000. $1,300,000 leaves out the five years of internal labor, which TCO has to include.`,
+        `$1,070,000`,
+        `$670,000`,
+        `$1,150,000`],
+  a:1, why:`TCO = 400,000 + 150,000 + (80,000 x 5) + 120,000 = 400,000 + 150,000 + 400,000 + 120,000 = 1,070,000. $950,000 leaves out the mid-term upgrade, and $1,150,000 counts six years of support.`,
   task:`L25`, domain:`Leadership`, level:`AP`, scored:false }
 
 ]});

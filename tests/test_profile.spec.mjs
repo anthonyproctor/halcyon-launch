@@ -9,7 +9,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const MOCK2 = fs.readFileSync(path.join(ROOT, "tests/fixtures/cphims_mock2.js"), "utf8");
 const TP = "halcyon-qa-test:";
 // display and device preferences that both profiles share (profile.js SHARED); every other "halcyon." key is real progress
 const SHARED = ["amb", "ambvol", "rate", "auto2", "storymode", "spoilers", "pdbg", "devid", "qa", "showwho", "qa.tester", "testprofile", "qa.ok"];
@@ -46,11 +45,10 @@ async function noSideScroll(page, where) {
 }
 // a profile switch reloads the page without its route; it has finished booting once it notes the route it opened
 const booted = (page, on) => page.waitForFunction(t => window.HalcyonProfile && window.HalcyonProfile.test === t && location.hash.length > 1, on);
-const withMock2 = page => page.route("**/courses/cphims/mock/mock1.js", async r => { const res = await r.fetch(); r.fulfill({ response: res, body: (await res.text()) + "\n;" + MOCK2 }) });
 
 test("test profile: real progress, mocks, study log, place and Continue stay untouched, and come back when it's off", async ({ page }) => {
   noDialogs(page);
-  await withMock2(page);
+  // CPHIMS form 2 is the real courses/cphims/mock/mock2.js (2026-10-14)
   await page.clock.install({ time: new Date("2026-10-12T09:00:00") });
 
   // real progress: a chapter 1 decision, PMP mock practice, CPHIMS form 2, study time, and an audiobook spot

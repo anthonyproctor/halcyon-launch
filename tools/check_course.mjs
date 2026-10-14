@@ -40,12 +40,12 @@ for(const c of data.full){
     try{prose.push(...sc.text(st,{},G),...sc.text(st,{},{}))}catch(e){err(`${sc.id} text() threw ${e.message}`)}
   });
   if(lb>4)err(`best answer longest in ${lb}/${(c.scenes||[]).length}`); if(lb<1)err(`best answer never longest`); if(sb<2)err(`best answer shortest in only ${sb}/${(c.scenes||[]).length}`);if(sb>4)err(`best answer shortest in ${sb}/12 (reverse tell)`);
-  const q=c.quiz||[];if(q.length!==15)err(`quiz=${q.length} (want 15)`);
+  const q=c.quiz||[];const NQ=q.length;if(NQ<15||NQ>20)err(`quiz=${NQ} (want 15 to 20)`);
   const pos=new Array(NOPT).fill(0);let ql=0,qs=0;const lv={RE:0,AP:0,AN:0};const qd={};
   q.forEach((x,i)=>{if(x.opts.length!==NOPT||x.a<0||x.a>=NOPT)err(`quiz ${i}`);pos[x.a]++;if(!TASKS.has(x.task))err(`quiz ${i} task ${x.task}`);else if(domOf(x.task)!==x.domain)err(`quiz ${i} domain`);
     if(course.levels){if(!lv.hasOwnProperty(x.level))err(`quiz ${i} level`);else lv[x.level]++}qd[x.domain]=(qd[x.domain]||0)+1;
     const r=lenCheck(`quiz ${i}`,x.opts,x.a);if(r.longest)ql++;if(r.shortest)qs++;prose.push(x.q,...x.opts,x.why)});
-  if(Math.max(...pos)>Math.ceil(15/NOPT)+2||Math.min(...pos)<Math.floor(15/NOPT)-2)err(`quiz answer positions ${pos}`); if(ql>5)err(`quiz right answer longest in ${ql}/15`);if(qs>6)err(`quiz right answer shortest in ${qs}/15`);
+  if(Math.max(...pos)>Math.ceil(NQ/NOPT)+2||Math.min(...pos)<Math.floor(NQ/NOPT)-2)err(`quiz answer positions ${pos}`); if(ql>Math.ceil(NQ/3))err(`quiz right answer longest in ${ql}/${NQ}`);if(qs>Math.floor(NQ*0.4))err(`quiz right answer shortest in ${qs}/${NQ}`);
   const offDom=Object.keys(qd).filter(d=>!domCount[d]).reduce((a,d)=>a+qd[d],0);if(meta.DOMS.some(d=>!domCount[d])&&offDom<2)err(`spaced review: only ${offDom} quiz items from domains not in this chapter`);
   (c.drills||[]).forEach((d,i)=>{if(!d.fields||!d.fields.every(f=>typeof f.answer==="number"))err(`drill ${i} fields`);if(!(c.scenes||[]).some(s=>s.id===d.after))err(`drill ${i} after`);prose.push(...d.setup,...d.solution)});
   if(c.exercise){const e=c.exercise;if(!(c.scenes||[]).some(s=>s.id===e.after))err("exercise after");e.items.forEach((it,i)=>{if(it.answer<0||it.answer>=it.choices.length)err(`exercise ${i}`);prose.push(it.prompt,it.why)})}
