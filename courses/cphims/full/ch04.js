@@ -49,7 +49,7 @@
   },
   scenes: [
     { id:`f4s1`, domain:`Leadership`, task:`L6`, title:`Forty-seven`,
-      text:(s,all,G)=>[`Walt Hagen was in the surgeons' lounge with the complaint, a pencil, and a printed discharge summary with tally marks down the margin. <span class="said" data-who="Walt">"Forty-seven,"</span> he said. <span class="said" data-who="Walt">"I counted again this morning, in case you thought I was exaggerating."</span>`,`He walked her through the new ones. A screen to confirm he'd seen every pending result. Two clicks to acknowledge each one. A medication count to confirm on transfers. She knew all six. She'd sat in the room where they were decided.`,`<span class="said" data-who="Walt">"I'm told these were safety fixes. I believe it. I'd like to know which of my forty-seven are keeping someone safe, and which are keeping someone covered."</span>`],
+      text:(s,all,G)=>[`Walt Hagen was in the surgeons' lounge with the complaint, a pencil, and a printed discharge summary with tally marks down the margin. <span class="said" data-who="Walt" data-tone="Dry, flat, pointed.">"Forty-seven,"</span> he said. <span class="said" data-who="Walt">"I counted again this morning, in case you thought I was exaggerating."</span>`,`He walked her through the new ones. A screen to confirm he'd seen every pending result. Two clicks to acknowledge each one. A medication count to confirm on transfers. She knew all six. She'd sat in the room where they were decided.`,`<span class="said" data-who="Walt">"I'm told these were safety fixes. I believe it. I'd like to know which of my forty-seven are keeping someone safe, and which are keeping someone covered."</span>`],
       opts:[
         {t:`Explain that the six came from the safety review, and ask him to give them time.`, s:1, d:{trust:-1,conf:1,health:1},
           after:`Walt nods slowly. <span class="said" data-who="Walt">"Give it time. They said that in 1998."</span> He doesn't argue. He also stops telling her what's slow.`,
@@ -58,7 +58,7 @@
           after:`Kiran pulls them Wednesday. Walt is pleased for a week. Then a patient goes home with a potassium still pending that nobody looked at, and the review that added the check opens again.`,
           why:`You undid a safety fix to answer a complaint you hadn't measured. Some of those clicks protect patients. Find out which before you touch any of them.`},
         {t:`Sit with him through a real discharge, and tag what every single click is for.`, s:3, best:true, d:{trust:6,conf:3,health:3},
-          after:`She follows him through a gallbladder discharge at ten, legal pad on her knee. Each click gets one word: safety, billing, legal, habit, nothing. The pending results check stays, and he agrees it should. Kiran folds its two acknowledgments into one signed list, and an old duplicate diagnosis entry goes. Walt looks at the new count for a long time. <span class="said" data-who="Walt">"You kept the ones that matter and told me why. That's new."</span> At the door he turns. <span class="said" data-who="Walt">"While you're counting, count the nurses."</span>`,
+          after:`She follows him through a gallbladder discharge at ten, legal pad on her knee. Each click gets one word: safety, billing, legal, habit, nothing. The pending results check stays, and he agrees it should. Kiran folds its two acknowledgments into one signed list, and an old duplicate diagnosis entry goes. Walt looks at the new count for a long time. <span class="said" data-who="Walt" data-tone="Grudging, quiet, almost approving.">"You kept the ones that matter and told me why. That's new."</span> At the door he turns. <span class="said" data-who="Walt" data-tone="Quiet, pointed, deliberate.">"While you're counting, count the nurses."</span>`,
           why:`User satisfaction is data, and one surgeon's count is a place to start. Watch the real work, measure each step against its purpose, keep what protects patients, and say why. Effectiveness and satisfaction get measured together.`},
         {t:`Send him the annual user survey, so his complaint is counted with everyone's.`, s:0, d:{trust:-3,conf:0,health:0},
           after:`Walt puts the link in his pocket with the printed note. The survey asks him to rate his satisfaction from one to five. It doesn't ask which clicks.`,
@@ -87,7 +87,7 @@
           after:`Jess says she will. She scans carefully for the rest of the pass, with Maria watching. Maria will never know what she does on Wednesday.`,
           why:`You turned an observation into an audit. People hide workarounds from auditors, and you need them to show you, so you can fix what drives them.`},
         {t:`Check that dose with Jess, then finish the pass and log each skip and why.`, s:3, best:true, d:{trust:5,conf:4,health:5},
-          after:`She asks Jess to read the five rights on that dose, out loud, against the eMAR. All right. Then she keeps walking and keeps a tally. Five of twenty-two doses skip the scan: three bands that won't read, a liquid from pharmacy with no barcode, a scanner battery that dies in 316. At the end Jess looks wary. <span class="said" data-who="woman">"You're not writing me up?"</span> <span class="said" data-who="Maria">"I'm fixing the bands,"</span> Maria says. <span class="said" data-who="Maria">"And the button."</span>`,
+          after:`She asks Jess to read the five rights on that dose, out loud, against the eMAR. All right. Then she keeps walking and keeps a tally. Five of twenty-two doses skip the scan: three bands that won't read, a liquid from pharmacy with no barcode, a scanner battery that dies in 316. At the end Jess looks wary. <span class="said" data-who="woman" data-tone="Wary, surprised, quiet.">"You're not writing me up?"</span> <span class="said" data-who="Maria">"I'm fixing the bands,"</span> Maria says. <span class="said" data-who="Maria">"And the button."</span>`,
           why:`Patient safety first: confirm the dose in front of you is right, and reprint the band or confirm two identifiers before the next dose. Then watch the real work without punishing the person showing it to you. Count the workarounds and learn why each one happens. That's where the fixes are.`},
         {t:`Have the charge nurse reprint every wristband on the unit before the noon meds.`, s:1, d:{trust:1,conf:1,health:1},
           after:`Twenty-six new bands by noon. By Thursday half of them are smeared again, and the liquid still has no barcode.`,
@@ -97,12 +97,12 @@
           why:`Coaching a workaround away without fixing its causes just moves it out of sight. Find out why before anyone gets coached.`}
       ]},
     { id:`f4s4`, domain:`Clinical Informatics`, task:`C4`, title:`Walt's tally`,
-      text:(s,all,G)=>[`Tuesday afternoon Walt found her in the cafeteria and set a printed note on her tray, face down. On the back, in pencil, were tally marks.`,`<span class="said" data-who="Walt">"You counted my clicks. I counted your nurses. Three days on my floor. Fifty-eight doses I watched. Eleven went through that button."</span>`,`He'd brought the monthly quality report from the unit break room, too.`,
+      text:(s,all,G)=>[`Tuesday afternoon Walt found her in the cafeteria and set a printed note on her tray, face down. On the back, in pencil, were tally marks.`,`<span class="said" data-who="Walt" data-tone="Dry, grave, deliberate.">"You counted my clicks. I counted your nurses. Three days on my floor. Fifty-eight doses I watched. Eleven went through that button."</span>`,`He'd brought the monthly quality report from the unit break room, too.`,
         `<prop type="chart" kind="bars" title="BCMA scan compliance, December, as reported" labels="Corvane hospitals,Cheyenne,Laramie,Rawlins" values="93,96,97,98">Percent of doses with both the wristband and the medication scanned, from the monthly quality report. The three MedaLink hospitals report the highest rates in the system.</prop>`,
-        `<span class="said" data-who="Walt">"Your oldest system has your best numbers,"</span> Walt said. <span class="said" data-who="Walt">"In my line of work, when the chart looks better than the patient, you look again."</span>`],
+        `<span class="said" data-who="Walt">"Your oldest system has your best numbers,"</span> Walt said. <span class="said" data-who="Walt" data-tone="Low, grave, deliberate.">"In my line of work, when the chart looks better than the patient, you look again."</span>`],
       opts:[
         {t:`Thank him, and explain that nursing quality checks the report every month.`, s:0, flag:`dismissedwalt`, d:{trust:-6,conf:-2,health:-4},
-          after:`Walt takes the paper back, folds it, and puts it in his coat. <span class="said" data-who="Walt">"Checked every month,"</span> he says. <span class="said" data-who="Walt">"Okay."</span> He doesn't bring her anything else that week.`,
+          after:`Walt takes the paper back, folds it, and puts it in his coat. <span class="said" data-who="Walt" data-tone="Flat, cold, disappointed.">"Checked every month,"</span> he says. <span class="said" data-who="Walt" data-tone="Flat, quiet, done.">"Okay."</span> He doesn't bring her anything else that week.`,
           why:`You defended a report you hadn't looked at against a man who had. The question was never whether someone reviews it. It was what it counts.`},
         {t:`Pass his tally to the Laramie CNO, since BCMA practice belongs to nursing.`, s:1, d:{trust:0,conf:1,health:0},
           after:`The CNO thanks her and puts it on the nursing quality agenda for March. The report keeps saying 97.`,
@@ -175,7 +175,7 @@
           after:`The doctor is gracious about it. A prescriber checking her own order catches what she already knew and misses what she didn't.`,
           why:`Pharmacist verification is valuable because it's a second, independent check by a different expert. Self review isn't a substitute.`},
         {t:`Work with pharmacy on night verification from Cheyenne, under state pharmacy rules.`, s:3, best:true, d:{trust:4,conf:4,health:6},
-          after:`Cascade's pharmacy director takes it on. Cheyenne already has a pharmacist overnight. With access to Rawlins orders in MedaLink and the state pharmacy board's rules checked, remote verification can start in March. Night first doses will get a pharmacist's eyes before the cabinet opens. Gail is quiet a second. <span class="said" data-who="Gail">"We asked for this two years ago."</span> Maria believes her.`,
+          after:`Cascade's pharmacy director takes it on. Cheyenne already has a pharmacist overnight. With access to Rawlins orders in MedaLink and the state pharmacy board's rules checked, remote verification can start in March. Night first doses will get a pharmacist's eyes before the cabinet opens. Gail is quiet a second. <span class="said" data-who="Gail" data-tone="Quiet, rueful, relieved.">"We asked for this two years ago."</span> Maria believes her.`,
           why:`Telepharmacy is a trend that improves outcomes for small hospitals: a pharmacist checks each order before the dose, even with nobody on site at night. Judge it by outcomes, use what you already own when you can, and check the state rules.`}
       ]},
     { id:`f4s9`, domain:`Clinical Informatics`, task:`C1`, title:`Nine and nine`,
@@ -192,7 +192,7 @@
           after:`Med pass times stay put, which Denise appreciates. The fourteen q12h drugs built as BID are still built as BID, and now One Chart has two kinds of BID.`,
           why:`Protecting the floor's routine is reasonable. But a local variant hides the real problem, which is orders whose meaning was wrong. Map by intent, then let governance settle the times.`},
         {t:`Let Corvane's default times stand, and retrain Wyoming nurses at go-live.`, s:0, d:{trust:-4,conf:-1,health:-2},
-          after:`Denise looks at her for a long moment. <span class="said" data-who="Denise">"You've met my nurses, right?"</span> The q12h drugs built as BID go live wrong anyway.`,
+          after:`Denise looks at her for a long moment. <span class="said" data-who="Denise" data-tone="Dry, flat, unimpressed.">"You've met my nurses, right?"</span> The q12h drugs built as BID go live wrong anyway.`,
           why:`Retraining people around a mapping you haven't checked puts the burden on the floor and leaves the real errors in place.`}
       ]},
     { id:`f4s10`, domain:`Clinical Informatics`, task:`C3`, title:`Heads in beds`,
@@ -282,25 +282,27 @@
   ],
   closing:(s,all,G)=>[
     `Maria drove home from Cheyenne on Friday night with the heater on high and five days of notes on the seat beside her. Forty-seven clicks. Three hundred and twelve order sentences. Five of twenty-two doses. A wall of butcher paper. Fourteen heparin orders. Most of it was the same lesson from different directions. The system said one thing and the floor did another, and nobody had looked closely enough to see the space between.`,
+    (s.score>=30
+      ?`Somewhere past Wellington she worked out why the week had gone well. She'd let other people show her things. A nurse showed her a button. A surgeon showed her a tally. A nurse manager in Cheyenne showed her a map that was wrong. She'd spent fourteen years being the one who knew. This week she'd been the one who asked, and she'd learned more.`
+      :`Somewhere past Wellington she started the list of things she'd want back. She'd gone to the floor to listen and caught herself defending a few things she should have questioned. Ochoa would point out which ones on Tuesday. He usually didn't have to.`),
     ((s.flags.dismissedwalt||G.dismissedwalt)
       ?`She heard from Renee the next week that Walt had started a tally of his own on the whiteboard in the surgeons' lounge. Doses watched, doses scanned. Above it, in his good handwriting, was one word: Checked. Nobody at Laramie needed it explained.`
-      :`Walt emailed the next week, which Renee said he never did. <span class="said" data-who="Walt">"Saw the restated report. 81. Thank you for looking again. My complaint stands. I'll grant that you looked."</span>`),
+      :`Walt emailed the next week, which Renee said he never did. <span class="said" data-who="Walt" data-tone="Dry, grudging, sincere.">"Saw the restated report. 81. Thank you for looking again. My complaint stands. I'll grant that you looked."</span>`),
     `Lucia was on the couch when she got in, the practice quiz still open on her laptop. <span class="said" data-who="Lucia">"You never answered me. BID and q12h."</span>`,
     `<span class="said" data-who="Maria">"Your quiz is right,"</span> Maria said, and sat down next to her. <span class="said" data-who="Maria">"BID is twice a day, when the hospital says. q12h is every twelve hours, no matter what. Some drugs don't care. Some do. Heparin cares."</span>`,
-    `<span class="said" data-who="Lucia">"Did you ever get one wrong?"</span>`,
-    `Maria looked at the laptop for a while. <span class="said" data-who="Maria">"Every nurse has a night she doesn't talk about,"</span> she said. Lucia waited. Maria didn't say anything else, and after a minute Lucia went back to the quiz.`,
-    (s.score>=30
-      ?`It had been a good week, mostly because she'd let other people show her things. A nurse showed her a button. A surgeon showed her a tally. A nurse manager in Cheyenne showed her a map that was wrong. She'd spent fourteen years being the one who knew. This week she'd been the one who asked, and she'd learned more.`
-      :`It had been a long week, and she'd want some of it back. She'd gone to the floor to listen and caught herself defending a few things she should have questioned. Ochoa would point out which ones on Tuesday. He usually didn't have to.`),
+    `Lucia clicked to the next question. Maria watched her for a while, the pencil behind her ear, the way she mouthed the words. Five days of asking people about their work, and she'd never asked her own daughter about hers.`,
+    `<span class="said" data-who="Maria" data-tone="Quiet, curious, gentle.">"Why nursing? Really."</span>`,
+    `Lucia thought about it. <span class="said" data-who="Lucia" data-tone="Plain, thoughtful, sure.">"You come home tired,"</span> she said. <span class="said" data-who="Lucia" data-tone="Plain, thoughtful, sure.">"You never come home sorry you went."</span>`,
+    `Maria didn't have anything to say to that. She leaned over and pointed at the next question, and Lucia knew that one too.`,
     `Kiran's file arrived at 11:52 PM on Monday, February 1. She opened it at 5:50 the next morning, before her one-on-one with Ochoa, with the coffee still brewing.`,
     `The Laramie and Cheyenne lines looked the way she expected. Laramie sat around 81 all year. Cheyenne ran in the low 90s, and Denise's floor was higher.`,
     `Rawlins didn't.`,
     `<prop type="chart" kind="bars" title="Rawlins BCMA scan compliance, counting every dose" labels="Nov 2025,Dec 2025,Jan 2026,Apr 2026,Jul 2026,Oct 2026,Dec 2026" values="91,90,64,62,63,61,62">The true rate, from the eMAR, by month. The report the board saw said 98 percent every month.</prop>`,
     `Ninety in December 2025. Sixty-four in January. It had never come back. For a whole year, more than one dose in three at Rawlins had gone around the scanner, and every month the report had said ninety-eight, and Gail had been proud of it, and so had everyone who read it.`,
-    `Maria sat very still. Then she remembered Gail on the video call, a window full of snow behind her, saying it almost in passing. <span class="said" data-who="Gail">"We haven't had a night pharmacist since last January."</span>`,
+    `Maria sat very still. Then she remembered Gail on the video call, a window full of snow behind her, saying it almost in passing. <span class="said" data-who="Gail" data-tone="Offhand, almost in passing.">"We haven't had a night pharmacist since last January."</span>`,
     `She picked up her phone and called Kiran, who answered on the first ring at six in the morning, which told her he hadn't slept either.`,
-    `<span class="said" data-who="Maria">"Rawlins,"</span> she said.`,
-    `<span class="said" data-who="Kiran">"I know,"</span> he said. <span class="said" data-who="Kiran">"A year."</span>`
+    `<span class="said" data-who="Maria" data-tone="Quiet, certain, grim.">"Rawlins,"</span> she said.`,
+    `<span class="said" data-who="Kiran" data-tone="Quiet, flat, grim.">"I know,"</span> he said. <span class="said" data-who="Kiran" data-tone="Low, flat, stunned.">"A year."</span>`
   ],
   episode:{src:`audio/full-ch04.mp3`, len:`about 35 minutes`},
   next:`The Alert`

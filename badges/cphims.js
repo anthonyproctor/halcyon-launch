@@ -16,8 +16,7 @@
     {id:"cphims-streak-3",name:"Three Twelves",line:"Three days in a row. Most nurses call that a week.",mark:"grid",rule:{type:"streak",days:3}},
     {id:"cphims-streak-7",name:"Seven On",line:"Seven days running. Bev would call you kid and mean it kindly.",mark:"calendar",rule:{type:"streak",days:7}},
     {id:"cphims-kid",hidden:true,name:"Kid",line:"You let Bev answer, then owned the gap yourself.",mark:"clipboard",rule:{type:"pick",ch:2,scene:"f2s1",opt:1}},
-    {id:"cphims-called-irene",hidden:true,pending:true,name:"Called Irene",line:"Four years, and you made the call.",mark:"cups",rule:{type:"pick",ch:8},
-     plan:"Chapter 8, the coffee with Irene after Theo's text: reaching that scene's page, or the call to Irene if chapter 8 makes it a decision."},
+    {id:"cphims-called-irene",hidden:true,name:"Called Irene",line:"Four years, and you made the call.",mark:"cups",rule:{type:"pick",ch:8,scene:"f8s1"}},
     {id:"cphims-page-two",hidden:true,pending:true,name:"Page Two",line:"You told Lucia all of it, the missing page and the luck.",mark:"sheet",rule:{type:"pick",ch:11},
      plan:"Chapter 11, Maria tells Lucia the whole fax story: reaching that page."}
   ]

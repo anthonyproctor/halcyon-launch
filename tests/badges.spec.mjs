@@ -30,6 +30,10 @@ test("Progress page: the readiness card and its footnote, the shelf with earned,
   await expect(page.locator("#page h1")).toBeVisible();
   // chapters 1 to 3 finished with the best call every time, before badges existed on this device (no badges record)
   await seed(page, { c201: await chapterState(page, 1), c202: await chapterState(page, 2), c203: await chapterState(page, 3) });
+  // the app's first badge check (300 ms after boot) may already have written an empty record on the Guide page when the machine is slow;
+  // drop it so this really is a device with no badges record
+  await page.waitForTimeout(400); // let that check run first, so it can't write the record back after the removal
+  await page.evaluate(() => localStorage.removeItem("halcyon.c908"));
   await page.goto("/#pmp/progress");
   await page.reload();
   const card = page.locator("#readycard");

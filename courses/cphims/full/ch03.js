@@ -6,7 +6,7 @@
   ],
   opening: [
     `Relay lived in the basement of the Fort Collins data center, in a room that had been a storage closet until 2010. Marcus Bell had moved into it then and never left. Three monitors, a space heater he wasn't supposed to have, a coffee maker he definitely wasn't supposed to have, and a whiteboard covered in boxes and arrows that nobody else in the building could read.`,
-    `Maria came down at 8:15 on Tuesday, straight from her one-on-one with Ochoa. He'd read her status page and asked one question. <span class="said" data-who="Ochoa">"Do you know why yet?"</span> She'd said Marcus did. Ochoa had said, <span class="said" data-who="Ochoa">"Then go find out what he knows. All of it. Write it down this time."</span>`,
+    `Maria came down at 8:15 on Tuesday, straight from her one-on-one with Ochoa. He'd read her status page and asked one question. <span class="said" data-who="Ochoa" data-tone="Quiet, pointed, unhurried.">"Do you know why yet?"</span> She'd said Marcus did. Ochoa had said, <span class="said" data-who="Ochoa">"Then go find out what he knows. All of it. Write it down this time."</span>`,
     `Marcus didn't look up when she knocked. He was a big man in a fleece vest, gray at the temples, twenty-two years into a career of making systems talk to each other that had never been built to. He'd written most of Relay himself, one interface at a time, and he kept the rest of it in his head.`,
     `<span class="said" data-who="Marcus">"Sit,"</span> he said, and pointed at a folding chair. <span class="said" data-who="Marcus">"This takes a minute. It's two problems. The first one is the boring one, and it's the one everybody's going to want to talk about."</span>`,
     `On the middle monitor was a diagram she half recognized. A box for Relay. A line to Laramie. A smaller box on the line that said FW CHY, and someone had circled it in red, twice.`,
@@ -50,7 +50,7 @@
     { id:`f3s1`, domain:`Environments`, task:`E7`, title:`Too patient`,
       text:(s,all,G)=>[`Marcus walked her through it the way he'd walk a new nurse through a drip. Relay held one open connection to MedaLink at Laramie, across the Wyoming network, through a firewall in Cheyenne. That connection had stayed open, day and night, for nine years.`,`<span class="said" data-who="Marcus">"Two Thursdays ago the change board approved a firewall cleanup. Listed as no clinical impact. One line in it cut the idle timeout from eight hours to sixty minutes. Laramie's lab goes quiet some nights between seven and eight. At 8:28 the firewall decided my connection was dead and dropped it. Didn't tell anybody. Relay kept sending into it, waiting for an ACK that was never coming. And I'd set it to wait forever, because in 2017 forever seemed safe."</span>`,
         (G.solofix
-          ?`He tapped the log. <span class="said" data-who="Marcus">"Also. The restart at 11:56 came from your account. It cleared the connection history I needed. Took me four extra days to rebuild it from the firewall side."</span> He didn't say it unkindly. He didn't have to.`
+          ?`He tapped the log. <span class="said" data-who="Marcus" data-tone="Even, plain, not unkind.">"Also. The restart at 11:56 came from your account. It cleared the connection history I needed. Took me four extra days to rebuild it from the firewall side."</span> He didn't say it unkindly. He didn't have to.`
           :`He tapped the log. <span class="said" data-who="Marcus">"The emergency change note had my timestamps, so the firewall team found their side in ten minutes. That part went right."</span>`),
         `So what does Maria want fixed?`],
       opts:[
@@ -81,7 +81,7 @@
           after:`The vendor demo is lovely. The quote takes a month, the build takes six, and the new tool would have emailed the same alert to the same inbox.`,
           why:`A new tool doesn't fix bad thresholds or bad routing. Figure out what failed in the process first. Often the tool you have is fine once someone tunes it and owns it.`},
         {t:`Ask Marcus to clear the folder and read every Relay alert as it comes in.`, s:0, d:{trust:-3,conf:-2,health:-2},
-          after:`Marcus looks at her for a long moment. <span class="said" data-who="Marcus">"Sure. Every night. Forever."</span> He doesn't say anything else that day.`,
+          after:`Marcus looks at her for a long moment. <span class="said" data-who="Marcus" data-tone="Flat, deadpan, sarcastic.">"Sure. Every night. Forever."</span> He doesn't say anything else that day.`,
           why:`You found the gap and handed it back to the one person who couldn't close it. A system that depends on one man reading forty false alarms a day has already failed. Fix the system.`}
       ]},
     { id:`f3s3`, domain:`Systems Management`, task:`SC6`, title:`The readout`,
@@ -94,7 +94,7 @@
           after:`The room moves on. But nobody corrected the quality director, and three people leave believing it was Marcus.`,
           why:`You protected him from a public blame, which is decent. You also left the wrong conclusion standing. Say what the analysis shows, out loud, while the room is listening.`},
         {t:`Say the alert went where the design sent it, and list every contributing cause.`, s:3, best:true, d:{trust:6,conf:5,health:4},
-          after:`<span class="said" data-who="Maria">"The alert went where we built it to go. One inbox, no on-call path, thresholds from 2015. That's mine."</span> Then she lists the rest: a firewall change approved without a dependency check, an engine that waited forever, two nurse tickets triaged as slowness. The patient safety officer writes all four on the board. Marcus looks up for the first time.`,
+          after:`<span class="said" data-who="Maria" data-tone="Level, plain, owning it.">"The alert went where we built it to go. One inbox, no on-call path, thresholds from 2015. That's mine."</span> Then she lists the rest: a firewall change approved without a dependency check, an engine that waited forever, two nurse tickets triaged as slowness. The patient safety officer writes all four on the board. Marcus looks up for the first time.`,
           why:`Root cause analysis looks for the conditions that let a failure happen, and there's almost never just one. Name the system causes, own the ones that are yours, and keep the review from settling on the nearest person. That's how people keep reporting problems to you.`},
         {t:`Ask the network engineer to explain the firewall change, since it started it all.`, s:0, d:{trust:-3,conf:-1,health:-1},
           after:`The network engineer turns red and explains the change board approved it. Now the room has two people to blame instead of one.`,
@@ -110,7 +110,7 @@
           after:`She writes back in two lines: remove mine today, and let's do the rest together. The consultants' accounts go first. The shared account takes three weeks, because Marcus's scripts use it, and each script gets its own service account with only the rights it needs. Nate replies with one word. <span class="said" data-who="Nate">"Appreciated."</span>`,
           why:`Least privilege applies to the people at the top, too. Access should match the job you do now, not the job you did two years ago. Lead by removing your own, then fix the rest: named accounts, no shared logins, and service accounts scoped to what they do.`},
         {t:`Keep her access as a backup, in case Marcus can't be reached during an outage.`, s:0, d:{trust:-2,conf:-2,health:-2},
-          after:`Nate writes back one line. <span class="said" data-who="Nate">"A backup who isn't on call, isn't trained, and doesn't open change tickets isn't a backup."</span>`,
+          after:`Nate writes back one line. <span class="said" data-who="Nate" data-tone="Cool, flat, unimpressed.">"A backup who isn't on call, isn't trained, and doesn't open change tickets isn't a backup."</span>`,
           why:`The answer to one engineer being a single point of failure is more trained engineers on call, not a vice president with admin rights. Access you don't need is risk you're carrying for no reason.`},
         {t:`Change hers to read-only, so she can still watch the queues during an outage.`, s:1, d:{trust:1,conf:1,health:1},
           after:`It's better. She can see the queues without being able to change them. But she hasn't looked once in three months, and the new alerts already go to people who will.`,
@@ -154,7 +154,7 @@
           why:`Know the words. The medical record number identifies the patient, the account or visit number identifies the encounter, and the master patient index keeps one person from becoming two. File each result where it belongs, then close the loop with the clinician.`}
       ]},
     { id:`f3s7`, domain:`Systems Management`, task:`SB2`, title:`Three names for lactate`,
-      text:(s,all,G)=>[`Aisha Rahman caught Maria after the Clinical Informatics Council the second week of December. <span class="said" data-who="Aisha">"I want lactate times across all eleven hospitals. Order to result. I'm building something for sepsis and I need a baseline."</span>`,`The eight Corvane hospitals sent lactate with a LOINC code. The three MedaLink hospitals sent it as LACT, LA2, or LACTWB, depending on the hospital and the year someone built it. Laramie had nine hundred local lab codes in all.`,`Kiran was already nodding. <span class="said" data-who="Kiran" data-tone="Too quick, forced easy.">"I can map all nine hundred. Weekends, maybe a month. It's fine."</span> He said it the way he said yes to everything, before anyone had finished asking.`],
+      text:(s,all,G)=>[`Aisha Rahman caught Maria after the Clinical Informatics Council the second week of December. <span class="said" data-who="Aisha">"I want lactate times across all eleven hospitals. Order to result. I'm building something for sepsis and I need a baseline."</span>`,`The eight Corvane hospitals sent lactate with a LOINC code. The three MedaLink hospitals sent it as LACT, LA2, or LACTWB, depending on the hospital and the year someone built it. Laramie had nine hundred local lab codes in all.`,`Kiran was already nodding. <span class="said" data-who="Kiran" data-tone="Quick, eager, too cheerful." data-tone="Too quick, forced easy.">"I can map all nine hundred. Weekends, maybe a month. It's fine."</span> He said it the way he said yes to everything, before anyone had finished asking.`],
       opts:[
         {t:`Let Kiran map all nine hundred himself, since he knows lab codes better than anyone.`, s:1, d:{trust:1,conf:1,health:-1},
           after:`He does it in five weekends. The mapping is excellent and nobody else has checked it. Two codes for a whole blood test and a plasma test end up on the same LOINC.`,
@@ -236,9 +236,9 @@
     { id:`f3s12`, domain:`Leadership`, task:`L22`, title:`The binder`,
       text:(s,all,G)=>[`Marcus was taking a week off after New Year's, his first in three years. His daughter was having a baby in Tucson. He came to Maria's office the afternoon of December 30 with a list of things that could go wrong while he was gone. It ran two pages, in pencil.`,
         ((s.flags.blamedmarcus||G.blamedmarcus)
-          ?`He set it on her desk and didn't sit down. Things had been cool between them since the readout in Laramie. <span class="said" data-who="Marcus">"In case anybody needs someone to point at while I'm gone."</span>`
-          :`He set it on her desk and sat down without being asked, which was new. <span class="said" data-who="Marcus">"You stood up for the design in Laramie. Figured I owed you a list."</span>`),
-        `Maria had two junior analysts who'd asked to learn Relay. She'd asked Marcus twice. He'd changed the subject twice. This time she asked why.`,`He was quiet a long time. <span class="said" data-who="Marcus">"2009. Hospital in Omaha. They asked me to write everything down. I did. Good binder. Three months later they handed the binder to a contractor and handed me a box."</span>`],
+          ?`He set it on her desk and didn't sit down. Things had been cool between them since the readout in Laramie. <span class="said" data-who="Marcus" data-tone="Cool, clipped, bitter.">"In case anybody needs someone to point at while I'm gone."</span>`
+          :`He set it on her desk and sat down without being asked, which was new. <span class="said" data-who="Marcus" data-tone="Gruff, grudging, almost warm.">"You stood up for the design in Laramie. Figured I owed you a list."</span>`),
+        `Maria had two junior analysts who'd asked to learn Relay. She'd asked Marcus twice. He'd changed the subject twice. This time she asked why.`,`He was quiet a long time. <span class="said" data-who="Marcus" data-tone="Low, slow, old bitterness.">"2009. Hospital in Omaha. They asked me to write everything down. I did. Good binder. Three months later they handed the binder to a contractor and handed me a box."</span>`],
       opts:[
         {t:`Make documentation part of his formal goals, so it gets done, and he knows it matters.`, s:0, d:{trust:-4,conf:0,health:0},
           after:`Marcus nods. He writes exactly what the goal asks for, and nothing that would make him easy to replace.`,
@@ -247,7 +247,7 @@
           after:`The course teaches the product. It doesn't teach Cascade's 214 interfaces, the firewall in Cheyenne, or why the dietary feed existed.`,
           why:`Formal training builds base skill, and it's worth doing. But the knowledge that matters lives in this system and in Marcus. Pair the training with time beside him.`},
         {t:`Make Marcus the teacher, in writing: paired runbooks, two trainees, and skill sign-offs.`, s:3, best:true, d:{trust:6,conf:4,health:4},
-          after:`She writes it into his role that afternoon: lead interface engineer, responsible for building the team's competency. The analysts will watch him, then work while he watches, then work alone, with a sign-off for each skill. He'll write the runbooks with them, not for them. Marcus reads it twice. <span class="said" data-who="Marcus">"This in my file?"</span> She says it is. He folds it into his vest pocket.`,
+          after:`She writes it into his role that afternoon: lead interface engineer, responsible for building the team's competency. The analysts will watch him, then work while he watches, then work alone, with a sign-off for each skill. He'll write the runbooks with them, not for them. Marcus reads it, then reads the last line again. <span class="said" data-who="Marcus" data-tone="Gruff, guarded, half pleased.">"This in my file?"</span> She says it is. He folds it into his vest pocket.`,
           why:`Staff competency comes from defined skills, practice, and verification, and from an expert who's rewarded for passing it on. Make the role explicit and protect the person. Then a single point of failure becomes a team.`},
         {t:`Hire a contractor to document Relay while he's away, so it's ready when he's back.`, s:0, d:{trust:-6,conf:-1,health:-1},
           after:`Marcus finds out on the second day of his vacation, from a junior analyst's text. It's Omaha all over again, and he doesn't answer his phone the rest of the week.`,
@@ -292,22 +292,22 @@
   ],
   closing:(s,all,G)=>[
     `The patient safety review closed on the Tuesday between Christmas and New Year's. Four causes, four owners, eleven actions, and every one of them with a date. Ochoa read the final report at their one-on-one and set it down without a question, which Maria was learning was his highest compliment.`,
-    `<span class="said" data-who="Ochoa">"Two months ago you'd have fixed the interface,"</span> he said. <span class="said" data-who="Ochoa">"This time you fixed the building it lives in. Keep doing that. It's slower and it's the job."</span>`,
+    `<span class="said" data-who="Ochoa" data-tone="Quiet, approving, measured.">"Two months ago you'd have fixed the interface,"</span> he said. <span class="said" data-who="Ochoa" data-tone="Quiet, approving, measured.">"This time you fixed the building it lives in. Keep doing that. It's slower and it's the job."</span>`,
     ((s.flags.blamedmarcus||G.blamedmarcus)
       ?`Marcus's list sat on her desk, two pages in pencil. He'd left it and gone without saying goodbye. She'd said one thing in a Laramie conference room that she couldn't unsay, and he'd remember it longer than any fix she made.`
       :`Marcus left for Tucson that night. At 9 PM he sent her a photo of the whiteboard in the basement, with two new names written at the top in his handwriting, and nothing else.`),
     `Lucia was on the couch when she got home, a practice question for her nursing school interview open on her phone. <span class="said" data-who="Lucia">"What's a med rec?"</span>`,
     `<span class="said" data-who="Maria">"Medication reconciliation. When a patient moves, somebody checks the list they came with against the list they're supposed to be on."</span>`,
-    `<span class="said" data-who="Lucia">"Sounds boring."</span>`,
-    `<span class="said" data-who="Maria">"It is,"</span> Maria said. <span class="said" data-who="Maria">"Until the list is short."</span> Lucia looked up at her, waiting for the rest. Maria went to start dinner instead.`,
+    `<span class="said" data-who="Lucia" data-tone="Offhand, bored, teasing.">"Sounds boring."</span>`,
+    `<span class="said" data-who="Maria" data-tone="Dry, light.">"It is,"</span> Maria said. <span class="said" data-who="Maria" data-tone="Quiet, far away, heavy.">"Until the list is short."</span> Lucia looked up at her, waiting for the rest. Maria went to start dinner instead.`,
     (s.score>=30
       ?`It had been a long two months, and most of it had gone right. The ceiling was dry. She knew where the pipes ran now, and who knew them, and that the answer to who knew them couldn't be one man in a fleece vest. She had a plan for that, and he'd put it in his pocket.`
       :`It had been a long two months, and she'd want some of it back. The ceiling was dry, mostly. She knew where the pipes ran now. She also knew how many of her own choices had made the next leak more likely, and Ochoa would make sure she remembered them.`),
     `Two emails came in on Monday, January 4, three minutes apart.`,
-    `The first was from Aisha Rahman. <span class="said" data-who="Aisha">"The lactate baseline is ugly. Sepsis is killing people in Wyoming slower than it should, but it's killing them. I want a sepsis alert live in all eleven hospitals by spring. I'm bringing it to the council next week. I'd like you to co-sponsor."</span>`,
+    `The first was from Aisha Rahman. <span class="said" data-who="Aisha" data-tone="Urgent, intense, determined.">"The lactate baseline is ugly. Sepsis is killing people in Wyoming slower than it should, but it's killing them. I want a sepsis alert live in all eleven hospitals by spring. I'm bringing it to the council next week. I'd like you to co-sponsor."</span>`,
     `The second was from the Laramie medical staff office. It had an attachment.`,
     `<prop type="doc" title="Formal complaint, medical staff office">Submitted by Walter Hagen, MD, General Surgery, Laramie. Subject: click counts. Since changes made in December after the lab interface outage, a routine discharge now takes forty-seven clicks in MedaLink, up from forty-one. I was told the new system would be better. I would like it noted that the old one just got worse.</prop>`,
-    `Maria read them both twice. Then she opened her calendar and blocked a week in Wyoming, on the floor, in scrubs.`
+    `Maria sat with them both until her coffee went cold. Then she opened her calendar and blocked a week in Wyoming, on the floor, in scrubs.`
   ],
   episode:{src:`audio/full-ch03.mp3`, len:`about 35 minutes`},
   next:`The Floor`

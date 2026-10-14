@@ -70,7 +70,7 @@ for (const c of COURSES) {
     if (r.type === "pick") {
       const ch = L.find(x => x.num === r.ch); if (!ch) { err(`${where}: chapter ${r.ch} isn't written (mark it pending)`); continue }
       const i = ch.scenes.findIndex(s => s.id === r.scene); if (i < 0) { err(`${where}: scene ${r.scene} not in chapter ${r.ch}`); continue }
-      const sc = ch.scenes[i]; if (!(Number.isInteger(r.opt) && r.opt >= 0 && r.opt < sc.opts.length)) err(`${where}: option ${r.opt} of ${sc.opts.length}`);
+      const sc = ch.scenes[i]; if (r.opt == null) console.log(`  ${it.id}: ch${r.ch} ${r.scene} "${sc.title}" page s${i}, any option (reaching the scene)`); else if (!(Number.isInteger(r.opt) && r.opt >= 0 && r.opt < sc.opts.length)) err(`${where}: option ${r.opt} of ${sc.opts.length}`);
       else console.log(`  ${it.id}: ch${r.ch} ${r.scene} "${sc.title}" page s${i}, option ${r.opt}${sc.opts[r.opt].best ? " (the best option)" : " (not the best option)"}`);
     }
     if (r.type === "all") (r.ids || []).forEach(x => { if (!all.some(y => y.id === x)) err(`${where}: all names ${x}`) });

@@ -200,7 +200,7 @@ test("art: every form and mark draws in every state", () => {
 });
 
 test("the real definitions: counts, pending badges dropped, targets from courses.js", () => {
-  const want = { pmp: [25, 0], cisa: [22, 2], pilot: [22, 0], cphims: [21, 2], asep: [21, 2], gh300: [15, 1] };
+  const want = { pmp: [25, 0], cisa: [22, 2], pilot: [22, 0], cphims: [21, 1], asep: [21, 2], gh300: [15, 1] };
   for (const [id, [total, pending]] of Object.entries(want)) {
     const c = course(id), def = DEFS[id], planned = c.planned;
     const items = HB.expand(def, { planned, chapters: [] });
@@ -214,4 +214,14 @@ test("the real definitions: counts, pending badges dropped, targets from courses
   assert.equal(DEFS.pmp.readiness.name, "Launch poll");
   assert.ok(DEFS.pmp.items.some(x => x.id === "pmp-doc" && x.hidden && !x.pending));
   assert.match(DEFS.cisa.idCard.note, /Henry's business card/);
+});
+
+test("pick with no opt: reaching the scene (any answer) earns it, a replay doesn't", () => {
+  const D = { ...DEF, items: [{ id: "t-reach", hidden: true, name: "Reached", line: "Reached.", mark: "cups", rule: { type: "pick", ch: 1, scene: "f1s2" } }] };
+  const F = facts(3);
+  assert.ok(!HB.evaluate(D, F, 75).got["t-reach"]); // not there yet
+  F.chapters[0].picks = { 0: 0, 1: 3 }; // any option at f1s2
+  assert.ok(HB.evaluate(D, F, 75).got["t-reach"]);
+  F.chapters[0].rd = 1;
+  assert.ok(!HB.evaluate(D, F, 75).got["t-reach"]);
 });

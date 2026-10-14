@@ -123,7 +123,8 @@ test("library hides listed:false books; Coming next and direct links keep them",
   await expect(page.locator("#page h1")).toHaveText("Your courses");
   const onShelf = await page.locator("#page .libgrid [data-course]").evaluateAll(els => els.map(e => e.dataset.course));
   const listed = COURSES.filter(c => c.listed !== false).map(c => c.id), hidden = COURSES.filter(c => c.listed === false).map(c => c.id);
-  expect(hidden.sort()).toEqual(["asep", "cphims", "gh300"]);
+  expect(hidden.sort()).toEqual(["asep", "gh300"]);
+  expect(onShelf).toContain("cphims"); // listed 2026-10-14, six chapters live
   expect(onShelf.sort()).toEqual(listed.sort());
   expect(onShelf).toContain("cisa"); // the new flagship stays even with one chapter
   await expect(page.locator("#sitefoot")).toContainText("independent study stories");
@@ -142,7 +143,7 @@ test("library hides listed:false books; Coming next and direct links keep them",
     await expect(page.locator("#page h1")).toHaveText("Coming next");
   }
   // a direct link to a hidden book still opens it
-  await page.goto("/#cphims/full/1");
+  await page.goto("/#asep/full/1");
   await expect(page.locator("#page .chmap")).toBeVisible();
   expect(errs).toEqual([]);
 });

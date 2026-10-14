@@ -55,15 +55,15 @@ window.HALCYON_UPCOMING={
 
   shelf:{
     title:"More chapters on the way",
-    intro:"Books you can start today. Chapter 1 is up on each, and the rest are being written.",
+    intro:"Books you can start today. Each one shows how many chapters are out, and the rest are being written.",
     ids:["cphims","asep","gh300"]
   },
 
   finale:{
-    course:"pilot", title:"Danny's Logbook", status:"Final chapters arriving", art:"/courses/pilot/art/full-ch01.svg",
+    course:"pilot", title:"Danny's Logbook", status:"All 12 chapters out", art:"/courses/pilot/art/full-ch01.svg",
     paras:[
       "Jordan Reyes inherited her late brother's share of a 1978 Cessna, his logbook, and one year to learn to fly it or sell it.",
-      "Her year is almost up. The last chapters are being written now, so if you've been flying with her, you won't wait long."
+      "All twelve chapters are out. The audiobook for the last six is being recorded now, so if you listen in the car, it won't be long."
     ]
   }
 };

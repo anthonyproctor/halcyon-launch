@@ -52,7 +52,7 @@
           after:`Maria explains it clearly. The surveyor listens, writes something, and says, <span class="said" data-who="woman">"Thank you. I was asking the charge nurse."</span> Bev looks at the floor.`,
           why:`You know the answer, and you wanted to protect a friend. Surveyors aren't testing whether the VP knows the procedure. They're testing whether the nurse at 3 AM does. Answering for her hides the gap you need to see.`},
         {t:`Let Bev answer, then tell the surveyor plainly what's missing and what she owns.`, s:3, best:true, d:{trust:5,conf:3,health:4},
-          after:`Bev says she'd call the lab and the lab would call her. That's half right. Afterward Maria tells the surveyor that the unit's downtime binder is missing, that her team owns the downtime procedures, and that a recent outage at another hospital showed the same gap. The surveyor writes for a long time. Bev squeezes Maria's arm in the hallway. <span class="said" data-who="woman">"You always did tell on yourself, kid."</span>`,
+          after:`Bev says she'd call the lab and the lab would call her. That's half right. Afterward Maria tells the surveyor that the unit's downtime binder is missing, that her team owns the downtime procedures, and that a recent outage at another hospital showed the same gap. The surveyor writes for a long time. Bev squeezes Maria's arm in the hallway. <span class="said" data-who="woman" data-tone="Fond, wry, quietly proud.">"You always did tell on yourself, kid."</span>`,
           why:`Accreditation exists to find exactly this. Let staff answer for themselves, then be honest about the gap and who owns it. A surveyor who finds a problem you already named sees a hospital that learns. One who finds a problem you hid sees a hospital that performs.`},
         {t:`Tell the surveyor the downtime policy is being rewritten right now, so it's covered.`, s:0, d:{trust:-2,conf:-2,health:-3},
           after:`The surveyor asks to see the draft. There isn't one. The conversation gets noticeably cooler.`,
@@ -78,7 +78,7 @@
           why:`Events get reviewed while the facts are fresh, survey or no survey. Delaying a safety review to keep it out of sight is the opposite of what accreditation is looking for.`}
       ]},
     { id:`f2s3`, domain:`Systems Management`, task:`SE1`, title:`The texts`,
-      text:(s,all,G)=>[`The Laramie house supervisor called back that afternoon. She sounded like she'd been up all night, because she had.`,`<span class="said" data-who="woman">"I texted the criticals to the nurses' personal phones. Name, room, value. I know. I'd do it again. It was faster than walking six units."</span>`,`She wasn't wrong that it was faster. She also wasn't wrong that it put patient names on a dozen personal phones. Cascade's policy didn't say anything about downtime messaging at all.`],
+      text:(s,all,G)=>[`The Laramie house supervisor called back that afternoon. She sounded like she'd been up all night, because she had.`,`<span class="said" data-who="woman" data-tone="Defiant, frayed, unapologetic.">"I texted the criticals to the nurses' personal phones. Name, room, value. I know. I'd do it again. It was faster than walking six units."</span>`,`She wasn't wrong that it was faster. She also wasn't wrong that it put patient names on a dozen personal phones. Cascade's policy didn't say anything about downtime messaging at all.`],
       opts:[
         {t:`Write a policy that bans PHI in any text message, with no exceptions at all.`, s:1, d:{trust:-2,conf:1,health:-1},
           after:`It's clear and easy to enforce. The next time results stop flowing, nurses will walk six units again, or quietly text anyway.`,
@@ -100,7 +100,7 @@
           after:`On day three a surveyor asks a night nurse when she last reviewed the binder. The nurse says she's never seen it before tonight. The sticker says April.`,
           why:`A backdated review is a false record. It's small until someone checks, and then it's the only thing anyone remembers about your survey. Ethics doesn't have a size threshold.`},
         {t:`Put the binders out tonight, but with today's date and no reviewed stickers.`, s:3, best:true, d:{trust:3,conf:5,health:3},
-          after:`Doug winces, then laughs. <span class="said" data-who="man">"Yeah. Okay. That was dumb."</span> They put the binders out together, dated today. When a surveyor asks the next morning, the nurse says they came out last night, and she read hers. The surveyor nods.`,
+          after:`Doug winces, then laughs. <span class="said" data-who="man" data-tone="Sheepish, laughing at himself.">"Yeah. Okay. That was dumb."</span> They put the binders out together, dated today. When a surveyor asks the next morning, the nurse says they came out last night, and she read hers. The surveyor nods.`,
           why:`Fixing a gap fast is good. Faking when you fixed it isn't. Put the real fix in place, date it truthfully, and let the record show what actually happened. Honesty with an accreditor is an ethical duty, and it's also the better strategy.`},
         {t:`Hold the binders back until the survey is over, so nothing looks rushed.`, s:1, d:{trust:0,conf:0,health:-3},
           after:`The units go another three days without downtime binders, survey or not. If anything goes down this week, nurses will be guessing.`,
@@ -184,7 +184,7 @@
           after:`The analyst deletes it. Nobody can say whether the account forwarded it, synced it, or backed it up. And Joan finds out it happened from the lab, a week later.`,
           why:`Fixing a privacy event quietly is hiding it. The privacy officer owns the breach risk assessment. You don't get to decide alone that something wasn't a breach.`},
         {t:`Call Joan back now, share every fact, and let Joan run the breach assessment.`, s:3, best:true, d:{trust:5,conf:3,health:4},
-          after:`Joan listens without interrupting, then asks for the account type, the time, and whether the analyst forwarded it. The assessment takes two days. Joan handles the analyst with care. When it's done, Joan says, <span class="said" data-who="Joan">"You called me before I had to call you. Keep doing that."</span>`,
+          after:`Joan listens without interrupting, then asks for the account type, the time, and whether the analyst forwarded it. The assessment takes two days. Joan handles the analyst with care. When it's done, Joan says, <span class="said" data-who="Joan" data-tone="Dry, approving, understated.">"You called me before I had to call you. Keep doing that."</span>`,
           why:`Report privacy events to the person who owns them, quickly and completely. The privacy officer decides, through a documented risk assessment, whether it's a reportable breach. Your job is facts and cooperation, and fixing whatever process let it happen.`},
         {t:`Wait until the survey ends Friday, then bring the whole thing to Joan in one meeting.`, s:0, d:{trust:-3,conf:-1,health:-3},
           after:`Joan's face, on Friday, is very still. Breach rules run on a clock that starts when the organization knows, and the organization has known since Wednesday.`,
@@ -277,15 +277,15 @@
     ((s.flags.skippedprivacy||G.skippedprivacy)
       ?`Joan Whitfield sat across the table and didn't look at her. Maria still owed Joan a conversation about the HIE, and they both knew it.`
       :`Joan Whitfield, across the table, caught her eye and gave a small nod. It might have meant sorry. It might have meant good. With Joan, she was learning, it could mean both.`),
-    `In the parking lot Ochoa walked her to her car. <span class="said" data-who="Ochoa">"You told them before they found it,"</span> he said. <span class="said" data-who="Ochoa">"They noticed. Now go find out why your hospitals didn't know their own procedures. Then fix that, not the binders."</span>`,
+    `In the parking lot Ochoa walked her to her car. <span class="said" data-who="Ochoa" data-tone="Quiet, approving, firm.">"You told them before they found it,"</span> he said. <span class="said" data-who="Ochoa" data-tone="Quiet, approving, firm.">"They noticed. Now go find out why your hospitals didn't know their own procedures. Then fix that, not the binders."</span>`,
     `Lucia was at the kitchen table when she got home, laptop open, a nursing school essay prompt on the screen. Describe a time a rule protected a patient. She'd written two sentences and deleted them.`,
     `<span class="said" data-who="Lucia">"Do you have one?"</span> she asked. <span class="said" data-who="Lucia">"A rule that actually saved somebody?"</span>`,
-    `Maria thought about Bev's empty shelf, a pretend teenager with a broken wrist stuck behind an insurance question, a list of patients who'd said no to sharing. <span class="said" data-who="Maria">"Most of the rules I know about,"</span> she said, sitting down, <span class="said" data-who="Maria">"somebody got hurt first. That's how they got written."</span>`,
-    `Lucia looked at her for a long moment. <span class="said" data-who="Lucia">"That's kind of a sad essay, Mom."</span> But she started typing.`,
+    `Maria thought about Bev's empty shelf, a pretend teenager with a broken wrist stuck behind an insurance question, a list of patients who'd said no to sharing. <span class="said" data-who="Maria" data-tone="Quiet, rueful, honest.">"Most of the rules I know about,"</span> she said, sitting down, <span class="said" data-who="Maria" data-tone="Quiet, rueful, honest.">"somebody got hurt first. That's how they got written."</span>`,
+    `Lucia looked at her for a long moment. <span class="said" data-who="Lucia" data-tone="Soft, wry, a little worried.">"That's kind of a sad essay, Mom."</span> But she started typing.`,
     (s.score>=30
       ?`It had been a hard week that went well. Maria had told the truth to a surveyor on her old unit and tried to put every problem in front of the person who owned it. None of that changed the finding. The finding was about the work before her, and now it was hers.`
       :`It had been a hard week, and some of it she'd want back. Ochoa would go through it on Tuesday, line by line. The finding didn't care which choices were hers. It was hers now either way.`),
-    `At 10:15 PM her phone lit up on the counter. Marcus. <span class="said" data-who="Marcus">"found why nobody noticed laramie. it's not the interface. you'll want to sit down for this one. tues?"</span>`
+    `At 10:15 PM her phone lit up on the counter. Marcus. <span class="said" data-who="Marcus" data-tone="Low, grim, deadpan.">"found why nobody noticed laramie. it's not the interface. you'll want to sit down for this one. tues?"</span>`
   ],
   episode:{src:`audio/full-ch02.mp3`, len:`about 35 minutes`},
   next:`The Plumbing`

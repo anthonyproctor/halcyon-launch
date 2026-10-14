@@ -79,7 +79,7 @@ H.test=function(it,F,ready,target,got){const r=it.rule||{};
     case "streak":return H.streak(F.listen,F.today).best>=(r.days||3);
     case "flag":{const on=!!(F.flags&&F.flags[r.flag]);return r.not?!on:on}
     case "pick":{const c=(F.chapters||[]).find(x=>x.n===r.ch);if(!c||!c.ids||c.rd>0)return false; // a redo or replay in this run: no fishing for a hidden badge
-      const i=c.ids.indexOf(r.scene);return i>=0&&c.picks&&c.picks[i]===r.opt}
+      const i=c.ids.indexOf(r.scene);return i>=0&&c.picks&&(r.opt==null?c.picks[i]!=null:c.picks[i]===r.opt)} // no opt: any answer at that scene, i.e. the reader reached it
     case "all":return Array.isArray(r.ids)&&r.ids.length>0&&r.ids.every(id=>got&&got[id]);
   }return false};
 /* {id: true or {ch}} for every badge earned now. target: the course's readiness target (courses.js target) */
