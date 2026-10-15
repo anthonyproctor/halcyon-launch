@@ -17,7 +17,7 @@ They reach the AWS CLI through its environment only (endpoint too, as AWS_ENDPOI
 every error is scrubbed of them, of the endpoint host and of anything shaped like an account id.
 
 usage:
-  tools/r2_sync.py [--course ID ...] [--chapter N] [--dry-run] [--force] [--prune [--yes]] [--if-configured] [--quiet]
+  tools/r2_sync.py [--course ID ...] [--chapter N | --cast] [--dry-run] [--force] [--prune [--yes]] [--if-configured] [--quiet]
   tools/r2_sync.py --check            local only: every manifest entry still matches its local file (run before a deploy; tools/pre-commit runs it)
   tools/r2_sync.py --verify [--base URL] [--all]   public URLs answer 206 to a Range with the right type, ETag, CORS, cache and download headers
   tools/r2_sync.py --pull [--base URL] [--course ID]  download the manifest's mp3s into a clone that doesn't have them (no credentials)
@@ -317,6 +317,7 @@ def cmd_sync(args):
     if args.chapter is not None and (not args.course or len(args.course) != 1): sys.exit("--chapter needs exactly one --course")
     courses = args.course or course_ids()
     keep = chapter_filter(courses[0], args.chapter) if args.chapter is not None else (lambda rel: True)
+    if args.cast: keep = lambda rel: rel.startswith(("cast/voice/", "cast/v2/voice/")) or "/cast/voice/" in rel  # cast page samples only, never chapter audio
     roots = [r for c in courses for r in roots_of(c)]
     local = local_files(roots, keep)
     in_scope = lambda rel: keep(rel) and any(rel.startswith(r) for r in roots)
@@ -402,6 +403,7 @@ def main():
     ap = argparse.ArgumentParser(description="Sync narration mp3s to Cloudflare R2 (docs/AUDIO_HOSTING.md)")
     ap.add_argument("--course", action="append", help="course id (repeatable); default every course")
     ap.add_argument("--chapter", type=int, help="only this chapter's files (needs one --course)")
+    ap.add_argument("--cast", action="store_true", help="only cast page voice samples (cast/voice), never chapter audio; safe while a chapter renders")
     ap.add_argument("--dry-run", action="store_true", help="show what would change; upload, delete and write nothing")
     ap.add_argument("--force", action="store_true", help="re-upload every file in scope (after a header policy change)")
     ap.add_argument("--prune", action="store_true", help="also delete old takes in scope that nothing (tree, HEAD, live site) names")

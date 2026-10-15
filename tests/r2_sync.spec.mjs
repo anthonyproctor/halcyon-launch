@@ -100,6 +100,13 @@ test("--course and --chapter limit the scope; --dry-run uploads and writes nothi
   expect(sync("--chapter", "1").code).not.toBe(0); // a chapter needs exactly one course
 });
 
+test("--cast uploads only cast page samples, never chapter audio (safe while a chapter renders)", () => {
+  setup();
+  const r = sync("--quiet", "--cast"); expect(r.code, r.out).toBe(0);
+  expect(puts()).toEqual(["cast/v2/voice/sam.mp3"].map(take));
+  expect(Object.keys(manifest())).toEqual(["cast/v2/voice/sam.mp3"]);
+});
+
 test("nothing is deleted without --prune; --prune deletes only old takes nothing names (tree, HEAD, live site)", () => {
   setup();
   expect(sync("--quiet").code).toBe(0);

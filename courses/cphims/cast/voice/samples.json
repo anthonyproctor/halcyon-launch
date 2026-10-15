@@ -1,0 +1,364 @@
+{
+ "_about": "Cast page voice samples. tools/cast_samples.py <course> remakes any sample whose line or casting (tools/gemini_voices.json) changed; 'made' is written by the tool, edit only who/line/from.",
+ "course": "cphims",
+ "audio": "audio",
+ "samples": {
+  "maria": {
+   "who": "Maria",
+   "line": "Somebody almost didn't find out about a lab result. It's fine now.",
+   "from": "ch1",
+   "made": {
+    "hash": "8edc6d61b82cb76c",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Aoede",
+    "style": "A woman's voice. Quick, warm, direct.",
+    "take": 0,
+    "takes": 4,
+    "sim": 0.948,
+    "prev_sim": null,
+    "centroid_lines": 7,
+    "f0": 160,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 3.2,
+    "date": "2026-10-14"
+   }
+  },
+  "ochoa": {
+   "who": "Ochoa",
+   "line": "Before you fix anything, know what you own and who you serve.",
+   "from": "ch1",
+   "made": {
+    "hash": "d56584d84ea6ab67",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Charon",
+    "style": "A man's voice. Measured, dry, warm underneath.",
+    "take": 2,
+    "takes": 4,
+    "sim": 0.971,
+    "prev_sim": null,
+    "centroid_lines": 349,
+    "f0": 105,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 4.8,
+    "date": "2026-10-14"
+   }
+  },
+  "lucia": {
+   "who": "Lucia",
+   "line": "Isn't that, like, the whole job? Finding out about the lab result?",
+   "from": "ch1",
+   "made": {
+    "hash": "f2b5695fb7d4aa67",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Callirrhoe",
+    "style": "A young woman's voice. Quick, dry, curious.",
+    "take": 2,
+    "takes": 4,
+    "sim": 0.958,
+    "prev_sim": null,
+    "centroid_lines": 13,
+    "f0": 200,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 3.5,
+    "date": "2026-10-14"
+   }
+  },
+  "kiran": {
+   "who": "Kiran",
+   "line": "Where do you want to start?",
+   "from": "ch3",
+   "made": {
+    "hash": "16925f536dc61c16",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Sadaltager",
+    "style": "A man's voice. Quick, precise, eager to help.",
+    "take": 3,
+    "takes": 4,
+    "sim": 0.903,
+    "prev_sim": null,
+    "centroid_lines": 11,
+    "f0": 160,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 0.8,
+    "date": "2026-10-14"
+   }
+  },
+  "marcus": {
+   "who": "Marcus",
+   "line": "The emergency change note had my timestamps, so the firewall team found their side in ten minutes. That part went right.",
+   "from": "ch3",
+   "made": {
+    "hash": "d584485d92ae580a",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Algenib",
+    "style": "A man's voice. Gruff, dry, funny.",
+    "take": 2,
+    "takes": 4,
+    "sim": 0.984,
+    "prev_sim": null,
+    "centroid_lines": 20,
+    "f0": 90,
+    "gender": "m",
+    "heard": 0.964,
+    "seconds": 7.6,
+    "date": "2026-10-14"
+   }
+  },
+  "aisha": {
+   "who": "Aisha",
+   "line": "Thank you for not going around us.",
+   "from": "ch1",
+   "made": {
+    "hash": "a49fc23eacf5fccf",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Autonoe",
+    "style": "A woman's voice. Quick, driven, warm.",
+    "take": 0,
+    "takes": 4,
+    "sim": 0.961,
+    "prev_sim": null,
+    "centroid_lines": 7,
+    "f0": 158,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 1.6,
+    "date": "2026-10-14"
+   }
+  },
+  "joan": {
+   "who": "Joan",
+   "line": "You called me before I had to call you. Keep doing that.",
+   "from": "ch2",
+   "made": {
+    "hash": "146f3837dc32441d",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Pulcherrima",
+    "style": "A woman's voice. Precise, calm, unflappable.",
+    "take": 0,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 147,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 3.7,
+    "date": "2026-10-14"
+   }
+  },
+  "nate": {
+   "who": "Nate",
+   "line": "A backup who isn't on call, isn't trained, and doesn't open change tickets isn't a backup.",
+   "from": "ch3",
+   "made": {
+    "hash": "189bdd6a7aa76cb5",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Alnilam",
+    "style": "A man's voice. Calm, firm, economical.",
+    "take": 1,
+    "takes": 4,
+    "sim": 0.974,
+    "prev_sim": null,
+    "centroid_lines": 2,
+    "f0": 108,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 6.5,
+    "date": "2026-10-14"
+   }
+  },
+  "walt": {
+   "who": "Walt",
+   "line": "Fewer clicks. I'll hold you to that.",
+   "from": "ch1",
+   "made": {
+    "hash": "38875dd735aa8b0d",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Rasalgethi",
+    "style": "A man's voice. Dry, deliberate, unhurried.",
+    "take": 0,
+    "takes": 4,
+    "sim": 0.96,
+    "prev_sim": null,
+    "centroid_lines": 7,
+    "f0": 132,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 3.1,
+    "date": "2026-10-14"
+   }
+  },
+  "glenn": {
+   "who": "Glenn",
+   "line": "Ask my reimbursement team for that number. Don't guess it.",
+   "from": "ch6",
+   "made": {
+    "hash": "c7d22a1d95f38fb7",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Algieba",
+    "style": "A man's voice. Even, dry, exacting.",
+    "take": 2,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 118,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 3.8,
+    "date": "2026-10-14"
+   }
+  },
+  "brett": {
+   "who": "Brett",
+   "line": "Most customers just turn it on.",
+   "from": "ch5",
+   "made": {
+    "hash": "ae304c8ae0041887",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Puck",
+    "style": "A man's voice. Charming, easy, selling.",
+    "take": 1,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 172,
+    "gender": "m",
+    "heard": 0.962,
+    "seconds": 1.9,
+    "date": "2026-10-14"
+   }
+  },
+  "tasha": {
+   "who": "Tasha",
+   "line": "Forty minutes each, at the rate we're verifying.",
+   "from": "ch9",
+   "made": {
+    "hash": "2052faa40674ea5b",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Kore",
+    "style": "A woman's voice. Direct, brisk, matter of fact.",
+    "take": 3,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 178,
+    "gender": "f",
+    "heard": 0.904,
+    "seconds": 2.1,
+    "date": "2026-10-14"
+   }
+  },
+  "gail": {
+   "who": "Gail",
+   "line": "We'd have loved to have you. The road had other plans.",
+   "from": "ch4",
+   "made": {
+    "hash": "29256949877cf2f6",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Laomedeia",
+    "style": "A woman's voice. Plainspoken, steady, direct.",
+    "take": 3,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 200,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 3.6,
+    "date": "2026-10-14"
+   }
+  },
+  "denise": {
+   "who": "Denise",
+   "line": "You're in my building. I hear you've been counting things.",
+   "from": "ch4",
+   "made": {
+    "hash": "216a9d9c8ee0f24c",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Vindemiatrix",
+    "style": "A woman's voice. Blunt, warm, plainspoken.",
+    "take": 3,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 211,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 3.8,
+    "date": "2026-10-14"
+   }
+  },
+  "theo": {
+   "who": "Theo",
+   "line": "Build it once. I'll tell Cheyenne the why.",
+   "from": "ch1",
+   "made": {
+    "hash": "3e7ec3b01645d00b",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Achird",
+    "style": "A man's voice. Warm, easy, a little teasing.",
+    "take": 3,
+    "takes": 4,
+    "sim": 0.975,
+    "prev_sim": null,
+    "centroid_lines": 6,
+    "f0": 126,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 2.5,
+    "date": "2026-10-14"
+   }
+  },
+  "irene": {
+   "who": "Irene",
+   "line": "You're here now. Sit down before it gets cold.",
+   "from": "ch8",
+   "made": {
+    "hash": "45056e0c5b6dfb87",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Gacrux",
+    "style": "A woman's voice. Dry, kind, unhurried.",
+    "take": 2,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 148,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 4.2,
+    "date": "2026-10-14"
+   }
+  },
+  "henry": {
+   "who": "Henry",
+   "line": "Morning. Henry Ashby, for the insurer.",
+   "from": "ch10",
+   "made": {
+    "hash": "c66f8d9b8ee3a18c",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "en-gb-tutor-9",
+    "style": "Dry, precise, tired, understated.",
+    "take": 0,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 110,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 4.2,
+    "date": "2026-10-14"
+   }
+  }
+ }
+}

@@ -125,7 +125,7 @@ test("assets.js lists exactly the portrait and art files on disk (run node tools
 test("no portrait or chapter art request 404s on normal pages", async ({ page }) => {
   const bad = [];
   page.on("response", r => { const u = new URL(r.url()); if (/\/(cast|art)\//.test(u.pathname) && /\.(jpg|svg|png|webp)$/.test(u.pathname) && r.status() >= 400) bad.push(`${r.status()} ${u.pathname}`) });
-  for (const c of ["pmp", "pilot", "cisa"]) {
+  for (const c of ["pmp", "pilot", "cisa", "cphims"]) {
     await page.goto(`/#${c}/full/1`); await page.waitForSelector("#page .chmap"); await page.waitForTimeout(400);
     await page.goto(`/#${c}/cast`); await page.waitForSelector("#page h1"); await page.waitForTimeout(600);
     await page.goto(`/#${c}/home`); await page.waitForSelector("#page h1"); await page.waitForTimeout(300);

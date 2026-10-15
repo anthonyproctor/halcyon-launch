@@ -77,3 +77,110 @@ test("app closed before its last save reached the server: on open, this device's
   await expect.poll(async () => { const L = await saved(page); return L && L.book && L.book.n }).toBe(3);
   await expect.poll(() => puts.some(p => p.chapter === 904 && p.state && p.state.book && p.state.book.n === 3)).toBe(true);
 });
+
+// ---- 2026-10-14, second report from his iPhone: "the scrubber still doesn't work. It brings the screen and the blue text to the right spot
+// but not the audio: it plays from the top and keeps going." The audio here comes from a second origin (standing in for the R2 host: byte
+// ranges and CORS), like production. iOS can drop a seek it accepted and keep playing from where it was; that is simulated by snapping the
+// element back once right after the bar's seek lands.
+import http from "node:http";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const HX = "0123456789ab";
+let srv, ABASE;
+test.describe("remote audio, like the R2 host", () => {
+  test.beforeAll(async () => {
+    srv = http.createServer((req, res) => {
+      const key = decodeURIComponent(new URL(req.url, "http://x").pathname).replace(/^\/+/, ""), m0 = /^(.+)\.([0-9a-f]{12})\.mp3$/.exec(key);
+      const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Expose-Headers": "Content-Length, Content-Range, Accept-Ranges" };
+      const f = m0 ? path.join(ROOT, m0[1] + ".mp3") : "";
+      if (!m0 || !f.startsWith(ROOT + path.sep) || !fs.existsSync(f)) { res.writeHead(404, cors); res.end(); return }
+      const size = fs.statSync(f).size, m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || "");
+      if (m) { const a = m[1] ? +m[1] : 0, b = m[2] ? Math.min(+m[2], size - 1) : size - 1;
+        res.writeHead(206, { ...cors, "Content-Type": "audio/mpeg", "Content-Range": `bytes ${a}-${b}/${size}`, "Content-Length": b - a + 1 }); fs.createReadStream(f, { start: a, end: b }).pipe(res); return }
+      res.writeHead(200, { ...cors, "Content-Type": "audio/mpeg", "Content-Length": size, "Accept-Ranges": "bytes" }); fs.createReadStream(f).pipe(res);
+    });
+    await new Promise(ok => srv.listen(0, "127.0.0.1", ok));
+    ABASE = `http://127.0.0.1:${srv.address().port}`;
+  });
+  test.afterAll(() => new Promise(ok => srv.close(ok)));
+  test.beforeEach(async ({ page }) => {
+    await page.route("**/config.js", r => r.fulfill({ contentType: "text/javascript", body: `window.HALCYON_AUDIO_BASE=${JSON.stringify(ABASE)};` }));
+    await page.route("**/audio-manifest.json", r => r.fulfill({ json: { files: { "audio/v2/full-ch01.mp3": HX, "audio/v2/story/full-ch01.mp3": HX } } }));
+  });
+  const seeks = page => page.evaluate(() => { const a = window.__nar.audio; window.__seeks = []; a.addEventListener("seeking", () => window.__seeks.push(+a.currentTime.toFixed(1))) });
+
+  test("the bar's seek sticks even if the player snaps back once after it lands", async ({ page }) => {
+    await playBook(page);
+    expect(await page.evaluate(() => window.__nar.audio.src)).toContain("127.0.0.1"); // playing the remote copy
+    const dur = await page.evaluate(() => window.__nar.audio.duration);
+    // iOS: the seek is accepted, then the player carries on from where it was
+    await page.evaluate(() => { const a = window.__nar.audio, d = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, "currentTime"); let once = true;
+      a.addEventListener("seeked", () => { if (once) { once = false; const back = window.__before; setTimeout(() => d.set.call(a, back), 0) } }); window.__before = a.currentTime });
+    const box = await page.locator("#narseek").boundingBox();
+    await page.touchscreen.tap(box.x + 8 + (box.width - 16) * 0.6, box.y + box.height / 2);
+    await page.waitForTimeout(2500);
+    const r = await page.evaluate(() => window.__nar.audio.currentTime) / dur;
+    expect(r).toBeGreaterThan(0.55); expect(r).toBeLessThan(0.65);
+  });
+
+  test("a newer seek cancels an older pending one: a resume seek never drags the audio back after the reader scrubs", async ({ page }) => {
+    await playBook(page);
+    const dur = await page.evaluate(() => window.__nar.audio.duration);
+    await page.evaluate(() => { const a = window.__nar.audio, src = a.src; a.pause(); a.removeAttribute("src"); a.load(); a.src = src; a.preload = "none" });
+    await expect.poll(() => page.evaluate(() => window.__nar.audio.readyState)).toBe(0);
+    await seeks(page);
+    await page.evaluate(() => window.__player.seekTo(30, "resume")); // the saved spot, pending until the file loads
+    const box = await page.locator("#narseek").boundingBox();
+    await page.touchscreen.tap(box.x + 8 + (box.width - 16) * 0.6, box.y + box.height / 2); // then the reader drags to 60%
+    await page.evaluate(() => window.__nar.audio.play());
+    await page.waitForTimeout(2500);
+    const t = await page.evaluate(() => window.__nar.audio.currentTime);
+    expect(t / dur).toBeGreaterThan(0.55);
+    const back = await page.evaluate(() => window.__seeks.filter(x => Math.abs(x - 30) < 2).length);
+    expect(back).toBe(0); // never pulled back to the old spot
+  });
+
+  test("a paragraph tap (follow along text) moves the audio, and it stays", async ({ page }) => {
+    await playBook(page);
+    const p = page.locator("#bftext [data-t]").nth(8);
+    test.skip(!(await p.count()), "no follow along text for this chapter");
+    const want = +(await p.getAttribute("data-t"));
+    await p.tap();
+    await page.waitForTimeout(1500);
+    const t = await page.evaluate(() => window.__nar.audio.currentTime);
+    expect(Math.abs(t - want)).toBeLessThan(4);
+  });
+});
+
+test("lock screen play refused by iOS (NotAllowedError) keeps the element and the spot: no reload", async ({ page }) => {
+  await playBook(page);
+  await page.evaluate(() => window.__ms.seekto({ seekTime: 40 }));
+  await expect.poll(() => page.evaluate(() => Math.round(window.__nar.audio.currentTime))).toBeGreaterThanOrEqual(39);
+  await page.evaluate(() => window.__ms.pause());
+  await page.evaluate(() => { const a = window.__nar.audio; window.__loads = 0; a.addEventListener("loadstart", () => window.__loads++);
+    const orig = a.play; a.play = function () { a.play = orig; const e = new Error("not allowed"); e.name = "NotAllowedError"; return Promise.reject(e) } });
+  await page.evaluate(() => window.__ms.play());
+  await page.waitForTimeout(800);
+  expect(await page.evaluate(() => window.__loads)).toBe(0);
+  expect(Math.round(await page.evaluate(() => window.__nar.audio.currentTime))).toBeGreaterThanOrEqual(39);
+  await page.evaluate(() => window.__ms.play()); // the next press plays
+  await expect.poll(() => page.evaluate(() => window.__nar.audio.paused)).toBe(false);
+});
+
+test("player diagnostics: with the switch on, seeks, lock screen actions and element events are batched to /api/qa-report?action=diag", async ({ page }) => {
+  const sent = [];
+  await page.route("**/api/qa-report?action=diag", r => { sent.push(JSON.parse(r.request().postData() || "{}")); r.fulfill({ json: { ok: true } }) });
+  await page.addInitScript(() => localStorage.setItem("halcyon.pdbg", "true"));
+  await playBook(page);
+  await page.evaluate(() => { window.__ms.pause(); window.__ms.seekto({ seekTime: 20 }) });
+  await page.waitForTimeout(500);
+  await page.evaluate(() => window.__player.dflush());
+  await expect.poll(() => sent.length).toBeGreaterThan(0);
+  const evs = sent.flatMap(b => b.events).map(e => e.ev);
+  for (const k of ["seek", "playing", "ms:pause", "ms:seekto", "seeked"]) expect(evs, k).toContain(k);
+  expect(sent[0].sid).toMatch(/^[a-z0-9]+$/);
+  const off = await page.evaluate(() => { window.__player.pdbg.on = false; window.__diag.buf.length = 0; window.__player.dlog("x"); return window.__diag.buf.length });
+  expect(off).toBe(0); // nothing is buffered while the switch is off
+});
