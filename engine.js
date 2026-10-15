@@ -899,7 +899,8 @@ function logWhat(){if(NAR.page==="book"&&NAR.book&&!NAR.audio.paused)return "b"+
 function logAdd(sec,kind,what){sec=Math.round(sec);if(!(sec>0)||!COURSE)return;const L=logGet(),k=dayKey(Date.now()),D=L.days[k]||(L.days[k]={t:{},a:[]}),id=devId(),T=D.t[id]||(D.t[id]=[0,0]);
   sec=Math.min(sec,16*3600-T[0]-T[1]);if(sec<=0)return;T[kind==="l"?1:0]+=sec;if(what&&!D.a.includes(what)&&D.a.length<40)D.a.push(what);logSave(L);if(kind==="l"&&Date.now()-BDG.heard>60000){BDG.heard=Date.now();badgeSoon()}}
 /* listening: settle the span since the last mark, then mark again if the audio is still playing */
-function logHear(pos){const a=NAR.audio,now=Date.now(),m=LOG.lm;
+function logHear(pos){if(NAR.soft){LOG.lm=null;return} // soft paused: muted, so not listening
+  const a=NAR.audio,now=Date.now(),m=LOG.lm;
   if(m){const wall=(now-m.t)/1000,p=pos!=null?pos:a.currentTime;let s;
     if(a.src===m.src){const dp=p-m.p;s=dp>=0?Math.min(wall,dp/(a.playbackRate||1)+2):Math.min(wall,10)}else s=Math.min(wall,1200);
     if(s>0){logAdd(s,"l",m.what);LOG.heard=true}}
@@ -1200,7 +1201,7 @@ async function narSkip(dir){const a=NAR.audio;
     const pv=Object.keys(BOOK.full).map(Number).filter(k=>k<n&&BOOK.full[k][ed]).sort((x,y)=>y-x)[0];if(pv)bookPlay(ed,pv,0);else a.currentTime=0;return}
   if(TRACK==="full"&&CH&&S){const L=steps(CH),cur=L[S.pos];if(dir>0&&cur&&cur.k==="scene"&&S.picks[cur.i]===undefined)return;const p=S.pos+dir;if(p>=0&&p<L.length&&secOpen(p))fullGo(p);return}
   if(TRACK==="ref"&&CH&&S){if(dir>0){const b=$("next")||$("go");if(b)b.click()}else if(S.step>=0){S.step--;save();render();top()}}}
-function narSavePos(now){const a=NAR.audio;if(!a.src||!(a.currentTime>0))return;const t=+a.currentTime.toFixed(1),dur=a.duration||0;
+function narSavePos(now){const a=NAR.audio,ct=NAR.soft?NAR.soft.t:a.currentTime;if(!a.src||!(ct>0))return;const t=+ct.toFixed(1),dur=a.duration||0;
   if(NAR.page==="book"&&NAR.book)lput({book:{ed:NAR.book.ed,n:NAR.book.n,t,dur,at:Date.now()}},now);
   else if(NAR.page&&NAR.key&&NAR.page!=="car")lput({page:{key:NAR.key,pid:NAR.page,t,at:Date.now()}},now);}
 function narTick(){if(Date.now()-lsaveAt>5000){lsaveAt=Date.now();narSavePos(false)}}
@@ -1229,7 +1230,8 @@ window.__diag=DIAG;window.__player={seekTo:(p,w)=>seekTo(p,w),dflush:()=>dflush(
 /* the one seek path (2026-10-14, iPhone: the text moved but the audio kept playing from the top). A newer seek cancels every older one,
    so a resume retry can't drag the audio back after the reader scrubs. Before the element has metadata, iOS ignores currentTime, so the
    target is held and applied on loadedmetadata, canplay and playing, then re-checked on seeked and a few times after, until it sticks. */
-function seekTo(pos,why){const a=NAR.audio;pos=+pos;dlog("seek",{why:why||"",to:+(pos||0).toFixed(2),src:audTail(a.src)});plog("seekTo "+(+pos).toFixed(1)+" src="+audTail(a.src));if(!(pos>=0))return;
+function seekTo(pos,why){const a=NAR.audio;pos=+pos;if(NAR.soft&&why!=="stall"&&pos>=0)NAR.soft.t=pos; // a skip or scrub while soft paused moves the remembered spot
+  dlog("seek",{why:why||"",to:+(pos||0).toFixed(2),src:audTail(a.src)});plog("seekTo "+(+pos).toFixed(1)+" src="+audTail(a.src));if(!(pos>=0))return;
   const tok=++NAR.seekTok;NAR.want=pos;const near=()=>Math.abs((a.currentTime||0)-pos)<1.5;let tries=0;
   const apply=()=>{if(tok!==NAR.seekTok)return;if(a.readyState<1||!a.duration)return;const t=Math.min(pos,Math.max(0,a.duration-0.5));if(Math.abs(a.currentTime-t)>0.4){const b=a.currentTime;try{a.currentTime=t}catch(e){}dlog("seek:set",{from:+b.toFixed(2),to:+t.toFixed(2),now:+(a.currentTime||0).toFixed(2)})}};
   const check=()=>{if(tok!==NAR.seekTok)return;if(near()){NAR.want=null;dlog("seek:ok",{at:+a.currentTime.toFixed(2)});return}if(++tries>8){dlog("seek:gave_up",{want:pos,at:+(a.currentTime||0).toFixed(2)});NAR.want=null;return}apply();setTimeout(check,350)};
@@ -1318,7 +1320,7 @@ async function narAttach(){
   narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
 }
-NAR.audio.addEventListener("ended",()=>{if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${BID()}.${ed}.${n}`,true);store.set(`bookpos.${BID()}.${ed}.${n}`,0);{const L=lget();if(L.book&&L.book.n===n)lput({book:null},true)}const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
+NAR.audio.addEventListener("ended",()=>{if(NAR.soft){softEnd("ended");return}if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${BID()}.${ed}.${n}`,true);store.set(`bookpos.${BID()}.${ed}.${n}`,0);{const L=lget();if(L.book&&L.book.n===n)lput({book:null},true)}const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];if(nx)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
   if(!NAR.auto)return;const pid=NAR.page||"";
   if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>{SCR.auto=true;b.click();SCR.auto=false},700)}
   else if(pid[0]==="o"){const b=$("next");if(b)setTimeout(()=>{SCR.auto=true;b.click();SCR.auto=false},900)}
@@ -1329,7 +1331,7 @@ function narInit(){
   const bar=document.createElement("div");bar.id="narbar";bar.hidden=true;bar.innerHTML=`<button class="btn small" id="narfollow" type="button" hidden>↓ Follow the reading</button><div class="narseekrow"><span class="prog nartime" id="narcur">0:00</span><div class="narseekwrap"><div class="narticks" id="narticks" aria-label="Scenes"></div><span class="narbubble" id="narbubble" hidden></span><input type="range" id="narseek" min="0" max="1000" value="0" step="1" aria-label="Seek"></div><span class="prog nartime" id="nardur">0:00</span><span id="narprog" hidden></span></div><div class="narrow"><button class="btn small ghost" id="narprev" type="button" aria-label="Previous section" data-tip="Previous scene in the Audiobook, or previous page while reading.">⏮</button><button class="btn small ghost" id="narback" type="button" aria-label="Back 10 seconds" data-tip="Jump back 10 seconds for a quick refresher.">⟲ 10</button><button class="btn" id="narplay" type="button">▶ Listen</button><button class="btn small ghost" id="narfwd" type="button" aria-label="Forward 30 seconds" data-tip="Skip ahead 30 seconds.">30 ⟳</button><button class="btn small ghost" id="narnext" type="button" aria-label="Next section" data-tip="Next scene in the Audiobook, or next page while reading.">⏭</button><span class="prog" id="narlabel"></span><label class="prog" for="narrate" data-tip="Reading speed. Your choice is remembered.">Speed <select id="narrate">${[0.8,0.9,1,1.1,1.25,1.5].map(r=>`<option value="${r}" ${r==NAR.rate?"selected":""}>${r}x</option>`).join("")}</select></label><label class="chk prog" for="narauto" data-tip="When a page finishes reading, turn to the next page by itself. Decisions still wait for you to choose."><input type="checkbox" id="narauto" ${NAR.auto?"checked":""}> Keep going</label><button class="btn small ghost" id="gohf" type="button" data-tip="Switch to the audiobook. It starts at the part you're reading and plays straight through, chapter after chapter.">🎧 Audiobook</button></div>`;
   document.body.appendChild(bar);
   $("narfollow").onclick=()=>{NAR.free=false;$("narfollow").hidden=true;const w=NAR.lastw;if(!w||!w.isConnected)return;if(NAR.page==="book"&&BF.box&&BF.box.contains(w)){const r=BF.box.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight)BF.box.scrollIntoView({block:"nearest",behavior:"smooth"});bfScrollTo(w)}else{scrMine(700);w.scrollIntoView({block:"center",behavior:"smooth"})}};
-  $("narplay").onclick=()=>{plog("tap Listen");if(NAR.audio.paused){NAR.listening=true;NAR.free=false;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{plog("play() ok");narUI();narHighlight()}).catch(e=>{plog("play() REJECTED "+e.name+": "+e.message);dlog("play:rejected",{name:e.name,where:"bar"})})}else{NAR.listening=false;NAR.audio.pause();narUI()}};
+  $("narplay").onclick=()=>{plog("tap Listen");dlog(NAR.audio.paused?"tap:play":"tap:pause");if(NAR.soft){softEnd("tap");return}if(NAR.audio.paused){NAR.listening=true;NAR.free=false;if(NAR.audio.ended)NAR.audio.currentTime=0;NAR.audio.play().then(()=>{plog("play() ok");narUI();narHighlight()}).catch(e=>{plog("play() REJECTED "+e.name+": "+e.message);dlog("play:rejected",{name:e.name,where:"bar"})})}else{NAR.listening=false;NAR.audio.pause();narUI()}};
   {const sk=$("narseek");let drag=false;
    const show=()=>{const a=NAR.audio,d=a.duration||0;$("narcur").textContent=fmtT(drag?(+sk.value/1000*d):a.currentTime);$("nardur").textContent=d?fmtT(d):"0:00";if(!drag&&d)sk.value=Math.round(a.currentTime/d*1000)};
    ["timeupdate","loadedmetadata","durationchange","seeked","emptied"].forEach(ev=>NAR.audio.addEventListener(ev,show));
@@ -1360,17 +1362,37 @@ function narInit(){
   addEventListener("pagehide",()=>narSavePos(true));
 }
 narInit();logInit();window.__nar=NAR;
+/* soft pause (2026-10-14, from Anthony's phone diagnostics): an iOS home-screen app that pauses while hidden loses its audio session, and a later
+   lock screen play() resolves but stays silent with currentTime frozen. So a lock screen, headphone or car pause while the page is hidden mutes the
+   element and keeps it playing (the session stays alive), shows "paused" on the lock screen at the remembered spot, and a lock screen play unmutes
+   and seeks back there. Coming back to the app, a stop, the chapter ending, or 10 minutes soft paused turns it into a real pause at that spot. */
+NAR.soft=null;
+function softPause(){const a=NAR.audio;if(NAR.soft||a.paused||!a.src)return false;logHear();const t=a.currentTime||0;NAR.soft={t,at:Date.now(),muted:a.muted};a.muted=true;LOG.lm=null;
+  dlog("soft:pause",{t:+t.toFixed(2)});narSavePos(true);narMsState();clearTimeout(NAR.softT);NAR.softT=setTimeout(()=>softEnd("timeout"),600000);return true}
+function softResume(why){const a=NAR.audio,s=NAR.soft;if(!s)return false;NAR.soft=null;clearTimeout(NAR.softT);a.muted=s.muted;dlog("soft:resume",{t:+s.t.toFixed(2),why});
+  seekTo(s.t,"soft:"+why);narMsState();logHear();return true}
+function softEnd(why){const a=NAR.audio,s=NAR.soft;if(!s)return false;NAR.soft=null;clearTimeout(NAR.softT);NAR.listening=false;try{a.pause()}catch(e){}a.muted=s.muted;
+  dlog("soft:end",{t:+s.t.toFixed(2),why});seekTo(s.t,"soft:end");narSavePos(true);narUI();narMsState();return true}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&NAR.soft)softEnd("visible")});
+NAR.audio.addEventListener("loadstart",()=>{if(NAR.soft){NAR.soft.t=0;dlog("soft:newsrc",{src:audTail(NAR.audio.src)});narMsState()}}); // next/previous track while soft paused: stay soft paused at the start of the new item
+/* stall guard: the element says playing but the clock hasn't moved for 3 s (not seeking, not buffering): log it, and once per 30 s try pause, seek to the same spot, play */
+NAR.stall={t:-1,at:0,fixed:0};
+setInterval(()=>{const a=NAR.audio,S=NAR.stall;if(a.paused||a.ended||a.seeking||!a.src||a.readyState<3||NAR.want!=null){S.at=0;S.t=a.currentTime;return}
+  const t=a.currentTime;if(Math.abs(t-S.t)>0.05||!S.at){S.t=t;S.at=Date.now();return}if(Date.now()-S.at<3000)return;S.at=Date.now();
+  dlog("stall",{t:+t.toFixed(2),hidden:document.hidden,soft:!!NAR.soft});if(Date.now()-S.fixed<30000)return;S.fixed=Date.now();
+  try{a.pause()}catch(e){}seekTo(NAR.soft?NAR.soft.t:t,"stall");Promise.resolve(a.play()).then(()=>dlog("stall:recovered")).catch(e=>dlog("stall:play_rejected",{name:e&&e.name}))},1000);
 /* lock screen and car controls */
 function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:NAR.bsec?`Ch ${NAR.book.n} · ${pidLabel(NAR.bsec,NAR.book.n)}`:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:NAR.book.ed==="story"?"Audiobook, story only":"Audiobook, story + lessons",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
 if("mediaSession" in navigator){try{
   const ok=()=>{narUI();narHighlight()};
   // play from the lock screen or the car: call play() right here (iOS only honors it inside the handler); an element iOS unloaded while paused is reloaded at the saved spot first
-  const msPlay=()=>{const a=NAR.audio;let p;try{p=a.play()}catch(e){p=Promise.reject(e)} // play() first, synchronously, before anything else (iOS only honors it inside the handler)
+  const msPlay=()=>{const a=NAR.audio;if(NAR.soft){let q;if(a.paused){try{q=a.play()}catch(e){}}NAR.listening=true;softResume("ms:play");Promise.resolve(q).then(ok).catch(()=>{});return}
+    let p;try{p=a.play()}catch(e){p=Promise.reject(e)} // play() first, synchronously, before anything else (iOS only honors it inside the handler)
     NAR.listening=true;const t=a.currentTime;dlog("ms:play:called",{rs:a.readyState,src:audTail(a.src)});
     Promise.resolve(p).then(()=>{dlog("ms:play:ok");ok()}).catch(e=>{dlog("ms:play:rejected",{name:e&&e.name,msg:String(e&&e.message||"").slice(0,80)});
       if(e&&e.name==="NotAllowedError")return; // iOS refused this one; reloading would only lose the spot
       try{if(a.readyState===0||a.error){if(t>0)seekTo(t,"ms:reload");a.load()}Promise.resolve(a.play()).then(ok).catch(x=>dlog("ms:play:retry_rejected",{name:x&&x.name}))}catch(x){}})};
-  const H={play:msPlay,pause:()=>{NAR.listening=false;NAR.audio.pause();narUI()},stop:()=>{NAR.listening=false;NAR.audio.pause();narUI()},
+  const H={play:msPlay,pause:()=>{if(document.hidden&&softPause())return;NAR.listening=false;NAR.audio.pause();narUI()},stop:()=>{if(softEnd("ms:stop"))return;NAR.listening=false;NAR.audio.pause();narUI()},
     nexttrack:()=>narSkip(1),previoustrack:()=>narSkip(-1),
     seekbackward:d=>{const a=NAR.audio;seekTo(Math.max(0,a.currentTime-((d&&d.seekOffset)||10)),"ms:back");narSavePos(true)},
     seekforward:d=>{const a=NAR.audio;seekTo(Math.min((a.duration||0)-0.5,a.currentTime+((d&&d.seekOffset)||10)),"ms:fwd");narSavePos(true)},
@@ -1378,8 +1400,8 @@ if("mediaSession" in navigator){try{
   Object.entries(H).forEach(([k,f])=>{try{navigator.mediaSession.setActionHandler(k,k==="play"?f:d=>{dlog("ms:"+k,d&&d.seekTime!=null?{seekTime:+(+d.seekTime).toFixed(2)}:d&&d.seekOffset!=null?{seekOffset:d.seekOffset}:null);return f(d)})}catch(e){}});
 }catch(e){}}
 /* the lock screen's play or pause button and its scrubber follow the element (iOS shows a slider it can't move without seekto and a position) */
-function narMsState(){if(!("mediaSession" in navigator))return;const a=NAR.audio;try{navigator.mediaSession.playbackState=a.src?(a.paused?"paused":"playing"):"none"}catch(e){}
-  try{if(navigator.mediaSession.setPositionState&&a.duration&&isFinite(a.duration))navigator.mediaSession.setPositionState({duration:a.duration,playbackRate:a.playbackRate||1,position:Math.min(a.duration,Math.max(0,a.currentTime||0))})}catch(e){}}
+function narMsState(){if(!("mediaSession" in navigator))return;const a=NAR.audio,sp=NAR.soft;try{navigator.mediaSession.playbackState=a.src?(sp||a.paused?"paused":"playing"):"none"}catch(e){}
+  try{if(navigator.mediaSession.setPositionState&&a.duration&&isFinite(a.duration))navigator.mediaSession.setPositionState({duration:a.duration,playbackRate:a.playbackRate||1,position:Math.min(a.duration,Math.max(0,sp?sp.t:(a.currentTime||0)))})}catch(e){}}
 let msAt=0;["play","pause","loadedmetadata","seeked","ratechange","ended"].forEach(ev=>NAR.audio.addEventListener(ev,narMsState));NAR.audio.addEventListener("timeupdate",()=>{if(Date.now()-msAt>5000){msAt=Date.now();narMsState()}});
 NAR.audio.addEventListener("play",narMedia);
 if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("/sw.js").catch(()=>{});
