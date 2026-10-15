@@ -199,9 +199,9 @@ function refRender(){
 function refEnd(){
   const n=CH.scenes.length,weak=DOMS.map(d=>[d,S.dom[d][1]?S.dom[d][0]/S.dom[d][1]:1]).sort((a,b)=>a[1]-b[1])[0];
   const missed=CH.scenes.map((sc,i)=>[sc,S.picks[i]]).filter(([sc,p])=>p!==undefined&&sc.opts[p].s<3);const nxt=chapters().find(c=>c.num===CH.num+1);
-  $("page").innerHTML=`<div class="kicker">Refresher · Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates()))}
+  $("page").innerHTML=`<div class="kicker">Refresher · Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates(),globalFlags()))}
    <div class="end-grid"><div class="card"><h3>Score</h3><div class="big">${S.score}/${n*3}</div></div>${METERS_OF().map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
-   <h2>What to study next</h2><div class="story"><p>Your weakest area this chapter was <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent.${missed.length?" The decisions to revisit:":" You found the best answer every time."}</p></div>
+   <h2>What to study next</h2><div class="story"><p>${weak[1]<1?`Your weakest area this chapter was <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent.`:"You got every question right in every area this chapter."}${missed.length?" The decisions to revisit:":" You found the best answer every time."}</p></div>
    ${missed.length?`<ul class="story" style="padding-left:22px">${missed.map(([sc])=>`<li>${sc.task} (${sc.domain})</li>`).join("")}</ul>`:""}
    ${videoCard(CH.deeper,"Go deeper")}${episodeCard(CH)}
    <div class="bar">${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:""}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
@@ -264,7 +264,7 @@ function fullRender(){
     const weak=DOMS.map(d=>[d,S.dom[d][1]?S.dom[d][0]/S.dom[d][1]:1]).sort((a,b)=>a[1]-b[1])[0];
     h+=`<div class="kicker">${esc(CH.part)} · Chapter ${CH.num} · Debrief</div><h1>${CH.title}</h1>${paras(CH.closing(S,allStates(),globalFlags()))}
      <div class="end-grid"><div class="card"><h3>Decisions</h3><div class="big">${S.score}/${n*3}</div></div><div class="card"><h3>Quiz</h3><div class="big">${S.quiz?S.quiz.right+"/"+CH.quiz.length:"·"}</div></div>${dr?`<div class="card"><h3>Drills</h3><div class="big">${drOk}/${dr}</div></div>`:""}${METERS_OF().map(([k,l])=>`<div class="card"><h3>${l}</h3><div class="big">${S.m[k]}</div></div>`).join("")}</div>
-     <div class="story"><p>Weakest area this chapter: <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent, counting decisions and quiz together.</p></div>
+     <div class="story"><p>${weak[1]<1?`Weakest area this chapter: <b>${weak[0]}</b> at ${Math.round(weak[1]*100)} percent, counting decisions and quiz together.`:"Every area this chapter came in at 100 percent, counting decisions and quiz together."}</p></div>
      ${episodeCard(CH)}<div class="bar">${STORY()&&S.pos<steps(CH).length-1?`<button class="btn ghost" id="fnext" type="button">${MENTOR()}'s notes (optional)</button>`:""}${nxt?`<button class="btn" id="nextch" type="button">Chapter ${nxt.num}: ${nxt.title}</button>`:`${COURSE.final?`<button class="btn" id="tofinal" type="button">Take the final assessment</button>`:""}${hasMock()?`<button class="btn${COURSE.final?" ghost":""}" id="tomock" type="button">Take the practice exam</button>`:""}`}<button class="btn ghost" id="replay" type="button">Replay chapter ${CH.num}</button></div>`;
   }
   $("page").innerHTML=h;wireVideos();if(cur.k==="labs")labsMount();recapWire();bmWireChapter();
