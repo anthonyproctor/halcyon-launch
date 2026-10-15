@@ -144,7 +144,7 @@
    "Jun": {"voice": "Zubenelgenubi", "style": "General American accent. A junior systems engineer of twenty-four. Quick, earnest."},
    "Tess": {"voice": "Zephyr", "style": "General American accent, bright."},
    "Frank": {"voice": "Orus", "style": "General American accent, gruff."},
-   "Gail": {"voice": "Kore", "style": "A woman's voice. Dry, kind, exact, unhurried.", "run": true, "gender": "f"},
+   "Colleen": {"voice": "Kore", "style": "A woman's voice. Dry, kind, exact, unhurried.", "run": true, "gender": "f"},
    "Beto": {"voice": "Algieba", "style": "General American accent. Easygoing, warm.", "gender": "m"}
   },
   "gh300": {

@@ -9,14 +9,20 @@ async function stubAudio(page) {
   await page.route("https://audio.strakesystems.com/**", r => r.fulfill({ status: 204, body: "" }));
 }
 
-test("renders the headline, the five books (four with clips, The Appeal with chapter one only), the not affiliated line, and no endorsement words", async ({ page }) => {
+test("renders the headline, the six books (four with clips, The Appeal and Hearth with chapter one only), the not affiliated line, and no endorsement words", async ({ page }) => {
   const errs = []; page.on("pageerror", e => errs.push(String(e)));
   await stubAudio(page);
   await page.goto("/welcome");
   await expect(page.locator("h1")).toContainText("listening to a story");
-  await expect(page.locator(".book")).toHaveCount(5);
+  await expect(page.locator(".book")).toHaveCount(6);
   await expect(page.locator(".book[data-book=lsat] .play")).toHaveCount(0); // new book: text first, audiobook next
   await expect(page.locator(".book[data-book=lsat] .meta")).toContainText("1 of 12 chapters out");
+  await expect(page.locator(".book[data-book=asep] h3")).toHaveText("Hearth");
+  await expect(page.locator(".book[data-book=asep] .hero-name")).toHaveText("You play Nadia Brooks");
+  await expect(page.locator(".book[data-book=asep] .play")).toHaveCount(0);
+  await expect(page.locator(".book[data-book=asep] .meta")).toHaveText("1 of 12 chapters out");
+  await expect(page.locator(".book[data-book=asep] .src")).toHaveText("New. Read chapter one now; the audiobook comes next.");
+  await expect(page.locator("#book option[value=asep]")).toHaveText("Hearth (ASEP)");
   for (const id of BOOKS) {
     const card = page.locator(`.book[data-book="${id}"]`);
     await expect(card.locator("h3")).not.toHaveText("");
@@ -25,7 +31,8 @@ test("renders the headline, the five books (four with clips, The Appeal with cha
   }
   await expect(page.locator(".book[data-book=pmp] h3")).toHaveText("The Halcyon Launch");
   await expect(page.locator(".book[data-book=pmp] .meta")).toHaveText("All 15 chapters out");
-  await expect(page.locator("footer")).toContainText("aren't affiliated with or endorsed by PMI, HIMSS, ISACA, LSAC, or the FAA");
+  await expect(page.locator("footer")).toContainText("aren't affiliated with or endorsed by PMI, HIMSS, ISACA, INCOSE, LSAC, or the FAA");
+  await expect(page.locator("footer")).toContainText("ASEP is an INCOSE certification.");
   const text = await page.locator("body").innerText();
   expect(text).not.toMatch(/\bapproved\b|guarantee|PDU|official/i);
   expect(await page.locator('meta[name="robots"]').getAttribute("content")).toContain("noindex");

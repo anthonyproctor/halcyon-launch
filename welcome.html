@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one reading column, like a book's front matter. The headline, then the idea in three steps, then the four books, each with its first page to hear. */
+/* Layout: one reading column, like a book's front matter. The headline, then the idea in three steps, then the books, each with its first page to hear. */
 :root{
   --bg:#f3f1ec; --page:#fbfaf7; --ink:#1d2024; --muted:#5d636b; --line:#dcd8cf; --soft:#ece9e2;
   --accent:#28536b; --accent-soft:#e1ebf0; --on-accent:#ffffff; --good:#2e7350; --bad:#a63c32;
@@ -138,6 +138,7 @@ footer p{margin:0 0 8px}
           <option value="cisa">Exception Noted (CISA)</option>
           <option value="pilot">Danny's Logbook (private pilot)</option>
           <option value="lsat">The Appeal (LSAT)</option>
+          <option value="asep">Hearth (ASEP)</option>
         </select>
       </label>
       <button class="btn" type="submit" id="send">Request an invite</button>
@@ -147,8 +148,8 @@ footer p{margin:0 0 8px}
   </section>
 
   <footer>
-    <p>These books are independent study stories. They aren't affiliated with or endorsed by PMI, HIMSS, ISACA, LSAC, or the FAA, and they don't promise a passing score.</p>
-    <p>PMP and PMBOK are registered marks of the Project Management Institute, Inc. CPHIMS is a registered mark of HIMSS. LSAT and LawHub are trademarks of LSAC. CISA is a registered mark of ISACA.</p>
+    <p>These books are independent study stories. They aren't affiliated with or endorsed by PMI, HIMSS, ISACA, INCOSE, LSAC, or the FAA, and they don't promise a passing score.</p>
+    <p>PMP and PMBOK are registered marks of the Project Management Institute, Inc. CPHIMS is a registered mark of HIMSS. LSAT and LawHub are trademarks of LSAC. CISA is a registered mark of ISACA. ASEP is an INCOSE certification.</p>
     <p>Narration uses synthetic voices.</p>
   </footer>
 </div>
@@ -164,7 +165,8 @@ footer p{margin:0 0 8px}
     {id:"cphims", hero:"Maria Santos", cert:"CPHIMS", clip:{url:A+"courses/cphims/cast/voice/maria.93adf43d4e2d.mp3", from:0, to:null, src:"Maria's voice. The full audiobook is being recorded now."}},
     {id:"cisa", hero:"Henry Ashby", cert:"CISA", clip:{url:A+"courses/cisa/audio/pages/f1/open.e0861da36cd0.mp3", from:0, to:43.5, src:"Chapter 1, the opening page"}},
     {id:"pilot", hero:"Jordan Reyes", cert:"Private pilot", clip:{url:A+"courses/pilot/audio/pages/f1/open.cc4099b77219.mp3", from:0, to:35.6, src:"Chapter 1, the opening page"}},
-    {id:"lsat", hero:"Dani Ruiz", cert:"LSAT", clip:null}
+    {id:"lsat", hero:"Dani Ruiz", cert:"LSAT", clip:null},
+    {id:"asep", hero:"Nadia Brooks", cert:"ASEP", clip:null}
   ];
   var C = {}; (window.HALCYON_COURSES || []).forEach(function(c){ C[c.id] = c; });
   function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(ch){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]; }); }

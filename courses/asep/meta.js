@@ -14,7 +14,7 @@ C.meta={
   },
   BASE_CAST:[
     ["Nadia Brooks","You. First systems engineer job at Front Range Orbital. Five years in avionics test before this."],
-    ["Gail Whitcomb","FRO advisory board. Retired Air Force pilot. She flew the evaluation flights on displays you tested, and put your name forward. Your mentor."],
+    ["Colleen Whitcomb","FRO advisory board. Retired Air Force pilot. She flew the evaluation flights on displays you tested, and put your name forward. Your mentor."],
     ["Wes Harland","Chief engineer. Thirty years of pressure vessels. Hates paperwork."],
     ["Amara Osei","Program manager. Ex-Air Force acquisition officer. Cost and schedule."],
     ["Tiago Ferreira","Integration and test lead. Owns the high bay and the pressure test cell."],

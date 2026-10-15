@@ -4,7 +4,7 @@
 (window.HALCYON_BADGES=window.HALCYON_BADGES||{}).asep={
   form:"qastamp",one:"stamp",shelf:"Traveler stamps",
   color:{paper:"#f6f1fb",rim:"#6a3d9a",ink:"#6a3d9a"},
-  readiness:{name:"Exit criteria",explain:"At {target} you've met them, and Gail would let you into the review."},
+  readiness:{name:"Exit criteria",explain:"At {target} you've met them, and Colleen would let you into the review."},
   // Phase 2 draws this: a Front Range Orbital badge with high bay access and a QA stamp number for the reader
   idCard:{title:"FRO badge",org:"Front Range Orbital",role:"SYSTEMS ENGINEER",access:"high bay",stampNumber:true,back:"the HEARTH traveler"},
   chapters:{prefix:"asep-ch",line:"Stamped and bought off. This step meets its requirements.",mark:"num"},
