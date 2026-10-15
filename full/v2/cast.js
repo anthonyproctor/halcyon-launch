@@ -1,5 +1,5 @@
 // Cast wiki for The Halcyon Launch, v2 DRAFT (2061 to 2063). Not loaded by index.html. Drop-in shape for full/cast.js.
-// Each section unlocks after the reader reaches the given chapter. Written to full/BIBLE_v2_proposal.md and its Decisions (2026-10-11):
+// Each section unlocks after the reader reaches the given chapter. Written to full/BIBLE.md and its Decisions (2026-10-11):
 // a separate world from the other courses; Sam a widower; Sam's wound never answered. Covers everyone who appears in chapter 1.
 window.HALCYON_CAST=[
  { id:`sam`, intro:`I'm Sam Okafor. Nine years in the Air Force on F-16s, the last stretch as a dedicated crew chief, then nineteen years keeping the high bay at Tallgrass running. My signature used to mean a jet was ready. For a long time now it's only meant a building was. Then the program manager walked out, and the ARA gave me the ship. My daughter is on the station it's for. I'm going to listen first.`, name:`Sam Okafor`, role:`Tallgrass integration operations manager, drafted to run the Halcyon program. Fifty. You.`, firstChapter:1, speaker:`Sam`,

@@ -227,7 +227,7 @@
           why:`You'll make that call, and you should. Third, though. Tower can't fly the airplane for you.`}
       ]},
     { id:`f1s12`, domain:`Preflight`, task:`I.A`, title:`Answering Walt`,
-      text:(s,all,G)=>[`After they tied Biscuit down, a man in a canvas jacket was waiting at the hangar door with two coffees. Gray at the temples, reading glasses on a cord, the posture of somebody who'd spent thirty years telling people things they didn't want to hear. Walt Herrera.`,`He handed Jordan a coffee. <span class="said" data-who="Walt">"How was it?"</span> Then, before Jordan could answer: <span class="said" data-who="Walt">"I meant what I said. I'm not trying to take anything from you. But you've got a lot on you right now, you've never flown, and that's a quarter of an airplane four people trust their lives to. So. Selling?"</span>`],
+      text:(s,all,G)=>[`After they tied Biscuit down, a man in a canvas jacket was waiting at the hangar door with two coffees. Gray at the temples, reading glasses on a cord, the posture of somebody who'd spent thirty years telling people things they didn't want to hear. Walt Herrera.`,`He handed Jordan a coffee. <span class="said" data-who="Walt" data-tone="Even, dry, unhurried.">"How was it?"</span> Then, before Jordan could answer: <span class="said" data-who="Walt">"I meant what I said. I'm not trying to take anything from you. But you've got a lot on you right now, you've never flown, and that's a quarter of an airplane four people trust their lives to. So. Selling?"</span>`],
       opts:[
         {t:`Tell Walt it's her share now and to stay out of it.`, s:0, d:{trust:-5,conf:-3,health:-2},
           after:`Walt nods slowly and takes his coffee back, which Jordan didn't know was possible.`,

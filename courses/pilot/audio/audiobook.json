@@ -63,61 +63,61 @@
   "7": {
    "story": {
     "src": "audio/story/full-ch07.mp3",
-    "min": 31.9
+    "min": 38.9
    },
    "study": {
     "src": "audio/full-ch07.mp3",
-    "min": 66.0
+    "min": 74.4
    }
   },
   "8": {
    "story": {
     "src": "audio/story/full-ch08.mp3",
-    "min": 31.1
+    "min": 37.3
    },
    "study": {
     "src": "audio/full-ch08.mp3",
-    "min": 72.1
+    "min": 80.7
    }
   },
   "9": {
    "story": {
     "src": "audio/story/full-ch09.mp3",
-    "min": 41.6
+    "min": 44.7
    },
    "study": {
     "src": "audio/full-ch09.mp3",
-    "min": 78.8
+    "min": 82.8
    }
   },
   "10": {
    "story": {
     "src": "audio/story/full-ch10.mp3",
-    "min": 34.1
+    "min": 40.9
    },
    "study": {
     "src": "audio/full-ch10.mp3",
-    "min": 70.3
+    "min": 78.4
    }
   },
   "11": {
    "story": {
     "src": "audio/story/full-ch11.mp3",
-    "min": 30.0
+    "min": 36.5
    },
    "study": {
     "src": "audio/full-ch11.mp3",
-    "min": 64.5
+    "min": 72.1
    }
   },
   "12": {
    "story": {
     "src": "audio/story/full-ch12.mp3",
-    "min": 53.1
+    "min": 65.5
    },
    "study": {
     "src": "audio/full-ch12.mp3",
-    "min": 78.2
+    "min": 92.2
    }
   }
  }

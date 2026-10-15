@@ -128,6 +128,7 @@ def judge(lines, book, key):
         med = float(np.median(f0s)) if f0s else None
         cfg = char_cfg(getattr(book, "course", None), who)
         smin, tmin, pst = float(cfg.get("sim_min", SIM_MIN)), float(cfg.get("tone_sim_min", TONE_SIM_MIN)), cfg.get("pitch_max_st")
+        flo, fclo = float(cfg.get("f0_low", F_LOW)), float(cfg.get("f0_char_low", F_CHAR_LOW))  # per character floors: an older or lower woman Anthony approved by ear (Kendra, 2026-10-14)
         pf = [L["f0"] for L in Ls if L["f0"] and not L.get("tone")]
         pmed = float(np.median(pf)) if pst is not None and len(pf) >= 5 else None
         for L in Ls:
@@ -135,7 +136,7 @@ def judge(lines, book, key):
             why = []
             lo = tmin if L.get("tone") else smin
             if L["sim"] is not None and L["sim"] < lo: why.append(f"voice {L['sim']:.2f} < {lo}")
-            if g == "f" and L["f0"] and L["f0"] < F_LOW: why.append(f"pitch {L['f0']:.0f} Hz reads male")
+            if g == "f" and L["f0"] and L["f0"] < flo: why.append(f"pitch {L['f0']:.0f} Hz reads male")
             if g == "m" and L["f0"] and L["f0"] > M_HIGH: why.append(f"pitch {L['f0']:.0f} Hz reads female")
             if pmed and L["f0"] and not L.get("tone") and abs(12 * np.log2(L["f0"] / pmed)) > float(pst):
                 why.append(f"pitch {L['f0']:.0f} Hz is {12 * np.log2(L['f0'] / pmed):+.1f} st from {who}'s {pmed:.0f}")
@@ -143,5 +144,5 @@ def judge(lines, book, key):
         sims = [L["sim"] for L in Ls if L["sim"] is not None]
         summary[who] = {"lines": len(Ls), "mean_sim": round(float(np.mean(sims)), 3) if sims else None,
                         "f0_median": round(med) if med else None, "gender": g,
-                        "gender_fail": bool(med and ((g == "f" and med < F_CHAR_LOW) or (g == "m" and med > M_CHAR_HIGH)))}
+                        "gender_fail": bool(med and ((g == "f" and med < fclo) or (g == "m" and med > M_CHAR_HIGH)))}
     return flagged, summary

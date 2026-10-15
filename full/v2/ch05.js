@@ -1,5 +1,5 @@
 // The Halcyon Launch, v2 DRAFT. Chapter 5, "The Numbers." Not loaded by index.html or courses.js. Drop-in shape for full/ch05.js.
-// Written 2026-10-11 to full/BIBLE_v2_proposal.md (chapter 5 plan, flags table, Decisions 2026-10-11) and in the format of full/v2/ch01.js to ch04.js.
+// Written 2026-10-11 to full/BIBLE.md (chapter 5 plan, flags table, Decisions 2026-10-11) and in the format of full/v2/ch01.js to ch04.js.
 // Sources read for this chapter (verified 2026-10-11):
 // PMI, PMP Examination Content Outline, July 2026 PMP Certification Exam Update (PDF, downloaded and read with pdftotext):
 //   https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/new-pmp-examination-content-outline-2026.pdf
@@ -104,9 +104,9 @@
     `Wendell went in at 8:55 with the shoebox of notebooks under one arm, the rubber bands on, and a canvas bag over his shoulder with a second set in it. Sam's text in May had said twice. Wendell had texted back one word, and the word had been Copies.`,
     `The door had a small window with wire in the glass. Through it Sam could see the end of a long table, a pitcher of water, and a hand with a green pen in it, writing. He looked at the floor after that. It was a good floor, old terrazzo with brass strips in it, and he learned it well over the next three hours.`,
     `At 12:05 the door opened and Wendell came out and set the shoebox on the bench and sat down beside it. He looked tired in the way men his age look after they've talked more than they meant to.`,
-    `<span class="said" data-who="Sam">"How'd it go?"</span>`,
+    `<span class="said" data-who="Sam" data-tone="Quiet, plain, unhurried.">"How'd it go?"</span>`,
     `<span class="said" data-who="Wendell">"She asked me the right question."</span> He took the rubber band off one bundle and put it back on. <span class="said" data-who="Wendell">"Whether anybody asked me, in '59, if the valve had noise. Or only the stand."</span>`,
-    `<span class="said" data-who="Sam">"What'd you tell her?"</span>`,
+    `<span class="said" data-who="Sam" data-tone="Quiet, curious, unhurried.">"What'd you tell her?"</span>`,
     `<span class="said" data-who="Wendell">"Nobody did."</span> He looked down the hallway. <span class="said" data-who="Wendell">"She didn't say anything to me about it. She said it to the record. She read it back in that voice and had the clerk write it down. That's how she does it now, I guess."</span> A pause. <span class="said" data-who="Wendell">"She asked if she could hold one of the notebooks. The '34 one. I said they're mine, I want them back. She laughed."</span> He seemed to think about that. <span class="said" data-who="Wendell">"Haven't heard her laugh since 2035."</span>`,
     `The minutes came through the docket system on Friday at 1:12 PM, in the board's capitals, the way everything from the board came.`,
     `<prop type="doc" title="INDEPENDENT READINESS BOARD · QUESTION 61-07 · SESSION OF THURSDAY, MAY 26, 2061 · MINUTES (EXTRACT)">MEMBER CALDER DISCLOSED PRIOR SERVICE WITH THE TEST CONDUCTOR (PETREL, 2034 TO 2035). THE CHAIR RULED NO CONFLICT.<br>1. AR 2207 (HALCYON DEPARTURE STAGE MOIV-1) IS OPEN AT CRITICALITY 1. FLIGHT RULE 2.36 APPLIES IN FULL.<br>2. THE BOARD RECEIVED THE ORIGINAL STAND RECORDS OF 2059 AND 2061 FROM THE TEST CONDUCTOR OF RECORD.<br>3. THE BOARD WILL REVIEW THE PROGRAM'S PLAN FOR REPRODUCTION AND LIFE TESTING AT ITS AUGUST SESSION.<br>4. THE BOARD REQUESTS THAT THE COST AND SCHEDULE OF THE AR 2207 INVESTIGATION BE SHOWN AS A SEPARATE LINE IN THE PROGRAM'S SUBMISSIONS TO THE ARA PARTNER FINANCE COMMITTEE, SO THAT IT IS VISIBLE TO THE PARTNERS AND CANNOT BE ABSORBED.<br>RAPPORTEUR: R. CALDER.<br>APPROVED: THE CHAIR.</prop>`,
@@ -350,9 +350,11 @@
           why:`A chart drawn to imply improvement while hiding the level is a misleading presentation, whatever its data. Tailor artifacts for clarity, not for effect. Give the numbers.`}
       ]},
     { id:`f5s10`, domain:`People`, task:`P6`, approach:`agile`, title:`The camera`,
-      text:(s,all,G)=>{const hid=s.flags.hidnumbers;
+      text:(s,all,G)=>{const hid=s.flags.hidnumbers, p=s.picks||{};
         return [`Thursday, July 14. 10:40 AM. The ballroom was called the Potomac Room, and it had chandeliers and a carpet in a pattern of gold leaves that seemed to move if you looked at it too long. The eleven delegations sat at long tables in a horseshoe, each with its flag on a little stand and its advisers behind it. The chair, a delegate in half glasses who had been a national auditor for twenty years before she was a delegate, sat at the top of the horseshoe. Calvin Osterhout sat at her right hand with a stack of tabbed binders. Hale sat in the first row of the gallery. Garrett sat beside Sam at the witness table, which Sam hadn't been sure he would.`,
         (hid?`Slide 6 had gone up at 10:20. 0.95. 2,480. Three percent. Osterhout had looked at it for a long time, and then at the appendix, and turned a page in a binder, and said nothing.`
+          :p[8]===1?`Slide 6 had gone up at 10:20. 0.94. 2,600 to 2,613. Nothing under them about Rule 4.2. Osterhout had looked a while at the space where it would have been, and written something on his pad, and underlined it twice.`
+          :p[8]===3?`Slide 6 had gone up at 10:20. Two lines climbing since May, on an axis that started at 0.90, and not one figure on it. Osterhout had looked at it for a long time, and then turned a page in a binder, and said nothing.`
           :`Slide 6 had gone up at 10:20. 0.94. 2,600 to 2,613. The notice line. The ballroom had gone quiet in the particular way a room of auditors goes quiet, and Osterhout had written something on his pad and underlined it twice.`),
         `Now Osterhout leaned toward his microphone. He was sixty, gray, with a bow tie that had been in fashion when he was a boy, and he spoke slowly, like a man counting the words. <span class="said" data-who="Calvin">"Mr. Okafor. Item 14. The live stream of the departure burn and the arrival. What does it cost to finish, and would the partners notice if it went?"</span>`,
         `In the first row, Hale didn't move. The stream had been her request in March. She'd said then what forty million people watching did to a budget vote, and half the people in this room were the vote. On Sam's tablet, Quinn had already sent the line for the stream: the remaining cost to finish it, a rounding error on the gap.`];},
@@ -371,9 +373,11 @@
           why:`Osterhout wants every dollar to earn its keep. Hale and two partners want the audience. They're both your customers, so they both get the cost and the value from you, and the cut, if it comes, goes through the change board with the person who asked for the stream sitting at the table. Then you tell them when they'll hear.`}
       ]},
     { id:`f5s11`, domain:`Process`, task:`R9`, approach:`hybrid`, title:`One number`,
-      text:(s,all,G)=>{const hid=s.flags.hidnumbers;
+      text:(s,all,G)=>{const hid=s.flags.hidnumbers, p=s.picks||{};
         return [`Thursday, July 14. 11:35 AM. The chair took her half glasses off and folded them, which, Osterhout had warned Sam in the hallway, meant she was about to ask the question she'd come for.`,`<span class="said" data-who="woman">"Mr. Okafor. Tonight I write a report to my finance minister. It has a box in it. The box holds one number. What do I write in it?"</span>`,
         (hid?`Slide 6 was still on the screen behind him with 0.95 on it, and 2,480, and whatever he said now, those numbers were already in eleven briefing books, tabbed.`
+          :p[8]===1?`Slide 6 was still on the screen behind him: 2,600 to 2,613, and no notice line under it. At 11:20 Osterhout had raised Rule 4.2 himself, from the top of the horseshoe, in a tone that made it sound like something he'd found.`
+          :p[8]===3?`Slide 6 was still on the screen behind him, two lines climbing on an axis that started at 0.90. Nobody had asked for the figures, and she was asking now.`
           :`Slide 6 was still on the screen behind him: 2,600 to 2,613, and the notice line under it.`),
         `Garrett, beside him, had his pen down. In the gallery somebody's chair creaked. On Sam's tablet, Quinn, who was watching the stream in Watkins with the whole big room behind her, had sent one word: <b>Range.</b>`];},
       opts:[
@@ -391,9 +395,11 @@
           why:`Refusing to give a number leaves the decision maker to invent one. Tailor the status to what they need: a most likely value with its range and drivers.`}
       ]},
     { id:`f5s12`, domain:`People`, task:`P8`, approach:`hybrid`, title:`Nine minutes`,
-      text:(s,all,G)=>{const hid=s.flags.hidnumbers, rosy=G.rosylog;
+      text:(s,all,G)=>{const hid=s.flags.hidnumbers, rosy=G.rosylog, p=s.picks||{};
         return [`Thursday, July 14. 9:00 PM. The hotel desk faced a window with the dome in it, and he turned the chair so the dome was behind the tablet and out of the shot. One way light time tonight was nine minutes and thirty eight seconds. She'd get it before she slept, and watch it twice.`,
         (hid?`The committee had taken the program's numbers under advisement. Osterhout had asked for the appendix in electronic form, all of it, by Monday, and had said it pleasantly, and Garrett had taken him to lunch.`
+          :p[8]===1?`The committee would decide the funding in August. The notice would go out by July 30. Osterhout had stopped him in the hallway after the session and said, <span class="said" data-who="Calvin">"I'll fight you on the money, Mr. Okafor. I won't have to fight you on the numbers. Next time, put the rule on the slide yourself. I don't enjoy finding things."</span>`
+          :p[8]===3?`The committee would decide the funding in August. Osterhout had stopped him in the hallway after the session, pleasantly, and asked for the figures behind slide 6 in writing, all of them, by Monday. He hadn't said anything else.`
           :`The committee would decide the funding in August. The notice would go out by July 30. Osterhout had stopped him in the hallway after the session and said, <span class="said" data-who="Calvin">"I'll fight you on the money, Mr. Okafor. I won't have to fight you on the numbers. That's rarer than you'd think."</span>`),
         `He was more tired than he'd been since the night of the storm. He'd been at a witness table for two hours and twenty minutes and his back said so. He had the notebook on the desk beside the tablet, open, and the hotel pen, and he hadn't written anything in it since Tuesday night.`,
         (rosy?`He thought about his first log to her, back in February, where he'd said on track. She'd heard it. She'd told him she'd heard it.`
@@ -460,7 +466,7 @@
   //   f5s8 is picks[7] (1 tell Garrett no, best; 0 agree; 2 overnight; 3 call Hale), read in f5s9's text. f5s9 is picks[8] (2 real numbers, best;
   //   0 rounded, hidnumbers). f5s11 is picks[10] (0 range, best). f5s12 is picks[11] (1 straight, best; 0 bright, rosylog).
   closing:(s,all,G)=>{const hid=s.flags.hidnumbers, rosyNow=s.flags.rosylog, rosyBefore=G.rosylog, res=s.flags.r_reserve, p=s.picks||{};
-    const summary=hid?`a program estimate within three percent of its budget`:`an estimate of 2.6 billion and a notice to the partners`;
+    const summary=hid?`a program estimate within three percent of its budget`:p[8]===3?`a program improving since May`:`an estimate of 2.6 billion and a notice to the partners`;
     return [
     `Friday, July 15. 7:40 AM in Washington, which was 5:40 at home. The tablet on the hotel desk made the two note chime, and he was awake for it, because he'd been awake since five, sitting in the chair by the window with the dome going from white to gray to stone as the sun came up behind it.`,
     `One way light time when she recorded it, nine minutes and thirty eight seconds. The first line, he'd learn, said she'd recorded it before she opened his.`,
@@ -494,7 +500,7 @@
     `He pressed record. <span class="said" data-who="Sam" data-tone="Tender, unsteady, remorseful.">"Happy birthday to your mother,"</span> he said. His voice did something on mother, and he let it. <span class="said" data-who="Sam" data-tone="Tender, unsteady, remorseful.">"I forgot, Ada. I wrote the date on every page of a slide deck and I forgot. I'm sorry. I'll go out Saturday and look in the pot, and I'll tell you what's in it, even if it's grass. It's usually grass."</span>`,
     (rosyNow
       ?`Then he sat there with the red light on and didn't say the rest. He'd tell her when the partners voted, he told himself, and he heard exactly how that sounded, in this room, the morning after. He stopped the recording and sent it anyway. Nine minutes and thirty nine seconds. In the cab to National he caught his eyes on the roof liner, up and left, twice, and the driver asked if he'd dropped something.`
-      :hid
+      :hid||p[8]===3
         ?`Then he told her the number. Point nine three seven five, the one that hadn't made it onto slide 6. Two point six billion dollars, which was what it really came to. He looked straight at the dot for all of it and his neck ached by the end, like after a ramp inspection in Tucson in August. He didn't watch it back. Kansas stayed put.`
         :`Then he told her the number. Point nine three seven five. Two point six billion dollars. A letter to eleven governments by the thirtieth, his name on it. He looked straight at the dot for all of it and his neck ached by the end, like after a ramp inspection in Tucson in August. He didn't watch it back. Kansas stayed put.`)
   ].filter(x=>x!==``);},

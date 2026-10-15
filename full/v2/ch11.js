@@ -1,5 +1,5 @@
 // The Halcyon Launch, v2 DRAFT. Chapter 11, "The Feed." Not loaded by index.html or courses.js. Drop-in shape for full/ch11.js.
-// Written 2026-10-11 to full/BIBLE_v2_proposal.md (chapter 11 plan, flags table, Decisions 2026-10-11) and in the format of full/v2/ch01.js to
+// Written 2026-10-11 to full/BIBLE.md (chapter 11 plan, flags table, Decisions 2026-10-11) and in the format of full/v2/ch01.js to
 // ch10.js, picking up ch10's closing hook (11:48 PM, Greaves's email about AR 2207's Sep 19 2059 closure record, on air at nine Mountain).
 // Sources read for this chapter (verified 2026-10-11):
 // PMI, PMP Examination Content Outline, July 2026 PMP Certification Exam Update (PDF, downloaded again and read with pdftotext):

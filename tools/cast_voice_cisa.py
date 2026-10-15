@@ -1,4 +1,5 @@
-"""Render a short voice sample for each CISA cast member ("Exception Noted") -> courses/cisa/cast/voice/<id>.mp3.
+"""SUPERSEDED 2026-10-12 by tools/cast_samples.py (lines in the voice folder's samples.json); kept for history, don't run.
+Render a short voice sample for each CISA cast member ("Exception Noted") -> courses/cisa/cast/voice/<id>.mp3.
 Same output format as tools/render_cast.py (Kokoro, 24 kHz mono, MP3 80k), but each sample is one short line the
 character actually says in chapter 1 (courses/cisa/full/ch01.js), picked to avoid spoilers, rather than the cast.js
 intro. Run from the repo root with the TTS venv: .ttsvenv/bin/python tools/cast_voice_cisa.py"""

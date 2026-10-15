@@ -1,5 +1,5 @@
 // The Halcyon Launch, v2 DRAFT. Chapter 7, "The Sprint." Not loaded by index.html or courses.js. Drop-in shape for full/ch07.js.
-// Written 2026-10-11 to full/BIBLE_v2_proposal.md (chapter 7 plan, flags table, Decisions 2026-10-11) and in the format of full/v2/ch01.js to ch06.js.
+// Written 2026-10-11 to full/BIBLE.md (chapter 7 plan, flags table, Decisions 2026-10-11) and in the format of full/v2/ch01.js to ch06.js.
 // Sources read for this chapter (verified 2026-10-11):
 // PMI, PMP Examination Content Outline, July 2026 PMP Certification Exam Update (PDF, downloaded again and read with pdftotext):
 //   https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/new-pmp-examination-content-outline-2026.pdf
@@ -396,10 +396,10 @@
       ]},
     { id:`f7s11`, domain:`Business Environment`, task:`B6`, approach:`agile`, title:`No names`,
       text:(s,all,G)=>{const p=s.picks||{};
-        return [`Friday, November 4. At the review at two, before anything else, Rafa had flown the departure burn in the integrated sim twice, back to back, and it had flown twice. Afterward he wrote TWICE under ONCE on the sim bay door, smaller, and nobody said anything about it, which was how the squad celebrated.`,
+        return [(p[9]===1?`Wednesday, November 9.`:`Friday, November 4.`)+` At the review at two, before anything else, Rafa had flown the departure burn in the integrated sim twice, back to back, and it had flown twice. Afterward he wrote TWICE under ONCE on the sim bay door, smaller, and nobody said anything about it, which was how the squad celebrated.`,
         `3:30 PM, the retrospective, in the sim bay with the lights up. The squad, Haddad, Mokoena, Quinn, and two of Hana's engineers, because the constants file belonged to propulsion as much as anybody. Sam stood at the back by the door with his arms folded, because it wasn't his meeting.`,
         `Somebody had already written the defect's history on the whiteboard in a neat column, from the request to Furrow on Tuesday, October 25, to the run on Tuesday, November 1. Seven steps. At every one of them, somebody could have caught it.`,
-        (p[8]===0?`Sam's defect report had gone to the board's clerk on Wednesday morning. The clerk had acknowledged it in capitals and put it on the agenda for the board's November session.`
+        (p[8]===0?`Sam's defect report had gone to the board's clerk `+(p[9]===1?`the Wednesday before`:`on Wednesday morning`)+`. The clerk had acknowledged it in capitals and put it on the agenda for the board's November session.`
           :p[8]===1?`The defect was in the squad's tracker as CONSTANT ERROR, FIXED.`
           :p[8]===2?`Furrow had been switched off for flight code since Tuesday night. Its icon was still in everybody's toolbar, grayed out, like a light left on in an empty room.`
           :`The engineer who'd accepted the routine sat in the back row with his notebook shut.`),
@@ -498,6 +498,8 @@
       ?`He knew what good call felt like. He'd felt it on Friday, November 4, at about a quarter to three, when the squad demoed nearly everything and the room liked it. He'd felt the other thing the Wednesday after, when the full suite finally ran and found the safe mode's wake timer a cycle late, from a change two files over that nobody had re-tested. He read Roz Tate's line at 0740 four times. THE THING NEXT TO IT DID.`
       :p[9]===3
         ?`He read the 0715 line four times. APPROVED NEW TESTS ONLY. On November 3 he'd had his own version of that line, with smaller numbers in it, and Haddad had taken stories out of the sprint instead, and the squad had shown twenty five points to a room that wanted thirty two. It hadn't felt like a good call. It had felt like a Thursday.`
+        :p[9]===1
+          ?`He read the 0715 line four times. On November 3 he hadn't cut anything. He'd moved the review to the next Wednesday instead, and the regression had run by then, and A2-3 had paid for it with three days. He thought about Roz Tate at 0740, putting it in writing because she was told to, and her note going into a file for drop 8.`
         :`He read the 0715 line four times. On November 3 the regression had run, one way or another, and the squad had paid for it one way or another. He thought about Roz Tate at 0740, putting it in writing because she was told to, and her note going into a file for drop 8.`),
     (p[8]===0
       ?`The board's November minutes had a paragraph on the defect under the program's report, and a line at the end of it in the board's capitals: THE BOARD NOTES THAT THE PROGRAM'S REPORT WAS RECEIVED BEFORE ANY INQUIRY.`

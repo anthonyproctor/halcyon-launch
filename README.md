@@ -29,6 +29,7 @@ A library of choose-your-path certification courses. Each one is a short novel w
 - **Contents and sections:** every chapter lists its parts (opening, lesson, each decision by name, drills, quiz, ending) in the chapter header and the side menu, and the Audiobook lists each chapter's scenes with start times. Lessons and quizzes are always open; decisions open in order.
 - **Focus mode:** hides scores and meters and moves the lesson to the end of the chapter. You still make every decision.
 - **Ambience:** quiet scene-matched background sound under the reading narration.
+- **Cast voice samples:** each Cast page's Hear button plays a short line in the voice that book's narration uses. `.ttsvenv/bin/python tools/cast_samples.py <course>` (pmp, pilot, cisa) remakes any sample whose voice or style in `tools/gemini_voices.json`, or whose line, changed since it was made; `--check` only lists the stale ones. The lines and what each mp3 was made from are in `samples.json` next to the samples (`cast/v2/voice/`, `courses/<id>/cast/voice/`). Run it after recasting a character.
 - Focus mode and Ambience follow your account. The in-app **Guide** explains every control, and the site installs to an iPhone home screen as an app.
 
 ## Courses
@@ -53,3 +54,14 @@ Invite only. Each invite link works once. Progress (chapter, decisions, scores, 
 A static front end plus small serverless functions in `api/` (Neon Postgres, signed session cookie, scrypt password hashes). No build step. Narration is generated from the game text with Kokoro TTS, one voice per character: `tools/pages.mjs` and `tools/render_pages.py` make the per-page clips and word timings, and `tools/episode_full.mjs` with `tools/render_kokoro.py` make the Audiobook files.
 
 All companies and people are fictional. Not affiliated with or endorsed by PMI. PMP is a registered mark of the Project Management Institute.
+
+## iOS Simulator check
+
+`tools/ios_sim_check.mjs` drives real Mobile Safari in the Xcode iOS Simulator and reads the actual audio state while scrubbing, tapping paragraphs, skipping, killing Safari and resuming. Run it on every release that touches the player, `engine.js` or `sw.js`.
+
+1. `export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer` and boot an iPhone: `xcrun simctl boot <UDID>` (`xcrun simctl list devices available`).
+2. Start the inspector proxy (`brew install ios-webkit-debug-proxy`): `ios_webkit_debug_proxy -s unix:$(lsof -U | awk '/webinspectord_sim.socket/{print $NF; exit}') -F &`
+3. Serve the tree with production audio: `PORT=4331 TEST_AUDIO_BASE=https://audio.strakesystems.com node tests/serve.mjs &`
+4. `node tools/ios_sim_check.mjs 4331` prints PASS or FAIL per check and exits 1 on any failure.
+
+Limits: input is dispatched from JavaScript, not real finger touches; Safari runs as a browser tab, not a home-screen app; lock screen buttons can't be pressed. Real touches would need `idb` from the `facebook/fb` Homebrew tap, which isn't trusted on this machine.

@@ -1,5 +1,5 @@
 // The Halcyon Launch, v2 DRAFT. Chapter 6, "Twenty Two Minutes." Not loaded by index.html or courses.js. Drop-in shape for full/ch06.js.
-// Written 2026-10-11 to full/BIBLE_v2_proposal.md (chapter 6 plan, flags table, Decisions 2026-10-11) and in the format of full/v2/ch01.js to ch05.js.
+// Written 2026-10-11 to full/BIBLE.md (chapter 6 plan, flags table, Decisions 2026-10-11) and in the format of full/v2/ch01.js to ch05.js.
 // Sources read for this chapter (verified 2026-10-11):
 // PMI, PMP Examination Content Outline, July 2026 PMP Certification Exam Update (PDF, downloaded and read with pdftotext):
 //   https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/new-pmp-examination-content-outline-2026.pdf

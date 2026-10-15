@@ -95,7 +95,8 @@
    "Ellie": {"voice": "Leda", "style": "A young girl. Curious, bright, quick questions.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Russ": {"voice": "Iapetus", "style": "General American accent. A 50-year-old who travels for work. Upbeat, busy, friendly."},
    "Danny": {"voice": "Puck", "style": "General American accent. A 41-year-old pilot. Easygoing, a wide grin in his voice, warm."},
-   "Kendra": {"voice": "Pulcherrima", "style": "General American accent. A pilot examiner in their fifties. Even, professional, fair."}
+   "Kendra": {"voice": "Pulcherrima", "style": "A woman's voice. Bright, even, unhurried, fair.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88, "f0_low": 110, "f0_char_low": 120},
+   "Proctor": {"voice": "Aoede", "style": "A woman's voice. Kind, brisk, practical.", "gender": "f"}
   },
   "cisa": {
    "narrator": {"voice": "en-gb-tutor-8", "style": "British audiobook narrator, southern English accent. Measured and low, thriller pacing, quiet tension, unhurried."},
@@ -114,17 +115,26 @@
    "woman": {"voice": "Callirrhoe", "style": "General American accent, natural and conversational."}
   },
   "cphims": {
-   "Ochoa": {"voice": "Charon", "style": "General American accent. A hospital CIO teaching his vice president. Measured, warm, conversational, first person."},
-   "Kiran": {"voice": "Sadaltager", "style": "A man's voice. General American accent. A senior EHR analyst. Quick, precise, eager to help.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
-   "Aisha": {"voice": "Autonoe", "style": "General American accent, bright and professional."},
-   "Brett": {"voice": "Puck", "style": "General American accent. A vendor account executive. Charming, generous, under quota pressure."},
-   "Walt": {"voice": "Orus", "style": "General American accent, an older man, dry and deliberate."},
-   "Tasha": {"voice": "Kore", "style": "General American accent. A service desk manager who lives in ticket data. Direct."},
-   "Glenn": {"voice": "Schedar", "style": "General American accent. A CFO. Even, unimpressed by soft numbers."},
-   "Nate": {"voice": "Alnilam", "style": "General American accent. A CISO and former Army signal officer. Calm, firm."},
-   "Lucia": {"voice": "Callirrhoe", "style": "General American accent, friendly."},
-   "Theo": {"voice": "Achird", "style": "General American accent. Warm, easy, a little teasing.", "gender": "m"},
-   "Irene": {"voice": "Gacrux", "style": "General American accent. An older woman. Dry, kind, unhurried.", "gender": "f"}
+     "narrator": {"voice": "Sulafat", "style": "General American accent. Warm, steady audiobook narrator. Unhurried, clear, quietly engaged."},
+     "man": {"voice": "Umbriel", "style": "A man's voice. Natural and conversational.", "run": true, "gender": "m"},
+     "woman": {"voice": "en-us-tutor-18", "style": "A woman's voice. Natural and conversational.", "run": true, "gender": "f"},
+     "Maria": {"voice": "Aoede", "style": "A woman's voice. Quick, warm, direct.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Ochoa": {"voice": "Charon", "style": "A man's voice. Measured, dry, warm underneath.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Kiran": {"voice": "Sadaltager", "style": "A man's voice. Quick, precise, eager to help.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Marcus": {"voice": "Algenib", "style": "A man's voice. Gruff, dry, funny.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Aisha": {"voice": "Autonoe", "style": "A woman's voice. Quick, driven, warm.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Joan": {"voice": "Pulcherrima", "style": "A woman's voice. Precise, calm, unflappable.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Brett": {"voice": "Puck", "style": "A man's voice. Charming, easy, selling.", "run": true, "gender": "m"},
+     "Walt": {"voice": "Rasalgethi", "style": "A man's voice. Dry, deliberate, unhurried.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Tasha": {"voice": "Kore", "style": "A woman's voice. Direct, brisk, matter of fact.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Glenn": {"voice": "Algieba", "style": "A man's voice. Even, dry, exacting.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Nate": {"voice": "Alnilam", "style": "A man's voice. Calm, firm, economical.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Denise": {"voice": "Vindemiatrix", "style": "A woman's voice. Blunt, warm, plainspoken.", "run": true, "gender": "f"},
+     "Lucia": {"voice": "Callirrhoe", "style": "A young woman's voice. Quick, dry, curious.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Theo": {"voice": "Achird", "style": "A man's voice. Warm, easy, a little teasing.", "run": true, "gender": "m"},
+     "Irene": {"voice": "Gacrux", "style": "A woman's voice. Dry, kind, unhurried.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Gail": {"voice": "Laomedeia", "style": "A woman's voice. Plainspoken, steady, direct.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+     "Henry": {"voice": "en-gb-tutor-9", "style": "Dry, precise, tired, understated.", "run": true, "gender": "m"}
   },
   "asep": {
    "Wes": {"voice": "en-us-tutor-16", "style": "General American accent. A brilliant chief engineer of fifty-eight who trusts his gut. Gruff, confident."},

@@ -1,6 +1,6 @@
 # full/v2: The Halcyon Launch v2 (LIVE, read in place)
 The rewritten PMP story course: 2061, a Mars colony losing its air, one launch window, and Sam Okafor running the rescue ship with his daughter on the station.
-Written to `full/BIBLE_v2_proposal.md` and its Decisions (2026-10-11).
+Written to `full/BIBLE.md` and its Decisions (2026-10-11).
 
 ## Live in place since 2026-10-11
 Anthony approved replacing the v1 book. The v1 chapters, `full/cast.js`, v1 chapter audio and page clips, and v1 chapter art were deleted (git history only).
@@ -21,7 +21,7 @@ Already done in place: courses.js fields (step 5), engine cast and lesson intro 
 check_full/check_speakers default to the live v2 chapters (part of step 10), sw.js cache bump (step 11), mock checked (step 12: generic, no v1 story). What's left is the move itself:
 steps 1 to 4, then make `V2()` in engine.js the identity, drop `FULL_BASE`'s PMP special case only if progress keys move too (they shouldn't), and update `readyCount`, sw.js SHELL, and tools/pages.mjs paths.
 Original plan, for reference:
-1. Files: `git mv full/v2/chNN.js full/chNN.js` for all 15 (replacing v1), `full/v2/cast.js` to `full/cast.js`. Keep v1 in git history only. Move `full/BIBLE.md` aside and promote `full/BIBLE_v2_proposal.md`. Replace `full/PORTRAIT_PROMPTS.md`.
+1. Files: `git mv full/v2/chNN.js full/chNN.js` for all 15 (replacing v1), `full/v2/cast.js` to `full/cast.js`. Keep v1 in git history only. Bible: done 2026-10-13, `full/BIBLE.md` is the v2 bible and v1 is `full/BIBLE_v1_hospital.md`. Replace `full/PORTRAIT_PROMPTS.md`.
 2. Episode paths inside the chapters: each chapter's `episode.src` says `audio/v2/full-chNN.mp3`; change to `audio/full-chNN.mp3` when the files move (the only chapter edit the switch needs).
 3. Audio: move `audio/v2/pages/fN` to `audio/pages/fN`, `audio/v2/full-chNN.mp3` and `audio/v2/story/full-chNN.mp3` to `audio/` and `audio/story/`, and `audio/v2/audiobook.json` and `audio/v2/bookmarks.json` to `audio/`. Re-run `tools/book_marks.sh` if marks were built for the v2 paths.
 4. Art and portraits: `art/v2/full-chNN.*` to `art/`, `cast/v2/*` to `cast/`, `cast/v2/voice/*` to `cast/voice/`. Sam, Ruth, and Ray keep their ids, so their v1 portraits and voice samples get replaced, not added.
