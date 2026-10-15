@@ -1,0 +1,124 @@
+{
+ "full": {
+  "1": {
+   "story": {
+    "src": "audio/story/full-ch01.mp3",
+    "min": 15.8
+   },
+   "study": {
+    "src": "audio/full-ch01.mp3",
+    "min": 33.4
+   }
+  },
+  "2": {
+   "story": {
+    "src": "audio/story/full-ch02.mp3",
+    "min": 16.2
+   },
+   "study": {
+    "src": "audio/full-ch02.mp3",
+    "min": 34.2
+   }
+  },
+  "3": {
+   "story": {
+    "src": "audio/story/full-ch03.mp3",
+    "min": 20.7
+   },
+   "study": {
+    "src": "audio/full-ch03.mp3",
+    "min": 39.5
+   }
+  },
+  "4": {
+   "story": {
+    "src": "audio/story/full-ch04.mp3",
+    "min": 21.1
+   },
+   "study": {
+    "src": "audio/full-ch04.mp3",
+    "min": 40.5
+   }
+  },
+  "5": {
+   "story": {
+    "src": "audio/story/full-ch05.mp3",
+    "min": 22.2
+   },
+   "study": {
+    "src": "audio/full-ch05.mp3",
+    "min": 41.4
+   }
+  },
+  "6": {
+   "story": {
+    "src": "audio/story/full-ch06.mp3",
+    "min": 20.8
+   },
+   "study": {
+    "src": "audio/full-ch06.mp3",
+    "min": 38.6
+   }
+  },
+  "7": {
+   "story": {
+    "src": "audio/story/full-ch07.mp3",
+    "min": 23.0
+   },
+   "study": {
+    "src": "audio/full-ch07.mp3",
+    "min": 40.3
+   }
+  },
+  "8": {
+   "story": {
+    "src": "audio/story/full-ch08.mp3",
+    "min": 29.5
+   },
+   "study": {
+    "src": "audio/full-ch08.mp3",
+    "min": 48.7
+   }
+  },
+  "9": {
+   "story": {
+    "src": "audio/story/full-ch09.mp3",
+    "min": 26.0
+   },
+   "study": {
+    "src": "audio/full-ch09.mp3",
+    "min": 43.8
+   }
+  },
+  "10": {
+   "story": {
+    "src": "audio/story/full-ch10.mp3",
+    "min": 28.7
+   },
+   "study": {
+    "src": "audio/full-ch10.mp3",
+    "min": 49.1
+   }
+  },
+  "11": {
+   "story": {
+    "src": "audio/story/full-ch11.mp3",
+    "min": 32.6
+   },
+   "study": {
+    "src": "audio/full-ch11.mp3",
+    "min": 51.5
+   }
+  },
+  "12": {
+   "story": {
+    "src": "audio/story/full-ch12.mp3",
+    "min": 25.6
+   },
+   "study": {
+    "src": "audio/full-ch12.mp3",
+    "min": 44.9
+   }
+  }
+ }
+}
