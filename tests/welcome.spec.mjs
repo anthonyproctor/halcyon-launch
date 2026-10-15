@@ -9,7 +9,7 @@ async function stubAudio(page) {
   await page.route("https://audio.strakesystems.com/**", r => r.fulfill({ status: 204, body: "" }));
 }
 
-test("renders the headline, the six books (four with clips, The Appeal and Hearth with chapter one only), the not affiliated line, and no endorsement words", async ({ page }) => {
+test("renders the headline, the six books (four with clips, The Appeal and Hearth text first), the not affiliated line, and no endorsement words", async ({ page }) => {
   const errs = []; page.on("pageerror", e => errs.push(String(e)));
   await stubAudio(page);
   await page.goto("/welcome");
@@ -20,8 +20,8 @@ test("renders the headline, the six books (four with clips, The Appeal and Heart
   await expect(page.locator(".book[data-book=asep] h3")).toHaveText("Hearth");
   await expect(page.locator(".book[data-book=asep] .hero-name")).toHaveText("You play Nadia Brooks");
   await expect(page.locator(".book[data-book=asep] .play")).toHaveCount(0);
-  await expect(page.locator(".book[data-book=asep] .meta")).toHaveText("1 of 12 chapters out");
-  await expect(page.locator(".book[data-book=asep] .src")).toHaveText("New. Read chapter one now; the audiobook comes next.");
+  await expect(page.locator(".book[data-book=asep] .meta")).toHaveText("2 of 12 chapters out");
+  await expect(page.locator(".book[data-book=asep] .src")).toHaveText("New. The first 2 chapters are ready to read; the audiobook comes next.");
   await expect(page.locator("#book option[value=asep]")).toHaveText("Hearth (ASEP)");
   for (const id of BOOKS) {
     const card = page.locator(`.book[data-book="${id}"]`);

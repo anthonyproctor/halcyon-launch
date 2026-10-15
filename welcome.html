@@ -185,7 +185,7 @@ footer p{margin:0 0 8px}
       '<span class="meta">' + esc(out) + '</span>' +
       (b.clip ? '<div class="clip"><button class="play" type="button" data-i="' + i + '" aria-pressed="false"><span class="ico" aria-hidden="true">&#9654;</span><span class="lbl">Play the first page</span></button>' +
       '<span class="bar" aria-hidden="true"><i></i></span><span class="t">' + esc(len) + '</span>' +
-      '<span class="src">' + esc(b.clip.src) + '</span></div>' : '<div class="clip"><span class="src">New. Read chapter one now; the audiobook comes next.</span></div>') + '</article>';
+      '<span class="src">' + esc(b.clip.src) + '</span></div>' : '<div class="clip"><span class="src">New. ' + (n > 1 ? 'The first ' + n + ' chapters are' : 'Chapter one is') + ' ready to read; the audiobook comes next.</span></div>') + '</article>';
   }).join("");
 
   var au = document.getElementById("clipaudio"), cur = -1;
