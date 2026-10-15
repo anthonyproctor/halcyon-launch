@@ -198,6 +198,7 @@ test("player diagnostics: with the switch on, seeks, lock screen actions and ele
   expect(off).toBe(0); // nothing is buffered while the switch is off
 });
 
+// soft pause is switched off (SOFT_PAUSE=false in engine.js): on a real iPhone, iOS paused the muted audio and gave the lock screen to Music/Spotify. Kept skipped for reference.
 // soft pause (Anthony's phone, 2026-10-14): a home-screen app that pauses while hidden loses its iOS audio session, and lock screen play
 // then "plays" silently with the clock frozen. A lock screen pause while hidden mutes and keeps playing; play unmutes at the same spot.
 const setHidden = (page, hidden) => page.evaluate(h => {
@@ -206,7 +207,7 @@ const setHidden = (page, hidden) => page.evaluate(h => {
   document.dispatchEvent(new Event("visibilitychange"));
 }, hidden);
 
-test("lock screen pause while the app is hidden is a soft pause: the session stays alive, and play resumes at the same spot", async ({ page }) => {
+test.skip("lock screen pause while the app is hidden is a soft pause: the session stays alive, and play resumes at the same spot", async ({ page }) => {
   await playBook(page);
   await page.evaluate(() => window.__ms.seekto({ seekTime: 40 }));
   await expect.poll(() => page.evaluate(() => Math.round(window.__nar.audio.currentTime)), { timeout: 10_000 }).toBeGreaterThanOrEqual(39);
@@ -226,7 +227,7 @@ test("lock screen pause while the app is hidden is a soft pause: the session sta
   expect(await page.evaluate(() => navigator.mediaSession.playbackState)).toBe("playing");
 });
 
-test("coming back to the app while soft paused turns it into a real pause at the remembered spot", async ({ page }) => {
+test.skip("coming back to the app while soft paused turns it into a real pause at the remembered spot", async ({ page }) => {
   await playBook(page);
   await page.evaluate(() => window.__ms.seekto({ seekTime: 40 }));
   await expect.poll(() => page.evaluate(() => Math.round(window.__nar.audio.currentTime)), { timeout: 10_000 }).toBeGreaterThanOrEqual(39);

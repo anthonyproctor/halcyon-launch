@@ -1367,7 +1367,8 @@ narInit();logInit();window.__nar=NAR;
    element and keeps it playing (the session stays alive), shows "paused" on the lock screen at the remembered spot, and a lock screen play unmutes
    and seeks back there. Coming back to the app, a stop, the chapter ending, or 10 minutes soft paused turns it into a real pause at that spot. */
 NAR.soft=null;
-function softPause(){const a=NAR.audio;if(NAR.soft||a.paused||!a.src)return false;logHear();const t=a.currentTime||0;NAR.soft={t,at:Date.now(),muted:a.muted};a.muted=true;LOG.lm=null;
+const SOFT_PAUSE=false; // 2026-10-14: off. On a real iPhone home-screen app, iOS paused the muted audio about 2 s later and handed the lock screen to Music/Spotify (device diagnostics). Kept for reference.
+function softPause(){const a=NAR.audio;if(!SOFT_PAUSE||NAR.soft||a.paused||!a.src)return false;logHear();const t=a.currentTime||0;NAR.soft={t,at:Date.now(),muted:a.muted};a.muted=true;LOG.lm=null;
   dlog("soft:pause",{t:+t.toFixed(2)});narSavePos(true);narMsState();clearTimeout(NAR.softT);NAR.softT=setTimeout(()=>softEnd("timeout"),600000);return true}
 function softResume(why){const a=NAR.audio,s=NAR.soft;if(!s)return false;NAR.soft=null;clearTimeout(NAR.softT);a.muted=s.muted;dlog("soft:resume",{t:+s.t.toFixed(2),why});
   seekTo(s.t,"soft:"+why);narMsState();logHear();return true}
