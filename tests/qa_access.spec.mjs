@@ -45,7 +45,8 @@ async function watchStorage(page, seed = {}) {
   }, seed);
 }
 const writes = page => page.evaluate(() => JSON.parse(sessionStorage.getItem("t.log") || "[]"));
-const loads = page => page.evaluate(() => +sessionStorage.getItem("t.loads"));
+// polled across the deliberate reload into the real profile: an evaluate that lands mid navigation reads as "not yet" (-1), not a failure
+const loads = page => page.evaluate(() => +sessionStorage.getItem("t.loads")).catch(e => { if (/context was destroyed|navigation/i.test(String(e))) return -1; throw e });
 const flags = page => page.evaluate(() => ({ qa: localStorage.getItem("halcyon.qa"), test: localStorage.getItem("halcyon.testprofile"), ok: localStorage.getItem("halcyon.qa.ok") }));
 const testKeys = page => page.evaluate(tp => Object.keys(localStorage).filter(k => k.startsWith(tp)).sort(), TP);
 // booted: the engine has drawn a page for a signed in user (the user card shows a name)
@@ -94,8 +95,9 @@ test("former tester's device: saved QA and test profile flags turn off at sign i
   const seed = { "halcyon.qa": "true", "halcyon.testprofile": "true", "halcyon.qa.ok": "true", [TP + "c1001"]: '{"step":2}', [TP + "route"]: '"pmp/full/1"' };
   await watchStorage(page, seed);
   await page.goto(HOST + "/#pmp/full/1");
-  await expect.poll(() => loads(page)).toBe(2); // it opened in the test profile, frozen, and reloaded into the real one
+  await expect.poll(() => loads(page), { timeout: 10_000 }).toBe(2); // it opened in the test profile, frozen, and reloaded into the real one
   await booted(page);
+  expect(await loads(page)).toBe(2); // exactly one reload: no second navigation after the real profile boots
   await expectNoQA(page, [TP + "c1001", TP + "route"]);
   const W = await writes(page);
   // load 1 (the test profile, before the sign in check): only the QA flags were removed; no progress write in either namespace

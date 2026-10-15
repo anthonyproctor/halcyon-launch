@@ -22,7 +22,9 @@ test.beforeEach(async ({ page }) => { await page.addInitScript(silence); await p
 async function playBook(page) {
   await page.goto("/#pmp/listen");
   await page.locator('.brow[data-b="1"]').tap();
-  await page.waitForFunction(() => window.__nar.audio.duration > 60 && !window.__nar.audio.paused, null, { timeout: 15_000 });
+  // really playing (the "playing" event has fired and time moves) and the lock screen handlers are registered: on a slow CI runner
+  // play() resolving comes well before either, so tests that drive __ms or look for "playing" raced it
+  await page.waitForFunction(() => { const a = window.__nar.audio; return a.duration > 60 && !a.paused && a.currentTime > 0.3 && window.__ms && typeof window.__ms.pause === "function" && typeof window.__ms.play === "function" }, null, { timeout: 30_000 });
 }
 const saved = page => page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c904") || "null"));
 
@@ -30,12 +32,13 @@ test("lock screen: pause, then play resumes; the scrubber (seekto) moves the aud
   await playBook(page);
   for (const k of ["play", "pause", "seekto", "seekforward", "seekbackward"]) expect(await page.evaluate(k => typeof window.__ms[k], k), k).toBe("function");
   await page.evaluate(() => window.__ms.pause());
-  await expect.poll(() => page.evaluate(() => window.__nar.audio.paused)).toBe(true);
+  const T = { timeout: 10_000 }; // a loaded CI runner can take a few seconds per step
+  await expect.poll(() => page.evaluate(() => window.__nar.audio.paused), T).toBe(true);
   await page.evaluate(() => window.__ms.play());
-  await expect.poll(() => page.evaluate(() => window.__nar.audio.paused)).toBe(false);
+  await expect.poll(() => page.evaluate(() => window.__nar.audio.paused), T).toBe(false);
   await page.evaluate(() => window.__ms.seekto({ seekTime: 40 }));
-  await expect.poll(() => page.evaluate(() => Math.round(window.__nar.audio.currentTime))).toBeGreaterThanOrEqual(39);
-  await expect.poll(async () => { const L = await saved(page); return L && L.book && Math.round(L.book.t) }).toBeGreaterThanOrEqual(39);
+  await expect.poll(() => page.evaluate(() => Math.round(window.__nar.audio.currentTime)), T).toBeGreaterThanOrEqual(39);
+  await expect.poll(async () => { const L = await saved(page); return L && L.book && Math.round(L.book.t) }, T).toBeGreaterThanOrEqual(39);
 });
 
 test("seek bar: a tap on the track jumps there (iOS range inputs only drag the thumb)", async ({ page }) => {
@@ -43,6 +46,7 @@ test("seek bar: a tap on the track jumps there (iOS range inputs only drag the t
   await page.evaluate(() => window.__nar.audio.pause());
   const box = await page.locator("#narseek").boundingBox();
   await page.touchscreen.tap(box.x + 8 + (box.width - 16) * 0.5, box.y + box.height / 2);
+  await expect.poll(() => page.evaluate(() => window.__nar.audio.currentTime / window.__nar.audio.duration), { timeout: 10_000 }).toBeGreaterThan(0.45);
   const r = await page.evaluate(() => window.__nar.audio.currentTime / window.__nar.audio.duration);
   expect(r).toBeGreaterThan(0.45); expect(r).toBeLessThan(0.55);
 });
@@ -120,8 +124,11 @@ test.describe("remote audio, like the R2 host", () => {
       a.addEventListener("seeked", () => { if (once) { once = false; const back = window.__before; setTimeout(() => d.set.call(a, back), 0) } }); window.__before = a.currentTime });
     const box = await page.locator("#narseek").boundingBox();
     await page.touchscreen.tap(box.x + 8 + (box.width - 16) * 0.6, box.y + box.height / 2);
-    await page.waitForTimeout(2500);
-    const r = await page.evaluate(() => window.__nar.audio.currentTime) / dur;
+    // lands (polled, not a fixed wait: a loaded CI runner is slow), then still there after the snap back had its chance
+    const ratio = () => page.evaluate(d => window.__nar.audio.currentTime / d, dur);
+    await expect.poll(ratio, { timeout: 10_000 }).toBeGreaterThan(0.55);
+    await page.waitForTimeout(1000);
+    const r = await ratio();
     expect(r).toBeGreaterThan(0.55); expect(r).toBeLessThan(0.65);
   });
 
@@ -135,7 +142,8 @@ test.describe("remote audio, like the R2 host", () => {
     const box = await page.locator("#narseek").boundingBox();
     await page.touchscreen.tap(box.x + 8 + (box.width - 16) * 0.6, box.y + box.height / 2); // then the reader drags to 60%
     await page.evaluate(() => window.__nar.audio.play());
-    await page.waitForTimeout(2500);
+    await expect.poll(() => page.evaluate(d => window.__nar.audio.currentTime / d, dur), { timeout: 10_000 }).toBeGreaterThan(0.55);
+    await page.waitForTimeout(1000);
     const t = await page.evaluate(() => window.__nar.audio.currentTime);
     expect(t / dur).toBeGreaterThan(0.55);
     const back = await page.evaluate(() => window.__seeks.filter(x => Math.abs(x - 30) < 2).length);
@@ -148,9 +156,10 @@ test.describe("remote audio, like the R2 host", () => {
     test.skip(!(await p.count()), "no follow along text for this chapter");
     const want = +(await p.getAttribute("data-t"));
     await p.tap();
-    await page.waitForTimeout(1500);
+    await expect.poll(() => page.evaluate(w => Math.abs(window.__nar.audio.currentTime - w), want), { timeout: 10_000 }).toBeLessThan(4);
+    await page.waitForTimeout(1000);
     const t = await page.evaluate(() => window.__nar.audio.currentTime);
-    expect(Math.abs(t - want)).toBeLessThan(4);
+    expect(Math.abs(t - want)).toBeLessThan(5); // and it stays
   });
 });
 
