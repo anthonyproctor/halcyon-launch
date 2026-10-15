@@ -200,7 +200,7 @@ test("art: every form and mark draws in every state", () => {
 });
 
 test("the real definitions: counts, pending badges dropped, targets from courses.js", () => {
-  const want = { pmp: [25, 0], cisa: [22, 2], pilot: [22, 0], cphims: [21, 0], asep: [21, 2], gh300: [15, 1] };
+  const want = { pmp: [25, 0], cisa: [22, 2], pilot: [22, 0], cphims: [21, 0], asep: [21, 2], gh300: [15, 1], lsat: [18, 0] };
   for (const [id, [total, pending]] of Object.entries(want)) {
     const c = course(id), def = DEFS[id], planned = c.planned;
     const items = HB.expand(def, { planned, chapters: [] });
@@ -210,7 +210,7 @@ test("the real definitions: counts, pending badges dropped, targets from courses
     assert.equal(def.target, undefined, id);
   }
   assert.equal(course("pmp").target, 75); assert.equal(course("pilot").target, 80); assert.equal(course("gh300").target, 80);
-  for (const id of ["cisa", "cphims", "asep"]) assert.equal(course(id).target, 75);
+  for (const id of ["cisa", "cphims", "asep", "lsat"]) assert.equal(course(id).target, 75);
   assert.equal(DEFS.pmp.readiness.name, "Launch poll");
   assert.ok(DEFS.pmp.items.some(x => x.id === "pmp-doc" && x.hidden && !x.pending));
   assert.match(DEFS.cisa.idCard.note, /Henry's business card/);

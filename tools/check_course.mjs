@@ -8,7 +8,7 @@ new Function('window',fs.readFileSync('courses.js','utf8'))(window);
 const course=window.HALCYON_COURSES.find(c=>c.id===id);if(!course){console.log("unknown course "+id);process.exit(1)}
 const root=course.root;
 new Function('window',fs.readFileSync(root+'meta.js','utf8'))(window);
-for(const f of (files.length?files:fs.readdirSync(root+'full').filter(x=>/^ch\d+\.js$/.test(x)).map(x=>root+'full/'+x))) new Function('window',fs.readFileSync(f,'utf8'))(window);
+for(const f of (files.length?files:(fs.existsSync(root+'full')?fs.readdirSync(root+'full'):[]).filter(x=>/^ch\d+\.js$/.test(x)).map(x=>root+'full/'+x))) new Function('window',fs.readFileSync(f,'utf8'))(window);
 const data=window.HALCYON_DATA[id];const meta=data.meta;
 const TASKS=new Set(Object.keys(meta.TASKNAMES));const DOMS=new Set(meta.DOMS);
 const TD=course.taskDomain;const domOf=t=>TD[t]||TD[t.split(".")[0]]||TD[t[0]];
@@ -46,6 +46,10 @@ for(const c of data.full){
     if(course.levels){if(!lv.hasOwnProperty(x.level))err(`quiz ${i} level`);else lv[x.level]++}qd[x.domain]=(qd[x.domain]||0)+1;
     const r=lenCheck(`quiz ${i}`,x.opts,x.a);if(r.longest)ql++;if(r.shortest)qs++;prose.push(x.q,...x.opts,x.why)});
   if(Math.max(...pos)>Math.ceil(NQ/NOPT)+2||Math.min(...pos)<Math.floor(NQ/NOPT)-2)err(`quiz answer positions ${pos}`); if(ql>Math.ceil(NQ/3))err(`quiz right answer longest in ${ql}/${NQ}`);if(qs>Math.floor(NQ*0.4))err(`quiz right answer shortest in ${qs}/${NQ}`);
+  // shared passages: every passage id a quiz item names exists, each passage's items are consecutive, and every passage is used
+  {const P=c.passages||{};const runs={};let last=null;q.forEach((x,i)=>{if(x.passage!==undefined){if(!P[x.passage])err(`quiz ${i} passage ${x.passage} not defined`);
+    if(runs[x.passage]&&last!==x.passage)err(`quiz ${i} passage ${x.passage} items not consecutive`);runs[x.passage]=(runs[x.passage]||0)+1}last=x.passage});
+   Object.keys(P).forEach(k=>{if(!runs[k])err(`passage ${k} not used by any quiz item`);const t=[].concat(P[k].text||[]);if(!t.length)err(`passage ${k} has no text`);prose.push(P[k].title||"",...t)})}
   const offDom=Object.keys(qd).filter(d=>!domCount[d]).reduce((a,d)=>a+qd[d],0);if(meta.DOMS.some(d=>!domCount[d])&&offDom<2)err(`spaced review: only ${offDom} quiz items from domains not in this chapter`);
   (c.drills||[]).forEach((d,i)=>{if(!d.fields||!d.fields.every(f=>typeof f.answer==="number"))err(`drill ${i} fields`);if(!(c.scenes||[]).some(s=>s.id===d.after))err(`drill ${i} after`);prose.push(...d.setup,...d.solution)});
   if(c.exercise){const e=c.exercise;if(!(c.scenes||[]).some(s=>s.id===e.after))err("exercise after");e.items.forEach((it,i)=>{if(it.answer<0||it.answer>=it.choices.length)err(`exercise ${i}`);prose.push(it.prompt,it.why)})}

@@ -155,7 +155,7 @@ function main() {
   if (!found) { console.error(`no canon story for course "${course}" in ${dir}`); process.exit(2); }
   const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
   let list = files;
-  if (!list.length) { const d = course === "pmp" ? path.join(root, "full", "v2") : path.join(root, "courses", course, "full"); list = fs.readdirSync(d).filter(f => /^ch\d+\.js$/.test(f)).sort().map(f => path.join(d, f)); }
+  if (!list.length) { const d = course === "pmp" ? path.join(root, "full", "v2") : path.join(root, "courses", course, "full"); list = (fs.existsSync(d) ? fs.readdirSync(d) : []).filter(f => /^ch\d+\.js$/.test(f)).sort().map(f => path.join(d, f)); }
   const ctx = { ...found, course }; const all = []; const written = [];
   for (const f of list) {
     const n = +(path.basename(f).match(/ch(\d+)/) || [])[1]; written.push(n);

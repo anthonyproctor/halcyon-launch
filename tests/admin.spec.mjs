@@ -19,7 +19,7 @@ const USERS = () => [
     { chapter: 101, updated: ago(30 * D), pos: 4, picks: 2 },
     { chapter: 3, updated: ago(31 * D), step: 10, score: 24 },
     { chapter: 99990, updated: ago(2 * H) },
-    { chapter: 60000, updated: ago(9 * D) },
+    { chapter: 90000, updated: ago(9 * D) }, // no course uses 9xxxx: decodes as "other" (60000 is now the LSAT book)
     { chapter: 40905, updated: ago(2 * H) },
     { chapter: 40908, updated: ago(1 * D) },
     { chapter: 908, updated: ago(6 * D) }],

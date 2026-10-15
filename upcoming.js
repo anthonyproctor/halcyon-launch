@@ -56,7 +56,7 @@ window.HALCYON_UPCOMING={
   shelf:{
     title:"More chapters on the way",
     intro:"Books you can start today. Each one shows how many chapters are out, and the rest are being written.",
-    ids:["cphims","asep","gh300"]
+    ids:["lsat","asep","gh300"]
   },
 
   finale:{

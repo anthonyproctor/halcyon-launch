@@ -9,7 +9,7 @@
   function arrange(itemKey,nOpts,correct,target){const others=[...Array(nOpts).keys()].filter(i=>i!==correct);shuffle(others,rng(hash(itemKey)));const out=new Array(nOpts);out[target]=correct;let k=0;for(let p=0;p<nOpts;p++)if(p!==target)out[p]=others[k++];return out}
   const ORD={};
   // groups: [{key, items:[{id, n, correct}]}]
-  function build(groups){groups.forEach(g=>{if(!g.items.length)return;const mod=Math.max(2,Math.min(4,...g.items.map(it=>it.n)));const T=targets(g.key,g.items.length,mod);g.items.forEach((it,i)=>{ORD[it.id]=arrange(it.id,it.n,it.correct,T[i]%it.n)})})}
+  function build(groups){groups.forEach(g=>{if(!g.items.length)return;const mod=Math.max(2,Math.min(5,...g.items.map(it=>it.n)));/* 5: LSAT quizzes have five choices, so the right one can land on E */const T=targets(g.key,g.items.length,mod);g.items.forEach((it,i)=>{ORD[it.id]=arrange(it.id,it.n,it.correct,T[i]%it.n)})})}
   // perm: a seeded shuffle of 0..n-1 (the final assessment's question order, a new key per attempt)
   G.HalcyonOrder={build,get:(id,n)=>ORD[id]||[...Array(n).keys()],perm:(key,n)=>shuffle([...Array(n).keys()],rng(hash(key))),_ORD:ORD};
 })(typeof window!=="undefined"?window:globalThis);

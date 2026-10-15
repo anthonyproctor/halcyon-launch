@@ -10,7 +10,7 @@
 import fs from "fs";
 globalThis.window = {};
 const W = globalThis.window;
-const run = f => new Function("window", fs.readFileSync(f, "utf8"))(W);
+const run = f => { if (!fs.existsSync(f)) { console.log(`  note: ${f} not written yet, skipped`); return; } new Function("window", fs.readFileSync(f, "utf8"))(W); };
 run("courses.js"); run("badges.js");
 const pv = {}; new Function("window", fs.readFileSync("full/v2/preview.js", "utf8"))(pv);
 for (const f of pv.HALCYON_V2.files) run("full/v2/" + f);

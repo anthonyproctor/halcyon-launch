@@ -2,7 +2,7 @@
   num: 1, part: `Part One: Triage`, title: `The Mandate`, weeks: `Week 1`,
   tasks: [`F1`,`F4`,`R1`,`S1`,`V1`],
   cast: [
-    [`Devin Ruiz`,`Engineer. Fast, talented, and already letting Copilot write whole functions.`],
+    [`Devin Marsh`,`Engineer. Fast, talented, and already letting Copilot write whole functions.`],
     [`Renata Vega`,`Junior engineer in her first month. Asks the questions everyone else is embarrassed to ask.`],
     [`Tomasz Nowak`,`Leads the Kraków engineering team, eight hours ahead of Denver.`],
     [`Raj Shah`,`Priya's father. Retired machinist in Aurora.`]
