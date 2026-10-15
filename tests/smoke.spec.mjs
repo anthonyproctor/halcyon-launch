@@ -22,6 +22,7 @@ const IGNORE_404 = [
   /\/cast\/(v2\/)?voice\/[\w-]+\.mp3$/,
   /\/audio\/(v2\/)?pages\/[\w-]+\/timings\.json$/,
   /\/audio\/(v2\/)?(audiobook|bookmarks)\.json$/,
+  /\/audio\/(v2\/)?(pages\/[\w-]+\/)?[\w-]+\.mp3$/, // mp3s are on R2 and untracked since 2026-10-12, so a CI checkout has none
 ];
 
 function watchErrors(page) {
