@@ -1189,7 +1189,9 @@ function LKEY(){return COURSE.base+(PMP2()?904:903)}
 function BID(){return PMP2()?"pmp2":COURSE.id} // local Audiobook keys (bookpos, bookdone, readat) for this edition
 function lget(){const L=store.get("c"+LKEY(),null);if(!L&&PMP2()){const o=store.get("c"+(COURSE.base+903),null);if(o&&o.prefs)return {prefs:o.prefs}}return L||{}}
 let lsyncT=0,lsaveAt=0;
-function lput(patch,now){const L=Object.assign(lget(),patch,{at:Date.now()});store.set("c"+LKEY(),L);if(SYNC){clearTimeout(lsyncT);const k=LKEY(),c=JSON.parse(JSON.stringify(L));lsyncT=setTimeout(()=>{delete SPEND[k];SYNC(k,c)},now?0:1500);SPEND[k]=[k,c]}}
+/* every course's listening record on this device (key base+903, or PMP v2's 904), read before sign in replaces local progress with the account's */
+function listenLocal(){const out={};try{Object.keys(localStorage).forEach(k=>{const m=k.match(/^halcyon\.c(\d+)$/);if(m&&[903,904].includes(+m[1]%10000)){const v=JSON.parse(localStorage.getItem(k)||"null");if(v&&v.at)out[m[1]]=v}})}catch(e){}return out}
+function lput(patch,now){const L=Object.assign(lget(),patch,{at:Date.now()});store.set("c"+LKEY(),L);if(SYNC){clearTimeout(lsyncT);const k=LKEY(),c=JSON.parse(JSON.stringify(L));if(now){delete SPEND[k];SYNC(k,c,true)}else{lsyncT=setTimeout(()=>{delete SPEND[k];SYNC(k,c)},1500);SPEND[k]=[k,c]}}} // a save on pause, pagehide or a seek goes out at once with keepalive: an iPhone home-screen app freezes timers as it leaves
 /* ⏮ ⏭: scene to scene in the Audiobook (then chapter to chapter), page to page while reading */
 async function narSkip(dir){const a=NAR.audio;
   if(NAR.page==="book"&&NAR.book){await bookMarks();const {ed,n}=NAR.book;const L=(MARKS.full[n]&&MARKS.full[n][ed]||[]).map(x=>x[1]);const t=a.currentTime||0;
@@ -1212,6 +1214,8 @@ function seekTo(pos){const a=NAR.audio;plog("seekTo "+(+pos).toFixed(1)+" src="+
   a.addEventListener("loadedmetadata",apply,{once:true});
   const again=()=>{apply();if(++tries<3&&Math.abs(a.currentTime-pos)>1.5)setTimeout(again,250)};
   a.addEventListener("playing",again,{once:true});a.addEventListener("canplay",apply,{once:true})}
+/* the playing file's length, or before its metadata loads (iOS loads nothing until play), the length the Audiobook or the saved spot recorded */
+function narDur(){const a=NAR.audio;if(a.duration&&isFinite(a.duration))return a.duration;if(NAR.page==="book"&&NAR.book){if(BF.dur&&BF.id===`${COURSE.id}|${NAR.book.ed}|${NAR.book.n}`)return BF.dur;const B=lget().book;if(B&&B.n===NAR.book.n&&B.ed===NAR.book.ed&&B.dur)return B.dur}return 0}
 function fmtT(s){s=Math.max(0,Math.round(s||0));return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`}
 function bookResumePos(ed,n,dur){const L=lget(),B=L.book;if(B&&B.n===n){if(B.ed===ed)return B.t;if(B.dur&&dur)return Math.max(0,B.t/B.dur*dur-15)}const old=store.get(`bookpos.${BID()}.${ed}.${n}`,0);return old||0}
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
@@ -1311,9 +1315,19 @@ function narInit(){
    const bubble=()=>{const d=NAR.audio.duration||0;if(!drag||!d){bub.hidden=true;return}const t=+sk.value/1000*d,W=sk.clientWidth,x=8+(W-16)*(+sk.value/1000);
      const pid=NAR.page==="book"&&NAR.book?pidAt(NAR.book.n,NAR.book.ed,t):null;bub.textContent=fmtT(t)+(pid?" · "+pidLabel(pid,NAR.book.n).replace(/^(Decision \d+):.*/,"$1"):"");bub.hidden=false;
      bub.style.left=Math.max(bub.offsetWidth/2,Math.min(W-bub.offsetWidth/2,x)).toFixed(1)+"px"}; // the time (and scene) under the thumb while dragging
-   sk.addEventListener("input",()=>{drag=true;show();bubble()});
-   sk.addEventListener("change",()=>{const d=NAR.audio.duration||0;if(d)NAR.audio.currentTime=+sk.value/1000*d;drag=false;bubble();if(NAR.page==="book")NAR.free=false;narSavePos(true);show();if(NAR.audio.paused)narHighlight()});
-   ["pointerup","pointercancel"].forEach(ev=>sk.addEventListener(ev,()=>setTimeout(()=>{if(drag){drag=false;show()}bubble()},60)))} // a drag that ends where it began fires no change
+   let v0=null;
+   const commit=()=>{const a=NAR.audio,d=narDur(),moved=v0==null||+sk.value!==v0;drag=false;v0=null;bubble();if(!d||!moved){show();return}const t=+sk.value/1000*d;
+     if(a.duration){try{a.currentTime=t}catch(e){}narSavePos(true)}
+     else{seekTo(t);if(NAR.page==="book"&&NAR.book)lput({book:{ed:NAR.book.ed,n:NAR.book.n,t:+t.toFixed(1),dur:d,at:Date.now()}},true);if(a.src&&a.readyState===0){try{a.load()}catch(e){}}} // iOS loads nothing until asked: seek once the metadata arrives
+     if(NAR.page==="book")NAR.free=false;show();if(a.paused)narHighlight()};
+   const fromX=x=>{const r=sk.getBoundingClientRect();if(!r.width)return;if(v0==null)v0=+sk.value;sk.value=Math.round(Math.min(1,Math.max(0,(x-r.left-8)/Math.max(1,r.width-16)))*1000);drag=true;show();bubble()}; // iOS range inputs only drag the thumb: a tap or a drag anywhere on the track moves it here
+   sk.addEventListener("touchstart",e=>{if(e.touches.length===1)fromX(e.touches[0].clientX)},{passive:true});
+   sk.addEventListener("touchmove",e=>{if(e.touches.length===1)fromX(e.touches[0].clientX)},{passive:true});
+   sk.addEventListener("touchend",()=>{if(drag)commit()});
+   sk.addEventListener("pointerdown",()=>{if(v0==null)v0=+sk.value});
+   sk.addEventListener("input",()=>{if(v0==null)v0=+sk.value;drag=true;show();bubble()});
+   sk.addEventListener("change",()=>{if(drag||v0!=null)commit()});
+   ["pointerup","pointercancel"].forEach(ev=>sk.addEventListener(ev,()=>setTimeout(()=>{if(drag)commit();else{v0=null;bubble()}},60)))} // a drag that ends where it began seeks nowhere
   $("narprev").onclick=()=>narSkip(-1);$("narnext").onclick=()=>narSkip(1);
   $("narback").onclick=()=>{NAR.audio.currentTime=Math.max(0,NAR.audio.currentTime-10);narSavePos(true);if(NAR.audio.paused)narHighlight()};
   $("narfwd").onclick=()=>{NAR.audio.currentTime=Math.min((NAR.audio.duration||0)-0.5,NAR.audio.currentTime+30);narSavePos(true);if(NAR.audio.paused)narHighlight()};
@@ -1328,12 +1342,21 @@ narInit();logInit();window.__nar=NAR;
 /* lock screen and car controls */
 function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book"){const c=TRACKS.full.list().find(x=>x.num===NAR.book.n);try{navigator.mediaSession.metadata=new MediaMetadata({title:NAR.bsec?`Ch ${NAR.book.n} · ${pidLabel(NAR.bsec,NAR.book.n)}`:`Chapter ${NAR.book.n}: ${c?c.title:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:NAR.book.ed==="story"?"Audiobook, story only":"Audiobook, story + lessons",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}return}if(!CH)return;try{navigator.mediaSession.metadata=new MediaMetadata({title:`${CH.title}: ${$("narlabel")?$("narlabel").textContent:""}`,artist:COURSE.full_title||"The Halcyon Launch",album:TRACK==="full"?"Full Course":"Refresher",artwork:[{src:"/icons/icon-512.png",sizes:"512x512",type:"image/png"}]})}catch(e){}}
 if("mediaSession" in navigator){try{
-  navigator.mediaSession.setActionHandler("play",()=>{NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight()})});
-  navigator.mediaSession.setActionHandler("pause",()=>{NAR.listening=false;NAR.audio.pause();narUI()});
-  navigator.mediaSession.setActionHandler("nexttrack",()=>narSkip(1));try{navigator.mediaSession.setActionHandler("previoustrack",()=>narSkip(-1))}catch(e){}
-  navigator.mediaSession.setActionHandler("seekbackward",()=>{NAR.audio.currentTime=Math.max(0,NAR.audio.currentTime-10)});
-  navigator.mediaSession.setActionHandler("seekforward",()=>{NAR.audio.currentTime=Math.min(NAR.audio.duration||0,NAR.audio.currentTime+10)});
+  const ok=()=>{narUI();narHighlight()};
+  // play from the lock screen or the car: call play() right here (iOS only honors it inside the handler); an element iOS unloaded while paused is reloaded at the saved spot first
+  const msPlay=()=>{const a=NAR.audio;NAR.listening=true;if(a.ended)a.currentTime=0;const t=a.currentTime;let p;try{p=a.play()}catch(e){p=Promise.reject(e)}
+    Promise.resolve(p).then(ok).catch(()=>{try{if(t>0)seekTo(t);a.load();Promise.resolve(a.play()).then(ok).catch(()=>{})}catch(e){}})};
+  const H={play:msPlay,pause:()=>{NAR.listening=false;NAR.audio.pause();narUI()},stop:()=>{NAR.listening=false;NAR.audio.pause();narUI()},
+    nexttrack:()=>narSkip(1),previoustrack:()=>narSkip(-1),
+    seekbackward:d=>{const a=NAR.audio;a.currentTime=Math.max(0,a.currentTime-((d&&d.seekOffset)||10));narSavePos(true)},
+    seekforward:d=>{const a=NAR.audio;a.currentTime=Math.min((a.duration||0)-0.5,a.currentTime+((d&&d.seekOffset)||10));narSavePos(true)},
+    seekto:d=>{const a=NAR.audio;if(!d||!(d.seekTime>=0))return;if(d.fastSeek&&a.fastSeek)a.fastSeek(d.seekTime);else a.currentTime=d.seekTime;narSavePos(true);if(a.paused)narHighlight()}}; // the lock screen scrubber
+  Object.entries(H).forEach(([k,f])=>{try{navigator.mediaSession.setActionHandler(k,f)}catch(e){}});
 }catch(e){}}
+/* the lock screen's play or pause button and its scrubber follow the element (iOS shows a slider it can't move without seekto and a position) */
+function narMsState(){if(!("mediaSession" in navigator))return;const a=NAR.audio;try{navigator.mediaSession.playbackState=a.src?(a.paused?"paused":"playing"):"none"}catch(e){}
+  try{if(navigator.mediaSession.setPositionState&&a.duration&&isFinite(a.duration))navigator.mediaSession.setPositionState({duration:a.duration,playbackRate:a.playbackRate||1,position:Math.min(a.duration,Math.max(0,a.currentTime||0))})}catch(e){}}
+let msAt=0;["play","pause","loadedmetadata","seeked","ratechange","ended"].forEach(ev=>NAR.audio.addEventListener(ev,narMsState));NAR.audio.addEventListener("timeupdate",()=>{if(Date.now()-msAt>5000){msAt=Date.now();narMsState()}});
 NAR.audio.addEventListener("play",narMedia);
 if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("/sw.js").catch(()=>{});
 
@@ -1826,8 +1849,10 @@ async function boot(){
   if(PROF.authorize&&PROF.authorize(!!(me.user.admin||me.user.tester)))return;
   /* test profile (QA): signed in so Flag still works, but the server's progress never lands in local storage and SYNC stays off, so
      nothing reaches /api/progress; the real namespace is left exactly as it was. */
-  if(!TESTP){clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
-    SYNC=(n,st,ka)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st}),keepalive:!!ka}).catch(()=>{});applyPrefs(lget().prefs);settingsPull()}
+  if(!TESTP){const keepL=listenLocal();clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
+    SYNC=(n,st,ka)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st}),keepalive:!!ka}).catch(()=>{});
+    Object.entries(keepL).forEach(([n,L])=>{const srv=(me.progress||{})[n];if((L.at||0)>((srv&&srv.at)||0)){store.set("c"+n,L);SYNC(+n,L)}}); // the last spot this device heard wins when the server never got it (an iPhone app closed mid-save)
+    applyPrefs(lget().prefs);settingsPull()}
   USERNAME=me.user.name||"";
   document.querySelector(".rail").hidden=false;$("usercard").hidden=false;meNav();$("adminlink").hidden=!me.user.admin;
   $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();if(PROF.testKeys)PROF.testKeys().forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});location.href="/"}; // test profile data goes with the account that made it
