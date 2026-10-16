@@ -678,7 +678,7 @@ function studyPlan(m){
   if(nextCh)plan.push(["Keep the story moving",`Full Course chapter ${nextCh.num}, ${nextCh.title}. Read ${LESSON()} and play the decisions.`,{open:nextCh.num}]);
   weak.forEach(([t,p])=>{const where=taughtIn(t)[0];plan.push([`Shore up ${t} ${TASKNAMES[t]} (${p}%)`,where?`Re-read the chapter ${where.c.num} lesson, then do 10 practice questions on this task.`:`Do 10 practice questions on this task.`,{task:t}])});
   const H={list:mockHistAll()},done5=()=>TRACKS.full.list().filter(c=>{const st=load("full",c.num);return st&&(st.doneAt||(st.pos||0)>=steps(c).length-1)}).length>=5;
-  if(hasMock()&&(!H||!H.list.length)){if(done5())plan.push(["Take a practice exam","You've finished five chapters. A full timed practice exam now shows where you really stand.",{mock:1}])}
+  if(hasMock()&&(!H||!H.list.length)){if(done5()){const n=TRACKS.full.list().filter(c=>{const st=load("full",c.num);return st&&(st.doneAt||(st.pos||0)>=steps(c).length-1)}).length,all=n>=TRACKS.full.list().length;plan.push(["Take a practice exam",`${all?"You've finished every chapter.":`You've finished ${n} chapters.`} A full timed practice exam now shows where you really stand.`,{mock:1}])}}
   else if(hasMock()||done5())plan.push(["Mixed practice","Do 10 mixed practice questions to keep everything warm.",{task:"mixed"}]);
   if(!plan.length)plan.push(["Start here","Open the Full Course and play chapter 1.",{open:1}]);
   const out=plan.slice(0,5);
