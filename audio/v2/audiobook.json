@@ -70,6 +70,16 @@
     "min": 79.7
    }
   },
+  "8": {
+   "story": {
+    "src": "audio/v2/story/full-ch08.mp3",
+    "min": 41.3
+   },
+   "study": {
+    "src": "audio/v2/full-ch08.mp3",
+    "min": 84.9
+   }
+  },
   "9": {
    "story": {
     "src": "audio/v2/story/full-ch09.mp3",
