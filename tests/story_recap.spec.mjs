@@ -302,24 +302,36 @@ for (const [w, h] of [[390, 844], [1280, 900]]) for (const scheme of ["light", "
   });
 }
 
-test("back after days away, mid-chapter: a one line prompt opens Where am I, once per visit", async ({ page }) => {
+test("back after days away, mid-chapter: the Story so far card takes the Been a while line's place; a tab back after days gets the line", async ({ page }) => {
   await page.goto("/#pmp/home");
   const now = await page.evaluate(() => Date.now()), t = now - 5 * DAY;
   const st = await stepsOf(page, 2), pos = posOf(st, "scene", 3);
   await seed(page, { c201: ch1Done({}), c202: fresh({ pos, max: pos, picks: { 0: 0, 1: 0, 2: 0 } }), "lastplace.pmp": { t: "full", n: 2 }, "readat.pmp2.2": t, c99990: { pins: [], last: { pmp: { t: "full", n: 2, at: t } }, at: t } });
   await open(page, "/#pmp/full/2");
-  await expect(page.locator("#rback")).toBeVisible();
-  await page.locator("#rbackgo").click();
-  await expect(page.locator("#wpanel")).toHaveAttribute("data-pid", "s3");
-  await page.keyboard.press("Escape");
-  await expect(page.locator("#rbackgo")).toBeFocused();
-  await page.locator("#page .choice").first().click(); // a redraw on the same page keeps it
-  await expect(page.locator("#rback")).toBeVisible();
+  // a return to a saved page: the resume card does this job, so the one line prompt stays away
+  await expect(page.locator("#rcatch")).toBeVisible();
+  await expect(page.locator("#rback")).toHaveCount(0);
+  await page.locator("#rcatchx").click();
+  await expect(page.locator("#rcatch")).toHaveCount(0);
+  await page.locator("#page .choice").first().click();
   await page.locator("#next").click();
   await expect(page.locator("#rback")).toHaveCount(0);
-  // a recent reader doesn't get it
-  await seed(page, { "readat.pmp2.2": now - DAY, c99990: { pins: [], last: { pmp: { t: "full", n: 2, at: now - DAY } }, at: now - DAY } });
+  // a phone tab left hidden 3 or more days and brought back: the one line prompt, which opens Where am I
+  await page.evaluate(() => {
+    let hid = true; Object.defineProperty(document, "hidden", { configurable: true, get: () => hid });
+    document.dispatchEvent(new Event("visibilitychange"));
+    const real = Date.now.bind(Date); Date.now = () => real() + 4 * 864e5; hid = false;
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await expect(page.locator("#rback")).toBeVisible();
+  await page.locator("#rbackgo").click();
+  await expect(page.locator("#wpanel")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#rbackgo")).toBeFocused();
+  // a recent reader on the opening page gets neither
+  await seed(page, { c202: fresh(), "readat.pmp2.2": now - DAY, c99990: { pins: [], last: { pmp: { t: "full", n: 2, at: now - DAY } }, at: now - DAY } });
   await open(page, "/#pmp/full/2");
   await expect(page.locator("#page .chmap")).toBeVisible();
   await expect(page.locator("#rback")).toHaveCount(0);
+  await expect(page.locator("#rcatch")).toHaveCount(0);
 });
