@@ -271,12 +271,12 @@ C.mock.push({ part:`M2: Practice exam 2`, questions:[
   a:2, why:`The PID segment carries the patient's identifiers, so a result filed to the wrong person usually traces to a bad or mismatched identifier there. The OBX value is correct, so the result itself isn't the problem.`,
   task:`C2`, domain:`Clinical Informatics`, level:`AN`, scored:true },
 
-{ q:`In one quarter a hospital recorded 9,600 inpatient days and 2,400 discharges. What was its average length of stay?`,
+{ q:`In one quarter a hospital discharged 2,400 inpatients, whose stays added up to 9,600 days. What was its average length of stay?`,
   opts:[`2.5 days`,
         `4.8 days`,
         `3.2 days`,
         `4.0 days`],
-  a:3, why:`Average length of stay = inpatient days / discharges = 9,600 / 2,400 = 4.0 days. Dividing the other way gives 0.25, and 2.5 days comes from misplacing that decimal.`,
+  a:3, why:`Average length of stay = total days of stay for discharged patients / discharges = 9,600 / 2,400 = 4.0 days. Dividing the other way gives 0.25, and 2.5 days comes from misplacing that decimal.`,
   task:`C3`, domain:`Clinical Informatics`, level:`AP`, scored:true },
 
 { q:`A 150-bed hospital's average daily census is 123. What's its occupancy rate?`,
@@ -519,7 +519,7 @@ C.mock.push({ part:`M2: Practice exam 2`, questions:[
   a:3, why:`At-the-elbow superusers fix most questions on the spot, before they become tickets. Pulling them before stabilization shifted the load to the help desk. Bring them back and taper by unit based on ticket trends. More help desk staff can't stand beside a nurse.`,
   task:`SC3`, domain:`Systems Management`, level:`AN`, scored:true },
 
-{ q:`A vendor delay pushes interface delivery back four weeks. Go-live can't move, because the legacy contract ends that day. What should the project lead do FIRST?`,
+{ q:`A vendor delay pushes interface delivery back four weeks. Go-live is set for the day the legacy contract ends. What should the project lead do FIRST?`,
   opts:[`Cut interface testing to make up the time`,
         `Assess options and bring the tradeoffs to the sponsor`,
         `Tell the vendor the date is its problem to fix`,
@@ -752,11 +752,11 @@ C.mock.push({ part:`M2: Practice exam 2`, questions:[
   task:`L17`, domain:`Leadership`, level:`RE`, scored:true },
 
 { q:`A long-time vendor asks Cascade to be a reference for a product that has given Cascade real trouble. What's the MOST ethical response?`,
-  opts:[`Decline quietly and say nothing to the vendor`,
+  opts:[`Decline, and blame a scheduling conflict`,
         `Agree in return for a discount on renewal`,
         `Agree, and stress only the good parts`,
         `Agree, and describe the problems honestly`],
-  a:3, why:`An honest reference serves the prospective buyer and keeps Cascade's word worth something. Trading a reference for a discount turns it into a paid endorsement, and painting only the good parts misleads another hospital.`,
+  a:3, why:`An honest reference serves the prospective buyer and keeps Cascade's word worth something. Trading a reference for a discount turns it into a paid endorsement, and painting only the good parts misleads another hospital. Declining with a made-up excuse is its own small lie.`,
   task:`L18`, domain:`Leadership`, level:`AN`, scored:true },
 
 { q:`Which chart BEST compares the number of help desk tickets at each of eleven hospitals for one month?`,

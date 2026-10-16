@@ -64,7 +64,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `Connect through a QHIN, which links networks`,
         `Register each clinician's Direct address with CMS`,
         `Send a monthly bulk FHIR export to every other network`],
-  a:1, why:`TEFCA works through Qualified Health Information Networks that sign the Common Agreement and exchange with each other, so a participant connects once through its QHIN. An HIE can also apply to become a QHIN itself. Signing a BAA with every hospital is the point-to-point patchwork TEFCA was built to replace, and a monthly bulk export is still point to point and can't answer a query at the time of care.`,
+  a:1, why:`TEFCA works through Qualified Health Information Networks that sign the Common Agreement and exchange with each other, so a participant connects once through its QHIN. An HIE can also apply to become a QHIN itself. A BAA governs how a vendor handles PHI and doesn't connect networks, so signing one with every hospital is one-by-one paperwork that still leaves no route for a query. A monthly bulk export is still point to point and can't answer a query at the time of care.`,
   task:`E2`, domain:`Environments`, level:`AP`, scored:true },
 
 { q:`A patient visits three unaffiliated emergency departments in one month. Which arrangement BEST lets each ED see the earlier visits at the time of care?`,
@@ -116,7 +116,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   task:`E4`, domain:`Environments`, level:`AN`, scored:true },
 
 { q:`An emergency department's new workflow has clerks verify insurance eligibility before a patient is seen in triage. What should the IT and compliance team do?`,
-  opts:[`Keep registration, but move the check until screening starts`,
+  opts:[`Move the check so it never delays the screening exam`,
         `Keep the check, but have patients sign a waiver of screening`,
         `Keep the check, but skip it when the waiting room is full`,
         `Keep the check, and refer uninsured patients to a clinic`],
@@ -317,7 +317,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
 
 { q:`Compliance with the sepsis order set is 40 percent. Hospitalists say it's four clicks deep and lists 60 items. What's the BEST fix?`,
   opts:[`Make the order set a hard stop for all ED admissions`,
-        `Redesign it with clinicians and launch it from the ED triage workflow`,
+        `Redesign it with clinicians and launch it from the admission workflow`,
         `Email the hospitalists a monthly reminder to use the order set`,
         `Add an interruptive alert that opens the order set`],
   a:1, why:`The barrier is usability, so the fix is a shorter, evidence-based set with core items preselected, built with the people who use it and launched where the decision happens. An interruptive alert gets clinicians to the same hard-to-use set, so it adds a click without fixing the cause.`,
@@ -520,7 +520,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `E-learning, short hands-on labs, and at-the-elbow superusers`,
         `A recorded webinar that each nurse can watch at home`,
         `Train the nurse managers first and let them teach their own staff`],
-  a:1, why:`E-learning covers basics on any shift, short hands-on labs build skill, and superusers support nurses on the floor at go-live. Eight-hour classes for 1,200 nurses in six weeks would strip the units of staff. Training only the managers adds a layer that dilutes quality, loads busy managers, and leaves no help at the elbow at go-live.`,
+  a:1, why:`E-learning covers basics on any shift, short hands-on labs build skill, and superusers support nurses on the floor at go-live. Eight-hour classes for 1,200 nurses in six weeks would strip the units of staff. Having managers teach their own staff is a form of train the trainer, which works when trainers have time and backup, but it loads busy managers and still leaves no help at the elbow at go-live.`,
   task:`SC3`, domain:`Systems Management`, level:`AP`, scored:true },
 
 { q:`Mid-build, the surgeons ask for a new OR module that wasn't in the project scope. What should the project leader do?`,
@@ -584,7 +584,7 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
         `Unplug the scanner from the network until the vendor fixes it`,
         `Accept the risk and log it in the risk register`,
         `Isolate it, limit access, monitor, and plan with the vendor`],
-  a:3, why:`When a device can't be patched, compensating controls like network isolation, restricted access, and monitoring reduce the risk while you work with the vendor on a fix or replacement. Patching it yourself may void the clearance or break the device. Unplugging it takes a diagnostic scanner out of patient care and trades a security risk for a care risk. Accepting the risk without any controls leaves the exposure in place.`,
+  a:3, why:`When a device can't be patched, compensating controls like network isolation, restricted access, and monitoring reduce the risk while you work with the vendor on a fix or replacement. Patching it yourself can break a validated configuration and end the vendor's support and warranty. Unplugging it takes a diagnostic scanner out of patient care and trades a security risk for a care risk. Accepting the risk without any controls leaves the exposure in place.`,
   task:`SE2`, domain:`Systems Management`, level:`AN`, scored:true },
 
 { q:`An ED nurse needs to open the chart of a patient with restricted access because of an emergency. What's the BEST control?`,

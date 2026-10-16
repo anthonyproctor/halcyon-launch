@@ -305,7 +305,7 @@ C.mock.push({ part:`Airport and flight`, questions:[
         `An in flight fire`,
         `A precautionary landing at another airport to wait out weather`],
   a:1, why:`830.5(a)(4) lists an in flight fire as a serious incident that requires immediate notification, as does any accident with serious injury or substantial damage. A flat tire alone isn't substantial damage, and a precautionary landing with nothing damaged isn't an accident or a listed incident. After an accident the written report is due within 10 days (830.15).`,
-  task:`III.A`, domain:`Airport and flight` },
+  task:`XII`, domain:`Airport and flight` },
 
 { q:`An airplane and a glider are converging at about the same altitude, and the airplane is to the glider's right. Which has the right of way?`,
   opts:[`The glider, because a glider has the right of way over powered aircraft`,

@@ -26,6 +26,8 @@ def main():
             old, new = e.get("old", ""), e.get("new", "")
             if not old or old == new: skipped.append((e.get("id"), "empty or no change")); continue
             if BAD.search(new) and not BAD.search(old): skipped.append((e.get("id"), "new text breaks a dash rule")); continue
+            if len(re.findall(r"\b[as]:\s*\d", old)) != len(re.findall(r"\b[as]:\s*\d", new)):
+                skipped.append((e.get("id"), "adds or removes an option or key (would shift pick indices)")); continue
             n = s.count(old)
             if n != 1: skipped.append((e.get("id"), f"old text found {n} times")); continue
             s = s.replace(old, new); applied.append(e)
