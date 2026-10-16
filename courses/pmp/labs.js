@@ -20,7 +20,7 @@ const ev={id:"pmev",kind:"calc",title:"Run the numbers yourself",
   presets:WK.map(([pv,e,ac],i)=>({label:`Week ${i+1}`,v:{bac:2040,pv,ev:e,ac}})),
   compute:v=>{const K=1000,pv=v.pv*K,e=v.ev*K,ac=v.ac*K,bac=v.bac*K;const cpi=e/ac,spi=pv?e/pv:NaN,eac=bac/cpi,etc=eac-ac,vac=bac-eac,tcpi=(bac-e)/(bac-ac);
     const c=x=>x>=1?"good":x>=0.9?"mid":"bad";
-    return {rows:[["CV",usd(e-ac),e-ac<0?"bad":"good"],["SV",usd(e-pv),e-pv<0?"bad":"good"],["CPI",f2(cpi),c(cpi)],["SPI",isNaN(spi)?"n/a":f2(spi),c(spi)],["EAC (BAC ÷ CPI)",usd(eac)],["ETC",usd(etc)],["VAC",usd(vac),vac<0?"bad":"good"],["TCPI to BAC",bac>ac?f2(tcpi):"spent",tcpi>1.1?"bad":tcpi>1?"mid":"good"]],
+    return {rows:[["CV",usd(e-ac),e-ac<0?"bad":"good"],["SV",usd(e-pv),e-pv<0?"bad":"good"],["CPI",f2(cpi),c(cpi)],["SPI",isNaN(spi)?"n/a":f2(spi),c(spi)],["EAC (BAC ÷ CPI)",usd(eac)],["ETC",usd(etc)],["VAC",usd(vac),vac<0?"bad":"good"],["TCPI to BAC",bac>ac?f2(tcpi):"spent",bac<=ac?"bad":tcpi>1.1?"bad":tcpi>1?"mid":"good"]],
       note:`${cpi<1?"Over budget":"On or under budget"} and ${spi<1?"behind schedule":"on or ahead of schedule"}. Under 1 is bad for both indexes.`,noteCls:cpi<1||spi<1?"bad":"good"}},
   source:`Practice figures for one Halcyon work package, stated here in full. Formulas as taught in the course: CPI = EV ÷ AC, SPI = EV ÷ PV, EAC = BAC ÷ CPI, ETC = EAC minus AC, VAC = BAC minus EAC, TCPI = (BAC minus EV) ÷ (BAC minus AC).`,
   questions:[
@@ -42,7 +42,7 @@ const ev={id:"pmev",kind:"calc",title:"Run the numbers yourself",
 // Forward pass: A 0-5, B 5-9, C 5-11, D 0-8, G 8-13, E 13-18, F 18-22. Backward: F 18, E 13, G 8, D 0, C 7, B 9, A 2.
 // Critical D G E F, 22 days. Float: A 2, B 4, C 2.
 const cp={id:"pmcp",kind:"sort",title:"Find the critical path",
-  hook:[`Here's a slice of the departure stage schedule, in working days. The valve on one side: install it in the high bay, leak check it, then cycle test it. The flight software build and its independent review on the other. Both feed integrated testing, then the test conductor runs the stage on the stand.`,
+  hook:[`Here's a slice of the departure stage schedule, in working days. The valve on one side: install it in the high bay, then leak check it and cycle test it at the same time, since both only need the valve installed. The flight software build and its independent review on the other. Both feed integrated testing, then the test conductor runs the stage on the stand.`,
     `Sort every activity: on the critical path, or has float. Then tell me how long it takes and how much room the cycle testing has. Don't guess from which one looks scariest.`],
   sort:{mode:"buckets",buckets:[{id:"crit",label:"On the critical path (zero float)"},{id:"float",label:"Has float"}],
     items:[{id:"A",label:"A Valve install",note:"5 days"},{id:"B",label:"B Leak check",note:"4 days"},{id:"C",label:"C Valve cycle testing",note:"6 days"},{id:"D",label:"D Flight software build",note:"8 days"},{id:"G",label:"G Independent software review",note:"5 days"},{id:"E",label:"E Integrated testing",note:"5 days"},{id:"F",label:"F Stand test",note:"4 days"}],
@@ -58,7 +58,7 @@ const cp={id:"pmcp",kind:"sort",title:"Find the critical path",
     sol:[`22 days: 8 for the software build, 5 for the independent review, 5 for integrated testing, 4 on the stand.`]},
    {id:"flt",type:"number",q:`How much total float does C, valve cycle testing, have?`,a:2,tol:0,unit:"days",
     hints:[`Find the longest path C is on and compare it with the critical path.`],
-    sol:[`C's longest path is A, C, E, F at 20 days. 22 minus 20 = 2 days of float. With a forward and backward pass: C can start on day 5 at the earliest and day 7 at the latest. The valve feels scary, but the software is what sets the date here.`]}
+    sol:[`C's longest path is A, C, E, F at 20 days. 22 minus 20 = 2 days of float. With a forward and backward pass, C's early start is 5 and its late start is 7, so total float is 7 minus 5 = 2. The valve feels scary, but the software is what sets the date here.`]}
   ]};
 
 const sh={id:"pmgrid",kind:"sort",title:"Who goes where on the grid",

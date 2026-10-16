@@ -18,10 +18,10 @@
 
 { q:`During planning, the project manager finds that the quality management plan requires a two-week inspection that the draft schedule does not include. What should the project manager do next?`,
   opts:[`Integrate the plans by working with the owners to resolve the conflict in one baseline`,
-        `Remove the inspection from the quality plan because the schedule has already been shared`,
+        `Keep the schedule as drafted and run the inspection in parallel with the next activities`,
         `Keep both plans as they are and let the team resolve the conflict during execution`,
-        `Add the two weeks to the end date without telling stakeholders until the baseline is set`],
-  a:0, why:`Integration management exists to make subsidiary plans consistent with each other. The project manager resolves the conflict with the plan owners before baselining. Ignoring it pushes the problem into execution, and hiding a date change breaks transparency.`,
+        `Baseline the schedule now and submit a change request later to add the inspection`],
+  a:0, why:`Integrating and aligning project plans means making the subsidiary plans consistent with each other. The project manager resolves the conflict with the plan owners before baselining. Running it in parallel, deferring it to a change request, or leaving it for execution leaves a known conflict unresolved.`,
   task:`R1`, domain:`Process`, approach:`predictive` },
 
 { q:`On a hybrid project, a team member asks how a proposed change to the fixed hardware scope should be submitted and who decides on it. Where should the project manager direct the team member?`,
@@ -500,8 +500,8 @@
   opts:[`Variances, trends, forecasts, and decisions needed, in a short summary`,
         `A full list of every task completed during the month by the whole team`,
         `Detailed technical notes so executives understand the engineering work`,
-        `Only good news, so executive confidence in the project stays high`],
-  a:0, why:`Executives need the status in context: variances, trends, forecasts, and the decisions they must make. Tailor communication to the audience, and never filter out bad news.`,
+        `Velocity charts and story counts for each team, to show delivery rates`],
+  a:0, why:`Executives need the status in context: variances, trends, forecasts, and the decisions they must make. Tailor communication to the audience, and give executives what they need to decide, not team-level detail.`,
   task:`R9`, domain:`Process`, approach:`hybrid` },
 
 { q:`At a status date, earned value is $45,000 and planned value is $50,000. What is the schedule variance, and what does it mean?`,
@@ -582,14 +582,14 @@
         `Plan the handoff early with operations: runbooks, training, and support readiness`,
         `Delay the release until the operations team has finished reviewing every feature`],
   a:2, why:`Transition is planned, not improvised. Involve operations early, transfer knowledge through runbooks and training, and confirm support readiness before handover.`,
-  task:`R10`, domain:`Process`, approach:`hybrid` },
+  task:`R10`, domain:`Process`, approach:`agile` },
 
-{ q:`A project has closed successfully. Which activity best supports the organization's future projects?`,
-  opts:[`Celebrating the team's success and releasing members to their next assignments`,
-        `Updating the organizational process assets with lessons, templates, and records`,
-        `Sending the final status report to the sponsor and the steering committee`,
-        `Archiving the project email so it can be searched by future project teams`],
-  a:1, why:`Updating organizational process assets with lessons learned, templates, and historical data is what makes the next project better. Celebration and release matter too, but they don't carry knowledge forward.`,
-  task:`R10`, domain:`Process`, approach:`agile` }
+{ q:`A project is in closing, and the team members are returning to their functional managers. What should the project manager do as part of releasing them?`,
+  opts:[`Release everyone on the same day so no one stays on the project longer than needed`,
+        `Give each functional manager input on the member's performance and contributions`,
+        `Keep the team charged to the project budget until the sponsor's next portfolio review`,
+        `Ask each team member to write their own performance review for their manager`],
+  a:1, why:`Releasing resources is part of closure. When people go back to functional managers, those managers usually own the performance review, so specific input on each person's contributions makes sure the project work is recognized. Releasing everyone on one day ignores handoffs, holding people on the budget wastes money, and a self-written review isn't feedback.`,
+  task:`R10`, domain:`Process`, approach:`predictive` }
 
 ]});

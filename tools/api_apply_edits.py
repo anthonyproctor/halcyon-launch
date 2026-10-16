@@ -15,12 +15,12 @@ BAD = re.compile(r"[–—]| - ")
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--date", default=datetime.date.today().isoformat()); ap.add_argument("--only"); ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--date", default=datetime.date.today().isoformat()); ap.add_argument("--only"); ap.add_argument("--dry-run", action="store_true"); ap.add_argument("--dir", help="reviews subfolder, default api-adjudicate-<date>")
     a = ap.parse_args()
     tot = {"applied": 0, "narrated": 0, "skipped": 0}
-    for j in sorted(glob.glob(os.path.join(REV, f"api-adjudicate-{a.date}", "*.json"))):
+    for j in sorted(glob.glob(os.path.join(REV, a.dir or f"api-adjudicate-{a.date}", "*.json"))):
         d = json.load(open(j)); rel = d["file"]
-        if a.only and not any(w in rel for w in a.only.split(",")): continue
+        if a.only and not any(w in rel or w in os.path.basename(j) for w in a.only.split(",")): continue
         p = os.path.join(ROOT, rel); s = open(p).read(); applied = []; skipped = []
         for e in d.get("edits", []):
             old, new = e.get("old", ""), e.get("new", "")
