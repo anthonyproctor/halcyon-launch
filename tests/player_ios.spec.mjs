@@ -178,6 +178,27 @@ test("lock screen play refused by iOS (NotAllowedError) keeps the element and th
   await expect.poll(() => page.evaluate(() => window.__nar.audio.paused)).toBe(false);
 });
 
+test("lock screen play after a pause made while the app was hidden reloads the audio and resumes at the same spot", async ({ page }) => {
+  await playBook(page);
+  await page.evaluate(() => window.__ms.seekto({ seekTime: 40 }));
+  await expect.poll(() => page.evaluate(() => Math.round(window.__nar.audio.currentTime))).toBeGreaterThanOrEqual(39);
+  await page.evaluate(() => { window.__hidden = true; Object.defineProperty(document, "hidden", { configurable: true, get: () => window.__hidden }) });
+  await page.evaluate(() => window.__ms.pause());
+  const at = await page.evaluate(() => window.__nar.audio.currentTime);
+  await page.evaluate(() => { window.__loads = 0; window.__nar.audio.addEventListener("loadstart", () => window.__loads++); window.__nar.hidPause.at -= 5000 }); // paused 5 s ago, still hidden
+  await page.evaluate(() => window.__ms.play());
+  await expect.poll(() => page.evaluate(() => window.__loads)).toBe(1);
+  await expect.poll(() => page.evaluate(() => !window.__nar.audio.paused && window.__nar.audio.currentTime > 0), { timeout: 15_000 }).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__nar.audio.currentTime), { timeout: 15_000 }).toBeGreaterThan(at - 1);
+  expect(await page.evaluate(() => window.__nar.audio.currentTime)).toBeLessThan(at + 8); // back at the paused spot, not the start
+  // a pause made with the app open plays without a reload
+  await page.evaluate(() => { window.__hidden = false; document.dispatchEvent(new Event("visibilitychange")) });
+  await page.evaluate(() => window.__ms.pause());
+  await page.evaluate(() => window.__ms.play());
+  await page.waitForTimeout(800);
+  expect(await page.evaluate(() => window.__loads)).toBe(1);
+});
+
 test("player diagnostics: with the switch on, seeks, lock screen actions and element events are batched to /api/qa-report?action=diag", async ({ page }) => {
   // Skipped on the Linux CI runner only: there, with the on screen diagnostics log running, the page never reports the lock screen
   // handlers and metadata in time (two runs timed out at 30 s), though every other player test passes there and the feature works on a

@@ -1392,7 +1392,14 @@ function narMedia(){if(!("mediaSession" in navigator))return;if(NAR.page==="book
 if("mediaSession" in navigator){try{
   const ok=()=>{narUI();narHighlight()};
   // play from the lock screen or the car: call play() right here (iOS only honors it inside the handler); an element iOS unloaded while paused is reloaded at the saved spot first
-  const msPlay=()=>{const a=NAR.audio;if(NAR.soft){let q;if(a.paused){try{q=a.play()}catch(e){}}NAR.listening=true;softResume("ms:play");Promise.resolve(q).then(ok).catch(()=>{});return}
+  // 2026-10-16: on Anthony's iPhone a lock screen play after a pause made while the app was hidden resolves but the clock never moves (iOS ended
+  // the audio session). So when the pause happened while hidden more than 2 s ago, reload the element and play in this same handler call,
+  // then seek back to the paused spot (seekTo holds it until the file loads). A pause made with the app open plays as before.
+  const msPlay=()=>{const a=NAR.audio,hp=NAR.hidPause;
+    if(!NAR.soft&&hp&&document.hidden&&a.src&&Date.now()-hp.at>2000){NAR.hidPause=null;dlog("ms:play:reload",{t:+hp.t.toFixed(2),away:Math.round((Date.now()-hp.at)/1000)});
+      seekTo(hp.t,"ms:reload");try{a.load()}catch(e){}let p;try{p=a.play()}catch(e){p=Promise.reject(e)}NAR.listening=true; // seek first: seekTo on an unloaded element calls load() itself, which would abort this play
+      Promise.resolve(p).then(()=>{dlog("ms:play:ok",{reload:1});ok()}).catch(e=>dlog("ms:play:rejected",{name:e&&e.name,reload:1}));return}
+    if(NAR.soft){let q;if(a.paused){try{q=a.play()}catch(e){}}NAR.listening=true;softResume("ms:play");Promise.resolve(q).then(ok).catch(()=>{});return}
     let p;try{p=a.play()}catch(e){p=Promise.reject(e)} // play() first, synchronously, before anything else (iOS only honors it inside the handler)
     NAR.listening=true;const t=a.currentTime;dlog("ms:play:called",{rs:a.readyState,src:audTail(a.src)});
     Promise.resolve(p).then(()=>{dlog("ms:play:ok");ok()}).catch(e=>{dlog("ms:play:rejected",{name:e&&e.name,msg:String(e&&e.message||"").slice(0,80)});
@@ -1410,6 +1417,9 @@ function narMsState(){if(!("mediaSession" in navigator))return;const a=NAR.audio
   try{if(navigator.mediaSession.setPositionState&&a.duration&&isFinite(a.duration))navigator.mediaSession.setPositionState({duration:a.duration,playbackRate:a.playbackRate||1,position:Math.min(a.duration,Math.max(0,sp?sp.t:(a.currentTime||0)))})}catch(e){}}
 let msAt=0;["play","pause","loadedmetadata","seeked","ratechange","ended"].forEach(ev=>NAR.audio.addEventListener(ev,narMsState));NAR.audio.addEventListener("timeupdate",()=>{if(Date.now()-msAt>5000){msAt=Date.now();narMsState()}});
 NAR.audio.addEventListener("play",narMedia);
+NAR.hidPause=null; // where and when the audio was paused while the app was hidden (lock screen, headphones, car)
+NAR.audio.addEventListener("pause",()=>{NAR.hidPause=document.hidden?{t:NAR.audio.currentTime||0,at:Date.now()}:null});
+NAR.audio.addEventListener("playing",()=>{NAR.hidPause=null});document.addEventListener("visibilitychange",()=>{if(!document.hidden)NAR.hidPause=null});
 if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("/sw.js").catch(()=>{});
 
 
