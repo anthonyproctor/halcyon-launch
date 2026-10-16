@@ -112,7 +112,8 @@
    "Laura": {"voice": "Aoede", "style": "General American accent. A woman in her early forties. Tired but civil."},
    "Priyanka": {"voice": "Erinome", "style": "London accent. A woman in her late thirties on a work call. Brisk, exact, not unkind.", "gender": "f"},
    "man": {"voice": "Schedar", "style": "General American accent, natural and conversational."},
-   "woman": {"voice": "Callirrhoe", "style": "General American accent, natural and conversational."}
+   "woman": {"voice": "Callirrhoe", "style": "General American accent, natural and conversational."},
+   "Kade": {"voice": "en-us-advisor-6", "style": "A man's voice. Warm, easy, charming.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88}
   },
   "cphims": {
      "narrator": {"voice": "Sulafat", "style": "General American accent. Warm, steady audiobook narrator. Unhurried, clear, quietly engaged."},
@@ -137,22 +138,35 @@
      "Henry": {"voice": "en-gb-tutor-9", "style": "Dry, precise, tired, understated.", "run": true, "gender": "m"}
   },
   "asep": {
-   "Wes": {"voice": "en-us-tutor-16", "style": "General American accent. A brilliant chief engineer of fifty-eight who trusts his gut. Gruff, confident."},
-   "Amara": {"voice": "Gacrux", "style": "General American accent. A program manager of forty-four, former Air Force acquisition officer. Brisk, schedule-minded."},
-   "Tiago": {"voice": "Umbriel", "style": "General American accent. An integration and test lead of thirty-nine. Calm, friendly."},
-   "Pavel": {"voice": "Sadachbia", "style": "Light Czech accent. A supplier account lead. Proud, overcommitted."},
-   "Jun": {"voice": "Zubenelgenubi", "style": "General American accent. A junior systems engineer of twenty-four. Quick, earnest."},
-   "Tess": {"voice": "Zephyr", "style": "General American accent, bright."},
-   "Frank": {"voice": "Orus", "style": "General American accent, gruff."},
+   "Wes": {"voice": "en-us-csagent-12", "style": "A man's voice. Gruff, confident, quick.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Amara": {"voice": "en-us-advisor-11", "style": "A woman's voice. Brisk, direct, practical.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Tiago": {"voice": "en-us-techagent-3", "style": "A man's voice. Calm, friendly, plainspoken.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Pavel": {"voice": "Sadachbia", "style": "A man's voice. Proud, warm, a little harried.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Jun": {"voice": "Zubenelgenubi", "style": "A man's voice. Quick, earnest, eager.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Tess": {"voice": "en-us-tutor-13", "style": "A woman's voice. Calm, warm, steady.", "run": true, "gender": "f"},
+   "Frank": {"voice": "Enceladus", "style": "A man's voice. Quiet, dry, plainspoken.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Colleen": {"voice": "Kore", "style": "A woman's voice. Dry, kind, exact, unhurried.", "run": true, "gender": "f"},
-   "Beto": {"voice": "Algieba", "style": "General American accent. Easygoing, warm.", "gender": "m"}
+   "Beto": {"voice": "en-us-cruz", "style": "A man's voice. Easygoing, teasing, warm.", "run": true, "gender": "m"},
+   "narrator": {"voice": "en-us-podcaster-4", "style": "General American accent. Warm, steady audiobook narrator. Unhurried, clear, quietly engaged."},
+   "man": {"voice": "Schedar", "style": "A man's voice. Natural and conversational.", "run": true, "gender": "m"},
+   "woman": {"voice": "Callirrhoe", "style": "A woman's voice. Natural and conversational.", "run": true, "gender": "f"},
+   "Helen": {"voice": "en-us-podcaster-3", "style": "A woman's voice. Calm, warm, direct.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Odette": {"voice": "en-us-tutor-21", "style": "A woman's voice. Quiet, exact, unhurried.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Callie": {"voice": "en-us-assistant-8", "style": "A woman's voice. Warm, quick, teasing.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88}
   },
   "gh300": {
    "Elena": {"voice": "Callirrhoe", "style": "General American accent. A CEO, confident and friendly."},
    "Lena": {"voice": "Gacrux", "style": "General American accent. A CTO sponsoring the rollout. Composed, decisive."},
    "Renata": {"voice": "Leda", "style": "General American accent. A junior engineer in her first month. Curious, eager, asks the question everyone else won't."},
    "Asha": {"voice": "Kore", "style": "An older woman, a retired ER charge nurse. Calm, warm, direct.", "run": true, "gender": "f"},
-   "Anders": {"voice": "Fenrir", "style": "General American accent, a skeptical, sardonic senior engineer.", "gender": "m"}
+   "Anders": {"voice": "Fenrir", "style": "General American accent, a skeptical, sardonic senior engineer.", "gender": "m"},
+   "Raj": {"voice": "en-us-storyteller-12", "style": "A man's voice. Warm, dry, plainspoken.", "run": true, "gender": "m"}
+  },
+  "lsat": {
+   "narrator": {"voice": "en-us-techagent-7", "style": "General American accent. Warm, steady audiobook narrator. Close, unhurried, clear."},
+   "man": {"voice": "Schedar", "style": "A man's voice. Natural and conversational.", "run": true, "gender": "m"},
+   "woman": {"voice": "Callirrhoe", "style": "A woman's voice. Natural and conversational.", "run": true, "gender": "f"},
+   "Joel": {"voice": "Orus", "style": "A man's voice. Even, kind, plainspoken.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88}
   }
  }
 }

@@ -196,6 +196,6 @@ test("PMP and CISA results also point to chapters: PMP from its chapters' task t
   const c = page.locator("#page ul.reread li");
   await expect(c).toHaveCount(1);
   await expect(c).toContainText("Acquisition and Implementation, 0 percent");
-  await expect(c).toContainText("coming in chapter 5");
+  await expect(c).toContainText("Reread chapter 5, The Build");
   await expect(c).toContainText("coming in chapter 6");
 });
