@@ -573,7 +573,7 @@
         `Pay the claim in full so the contract can be closed without further delay`,
         `Withhold the final payment until the vendor drops the claim completely`,
         `Resolve the claim through negotiation or the contract's dispute process`],
-  a:3, why:`Open claims must be settled before a contract is closed, preferably through negotiation, otherwise through the dispute resolution defined in the contract.`,
+  a:3, why:`Claims should be settled before the contract is closed, preferably through negotiation, otherwise through the dispute resolution process the contract defines. Closing first or paying in full just to close skips that process, and withholding payment to force a dropped claim is bad faith.`,
   task:`R10`, domain:`Process`, approach:`predictive` },
 
 { q:`An agile team is about to hand a released product to an operations team that will support it. What best ensures a smooth transition?`,

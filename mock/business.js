@@ -137,11 +137,11 @@
   task:`B3`, domain:`Business Environment`, approach:`hybrid` },
 
 { q:`Stakeholders complain that the change control process takes six weeks and is slowing the project down. What should the project manager do?`,
-  opts:[`Stop using change control for all changes under a set dollar amount`,
+  opts:[`Let the team skip change control whenever a change feels urgent`,
         `Review the process with stakeholders and tailor it to fit the project`,
         `Ask stakeholders to submit all changes before the project starts`,
         `Explain that the process is fixed and cannot be changed mid-project`],
-  a:1, why:`Processes should be tailored to the project. The PM reviews the change process with stakeholders and adjusts it, for example by adding tiered approvals for small changes, while keeping control. Dropping it entirely or refusing to change it are both poor answers.`,
+  a:1, why:`Processes should be tailored to the project. The PM reviews the change process with stakeholders and adjusts it, for example by adding tiered approvals for small changes, while keeping control. Skipping control when things feel urgent or refusing to change the process are both poor answers.`,
   task:`B3`, domain:`Business Environment`, approach:`hybrid` },
 
 { q:`During a daily standup, a developer says she has been waiting four days for access to a test environment. What should the project manager do?`,
