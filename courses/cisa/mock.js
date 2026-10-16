@@ -744,11 +744,11 @@ C.mock.push({ part:`Operations and Resilience`, questions:[
   task:`4A8`, domain:`Operations and Resilience` },
 
 { q:`A critical security patch is released for a server platform the company runs everywhere. What should the company do FIRST?`,
-  opts:[`Install it at once on internet facing servers, then the rest`,
+  opts:[`Install it untested on every server at once, starting today`,
         `Wait for the next scheduled quarterly maintenance window`,
         `Confirm it applies and test it before wide rollout`,
         `Apply the vendor's workaround and defer the patch`],
-  a:2, why:`Even urgent patches should be checked for relevance and tested, often on a fast track, because a bad patch can cause its own outage. Rushing it onto internet facing servers untested can cause the outage on the very systems that matter most, and deferring the patch for a workaround or a quarterly window leaves a known weakness open.`,
+  a:2, why:`Even urgent patches should be checked for relevance and tested, often on a fast track, because a bad patch can cause its own outage. Installing it untested everywhere can cause the outage on the very systems that matter most, and deferring the patch for a workaround or a quarterly window leaves a known weakness open.`,
   task:`4A8`, domain:`Operations and Resilience` },
 
 { q:`An IS auditor finds that change requests rarely list the systems a change will affect, and the configuration management database is out of date. What is the GREATEST risk?`,
