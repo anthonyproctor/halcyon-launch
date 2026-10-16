@@ -145,14 +145,15 @@
    "Jun": {"voice": "Zubenelgenubi", "style": "A man's voice. Quick, earnest, eager.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Tess": {"voice": "en-us-tutor-13", "style": "A woman's voice. Calm, warm, steady.", "run": true, "gender": "f"},
    "Frank": {"voice": "Enceladus", "style": "A man's voice. Quiet, dry, plainspoken.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
-   "Colleen": {"voice": "Kore", "style": "A woman's voice. Dry, kind, exact, unhurried.", "run": true, "gender": "f"},
+   "Colleen": {"voice": "en-us-advisor-3", "style": "A woman's voice. Dry, kind, exact, unhurried.", "gender": "f", "f0_low": 110, "f0_char_low": 125, "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
    "Beto": {"voice": "en-us-cruz", "style": "A man's voice. Easygoing, teasing, warm.", "run": true, "gender": "m"},
    "narrator": {"voice": "en-us-podcaster-4", "style": "General American accent. Warm, steady audiobook narrator. Unhurried, clear, quietly engaged."},
    "man": {"voice": "Schedar", "style": "A man's voice. Natural and conversational.", "run": true, "gender": "m"},
    "woman": {"voice": "Callirrhoe", "style": "A woman's voice. Natural and conversational.", "run": true, "gender": "f"},
    "Helen": {"voice": "en-us-podcaster-3", "style": "A woman's voice. Calm, warm, direct.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Odette": {"voice": "en-us-tutor-21", "style": "A woman's voice. Quiet, exact, unhurried.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
-   "Callie": {"voice": "en-us-assistant-8", "style": "A woman's voice. Warm, quick, teasing.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88}
+   "Callie": {"voice": "en-us-assistant-8", "style": "A woman's voice. Warm, quick, teasing.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Nadia": {"voice": "en-us-sola", "style": "A woman's voice. Sharp, careful, plainspoken.", "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88, "run": true}
   },
   "gh300": {
    "Elena": {"voice": "Callirrhoe", "style": "General American accent. A CEO, confident and friendly."},
@@ -166,7 +167,11 @@
    "narrator": {"voice": "en-us-techagent-7", "style": "General American accent. Warm, steady audiobook narrator. Close, unhurried, clear."},
    "man": {"voice": "Schedar", "style": "A man's voice. Natural and conversational.", "run": true, "gender": "m"},
    "woman": {"voice": "Callirrhoe", "style": "A woman's voice. Natural and conversational.", "run": true, "gender": "f"},
-   "Joel": {"voice": "Orus", "style": "A man's voice. Even, kind, plainspoken.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88}
+   "Joel": {"voice": "Orus", "style": "A man's voice. Even, kind, plainspoken.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Dani": {"voice": "en-us-nyla", "style": "A woman's voice. Precise, warm, a little dry.", "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
+   "Luis": {"voice": "en-us-podcaster-1", "style": "A man's voice. Warm, proud, gently funny.", "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
+   "Teo": {"voice": "Umbriel", "style": "A man's voice. Quiet, guarded, plain.", "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
+   "Ana": {"voice": "en-us-tutor-14", "style": "A woman's voice. Gruff, exact, drily funny.", "gender": "f", "f0_low": 115, "f0_char_low": 130, "sim_min": 0.92, "tone_sim_min": 0.88, "run": true}
   }
  }
 }
