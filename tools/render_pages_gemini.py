@@ -261,8 +261,15 @@ def whisper(paths):
     for i in range(0, len(paths), 24):
         chunk = paths[i:i + 24]; args = ["whisper-cli", "-m", WHISPER_MODEL, "-ml", "1", "-sow", "-np", "-t", "8"]
         args += ["-ojf", "-dtw", os.path.basename(WHISPER_MODEL)[5:-4], "-nfa"] if dtw else ["-oj"]
-        for p in chunk: args += ["-f", p]
-        subprocess.run(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        try:
+            subprocess.run(args + [x for p in chunk for x in ("-f", p)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        except subprocess.CalledProcessError:
+            # 2026-10-16: whisper.cpp aborted (SIGABRT) on a batch in PMP ch8 while every file in it transcribed fine alone.
+            # Retry one file at a time; a file that still crashes gets an empty transcript, which fails coverage and is re-rolled.
+            for p in chunk:
+                try: subprocess.run(args + ["-f", p], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+                except subprocess.CalledProcessError:
+                    json.dump({"transcription": []}, open(p + ".json", "w")); print(f"whisper crashed on {os.path.basename(p)}; treated as unheard", file=sys.stderr)
         for p in chunk:
             d = json.load(open(p + ".json")); ws = []
             if dtw:
