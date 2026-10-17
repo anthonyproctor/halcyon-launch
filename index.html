@@ -536,6 +536,21 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
 .wwho{list-style:none;margin:0;padding:0;display:grid;gap:10px}.wwho li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;align-items:start}
 .wwho b{display:block;font-size:15px}.wwl{display:block;font-size:14px;line-height:1.4;color:var(--muted)}
 @media print{.rback,.recap,.rcatch,.rnote,.wherebtn,.wherecard,.wpanel,.wback{display:none!important}}
+/* field guide (prototype 2026-10-17): #<course>/guide, its entry pages, the sheet a linked word opens, and the link itself. The pictures carry
+   their own dark ground, like the chapter art, so they read the same in light and dark. */
+.fggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:14px}
+.fgcard{display:grid;grid-template-rows:auto 1fr;text-align:left;font:inherit;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:10px;padding:0;overflow:hidden;cursor:pointer;min-width:0}
+.fgcard:hover:not(:disabled){border-color:var(--accent)}.fgcard:disabled{cursor:default}.fgcard:disabled .fgtext b{color:var(--muted)}
+.fgthumb{display:block;aspect-ratio:3/2;background:#16303f;overflow:hidden}.fgthumb svg{display:block;width:100%;height:100%}
+.fglocked{grid-template-rows:auto;align-self:start;background:var(--soft);border-style:dashed}
+.fgtext{display:grid;gap:2px;padding:10px 12px 12px}.fgtext b{font-family:var(--story);font-size:19px;font-weight:600;line-height:1.25}.fgtext .prog{font-size:13px}
+.fgfig{margin:10px 0 18px;border-radius:10px;overflow:hidden;background:#16303f;max-width:600px}.fgfig svg{display:block;width:100%;height:auto}
+@media (max-width:520px){.page>.fgfig{margin-inline:calc(-1 * clamp(18px,4vw,44px));border-radius:0}}
+.fgch{font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+.fgsheet .fgfig{margin:8px 0 12px}.fgwhat{margin:0 0 6px;font-family:var(--story);font-size:17px;line-height:1.5}
+.fgsheet .story{font-size:17px;line-height:1.5}.fgsheet .story p{margin:0 0 8px}.fgsheet .bar{margin-top:12px}
+.fglink{color:inherit;text-decoration:underline dotted var(--accent);text-decoration-thickness:2px;text-underline-offset:3px;cursor:pointer}
+.fglink:hover,.fglink:focus-visible{color:var(--accent)}.fglink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
 /* bookmarks and notes (2026-10-12): a small toggle at the end of the Contents row and in the Audiobook text header, a one line row under it, My notes */
 .bmbtn{flex:0 0 auto;display:inline-grid;place-items:center;width:32px;height:32px;margin:0 0 0 auto;padding:0;background:transparent;color:var(--accent);border:1px solid var(--line);border-radius:7px;cursor:pointer}
 .bmbtn svg path{fill:none}.bmbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}.bmbtn[aria-pressed="true"] svg path{fill:currentColor}
@@ -564,7 +579,7 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
 </head>
 <body>
 <header class="tophead"><nav class="topnav" id="usercard" hidden aria-label="Main">
-  <div class="navl"><button class="navbtn" id="liblink" type="button">Library</button><button class="navbtn" id="homelink" type="button">Home</button><button class="navbtn" id="proglink" type="button">Progress</button><button class="navbtn" id="listenlink" type="button" data-tip="Plays chapter after chapter with no tapping, even with your phone locked. Good for the car or the gym.">Audiobook</button><button class="navbtn" id="castlink" type="button">Cast</button><button class="navbtn" id="guidelink" type="button" data-tip="How listening, the Audiobook, Focus mode and Ambience work, plus installing on your phone.">Guide</button><button class="navbtn cont" id="contlink" type="button" hidden></button></div>
+  <div class="navl"><button class="navbtn" id="liblink" type="button">Library</button><button class="navbtn" id="homelink" type="button">Home</button><button class="navbtn" id="proglink" type="button">Progress</button><button class="navbtn" id="listenlink" type="button" data-tip="Plays chapter after chapter with no tapping, even with your phone locked. Good for the car or the gym.">Audiobook</button><button class="navbtn" id="castlink" type="button">Cast</button><button class="navbtn" id="fguidelink" type="button" hidden>Field guide</button><button class="navbtn" id="guidelink" type="button" data-tip="How listening, the Audiobook, Focus mode and Ambience work, plus installing on your phone.">Guide</button><button class="navbtn cont" id="contlink" type="button" hidden></button></div>
   <div class="navr"><label class="chk prog storyt" for="ambtoggle" data-tip="Quiet background sound that matches each scene, like a busy office or a data center hum. Use the slider for volume."><input type="checkbox" id="ambtoggle"> Ambience</label><input type="range" id="ambvol" min="0.05" max="1" step="0.05" aria-label="Ambience volume" class="ambvol"><label class="chk prog storyt" for="storytoggle" data-tip="Hide scores, lessons at the end. Reads like a novel and you still make every decision. Follows you to every device."><input type="checkbox" id="storytoggle"> Focus mode</label><button class="navbtn mebtn" id="username" type="button"></button><a id="adminlink" class="navbtn" href="/admin" hidden>Admin</a><button class="navbtn" id="signout" type="button">Sign out</button></div>
 </nav></header>
 <div class="wrap">
