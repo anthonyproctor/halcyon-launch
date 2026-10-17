@@ -20,8 +20,8 @@ test("renders the headline, the six books (four with clips, The Appeal and Heart
   await expect(page.locator(".book[data-book=asep] h3")).toHaveText("Hearth");
   await expect(page.locator(".book[data-book=asep] .hero-name")).toHaveText("You play Nadia Brooks");
   await expect(page.locator(".book[data-book=asep] .play")).toHaveCount(0);
-  await expect(page.locator(".book[data-book=asep] .meta")).toHaveText("10 of 12 chapters out");
-  await expect(page.locator(".book[data-book=asep] .src")).toHaveText("New. The first 10 chapters are ready to read; the audiobook comes next.");
+  await expect(page.locator(".book[data-book=asep] .meta")).toHaveText("11 of 12 chapters out");
+  await expect(page.locator(".book[data-book=asep] .src")).toHaveText("New. The first 11 chapters are ready to read; the audiobook comes next.");
   await expect(page.locator("#book option[value=asep]")).toHaveText("Hearth (ASEP)");
   for (const id of BOOKS) {
     const card = page.locator(`.book[data-book="${id}"]`);
