@@ -147,7 +147,7 @@ test("library hides listed:false books; Coming next and direct links keep them",
   // a listed book in production stays on the shelf too
   const hearth = page.locator("#page .upshelf", { hasText: "Hearth" });
   await expect(hearth).toContainText("In production");
-  await expect(hearth).toContainText("8 chapters out, 4 more coming");
+  await expect(hearth).toContainText("9 chapters out, 3 more coming");
   // a direct link to a hidden book still opens it
   await page.goto("/#gh300/full/1");
   await expect(page.locator("#page .chmap")).toBeVisible();
