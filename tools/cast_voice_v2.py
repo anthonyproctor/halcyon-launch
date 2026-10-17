@@ -1,4 +1,5 @@
-"""Render a short voice sample for each cast member of The Halcyon Launch v2 (the PMP book) -> cast/v2/voice/<id>.mp3.
+"""SUPERSEDED 2026-10-12 by tools/cast_samples.py (lines in the voice folder's samples.json); kept for history, don't run.
+Render a short voice sample for each cast member of The Halcyon Launch v2 (the PMP book) -> cast/v2/voice/<id>.mp3.
 Same output format as the other books' cast samples (24 kHz mono, MP3 80k). Voices and delivery come from the PMP
 casting in tools/gemini_voices.json (courses.pmp, then default), the same lookup the narration uses, so a reader hears
 the voice they'll hear in the chapters. Each sample is a line the character says in the book, picked to avoid

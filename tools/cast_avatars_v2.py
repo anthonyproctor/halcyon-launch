@@ -97,6 +97,9 @@ def extras(ex, sk):
     if "flightsuit" in ex:  # navy flight suit: zip, name tape, the Halcyon patch
         add('<path d="M100 152v48" stroke="#c9ccd1" stroke-width="2"/><path d="M84 150l16 6 16-6-4 8-12 4-12-4z" fill="#000" opacity=".2"/><rect x="66" y="170" width="24" height="7" rx="1" fill="#d9dde3" opacity=".85"/>'
             '<circle cx="124" cy="176" r="9" fill="#f3f1ec"/><circle cx="124" cy="176" r="7" fill="#1f3a5f"/><path d="M118 179q6-9 12 0" stroke="#e0b25c" stroke-width="2" fill="none"/><circle cx="127" cy="172" r="1.6" fill="#c4532f"/>')
+    if "oldsuit" in ex:  # a 2040s Air Force flight suit: zip, name tape, a plain squadron patch (no Halcyon patch, it's twenty years earlier)
+        add('<path d="M100 152v48" stroke="#c9ccd1" stroke-width="2"/><path d="M84 150l16 6 16-6-4 8-12 4-12-4z" fill="#000" opacity=".2"/><rect x="66" y="170" width="24" height="7" rx="1" fill="#d9dde3" opacity=".85"/>'
+            '<path d="M116 168h18v14q-9 8-18 0z" fill="#2a2a2a" stroke="#c9a35a" stroke-width="1.5"/><path d="M121 176l4-4 4 4" stroke="#c9a35a" stroke-width="1.5" fill="none"/>')
     if "medpatch" in ex:
         add('<rect x="117" y="188" width="14" height="10" rx="1" fill="#f3f1ec"/><path d="M124 189v8M120 193h8" stroke="#c0473b" stroke-width="2.5"/>')
     if "rolled" in ex:  # sleeves rolled to the elbow, the cuff at each shoulder edge
@@ -212,7 +215,7 @@ C = {
  "anjali": ("warmbrown", "pulledback", "dark", "#1f2f4f", ["flightsuit", "medpatch", "graystreak"]),
  "lorna": ("deep", "closecrop", "gray", "#2a3a5a", ["glasses_rimless", "smalllogo", "coffees"]),
  "esther": ("fair", "short", "darkgray", "#22252f", ["glasses_half", "cord", "blazer", "collar", "rangepin"]),
- "leo": ("olive", "short", "dark", "#4a5a3a", ["photo", "doccap", "flightsuit", "rolled", "grin"]),
+ "leo": ("olive", "short", "dark", "#4a5a3a", ["photo", "doccap", "oldsuit", "rolled", "grin"]),
 }
 
 if __name__ == "__main__":
