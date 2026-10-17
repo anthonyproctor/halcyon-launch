@@ -8,16 +8,16 @@ async function open(page, route) { await page.goto("about:blank"); await page.go
 const guide = page => page.evaluate(() => window.HALCYON_GUIDE.pmp.map(e => ({ id: e.id, title: e.title, what: e.what, levels: e.levels })));
 const noSideScroll = page => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 
-test("the guide page lists all three entries, linked from the nav next to Cast", async ({ page }) => {
+test("the guide page lists all three entries, linked from the nav's World page", async ({ page }) => {
   await page.goto("/#pmp/home");
   await seed(page, { c202: fresh() }); // chapter 2 started: every entry has a level open
   await open(page, "/#pmp/home");
-  const nav = page.locator("#fguidelink");
+  const nav = page.locator("#worldlink");
   await expect(nav).toBeVisible();
-  expect(await page.locator("#castlink + #fguidelink").count()).toBe(1);
   await nav.click();
+  await page.getByRole("tab", { name: "Places and things" }).click();
   await expect(page).toHaveURL(/#pmp\/guide$/);
-  await expect(page.locator("#page h1")).toHaveText("Field guide");
+  await expect(page.getByRole("tab", { name: "Places and things" })).toHaveAttribute("aria-selected", "true");
   const G = await guide(page);
   expect(G.map(e => e.id)).toEqual(["breather", "campus", "stand"]);
   const cards = page.locator("#fggrid .fgcard");

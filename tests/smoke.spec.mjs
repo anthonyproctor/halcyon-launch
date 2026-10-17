@@ -102,7 +102,7 @@ for (const c of COURSES) {
       await noSideScroll(page, `labs, chapter ${labCh}`);
     }
 
-    // Audiobook, Guide, Coming next
+    // Audiobook, Help, Coming next
     await page.locator("#listenlink").click();
     await expect(page.locator("#page h1")).toHaveText("Audiobook");
     await noSideScroll(page, "audiobook");

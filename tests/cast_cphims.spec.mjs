@@ -6,7 +6,8 @@ const open = async (page, hash) => { await page.goto("/" + hash); await page.rel
 
 test("cast grid: 17 cards, later characters wait for their chapter", async ({ page }) => {
   await open(page, "#cphims/cast");
-  await expect(page.locator("#page h1")).toHaveText("Cast");
+  await expect(page.locator("#page h1")).toHaveText("World"); // the cast page is World's People tab; CPHIMS has no field guide, so no tab bar
+  await expect(page.locator("#page [role=tab]")).toHaveCount(0);
   const cards = page.locator("#page .castcard");
   await expect(cards).toHaveCount(17);
   await expect(page.locator('#page .castcard[data-c="maria"]')).toBeEnabled();

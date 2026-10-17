@@ -756,7 +756,7 @@ function renderDash(){setTimeout(ambSync,0);setTimeout(navSync,0);
      has a jump link (opens the page, or plays the Audiobook from the saved time), its note (edited in place), a review switch, and Delete
      with an in-page Undo. Export downloads Markdown or plain text, built in the browser.
    - links to My notes only once the reader has a bookmark: a one line card in the rail (#notescard), a line under the study plan on
-     Progress, and a button in the Guide's "Bookmarks and notes" entry (the entry itself always shows).
+     Progress, and a button in the Help page's "Bookmarks and notes" entry (the entry itself always shows).
    - "Review this" bookmarks of the open book join the study plan as review items (after the plan's own items, at most 3), with an Open
      button back to the page; clearing the switch drops them.
    Saved state: one small record per course at base+907, through store (the test profile keeps its own, frozen pages write nothing) and
@@ -1229,7 +1229,7 @@ function narSavePos(now){const a=NAR.audio,ct=NAR.soft?NAR.soft.t:a.currentTime;
   if(NAR.page==="book"&&NAR.book)lput({book:{ed:NAR.book.ed,n:NAR.book.n,t,dur,at:Date.now()}},now);
   else if(NAR.page&&NAR.key&&NAR.page!=="car")lput({page:{key:NAR.key,pid:NAR.page,t,at:Date.now()}},now);}
 function narTick(){if(Date.now()-lsaveAt>5000){lsaveAt=Date.now();narSavePos(false)}}
-/* player diagnostics (Guide page toggle): logs what the audio element does, for debugging on phones */
+/* player diagnostics (Help page toggle): logs what the audio element does, for debugging on phones */
 const PDBG={on:store.get("pdbg",false),lines:[]};
 function plog(m){if(!PDBG.on)return;const a=NAR.audio;const s=`${new Date().toISOString().slice(14,23)} ${m} | t=${(a.currentTime||0).toFixed(1)} rs=${a.readyState} ns=${a.networkState} p=${a.paused?1:0} sk=${a.seekable&&a.seekable.length?a.seekable.end(0).toFixed(0):"-"}`;PDBG.lines.push(s);PDBG.lines=PDBG.lines.slice(-40);let el=$("pdbg");if(!el){el=document.createElement("pre");el.id="pdbg";el.style.cssText="position:fixed;top:0;left:0;right:0;max-height:25vh;overflow:auto;z-index:99;margin:0;padding:calc(6px + env(safe-area-inset-top)) 6px 6px;font:10px/1.3 monospace;background:rgba(0,0,0,.85);color:#9f9;white-space:pre-wrap;cursor:pointer";el.title="Tap to turn player diagnostics off";el.onclick=()=>{PDBG.on=false;store.set("pdbg",false);el.remove();const t=$("pdbgt");if(t)t.checked=false};document.body.appendChild(el)}el.textContent="Player diagnostics. Tap here to turn them off.\n"+PDBG.lines.join("\n");el.scrollTop=1e9}
 ["loadstart","loadedmetadata","loadeddata","canplay","canplaythrough","play","playing","pause","waiting","stalled","suspend","seeking","seeked","ended","error","abort","emptied"].forEach(ev=>NAR.audio.addEventListener(ev,()=>plog(ev+(ev==="error"&&NAR.audio.error?" code="+NAR.audio.error.code:""))));
@@ -1453,15 +1453,26 @@ function imgOf(stem){const c=[".jpg",".svg"].map(x=>R(V2(stem+x)));if(!ASSETS)re
 function imgTag(stem,attrs,gone){const f=imgOf(stem);if(!f)return "";return `<img src="${f.src}" ${attrs} onerror="${f.alt?`if(!this.dataset.f){this.dataset.f=1;this.src='${f.alt}'}else `:""}${gone}">`}
 function avatar(c,size){const ini=c.name.split(" ").map(w=>w[0]).slice(0,2).join("");let h=0;for(const ch of c.id)h=(h*31+ch.charCodeAt(0))>>>0;const hue=h%360;
   return `<span class="av" style="width:${size}px;height:${size}px;--avh:${hue}">${imgTag("cast/"+c.id,'alt="" loading="lazy"',"this.remove()")}<span>${esc(ini)}</span></span>`}
+/* World page (nav button #worldlink): the People tab is the cast page (#<course>/cast) and Places and things is the field guide
+   (#<course>/guide, #<course>/guide/<id>). The tab bar shows only when the book has a field guide (fgList()); otherwise World is just People.
+   Each tab is its own route, so chapter links, the sheet's full page button and old #<course>/cast links land on the right tab. */
+function worldHead(tab){const k=`<div class="kicker">${esc(COURSE.full_title||COURSE.title)}</div><h1>World</h1>`;if(!fgList().length)return k;
+  const t=(id,label)=>`<button class="wtab" type="button" role="tab" id="wtab-${id}" data-wtab="${id}" aria-selected="${tab===id}" aria-controls="wpanel" tabindex="${tab===id?0:-1}">${label}</button>`;
+  return k+`<div class="wtabs" role="tablist" aria-label="World">${t("people","People")}${t("places","Places and things")}</div>`}
+function worldPanel(tab,html){return fgList().length?`<div id="wpanel" role="tabpanel" aria-labelledby="wtab-${tab}">${html}</div>`:html}
+function worldWire(){const tabs=[...$("page").querySelectorAll("[data-wtab]")];if(!tabs.length)return;
+  const go=(id,focus)=>{if(id==="people")renderCast();else renderFieldGuide();if(focus){const b=$("wtab-"+id);if(b)b.focus()}};
+  tabs.forEach((b,i)=>{b.onclick=()=>{if(b.getAttribute("aria-selected")!=="true")go(b.dataset.wtab,true)};
+    b.onkeydown=ev=>{const j=ev.key==="ArrowRight"?(i+1)%tabs.length:ev.key==="ArrowLeft"?(i-1+tabs.length)%tabs.length:ev.key==="Home"?0:ev.key==="End"?tabs.length-1:-1;if(j<0)return;ev.preventDefault();go(tabs[j].dataset.wtab,true)}})}
 function renderCast(id){setTimeout(ambSync,0);setTimeout(navSync,0);
   TRACK="cast";$("railgame").hidden=true;$("mockcard").hidden=true;const L=castList();const reach=store.get("spoilers",false)?99:storyReach();
-  if(!L.length){$("page").innerHTML=`<h1>Cast</h1><p class="prog">The cast guide is on its way.</p>`;return}
-  if(!id){$("page").innerHTML=`<div class="kicker">${esc(COURSE.full_title||COURSE.title)}</div><h1>Cast</h1><div class="story"><p>Profiles fill in as you play the Full Course, so nothing gets spoiled. You've finished ${reach>=99?"everything (spoilers on)":reach?`chapter ${reach}`:"no chapters yet"}.</p></div>
+  if(!L.length){$("page").innerHTML=worldHead("people")+worldPanel("people",`<p class="prog">Profiles of the people are on their way.</p>`);worldWire();return}
+  if(!id){$("page").innerHTML=worldHead("people")+worldPanel("people",`<div class="story"><p>Profiles fill in as you play the Full Course, so nothing gets spoiled. You've finished ${reach>=99?"everything (spoilers on)":reach?`chapter ${reach}`:"no chapters yet"}.</p></div>
     <div class="castgrid">${L.map(c=>{const seen=c.firstChapter<=Math.max(1,reach+1);return `<button class="castcard" type="button" data-c="${c.id}" ${seen?"":"disabled"}>${avatar(c,64)}<span><b>${seen?esc(c.name):"Not met yet"}</b><span class="prog">${seen?esc(c.role):`Appears in chapter ${c.firstChapter}`}</span></span></button>`}).join("")}</div>
-    <label class="chk prog" style="margin-top:16px"><input type="checkbox" id="spoil" ${store.get("spoilers",false)?"checked":""}> Show everything, including spoilers</label>`;
+    <label class="chk prog" style="margin-top:16px"><input type="checkbox" id="spoil" ${store.get("spoilers",false)?"checked":""}> Show everything, including spoilers</label>`);worldWire();
     $("page").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{renderCast(b.dataset.c);top()});$("spoil").onchange=e=>{store.set("spoilers",e.target.checked);renderCast()};return}
   const c=L.find(x=>x.id===id);const byId={};L.forEach(x=>byId[x.id]=x);
-  $("page").innerHTML=`<div class="kicker"><button class="linkbtn" id="castback" type="button">Cast</button> · ${esc(c.role)}</div><div class="casthead">${avatar(c,112)}<div><h1>${esc(c.name)}</h1><p class="prog">First appears in chapter ${c.firstChapter}</p>${c.intro?`<button class="btn small" id="hear" type="button">▶ Hear ${esc(c.name.split(" ")[0])}</button>`:""}</div></div>
+  $("page").innerHTML=`<div class="kicker"><button class="linkbtn" id="castback" type="button">People</button> · ${esc(c.role)}</div><div class="casthead">${avatar(c,112)}<div><h1>${esc(c.name)}</h1><p class="prog">First appears in chapter ${c.firstChapter}</p>${c.intro?`<button class="btn small" id="hear" type="button">▶ Hear ${esc(c.name.split(" ")[0])}</button>`:""}</div></div>
     ${c.quote&&c.quote.unlock<=reach+1?`<blockquote class="castquote">${c.quote.text}</blockquote>`:""}
     ${c.sections.map(sec=>sec.unlock<=Math.max(1,reach)||(sec.unlock===1)?`<section class="lesson"><h2>${esc(sec.title)}</h2>${paras(sec.body)}</section>`:`<section class="locked"><h2>${esc(sec.title)}</h2><p class="prog">Unlocks after chapter ${sec.unlock}.</p></section>`).join("")}
     ${(c.ties||[]).filter(t=>t.unlock<=Math.max(1,reach)).length?`<h2>Connections</h2><ul class="ties">${c.ties.filter(t=>t.unlock<=Math.max(1,reach)).map(t=>`<li><button class="linkbtn" data-c="${t.id}" type="button">${esc((byId[t.id]||{}).name||t.id)}</button>: ${esc(t.text)}</li>`).join("")}</ul>`:""}`;
@@ -1489,15 +1500,15 @@ function fgLevelsHTML(e,r){const by=new Map();fgLevels(e,r).forEach(l=>{if(!by.h
   return [...by].map(([n,t])=>`<h3 class="fgch">Chapter ${n}</h3><div class="story">${t.map(x=>`<p>${esc(x)}</p>`).join("")}</div>`).join("")}
 function renderFieldGuide(id){setTimeout(ambSync,0);setTimeout(navSync,0);fgClose(false);
   TRACK="fguide";$("railgame").hidden=true;$("mockcard").hidden=true;const L=fgList(),r=fgReach(),e=id?L.find(x=>x.id===id):null;FG.id=e?e.id:null;
-  if(!L.length){$("page").innerHTML=`<h1>Field guide</h1><p class="prog">This book doesn't have a field guide yet.</p>`;return}
+  if(!L.length){renderCast();return} // no field guide: World is just People
   if(!e){const done=store.get("spoilers",false)?"everything (spoilers on)":`chapter ${r}`;
-    $("page").innerHTML=`<div class="kicker">${esc(COURSE.full_title||COURSE.title)}</div><h1>Field guide</h1><div class="story"><p>Pictures of the places and machines the story keeps naming, to look at while you listen. Entries fill in as you read, so nothing gets spoiled. You've reached ${done}.</p></div>
+    $("page").innerHTML=worldHead("places")+worldPanel("places",`<div class="story"><p>Pictures of the places and machines the story keeps naming, to look at while you listen. Entries fill in as you read, so nothing gets spoiled. You've reached ${done}.</p></div>
     <div class="fggrid" id="fggrid">${L.map(x=>{const lv=fgLevels(x,r);return lv.length?`<button class="fgcard" type="button" data-fg="${esc(x.id)}"><span class="fgthumb" aria-hidden="true"${x.bg?` style="background:${esc(x.bg)}"`:""}>${fgSvg(x,r)}</span><span class="fgtext"><b>${esc(x.title)}</b><span class="prog">${esc(x.kicker||"")}</span></span></button>`
       :`<button class="fgcard fglocked" type="button" disabled data-fglocked="${esc(x.id)}"><span class="fgtext"><b>Not reached yet</b><span class="prog">Unlocks in chapter ${fgFirst(x)}</span></span></button>`}).join("")}</div>
-    <label class="chk prog" style="margin-top:16px"><input type="checkbox" id="spoil" ${store.get("spoilers",false)?"checked":""}> Show everything, including spoilers</label>`;
+    <label class="chk prog" style="margin-top:16px"><input type="checkbox" id="spoil" ${store.get("spoilers",false)?"checked":""}> Show everything, including spoilers</label>`);worldWire();
     $("page").querySelectorAll("[data-fg]").forEach(b=>b.onclick=()=>{renderFieldGuide(b.dataset.fg);top()});$("spoil").onchange=ev=>{store.set("spoilers",ev.target.checked);renderFieldGuide()};return}
   const lv=fgLevels(e,r),nx=e.levels.map(l=>l.from).filter(n=>n>r).sort((a,b)=>a-b)[0];
-  $("page").innerHTML=`<div class="kicker"><button class="linkbtn" id="fgback" type="button">Field guide</button>${lv.length&&e.kicker?` · ${esc(e.kicker)}`:""}</div>`+(lv.length
+  $("page").innerHTML=`<div class="kicker"><button class="linkbtn" id="fgback" type="button">Places and things</button>${lv.length&&e.kicker?` · ${esc(e.kicker)}`:""}</div>`+(lv.length
     ?`<h1>${esc(e.title)}</h1><figure class="fgfig">${fgSvg(e,r)}</figure><h2>What it is</h2><div class="story"><p>${esc(e.what)}</p></div><h2>So far in the story</h2>${fgLevelsHTML(e,r)}${nx?`<p class="prog">More unlocks in chapter ${nx}.</p>`:""}`
     :`<h1>Not reached yet</h1><p class="prog">Unlocks in chapter ${fgFirst(e)}.</p>`);
   $("fgback").onclick=()=>{renderFieldGuide();top()}}
@@ -1534,7 +1545,7 @@ function renderLabTest(){TRACK="labtest";$("railgame").hidden=true;$("mockcard")
   $("page").innerHTML=`<div class="kicker">Lab test page</div><h1>Lab fixtures</h1><p class="lead">Test data for lab kinds. Answers save on this device only.</p>${L.map(l=>`<section class="lab" id="lab-${esc(l.id)}"></section>`).join("")}`;
   L.forEach((l,k)=>HalcyonLab.mount($("lab-"+l.id),l,st[l.id]||(st[l.id]={q:{}}),{R:x=>x,paras,mentor:"Fixture",k,n:L.length,save:()=>store.set("labtest",st)}))}
 function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;
-  $("page").innerHTML=`<div class="kicker">Guide</div><h1>How to use it</h1><div class="story guide"><p>Two ways to take in each chapter: read it and play it yourself, or let it play like an audiobook. Your place is saved to your account, so you can stop on your desktop and pick up on your phone.</p>
+  $("page").innerHTML=`<div class="kicker">Help</div><h1>How to use it</h1><div class="story guide"><p>Two ways to take in each chapter: read it and play it yourself, or let it play like an audiobook. Your place is saved to your account, so you can stop on your desktop and pick up on your phone.</p>
   <h2>How the stories work</h2><dl>
    <dt>Choose your path</dt><dd>Every course is a novel with an exam hidden inside it. You play the lead. When a decision comes up, you pick what they do, and the story goes where you sent it. People react to your call, later scenes can change, and so can the way the chapter ends. Then your mentor tells you what the best answer was and why, the way the exam would see it.</dd>
    <dt>Your path and the best path</dt><dd>Reading, you get your own path, good calls and bad ones. The Audiobook plays the best path, the version where the lead gets every call right, and it always has the good ending.</dd>
@@ -1598,10 +1609,10 @@ async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filt
   const c=courseById(p[0]);if(!c||c.status!=="live")return false;if(c.id!==COURSE.id&&!(await useCourse(c.id)))return false;if(!c._loaded&&(c.scripts||c.labs))await useCourse(c.id);
   const v=p[1]||"home",n=+p[2];
   if((v==="full"||v==="ref")&&TRACKS[v].list().find(x=>x.num===n)){openChapter(v,n);return true}
-  if(v==="listen"){renderBook();return true}if(v==="notes"){renderNotes();return true}if(v==="about"){renderAbout();return true}if(v==="cast"){renderCast();return true}if(v==="guide"){renderFieldGuide(p[2]);return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
+  if(v==="listen"){renderBook();return true}if(v==="notes"){renderNotes();return true}if(v==="about"){renderAbout();return true}if(v==="cast"||v==="world"){renderCast();return true}if(v==="guide"){renderFieldGuide(p[2]);return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
   renderHome();renderRail();return true}
 window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
-function navSync(){noteRoute();setTimeout(bdgToastNext,0);try{bookBarSync()}catch(e){console.error(e)}bmRail();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"castlink",fguide:"fguidelink",book:"listenlink",guide:"guidelink",notes:"proglink",me:"username"};["liblink","homelink","proglink","castlink","fguidelink","listenlink","guidelink","username"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});{const fl=$("fguidelink");if(fl)fl.hidden=!fgList().length}
+function navSync(){noteRoute();setTimeout(bdgToastNext,0);try{bookBarSync()}catch(e){console.error(e)}bmRail();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"worldlink",fguide:"worldlink",book:"listenlink",guide:"guidelink",notes:"proglink",me:"username"};["liblink","homelink","proglink","worldlink","listenlink","guidelink","username"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
@@ -1821,7 +1832,7 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
    ${ref.length?`<h2>Refresher <span class="prog">${ref.length} chapters · a fast review</span></h2><div class="ctiles">${ref.map(c=>tile("ref",c)).join("")}</div>`:""}
    <h2>Practice exam</h2><div class="card mockhome">${!hasMock()?`<p id="mocksoon">${MOCK_SOON}</p>`:`<p>${COURSE.mockShort||"A full practice exam."} ${last?(multiForm()?`${esc(formLabel(last.f))}. `:"")+lastLine(last):"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the practice exam</button>`}</div>
    ${finalHomeHTML()}
-   <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the ${ALLT().length}-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>Cast</b><span class="prog">Meet everyone, hear them talk</span></button></div>`;
+   <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the ${ALLT().length}-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>World</b><span class="prog">The people, and the places they work</span></button></div>`;
   const pg=$("page");wireLabWait();wireFinalHome();
   $("resume").onclick=()=>lp?lp[1]():openChapter("full",1);
   $("hfree").onclick=async()=>{const B=await bookManifest();const lpv=store.get("lastplace."+COURSE.id,null);const ed=store.get("bookEd."+COURSE.id,"story");let n=lpv&&lpv.t==="full"?lpv.n:1;const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);if(!have.length)return renderBook();if(!have.includes(n))n=have.find(k=>k>=n)||have[have.length-1];renderBook();bookPlay(ed,n)};
@@ -1972,8 +1983,7 @@ async function boot(){
     el.style.setProperty("--tipl",Math.round(x-r.left-el.clientLeft)+"px");el.style.setProperty("--tipr","auto");el.style.setProperty("--tipt","none")};
   for(const ev of ["mouseover","focusin"])document.addEventListener(ev,e=>placeTip(e.target.closest&&e.target.closest("[data-tip]")),true);
   document.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest("[data-tip]");document.querySelectorAll(".tipopen").forEach(x=>{if(x!==el)x.classList.remove("tipopen")});if(el&&matchMedia("(hover: none)").matches){if(!el.classList.contains("tipopen")){el.classList.add("tipopen");placeTip(el);setTimeout(()=>el.classList.remove("tipopen"),3500)}}},true);
-  if($("castlink"))$("castlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderCast();top()};
-  if($("fguidelink"))$("fguidelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderFieldGuide();top()};
+  if($("worldlink"))$("worldlink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderCast();top()}; // World opens on People
   $("proglink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderDash();top()};
   if($("liblink"))$("liblink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderLibrary();top()};
   $("homelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderHome();renderRail()};
