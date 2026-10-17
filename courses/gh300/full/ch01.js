@@ -9,7 +9,7 @@
   ],
   opening: [
     `The email arrived at 6:12 on a Monday morning, which meant Elena had written it on the treadmill.`,
-    `<prop type="email" from="Elena Vasquez" to="All Engineering" time="Monday, 6:12 AM" subject="Copilot, this quarter">Team,<br>Every engineer at Halcyon will be using GitHub Copilot by the end of the quarter. Our competitors already are. Priya Shah will lead the rollout and has my full support. Lena is the sponsor. Please give Priya whatever she needs.<br>Elena</prop>`,
+    `<prop type="email" from="Elena Vasquez" to="All Engineering" time="Monday, 6:12 AM" subject="Copilot, this quarter">Team,<br>Every engineer at Halcyon will be using GitHub Copilot by the end of the quarter. Our competitors already are. Priya Shah will lead the rollout and has my full support. Joyce is the sponsor. Please give Priya whatever she needs.<br>Elena</prop>`,
     `Priya Shah read it on her phone in the parking garage, still in the car, the engine off and the radio still talking about the Broncos. She read it a second time to make sure her name was actually in it. It was. It was in the same sentence as "full support," which at Halcyon could mean anything from a real budget to a blessing and a deadline.`,
     `Six months ago she'd been a data engineer who kept quiet in meetings. Then Anders Lindqvist took another job, and somebody had to own the platform, and the somebody turned out to be her. Then she moved Lumen, the discharge forecasting product Halcyon sold to hospitals, onto the new platform. It was her first project with her name at the top of the plan, and it shipped on time because she'd been too scared to let it slip. Now this. A rollout to ninety engineers, most of them older than her, several of them people who had trained her. Every team she'd led so far had wanted her there. These people hadn't.`,
     `Her phone buzzed before she got to the elevator. Anders, who was back at Halcyon on a six month contract, which still felt strange. <span class="said" data-who="Anders">"congrats on the robot job. I'll trust it when it can explain my own Terraform to me."</span>`,
@@ -51,7 +51,7 @@
   },
   scenes: [
     { id:`f1s1`, domain:`Copilot Features`, task:`F1`, title:`Where to start`,
-      text:(s,all,G)=>[`By nine, Priya had a blank document titled "Copilot rollout" and eleven Slack messages asking when people would "get it." Lena Cho stopped by with coffee and the look of a sponsor who would rather not be asked hard questions.`,`<span class="said" data-who="Lena">"Elena wants a plan by Friday. What do you need?"</span>`,`Priya didn't know yet. That was the problem. What does she do first?`],
+      text:(s,all,G)=>[`By nine, Priya had a blank document titled "Copilot rollout" and eleven Slack messages asking when people would "get it." Joyce Cho stopped by with coffee and the look of a sponsor who would rather not be asked hard questions.`,`<span class="said" data-who="Joyce">"Elena wants a plan by Friday. What do you need?"</span>`,`Priya didn't know yet. That was the problem. What does she do first?`],
       opts:[
         {t:`Survey the team: who uses Copilot now, on what plan, in which editors.`, s:3, best:true, d:{trust:3,conf:3,health:4},
           after:`The survey takes two days and fifty seven people answer. Thirty one are already using Copilot. Most are on personal plans they expense. They use five different editors. Two people are pasting code into a chatbot in a browser tab. None of this was on any diagram.`,
@@ -89,7 +89,7 @@
           after:`It's cheap. It's also ninety separate subscriptions the company doesn't control, can't apply policies to, and can't show an auditor.`,
           why:`Individual plans are managed by the individual. A rollout that needs consistent policies and evidence needs an organization plan.`},
         {t:`Copilot Business, revisiting Enterprise if Halcyon moves to Enterprise Cloud.`, s:3, best:true, d:{trust:1,conf:4,health:4},
-          after:`Lena signs off in ten minutes. Priya writes down the condition that would change the answer: if Halcyon ever moves to GitHub Enterprise Cloud, look at Enterprise again. It goes in the plan as a dated decision, not a vague maybe.`,
+          after:`Joyce signs off in ten minutes. Priya writes down the condition that would change the answer: if Halcyon ever moves to GitHub Enterprise Cloud, look at Enterprise again. It goes in the plan as a dated decision, not a vague maybe.`,
           why:`Business gives an organization central seat management and policy control, which is the core need. Enterprise is for organizations on GitHub Enterprise Cloud that want its enterprise grade capabilities. Pick what fits today and write down what would change it.`},
         {t:`Copilot Enterprise now, because it has every feature and they'll grow into it.`, s:1, d:{trust:0,conf:-1,health:-1},
           after:`The sales engineer is thrilled. Then he asks whether Halcyon is on GitHub Enterprise Cloud. It isn't. The project just got a migration nobody planned.`,
@@ -131,23 +131,23 @@
           why:`Hearing both sides is fine. Ending the meeting without a clear norm leaves everyone to guess. The rollout lead's job is to set it.`}
       ]},
     { id:`f1s6`, domain:`Copilot Features`, task:`F4`, title:`All at once`,
-      text:(s,all,G)=>[`Lena caught her after the kickoff. <span class="said" data-who="Lena">"Can we just turn it on for everyone Friday? Elena would love to see the number go to ninety."</span>`,`Priya knew what the Access page offered. One button covered all members, current and future. The other let her pick teams.`],
+      text:(s,all,G)=>[`Joyce caught her after the kickoff. <span class="said" data-who="Joyce">"Can we just turn it on for everyone Friday? Elena would love to see the number go to ninety."</span>`,`Priya knew what the Access page offered. One button covered all members, current and future. The other let her pick teams.`],
       opts:[
         {t:`Turn it on for all members Friday so the number looks good for Elena.`, s:0, d:{trust:1,conf:2,health:-6},
           after:`Ninety seats, Friday afternoon. Every new hire gets one automatically. On Monday Ken asks why the team that works on patient data integrations has Copilot with no exclusions set.`,
           why:`All members is a real option, and it covers future members too. Choosing it before policies and exclusions are ready means the riskiest teams get the tool with no guardrails.`},
         {t:`Grant seats to selected teams in waves, policies set first.`, s:3, best:true, d:{trust:2,conf:3,health:5},
-          after:`Wave one is the platform team and Kraków, the people already using it. The integrations team waits a week for Ken's exclusions. Lena gets a number that grows every week and a reason for each step.`,
+          after:`Wave one is the platform team and Kraków, the people already using it. The integrations team waits a week for Ken's exclusions. Joyce gets a number that grows every week and a reason for each step.`,
           why:`Selected teams and members lets you roll out in order. Set the rules first, then hand out the keys. It's slower by days and it saves you weeks.`},
         {t:`Grant seats to selected teams, starting with whoever asks most loudly.`, s:1, d:{trust:2,conf:1,health:0},
           after:`The loud teams are mostly the ones already using it, which is fine. One of them is the integrations team, which isn't.`,
           why:`Using selected teams is right. Ordering by who asks loudest ignores which teams need guardrails in place first.`},
         {t:`Wait until next quarter, when everything is ready, and then do it all at once.`, s:0, d:{trust:-3,conf:-5,health:0},
-          after:`Elena reads "next quarter" and calls Lena. Meanwhile twenty six people keep using personal plans.`,
+          after:`Elena reads "next quarter" and calls Joyce. Meanwhile twenty six people keep using personal plans.`,
           why:`Waiting for perfect leaves the uncontrolled usage in place. Roll out in waves so control arrives sooner.`}
       ]},
     { id:`f1s7`, domain:`Privacy and Safeguards`, task:`S1`, title:`Ken's list`,
-      text:(s,all,G)=>[`Ken Ito sent his message on Friday morning, polite and precise as always. <span class="said" data-who="Ken">"Before the integrations team gets seats, I want to know which repositories hold Lumen configuration and test data. Some of it is patient adjacent. I don't want it used as context."</span>`,`Nora Kim was copied. So was Lena.`],
+      text:(s,all,G)=>[`Ken Ito sent his message on Friday morning, polite and precise as always. <span class="said" data-who="Ken">"Before the integrations team gets seats, I want to know which repositories hold Lumen configuration and test data. Some of it is patient adjacent. I don't want it used as context."</span>`,`Nora Kim was copied. So was Joyce.`],
       opts:[
         {t:`List the sensitive repos with Ken and set exclusions before granting seats.`, s:3, best:true, d:{trust:3,conf:4,health:5},
           after:`They find four repositories and two folders in a fifth. Ken sets the exclusions at the organization level. Nora writes one line in her evidence log: exclusions configured before access granted, with the date.`,

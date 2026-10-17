@@ -158,7 +158,7 @@
   },
   "gh300": {
    "Elena": {"voice": "Callirrhoe", "style": "General American accent. A CEO, confident and friendly."},
-   "Lena": {"voice": "Gacrux", "style": "General American accent. A CTO sponsoring the rollout. Composed, decisive."},
+   "Joyce": {"voice": "Gacrux", "style": "General American accent. A CTO sponsoring the rollout. Composed, decisive."},
    "Renata": {"voice": "Leda", "style": "General American accent. A junior engineer in her first month. Curious, eager, asks the question everyone else won't."},
    "Asha": {"voice": "Kore", "style": "An older woman, a retired ER charge nurse. Calm, warm, direct.", "run": true, "gender": "f"},
    "Anders": {"voice": "Fenrir", "style": "General American accent, a skeptical, sardonic senior engineer.", "gender": "m"},

@@ -191,7 +191,7 @@
           why:`Underusing it wastes real value. Scope the work well instead of shrinking it to nothing.`}
       ]},
     { id:`f2s10`, domain:`Responsible AI`, task:`R2`, title:`Green means go`,
-      text:(s,all,G)=>[`Friday morning Lena stopped by with a chart. The coding agent's pull requests from Kraków were piling up in review.`,`<span class="said" data-who="Lena">"Review is the slow part now. If the checks are green, can we just auto merge the agent's pull requests? It wrote the tests too."</span>`],
+      text:(s,all,G)=>[`Friday morning Joyce stopped by with a chart. The coding agent's pull requests from Kraków were piling up in review.`,`<span class="said" data-who="Joyce">"Review is the slow part now. If the checks are green, can we just auto merge the agent's pull requests? It wrote the tests too."</span>`],
       opts:[
         {t:`Auto merge agent PRs when every check passes, and spot check a few each week.`, s:0, d:{trust:2,conf:-4,health:-6},
           after:`Merges speed up. The tests the agent wrote check what the agent thought the code should do, which isn't always what the hospital needed.`,
@@ -200,7 +200,7 @@
           after:`Most changes are small. One of the small ones flips a feature flag default in the scheduler.`,
           why:`Size isn't risk. A few lines in the wrong place can matter more than a big refactor. Review every pull request.`},
         {t:`Keep a person reviewing every agent PR, same as a teammate's code.`, s:3, best:true, d:{trust:3,conf:4,health:5},
-          after:`Lena wants something for the chart, so Priya gives her the real bottleneck: the issues were too big to review quickly. Smaller issues make smaller pull requests. By the next Friday review time is down by half, with a person on every one.`,
+          after:`Joyce wants something for the chart, so Priya gives her the real bottleneck: the issues were too big to review quickly. Smaller issues make smaller pull requests. By the next Friday review time is down by half, with a person on every one.`,
           why:`The coding agent can't approve or merge its own pull request, and its work gets reviewed like anyone's. Speed up review by scoping smaller issues, not by removing the reviewer.`},
         {t:`Let Copilot code review approve agent PRs, so a reviewer still signs off.`, s:0, d:{trust:1,conf:-3,health:-4},
           after:`Nora points out that Copilot approvals are a preview setting someone would have to turn on, and that the agent's pull requests already get a Copilot review before anyone sees them. AI writing the code and AI signing for it isn't a second pair of eyes. The idea dies in the meeting.`,
