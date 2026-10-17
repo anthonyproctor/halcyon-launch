@@ -105,7 +105,7 @@ const campus=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 440" role
 
 const stand=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 560" role="img">
 <title>The test stand, Stand 2</title>
-<desc>Stand 2 at night: a tower of white lights holding the departure stage, with frost blankets over its lower half and a crew member at its base for scale. The main oxidizer isolation valve, MOIV-1, sits low on the stage. The blockhouse is out on the prairie, about four hundred meters away. Below, a plot of cycle 3 from August 2059 shows the valve position reading jumping for 40 milliseconds, and a downstream pressure channel rippling inside the same 40 milliseconds.</desc>
+<desc>Stand 2: a steel tower holding the departure stage, a flat topped cylinder, with frost blankets over its lower half and a crew member at its base for scale. The main oxidizer isolation valve, MOIV-1, sits low on the stage. The blockhouse is out on the prairie, about four hundred meters away. Below, a plot of cycle 3 from August 2059 shows the valve position reading jumping for 40 milliseconds, and a downstream pressure channel rippling inside the same 40 milliseconds.</desc>
 <rect width="480" height="560" fill="#16303f"/>
 <g ${F}>
 <text data-from="2" x="16" y="34" font-size="17" font-weight="700" letter-spacing="2" fill="#8dbcd4">STAND 2</text>
@@ -117,7 +117,7 @@ const stand=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 560" role=
 <path d="M222 100 L250 130 M338 100 L310 130 M222 220 L250 250 M338 220 L310 250" stroke-width="2"/>
 </g>
 <g fill="#fff6dc"><circle cx="222" cy="64" r="4"/><circle cx="338" cy="64" r="4"/><circle cx="222" cy="130" r="3.5"/><circle cx="338" cy="130" r="3.5"/><circle cx="222" cy="190" r="3.5"/><circle cx="338" cy="190" r="3.5"/><circle cx="222" cy="250" r="3.5"/><circle cx="338" cy="250" r="3.5"/><circle cx="222" cy="310" r="3.5"/><circle cx="338" cy="310" r="3.5"/></g>
-<path d="M252 104 Q280 66 308 104 V350 H252 Z" fill="#eef3f7"/>
+<path d="M252 86 H308 V350 H252 Z" fill="#eef3f7"/><path d="M250 86 H310" stroke="#c9ccd1" stroke-width="4"/>
 <rect x="252" y="214" width="56" height="136" fill="#c9ccd1"/>
 <path d="M252 236 H308 M252 258 H308 M252 280 H308 M252 302 H308 M252 324 H308" stroke="#8a96a3" stroke-width="1.5"/>
 <path d="M268 296 C 254 300, 252 318, 262 326 M292 296 C 306 300, 310 318, 300 326" stroke="#596876" stroke-width="3" fill="none"/>
@@ -153,17 +153,18 @@ const stand=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 560" role=
 </g>
 </svg>`;
 
-// Labels for art/guide/stand-storm-ch4.webp (1200x670): the stand, the stage, the blockhouse, and the 400 m from the blockhouse door
-// to the pad (ch4: "The pad light, four hundred meters out"). Positions are measured on that painting; move them if it's replaced.
-const stormLabels=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670" aria-hidden="true" focusable="false">
+// Labels for art/guide/stand-day.webp (1200x670): the stand, the stage, the blockhouse, the Front Range, and the 400 m from the
+// blockhouse to the pad (ch4: "The pad light, four hundred meters out"). Positions are measured on that painting; move them if it's replaced.
+const standLabels=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670" aria-hidden="true" focusable="false">
 <g ${F} font-weight="700" font-size="50" fill="#fff6dc" stroke="#0b141b" stroke-width="11" paint-order="stroke" stroke-linejoin="round">
-<path d="M560 566 L880 424" fill="none" stroke="#0b141b" stroke-width="9" stroke-linecap="round"/>
-<path d="M560 566 L880 424" fill="none" stroke="#fff6dc" stroke-width="4" stroke-dasharray="16 12" stroke-linecap="round"/>
-<circle cx="560" cy="566" r="8" stroke-width="5"/><circle cx="880" cy="424" r="8" stroke-width="5"/>
-<text x="738" y="456" text-anchor="middle" transform="rotate(-24 738 456)">400 m</text>
-<path d="M772 96 L836 124" fill="none" stroke-width="4" stroke="#fff6dc"/><text x="764" y="96" text-anchor="end">Test stand</text>
-<path d="M786 262 L866 262" fill="none" stroke-width="4" stroke="#fff6dc"/><text x="776" y="250" text-anchor="end">Departure</text><text x="776" y="300" text-anchor="end">stage</text>
-<path d="M130 200 L176 234" fill="none" stroke-width="4" stroke="#fff6dc"/><text x="36" y="186">Blockhouse</text>
+<path d="M470 500 L866 366" fill="none" stroke="#0b141b" stroke-width="9" stroke-linecap="round"/>
+<path d="M470 500 L866 366" fill="none" stroke="#fff6dc" stroke-width="4" stroke-dasharray="16 12" stroke-linecap="round"/>
+<circle cx="470" cy="500" r="8" stroke-width="5"/><circle cx="866" cy="366" r="8" stroke-width="5"/>
+<text x="680" y="408" text-anchor="middle" transform="rotate(-18.7 680 408)">400 m</text>
+<path d="M740 62 L856 70" fill="none" stroke-width="4" stroke="#fff6dc"/><text x="730" y="74" text-anchor="end">Test stand</text>
+<path d="M740 200 L898 214" fill="none" stroke-width="4" stroke="#fff6dc"/><text x="730" y="184" text-anchor="end">Departure</text><text x="730" y="234" text-anchor="end">stage</text>
+<path d="M250 376 L250 404" fill="none" stroke-width="4" stroke="#fff6dc"/><text x="120" y="364">Blockhouse</text>
+<path d="M150 224 L170 270" fill="none" stroke-width="4" stroke="#fff6dc"/><text x="36" y="212">Front Range</text>
 </g>
 </svg>`;
 
@@ -182,7 +183,7 @@ window.HALCYON_GUIDE.pmp=[
     {from:10,text:"During the blackout the station pulled the leaking manifold off stack three of the old plant, and Ada was on the crew. A clamp let go. She got sixty one degree coolant on her left arm and hand, then hit the deck and cracked two ribs. Her medical report got to Earth before her own log did."}
    ]},
   {id:"campus",title:"The Watkins campus",kicker:"Tallgrass Aerospace",bg:"#26352d",aliases:["high bay","Watkins"],svg:campus,
-   photo:{src:"/art/guide/campus-space-power-facility.webp",w:1200,h:900,alt:"Photo: a giant white building, black dome on top, flat brown field around it, road coming in.",caption:"Ohio in 1969, NASA's Space Power Facility. Different place, but picture the high bay off I-70 and it's about this.",credit:"NASA",source:"https://images.nasa.gov/details/GRC-1969-C-00723"},
+   photo:{src:"/art/guide/campus-ksc-high-bay.webp",w:1200,h:800,alt:"Photo of a tall white building with two giant doors nearly as tall as the wall, concrete out front, grass and trees, blue sky.",caption:"A NASA high bay at Kennedy in Florida, shot in 2026. They fuel spacecraft in there before launch. Picture the Tallgrass one about like this, a white box ten stories up, only on bare prairie, no trees.",credit:"NASA/Kim Shiflett",source:"https://images.nasa.gov/details/KSC-20260421-PH-KLS02_0006"},
    what:"Halcyon gets built in Watkins, thirty five minutes east of Sam's kitchen in Aurora on I-70, where the plains go flat and brown. The high bay's the white box you see from the interstate, ten stories tall, with TALLGRASS down the side. Flight control has its own building and a wind sock that's nearly always straight out. The test stand's two more miles out, down a gravel road.",
    levels:[
     {from:1,text:"Sam's run the high bay for nineteen years. There's a countdown clock over the doors, in days. Out front, the wind sock on flight control is usually straight out, and pronghorn hang around the access road watching traffic."},
@@ -194,8 +195,8 @@ window.HALCYON_GUIDE.pmp=[
     {from:15,text:"On launch morning the countdown clock over the high bay doors says zero."}
    ]},
   {id:"stand",title:"The test stand",kicker:"Propulsion testing",bg:"#16303f",aliases:["test stand","Stand 2","the stand"],svg:stand,
-   photo:{src:"/art/guide/stand-stennis-b2-night.webp",w:1200,h:904,alt:"Photo of a test stand at night, lit up white and orange, lightning crackling across the sky right beside it.",caption:"NASA's B-2 stand in Mississippi, 2021, the night before they fired the stage that's bolted in there. Stand 2 holds Halcyon's departure stage the same way.",credit:"NASA/Robert Markowitz",source:"https://images.nasa.gov/details/NHQ202103170001"},
-   scene:{from:4,src:"/art/guide/stand-storm-ch4.webp",w:1200,h:670,alt:"Painting of a snowstorm at night. Blockhouse door's open on the left. Far right, Stand 2, lit up, stage inside, frost blankets on its bottom half.",caption:"Stand 2, chapter 4, the storm night. Labels are drawn on in code so they're right even where the painting's loose.",credit:"Illustration generated with AI",overlay:stormLabels},
+   photo:{src:"/art/guide/stand-stennis-b2-day.webp",w:1200,h:900,alt:"Drone photo of a giant concrete and steel test stand on a sunny day, top of an orange rocket stage sticking up in it, red crane beside, flat ground and pine woods all around.",caption:"NASA's B-2 stand in Mississippi, 2020, with the orange SLS core stage bolted in for testing. Stand 2 holds Halcyon's departure stage the same way, just out on the Colorado plains instead of in the woods.",credit:"NASA",source:"https://images.nasa.gov/details/2020-02-09%20-%20Artemis%20I%20Core%20Stage%20on%20the%20B-2%20Stand%20-%2001"},
+   scene:{from:1,src:"/art/guide/stand-day.webp",w:1200,h:670,alt:"Painting of Stand 2 on a sunny winter day. Steel tower out on brown prairie, white stage in it with gray blankets on the bottom half, concrete blockhouse by the gravel road, mountains way off.",caption:"Stand 2 on a normal day, how the book has it. Brown prairie east of Denver, blockhouse 400 meters back, Front Range way off west. It's a painting, not a photo. Labels are drawn on in code.",credit:"Illustration generated with AI",overlay:standLabels},
    what:"A propulsion test stand is a tower that holds a rocket stage on the ground while a crew chills it down, cycles its valves and fires it, with instruments recording every channel. Tallgrass's Stand 2 is two miles out on the prairie, and the crew runs it from a blockhouse out there with it. Halcyon's departure stage sits in it for its tests, and it doesn't leave for the Cape until they're done.",
    levels:[
     {from:1,text:"Halcyon's departure stage is bolted into the test stand two miles out on the prairie. In Bea's files, in a folder marked DO NOT CLOSE, Sam finds an anomaly report on the big valve that controls its oxygen. On the third of five test cycles, the valve's position reading disagreed with the close command for forty milliseconds."},

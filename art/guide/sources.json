@@ -1,5 +1,5 @@
 {
-  "_note": "Field guide pictures (prototype 2026-10-17). Every photo is US government work from the NASA Image and Video Library, checked on its own record (center, photographer and rights fields) on 2026-10-17. None shows an identifiable person. Credits are given as the source asks. Using them doesn't mean NASA endorses Halcyon. The storm scene is AI generated and is not a photo of anything real.",
+  "_note": "Field guide pictures (redone 2026-10-17 to show each thing's everyday look, in daylight). Every photo is US government work from the NASA Image and Video Library, checked on its own record (center, photographer and rights fields) on 2026-10-17. None shows an identifiable person. Credits are given as the source asks. Using them doesn't mean NASA endorses Halcyon. The Stand 2 scene is AI generated and is not a photo of anything real.",
   "files": {
     "breather-iss-oxygen-rack.webp": {
       "entry": "breather",
@@ -16,37 +16,23 @@
       "license": "Public domain in the US: a NASA photo (MSFC record, no outside photographer or secondary creator listed). NASA media guidelines: NASA content is generally not subject to US copyright; acknowledge NASA as the source; don't imply endorsement. https://www.nasa.gov/nasa-brand-center/images-and-media/",
       "edits": "Cropped to 4:5 from the top (drops the ground handling dolly), resized to 800x1000, WebP."
     },
-    "campus-space-power-facility.webp": {
+    "campus-ksc-high-bay.webp": {
       "entry": "campus",
       "kind": "photo",
-      "title": "Space Power Facility at NASA's Plum Brook Station",
-      "nasa_id": "GRC-1969-C-00723",
-      "source_page": "https://images.nasa.gov/details/GRC-1969-C-00723",
-      "source_record": "https://images-api.nasa.gov/search?nasa_id=GRC-1969-C-00723",
-      "source_metadata": "https://images-assets.nasa.gov/image/GRC-1969-C-00723/metadata.json",
-      "downloaded_from": "https://images-assets.nasa.gov/image/GRC-1969-C-00723/GRC-1969-C-00723~orig.jpg",
-      "center": "GRC (NASA Glenn Research Center)",
-      "date": "1969-02-23",
-      "credit": "NASA",
-      "license": "Public domain in the US: a NASA photo (GRC record, no outside photographer or secondary creator listed). NASA media guidelines as above.",
-      "edits": "Resized to 1200x900, WebP."
+      "title": "Payload Hazardous Servicing Facility",
+      "nasa_id": "KSC-20260421-PH-KLS02_0006",
+      "source_page": "https://images.nasa.gov/details/KSC-20260421-PH-KLS02_0006",
+      "source_record": "https://images-api.nasa.gov/search?nasa_id=KSC-20260421-PH-KLS02_0006",
+      "source_metadata": "https://images-assets.nasa.gov/image/KSC-20260421-PH-KLS02_0006/metadata.json",
+      "downloaded_from": "https://images-assets.nasa.gov/image/KSC-20260421-PH-KLS02_0006/KSC-20260421-PH-KLS02_0006~orig.JPG",
+      "center": "KSC (NASA Kennedy Space Center)",
+      "date": "2026-04-21",
+      "credit": "NASA/Kim Shiflett",
+      "license": "Public domain in the US: NASA photo by a NASA photographer. The record's photographer, credit and artist fields read NASA/Kim Shiflett, usage terms PAO Approved For Release, rights point to the NASA media guidelines. Credit line as the record asks. https://www.nasa.gov/nasa-brand-center/images-and-media/",
+      "people": "None in frame (checked at full size).",
+      "edits": "Resized from 6720x4480 to 1200x800, WebP."
     },
-    "stand-stennis-b2-night.webp": {
-      "entry": "stand",
-      "kind": "photo",
-      "title": "Second Hot Fire Test of SLS Rocket Core Stage",
-      "nasa_id": "NHQ202103170001",
-      "source_page": "https://images.nasa.gov/details/NHQ202103170001",
-      "source_record": "https://images-api.nasa.gov/search?nasa_id=NHQ202103170001",
-      "source_metadata": "https://images-assets.nasa.gov/image/NHQ202103170001/metadata.json",
-      "downloaded_from": "https://images-assets.nasa.gov/image/NHQ202103170001/NHQ202103170001~large.jpg",
-      "center": "HQ (NASA Headquarters); taken at NASA Stennis Space Center, B-2 Test Stand, 2021-03-17",
-      "date": "2021-03-17",
-      "credit": "NASA/Robert Markowitz",
-      "license": "Public domain in the US: NASA photo by a NASA photographer. The record's credit and rights fields read (NASA/Robert Markowitz), usage terms Released to Public, and point to the NASA media guidelines. Credit line as the record asks.",
-      "edits": "Resized to 1200x904, WebP."
-    },
-    "stand-storm-ch4.webp": {
+    "stand-day.webp": {
       "entry": "stand",
       "kind": "ai-illustration",
       "credit": "Illustration generated with AI",
@@ -54,9 +40,31 @@
       "generated": "2026-10-17",
       "tries": 3,
       "chosen": "try 3",
-      "prompt_facts_from": ["courses/pmp/guide.js (stand entry, campus level 4)", "full/v2/ch04.js (Whiteout, f4s3)"],
+      "why": "Only try with one straight cylindrical stage (try 1 drew a domed tank, try 2 a thin stage with a fatter blanket wrap), and it adds the upper deck tank (ch2) and a shed at the stand's foot (ch4 pad shelter).",
+      "prompt_facts_from": [
+        "courses/pmp/guide.js (stand and campus entries)",
+        "full/v2/ch01.js (I-70, flat brown plains, stand two miles out)",
+        "full/v2/ch02.js (gravel road, frost blankets on the lower half, upper deck tank)",
+        "full/v2/ch04.js (blockhouse, reflector posts, pad 400 m from the blockhouse door)"
+      ],
       "labels": "Drawn on top in code from courses/pmp/guide.js (entry stand, scene.overlay), never painted in.",
-      "edits": "Resized from 1376x768 to 1200x670, WebP."
+      "edits": "Painted out a scribbled signature mark in the bottom right corner (grass patch copied from beside it), resized from 1376x768 to 1200x670, WebP."
+    },
+    "stand-stennis-b2-day.webp": {
+      "entry": "stand",
+      "kind": "photo",
+      "title": "SLS Core Stage Installed",
+      "nasa_id": "2020-02-09 - Artemis I Core Stage on the B-2 Stand - 01",
+      "source_page": "https://images.nasa.gov/details/2020-02-09%20-%20Artemis%20I%20Core%20Stage%20on%20the%20B-2%20Stand%20-%2001",
+      "source_record": "https://images-api.nasa.gov/search?nasa_id=2020-02-09%20-%20Artemis%20I%20Core%20Stage%20on%20the%20B-2%20Stand%20-%2001",
+      "source_metadata": "https://images-assets.nasa.gov/image/2020-02-09%20-%20Artemis%20I%20Core%20Stage%20on%20the%20B-2%20Stand%20-%2001/metadata.json",
+      "downloaded_from": "https://images-assets.nasa.gov/image/2020-02-09%20-%20Artemis%20I%20Core%20Stage%20on%20the%20B-2%20Stand%20-%2001/2020-02-09%20-%20Artemis%20I%20Core%20Stage%20on%20the%20B-2%20Stand%20-%2001~orig.jpg",
+      "center": "SSC (NASA Stennis Space Center), B-2 Test Stand",
+      "date": "2020-10-08 (record date; NASA drone photo of the Artemis I core stage installed for Green Run)",
+      "credit": "NASA",
+      "license": "Public domain in the US: a NASA drone photo (SSC record, description says 'A NASA drone photo'; no outside photographer or secondary creator listed). NASA media guidelines: acknowledge NASA as the source; don't imply endorsement. The NASA insignia painted on the stand shows only as part of the real scene. https://www.nasa.gov/nasa-brand-center/images-and-media/",
+      "people": "Only specks at the stand's base, none identifiable.",
+      "edits": "Cropped to 4:3 around the stand (3840x2160 to 2613x1960, from x 960, y 200) so the stage reads at phone width, resized to 1200x900, WebP."
     }
   }
 }

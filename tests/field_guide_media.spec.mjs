@@ -1,5 +1,6 @@
-// Field guide media (2026-10-17): the "In real life" photo on every entry, the painted ch4 storm scene with its code-drawn labels,
-// the photo thumbnail in the sheet, the spoiler gate on the scene, and no sideways scroll at 390px.
+// Field guide media (2026-10-17, redone the same day for daylight, everyday looks): the "In real life" photo on every entry, the painted
+// Stand 2 scene with its code-drawn labels (shown from chapter 1, it's the stand's normal look), the photo thumbnail in the sheet, and no
+// sideways scroll at 390px.
 // Expected text (alt, caption, credit, scene chapter) is read from window.HALCYON_GUIDE, never typed here.
 import { test, expect } from "@playwright/test";
 
@@ -40,23 +41,17 @@ test("every entry page shows its In real life photo, with alt text, caption and 
   }
 });
 
-test("the ch4 storm scene is hidden for a chapter 3 reader and shows, labelled, from chapter 4", async ({ page }) => {
+test("the Stand 2 scene shows, labelled, from chapter 1", async ({ page }) => {
   await page.goto("/#pmp/home");
   const G = await guide(page);
   const st = G.find(e => e.id === "stand");
-  expect(st.scene.from).toBe(4);
-  // chapter 3 reader
-  await seed(page, { c203: fresh() });
+  expect(st.scene.from).toBe(1);
+  // a brand new reader, chapter 1
+  await seed(page, { c201: fresh() });
   await open(page, "/#pmp/guide/stand");
   await expect(page.locator("#page h1")).toHaveText(st.title);
   await expect(page.locator("#page .fgfig svg")).toHaveCount(1);
-  await expect(page.locator("#page .fgscene")).toHaveCount(0);
-  await expect(page.locator(`#page img[src="${st.scene.src}"]`)).toHaveCount(0);
-  await expect(page.locator("#page")).not.toContainText(st.scene.credit);
-  await expect(page.locator("#page figure.fgphoto")).toHaveCount(1); // the real photo isn't a spoiler
-  // chapter 4 reader
-  await seed(page, { c204: fresh() });
-  await open(page, "/#pmp/guide/stand");
+  await expect(page.locator("#page figure.fgphoto")).toHaveCount(1);
   const fig = page.locator('#page figure.fgscene[data-fgscene="stand"]');
   await expect(fig).toHaveCount(1);
   const img = fig.locator("img");
@@ -68,7 +63,7 @@ test("the ch4 storm scene is hidden for a chapter 3 reader and shows, labelled, 
   expect(await loaded(img)).toBe(true);
   // the labels lie over the picture and are drawn in code
   const labels = await fig.locator(".fgover svg text").allTextContents();
-  for (const t of ["Test stand", "Departure", "stage", "Blockhouse", "400 m"]) expect(labels).toContain(t);
+  for (const t of ["Test stand", "Departure", "stage", "Blockhouse", "400 m", "Front Range"]) expect(labels).toContain(t);
   expect(await fig.locator(".fgover svg path[stroke-dasharray]").count()).toBeGreaterThan(0);
   const [ib, ob] = [await img.boundingBox(), await fig.locator(".fgover svg").boundingBox()];
   for (const k of ["x", "y", "width", "height"]) expect(Math.abs(ib[k] - ob[k]), k).toBeLessThan(1.5);
