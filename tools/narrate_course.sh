@@ -3,6 +3,7 @@
 # usage: tools/narrate_course.sh <course id> <chapter number>
 cd "$(dirname "$0")/.."
 C=$1; n=$2; nn=$(printf %02d $n); T=/tmp/claude-501/$C; mkdir -p $T
+mkdir -p courses/$C/audio/story # a new course has no story edition folder yet (the Hearth ch1 render failed on it, 2026-10-17)
 node tools/pages.mjs full $n $T/p$n.json --course $C >/dev/null && node tools/pages.mjs full $n $T/p${n}s.json --course $C --story >/dev/null || exit 1
 # TTS=gemini uses tools/render_pages_gemini.py (Gemini, casting in tools/gemini_voices.json, its log in $T/tts.log); TTS=kokoro or unset = Kokoro
 TTS=${TTS:-kokoro}; RP=render_pages.py; ERR=/dev/null; [[ $TTS == gemini ]] && RP=render_pages_gemini.py && ERR=$T/tts.log
