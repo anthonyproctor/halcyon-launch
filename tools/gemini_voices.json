@@ -113,7 +113,8 @@
    "Priyanka": {"voice": "Erinome", "style": "London accent. A woman in her late thirties on a work call. Brisk, exact, not unkind.", "gender": "f"},
    "man": {"voice": "Schedar", "style": "General American accent, natural and conversational."},
    "woman": {"voice": "Callirrhoe", "style": "General American accent, natural and conversational."},
-   "Kade": {"voice": "en-us-advisor-6", "style": "A man's voice. Warm, easy, charming.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88}
+   "Kade": {"voice": "en-us-advisor-6", "style": "A man's voice. Warm, easy, charming.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Teresa": {"voice": "en-us-kira", "style": "A woman's voice. Calm, crisp, exact.", "run": true, "gender": "f"}
   },
   "cphims": {
      "narrator": {"voice": "Sulafat", "style": "General American accent. Warm, steady audiobook narrator. Unhurried, clear, quietly engaged."},
@@ -171,7 +172,9 @@
    "Dani": {"voice": "en-us-nyla", "style": "A woman's voice. Precise, warm, a little dry.", "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
    "Luis": {"voice": "en-us-podcaster-1", "style": "A man's voice. Warm, proud, gently funny.", "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
    "Teo": {"voice": "Umbriel", "style": "A man's voice. Quiet, guarded, plain.", "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
-   "Ana": {"voice": "en-us-tutor-14", "style": "A woman's voice. Gruff, exact, drily funny.", "gender": "f", "f0_low": 115, "f0_char_low": 130, "sim_min": 0.92, "tone_sim_min": 0.88, "run": true}
+   "Ana": {"voice": "en-us-tutor-14", "style": "A woman's voice. Gruff, exact, drily funny.", "gender": "f", "f0_low": 115, "f0_char_low": 130, "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
+   "Bianca": {"voice": "Despina", "style": "A woman's voice. Low, warm, plainspoken.", "run": true, "gender": "f"},
+   "Lupe": {"voice": "Leda", "style": "A little girl. Bright, curious, simple.", "run": true, "gender": "f"}
   }
  }
 }

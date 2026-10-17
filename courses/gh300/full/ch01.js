@@ -118,7 +118,7 @@
       text:(s,all,G)=>[`Thursday's kickoff had sixty people on the call and Anders in the front row of the conference room, arms folded.`,`Devin got there first. <span class="said" data-who="Devin">"Honestly the main thing is speed. It writes it, I ship it. Why would I reread code the machine already wrote?"</span>`,`Anders didn't look up. <span class="said" data-who="Anders">"And that's why I'll be on call."</span>`,`Sixty people waited to see what the new rollout lead would say.`],
       opts:[
         {t:`Agree speed is the goal and say the CI pipeline will catch whatever slips through.`, s:0, d:{trust:-2,conf:-3,health:-6},
-          after:`Devin nods. Anders leaves the meeting early. Two weeks later a pull request passes every check and still sends the wrong date to a customer.`,
+          after:`Devin nods. Anders leaves the meeting early. Two weeks later a pull request passes every check and still sends the wrong report to a customer.`,
           why:`Tests catch what someone thought to test for. Generative AI can be confidently wrong in ways nobody wrote a test for. A pipeline doesn't replace a human who understands the code.`},
         {t:`Set the rule: the person who accepts a suggestion owns it, so review and test it.`, s:3, best:true, d:{trust:4,conf:3,health:5},
           after:`She puts it on the shared screen in one line: you own what you accept. Then she asks Anders what he'd look for in a review of Copilot code. He's surprised to be asked. His list is good, and it goes in the guide.`,
