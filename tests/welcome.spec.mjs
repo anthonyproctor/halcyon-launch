@@ -16,7 +16,7 @@ test("renders the headline, the six books (four with clips, The Appeal and Heart
   await expect(page.locator("h1")).toContainText("listening to a story");
   await expect(page.locator(".book")).toHaveCount(6);
   await expect(page.locator(".book[data-book=lsat] .play")).toHaveCount(0); // new book: text first, audiobook next
-  await expect(page.locator(".book[data-book=lsat] .meta")).toContainText("6 of 12 chapters out");
+  await expect(page.locator(".book[data-book=lsat] .meta")).toContainText("7 of 12 chapters out");
   await expect(page.locator(".book[data-book=asep] h3")).toHaveText("Hearth");
   await expect(page.locator(".book[data-book=asep] .hero-name")).toHaveText("You play Nadia Brooks");
   await expect(page.locator(".book[data-book=asep] .play")).toHaveCount(0);
