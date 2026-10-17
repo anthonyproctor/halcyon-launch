@@ -102,21 +102,21 @@ test("library cards show a thin bar with the percent; an unfinished book says it
   await page.goto("/#pmp/home");
   const P = await pageCounts(page);
   const T = Object.values(P).reduce((a, b) => a + b, 0);
-  // PMP chapter 1 finished; CISA chapter 1 started (CISA's chapters load in the background, then the Library redraws)
-  await seed(page, { c201: doneCh(1), c50101: fresh({ pos: 2, max: 2 }) });
+  // PMP chapter 1 finished; The Appeal (LSAT, still being written) chapter 1 started (its chapters load in the background, then the Library redraws)
+  await seed(page, { c201: doneCh(1), c60101: fresh({ pos: 2, max: 2 }) });
   await open(page, "/#library");
   const pmp = page.locator(".libcard[data-course=pmp] .libbp");
   await expect(pmp).toContainText(`${floorPct(P[1], T)}% complete`);
   const w = await pmp.locator(".bpbar > span").evaluate(e => parseFloat(e.style.width));
   expect(w).toBeCloseTo(P[1] / T * 100, 1);
   await expect(page.locator(".libcard[data-course=pilot] .libbp")).toContainText("0% complete");
-  await expect(page.locator(".libcard[data-course=cisa] .libbp")).toContainText(/\d+% of what's written/);
-  await expect(page.locator(".libcard[data-course=cisa] .libbp")).not.toContainText("0% of");
+  await expect(page.locator(".libcard[data-course=lsat] .libbp")).toContainText(/\d+% of what's written/);
+  await expect(page.locator(".libcard[data-course=lsat] .libbp")).not.toContainText("0% of");
   const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(over).toBeLessThanOrEqual(0);
-  // and on CISA's own pages the rail says how much is written
-  await page.goto("/#cisa/home");
-  await expect(page.locator("#bookbar .bpline")).toContainText(/% of what's written · Chapter 1 of 12 · 11 written so far/);
+  // and on The Appeal's own pages the rail says how much is written
+  await page.goto("/#lsat/home");
+  await expect(page.locator("#bookbar .bpline")).toContainText(/% of what's written · Chapter 1 of 12 · 9 written so far/);
 });
 
 test("Progress page: the finish line as steps", async ({ page }) => {
