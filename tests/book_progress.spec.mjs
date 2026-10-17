@@ -116,7 +116,7 @@ test("library cards show a thin bar with the percent; an unfinished book says it
   expect(over).toBeLessThanOrEqual(0);
   // and on CISA's own pages the rail says how much is written
   await page.goto("/#cisa/home");
-  await expect(page.locator("#bookbar .bpline")).toContainText(/% of what's written · Chapter 1 of 12 · 8 written so far/);
+  await expect(page.locator("#bookbar .bpline")).toContainText(/% of what's written · Chapter 1 of 12 · 9 written so far/);
 });
 
 test("Progress page: the finish line as steps", async ({ page }) => {
