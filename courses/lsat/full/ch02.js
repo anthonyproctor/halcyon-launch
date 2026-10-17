@@ -269,7 +269,7 @@
       ]},
     { id:`f2s12`, domain:`Logical Reasoning`, task:`LR05`, title:`Her column`,
       text:(s,all,G)=>[`Ana let her take the dispatch folder home. <span class="said" data-who="Ana">"That's Phil's original. Not a copy."</span> Ana held it a second before she let go. <span class="said" data-who="Ana">"Bring it back Tuesday. Read it at your table, not on the bus."</span> It went in her bag next to the prep book. The January test was five weeks out. She'd done six practice questions all week.`,
-        `At home she didn't open the folder. She sat at the kitchen table under the photo on the fridge and drew two columns on the back of an envelope. NEEDED. ENOUGH. Then she did what she'd never done in nineteen years. She wrote her own doubt across the top, the way you'd write the State's conclusion, so she could look at it. Maybe he did it.`,
+        `At home she didn't open the folder. She sat at the kitchen table under the photo on the fridge and drew two columns on an envelope. NEEDED. ENOUGH. Then she did what she'd never done in nineteen years. She wrote her own doubt across the top, the way you'd write the State's conclusion, so she could look at it. Maybe he did it.`,
         `NEEDED was easy. She'd been living in it. What would be ENOUGH? What one thing, if she knew it was true, would end it?`],
       opts:[
         {t:`That the State's argument doesn't hold up against him, start to finish.`, s:1, d:{trust:0,conf:0,health:1},
