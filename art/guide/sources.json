@@ -1,0 +1,62 @@
+{
+  "_note": "Field guide pictures (prototype 2026-10-17). Every photo is US government work from the NASA Image and Video Library, checked on its own record (center, photographer and rights fields) on 2026-10-17. None shows an identifiable person. Credits are given as the source asks. Using them doesn't mean NASA endorses Halcyon. The storm scene is AI generated and is not a photo of anything real.",
+  "files": {
+    "breather-iss-oxygen-rack.webp": {
+      "entry": "breather",
+      "kind": "photo",
+      "title": "International Space Station (ISS): ECLSS Oxygen Generation System (OGS) rack",
+      "nasa_id": "0005602",
+      "source_page": "https://images.nasa.gov/details/0005602",
+      "source_record": "https://images-api.nasa.gov/search?nasa_id=0005602",
+      "source_metadata": "https://images-assets.nasa.gov/image/0005602/metadata.json",
+      "downloaded_from": "https://images-assets.nasa.gov/image/0005602/0005602~orig.jpg",
+      "center": "MSFC (NASA Marshall Space Flight Center)",
+      "date": "2000-09-01",
+      "credit": "NASA",
+      "license": "Public domain in the US: a NASA photo (MSFC record, no outside photographer or secondary creator listed). NASA media guidelines: NASA content is generally not subject to US copyright; acknowledge NASA as the source; don't imply endorsement. https://www.nasa.gov/nasa-brand-center/images-and-media/",
+      "edits": "Cropped to 4:5 from the top (drops the ground handling dolly), resized to 800x1000, WebP."
+    },
+    "campus-space-power-facility.webp": {
+      "entry": "campus",
+      "kind": "photo",
+      "title": "Space Power Facility at NASA's Plum Brook Station",
+      "nasa_id": "GRC-1969-C-00723",
+      "source_page": "https://images.nasa.gov/details/GRC-1969-C-00723",
+      "source_record": "https://images-api.nasa.gov/search?nasa_id=GRC-1969-C-00723",
+      "source_metadata": "https://images-assets.nasa.gov/image/GRC-1969-C-00723/metadata.json",
+      "downloaded_from": "https://images-assets.nasa.gov/image/GRC-1969-C-00723/GRC-1969-C-00723~orig.jpg",
+      "center": "GRC (NASA Glenn Research Center)",
+      "date": "1969-02-23",
+      "credit": "NASA",
+      "license": "Public domain in the US: a NASA photo (GRC record, no outside photographer or secondary creator listed). NASA media guidelines as above.",
+      "edits": "Resized to 1200x900, WebP."
+    },
+    "stand-stennis-b2-night.webp": {
+      "entry": "stand",
+      "kind": "photo",
+      "title": "Second Hot Fire Test of SLS Rocket Core Stage",
+      "nasa_id": "NHQ202103170001",
+      "source_page": "https://images.nasa.gov/details/NHQ202103170001",
+      "source_record": "https://images-api.nasa.gov/search?nasa_id=NHQ202103170001",
+      "source_metadata": "https://images-assets.nasa.gov/image/NHQ202103170001/metadata.json",
+      "downloaded_from": "https://images-assets.nasa.gov/image/NHQ202103170001/NHQ202103170001~large.jpg",
+      "center": "HQ (NASA Headquarters); taken at NASA Stennis Space Center, B-2 Test Stand, 2021-03-17",
+      "date": "2021-03-17",
+      "credit": "NASA/Robert Markowitz",
+      "license": "Public domain in the US: NASA photo by a NASA photographer. The record's credit and rights fields read (NASA/Robert Markowitz), usage terms Released to Public, and point to the NASA media guidelines. Credit line as the record asks.",
+      "edits": "Resized to 1200x904, WebP."
+    },
+    "stand-storm-ch4.webp": {
+      "entry": "stand",
+      "kind": "ai-illustration",
+      "credit": "Illustration generated with AI",
+      "model": "gemini-3-pro-image (Google Gemini API, generateContent, 16:9, 1K)",
+      "generated": "2026-10-17",
+      "tries": 3,
+      "chosen": "try 3",
+      "prompt_facts_from": ["courses/pmp/guide.js (stand entry, campus level 4)", "full/v2/ch04.js (Whiteout, f4s3)"],
+      "labels": "Drawn on top in code from courses/pmp/guide.js (entry stand, scene.overlay), never painted in.",
+      "edits": "Resized from 1376x768 to 1200x670, WebP."
+    }
+  }
+}

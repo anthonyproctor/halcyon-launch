@@ -556,6 +556,12 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
 .fgsheet .story{font-size:17px;line-height:1.5}.fgsheet .story p{margin:0 0 8px}.fgsheet .bar{margin-top:12px}
 .fglink{color:inherit;text-decoration:underline dotted var(--accent);text-decoration-thickness:2px;text-underline-offset:3px;cursor:pointer}
 .fglink:hover,.fglink:focus-visible{color:var(--accent)}.fglink:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.fgscene,.fgphoto{margin:10px 0 18px;max-width:600px}.fgscenebox{position:relative;border-radius:10px;overflow:hidden;background:#16303f}
+.fgscenebox img,.fgphoto img{display:block;width:100%;height:auto}.fgover{position:absolute;inset:0}.fgover svg{display:block;width:100%;height:100%}
+.fgphoto img{border-radius:10px;background:var(--soft);max-height:70vh;object-fit:contain}
+.fgscene figcaption,.fgphoto figcaption{margin-top:6px;font-size:14px;line-height:1.45;color:var(--ink)}.fgcredit{color:var(--muted);font-size:12.5px;white-space:nowrap}
+.fgpthumb{display:flex;gap:10px;align-items:flex-start;margin:4px 0 8px;padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--soft)}
+.fgpthumb img{flex:0 0 96px;width:96px;height:72px;object-fit:cover;border-radius:6px}.fgpthumb figcaption{font-size:13.5px;line-height:1.4;min-width:0}
 /* bookmarks and notes (2026-10-12): a small toggle at the end of the Contents row and in the Audiobook text header, a one line row under it, My notes */
 .bmbtn{flex:0 0 auto;display:inline-grid;place-items:center;width:32px;height:32px;margin:0 0 0 auto;padding:0;background:transparent;color:var(--accent);border:1px solid var(--line);border-radius:7px;cursor:pointer}
 .bmbtn svg path{fill:none}.bmbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}.bmbtn[aria-pressed="true"] svg path{fill:currentColor}

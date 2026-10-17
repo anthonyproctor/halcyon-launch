@@ -1496,6 +1496,19 @@ function fgReach(){if(store.get("spoilers",false))return 99;let r=Math.max(1,sto
 const fgFirst=e=>Math.min(...e.levels.map(l=>l.from));
 const fgLevels=(e,r)=>e.levels.filter(l=>l.from<=r);
 function fgSvg(e,r){const d=document.createElement("div");d.innerHTML=e.svg;d.querySelectorAll("[data-from]").forEach(x=>{if(+x.dataset.from>r)x.remove()});return d.innerHTML}
+/* Field guide media (2026-10-17; sources, licenses and credits in art/guide/sources.json). An entry may carry a painted scene (e.scene,
+   shown only from chapter e.scene.from, its svg labels laid over it in the picture's own viewBox) and a real world photo (e.photo,
+   "In real life": caption and credit under it). Both are optional; width and height are set so nothing shifts while they load. */
+const fgDim=m=>`width="${+m.w||0}" height="${+m.h||0}"`;
+const fgCredit=(m,lead)=>m.credit?`<span class="fgcredit">${lead?esc(lead)+" ":""}${esc(m.credit)}</span>`:"";
+function fgScene(e,r){const s=e.scene;if(!s||!s.src||r<(+s.from||1))return "";const d=document.createElement("div");d.innerHTML=s.overlay||"";d.querySelectorAll("[data-from]").forEach(x=>{if(+x.dataset.from>r)x.remove()});
+  return `<figure class="fgscene" data-fgscene="${esc(e.id)}"><div class="fgscenebox" style="aspect-ratio:${+s.w||16}/${+s.h||9}"><img src="${esc(s.src)}" alt="${esc(s.alt||"")}" ${fgDim(s)} loading="lazy" decoding="async"><div class="fgover">${d.innerHTML}</div></div>
+    <figcaption>${s.caption?`<span>${esc(s.caption)}</span> `:""}${fgCredit(s)}</figcaption></figure>`}
+function fgPhoto(e){const p=e.photo;if(!p||!p.src)return "";
+  return `<h2>In real life</h2><figure class="fgphoto" data-fgphoto="${esc(e.id)}"><img src="${esc(p.src)}" alt="${esc(p.alt||"")}" ${fgDim(p)} loading="lazy" decoding="async">
+    <figcaption>${p.caption?`<span>${esc(p.caption)}</span> `:""}${fgCredit(p,"Photo:")}</figcaption></figure>`}
+function fgPhotoThumb(e){const p=e.photo;if(!p||!p.src)return "";
+  return `<figure class="fgpthumb" data-fgphoto="${esc(e.id)}"><img src="${esc(p.src)}" alt="${esc(p.alt||"")}" width="96" height="72" loading="lazy" decoding="async"><figcaption><b>In real life.</b> ${esc(p.caption||"")} ${fgCredit(p,"Photo:")}</figcaption></figure>`}
 function fgLevelsHTML(e,r){const by=new Map();fgLevels(e,r).forEach(l=>{if(!by.has(l.from))by.set(l.from,[]);by.get(l.from).push(l.text)});
   return [...by].map(([n,t])=>`<h3 class="fgch">Chapter ${n}</h3><div class="story">${t.map(x=>`<p>${esc(x)}</p>`).join("")}</div>`).join("")}
 function renderFieldGuide(id){setTimeout(ambSync,0);setTimeout(navSync,0);fgClose(false);
@@ -1509,14 +1522,14 @@ function renderFieldGuide(id){setTimeout(ambSync,0);setTimeout(navSync,0);fgClos
     $("page").querySelectorAll("[data-fg]").forEach(b=>b.onclick=()=>{renderFieldGuide(b.dataset.fg);top()});$("spoil").onchange=ev=>{store.set("spoilers",ev.target.checked);renderFieldGuide()};return}
   const lv=fgLevels(e,r),nx=e.levels.map(l=>l.from).filter(n=>n>r).sort((a,b)=>a-b)[0];
   $("page").innerHTML=`<div class="kicker"><button class="linkbtn" id="fgback" type="button">Places and things</button>${lv.length&&e.kicker?` · ${esc(e.kicker)}`:""}</div>`+(lv.length
-    ?`<h1>${esc(e.title)}</h1><figure class="fgfig">${fgSvg(e,r)}</figure><h2>What it is</h2><div class="story"><p>${esc(e.what)}</p></div><h2>So far in the story</h2>${fgLevelsHTML(e,r)}${nx?`<p class="prog">More unlocks in chapter ${nx}.</p>`:""}`
+    ?`<h1>${esc(e.title)}</h1><figure class="fgfig">${fgSvg(e,r)}</figure>${fgScene(e,r)}<h2>What it is</h2><div class="story"><p>${esc(e.what)}</p></div>${fgPhoto(e)}<h2>So far in the story</h2>${fgLevelsHTML(e,r)}${nx?`<p class="prog">More unlocks in chapter ${nx}.</p>`:""}`
     :`<h1>Not reached yet</h1><p class="prog">Unlocks in chapter ${fgFirst(e)}.</p>`);
   $("fgback").onclick=()=>{renderFieldGuide();top()}}
 function fgSheet(id,from){const e=fgList().find(x=>x.id===id);if(!e)return;const r=fgReach();if(!fgLevels(e,r).length)return;fgClose(false);
   const back=document.createElement("div");back.className="wback";back.id="fgshade";back.onclick=()=>fgClose(true);
   const el=document.createElement("section");el.className="wpanel fgsheet";el.id="fgsheet";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-labelledby","fgtitle");el.tabIndex=-1;
   el.innerHTML=`<div class="whead"><h2 id="fgtitle" tabindex="-1">${esc(e.title)}</h2><button type="button" class="btn ghost small" id="fgclose">Close</button></div>
-    <figure class="fgfig">${fgSvg(e,r)}</figure><p class="fgwhat">${esc(e.what)}</p><h3 class="wsub">So far in the story</h3>${fgLevelsHTML(e,r)}
+    <figure class="fgfig">${fgSvg(e,r)}</figure><p class="fgwhat">${esc(e.what)}</p>${fgPhotoThumb(e)}<h3 class="wsub">So far in the story</h3>${fgLevelsHTML(e,r)}
     <div class="bar"><button type="button" class="btn small" id="fgfull">Open the full page</button></div>`;
   FG.inert=[...document.body.children].filter(x=>!x.inert&&!/^(SCRIPT|STYLE|LINK)$/.test(x.tagName));FG.inert.forEach(x=>x.inert=true);
   document.body.append(back,el);FG.ret=from||null;
