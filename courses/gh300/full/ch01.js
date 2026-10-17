@@ -17,7 +17,7 @@
     `<span class="said" data-who="Asha">"Saw it,"</span> Asha said. <span class="said" data-who="Asha">"Before you do anything, what do you actually know about how people there use Copilot today?"</span>`,
     `<span class="said" data-who="Priya">"Honestly? Not much."</span>`,
     `Asha let that sit a second. <span class="said" data-who="Asha">"Good. That's the right starting point. I'll send you something by lunch."</span>`,
-    `At 11:50 her phone buzzed with three photos of index cards covered in purple felt tip. Asha used to hand a stack like it to every new nurse on her shift. Across the top card she'd written: <span class="said" data-who="Asha">"Shift notes for a new kind of copilot. Read before you start."</span>`
+    `At 11:50 her phone buzzed with five photos of index cards covered in purple felt tip. Asha used to hand a stack like it to every new nurse on her shift. Across the top card she'd written: <span class="said" data-who="Asha">"Shift notes for a new kind of copilot. Read before you start."</span>`
   ],
   lesson: {
     title: `Asha's Shift Notes: what you're actually rolling out`,
