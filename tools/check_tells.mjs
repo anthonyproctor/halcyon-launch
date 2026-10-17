@@ -6,7 +6,7 @@ const J=/\b(since|so that|so the|because)\b/i, cl=t=>t.split(/,| and |:|;/).leng
 let bad=0;
 function mock(f){ // mock/*.js: {q, opts:[strings], a}
   const src=fs.readFileSync(f,'utf8'); const w={}; new Function('window',src)(w); let n=0,hit=0,lng=0,sh=0,few=0,cb=0,co=0,no=0,jb=0,jo=0;
-  for(const p of w.HALCYON_MOCK||[]) for(const q of p.questions){ n++; const os=q.opts.map((t,k)=>({t,s:k===q.a?3:0}));
+  const parts=[...(w.HALCYON_MOCK||[]), ...Object.values(w.HALCYON_DATA||{}).flatMap(c=>c.mock||[])]; for(const p of parts) for(const q of p.questions){ n++; const os=q.opts.map((t,k)=>({t,s:k===q.a?3:0}));
     const sc=o=>(J.test(o.t)?-10:0)+cl(o.t), pk=os.reduce((a,b)=>sc(b)>sc(a)?b:a), L=os.reduce((a,b)=>b.t.length>a.t.length?b:a);
     if(pk.s===3)hit++; if(L.s===3)lng++; const S=os.reduce((a,b)=>b.t.length<a.t.length?b:a), F=os.reduce((a,b)=>cl(b.t)<cl(a.t)?b:a); if(S.s===3)sh++; if(F.s===3)few++; for(const o of os){ if(o.s===3){cb+=cl(o.t); if(J.test(o.t))jb++;} else {co+=cl(o.t); no++; if(J.test(o.t))jo++;} } }
   return {n,hit,lng,sh,few,cb,co,no,jb,jo};
