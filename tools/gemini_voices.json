@@ -175,7 +175,11 @@
    "Teo": {"voice": "Umbriel", "style": "A man's voice. Quiet, guarded, plain.", "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
    "Ana": {"voice": "en-us-tutor-14", "style": "A woman's voice. Gruff, exact, drily funny.", "gender": "f", "f0_low": 115, "f0_char_low": 130, "sim_min": 0.92, "tone_sim_min": 0.88, "run": true},
    "Bianca": {"voice": "Despina", "style": "A woman's voice. Low, warm, plainspoken.", "run": true, "gender": "f"},
-   "Lupe": {"voice": "Leda", "style": "A little girl. Bright, curious, simple.", "run": true, "gender": "f"}
+   "Lupe": {"voice": "Leda", "style": "A little girl. Bright, curious, simple.", "run": true, "gender": "f"},
+   "Consuelo": {"voice": "Pulcherrima", "style": "An old woman's voice. Warm, sharp, unhurried.", "run": true, "gender": "f", "f0_low": 100, "f0_char_low": 115, "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Alma": {"voice": "Vindemiatrix", "style": "A young woman's voice. Cool, firm, careful.", "run": true, "gender": "f"},
+   "Gene": {"voice": "en-us-tutor-8", "style": "An older man's voice. Flat, guarded, plainspoken.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Ronnie": {"voice": "en-us-concierge-10", "style": "A man's voice. Warm, rueful, plainspoken.", "run": true, "gender": "m"}
   }
  }
 }
