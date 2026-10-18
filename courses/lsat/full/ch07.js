@@ -174,7 +174,7 @@
         `<prop type="doc" title="Detective G. Vigil, case summary, October 29, 2007, last paragraph">Witnesses at the scene did not report any other male in a confrontation with the victim. No other suspect was developed.</prop>`,
         `She knew what sat under that paragraph, because she'd read it all. Patrons' names not obtained. The bar empty before the first car came. A refinery crew list Gene got from the shift supervisor and never called. She wrote it out on the inside cover of her prep book the way Ana would: nobody reported another man; nobody asked; so there wasn't one. Then she went looking for its twin.`],
       opts:[
-        {t:`No guests reported any noise on the fourth floor, so the fourth floor has none. The hotel asked only the guests on the first three floors.`, s:3, best:true, d:{trust:1,conf:0,health:4},
+        {t:`No guests reported any noise on the fourth floor, so the fourth floor has none. The hotel only asked guests on the first three floors.`, s:3, best:true, d:{trust:1,conf:0,health:4},
           after:`Same hole. You can't report what nobody asks you about. She circles it, and then she circles did not report in Gene's paragraph, on her phone, with her thumb, which does nothing at all.`,
           why:`Parallel flaw. No report, from people who were never asked, taken as proof there's nothing to report. The hotel never asked the fourth floor, and nobody asked the crew. Same mistake.`},
         {t:`No guests reported any noise on the fourth floor, so there probably isn't much. Every guest on that floor was asked about it.`, s:1, d:{trust:0,conf:0,health:1},
@@ -187,7 +187,7 @@
           after:`Taking somebody's word because they're the one saying it. Gene's paragraph doesn't do that. It says nobody said anything.`,
           why:`Parallel flaw. This rests on an authority being trusted. Gene's reasoning rests on the absence of reports, a different flaw.`}
       ]},
-    { id:`f7s8`, domain:`Logical Reasoning`, task:`LR16`, title:`Nobody`,
+    { id:`f7s8`, domain:`Logical Reasoning`, task:`LR16`, title:`Nobody`, q:`What did Pa just do with her question?`,
       text:(s,all,G)=>[`Her phone went in the glove box with the prep book and the envelope. Her jacket stayed on the seat. Inside, at the desk, she showed her license and the one debit card they let you bring for the machines, and a woman in a fleece vest handed her a laminated card to read while she waited.`,
         `<prop type="doc" title="Card at the visiting desk">Bring one photo ID and one debit or credit card. No phones, watches, books or papers past this desk. Coats, jackets, hats and hoods stay outside. Except for vending machine items, nothing passes between visitor and resident. Games go back to the desk thirty minutes before visiting ends.</prop>`,
         `It was cold in there, like he'd said, and bright. Round tables bolted down, the machines on one wall, a TV up in a corner with the sound off showing a golf tournament nobody was watching. He came through the far door in the green they all wore. Older than his voice. Grayer, thinner through the shoulders. Then he saw her and grinned and walked too fast, and the officer said something, and he slowed down about one step's worth.`,
@@ -212,7 +212,7 @@
           after:`<span class="said" data-who="Luis">"I just told you I did,"</span> he says, quietly, and she hears it again, the thing she drove up here for. She'd answered the man on the phone, not the one at the table.`,
           why:`Method of reasoning. Contradicted. He's just admitted the first punch, at this table, out loud, after denying it to Gene in 2007 and to her on the phone in January. So a description of his move can't have him denying it. The move she has to describe comes afterward, when she asks him about the kid and he starts talking about her sleep and her test instead.`}
       ]},
-    { id:`f7s9`, domain:`Logical Reasoning`, task:`LR14`, title:`Going home`,
+    { id:`f7s9`, domain:`Logical Reasoning`, task:`LR14`, title:`Going home`, q:`Which line about Benny has the same shape as Pa's argument about going home?`,
       text:(s,all,G)=>[`<span class="said" data-who="Dani">"And after?"</span> she said.`,
         `<span class="said" data-who="Luis">"After, Ronnie threw me out, and I went home. By myself."</span> He said the going home part to the board, in the same words he'd given Gene in 2007 and her on a hundred Wednesdays since. <span class="said" data-who="Luis">"A man who just got thrown out of a bar for fighting goes home, mija. He doesn't go back out looking for more. I got thrown out. So I went home."</span>`,
         `At the next table a little boy in light up shoes was trying to climb into his father's lap, and his mother kept telling him not yet, not yet, baby, and the shoes kept flashing red against the table leg. Dani watched them for a second. Then she answered her father the way he'd taught her to answer a move on the garage sale board, with a move of her own.`],
@@ -247,7 +247,7 @@
           after:`<span class="said" data-who="Luis">"That's what I told Gene,"</span> he says, dry, and drinks some of his coffee. It was. Never, so not this time. That mistake was his, not hers, and he'd been making it since 2007.`,
           why:`Parallel flaw. A different flaw: from never to not this once. The thought she's fighting runs from one lie to every claim.`}
       ]},
-    { id:`f7s11`, domain:`Logical Reasoning`, task:`LR14`, title:`The board`,
+    { id:`f7s11`, domain:`Logical Reasoning`, task:`LR14`, title:`The board`, q:`Which spill story most closely parallels Brennan's argument?`,
       text:(s,all,G)=>[`At three the woman at the desk called it. <span class="said" data-who="woman">"Games back, folks. Thirty minutes."</span>`,
         `<span class="said" data-who="Luis">"That's been sitting there since January,"</span> her father said, about the bishop.`,
         `It was still on her knight's old square. Two of her pawns could take it. She went for the one next to her king, the one Lupe had poked at in January, and stopped with her hand over it.`,

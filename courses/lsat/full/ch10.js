@@ -62,7 +62,7 @@
     video: [`yZDldMokOWc`,`Intro to Paradox Questions | LSAT Logical Reasoning`,`LSAT Demon`,`4:44`]
   },
   scenes: [
-    { id:`f10s1`, domain:`Logical Reasoning`, task:`LR18`, title:`Not for gas`,
+    { id:`f10s1`, domain:`Logical Reasoning`, task:`LR18`, title:`Not for gas`, q:`What best explains their father tossing out the proof of that stop, then denying the stop for years?`,
       text:(s,all,G)=>[`Wednesday, June 30. At 5:58 the phone lit up on the nightstand.`,
         `<prop type="text" from="Teo" time="5:58 AM">you up</prop>`,
         `She was. She'd been up since four, listening to the sprinklers come on across the street. She wrote back yeah, and he wrote back that Bianca had looked it up and the scores came out at seven, and then nothing, and she pictured him sitting in the truck in his driveway with the phone on his knee.`,
@@ -114,7 +114,7 @@
         {t:`"All she ever lied about was where you were, Teo. A boy in that lot was enough for her."`, s:3, best:true, d:{trust:1,conf:3,health:4},
           after:`Teo says that isn't the same thing. She says it's the whole difference. Abuela's lie was about a place. It didn't need her to know anything about the lot except that a ten year old had been in it, and she'd washed what was on his hands without once asking what it was. He sits with that. He doesn't say she's right, and he doesn't say she's wrong.`,
           why:`Resolve the paradox. Two facts: she never lied, and she lied for him. Teo squares them with the worst thing he can think of. You square them with less. The lie was about where he was, nothing more, and a ten year old in a bar fight is reason enough for a grandmother. It takes no belief about what he did.`},
-        {t:`"Pa asked her to. Abuela would have done anything at all Pa asked her for, and did."`, s:1, d:{trust:0,conf:1,health:1},
+        {t:`"Pa asked her to. Abuela would have done anything at all Pa ever asked her for, and she did."`, s:1, d:{trust:0,conf:1,health:1},
           after:`<span class="said" data-who="Teo">"I know he asked her,"</span> Teo says. <span class="said" data-who="Teo">"That's not what I said."</span> He's right. It explains why she told it. It doesn't touch what he's built on top of it, that a lie that big means a thing that bad.`,
           why:`Resolve the paradox. True, and only half. Luis asking explains why there was a lie to tell. It doesn't explain why a woman who never lied would tell it, and that's the fact Teo's conclusion rests on.`},
         {t:`"She saw what was on your hands, Teo. She knew right then that man wasn't getting up."`, s:0, d:{trust:0,conf:-2,health:-2},
@@ -124,7 +124,7 @@
           after:`<span class="said" data-who="Teo">"Since supper,"</span> Teo says. <span class="said" data-who="Teo">"She said since supper, Dani. I was in that bar at supper."</span> A lie with an hour in it is still a lie, and it doesn't answer what he asked her.`,
           why:`Resolve the paradox. It explains the facts away instead of reconciling them. She said since supper. That wasn't true, whatever it felt like to her.`}
       ]},
-    { id:`f10s3`, domain:`Logical Reasoning`, task:`LR17`, title:`Where`,
+    { id:`f10s3`, domain:`Logical Reasoning`, task:`LR17`, title:`Where`, q:`Which question to Teo would do the most to test what she suspects?`,
       text:(s,all,G)=>[`Sunday Abuela drove him home after lunch. Dani was already there. She'd come home from the sleepover in Thornton at eight that morning, and she'd been down to the basement once already and seen the jacket in the washer, and come back up and said nothing to anybody, because Ma was asleep from her shift, and the only other person up was Pa, at the kitchen table, and it was his jacket.`,
         `<span class="said" data-who="Teo">"A guy in a tan coat comes at three,"</span> Teo said. <span class="said" data-who="Teo">"You take him down the basement. I'm on the top step in my socks. You've got your back to the stairs the whole time. I hear you tell him Ma does the wash on Mondays. Then he comes back up past me with Pa's jacket in a paper bag, and he says excuse me, son. Like I'm in his way."</span>`,
         `She'd stayed down by the washer after, she remembered that, a long while, with her hand on the lid. She'd never known he was on the stairs. Fifteen, and right there, and she'd never once seen him.`,
@@ -164,7 +164,7 @@
         {t:`It hurt him a good deal less than it looked to a boy of ten in the dark.`, s:1, d:{trust:0,conf:0,health:1},
           after:`Superficial, yes. But less than it looked isn't what the page is about. The page is about what killed him, and it's careful to say the cut didn't.`,
           why:`Application. Partly right. Superficial does describe the cut. But the passage's point about it is that it didn't contribute to the death, and this answer leaves that out.`},
-        {t:`It's what knocked him back against the curb, and the fall did the rest.`, s:0, d:{trust:-1,conf:0,health:-2},
+        {t:`It's what knocked him back down against the curb, and the fall did all the rest.`, s:0, d:{trust:-1,conf:0,health:-2},
           after:`The report doesn't say what put him on the curb. It says the fracture at the back killed him and the cut in front is a separate injury. Putting the fall on his swing is the one thing the page never does.`,
           why:`Application. Unsupported. The report says the cut played no part in the death. It never says what put him on the curb, so its words can't be carried over to say the swing caused the fall.`}
       ]},
@@ -178,7 +178,7 @@
         {t:`"Then somebody else hit him after you did, Teo, at the curb, and that's the only way it works."`, s:1, d:{trust:0,conf:0,health:1},
           after:`Maybe somebody did. Consuelo saw somebody. But a man can go over backward against a curb with nobody's help, and the report doesn't say which. What has to be false is narrower, and she went past it to the one he can argue with. <span class="said" data-who="Teo">"You don't know that,"</span> he says, and he's right.`,
           why:`Must be false. It goes too far the other way. Both accounts leave room for a second attacker, and Consuelo saw one, but neither requires it. He could have fallen. A must be false question wants the claim the facts rule out, not one they merely suggest.`},
-        {t:`"Then that cut barely hurt him, Teo. It only looked bad in the dark out there."`, s:0, d:{trust:0,conf:-1,health:-2},
+        {t:`"Then that cut barely hurt him, Teo. It only looked that bad in the dark out there in the lot."`, s:0, d:{trust:0,conf:-1,health:-2},
           after:`Teo stares at her. <span class="said" data-who="Teo">"He was bleeding through his fingers."</span> The report says superficial, not small. A cut can be shallow and still bleed like that. She's said a thing the page doesn't, and he caught it.`,
           why:`Must be false. Not what the facts rule out. Superficial means shallow, not painless, and the report never says how much the cut hurt. It says the fracture was fatal.`},
         {t:`"Then it can't be true that your swing killed him. One swing, there, and he walked off."`, s:3, best:true, d:{trust:1,conf:3,health:4},
@@ -212,7 +212,7 @@
           after:`She writes it down and looks at it and can't keep it. Not since 11:05. If she's taking Teo's night as true, and she is, then guilty is the one thing this question can't be explained by.`,
           why:`Resolve the paradox. It throws out one of the facts. A paradox answer has to let both facts stand, and here one of them is that Luis didn't do it.`}
       ]},
-    { id:`f10s7`, domain:`Reading Comprehension`, task:`RC06`, title:`How far apart`,
+    { id:`f10s7`, domain:`Reading Comprehension`, task:`RC06`, title:`How far apart`, q:`From that page alone, what can she properly infer?`,
       text:(s,all,G)=>[`At one in the morning she had the report out of the folder and flat on the table under the lamp, the copy Ana gave her in June, eight pages stapled at the corner. She read the last paragraph again, the 2007 doctor's. Then the page with the two injuries on it, one above the other.`,
         `Teo needed an order. A blow, then a man walking off, then a curb. The State had needed an order too, the other way around. She wanted to know how much of anybody's order was on this page, and how much she'd be bringing to it.`,
         `And the cuff. The blood on it was the third thing the court had leaned on in 2010, after the jacket and the fight. Some of what was on that sleeve had come off a ten year old's hands before ten to eleven, twenty five minutes before anybody was at the curb.`,
@@ -231,12 +231,12 @@
           after:`Separate, and that's all. The page doesn't keep time. She turns her card over and writes the times down from where they came from. Ten to eleven, the boy crying, by Consuelo's stove. 11:04, the call to Shannon. 11:05, the register over Teo's Gatorade. 11:15, Consuelo at her window again. The report isn't in any of them. Every clock that night belonged to somebody else, and the one Teo read, he read at ten.`,
           why:`Inference. The report calls the injuries separate, which means two distinct injuries, not one. It says nothing about when either happened, so you can't infer how much time passed between them. The order has to come from the witnesses.`}
       ]},
-    { id:`f10s8`, domain:`Logical Reasoning`, task:`LR17`, title:`The next morning`,
+    { id:`f10s8`, domain:`Logical Reasoning`, task:`LR17`, title:`The next morning`, q:`Which would be most useful to know in testing her card?`,
       text:(s,all,G)=>[`Sunday, July 11. She found the corner on the map on her phone at seven, before coffee. Teo had said by the on ramp, and there was only one on ramp it could be. It was a tire shop now, like he'd said. Four miles from where the Night Owl had stood.`,
         `When he tells you the rest, I want it the next morning. It was the next morning, and a Sunday. Monday at seven, then, before her bus. That gave her a day to try to break it first.`,
         `She wrote it on a card first, as Ana would have made her. PA AT A PUMP FOUR MILES OFF AT 11:05. SO PA WASN'T THE MAN AT THE CURB AT 11:15. If she walked in on Federal with an argument, it had better be one she'd already tried to break.`],
       opts:[
-        {t:`Whether Pa paid for the gas and the Gatorade in cash, or with a card in his name.`, s:0, d:{trust:-1,conf:0,health:-2},
+        {t:`Whether Pa paid for the gas and the Gatorade in cash, or with a card that had his name on it.`, s:0, d:{trust:-1,conf:0,health:-2},
           after:`Cash or card might change what a records search could find twenty years later, which is nothing anyway. It doesn't change whether the argument works. Monday morning she tells Ana all of it, the card and the tire shop and the blue Gatorade, and Ana asks the question she didn't.`,
           why:`Evaluate the argument. Irrelevant to the reasoning. How he paid says nothing about whether a man at that pump at 11:05 could be at the curb at 11:15.`},
         {t:`Whether a man could drive those four miles back to the lot before 11:15.`, s:3, best:true, d:{trust:2,conf:1,health:4},

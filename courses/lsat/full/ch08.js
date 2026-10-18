@@ -82,12 +82,12 @@
           after:`Ana asks who ever said the man at the curb came out of the bar. Nobody had. Dani had done Meredith's homework for her, and thrown in a little extra for free.`,
           why:`Flaw. It turns the share into a new claim the numbers don't reach. Most of the room had no jacket, fine. That tells you about the room. It doesn't tell you the man at the curb was ever in it, and nobody has shown he was.`}
       ]},
-    { id:`f8s2`, domain:`Logical Reasoning`, task:`LR08`, tags:[`STAT`], title:`Seen`,
+    { id:`f8s2`, domain:`Logical Reasoning`, task:`LR08`, tags:[`STAT`], title:`Seen`, q:`Which reply most weakens Meredith's sentence about the fight?`,
       text:(s,all,G)=>[`Ana underlined the last sentence twice. The second line came out wobbly, because Dicta picked that moment to lean her whole weight on Ana's shin. Exactly one man was seen fighting Travis Hensley.`,
         `<span class="said" data-who="Ana">"That's the one she believes,"</span> she said. <span class="said" data-who="Ana">"The rest of the paragraph is upholstery. She'll say it at the hearing in just those words, and she'll say it like it's arithmetic too."</span> She set the pencil down on the page and pushed Dicta off her shin. <span class="said" data-who="Ana">"Weaken it."</span>`,
         `Dani knew the patrol report by heart now, the way she knew the bus schedule. Patrons' names not obtained. And Ronnie in January, across the table at the taqueria with a towel on his shoulder, saying it like it was nothing: I couldn't see over the people.`],
       opts:[
-        {t:`"Ronnie didn't see what started it. He only looked up when the yelling got loud enough."`, s:1, d:{trust:0,conf:0,health:1},
+        {t:`"Ronnie never saw what started it, by his own account. He only looked up when the yelling got loud."`, s:1, d:{trust:0,conf:0,health:1},
           after:`<span class="said" data-who="Ana">"Which makes him a worse witness to the start,"</span> Ana says. <span class="said" data-who="Ana">"He still saw two men fighting. She didn't say anything about how it started. She said who was seen."</span>`,
           why:`Weaken. This goes after Ronnie on how the fight began, and Meredith never claimed he saw the beginning. She claimed one man was seen fighting. Ronnie saw that much, whatever he missed before it.`},
         {t:`"Seen by Ronnie, who couldn't see over the crowd. Nobody else in that room was ever asked."`, s:3, best:true, d:{trust:2,conf:0,health:4},
@@ -171,7 +171,7 @@
           after:`<span class="said" data-who="Ana">"Couldn't have known what?"</span> Ana says. <span class="said" data-who="Ana">"The jacket doesn't tell you what's under a man's nails. That's timing. The line's wrong for a different reason."</span>`,
           why:`Strengthen or weaken a passage claim. When he cancelled it doesn't bear on whether foreign DNA would be of no value about the lot.`}
       ]},
-    { id:`f8s7`, domain:`Logical Reasoning`, task:`LR06`, tags:[`STAT`], title:`Page eleven`,
+    { id:`f8s7`, domain:`Logical Reasoning`, task:`LR06`, tags:[`STAT`], title:`Page eleven`, q:`Gene's reasoning from the ten or eleven calls is most vulnerable to which criticism?`,
       text:(s,all,G)=>[`Saturday, May 15, nine in the morning, Gene's notebook out of its freezer bag on Ana's desk. Ana had flagged page eleven with a strip of yellow paper. A column of names in Gene's square hand, two of them misspelled and fixed, and across the top, PVR DAY SHIFT 10/27 PER SUPV. Twenty one names. The fourth one down was RUIZ, L.`,
         `She took her own phone out to the landing, shut Ana's door behind her, and called Northglenn.`,
         ((s.flags.calledgenealiar||G.calledgenealiar)
@@ -186,14 +186,14 @@
         {t:`"You pulled it because you knew what it would show. You didn't want to find another man."`, s:0, d:{trust:-1,conf:0,health:-3},
           after:`<span class="said" data-who="Gene">"I've told you what I did,"</span> he says, flat, and she hears the hose start up again on his end. That's the end of the call, near enough. She'd gone after the man and left his reason standing.`,
           why:`Flaw. That's an accusation about motive, not a flaw in what he argued. His reasoning has a real hole, and this walks right past it.`},
-        {t:`"Those were the fights somebody called in, Gene. The ones nobody called in never got to you."`, s:3, best:true, d:{trust:2,conf:0,health:4},
+        {t:`"Those were fights somebody called in, Gene. The ones nobody called in never got to you."`, s:3, best:true, d:{trust:2,conf:0,health:4},
           after:`Nothing on the line. Then a sound like a laugh with no fun in it. <span class="said" data-who="Gene">"Nobody calls about the ones that go fine,"</span> he says. <span class="said" data-who="Gene">"Or the ones that go out back where nobody's looking."</span> He's quiet again. <span class="said" data-who="Gene">"Eleven I got called to. That's all I ever knew about that bar."</span>`,
           why:`Flaw. Gene builds a rule from the fights he was called to, and those aren't a fair sample of the bar's fights. A fight that went out back and ended where nobody saw it never became a call, so the rule was built from exactly the cases most likely to fit it.`},
         {t:`"Then you should've tested it anyway, Gene. If you were right, it would only have proved it."`, s:0, d:{trust:-1,conf:0,health:-2},
           after:`<span class="said" data-who="Gene">"Should've,"</span> he says. <span class="said" data-who="Gene">"Sure. I've got a garage full of should've."</span> It's true, and it doesn't touch why he thought he was right.`,
           why:`Flaw. It's fair advice, but it doesn't name what's wrong with his reasoning. The question is why his rule didn't hold, and that's about where his cases came from.`}
       ]},
-    { id:`f8s8`, domain:`Logical Reasoning`, task:`LR06`, tags:[`STAT`], title:`The city`,
+    { id:`f8s8`, domain:`Logical Reasoning`, task:`LR06`, tags:[`STAT`], title:`The city`, q:`What, if anything, is wrong with the caption's reasoning?`,
       text:(s,all,G)=>[`Sunday, May 16, she built the count at the kitchen table on her laptop, with page eleven copied out beside it and the 2007 box score open in another window. Game 3. A Saturday night at Coors Field, the Rockies' first World Series game at home, and Boston fans all over the city in red.`,
         `<prop type="chart" kind="bars" title="Red, the night of Saturday, October 27, 2007 (Dani's draft)" labels="At Coors Field for Game 3,On Gene's crew list,Crew besides Pa anybody interviewed,Men seen fighting Travis" values="49983,21,0,1">Under it, her caption: The city was full of red that night. Fifty thousand at the game alone, Boston everywhere. The jacket was the most common thing in Denver, so it couldn't point at anybody.</prop>`,
         `The first bar ran clear across the screen. The other three were slivers. She had her thumb on send a long while, and then she didn't send it. She read the caption the way Ana would, with a pencil she didn't have.`],
@@ -251,7 +251,7 @@
           after:`<span class="said" data-who="Ana">"That's Meredith's,"</span> Ana says. <span class="said" data-who="Ana">"It makes him the regular in red. You just argued her habit evidence for her."</span>`,
           why:`Strengthen. Reversed. It ties Luis more tightly to the jacket, which helps the State, not the claim.`}
       ]},
-    { id:`f8s11`, domain:`Logical Reasoning`, task:`LR08`, tags:[`STAT`], title:`Twenty`,
+    { id:`f8s11`, domain:`Logical Reasoning`, task:`LR08`, tags:[`STAT`], title:`Twenty`, q:`What should Dani make of what Shannon said?`,
       text:(s,all,G)=>[`Tuesday night a Denver news site ran it. Celia didn't send it this time. Dani found it herself at eleven, in bed, which was the wrong place.`,
         `<prop type="doc" title="News item, Tuesday, May 18, 2027">Prosecutors in Adams County won't oppose DNA testing in the case of a man convicted of a 2007 death outside a Commerce City bar, according to a court filing. Luis Ruiz, 62, is serving forty years for second degree murder in the death of Travis Hensley, 31. His lawyer says evidence collected in 2007 was never tested, and that the red work jacket at the center of the trial was common among men in the bar that night. Shannon Hensley, the victim's sister, said she wasn't surprised. "Let them count jackets," she said. "Say there were twenty. One of them fought my brother and went out the back after him."</prop>`,
         `On the nightstand, in her own capitals from Sunday, before Ana: SAY 20 JACKETS IN THE BAR. PA IS ONE. 19 IN 20 IT WASN'T HIM.`,
@@ -270,7 +270,7 @@
           after:`It's true. Ana would say so. But make it ten jackets and it's still one in ten, and Shannon's sentence would still be sitting there on her phone, untouched.`,
           why:`Weaken. Fair enough, twenty is a guess. Cut it in half and Luis is still one in ten. What really hurts the card is that one of those jackets wasn't like the others, and this choice never gets near that.`}
       ]},
-    { id:`f8s12`, domain:`Logical Reasoning`, task:`LR17`, title:`Queen`,
+    { id:`f8s12`, domain:`Logical Reasoning`, task:`LR17`, title:`Queen`, q:`Which question would best test the State's timeline?`,
       text:(s,all,G)=>[`Wednesday, May 19, seven. Her step. The recording, and then him, before she could say anything at all. <span class="said" data-who="Luis">"Queen goes home."</span>`,
         `She'd carried the board down to the step for once, and she moved it there on her knees. His queen off the long file, back to the square it started the game on, and the file in front of her king was just a file again, closed, with nobody at the far end of it. Four weeks he'd looked at it. That was what he'd been looking at.`,
         ((s.flags.pushedluis||G.pushedluis)

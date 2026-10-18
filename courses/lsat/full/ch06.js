@@ -124,7 +124,7 @@
           after:`<span class="said" data-who="Ana">"Angry judges are a myth,"</span> Ana says. <span class="said" data-who="Ana">"Tired judges are real. I didn't sort them. I cut them."</span>`,
           why:`Principle. It describes ordering, and she didn't reorder anything. She removed points.`}
       ]},
-    { id:`f6s4`, domain:`Logical Reasoning`, task:`LR19`, title:`Ninth`,
+    { id:`f6s4`, domain:`Logical Reasoning`, task:`LR19`, title:`Ninth`, q:`What point are Dani and Ana really at odds over?`,
       text:(s,all,G)=>[`Dani looked at the three wiped lines. She'd sat in Ronnie's taqueria for one of them and read Archuleta's testimony twice on the bus for another.`,
         `<span class="said" data-who="Dani">"They're all true,"</span> she said. <span class="said" data-who="Dani">"Every one. Ronnie didn't see it start. Archuleta wrote down what he felt like writing down. Put them back. Each one's another reason. Nine reasons is more than three."</span>`,
         `<span class="said" data-who="Ana">"They're all true,"</span> Ana said. <span class="said" data-who="Ana">"True was never the test."</span> She sat down on the edge of the desk, which she also never did. <span class="said" data-who="Ana">"In 2010 I filed a brief for your father with nine issues. Nine. I had a jury instruction. I had a juror who might've been asleep. I had a hearsay ruling. I had the jacket, and I put the jacket ninth."</span> She said it to the whiteboard. <span class="said" data-who="Ana">"The court spent ten pages on the first eight. The jacket got one sentence, on the last page, under remaining contentions. I read that sentence standing up in the hall."</span>`,
@@ -132,13 +132,13 @@
         `She stopped there. Dicta's tags rattled once, on the rug. Whatever came after I knew, Ana kept.`,
         `Dani had read that opinion twice on the basement stairs and blamed three judges she'd never met. She'd never once thought about who put the jacket ninth.`],
       opts:[
-        {t:`"So it isn't whether they're true. You and I both say they are. It's whether nine makes it stronger."`, s:3, best:true, d:{trust:2,conf:0,health:4},
+        {t:`"So it isn't whether they're true. We both say they are. It's whether nine makes it stronger."`, s:3, best:true, d:{trust:2,conf:0,health:4},
           after:`<span class="said" data-who="Ana">"That's the fight,"</span> Ana says. <span class="said" data-who="Ana">"You think reasons add up. I think they water each other down. We agree they're true. We agree about the jacket."</span> She picks the eraser up again and doesn't use it. <span class="said" data-who="Ana">"I've had this fight before. I lost it to myself."</span>`,
           why:`Point at issue. Dani says nine reasons beat three. Ana's answer is her 2010 brief, where nine issues told the court she didn't believe in any of them. Both have said the points are true, which leaves the question of whether more of them makes the motion stronger.`},
-        {t:`"We're arguing over whether the judge is going to sit down and read every page we give the court."`, s:0, d:{trust:-1,conf:0,health:-2},
+        {t:`"We're arguing over whether the judge is really going to read every page we give the court."`, s:0, d:{trust:-1,conf:0,health:-2},
           after:`<span class="said" data-who="Ana">"Neither of us said a thing about reading,"</span> Ana says. <span class="said" data-who="Ana">"Though no. Nobody does."</span>`,
           why:`Point at issue. Neither speaker says anything about how much the judge will read.`},
-        {t:`"You think Ronnie and Archuleta lied about what they saw out there. I think they were honest."`, s:0, d:{trust:-1,conf:0,health:-2},
+        {t:`"You think Ronnie and Archuleta lied, both of them. I think they were honest about what they saw."`, s:0, d:{trust:-1,conf:0,health:-2},
           after:`<span class="said" data-who="Ana">"I said they're all true,"</span> Ana says. <span class="said" data-who="Ana">"You said they're all true. That's us agreeing. Find the thing one of us says yes to and the other says no."</span>`,
           why:`Point at issue. Ana never says either witness lied. She says the points are all true, the same as Dani does, and a thing both speakers grant can't be what they're fighting over.`},
         {t:`"This is about 2010, then. Whether nine was the right number for the brief you filed for him."`, s:1, d:{trust:0,conf:0,health:1},
@@ -198,7 +198,7 @@
           after:`<span class="said" data-who="Ana">"Where's that on the card?"</span> Ana says. It isn't. Dani had brought in a rule from somewhere else to make the hard case go away.`,
           why:`Application. The card says nothing about age. Adding a condition the standard doesn't have is the classic application trap.`}
       ]},
-    { id:`f6s8`, domain:`Logical Reasoning`, task:`LR12`, title:`The wall`,
+    { id:`f6s8`, domain:`Logical Reasoning`, task:`LR12`, title:`The wall`, q:`Which rule sums up what Joel just told her?`,
       text:(s,all,G)=>[`At 11:58 Ana pressed the key, and the motion went to Brighton, and nothing happened. No sound. The screen said Submitted. Ana looked at it a while anyway. <span class="said" data-who="Dani">"The lab,"</span> Dani said. <span class="said" data-who="Dani">"Who pays for it?"</span> <span class="said" data-who="Ana">"Not you,"</span> Ana said, and that was all she ever said about it.`,
         `She'd gone in at four on her day off to tell Joel herself, standing in his doorway, before he could hear it anywhere else. Tuesday, March 16, at nine, he closed his door.`,
         (G.usedthesystem
@@ -219,7 +219,7 @@
           after:`<span class="said" data-who="Joel">"I said nobody thinks that,"</span> Joel says, and then he says it again, slower, so she'll hear it. <span class="said" data-who="Joel">"It isn't about you. It's about what somebody can ask later."</span>`,
           why:`Principle. Contradicted. Joel rules out distrust as the reason before she can say it.`}
       ]},
-    { id:`f6s9`, domain:`Logical Reasoning`, task:`LR13`, title:`Two seconds`,
+    { id:`f6s9`, domain:`Logical Reasoning`, task:`LR13`, title:`Two seconds`, q:`Which reply to Celia does Joel's rule call for?`,
       text:(s,all,G)=>[`At 2:40 a chat window opened in the corner of her screen. Celia Lucero, two desks down, who'd walked her through her first year in the office and still remembered how she took her coffee.`,
         `<prop type="chat" from="Celia Lucero" time="Tuesday, 2:40 PM">heard about your dad. im so sorry about all of it. want me to look up that first officer from the motion in the system? whatever address we have. two seconds. nobody would know</prop>`,
         `Joel's door was open again. From her desk she could see the back of his head, bent over something.`,
@@ -260,7 +260,7 @@
           after:`<span class="said" data-who="Luis">"That's what Rudy thinks,"</span> her father says. <span class="said" data-who="Luis">"Same facts, though. Same knife, same clock. A smarter man looking at the same stuff."</span> A second. <span class="said" data-who="Luis">"That's an argument, mija. Brennan would say that."</span>`,
           why:`Principle, apply. A new opinion about the same facts is a better argument, not new evidence about what happened. Coming along later doesn't make old facts new.`}
       ]},
-    { id:`f6s11`, domain:`Logical Reasoning`, task:`LR19`, title:`Thirty`,
+    { id:`f6s11`, domain:`Logical Reasoning`, task:`LR19`, title:`Thirty`, q:`What does Dani say to Teo now?`,
       text:(s,all,G)=>[`Thursday a Denver news site ran four paragraphs on it. Celia sent her the link without a word, which was the kind thing.`,
         `<prop type="doc" title="News item, Thursday, March 18, 2027">A man serving a forty year sentence for a 2007 death outside a Commerce City bar has asked an Adams County judge for DNA testing and a new trial. Luis Ruiz, 61, was convicted in 2008 of second degree murder in the death of Travis Hensley, 31. A motion filed Monday by his lawyer, Ana Brennan, says evidence collected in 2007 was never tested. It also cites a neighbor's account, never presented at trial, that a child was heard crying in the bar's parking lot shortly before the attack. Shannon Hensley, the victim's sister, said she learned of the filing from a letter sent by the district attorney's office. "Nineteen years," she said, "and every letter I get is about him." The district attorney's office declined to comment on a pending case.</prop>`,
         `Friday night, Bianca.`,
@@ -284,7 +284,7 @@
           after:`<span class="said" data-who="Teo">"I never said that."</span> Fast. Too fast. <span class="said" data-who="Teo">"Don't you put that on me. I never said that."</span> He sets the bottle down on the hood of Bianca's car hard enough that it foams over his hand.`,
           why:`Point at issue. Teo never says their father did it, and Dani's half is a guess about why he stays away, not a view either of them has stated. There's no yes and no to find.`}
       ]},
-    { id:`f6s12`, domain:`Logical Reasoning`, task:`LR20`, title:`Same side`,
+    { id:`f6s12`, domain:`Logical Reasoning`, task:`LR20`, title:`Same side`, q:`What can Dani and Teo agree on?`,
       text:(s,all,G)=>[
         ((s.flags.pushedteo||G.pushedteo)
           ?`Teo didn't raise his voice. He got quieter, which was worse, and two of the bus guys found a reason to go inside. <span class="said" data-who="Teo">"You want to know about that night. Okay. They looked everywhere. A detective came down our basement stairs and left with Pa's jacket in a paper bag, and nobody found the flashlight, and nobody found anybody. That was nineteen years ago. Now there's a kid crying in a parking lot in the paper, and you're asking me about it standing next to my own grill."</span>`
@@ -301,7 +301,7 @@
         {t:`"Pa never hurt anybody that night, Teo. Not one single person. You know it, and I know it."`, s:0, d:{trust:-1,conf:-2,health:-2},
           after:`Teo goes very still. <span class="said" data-who="Teo">"Don't,"</span> he says. He doesn't finish it. He puts the bottle on the step and walks into the house, and the screen door slaps shut on its spring. A minute later Lupe is laughing in the kitchen about something, loud, the way she does when she's been told no and has decided not to care.`,
           why:`Point of agreement. Neither one said it. Dani believes Ronnie, besides.`},
-        {t:`"Okay. Then that part we both want. She doesn't hear about him from a stranger on a phone."`, s:3, best:true, d:{trust:1,conf:3,health:4},
+        {t:`"Okay. Then that part we both want, that she doesn't hear about him from a stranger on a phone."`, s:3, best:true, d:{trust:1,conf:3,health:4},
           after:`<span class="said" data-who="Teo">"Yeah."</span> He breathes out, and it hangs under the string lights for a second in the cold. <span class="said" data-who="Teo">"From us."</span> Inside, Lupe gives up the knife and starts bargaining for the bowl instead. <span class="said" data-who="Dani">"Before she's seven,"</span> Dani says. He takes long enough to answer that she thinks he isn't going to. <span class="said" data-who="Teo">"Before she's seven."</span>`,
           why:`Point of agreement. Teo: not off a phone, not from a stranger. Dani, earlier: better she hears it from us, which rules out strangers too. Two yeses on one claim.`}
       ]}

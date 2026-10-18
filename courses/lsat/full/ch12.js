@@ -174,7 +174,7 @@
           after:`<span class="said" data-who="Alma">"She's never going to say that,"</span> Alma says, low. <span class="said" data-who="Alma">"She never saw a face."</span> And the order never asks her to. It says plainly that it makes no finding about who. Dani has just asked an old woman for the one thing she won't give.`,
           why:`Application. The order doesn't depend on any identification, for or against. It makes no finding about who. Applying it to a retrial can't require her to say more than she saw.`}
       ]},
-    { id:`f12s7`, domain:`Logical Reasoning`, task:`LR09`, title:`Under the left hand`,
+    { id:`f12s7`, domain:`Logical Reasoning`, task:`LR09`, title:`Under the left hand`, q:`Going only on the report, what must be true about the man under the left hand?`,
       text:(s,all,G)=>[`Wednesday, October 6, the recording named the county jail, and her father said Brennan had read him the whole order on the legal line the Friday after, every word, and he'd had her read the last part twice.`,
         `<span class="said" data-who="Luis">"A new trial,"</span> he said. <span class="said" data-who="Luis">"Brennan says don't get excited. I told her, Brennan, I'm sixty two. I don't get excited."</span>`,
         `Then, quieter, with a TV going somewhere behind him: <span class="said" data-who="Luis">"This other one. Under the left hand. Brennan says they don't know who he is. So what do they know, mija? About him?"</span>`,

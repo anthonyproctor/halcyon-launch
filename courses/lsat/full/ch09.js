@@ -152,7 +152,7 @@
           after:`All nine? The first eight got ten pages and answers of their own. This sentence is about who struck the victim and nothing else.`,
           why:`Function of a detail. The sentence addresses only the identification issue. Page one says the first eight are taken up one at a time.`}
       ]},
-    { id:`f9s6`, domain:`Reading Comprehension`, task:`RC02`, title:`At all`,
+    { id:`f9s6`, domain:`Reading Comprehension`, task:`RC02`, title:`At all`, q:`What's the primary purpose of page eleven?`,
       text:(s,all,G)=>[`WHY WRITE THE LAST PARAGRAPH AT ALL? Ana had put a pencil line under AT ALL.`,
         `It was a fair question. The court had spent ten pages on eight arguments. It could have stopped at the bottom of page ten, and it wrote one more paragraph instead.`],
       opts:[
@@ -169,7 +169,7 @@
           after:`Nine issues tells a judge you don't believe any of them. Ana had said that in March, to her whiteboard. The court never said it. Ana did.`,
           why:`Primary purpose. Not in the passage. The court says nothing about how many issues were raised or how they were argued.`}
       ]},
-    { id:`f9s7`, domain:`Reading Comprehension`, task:`RC04`, title:`Sufficient`,
+    { id:`f9s7`, domain:`Reading Comprehension`, task:`RC04`, title:`Sufficient`, q:`Which statement is the court committed to by what it wrote on page eleven?`,
       text:(s,all,G)=>[`WHAT WOULD THEY AGREE WITH? The last question on the card. She held page eleven under the lamp and read the sentence slowly, the way she'd read her own testimony on the bus in October.`,
         ((s.flags.overclaimed||G.overclaimed)
           ?`Sufficient. In March she'd written proves in a draft, and Ana had circled it twice. Three judges in 2010 had been more careful with their verb than she'd been with hers.`
@@ -188,7 +188,7 @@
           after:`The page says the man the witness saw. It doesn't say what she saw of him, and Dani knew from February exactly how little that was.`,
           why:`Would agree. Not in the passage. The opinion says the witness saw a man strike the victim, and nothing about seeing his face.`}
       ]},
-    { id:`f9s8`, domain:`Logical Reasoning`, task:`LR04`, title:`One more`,
+    { id:`f9s8`, domain:`Logical Reasoning`, task:`LR04`, title:`One more`, q:`Her plan in the log depends on which assumption?`,
       text:(s,all,G)=>[`Then the report. She'd had every page of the case in her hands by now except this one. There was a copy in Phil's second banker's box too, and she'd lifted it out and set it aside twice, the way you step around a soft place in a floor.`,
         `<prop type="doc" title="Report of autopsy, Travis Hensley, October 28, 2007, from the findings and the opinion">Laceration, 2.5 cm, above the left eyebrow. Superficial. Does not reach the bone. Bruising of the left brow and upper eyelid.<br>Depressed fracture of the back of the skull, with bleeding over and into the brain.<br>Fingernail scrapings and clippings collected from both hands, released to Det. G. Vigil.<br>Opinion. Cause of death: blunt force injury of the head. The fatal injury is the depressed fracture at the back of the skull. The laceration above the left eyebrow is a separate, superficial injury and is non-contributory. Manner of death: homicide.</prop>`,
         `She read it the way Ana said to, like a passage. Main point, the fracture killed him. Detail, two and a half centimeters. Meaning in context, non-contributory: it was there, and it had nothing to do with how it ended. She wrote the answers in the margin in pencil and they were right, and she sat there with them anyway.`,
@@ -231,7 +231,7 @@
           after:`It was his thumb on the phone at 9:41, not Bianca's, and four seconds is faster than anybody gets talked into anything. She lets it go and drinks the coffee with her name on the lid.`,
           why:`Resolve the paradox. Even if Bianca pushed him, that wouldn't account for an answer in four seconds, or for the five weeks of nothing before it, so neither fact gets explained.`}
       ]},
-    { id:`f9s10`, domain:`Logical Reasoning`, task:`LR06`, title:`Ten minutes`,
+    { id:`f9s10`, domain:`Logical Reasoning`, task:`LR06`, title:`Ten minutes`, q:`Her reasoning at the cooler is most vulnerable to which criticism?`,
       text:(s,all,G)=>[`The test center was in an office building in the Tech Center, beige carpet and a water cooler and a row of chairs, and she was the third one there. She left the prep book on the truck seat. Inside it would only have gone in a locker. The envelope was in it, marking her page. She knew it was. She thought about taking it out, and didn't.`,
         `A man behind a counter looked at her license and then at her, a second each. Phone off, into a gray locker with Lupe's horse, the burrito and her water. Her username and password she said to herself once more, as she had on the bus all week. They gave her a station by the wall with a computer on it, gray earmuffs the size of a pilot's, two pencils and a short stack of scratch paper, and there was a camera up in the corner of the ceiling. She read the statement on the screen and agreed to it. Then section one came up, with its clock running in the corner.`,
         `Section two had a question in it about a ferry schedule that she read three times and couldn't make give. She flagged it and went on. With four minutes left she came back, read it once more, saw it, and changed her answer. Eraser marks, she thought, and moved on.`,
@@ -254,7 +254,7 @@
           after:`That answers a different worry. Whether everybody found it hard says nothing about whether it counts.`,
           why:`Flaw. It doesn't find the error. How other people did has nothing to do with whether this section is scored.`}
       ]},
-    { id:`f9s11`, domain:`Logical Reasoning`, task:`LR10`, title:`One minute`,
+    { id:`f9s11`, domain:`Logical Reasoning`, task:`LR10`, title:`One minute`, q:`What do those facts most strongly support about the three she hasn't opened?`,
       text:(s,all,G)=>[`Section three was Reading Comprehension, and it went like the last eight months said it would. Section four didn't. Twenty three questions in, the clock in the corner said 1:00, and there were three she hadn't opened.`,
         `Every question worth the same. Nothing off for a wrong one. One minute.`],
       opts:[
