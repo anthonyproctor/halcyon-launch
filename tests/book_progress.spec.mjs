@@ -99,6 +99,8 @@ test("time left: real narration minutes for the reader's edition, word counts wh
 });
 
 test("library cards show a thin bar with the percent; an unfinished book says it's of what's written", async ({ page }) => {
+  // every book is written now, so plan The Appeal one chapter longer to keep the unfinished view under test
+  await page.route("**/courses.js*", async r => { const res = await r.fetch(); const b = (await res.text()).replace(/(id:"lsat"[\s\S]*?planned:)12/, "$113"); await r.fulfill({ response: res, body: b }); });
   await page.goto("/#pmp/home");
   const P = await pageCounts(page);
   const T = Object.values(P).reduce((a, b) => a + b, 0);
@@ -116,7 +118,7 @@ test("library cards show a thin bar with the percent; an unfinished book says it
   expect(over).toBeLessThanOrEqual(0);
   // and on The Appeal's own pages the rail says how much is written
   await page.goto("/#lsat/home");
-  await expect(page.locator("#bookbar .bpline")).toContainText(/% of what's written · Chapter 1 of 12 · 11 written so far/);
+  await expect(page.locator("#bookbar .bpline")).toContainText(/% of what's written · Chapter 1 of 13 · 12 written so far/);
 });
 
 test("Progress page: the finish line as steps", async ({ page }) => {
