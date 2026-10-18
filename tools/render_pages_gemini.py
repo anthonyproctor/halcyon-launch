@@ -29,7 +29,7 @@ WHISPER_MODEL = os.path.expanduser(os.environ.get("WHISPER_MODEL", "~/.cache/whi
 # Checked with whisper 2026-10-11: plain "Okafor" came back "Okaphor", plain "Ares Station" came back "Air Station", "En-KAY-chee" came
 # back "and Keiichi" / "Nketchy" while "In-KAY-chee" came back "Nkechi", "Tomasz" came back "Tomas". "Sol 3518" came back "Seoul 3518"
 # twice in the v2 pilot; "Soll" came back "Sol". "AIR-eez" comes back "Aries" (right) and now and then "Airy" (caught by HEARD_WRONG).
-SAY = {"Teo": "TAY-oh", "Teo's": "TAY-oh's", "Vigil": "vee-HEEL", "Vigil's": "vee-HEEL's", "Galvan": "gahl-VAHN", "Galvan's": "gahl-VAHN's", "Okafor": "Oh-kuh-for", "Okafors": "Oh-kuh-fors", "Okafor's": "Oh-kuh-for's", "Halcyon": "HAL-see-un", "Halcyon's": "HAL-see-un's",
+SAY = {"Teo": "TAY-oh", "Teo's": "TAY-oh's", "Vigil": "vee-HEEL", "Vigil's": "vee-HEEL's", "Galvan": "gahl-VAHN", "Galvan's": "gahl-VAHN's", "Abeyta": "ah-BAY-tah", "Abeyta's": "ah-BAY-tah's", "Okafor": "Oh-kuh-for", "Okafors": "Oh-kuh-fors", "Okafor's": "Oh-kuh-for's", "Halcyon": "HAL-see-un", "Halcyon's": "HAL-see-un's",
        "Nkechi": "In-KAY-chee", "Nkechi's": "In-KAY-chee's", "Lutine": "LOO-teen", "Ares": "AIR-eez", "Sol": "Soll",
        "LoDo": "LOH-doh", "Lindqvist": "LIND-kvist", "Ochoa": "oh-CHO-uh", "Ochoa's": "oh-CHO-uh's", "Tomasz": "TOH-mahsh",
        "Kraków": "KRAH-koof", "Krakow": "KRAH-koof", "Nowak": "NOH-vahk", "Adeyemi": "ah-day-YEH-mee", "ADKAR": "ADD-kar",
