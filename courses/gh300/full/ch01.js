@@ -66,7 +66,7 @@
           after:`The demo is polished. Every feature looks great on a sample repo. Nobody in the room can say which of them Halcyon needs.`,
           why:`A demo tells you what the product can do. It doesn't tell you what your people do today or what they need.`}
       ]},
-    { id:`f1s2`, domain:`Copilot Features`, task:`F1`, title:`The odd editors`,
+    { id:`f1s2`, domain:`Copilot Features`, task:`F1`, title:`The odd editors`, q:`Engineers ask about Neovim, Xcode and a GitHub.com extension. What should Priya tell them?`,
       text:(s,all,G)=>[`The survey had a free text box, and people used it. One answer said: "I use Neovim, so I assume I'm out." Another said: "Can we install the GitHub.com extension so it works in the browser?" A third said Xcode, from the one engineer who still maintained the old iPad app.`,`Priya needed to answer before the questions turned into folklore.`],
       opts:[
         {t:`Tell them Neovim and Xcode have Copilot extensions, and Copilot on GitHub.com is built in.`, s:3, best:true, d:{trust:4,conf:2,health:2},
@@ -82,7 +82,7 @@
           after:`They try it for a day and go back to doing everything by hand. Pasting code into a browser tab isn't how anyone wants to work.`,
           why:`There's no reason to push them out of their editors. Both editors are supported. Check the docs before you invent a workaround.`}
       ]},
-    { id:`f1s3`, domain:`Copilot Features`, task:`F4`, title:`Which plan`,
+    { id:`f1s3`, domain:`Copilot Features`, task:`F4`, title:`Which plan`, q:`Anders says Enterprise, and Devin says expense Pro for everybody. Which Copilot plan fits?`,
       text:(s,all,G)=>[`Wednesday Priya sat down with the account details. Halcyon's code lived in a GitHub organization on the Team plan. Nobody had ever moved it to GitHub Enterprise Cloud. Anders had said Enterprise. Devin had said, in the survey, "Pro is ten bucks, just expense it for everybody."`,`What she needed, more than anything, was a way to set rules once and have them apply to everyone.`],
       opts:[
         {t:`Copilot Pro for each engineer, expensed, since it's cheaper and they already know it.`, s:0, d:{trust:2,conf:-3,health:-5},
@@ -98,7 +98,7 @@
           after:`Within a week there are four kinds of plans across six teams and no single place to see who has what.`,
           why:`Team autonomy is good for how work gets done. It's bad for licensing and policy, which only work when they're consistent.`}
       ]},
-    { id:`f1s4`, domain:`Copilot Features`, task:`F4`, title:`The personal accounts`,
+    { id:`f1s4`, domain:`Copilot Features`, task:`F4`, title:`The personal accounts`, q:`Devin wants the people on personal Pro plans to keep them. What should Priya do?`,
       text:(s,all,G)=>[`Thirty one engineers already used Copilot. Twenty six of them did it on personal Pro plans, on company code, expensed or paid out of pocket.`,`Devin was one of them, and he wasn't shy about it. <span class="said" data-who="Devin">"Mine works fine. I've got my settings how I like them. Just let us keep what we have and give seats to everybody else."</span>`,`A few people in the channel added a plus one. Priya felt the old pull to keep the peace.`],
       opts:[
         {t:`Let personal plan users keep them and give org seats only to people with nothing.`, s:0, flag:`personalseats`, d:{trust:4,conf:-3,health:-5},
@@ -114,7 +114,7 @@
           after:`Devin can't push a hotfix for half a day. The story of the lockout reaches Elena before the reason does.`,
           why:`Right goal, wrong first move. Lead with the reason and an easy path, and escalate only for people who won't move.`}
       ]},
-    { id:`f1s5`, domain:`Responsible AI`, task:`R1`, title:`The kickoff`,
+    { id:`f1s5`, domain:`Responsible AI`, task:`R1`, title:`The kickoff`, q:`Devin says he ships Copilot's code without rereading it. How should Priya respond?`,
       text:(s,all,G)=>[`Thursday's kickoff had sixty people on the call and Anders in the front row of the conference room, arms folded.`,`Devin got there first. <span class="said" data-who="Devin">"Honestly the main thing is speed. It writes it, I ship it. Why would I reread code the machine already wrote?"</span>`,`Anders didn't look up. <span class="said" data-who="Anders">"And that's why I'll be on call."</span>`,`Sixty people waited to see what the new rollout lead would say.`],
       opts:[
         {t:`Agree speed is the goal and say the CI pipeline will catch whatever slips through.`, s:0, d:{trust:-2,conf:-3,health:-6},
@@ -130,7 +130,7 @@
           after:`They argue for twenty minutes. Neither one changes his mind, and the call ends without a rule.`,
           why:`Hearing both sides is fine. Ending the meeting without a clear norm leaves everyone to guess. The rollout lead's job is to set it.`}
       ]},
-    { id:`f1s6`, domain:`Copilot Features`, task:`F4`, title:`All at once`,
+    { id:`f1s6`, domain:`Copilot Features`, task:`F4`, title:`All at once`, q:`Joyce wants Copilot turned on for everyone Friday. How should Priya assign seats?`,
       text:(s,all,G)=>[`Joyce caught her after the kickoff. <span class="said" data-who="Joyce">"Can we just turn it on for everyone Friday? Elena would love to see the number go to ninety."</span>`,`Priya knew what the Access page offered. One button covered all members, current and future. The other let her pick teams.`],
       opts:[
         {t:`Turn it on for all members Friday so the number looks good for Elena.`, s:0, d:{trust:1,conf:2,health:-6},
@@ -146,7 +146,7 @@
           after:`Elena reads "next quarter" and calls Joyce. Meanwhile twenty six people keep using personal plans.`,
           why:`Waiting for perfect leaves the uncontrolled usage in place. Roll out in waves so control arrives sooner.`}
       ]},
-    { id:`f1s7`, domain:`Privacy and Safeguards`, task:`S1`, title:`Ken's list`,
+    { id:`f1s7`, domain:`Privacy and Safeguards`, task:`S1`, title:`Ken's list`, q:`Ken doesn't want patient adjacent repositories used as Copilot context. What should Priya do?`,
       text:(s,all,G)=>[`Ken Ito sent his message on Friday morning, polite and precise as always. <span class="said" data-who="Ken">"Before the integrations team gets seats, I want to know which repositories hold Lumen configuration and test data. Some of it is patient adjacent. I don't want it used as context."</span>`,`Nora Kim was copied. So was Joyce.`],
       opts:[
         {t:`List the sensitive repos with Ken and set exclusions before granting seats.`, s:3, best:true, d:{trust:3,conf:4,health:5},
@@ -162,7 +162,7 @@
           after:`The integrations team feels punished, and three of them sign up for personal Pro plans the next week.`,
           why:`Blanket bans push people around the fence. The safeguard is the control, not keeping a team out forever.`}
       ]},
-    { id:`f1s8`, domain:`Copilot Features`, task:`F1`, title:`Nothing happens`,
+    { id:`f1s8`, domain:`Copilot Features`, task:`F1`, title:`Nothing happens`, q:`Renata installed the VS Code extension and gets no suggestions. What should Priya look at first?`,
       text:(s,all,G)=>[`Renata Vega had been at Halcyon three weeks. She was in wave one because she sat with the platform team, and on Monday she messaged Priya directly, which took courage for someone in her first month.`,`<span class="said" data-who="Renata">"Sorry if this is dumb. I installed the Copilot extension in VS Code and nothing happens. No suggestions. Is it me?"</span>`,`Priya remembered being three weeks in and afraid to ask anything.`],
       opts:[
         {t:`Check which GitHub account she's signed into, since the seat is on her work account.`, s:3, best:true, d:{trust:4,conf:1,health:3},
@@ -178,7 +178,7 @@
           after:`Renata waits a week and doesn't ask anything again for a while.`,
           why:`Guessing costs her a week and teaches a new engineer that asking doesn't help. Find the cause.`}
       ]},
-    { id:`f1s9`, domain:`Developer Productivity`, task:`V1`, title:`Anders's Terraform`,
+    { id:`f1s9`, domain:`Developer Productivity`, task:`V1`, title:`Anders's Terraform`, q:`Anders still hasn't installed Copilot, and people are quoting his doubt. How should Priya handle him?`,
       text:(s,all,G)=>[`Anders hadn't installed it. He'd made that clear in two meetings and one very long Slack thread. People were starting to quote him, and Priya could feel the rollout bending around his doubt.`,`It was hard to be the one leading Anders. He had shown her where everything lived, back when she was the quietest person on the team. She still had a runbook with "ask Anders" written in the margins in her own handwriting.`],
       opts:[
         {t:`Ask Anders privately to try Chat on his own Terraform and tell her honestly what it gets wrong.`, s:3, best:true, d:{trust:6,conf:2,health:2},
@@ -210,7 +210,7 @@
           after:`Ninety people click "I agree." Nora is unimpressed.`,
           why:`Attestations don't replace system records. Use the audit log for what it can show and be honest about what it can't.`}
       ]},
-    { id:`f1s11`, domain:`Responsible AI`, task:`R1`, title:`The quota`,
+    { id:`f1s11`, domain:`Responsible AI`, task:`R1`, title:`The quota`, q:`Elena wants a target acceptance rate for each engineer. How should Priya answer?`,
       text:(s,all,G)=>[`On Friday Elena called Priya directly, which had never happened before.`,`<span class="said" data-who="Elena">"Love the progress. One idea. Let's track acceptance rates per engineer and set a target. If we're paying for it, people should be using it."</span>`,`Priya thought about Devin shipping code he hadn't read. She thought about Renata, who'd be afraid of a number with her name on it.`],
       opts:[
         {t:`Track team adoption and outcomes like defects, not per person acceptance.`, s:3, best:true, d:{trust:4,conf:3,health:4},

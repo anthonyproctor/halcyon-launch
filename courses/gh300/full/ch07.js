@@ -52,7 +52,7 @@
     ]
   },
   scenes: [
-    { id:`f7s1`, domain:`Developer Productivity`, task:`V1`, title:`Elena's Perl`,
+    { id:`f7s1`, domain:`Developer Productivity`, task:`V1`, title:`Elena's Perl`, q:`Kraków wants Copilot to turn Elena's 2016 Perl script into TypeScript by Friday. How should Renata approach it?`,
       text:(s,all,G)=>[`At 7:40 Tomasz called with his camera on. It was 3:40 in the afternoon in Kraków, and he had the oldest ticket in Halcyon's backlog open on his screen.`,`<span class="said" data-who="Tomasz">"Retire run_forecasts.pl. Elena wrote it in 2016, before Halcyon had an office. Every night it starts the forecasts, one hospital unit at a time. Since 2019 people only add hospitals to it. My team says Copilot can turn it into TypeScript by Friday."</span>`,`Renata was on the call too. She'd joined the infra rotation on December 1, and this was her first ticket on it.`,`<span class="said" data-who="Tomasz">"Nobody here reads Perl. That's the problem. It's also why they want to hand it to Copilot."</span>`],
       opts:[
         {t:`Have Copilot translate the whole script at once, and ship it once it compiles.`, s:0, d:{trust:0,conf:-3,health:-4},
@@ -68,7 +68,7 @@
           after:`Tomasz closes the ticket. By noon Elena has reopened it with one line: nobody here can read the thing that starts every forecast, and that's the bug. Tuesday Kraków starts over with Copilot explaining the script, and the first thing it finds is a rule for paused units, Elena's, from 2018.`,
           why:`Modernizing legacy code is one of the jobs Copilot helps with most. The risk is handled by explaining, testing, and converting in steps, not by leaving it alone.`}
       ]},
-    { id:`f7s2`, domain:`Copilot Features`, task:`F4`, title:`Where the numbers live`,
+    { id:`f7s2`, domain:`Copilot Features`, task:`F4`, title:`Where the numbers live`, q:`Elena wants adoption numbers by Thursday, each with a findable source. Where should they come from?`,
       text:(s,all,G)=>[`At ten Joyce and Nora came to her desk together, which usually meant one of them had a question and the other had a deadline.`,`<span class="said" data-who="Joyce">"Elena wants numbers Thursday. Not stories. How many people use it, how they use it, and whether anything got faster."</span>`,`<span class="said" data-who="Nora">"And where each number came from, so I can find it again in March."</span>`,`Halcyon was one organization on the Team plan, with no enterprise account above it. Ken had turned on the Copilot usage metrics policy in October, the week Nora first asked for numbers. Joyce had pulled a count from it for Finance in October and again in November, and read the first line both times. Nobody had downloaded the full report.`,...((G.personalseats)?[`<span class="said" data-who="Nora">"And the people still on personal plans?"</span> <span class="said" data-who="Joyce">"Their seats aren't ours. Neither are their numbers."</span>`]:[])],
       opts:[
         {t:`Download the org's 28 day usage metrics report through the REST API.`, s:3, best:true, d:{trust:4,conf:5,health:3},
@@ -100,7 +100,7 @@
           after:`She attaches the config types file, which isn't excluded, and writes the goal first: twelve test hospitals for the scheduler, all invented. Then the specifics, one per line: a paused unit, a unit with zero beds, a hospital with forty units, a unit name with an apostrophe and a number in it. Under that she types one example config by hand, for a hospital that doesn't exist. What comes back has every edge she asked for. One made up name sounds too close to a real hospital, so she changes it. St. Joseph's 4 West stays. <span class="said" data-who="Renata">"I gave it one example and it got the shape."</span> <span class="said" data-who="Priya">"That's one shot. Give it three and it's few shot."</span>`,
           why:`Start with the goal, then list specific requirements. Give context, like a schema or types file, and an example of what you want: one example is one shot, several is few shot. Ask for invented data and read it before you use it. The exclusion stays.`}
       ]},
-    { id:`f7s4`, domain:`Developer Productivity`, task:`V2`, title:`Green`,
+    { id:`f7s4`, domain:`Developer Productivity`, task:`V2`, title:`Green`, q:`Twenty six unit tests pass in four seconds with everything mocked. What should Renata do next?`,
       text:(s,all,G)=>[`Tuesday at two Renata's tests were green. All twenty six. By then her test hospitals had every odd case she could think of in them, down to a unit called St. Joseph's 4 West.`,`She'd selected the new scheduler and run /tests, with one of Kraków's test files open in the next tab so Copilot would match their framework. The tests mocked the forecast command and the database, so they ran in four seconds.`,`Tomasz read them on his phone, on a tram. <span class="said" data-who="Tomasz">"Very green. Has it started a forecast yet?"</span>`,`It hadn't. Nothing in the tests had started anything.`],
       opts:[
         {t:`Merge it, since twenty six passing tests cover every function in the file.`, s:0, d:{trust:0,conf:-3,health:-3},
@@ -116,7 +116,7 @@
           after:`The unit tests get slow and flaky, and they still test one piece at a time.`,
           why:`Mocks keep unit tests fast and isolated, which is their job. Add integration tests for the pieces working together.`}
       ]},
-    { id:`f7s5`, domain:`Developer Productivity`, task:`V2`, title:`St. Joseph's`,
+    { id:`f7s5`, domain:`Developer Productivity`, task:`V2`, title:`St. Joseph's`, q:`Copilot Chat flagged a shell injection risk and a speed idea in the scheduler. What should Renata do?`,
       text:(s,all,G)=>{const P=s.picks||{};return [(P[3]===1?`By Wednesday morning the integration test that failed at 3:10 was the most read file in Kraków.`:`Tuesday night staging ran the new scheduler against Renata's test hospitals for the first time. It failed on one, St. Joseph's 4 West. The scheduler built the forecast command as one string, and the apostrophe broke it.`),`At eight Renata selected the scheduler and asked Copilot Chat to look for security problems and anything slow.`,`<prop type="chat" from="Copilot Chat" time="Wednesday, 8:04 AM">1. The forecast command is built as one string from config values, then run through a shell. A unit name with a quote breaks it, and anyone who can edit a config could make it run other commands. Pass the arguments as an array, with no shell.<br>2. Units run one at a time. Starting all of them at once with Promise.all could cut the nightly run from about two hours to minutes.</prop>`,`<span class="said" data-who="Renata">"Both of those sound right. The last time something sounded right to me, I approved it."</span>`];},
       opts:[
         {t:`Take both changes, since Copilot found them and every test still passes.`, s:0, d:{trust:0,conf:-3,health:-4},
@@ -132,7 +132,7 @@
           after:`Copilot agrees with itself in a confident paragraph. It would have sounded the same if it were wrong.`,
           why:`Copilot's opinion of its own suggestions isn't validation. Tests and measurement are.`}
       ]},
-    { id:`f7s6`, domain:`Developer Productivity`, task:`V1`, title:`Lines`,
+    { id:`f7s6`, domain:`Developer Productivity`, task:`V1`, title:`Lines`, q:`Devin's board slide counts Copilot lines and turns them into engineers' worth of work. What should Priya say?`,
       text:(s,all,G)=>[`At ten Devin brought her the numbers slide. He'd volunteered for it, which he'd never done for a slide in eight years.`,`<prop type="doc" title="Board slide 3, Devin's draft">Copilot at Halcyon, last 28 days<br>23,400 lines from Copilot suggestions added to our code<br>About two engineers' worth of work, every month</prop>`,`<span class="said" data-who="Devin">"The first line is straight from GitHub's report. The second one is my math. I'm asking before I send it."</span>`,...((G.blamedevin)?[`He said it quietly. He'd said most things quietly since his name went into the writeup.`]:[])],
       opts:[
         {t:`Send it. The lines figure comes straight out of GitHub's own usage report.`, s:0, d:{trust:0,conf:-4,health:-3},
@@ -148,7 +148,7 @@
           after:`They rebuild it together. Around forty six daily active users on a weekday, sixty one weekly. Agent mode up every week since November. Acceptance rate 31 percent. Median time to merge on Lumen down from twenty one hours in Joyce's October pull to seventeen. Lines added go at the bottom, marked directional. Then thirty eight answers from Nora's survey, in people's own words. Devin reads the new version slowly. <span class="said" data-who="Devin">"The lines number has the date bug in it."</span> <span class="said" data-who="Priya">"It has everything in it. That's why it's at the bottom."</span>`,
           why:`Usage metrics show adoption, engagement, acceptance, lines of code, and pull request flow. GitHub says to read them together, with developer feedback. Lines are a directional view of output, not value, and acceptance shows trust, not correctness.`}
       ]},
-    { id:`f7s7`, domain:`Copilot Features`, task:`F3`, title:`Summary`,
+    { id:`f7s7`, domain:`Copilot Features`, task:`F3`, title:`Summary`, q:`Renata wrote three paragraphs in her PR description herself, and Copilot offers a Summary. What should she do?`,
       text:(s,all,G)=>[`At 11:30 Renata opened her first big pull request: replace run_forecasts.pl with scheduler.ts. Thirty one files.`,`She'd already written three paragraphs in the description. Why the script was going. What she'd tested, and what she hadn't. The paused units rule, and that Elena had written it.`,`Then she noticed the Copilot icon in the header of the box, and the word Summary under it.`,`<span class="said" data-who="Renata">"Do I use that? Mine took an hour. That would take a second."</span>`],
       opts:[
         {t:`Move her notes out, generate on a blank box, check it, then add her notes.`, s:3, best:true, d:{trust:5,conf:4,health:4},
@@ -164,7 +164,7 @@
           after:`The summary that comes back doesn't use a word of them. Copilot doesn't read what's already in the description.`,
           why:`Copilot doesn't consider existing content in the description, so start with a blank one and add your notes after.`}
       ]},
-    { id:`f7s8`, domain:`Responsible AI`, task:`R1`, title:`Sample numbers`,
+    { id:`f7s8`, domain:`Responsible AI`, task:`R1`, title:`Sample numbers`, q:`Renata's agent mode dashboard runs on sample numbers Copilot made up. How should it be used?`,
       text:(s,all,G)=>[`At one Renata showed her something else, a little shyly.`,`It was a dashboard for the retro: adoption by team, hours saved, a chart that climbed to the right. She'd tried GitHub Spark first, because a post from last year said it could build a whole app from one sentence. GitHub's page said Spark had stopped taking new apps in August. So she'd built it in VS Code with agent mode, in one evening.`,`The numbers were sample data. She'd had Copilot make them up, on purpose, so she could build the charts before the real report came.`,`<span class="said" data-who="Renata">"Could it go in Thursday's deck? The numbers are probably close."</span>`],
       opts:[
         {t:`Put it in the board deck, since the sample numbers are probably close enough.`, s:0, d:{trust:1,conf:-4,health:-4},
@@ -196,7 +196,7 @@
           after:`Nora writes it the way Ken says it. The policy setting and the date it last changed, from the audit log. Block covers suggestions in the editors. It doesn't cover the CLI, and the cloud agent can still write matching code, which it shows in its session logs. GitHub doesn't claim ownership of suggestions, so checking the licenses of what Halcyon ships is Halcyon's job, filter or no filter. <span class="said" data-who="Ken">"That's a sentence I'd sign."</span> <span class="said" data-who="Nora">"Then sign it."</span> He does.`,
           why:`The public code policy blocks matching suggestions in IDEs, but not every surface applies it, and the CLI and cloud agent can still produce matches. GitHub doesn't claim ownership of suggestions. Whether one can be owned depends on things like local law. Licensing what ships stays your job.`}
       ]},
-    { id:`f7s10`, domain:`Responsible AI`, task:`R1`, title:`Worth it`,
+    { id:`f7s10`, domain:`Responsible AI`, task:`R1`, title:`Worth it`, q:`In front of the board, how should Priya sum up the rollout?`,
       text:(s,all,G)=>{const P=s.picks||{};return [`Thursday at ten the board met in the room with the long table. Elena sat at the end. Joyce sat beside Priya, not in front of her.`,(P[5]===3?`The numbers slide was up, the version she and Devin had rebuilt, with lines at the bottom.`:P[5]===2?`The numbers slide was up, with the acceptance rate at the top.`:P[5]===0||P[5]===1?`The numbers slide was up, with the lines figure at the top.`:`The numbers slide was up.`),`Priya knew what a whole answer had in it. The date bug. The empty staging database in October. The seed rows her own July runbook had let through to Copilot${G.cliunsafe?`. The week the CLI ran things nobody had read`:``}${G.noinstructions?`. Anders's Terraform rules, still in his head`:``}. And numbers that could show people using Copilot, and couldn't show why anything had changed.`,`Elena folded her hands on the table. <span class="said" data-who="Elena">"Priya. Was it worth it? Yes or no first."</span>`];},
       opts:[
         {t:`Yes. Lead with the strongest number, and save the incidents for questions.`, s:0, d:{trust:-2,conf:-3,health:-3},

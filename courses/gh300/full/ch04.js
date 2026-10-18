@@ -46,7 +46,7 @@
     ]
   },
   scenes: [
-    { id:`f4s1`, domain:`Copilot Features`, task:`F3`, title:`Eleven rules`,
+    { id:`f4s1`, domain:`Copilot Features`, task:`F3`, title:`Eleven rules`, q:`The team has eleven house rules for Copilot, and Joyce wants them read every time. Where should they live?`,
       text:(s,all,G)=>[`At nine she put the list on the screen in the small conference room. Joyce had coffee. Devin had his laptop closed in front of him, which was new. Ken stood by the door. He had somewhere to be and had come anyway.`,`<span class="said" data-who="Joyce">"These are good. Where do they live, so Copilot actually reads them? I'm not paying for a tool that has to be told the same thing ninety times a day."</span>`,`<span class="said" data-who="Ken">"And wherever they live, I want to be able to show Nora who changed them, and when."</span>`],
       opts:[
         {t:`Post them as a pinned channel message, so every engineer sees them daily.`, s:0, d:{trust:1,conf:-3,health:-3},
@@ -62,7 +62,7 @@
           after:`About a third of the team does it. By Wednesday every copy is a little different. Personal instructions also only apply to Copilot Chat on GitHub.com, so none of it reaches an editor.`,
           why:`Personal instructions are for one person's preferences, like response language or style, and they only apply to Copilot Chat on GitHub.com. Team rules belong in the repository.`}
       ]},
-    { id:`f4s2`, domain:`Copilot Features`, task:`F3`, title:`Things Lumen Doesn't Tell You`,
+    { id:`f4s2`, domain:`Copilot Features`, task:`F3`, title:`Things Lumen Doesn't Tell You`, q:`Joyce's old wiki page runs eleven screens. What belongs in the instructions file?`,
       text:(s,all,G)=>[((s.picks||{})[0]===2?`By Monday afternoon the file existed, and it was empty.`:`By Monday afternoon Joyce had made the call herself: a file in the Lumen repository, .github/copilot-instructions.md, reviewed like code. It existed, and it was empty.`),`Joyce sent her a link to an old wiki page called Things Lumen Doesn't Tell You. It ran to eleven screens: the history of every product decision, a long section on why the scheduler retries, a joke about a holiday party, and, halfway down, the date rule, in the middle of a paragraph.`,`<span class="said" data-who="Joyce">"I wrote that at two in the morning in 2023, the night of our first clock change bug. I wrote addCalendarDays the same night."</span> She said it lightly, and she didn't look at Priya while she said it. <span class="said" data-who="Joyce">"Nobody's opened the page since. I checked."</span>`,`<span class="said" data-who="Joyce">"Can we paste it in? All of it's still true."</span>`],
       opts:[
         {t:`Turn it into short rules: what Lumen is, the stack, how to test, the date rule.`, s:3, best:true, d:{trust:5,conf:4,health:3},
@@ -78,7 +78,7 @@
           after:`Copilot can't do much with it. "Be careful" doesn't say what careful means, and nobody reading the file could tell what the date rule even is.`,
           why:`Vague directives like "be more accurate" or "don't miss anything" add noise. Specific statements, ideally with an example, are what change Copilot's output.`}
       ]},
-    { id:`f4s3`, domain:`Copilot Features`, task:`F3`, title:`Terraform rules`,
+    { id:`f4s3`, domain:`Copilot Features`, task:`F3`, title:`Terraform rules`, q:`Anders's Terraform rules shouldn't reach forty people writing TypeScript. Where should they go?`,
       text:(s,all,G)=>{const P=s.picks||{},a=((all&&all[2]||{}).picks||{})[2];return [`Tuesday morning the file was open on her second monitor.`,(P[1]===0?`<prop type="doc" title=".github/copilot-instructions.md, draft">## About Lumen<br>Discharge forecasting for hospitals. TypeScript services, PostgreSQL, Terraform under infra/.<br>## Build and test<br>Run npm ci, then npm test. Run date tests with TZ=America/Denver.<br>## Rules<br>- A discharge window is calendar days in the hospital's time zone. Use addCalendarDays. Never multiply days by 86400000.<br>- Build SQL with parameters, never by joining strings.<br>- Log request IDs, never request bodies.</prop>`:`It wasn't what she wanted yet, and she knew it. She'd fix it after lunch.`),`Anders read it over her shoulder at ten, coffee in hand. <span class="said" data-who="Anders">"Fine. Now where do mine go? Always plan before apply. Never the flag that skips the yes or no question. The staging database has prevent_destroy on it and it stays that way."</span>`,`He tapped the screen. <span class="said" data-who="Anders">"Not in there, though. Forty people writing TypeScript don't need my state files in every answer they get."</span>`,(a===0?`He'd written the first of those rules himself, two weeks ago, under his own name.`:a===2?`He said "mine" carefully. He'd said most things to her carefully since his name went in the channel.`:`It had taken an empty staging database to get those rules out of him.`)];},
       opts:[
         {t:`Leave those rules with Anders, since he reviews every infra pull request.`, s:0, flag:`noinstructions`, d:{trust:2,conf:-3,health:-4},
@@ -94,7 +94,7 @@
           after:`The file is six lines under a short front matter block, with applyTo set to infra/**/*.tf. Copilot uses it, along with the repository wide file, whenever the file in play matches that pattern, and nowhere else. Anders opens the staging module, asks Copilot Chat what it does, and reads the answer while his coffee goes cold. <span class="said" data-who="Anders">"It knows about prevent_destroy now. That's more than the last contractor knew."</span> He's the last contractor. He lets her laugh at that.`,
           why:`Path specific instructions live in .github/instructions/, in files ending .instructions.md, with an applyTo glob in the front matter. When the file Copilot is working on matches, those instructions are used together with the repository wide ones. Rules for one part of the code stay out of every other request.`}
       ]},
-    { id:`f4s4`, domain:`Copilot Features`, task:`F3`, title:`Still 86400000`,
+    { id:`f4s4`, domain:`Copilot Features`, task:`F3`, title:`Still 86400000`, q:`Copilot's inline suggestion breaks the date rule in the instructions file. What should Priya tell Devin?`,
       text:(s,all,G)=>{const c=((all&&all[3]||{}).picks||{})[5]===3;return [(s.flags.blamedevin||G.blamedevin?`Wednesday morning Devin waved her over to his desk. He'd been quieter since his name was in the writeup, and he'd still waved.`:`Wednesday morning Devin waved her over to his desk.`),...(c?[`The yellow page that said Careful was taped to the bottom of his monitor, turned so it faced him and not the room.`]:[]),`<span class="said" data-who="Devin">"The file doesn't work. Watch."</span> In a scratch file he typed const end = new Date(start.getTime() + and stopped. Gray text appeared after the cursor: days * 86400000.`,`<span class="said" data-who="Devin">"It's right there in the rules. Never multiply by 86400000. And it suggests it anyway."</span>`];},
       opts:[
         {t:`Rewrite the date rule in capital letters at the top of the file so it sticks.`, s:0, d:{trust:0,conf:-3,health:-2},
@@ -110,7 +110,7 @@
           after:`Half the Lumen team loses suggestions they use all day, to fix something the file was never going to do.`,
           why:`Inline suggestions don't read instructions files, so turning them off doesn't make the file work. Know where instructions apply, and keep review on what they don't cover.`}
       ]},
-    { id:`f4s5`, domain:`Copilot Features`, task:`F3`, title:`The review section`,
+    { id:`f4s5`, domain:`Copilot Features`, task:`F3`, title:`The review section`, q:`Renata and Devin drafted five lines for Copilot code review. Which should stay, and how?`,
       text:(s,all,G)=>[`Wednesday afternoon Renata and Devin brought her the part of the file meant for Copilot code review. They'd written it together. Priya noticed that, and didn't mention it.`,((((all&&all[3]||{}).picks||{})[9]===2)?`It started from Friday's review rule, the one with whoever wrote it in bold, and tried to teach Copilot the same habits.`:`Friday's review change had never quite made it into one paragraph. This was the closest anyone had come.`),`<prop type="doc" title="Review section, draft">- Flag day math that multiplies by 86400000. Suggest addCalendarDays in the hospital's zone.<br>- Flag SQL built by joining strings. Suggest a parameterized query.<br>- Block merging until every Copilot comment is resolved.<br>- Review against the standards at wiki/lumen-review.<br>- Be thorough and don't miss anything.</prop>`,`<span class="said" data-who="Renata">"Is this how you do it? I wasn't sure which of these it can actually do."</span>`],
       opts:[
         {t:`Keep the two specific checks, add examples, and block merges with a ruleset.`, s:3, best:true, d:{trust:4,conf:4,health:5},
@@ -126,7 +126,7 @@
           after:`The reviews come back generic. The first pull request with day math in it gets a comment about variable names and nothing about 86400000.`,
           why:`Copilot code review uses .github/copilot-instructions.md and matching path specific instructions by default. That's how a team sets its own review standards.`}
       ]},
-    { id:`f4s6`, domain:`Copilot Features`, task:`F3`, title:`Seven prompts`,
+    { id:`f4s6`, domain:`Copilot Features`, task:`F3`, title:`Seven prompts`, q:`Seven engineers used seven prompts for date tests, and one only tested October. How should the team standardize?`,
       text:(s,all,G)=>[`Thursday at seven Tomasz had his camera on. He had something to show her.`,`<span class="said" data-who="Tomasz">"After last week, my team wrote date tests for every service. I read them all. Seven engineers, seven prompts, seven kinds of test. One of them only tested October. Can we have one way to ask?"</span>`,((s.flags.agentblur||G.agentblur)?`Behind him someone asked, in English for her benefit, whether the agent on GitHub could just do it for everyone. Two people at the table answered at once, and they didn't agree.`:`Behind him his engineers had their editors open, and two of them were already typing.`)],
       opts:[
         {t:`Pin the best prompt in the Kraków channel so people can copy it as needed.`, s:0, d:{trust:1,conf:-2,health:-2},
@@ -142,7 +142,7 @@
           after:`The coding agent writes tests for nine services overnight. They're decent, and they come in nine different shapes, because nobody wrote down what a good date test looks like.`,
           why:`The coding agent works from the issue and the repository's instructions. Handing off the work doesn't fix an inconsistent request. Define the task once, then reuse it.`}
       ]},
-    { id:`f4s7`, domain:`Prompt Engineering`, task:`P1`, title:`Three examples`,
+    { id:`f4s7`, domain:`Prompt Engineering`, task:`P1`, title:`Three examples`, q:`Renata's few shot examples came from staging rows with real looking birth dates. How should she fix the prompt?`,
       text:(s,all,G)=>[`At 10:14 Ken's scanner flagged a pull request. It read every pull request at Halcyon for secrets, patient identifiers, and a list of bad patterns Ken had been adding to for years, and it was rarely wrong. This one was Renata's.`,`She'd been writing ${(s.picks||{})[5]===2?`a second prompt file`:`the team's first prompt file`}, for test fixtures. Asked once with no examples, Copilot had given her fixtures in the wrong shape: one date field instead of three, times with no zones. So she'd pasted five rows from the staging database into the prompt as examples. Staging was seeded from scrubbed data, mostly. Two of the rows still had real looking dates of birth.`,`Renata reached Priya's desk a minute before Ken's message did.`,`<span class="said" data-who="Renata">"I'm closing it. I only wanted it to see the format. Am I in trouble?"</span>`],
       opts:[
         {t:`Keep the real rows but mask names and IDs, since only the shape matters.`, s:0, d:{trust:0,conf:-3,health:-5},
@@ -158,7 +158,7 @@
           after:`Now the rows are in the repository, which is worse. Ken's scanner flags the new file within the minute.`,
           why:`Real patient data doesn't belong in a prompt or in the repository the prompt links to. Use made up examples in the same shape.`}
       ]},
-    { id:`f4s8`, domain:`Prompt Engineering`, task:`P1`, title:`Which this`,
+    { id:`f4s8`, domain:`Prompt Engineering`, task:`P1`, title:`Which this`, q:`Renata and Devin asked Chat the same question and got different answers. What should Renata change?`,
       text:(s,all,G)=>[`At the Thursday sync Renata put her hand halfway up, then down, then up again.`,((((all&&all[3]||{}).picks||{})[10]===3)?`Priya saw it the first time and stopped talking. <span class="said" data-who="Priya">"Renata."</span>`:!(all&&all[3])?`Someone talked over it. Priya stopped the room. <span class="said" data-who="Priya">"Renata. Go ahead."</span>`:`Someone talked over it. Priya heard Asha on the porch steps. Be the one who hears it. She stopped the room. <span class="said" data-who="Priya">"Renata. Go ahead."</span>`),`<span class="said" data-who="Renata">"This is probably basic. I asked Chat what's wrong with this window, and it told me about the export query. Then Devin asked the same question on his laptop and got the right answer. Why would it answer us differently?"</span>`,`Devin turned his laptop around: one file open, the window function selected. Renata had nine tabs open. Three of them were the old export.`],
       opts:[
         {t:`It picks answers at random, so ask the same question a few times and compare.`, s:0, d:{trust:0,conf:-3,health:-1},
@@ -174,7 +174,7 @@
           after:`Renata closes six tabs, selects calculateWindow, and asks what's wrong with calculateWindow. The answer is about calculateWindow. <span class="said" data-who="Renata">"So 'this' was doing a lot of work."</span> Half the room laughs, kindly, and two people quietly close tabs of their own.`,
           why:`Copilot builds its prompt from your question plus context: the open file, the selected code, other open tabs, and the chat history. Open what matters, close what doesn't, select the code, and avoid vague words like "this." Chat variables such as #selection or #file make the context explicit.`}
       ]},
-    { id:`f4s9`, domain:`Prompt Engineering`, task:`P2`, title:`One prompt, five jobs`,
+    { id:`f4s9`, domain:`Prompt Engineering`, task:`P2`, title:`One prompt, five jobs`, q:`Devin's one prompt asks for a refactor, tests, docs, speed and anything else. What should Devin do?`,
       text:(s,all,G)=>[`Friday morning Devin had a chat open with a single prompt in it.`,`<prop type="chat" from="Devin's prompt" time="Friday, 8:40 AM">Refactor the nightly census job to use parameterized queries the way we fixed the export, add tests for every edge case, update the docs, make it faster, and fix anything else you see.</prop>`,`The answer was six hundred lines across eleven files. Devin scrolled to the bottom and back up.`,((((all&&all[3]||{}).picks||{})[5]===3)?`<span class="said" data-who="Devin">"I can't review this. I mean I can. Not carefully."</span>`:`<span class="said" data-who="Devin">"It's probably mostly right,"</span> he said, and didn't sound like he believed it.`)],
       opts:[
         {t:`Split it into single tasks, one prompt each, and check each before the next.`, s:3, best:true, d:{trust:4,conf:4,health:4},
@@ -190,7 +190,7 @@
           after:`Copilot code review leaves thirty comments. Nobody, Copilot included, can tell which change caused which problem.`,
           why:`Review can't untangle a change too big to understand. Smaller, single purpose prompts give you output you can validate.`}
       ]},
-    { id:`f4s10`, domain:`Prompt Engineering`, task:`P2`, title:`Monday's thread`,
+    { id:`f4s10`, domain:`Prompt Engineering`, task:`P2`, title:`Monday's thread`, q:`Priya's Chat draft for Joyce describes rules the team cut by Tuesday. What should she do?`,
       text:(s,all,G)=>[`At one Priya asked Copilot Chat to draft her summary for Joyce: what the house rules were, where they lived, and how they worked. She'd used the same chat thread all week, since seven on Monday morning.`,`The draft was mostly right. It also described the eleven rules the way she'd first sketched them on Monday, before anyone had read them, three of which the team had cut by Tuesday.`,`Her own chat history, she realized, had more of Monday in it than Friday.`],
       opts:[
         {t:`Turn off repository instructions in chat, since they're confusing its answers.`, s:0, d:{trust:0,conf:-3,health:-2},
@@ -206,7 +206,7 @@
           after:`The summary is fine. Next Tuesday the thread suggests a rule they cut a week ago, and she spends twenty minutes working out why.`,
           why:`A long thread carries every turn forward. Use a fresh thread for each task so old history doesn't steer new answers.`}
       ]},
-    { id:`f4s11`, domain:`Copilot Features`, task:`F3`, title:`Review requested`,
+    { id:`f4s11`, domain:`Copilot Features`, task:`F3`, title:`Review requested`, q:`Priya's house rules pull request is up, with Anders as reviewer. What should come next?`,
       text:(s,all,G)=>{const P=s.picks||{},noi=s.flags.noinstructions||G.noinstructions;return [`At three she opened the pull request with the house rules in it: the repository wide file, ${P[2]===3?`Anders's Terraform file, `:``}${P[4]===3?``:`the review section, `}and ${P[5]===2?`two prompt files`:`Renata's fixtures prompt`}. Then she sat looking at the reviewer box.`,`The runbook was open beside her keyboard. All week she'd been crossing out margins as the rules went into files. ${P[2]===3||P[2]===1?`Nine were gone, the Terraform ones last.`:`Six were gone. The Terraform pages still said ask Anders.`}`,`For years the reviewer on nearly everything she wrote had been Anders. She typed his name.`,...(noi?[`The Terraform rules weren't in it. They were still in Anders, whose contract had an end date on it.`]:[]),`He came over instead of commenting, which he never did. He looked at the runbook, at his own name with a line through it in her pen, a second longer than he needed to. <span class="said" data-who="Anders">"Before I approve this. How do you know Copilot follows any of it?"</span>`];},
       opts:[
         {t:`Merge it today, since Copilot follows every rule in the file, every time.`, s:0, d:{trust:-1,conf:-4,health:-4},

@@ -48,7 +48,7 @@
     ]
   },
   scenes: [
-    { id:`f3s1`, domain:`Responsible AI`, task:`R2`, title:`Tuesday, 8:05`,
+    { id:`f3s1`, domain:`Responsible AI`, task:`R2`, title:`Tuesday, 8:05`, q:`Fourteen tickets point at Devin's cleanup, and he has a one line fix ready. What should Priya do first?`,
       text:(s,all,G)=>[`By 8:20 there was an incident channel and fourteen tickets. Every wrong window had one thing in common. It ran past Sunday, November 1, the night Denver's clocks would go back an hour. Priya heard Tomasz from the day before. Yours wait until next Sunday.`,`The only change to the window code since last week was Devin's cleanup, which had gone out on Monday's train.`,`Devin was at her desk before she could get to his, laptop open, already talking. <span class="said" data-who="Devin">"Is it mine? It's mine. Okay. Copilot found it. It says swap one line and it's fixed. I can have a hotfix out in twenty minutes."</span>`,`He looked like a man who'd been awake since the first ticket.`],
       opts:[
         {t:`Roll back to last week's version, check the windows, and then find the cause.`, s:3, best:true, d:{trust:3,conf:4,health:6},
@@ -80,7 +80,7 @@
           after:`Ken checks. One line of arithmetic isn't a match to anything. The bug is common, not copied.`,
           why:`The public code filter is about matching existing code and licenses. It isn't a quality check, and most wrong suggestions aren't copies of anything.`}
       ]},
-    { id:`f3s3`, domain:`Responsible AI`, task:`R2`, title:`5:49`,
+    { id:`f3s3`, domain:`Responsible AI`, task:`R2`, title:`5:49`, q:`Renata approved Devin's PR after reading three of its files. What should Priya tell her?`,
       text:(s,all,G)=>[`The approval at 5:49 on Friday was Renata's. One comment: "Looks good to me!"`,`She found Priya before Priya found her. She'd clearly been practicing what to say on the way over.`,`<span class="said" data-who="Renata">"I approved it. I looked at the first three files. He's been here eight years, and he's the fastest person on the team, and it was Friday. I didn't want to be the new person who holds up his weekend."</span> She stopped. <span class="said" data-who="Renata">"I thought if he wrote it, it was right."</span>`,...((((all&&all[2]||{}).picks||{})[4]===1)?[`Last week she'd caught a JSON key in her own four files. She'd read three of his.`]:[]),`Priya thought of Asha's third card from last week, the one written in a hurry, and didn't need to open it.`,`She also thought about Friday at six. She had seen those three times on the screen, with her coat on, and gone home.`],
       opts:[
         {t:`Stop first month engineers from approving senior engineers' work for now.`, s:0, d:{trust:-5,conf:1,health:-2},
@@ -96,7 +96,7 @@
           after:`<span class="said" data-who="Priya">"I saw those times at six on Friday and went home,"</span> Priya says. <span class="said" data-who="Priya">"So this isn't only yours."</span> Renata looks at her for a second, surprised. <span class="said" data-who="Renata">"But what was I supposed to say to him?"</span> <span class="said" data-who="Priya">"'I don't understand this line.' That's a whole review. If he doesn't hear you, say it again."</span> Renata writes it on a sticky note and puts it on the bottom of her monitor.`,
           why:`Validating AI output is the reviewer's job as much as the author's, whoever the author is. A review only works if the reviewer feels able to say no. Owning your own part first makes that safe.`}
       ]},
-    { id:`f3s4`, domain:`Responsible AI`, task:`R1`, title:`The name in the channel`,
+    { id:`f3s4`, domain:`Responsible AI`, task:`R1`, title:`The name in the channel`, q:`Joyce says Elena will read the who before the what. How should the incident review be written?`,
       text:(s,all,G)=>{const p=((all&&all[2]||{}).picks||{})[2];return [`Wednesday at nine Joyce ran the incident review in the big room. Devin sat at the end of the table with his hands flat on it. Renata sat near the door.`,`Someone had already posted the pull request link in the channel the night before. GitHub put the author's name right next to it.`,`<span class="said" data-who="Joyce">"Elena's asked me what happened and who,"</span> Joyce said. <span class="said" data-who="Joyce">"In that order, but she'll read the second part first."</span>`,(p===0?`Anders had come in late and taken the chair next to Devin. He didn't say anything. He didn't have to.`:p===2?`Anders sat with his arms folded, watching Priya the way he'd watched her since his own name went in the channel.`:p===3?`Anders, who'd typed every line of Terraform by hand for a week, looked at the ceiling.`:`Anders sat across from Devin and studied the table.`)];},
       opts:[
         {t:`Name Devin as the cause in the review, so the team sees mistakes cost something.`, s:0, flag:`blamedevin`, d:{trust:-7,conf:2,health:-3},
@@ -112,7 +112,7 @@
           after:`Nobody's named. Everyone notices anyway. Devin finds out from a permissions email, starting next week.`,
           why:`A quiet punishment is still blame, with less honesty. Fix the process and say so in the open.`}
       ]},
-    { id:`f3s5`, domain:`Developer Productivity`, task:`V2`, title:`Green`,
+    { id:`f3s5`, domain:`Developer Productivity`, task:`V2`, title:`Green`, q:`Every one of Devin's thirty one tests uses a mid October date in UTC. What should Priya tell him?`,
       text:(s,all,G)=>[`Wednesday afternoon Devin showed her the tests. <span class="said" data-who="Devin">"Thirty one tests, all green. That's why I merged. I had Copilot regenerate them with /tests after the cleanup, so they'd match."</span>`,`They matched. Priya read them one by one. Every test used a date in the middle of October. Every expected value was whatever the new code returned. The build servers ran on UTC, and every test hospital in the fixtures was set to UTC too, which never changes its clocks.`,`<span class="said" data-who="Devin">"So the tests were testing that the code does what the code does."</span>`],
       opts:[
         {t:`Add one test for November 1, 2026, the exact date that broke, and move on.`, s:1, d:{trust:1,conf:1,health:1},
@@ -144,7 +144,7 @@
           after:`They go through all fourteen together until ten. Nine are real, four are style, and one is wrong: the null check guards pre admitted surgery patients, who have no admit time until they arrive. Devin rewrites the export with a parameterized query and asks Priya to review it. <span class="said" data-who="Devin">"Actually read it,"</span> he says. <span class="said" data-who="Devin">"Please."</span> At ten he closes the last tab. Priya turns the yellow pad to a clean page, writes one word, and slides it across. Careful. <span class="said" data-who="Priya">"Somebody's written it now,"</span> she says. He looks at it a long time and doesn't make it a joke.`,
           why:`Copilot can point out security problems like SQL injection, and its review comments are worth checking. Some will be wrong. Verify each one, fix what holds up, and keep a human review on the result.`}
       ]},
-    { id:`f3s7`, domain:`Data and Architecture`, task:`D2`, title:`Nora's two columns`,
+    { id:`f3s7`, domain:`Data and Architecture`, task:`D2`, title:`Nora's two columns`, q:`Nora needs to record what GitHub's filters check and what Halcyon must check. What should Priya tell her?`,
       text:(s,all,G)=>[`Thursday morning Nora Kim came by with her laptop open to the incident record. Auditors would read it in the spring.`,`<span class="said" data-who="Nora">"Ken says suggestions go through filters before anybody sees them. So which filter missed this? I need to write down what GitHub checks and what we check."</span>`,((s.flags.personalseats||G.personalseats)?`She paused. <span class="said" data-who="Nora">"And Devin was on his personal plan when he accepted that line. So whose settings even applied? His, I assume. Not ours."</span>`:`She had two columns drawn on a page already. Both were empty.`)],
       opts:[
         {t:`Filters check prompts and responses for harm, unsafe code, public code. Not our rules.`, s:3, best:true, d:{trust:3,conf:5,health:4},
@@ -160,7 +160,7 @@
           after:`The second half is right and Nora uses it. The first half is wrong. Prompts are filtered on the way in too, and Ken has to fix the record.`,
           why:`Copilot filters on both sides: the prompt at the proxy and the response before it's shown. The point about our own checks is right.`}
       ]},
-    { id:`f3s8`, domain:`Responsible AI`, task:`R1`, title:`Elena's question`,
+    { id:`f3s8`, domain:`Responsible AI`, task:`R1`, title:`Elena's question`, q:`After the incident, what should Priya recommend to Elena about Copilot?`,
       text:(s,all,G)=>[`Thursday afternoon Elena called. She didn't start with hello.`,`<span class="said" data-who="Elena">"A hospital got the wrong dates from our product, and the line that did it came from Copilot. The board meets in two weeks. Should we pause it until the quarter's over? Tell me straight."</span>`],
       opts:[
         {t:`Pause Copilot company wide until the end of the quarter, just to be safe.`, s:0, d:{trust:-3,conf:-2,health:1},
@@ -176,7 +176,7 @@
           after:`Elena is relieved for about a week, until the next one.`,
           why:`Calling it one person's mistake hides a pattern every Copilot user can fall into. Responsible use names the risk and changes the process.`}
       ]},
-    { id:`f3s9`, domain:`Responsible AI`, task:`R1`, title:`What the hospital hears`,
+    { id:`f3s9`, domain:`Responsible AI`, task:`R1`, title:`What the hospital hears`, q:`The draft calls it a configuration issue. What should the hospital be told?`,
       text:(s,all,G)=>[`Thursday evening the customer success lead sent Priya a draft for the hospital. It was short and calm.`,`<prop type="doc" title="Draft note to customer">A configuration issue caused some discharge window end dates to display one day early between Monday and Tuesday. The issue has been resolved. We apologize for any inconvenience.</prop>`,`Joyce was copied. Under the draft she'd written one line: "Do we have to say Copilot?"`],
       opts:[
         {t:`Approve it, since configuration issue is close enough and won't alarm anyone.`, s:0, d:{trust:-3,conf:-4,health:-4},
@@ -192,7 +192,7 @@
           after:`The new draft lists the affected windows, the hours they were wrong, and the review and testing changes. Priya answers Joyce under it: <span class="said" data-who="Priya">"Only if they ask. If they ask, we say it plainly. It didn't get past Copilot. It got past us."</span> The hospital's case management lead writes back the next morning to say thank you for the list. She'd already started calling families.`,
           why:`Healthcare is a sensitive area where GitHub's guidance asks for particular care. People affected by a mistake deserve the facts they need to act on it, and honesty about what's changing.`}
       ]},
-    { id:`f3s10`, domain:`Responsible AI`, task:`R2`, title:`The rule`,
+    { id:`f3s10`, domain:`Responsible AI`, task:`R2`, title:`The rule`, q:`Priya's new review rule is how Lumen keeps this from happening again. What should it require?`,
       text:(s,all,G)=>[`Friday morning Priya sat down to write the review change, the one she'd promised in the incident record. ${(((all&&all[1]||{}).picks||{})[4]===1)?`Her rule from the kickoff was still pinned in the channel: you own what you accept. It had been true. It hadn't been enough.`:`She'd never written a rule about owning what you accept. She was writing it now.`}`,`Joyce wanted it in one paragraph. Devin wanted it short. Renata wanted to know if it would apply to everyone.`],
       opts:[
         {t:`Require that any pull request over 300 lines be split before anyone reviews it.`, s:1, d:{trust:1,conf:2,health:2},
@@ -208,7 +208,7 @@
           after:`People start opening reviews and leaving them in a tab for thirty minutes before approving.`,
           why:`A timer measures waiting, not checking. Validation is about understanding the change.`}
       ]},
-    { id:`f3s11`, domain:`Developer Productivity`, task:`V2`, title:`1:30 twice`,
+    { id:`f3s11`, domain:`Developer Productivity`, task:`V2`, title:`1:30 twice`, q:`Renata's comment asks for a test of the hour that happens twice. What should Priya do?`,
       text:(s,all,G)=>[((s.picks||{})[4]===2?`Friday at 1:30 Devin's real fix was up for review: the calendar helper back in place, twenty two tests written from the rule, the test job running in Denver time.`:`Friday at 1:30 Devin's real fix was up for review: the calendar helper back in place and a handful of new tests.`),((s.picks||{})[2]===0?`Under Priya's new rule, Renata wasn't supposed to be reviewing a senior engineer's code. She'd left a comment anyway.`:`Renata had picked up the review. She'd left one comment.`),`<prop type="chat" from="Renata Vega, review comment" time="1:52 PM">These all start at midnight. What about a patient admitted at 1:30 AM on November 1? That time happens twice. I don't understand which one the window starts from. Can we add a test?</prop>`,`<prop type="chat" from="Devin Marsh, reply" time="1:58 PM">Start of day is midnight either way. It's fine.</prop>`,`<prop type="chat" from="Renata Vega, reply" time="2:04 PM">I still don't understand it. Can we add the test?</prop>`,`A minute later Devin messaged Priya. <span class="said" data-who="Devin">"She asked twice. I know what I said Wednesday night. Can you approve it anyway? The Friday train leaves at three."</span>`],
       opts:[
         {t:`Approve it herself so it makes the three o'clock train, and add the test next week.`, s:0, d:{trust:-4,conf:-1,health:-2},

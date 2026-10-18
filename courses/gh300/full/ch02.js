@@ -46,7 +46,7 @@
     ]
   },
   scenes: [
-    { id:`f2s1`, domain:`Copilot Features`, task:`F3`, title:`Where it went`,
+    { id:`f2s1`, domain:`Copilot Features`, task:`F3`, title:`Where it went`, q:`Kraków assigned an issue to Copilot this morning, and nothing seems to be happening. What should Priya tell them?`,
       text:(s,all,G)=>[`At seven she was on video with Kraków, a cup of coffee she didn't want in her hand. Tomasz sat at the head of a table with four of his engineers. Behind them the window was full of a gray October afternoon.`,`<span class="said" data-who="Tomasz">"We assigned the logging issue to Copilot at ten this morning. Then we opened our editors and waited for it to start. Nothing happened. So, is it broken, or are we?"</span>`,`Nobody at the table was smiling. They had been the first team to sign up for anything new for two years, and Priya could see they were bracing to be the team that got it wrong.`],
       opts:[
         {t:`Show them it works on GitHub, not in the editor, and open its draft PR.`, s:3, best:true, d:{trust:5,conf:3,health:2},
@@ -62,7 +62,7 @@
           after:`The engineer starts the change from scratch. A draft pull request with the work already done gets closed by a cleanup bot two weeks later.`,
           why:`Pulling the work back hides the misunderstanding instead of fixing it. The coding agent works asynchronously on GitHub. Check its pull request before deciding it failed.`}
       ]},
-    { id:`f2s2`, domain:`Copilot Features`, task:`F3`, title:`Taking report`,
+    { id:`f2s2`, domain:`Copilot Features`, task:`F3`, title:`Taking report`, q:`The agent's draft PR has workflows awaiting approval. What's the right path to merge it?`,
       text:(s,all,G)=>[`The pull request changed nine files. It had a tidy summary, a link that said View session, and a yellow banner Priya hadn't seen before: workflows awaiting approval.`,`Tomasz clicked Approve. GitHub didn't let him.`,`<span class="said" data-who="Tomasz">"I assigned it. I'm the one who knows what I wanted. Why can't I approve it?"</span>`],
       opts:[
         {t:`Get a second reviewer, approve the workflow runs, and ask @copilot for fixes.`, s:3, best:true, d:{trust:4,conf:4,health:4},
@@ -78,7 +78,7 @@
           after:`The rewrite takes two days. It's about the same as what the agent wrote, minus the bug a reviewer would have caught in ten minutes.`,
           why:`Throwing away the work isn't caution, it's waste. Review the pull request like any teammate's, and ask for changes in a comment.`}
       ]},
-    { id:`f2s3`, domain:`Responsible AI`, task:`R2`, title:`The command he didn't read`,
+    { id:`f2s3`, domain:`Responsible AI`, task:`R2`, title:`The command he didn't read`, q:`Anders approved a destructive Terraform command in agent mode without reading it. How should Priya handle it?`,
       text:(s,all,G)=>[`Tuesday at 11:20 the staging database came back empty. Two days of test data that Kraków had seeded for their integration tests were gone.`,`It took Priya fifteen minutes to read the session. Anders had been in agent mode, asking it to fix drift in the staging Terraform. It proposed running terraform apply with the flag that skips its own yes or no question. Anders had clicked Continue while he was on another call. If he'd run a plan first, it would have told him the database was about to be replaced.`,`Anders had been using agent mode for a week without telling anyone, which was its own kind of news.`,`She looked at her old runbook on the desk, the one with "ask Anders" in the margins in her own handwriting. Asha's rushed card was still on her phone, three photos in. A signature means you checked. She texted Asha before she could stop herself.`,`<prop type="text" from="Asha" time="11:52 AM">Who knows he didn't read it? Him, or just you?</prop>`],
       opts:[
         {t:`Talk to Anders alone, then write it up with him, no blame, and fix the rule.`, s:3, best:true, d:{trust:6,conf:3,health:4},
@@ -94,7 +94,7 @@
           after:`The infra team goes back to typing everything by hand. The habit that caused the incident, approving without reading, doesn't get fixed. It just waits for the next tool.`,
           why:`Banning the tool skips the real control. Responsible use means a human reads and validates each command, especially anything that changes state.`}
       ]},
-    { id:`f2s4`, domain:`Copilot Features`, task:`F1`, title:`Approve always`,
+    { id:`f2s4`, domain:`Copilot Features`, task:`F1`, title:`Approve always`, q:`Devin wants agent mode to run every terminal command without asking. What should Priya set?`,
       text:(s,all,G)=>[`By Tuesday afternoon everyone had heard about staging. Devin had a different conclusion than everyone else.`,`<span class="said" data-who="Devin">"Hot take. Clicking Continue fifty times a day is what made him stop reading. There's a setting that approves terminal commands automatically. Turn it on and I ship twice as fast."</span>`,`He wasn't entirely wrong about the first part. Priya had seen the setting.`],
       opts:[
         {t:`Turn on automatic approval for every command, since devs still check the diff.`, s:0, d:{trust:2,conf:-4,health:-6},
@@ -110,7 +110,7 @@
           after:`Within a week half the team has turned on automatic approval for everything, and nobody can say who.`,
           why:`A safety setting left to personal taste ends up off. Set a team norm for which commands can run without a human.`}
       ]},
-    { id:`f2s5`, domain:`Copilot Features`, task:`F3`, title:`Four files`,
+    { id:`f2s5`, domain:`Copilot Features`, task:`F3`, title:`Four files`, q:`Renata's rename touches a short list of files she can name. Which Copilot feature fits?`,
       text:(s,all,G)=>[`Wednesday morning Renata came to Priya's desk instead of messaging. She'd been thinking about it for a while.`,`<span class="said" data-who="Renata">"I have to rename a field across the API, the model, and two tests. Four files. I know exactly which ones. Everyone says use agent mode for everything now. Is that what I should do? It feels like a lot for four files."</span>`],
       opts:[
         {t:`Use agent mode and let it find every file that needs changing on its own.`, s:1, d:{trust:1,conf:1,health:0},
@@ -126,7 +126,7 @@
           after:`The answers come back mostly right. Copying them in by hand, she drops a closing brace and spends twenty minutes finding it.`,
           why:`Copying chat answers by hand adds mistakes the editor would have avoided. Copilot Edits applies the changes in place and lets you review each one.`}
       ]},
-    { id:`f2s6`, domain:`Copilot Features`, task:`F3`, title:`Three hours in`,
+    { id:`f2s6`, domain:`Copilot Features`, task:`F3`, title:`Three hours in`, q:`Three hours in, the agent keeps reviving ideas the team rejected. What should Priya tell Tomasz?`,
       text:(s,all,G)=>[`Wednesday afternoon, Tomasz again, on a call with his camera off.`,`<span class="said" data-who="Tomasz">"We started an agent session this morning to refactor the scheduler. At ten it was brilliant. We agreed at the start to keep the old retry behavior. Now it keeps suggesting we remove it, and it brings back ideas we said no to two hours ago. It's like talking to someone who's been in the same meeting since breakfast."</span>`,`Priya thought of Asha's fourth card.`],
       opts:[
         {t:`Keep the session going and repeat the retry rule in capital letters each time.`, s:0, d:{trust:-1,conf:-2,health:-1},
@@ -142,7 +142,7 @@
           after:`The new session starts already full of the old one, rejected ideas and all. It's better for a little while.`,
           why:`A fresh session is right. Carrying the whole history over brings the clutter with it. Summarize what matters instead.`}
       ]},
-    { id:`f2s7`, domain:`Privacy and Safeguards`, task:`S1`, title:`Ken's question`,
+    { id:`f2s7`, domain:`Privacy and Safeguards`, task:`S1`, title:`Ken's question`, q:`Ken asks whether content exclusions hold for the coding agent and agent mode. What should Priya do?`,
       text:(s,all,G)=>[`Ken caught her at the end of Wednesday, at her desk, standing, which meant it wouldn't take long and it mattered.`,`<span class="said" data-who="Ken">"The Lumen repositories are behind content exclusions. If someone assigns the coding agent an issue in one of them, or opens one in agent mode, do my exclusions hold?"</span>`,((s.flags.personalseats||G.personalseats)?`He paused. <span class="said" data-who="Ken">"And the people still on personal plans aren't behind any fence of mine at all. I know. That's a different conversation."</span>`:`Nora was copied on his calendar invite for Thursday, so whatever Priya said would end up in the evidence log.`),`Priya didn't know.`],
       opts:[
         {t:`Read the exclusion limits with Ken and keep agents off those repos for now.`, s:3, best:true, d:{trust:4,conf:5,health:5},
@@ -158,7 +158,7 @@
           after:`The integrations team loses inline suggestions they were using safely, and two of them start pasting code into a browser chatbot instead.`,
           why:`Blanket shutdowns push people around the fence. Read the limits and close the specific gaps.`}
       ]},
-    { id:`f2s8`, domain:`Copilot Features`, task:`F3`, title:`Plugging in`,
+    { id:`f2s8`, domain:`Copilot Features`, task:`F3`, title:`Plugging in`, q:`Anders wants an MCP server linking agent mode to Postgres and the ticket tracker. How should they do it?`,
       text:(s,all,G)=>[((s.picks||{})[2]===2?`Thursday Anders came to her with something he'd found. He came to her anyway, which said more about him than about her.`:`Thursday Anders came to her with something he'd found, and it was the first time all week he'd sounded like himself.`),`<span class="said" data-who="Anders">"There's an MCP server on GitHub that connects agent mode to Postgres and to our ticket tracker. The agent could read the staging schema itself, look up the ticket, and stop guessing. I'll set it up for infra with my credentials this afternoon."</span>`,`His credentials were the admin ones. Priya thought about Tuesday, and then about how to say that to him.`],
       opts:[
         {t:`Install it with Anders's admin credentials so the agent can fix things on its own.`, s:0, d:{trust:2,conf:-4,health:-6},
@@ -174,7 +174,7 @@
           after:`Anders shrugs and stops bringing her ideas for a while, which is a bigger loss than the server.`,
           why:`MCP is a supported way to give agents useful context. The control is vetting and least privilege, not a ban.`}
       ]},
-    { id:`f2s9`, domain:`Copilot Features`, task:`F3`, title:`What to hand it`,
+    { id:`f2s9`, domain:`Copilot Features`, task:`F3`, title:`What to hand it`, q:`Kraków assigned the coding agent a one line request to migrate every hospital's logins. What should Priya do?`,
       text:(s,all,G)=>[`Kraków had gone from wary to hungry in three days. Thursday evening Tomasz sent her a link to a new issue.`,`<prop type="doc" title="Issue 412: Migrate auth service to the new identity provider">Move the auth service to the new identity provider. Should be straightforward.</prop>`,`It was assigned to Copilot. The auth service touched every login at every hospital that licensed Lumen.`],
       opts:[
         {t:`Let it run as written, since the agent can ask questions when it gets stuck.`, s:0, d:{trust:1,conf:-3,health:-5},
@@ -190,7 +190,7 @@
           after:`Kraków stops assigning it anything. Most of what it's good at, like tests, small bugs, and docs, goes back on the pile.`,
           why:`Underusing it wastes real value. Scope the work well instead of shrinking it to nothing.`}
       ]},
-    { id:`f2s10`, domain:`Responsible AI`, task:`R2`, title:`Green means go`,
+    { id:`f2s10`, domain:`Responsible AI`, task:`R2`, title:`Green means go`, q:`Agent PRs are piling up in review. How should review work for them?`,
       text:(s,all,G)=>[`Friday morning Joyce stopped by with a chart. The coding agent's pull requests from Kraków were piling up in review.`,`<span class="said" data-who="Joyce">"Review is the slow part now. If the checks are green, can we just auto merge the agent's pull requests? It wrote the tests too."</span>`],
       opts:[
         {t:`Auto merge agent PRs when every check passes, and spot check a few each week.`, s:0, d:{trust:2,conf:-4,health:-6},
@@ -206,7 +206,7 @@
           after:`Nora points out that Copilot approvals are a preview setting someone would have to turn on, and that the agent's pull requests already get a Copilot review before anyone sees them. AI writing the code and AI signing for it isn't a second pair of eyes. The idea dies in the meeting.`,
           why:`By default, Copilot code review doesn't count toward required approvals. A preview setting can let it approve, but on agent pull requests that means AI wrote it and AI approved it. Keep a person signing off.`}
       ]},
-    { id:`f2s11`, domain:`Copilot Features`, task:`F1`, title:`Friday at four`,
+    { id:`f2s11`, domain:`Copilot Features`, task:`F1`, title:`Friday at four`, q:`The team keeps mixing up where Copilot runs and what it does there. How should Priya use the sync?`,
       text:(s,all,G)=>[`Priya had thirty minutes at the Friday engineering sync. It had been a long week of the same confusion in different clothes. Kraków had waited in their editors for an agent that lived on GitHub. Someone had asked whether agent mode opens pull requests. Devin thought Copilot CLI was just chat in a terminal window.`,`Anders, in the front row again, had his arms folded. It looked different this week.`],
       opts:[
         {t:`Do one real task live in each place: inline, chat, agent mode, coding agent, CLI.`, s:3, best:true, d:{trust:5,conf:4,health:4},

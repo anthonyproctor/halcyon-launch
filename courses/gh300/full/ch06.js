@@ -50,7 +50,7 @@
     ]
   },
   scenes: [
-    { id:`f6s1`, domain:`Copilot Features`, task:`F4`, title:`Off on purpose`,
+    { id:`f6s1`, domain:`Copilot Features`, task:`F4`, title:`Off on purpose`, q:`Anders installed Copilot for his terminal, and signing in says his organization doesn't allow it. What should Priya do?`,
       text:(s,all,G)=>[...((G.filteroff)?[`Ken's Monday agenda had one word on it, licenses. They gave it twenty minutes at eight and put it back on the list for December. Neither of them liked that, and neither of them said so.`]:[]),`At nine Anders put his laptop on her desk, open to a terminal. He'd installed the CLI on Sunday night with one npm command, typed copilot, signed in, and been told politely that his organization didn't allow it.`,`Ken was already standing behind him. He'd seen the laptop cross the room.`,`<span class="said" data-who="Ken">"I left the CLI policy off in October. On purpose. Nobody had asked for it, and I don't turn on what nobody's asked for."</span> He looked at Anders. <span class="said" data-who="Ken">"Somebody's asking. Before it goes on, I want to know what it can reach."</span>`],
       opts:[
         {t:`Turn on the org's Copilot CLI policy, after Ken checks what it reaches.`, s:3, best:true, d:{trust:4,conf:4,health:4},
@@ -66,7 +66,7 @@
           after:`The Homebrew install works fine and says exactly the same thing. The package was never the problem.`,
           why:`npm, Homebrew, WinGet, and the install script all install the same CLI. A disabled policy blocks it however it got there.`}
       ]},
-    { id:`f6s2`, domain:`Copilot Features`, task:`F2`, title:`Home`,
+    { id:`f6s2`, domain:`Copilot Features`, task:`F2`, title:`Home`, q:`Anders opened the CLI in his home folder and is about to remember it. What should he do?`,
       text:(s,all,G)=>{const P=s.picks||{};return [(P[0]===0?`By ten the CLI policy was on.`:P[0]===1?`By ten everything was on, and Ken was reading down the list of what that meant. The CLI was near the top.`:`By ten Ken had turned the CLI policy on himself, after an hour with GitHub's table of what it reached.`),`Anders had typed copilot from his home folder, which was where his terminal always opened. Everything he'd touched in seven years was under there somewhere: a folder called src with a dozen repos in it, his SSH keys, a folder called taxes.`,`The CLI wanted to know if he trusted all that. His cursor was already sitting on choice two, the one that says remember this folder.`,`<span class="said" data-who="Anders">"The Terraform's in Lumen. The deploy scripts live in their own repo. I want it to see both, and I'm not starting it twice."</span>`];},
       opts:[
         {t:`Remember the home folder, so it reaches every repo and never asks again.`, s:0, d:{trust:1,conf:-4,health:-4},
@@ -82,7 +82,7 @@
           after:`No more questions. Also no more path checks anywhere, and the checks were the reason for the questions.`,
           why:`--allow-all-paths switches path verification off completely. If the prompts are annoying, the folder's too big, and that's the thing to change.`}
       ]},
-    { id:`f6s3`, domain:`Copilot Features`, task:`F2`, title:`My own Terraform`,
+    { id:`f6s3`, domain:`Copilot Features`, task:`F2`, title:`My own Terraform`, q:`The CLI explained the wrong database module. How should Anders get the right one?`,
       text:(s,all,G)=>{const a4=(all&&all[4]||{}).picks||{},noi=G.noinstructions;return [`At two Anders asked her to come watch.`,`<span class="said" data-who="Anders">"I said in October I'd trust it when it could explain my own Terraform to me,"</span> he said. <span class="said" data-who="Anders">"Fine. Let's see."</span>`,`He typed: explain the staging database module. Copilot answered about the wrong one. There were three staging database modules under infra/modules: staging-db, staging-db-old, and staging-db-v2, which nobody had finished. The one he meant was the oldest. He'd written it in 2019.`,(noi?`It didn't know his Terraform rules either. Those were still in his head, where they'd been all month.`:a4[2]===3?`It had picked up the instructions file and his Terraform file on its own, rules and all. Wrong module anyway.`:a4[2]===1?`It had read the repository's instructions file, Terraform heading and all. It just didn't have the right module.`:`It had read the repository's instructions file. It just didn't have the right module.`),`He sat back. <span class="said" data-who="Anders">"Well?"</span>`];},
       opts:[
         {t:`Point it at the file with @infra/modules/staging-db/main.tf and ask again.`, s:3, best:true, d:{trust:5,conf:4,health:3},
@@ -98,7 +98,7 @@
           after:`The CLI goes looking for a file named workspace. There isn't one, so he gets staging-db-v2 again.`,
           why:`@workspace is an IDE chat participant from older material. Type @ in the terminal and the CLI expects a path.`}
       ]},
-    { id:`f6s4`, domain:`Copilot Features`, task:`F2`, title:`For the rest of the session`,
+    { id:`f6s4`, domain:`Copilot Features`, task:`F2`, title:`For the rest of the session`, q:`The CLI wants approval to delete an old plan file, the first of many. Which choice should Anders make?`,
       text:(s,all,G)=>[`By Tuesday morning Anders's desk had become a place people stood. Devin was there with coffee. Renata had brought a chair.`,`Anders had asked the CLI to clear out old plan files from the drift checks. It wanted to start with one.`,`<prop type="doc" title="Copilot CLI, lumen, Tuesday 9:12 AM">delete the plan files in infra/plans older than 30 days<br>rm infra/plans/2026-09-02-staging.tfplan<br>1. Yes<br>2. Yes, and approve rm for the rest of the running session<br>3. No, and tell Copilot what to do differently (Esc)</prop>`,`There were forty one files. <span class="said" data-who="Devin">"I'm asking, not telling. Two, right?"</span> Devin said. <span class="said" data-who="Devin">"Otherwise you're pressing one all morning."</span>`],
       opts:[
         {t:`Choose 2, since all forty one of those files are being deleted anyway.`, s:0, flag:`cliunsafe`, d:{trust:1,conf:-4,health:-5},
@@ -114,7 +114,7 @@
           after:`The files go, Thursday's plan with them. So does every prompt for every tool, for the whole session.`,
           why:`--allow-all-tools lets Copilot run any tool without asking, with your access. Keep the question for anything that deletes.`}
       ]},
-    { id:`f6s5`, domain:`Copilot Features`, task:`F2`, title:`Every morning`,
+    { id:`f6s5`, domain:`Copilot Features`, task:`F2`, title:`Every morning`, q:`Tomasz wants a drift check waiting for Kraków every morning. How should the team build it?`,
       text:(s,all,G)=>[`Tuesday at three Tomasz called with his camera on. It was eleven at night in Kraków, and he'd waited up for this.`,`<span class="said" data-who="Tomasz">"My team starts at seven. Twice this month they found drift in staging at ten, after building on it. I want a drift check waiting for them every morning. Your Anders says the CLI can do anything now. Can it do this every morning?"</span>`,...((G.agentblur)?[`Behind him one of his engineers said to give it to the agent. Nobody asked which agent, and Priya noticed nobody asked.`]:[`Behind him, on Kraków's own whiteboard, someone had copied Denver's two columns, agent mode on the left and the coding agent on the right, coffee cup and all.`])],
       opts:[
         {t:`Have the CLI write a drift script, read it, test it, and commit it for review.`, s:3, best:true, d:{trust:5,conf:4,health:4},
@@ -130,7 +130,7 @@
           after:`Seven people ask seven ways. Two get reports on the wrong workspace, and nobody can compare one morning with the next.`,
           why:`Hand prompting the same job every day drifts. A script, generated once and reviewed, runs the same way for everyone.`}
       ]},
-    { id:`f6s6`, domain:`Copilot Features`, task:`F2`, title:`Closed the window`,
+    { id:`f6s6`, domain:`Copilot Features`, task:`F2`, title:`Closed the window`, q:`Renata's laptop restarted an hour into a CLI session in the Lumen repo. What should she do?`,
       text:(s,all,G)=>[`Wednesday at ten Renata came to Priya's desk, because Anders was in a meeting and she'd decided not to wait.`,`She'd spent an hour in a CLI session in the Lumen repository, working through the infra folder module by module with Anders's checklist. Then her laptop had restarted for an update.`,`<span class="said" data-who="Renata">"Is that hour just gone? I don't want to start over and explain it all again."</span>`],
       opts:[
         {t:`Start a new session and type in what she remembers of the last hour.`, s:1, d:{trust:2,conf:1,health:1},
@@ -146,7 +146,7 @@
           after:`There's no cloud agent session to ask about. Her session ran on her laptop, and that's where it was saved.`,
           why:`Local CLI sessions are saved locally and come back with --continue or --resume. Cloud agent session logs cover work the cloud agent did.`}
       ]},
-    { id:`f6s7`, domain:`Copilot Features`, task:`F2`, title:`Not today's work`,
+    { id:`f6s7`, domain:`Copilot Features`, task:`F2`, title:`Not today's work`, q:`Kraków wants thirty module READMEs fixed while Anders keeps refactoring. How should that get done?`,
       text:(s,all,G)=>[`Wednesday afternoon Anders was deep in the staging module, the old one, splitting it into pieces he could test. He had four terminals open and the look he got when he didn't want to be talked to.`,`Tomasz messaged anyway. <span class="said" data-who="Tomasz">"Thirty modules, thirty READMEs, all wrong since the summer. My new people read them first. Can Copilot fix them without stopping you?"</span>`,((G.agentblur)?`Someone in Kraków had already asked whether the CLI was just agent mode in a black window. Two people said yes. Neither was right.`:`Under it Tomasz added: <span class="said" data-who="Tomasz">"Our whiteboard has editor and GitHub. Where does the terminal go?"</span>`)],
       opts:[
         {t:`Use agent mode in VS Code to do the READMEs between refactor steps.`, s:1, d:{trust:1,conf:1,health:0},
@@ -162,7 +162,7 @@
           after:`The refactor waits an hour, and the session's context fills up with thirty READMEs that have nothing to do with it.`,
           why:`Mixing unrelated work into one session crowds the context. Hand side tasks off, or give them their own session.`}
       ]},
-    { id:`f6s8`, domain:`Responsible AI`, task:`R2`, title:`Ten at night`,
+    { id:`f6s8`, domain:`Responsible AI`, task:`R2`, title:`Ten at night`, q:`Devin wants a nightly CLI run that repairs staging drift with --yolo. What should Priya say?`,
       text:(s,all,G)=>{const a2=((all&&all[2]||{}).picks||{})[2],P=s.picks||{};return [...(P[4]!==0?[`By Wednesday night Anders had given up on ${P[4]===1?`the /every session`:P[4]===2?`the cloud agent`:`seven people asking seven ways`} and had the CLI write drift-check.sh instead. He read every line before it merged.`]:[]),`Thursday morning Devin brought her a single line on a sticky note, which was new for Devin.`,`<span class="said" data-who="Devin">"I'm asking before I do it. The drift script finds drift. I want the CLI to fix it too, every night at ten, before Kraków starts. copilot -p, fix any drift in staging, with --yolo, because nobody's going to sit up to press yes. That's the whole point of it."</span>`,`Across the room Anders stopped typing.`,(a2===0?`In October he'd written the rule himself and posted it under his own name: nobody approves a command they haven't read.`:a2===1?`In October Priya had written that rule from her desk. Anders had read it in the channel with everyone else.`:a2===2?`In October his name had been in the channel next to the words skipped review. He hadn't forgotten, and neither had anybody else.`:a2===3?`In October Priya had banned agent mode on Terraform until next quarter. Anders had typed everything by hand since and never complained once, which was how she knew.`:`In October the staging database had come back empty, because a command that skipped its own question was approved without being read.`),`A flag that skips the yes or no question. Staging. Nobody watching.`];},
       opts:[
         {t:`Run it with --yolo, since staging can be rebuilt if anything goes wrong.`, s:0, flag:`cliunsafe`, d:{trust:1,conf:-4,health:-6},
@@ -178,7 +178,7 @@
           after:`Devin takes the first night himself, on his couch. At 10:20 he approves a plan he reads with one eye on the game.`,
           why:`An approval from someone half watching isn't review. Move the change to a time when someone can read it.`}
       ]},
-    { id:`f6s9`, domain:`Copilot Features`, task:`F4`, title:`The census`,
+    { id:`f6s9`, domain:`Copilot Features`, task:`F4`, title:`The census`, q:`Anders's seat cleanup script is ready to remove everyone with no recent activity. What should Priya do?`,
       text:(s,all,G)=>[`Thursday at two Anders had a script for Joyce's list. He'd had the CLI write it in twenty minutes and had read it in twenty more.`,`<prop type="doc" title="seat-cleanup.sh, what it does">1. GET /orgs/ORG/copilot/billing/seats<br>2. Keep anyone whose last_activity_at is empty or more than 30 days old<br>3. DELETE /orgs/ORG/copilot/billing/selected_users with those names</prop>`,`Step two had found twenty eight people. Nora was reading the list over Priya's shoulder.`,...((G.personalseats)?[`<span class="said" data-who="Nora">"The people on personal plans aren't on here at all,"</span> Nora said. <span class="said" data-who="Nora">"Halcyon doesn't pay for them, so the API doesn't see them. That's its own list."</span>`]:[]),`<span class="said" data-who="Anders">"Twenty eight seats. Say go."</span>`],
       opts:[
         {t:`Say go, since twenty eight empty seats is the list Joyce asked for.`, s:0, d:{trust:-1,conf:-3,health:-3},
@@ -194,7 +194,7 @@
           after:`Removing people from the organization takes their seats, their repository access, and two names off Kraków's on call rotation. Ken stops it at four.`,
           why:`Seats are managed in Copilot settings or through the REST API's selected_users and selected_teams endpoints. Removing members from the organization does far more than that.`}
       ]},
-    { id:`f6s10`, domain:`Copilot Features`, task:`F4`, title:`Still on the list`,
+    { id:`f6s10`, domain:`Copilot Features`, task:`F4`, title:`Still on the list`, q:`After the API removal, Nora sees every removed user still on the API's list. What explains it?`,
       text:(s,all,G)=>{const P=s.picks||{},n=P[8]===1?`twenty`:P[8]===2?`nine`:P[8]===3?`none of the twenty eight`:`twenty eight`;return [(P[8]===3?`By Friday morning Ken had put everyone back in the organization, and Anders had run the removal through the API instead, for the twenty left once they'd checked the list with people.`:`Friday morning the removal ran for ${n} people.`),`At eleven Nora brought her laptop over, open to the seat list from the API.`,`<span class="said" data-who="Nora">"They're all still on here. Every one. The three I asked say Copilot still works. Did it fail? Finance reads this on the first."</span>`,`Anders leaned in. Most of the removed names had a date beside them now. Four didn't.`];},
       opts:[
         {t:`They're pending until the cycle ends, and the four keep seats through a team.`, s:3, best:true, d:{trust:4,conf:5,health:4},
