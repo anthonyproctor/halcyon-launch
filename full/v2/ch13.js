@@ -159,7 +159,7 @@
     video: [`SYzuVhtMafQ`,`PMI Code of Ethics and Professional Conduct`,`Joseph Phillips`,`6:13`]
   },
   scenes: [
-    { id:`f13s1`, domain:`People`, task:`P4`, approach:`hybrid`, title:`Continuance`,
+    { id:`f13s1`, domain:`People`, task:`P4`, approach:`hybrid`, title:`Continuance`, q:`Hale asks Sam to get the board to grant a three week continuance. How should he respond?`,
       text:(s,all,G)=>{const nc=G.nocharter;
         return [`6:05 AM. I-70 westbound, past the old stockyards, with the city lit up ahead of him and the mountains still black behind it. The dash said IMOGEN HALE, and he answered it.`,
         `<span class="said" data-who="Imogen">"I read it at midnight. So did eleven partner liaisons, because the docket goes to them automatically, which I've asked to have changed four times."</span> She sounded like she'd been up since. <span class="said" data-who="Imogen">"I want you to ask Esther Quayle for a continuance on item one. January 4. The partners' finance committee takes up the sixteen million on Monday. If a waiver fight runs on Greaves's feed all weekend, we lose it, and if we lose it we're short in February. And nobody makes a good decision about a valve the week before Christmas."</span>`,
@@ -183,7 +183,7 @@
           after:`Hale doesn't call back. She doesn't need to. At 8:40 the clerk receives a request for a continuance on ARA letterhead, and at 8:50, before the session opens, the board spends ten minutes on it in public, with the families in the third row, before denying it. Hale sits through the rest of the morning with her coat on.`,
           why:`The sponsor is a key stakeholder with real stakes, even when her ask is wrong. Cutting her off loses your chance to change her mind and pushes her to act around you. Engage her with the facts.`}
       ]},
-    { id:`f13s2`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`Nine forty`,
+    { id:`f13s2`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`Nine forty`, q:`Garrett has told Sam his part in 2059 and asked him to sign the waiver. How should Sam answer him?`,
       text:(s,all,G)=>{const sac=G.sacrificedhana, bu=G.buriedar, spun=G.spunmedia;
         return [`7:20 AM. The fourth floor of the federal building had a witness room off the hearing room, with a table and six chairs and a box of tissues somebody had put out for other kinds of hearings. Garrett was in it when Sam came past with his coffee. He said, <span class="said" data-who="Garrett" data-tone="Quiet, flat, unguarded.">"Close the door,"</span> in a voice Sam had never heard him use, which was a quiet one.`,
         `He wasn't smiling. Sam had read that smile like a gauge for two years, and the gauge was off.`,
@@ -211,7 +211,7 @@
           after:`The clerk logs it at 8:41. At 9:20 the chair asks Garrett whether the program manager's note reflects his words, and Garrett, who hasn't seen it, says it does, in a voice that carries to the third row. He doesn't speak to Sam again that day. The account is in the record. Garrett's own version of it never is.`,
           why:`Getting the fact to the board is right, which is why this isn't a zero. But you took his chance to own it, and blindsided him in public. Approach the person directly first (Code 3.2.7), and let him report it before you do.`}
       ]},
-    { id:`f13s3`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`The signature line`,
+    { id:`f13s3`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`The signature line`, q:`Garrett's counsel has left a pen beside the waiver. What should Sam do with the signature line?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`8:15 AM. The clerk had set out the morning's papers on a table outside the hearing room in docket order, and the waiver was third, under the agenda and the program's data package. Somebody at Tallgrass had stuck a yellow tab on the signature line.`,
         `The board's rules were in a binder beside it. Rule 9: a request for waiver of a criticality 1 requirement comes to the board signed by the program manager of record, or with the program manager's written statement of nonconcurrence, and the board hears it either way. Rule 11: residual risk to crew is accepted by the board, in writing, or it isn't accepted.`,
@@ -234,7 +234,7 @@
           after:`He writes it at the clerk's table on the back of the agenda, types it on his phone, and sends it to the clerk at 8:37. STATEMENT OF NONCONCURRENCE, S. OKAFOR, PROGRAM MANAGER. Five sentences. He doesn't sign Request for Waiver 62-14. The ground runs met their limits, and the third close after every soak rippled 2 milliseconds after lift, cause unknown; the word nominal leaves that out. Revision C against D is unexplained. The program will present both options with their risks and dates and recommend from the data. Acceptance of residual risk to the crew belongs to the board under its Rule 11, with the crew's consent, and isn't the program's to give. He puts the good pen back where counsel left it.`,
           why:`Don't sign what you don't believe, and don't only refuse. Put your position, the data, and the options in writing through governance, and leave risk acceptance with the authority that has it. That's responsibility and honesty together (Code 2.2.1, 5.3.1).`}
       ]},
-    { id:`f13s4`, domain:`People`, task:`P6`, approach:`hybrid`, title:`During cruise`,
+    { id:`f13s4`, domain:`People`, task:`P6`, approach:`hybrid`, title:`During cruise`, q:`Haddad read the docket at six and asks whether this is Sam's waiver. How should he answer her?`,
       text:(s,all,G)=>{const p=s.picks||{}, rw=G.r_wendell;
         return [`8:40 AM. Commander Haddad came up the stairs instead of taking the elevator, two at a time, in a flight jacket over a sweater, with her phone in her hand and the docket on its screen.`,
         `Haddad had been home in Aurora since Monday, her last two weeks before quarantine. She'd read it at six, she said, in her kitchen, with her youngest eating cereal beside her. Nobody had sent it to her. The partners' liaisons got the docket automatically. The crew didn't.`,
@@ -260,7 +260,7 @@
           after:`She takes it up with the clerk herself, which takes an hour, because the clerk has to check whether the crew counts as a party. In that hour Tallgrass's request gets its first reading without the crew in the record. When she finally speaks, at 2:40, the chair thanks her for her patience.`,
           why:`Pointing the crew at the process leaves them to find their own way into it. You hold the data and the relationship. Give them both, and ask for their voice to be heard.`}
       ]},
-    { id:`f13s5`, domain:`People`, task:`P4`, approach:`predictive`, title:`Member Calder`,
+    { id:`f13s5`, domain:`People`, task:`P4`, approach:`predictive`, title:`Member Calder`, q:`The chair asks whether the program objects to Member Calder sitting. How should Sam answer?`,
       text:(s,all,G)=>{const sq=G.squeezedaldergrove;
         return [`9:00 AM. The hearing room had the same terrazzo in the hall and the same coffee in the urn, and a bench of pale wood across the front with six chairs behind it and a seal on the wall that the ARA had paid for and the building's lease said it couldn't take down.`,
         `Greaves's crew had a camera on a tripod at the back. Frances Odum was in the third row with the Families of Ares binder on her knees. Hale was in the front row, still in her coat. `+(sq
@@ -285,7 +285,7 @@
           after:`The chair says the minutes will record what the member disclosed, which is the board's business and not the program's. Ruth looks at him over her glasses for the first time that morning. It's the look from her kitchen in January of last year.`,
           why:`Asking to keep a disclosed relationship out of the record works against transparency (Code 4.2.1). The pages are private. The fact of them stopped being private the moment a member disclosed it. Consent, and disclose your side.`}
       ]},
-    { id:`f13s6`, domain:`Process`, task:`R9`, approach:`hybrid`, title:`I signed it`,
+    { id:`f13s6`, domain:`Process`, task:`R9`, approach:`hybrid`, title:`I signed it`, q:`Quinn has the whole package on the screen. How should Sam present the runs to the board?`,
       text:(s,all,G)=>{const ct=G.crashedtest, ta=G.r_testarticle, hid=G.hidnumbers, rw=G.r_wendell, sk=G.skippedwendell;
         return [`9:14 AM. The chair said the board would hear the member's statement before the item, at the member's request, and that it would be part of the record. Ruth turned the typed page over, put her reading glasses on, and then didn't read from it.`,
         `<span class="said" data-who="Ruth" data-tone="Grave, quiet, steady.">"I've never said this in public. I said it to an investigation board in 2036, in a room like this one, and they wrote it down, and it went into a report people quote my rule from and don't read. So I'll say it once in a room where it might be some use."</span>`,
@@ -320,7 +320,7 @@
           after:`The board listens politely to the Petrel for the second time in two hours. Then a member asks for the traces, and Quinn puts them up, and the members spend the rest of the morning working out for themselves how worried to be, because the program told them how to feel and left out what it knows.`,
           why:`Steering a decision with fear is the mirror image of spinning it with good news. Present the data and the options evenly, and recommend from the evidence.`}
       ]},
-    { id:`f13s7`, domain:`People`, task:`P2`, approach:`hybrid`, title:`Attachment B`,
+    { id:`f13s7`, domain:`People`, task:`P2`, approach:`hybrid`, title:`Attachment B`, q:`Hana says she'll tell the board everything that happened. What should Sam do?`,
       text:(s,all,G)=>{const p=s.picks||{}, sac=G.sacrificedhana;
         return [`12:10 PM. Lunch recess. Wendell had gone at the start of it, an hour short of the doctor's five, with Arlo driving him home to Byers. The hall smelled like the sandwiches the clerk had ordered, and Hana came out of the witness room with her face set the way it had been on the stand deck in February.`,
         `Tallgrass's counsel had found her at the coffee urn at noon. The afternoon was Tallgrass's request, and Hana was Tallgrass's propulsion lead and its witness. Counsel's advice, Hana said, had been friendly and very clear. Stick to the engineering. The board didn't need history. Attachment B had it covered.`,
@@ -346,7 +346,7 @@
           after:`Hana doesn't argue. She sits in the second row all afternoon with her hands in her lap while Sam answers questions about seat wear and soak times that she'd answer better. At 3:20 a member asks why the propulsion lead isn't testifying about her own valve. Sam says he wanted to spare her. The member says that's kind, and asks her to come up.`,
           why:`You spared her by keeping her quiet, and the board lost the one witness who knew the valve. Shield her from pressure and from payback, and then let her talk.`}
       ]},
-    { id:`f13s8`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`Who decides`,
+    { id:`f13s8`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`Who decides`, q:`The chair asks who should decide what between now and the burn. What should Sam propose?`,
       text:(s,all,G)=>{const p=s.picks||{};
         const garrett=p[1]===0
           ?`Garrett read his account into the record first, standing, from the two pages he'd written at 8:50. He read the dinner and the call at 9:40 and the four minutes and the stand he'd booked over Wendell's slot. Then he said, <span class="said" data-who="Garrett" data-tone="Quiet, flat, unguarded.">"Nobody did it alone. I did more of it than anybody,"</span> and sat down, and at the end of Tallgrass's table Hana put her pen down very carefully.`
@@ -383,7 +383,7 @@
           after:`He puts it on the screen with Quinn, because they'd drafted it on Wednesday night, in case. Each decision between now and departure has its own row: who recommends, who decides, who has to agree, who's told. Residual risk to the crew is accepted only by the board, in writing, under its Rule 11, after the crew has given its consent in writing. The program recommends from the data. The contractor can't accept risk on the crew's behalf, and neither can the program manager. The criteria for any final test are written and published before it runs, and nobody changes them after. Anybody on the program can file a dissent; it's written up with the agreed facts and both positions, goes at least two levels up, and costs its author nothing. The chair asks the clerk for a copy. Garrett reads it twice. In the fourth row Lorna turns her pad face down.`,
           why:`Governance means decision rights written down before they're needed: who recommends, who decides, who must consent, with thresholds set in advance and a path for documented dissent. Risk to people is accepted by the authority that matches it, with the people exposed consenting.`}
       ]},
-    { id:`f13s9`, domain:`People`, task:`P6`, approach:`hybrid`, title:`Two rumors`,
+    { id:`f13s9`, domain:`People`, task:`P6`, approach:`hybrid`, title:`Two rumors`, q:`Frances wants to know what she can tell the families this evening. What should Sam do?`,
       text:(s,all,G)=>{const hid=G.hidnumbers, spun=G.spunmedia, p=s.picks||{};
         return [`Friday, December 15. 7:00 AM. The board's notice had posted at 6:30. <b>ITEM 1: DELIBERATION CONTINUES. DECISION TO BE POSTED BY NOON TUESDAY, DECEMBER 19.</b> Three days ahead of Coquina's manifest. Somebody on the bench had done the arithmetic.`,
         `Greaves had run Ruth's statement in full at nine the night before, all eleven minutes of it, without music, under the title <b>I SIGNED IT</b>. By midnight it had been watched more times than anything the feed had run since the AR 2207 record in `+(G.crashedtest?`September`:`October`)+`. Frances Odum had texted at 12:15. <b>We watched it together. All of us.</b>`,
@@ -407,7 +407,7 @@
           after:`The families get two statements that agree with each other and say nothing about a valve. At 6:20 a mother in Golden asks Frances, on the call, whether February is a promise or a plan. Frances says she doesn't know, and that the program didn't say.`,
           why:`One consistent message helps only if it answers what people are asking, and these two answer nothing about the valve. Speak to the stakeholders' real question.`}
       ]},
-    { id:`f13s10`, domain:`People`, task:`P1`, approach:`agile`, title:`On track for what`,
+    { id:`f13s10`, domain:`People`, task:`P1`, approach:`agile`, title:`On track for what`, q:`The headline says on track, and Rafa asks on track for what. What should Sam do about the headline?`,
       text:(s,all,G)=>{const spun=G.spunmedia, nc=G.nocharter;
         return [`1:30 PM. Watkins, the program room. Tallgrass's communications office had sent a draft statement at noon, for release at five, with a headline in bold. <b>HALCYON ON TRACK FOR FEBRUARY 18 AFTER READINESS REVIEW.</b> Under it was a quote from Garrett about engineering excellence and a space left for a quote from the program manager.`,
         `Hale's office had sent its own draft, which agreed with Tallgrass's on the date and on nothing else. Greaves had sent a question at 12:40, one line. <b>Is February 18 a date or a promise?</b>`,
@@ -432,7 +432,7 @@
           after:`It takes until 4:30 and four phone calls, two of them with Hale. What comes out is short, and it's the same words for Greaves, the families, and the high bay. Halcyon exists to get air to Ares Station before its reserve runs out. The readiness board heard two options for a valve that isn't fully understood, and decides by Tuesday. The plan is still a February 18 departure in a window that runs to March 4, the board's decision may change the plan, and if it does the program will say so the same day. Garrett's quote stays, minus the word excellence. Sam's is one sentence. <span class="said" data-who="Sam">"We're going because they need air, and February 18 is the plan for getting it there."</span> Greaves runs it at five without changing a word, and at 5:20, on air, he answers his own question: a plan.`,
           why:`Keep the shared vision current and find the root cause of the misunderstanding: each group's picture of success stopped at a date. Restate the vision with the stakeholders, in one set of words for everyone, with the open decision stated honestly.`}
       ]},
-    { id:`f13s11`, domain:`Business Environment`, task:`B7`, approach:`hybrid`, title:`Here you close things`,
+    { id:`f13s11`, domain:`Business Environment`, task:`B7`, approach:`hybrid`, title:`Here you close things`, q:`Garrett asks what he should really tell nine hundred people on Monday. What's Sam's best answer?`,
       text:(s,all,G)=>{const p=s.picks||{}, rw=G.r_wendell, sk=G.skippedwendell, sac=G.sacrificedhana;
         return [`4:30 PM. The light was going orange across the prairie, and from Sam's office window he could see the stand road two miles out, and a truck on it coming in from the blockhouse with its window down an inch.`,
         `Wendell's contract had ended at four, and he'd meant to leave on the hour, to beat traffic on I-70 that there wouldn't be. `
@@ -461,7 +461,7 @@
           after:`Tallgrass's security office spends a week on it and finds nothing, because there's nothing on any machine it can see. Every member of the stand crew is interviewed. After that nobody on the stand crew volunteers anything to anybody, about anything, until January.`,
           why:`Hunting the source of an inconvenient truth teaches everyone that bad news is dangerous, which is retaliation in effect if not in name (Code 2.3.5). Fix the culture that made the leak feel necessary.`}
       ]},
-    { id:`f13s12`, domain:`People`, task:`P8`, approach:`hybrid`, title:`Log fifty five`,
+    { id:`f13s12`, domain:`People`, task:`P8`, approach:`hybrid`, title:`Log fifty five`, q:`Ada asks why Sam left the Air Force. What should he tell her tonight?`,
       text:(s,all,G)=>{const p=s.picks||{}, ex=G.exposedada, rosy=G.rosylog, spun=G.spunmedia;
         const A=253, R=260, arr=262;
         const open=ex

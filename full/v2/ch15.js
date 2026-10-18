@@ -128,7 +128,7 @@ const flew=(s,all,G)=>{if(ending(s,all,G)!==`petrel`)return true;const p=(s&&s.p
 const NAMES={clean:`Clean Burn`,eyes:`Eyes Open`,cargo:`Cargo Only`,petrel:`Petrel`};
 
 SC=[
-    { id:`f15s1`, domain:`Process`, task:`R9`, approach:`hybrid`, title:`Eligible`,
+    { id:`f15s1`, domain:`Process`, task:`R9`, approach:`hybrid`, title:`Eligible`, q:`Hale and Garrett both asked whether the program will ask for acceptance. What should Sam give the board?`,
       text:(s,all,G)=>{const g=book(all,G), E=ending(s,all,G);
         const hana=E===`clean`
           ?`On Wednesday Hana had come in at 8:02 with a page she'd printed at 7:40, and she'd let him read it in the hall. At 6:50 on Wednesday morning, after a soak as long as the one on orbit, the second test article in Building 6 had rippled on its third close at 13 milliseconds, past the ground limit for the first time in its life, at 3,140 cycles. The borescope showed the polished ring on its seat wider than it had been at 2,400. Then she'd written the line she'd refused to write for fourteen months. <b>FINDING: SEAT WEAR. THE 2058 LOT'S SEAT INSERTS POLISH A RING UNDER COLD CYCLING, AND AFTER A SOAK THE POPPET HANGS ON IT AT THE THIRD CLOSE. MOIV-1 AND THIS ARTICLE HAVE 2058 INSERTS. THE REPLACEMENT VALVE HAS A 2062 INSERT AND ELEVEN CYCLES ON IT.</b> She'd signed it. It had taken two years of closure history, back to the month he'd reopened AR 2207, and `+(g.r_reserve?`the extra cold shifts in Building 6 that the declared reserve had paid for in the fall.`:`hot fire 2's trace from the Cape to line it up against.`)
@@ -158,7 +158,7 @@ SC=[
           after:`He puts close three up first, with the ten millisecond line drawn heavy. Hana corrects him from Tallgrass's table before he's done: the limit the board set was fifteen, and he knows where fifteen came from. The members spend twenty minutes taking his framing apart before they can get to the data. Ruth doesn't write anything.`,
           why:`Leading with the frightening number to push a decision is steering, the mirror image of spin. The board set its criteria in advance to keep exactly that out of the room. Present every value against both limits, evenly.`}
       ]},
-    { id:`f15s2`, domain:`People`, task:`P3`, approach:`hybrid`, title:`Ask us each`,
+    { id:`f15s2`, domain:`People`, task:`P3`, approach:`hybrid`, title:`Ask us each`, q:`Haddad's message asks who talks first. How should Sam open the pass?`,
       text:(s,all,G)=>{const E=ending(s,all,G);
         const D={clean:`THE CRITERIA WERE MET. THE CAUSE IS NOW KNOWN TO THIS BOARD'S SATISFACTION: SEAT WEAR (TALLGRASS FINDING OF JANUARY 31, BUILDING 6).<br>MOIV-1 WILL BE REPLACED BY SPACEWALK WITH THE VALVE FLOWN ON JANUARY 9. SPACEWALKS SATURDAY, FEBRUARY 3, AND TUESDAY, FEBRUARY 6. RETEST FRIDAY, FEBRUARY 16, ON THE SAME SIX CRITERIA, AFTER THE SAME SOAK.<br>THE CR 62-311 WORKAROUND STAYS LOADED AS A SECOND BARRIER.<br>THE BOARD ACCEPTS THE RESIDUAL RISK OF THE SPACEWALKS AND OF THE NEW VALVE, SUBJECT TO THE WRITTEN CONSENT OF EACH MEMBER OF THE CREW, ASKED TONIGHT.<br>VOTE 6 TO 0.`,
           eyes:`THE CRITERIA WERE MET. THE CAUSE IS UNKNOWN.<br>REPLACEMENT IS NOT ORDERED. THE GROUND VALVE OF THE SAME DESIGN RIPPLES IN THE SAME CONDITION, SO A NEW VALVE HAS NOT BEEN SHOWN TO BEHAVE DIFFERENTLY, AND A SPACEWALK ON A LOADED STAGE CARRIES RISK OF ITS OWN.<br>THE BOARD ACCEPTS THE RESIDUAL RISK OF FLYING MOIV-1 WITH THE CR 62-311 WORKAROUND, SUBJECT TO THE WRITTEN CONSENT OF EACH MEMBER OF THE CREW, ASKED TONIGHT.<br>VOTE 5 TO 1. ONE MEMBER DISSENTS AND WOULD ORDER THE REPLACEMENT. DISSENT ATTACHED.<br>MEMBER CALDER CONCURS AND ADDS: EVERY VALUE GOES IN THE POLL BOOK AS MEASURED.`,
@@ -187,7 +187,7 @@ SC=[
           after:`The chair says yes before Hale can get her coat off the chair. The data went up at five. At seven the chair takes each of them on a private channel, in the order they chose, and nobody else is on any of them. Dr. Rao starts, with what the four of them have slept and eaten since Monday, because a doctor ought to say that out loud before people answer questions like these. Echeverría asks one question about MOIV-2, and page nine of the data answers it. Brandvold reads off an index card she wrote out twice, and stops once to fix a word. Haddad goes last. Her answer's one sentence long. The clerk types each answer as it's said, and on the ground nobody says a thing till they're done.`,
           why:`Lead by representing the team's voice, not speaking over it: the people who carry the risk get the data first, speak first in their own words, and nobody frames it for them. That's what makes what they say worth recording.`}
       ]},
-    { id:`f15s3`, domain:`Process`, task:`R3`, approach:`hybrid`, title:`Line one`,
+    { id:`f15s3`, domain:`Process`, task:`R3`, approach:`hybrid`, title:`Line one`, q:`The benefit won't be known until after the program office closes. How should Sam handle it?`,
       text:(s,all,G)=>{const E=ending(s,all,G);
         const now={clean:`Haddad and Echeverría had done the first spacewalk on Saturday in six hours and forty minutes. The second was today at 9:10, with the old valve coming off and the new one going on, and the whole building was going to watch it, so Quinn had put this meeting before.`,
           eyes:`All four had consented on Thursday night, each on a private channel, and the forms were in the board's record by Friday. There was nothing more to decide about the valve but whether to trust it on the day, so the building had started on everything else.`,
@@ -212,7 +212,7 @@ SC=[
           after:`Hollis's office says yes, kindly. The benefit becomes one more line in the weekly, beside morale. If Bay D's line and the Breather's ever drift apart, it's nobody's job to notice which one moved.`,
           why:`Folding a benefit into a general report, without an owner, metrics, or reviews, means it's reported and not managed. Name the owner and how she reports, separately, to someone who acts on it.`}
       ]},
-    { id:`f15s4`, domain:`Business Environment`, task:`B6`, approach:`hybrid`, title:`What Lorna takes`,
+    { id:`f15s4`, domain:`Business Environment`, task:`B6`, approach:`hybrid`, title:`What Lorna takes`, q:`Garrett says wait for the final report. Hale's office says send only closed entries. What should Sam do?`,
       text:(s,all,G)=>{const g=book(all,G), E=ending(s,all,G);
         return [`Monday, February 12. 8:00 AM. Flight control. Lorna had the hand off on her whiteboard as a single line with a box at the end. <b>DEPARTURE PLUS 24 · MON FEB 19 · 0906.</b> She'd drawn the box in December and hadn't touched it since.`+(E===`petrel`?` Whatever happened on the eighteenth, the ship would be hers on the nineteenth, in whatever orbit it was in.`:``),
         `At eight she wanted one thing she didn't have. <span class="said" data-who="Lorna">"The program's lessons register. Not the report you'll write in March. The register, this week. My people are taking a ship that's had two years of things go wrong on it, and I'd like to know which of them are still in it."</span>`,
@@ -233,7 +233,7 @@ SC=[
           after:`Lorna reads the list and sends it back with one line. <b>I asked what's still in it.</b> Two of the entries the program left out are about the valve she's taking.`,
           why:`Sending only the closed entries leaves the next team blind to what's still open, which is most of what they need from a lessons register. Hand over the hard ones first.`}
       ]},
-    { id:`f15s5`, domain:`People`, task:`P1`, approach:`hybrid`, title:`Log sixty five`,
+    { id:`f15s5`, domain:`People`, task:`P1`, approach:`hybrid`, title:`Log sixty five`, q:`This is the last log Ada will hear before the burn. What should Sam tell her?`,
       text:(s,all,G)=>{const g=book(all,G), E=ending(s,all,G), ex=g.exposedada;
         const A=233, R=240, arr=201;
         const hi=ex?`Hi, Dad, and hi, director's office. Log sixty five. Sol 4265.<br><br>`:`Hi, Dad. Log sixty five. Sol 4265.<br><br>`;
@@ -267,7 +267,7 @@ SC=[
           after:`He doesn't record anything. In the morning, on the station's public feed, nine and a half minutes late, the galley camera shows her asleep at a table with her tablet face up beside her, as if something might still come in.`,
           why:`Silence before a decision that matters to someone leaves them alone with it. Tell the people it's for what you know and when they'll hear, before, and not only after.`}
       ]},
-    { id:`f15s6`, domain:`Process`, task:`R10`, approach:`predictive`, title:`The poll`,
+    { id:`f15s6`, domain:`Process`, task:`R10`, approach:`predictive`, title:`The poll`, q:`The poll has reached its last line, the program's. How should Sam answer?`,
       text:(s,all,G)=>{const E=ending(s,all,G);
         const state={clean:`The retest had run on Friday at 2 PM after a twenty two hour soak, on a valve that had gone up with eleven cycles on it. Five closes. Close three under one millisecond, pressure confirming closed at 29 milliseconds, no ripple. Both blind readers had written the same thing beside every close, and then, because they'd been told to write what they saw, the number.`,
           eyes:`The poll book was open on Quinn's desk at the page Ruth had asked for in the board's minutes: every value from January 30 as measured, close three at 12 milliseconds against both limits, the board's acceptance, and four consent forms in four hands, each signed on a private channel on the first of February.`,
@@ -299,7 +299,7 @@ SC=[
           after:`<span class="said" data-who="Sam" data-tone="Flat, hard, final.">"Program is go."</span> He says it in the voice that ends conversations. Quinn writes it down. In the back row Wendell takes his hand off his shirt pocket and puts it on his knee, and Ruth looks at the floor before she writes anything.`,
           why:`A go given to protect a date is the oldest mistake in this book. The window is real, and so is the colony, and neither one makes the record say something it doesn't. Answer what the evidence supports.`}
       ]},
-    { id:`f15s7`, domain:`Process`, task:`R5`, approach:`predictive`, title:`Row three`,
+    { id:`f15s7`, domain:`Process`, task:`R5`, approach:`predictive`, title:`Row three`, q:`Garrett wants to hold Aldergrove's last payment. What should Sam do with the contract?`,
       text:(s,all,G)=>{const g=book(all,G), E=ending(s,all,G), F=flew(s,all,G);
         const burn=!F
           ?[`Sunday, February 18. 8:52 AM. The board's answer came over the open line from the fourth floor in the chair's voice. <span class="said" data-who="Esther">"The board does not accept the risk. Halcyon holds."</span> At 9:06 nothing lit over the Pacific. People stayed in their chairs because nobody knew where else to go. The window would close on Sunday, March 4, whatever anybody did before then, and nobody did anything that changed it. That afternoon Hana ran the spacewalk path again from the nineteenth: about two chances in three of a retest by Friday the 2nd. The board wouldn't put a crew outside on those odds for a valve nobody understood.`]
@@ -329,7 +329,7 @@ SC=[
           after:`It takes the morning. Peg reads each clause aloud and Aldergrove's controller ticks it. Both valves accepted, with what each one did in service written beside it. The task order closed at its final cost and paid within the month. The release signed both ways. Then the record, which takes longer, because Sam asks for it to start in 2034: the rev C cold cycle data with the third row boxed and CYCLE 3 AFTER SO in the margin, Emmett Garrity's request of April 2035 for three weeks, the termination for default and the 2039 ruling that it wasn't one, and every June letter since, by date. Peg writes one line at the top of the closeout in her own words. <b>The supplier asked. It's in here.</b> Nell takes her father's badge off its lanyard and lays it on the folder, and then picks it back up. <span class="said" data-who="Nell">"Not yet,"</span> she says.`,
           why:`Close a contract completely: formal acceptance, claims and invoices settled, records updated to the final results, and the history archived for whoever buys from that supplier next. Pay what's due on time (Code 3.3.1), and let the record say what the supplier got right, too (Code 5.3.1).`}
       ]},
-    { id:`f15s8`, domain:`Process`, task:`R10`, approach:`hybrid`, title:`The twelve`,
+    { id:`f15s8`, domain:`Process`, task:`R10`, approach:`hybrid`, title:`The twelve`, q:`Hale's office wants a ceremony for the twelve in Denver. What's Sam's best move?`,
       text:(s,all,G)=>{const E=ending(s,all,G), F=flew(s,all,G);
         const ship=!F?`Halcyon was still in low orbit, whole, held, and Garrett had a question about that.`
           :E===`petrel`?`Halcyon was in its wrong orbit, safed, flight operations' now, and Garrett had a question about that.`
@@ -353,7 +353,7 @@ SC=[
           after:`The email is warm and goes to nine hundred people. The twelve read it on their phones in the parking lot on their last day. In September nobody remembers to hold anything, because by then they're at other jobs.`,
           why:`Recognition belongs throughout the project and at the moment people finish, not deferred to an outcome they won't be there for. Thank them while they're still in the building.`}
       ]},
-    { id:`f15s9`, domain:`Business Environment`, task:`B6`, approach:`hybrid`, title:`Line two`,
+    { id:`f15s9`, domain:`Business Environment`, task:`B6`, approach:`hybrid`, title:`Line two`, q:`Garrett wants a named lessons session, and Hale wants a two page summary. What should Sam do with the lessons?`,
       text:(s,all,G)=>{const g=book(all,G), E=ending(s,all,G), F=flew(s,all,G);
         return [`Monday, February 26. 9:00 AM. The ARA's flight rules office had asked every program to send its closing lessons by Friday, March 2, for the rules review on Wednesday, March 14. The form had a box for each lesson, and a box beside it that said PROPOSED ACTION (OPTIONAL).`+(E===`petrel`?` A separate line asked for a statement of why the program hadn't delivered`+(F?`, and what had happened at 9:15 on the eighteenth.`:`, and why it had held.`):``),
         `Quinn had the register sorted by what each lesson touched. The longest pile was the anomaly process. At the top of it was the oldest thing in the program: AR 2207, a criticality 1 anomaly downgraded to criticality 2 eleven days before a review, so that Flight Rule 2.36 printed N/A beside it and never applied.`,
@@ -373,7 +373,7 @@ SC=[
           after:`The summary is handsome and true in every line, and the partners like it. The flight rules office reads it in March and finds nothing in it to act on, which is how the downgrade door stays open for the next ship.`,
           why:`Lessons are for improving the work, not for marketing it. Leaving out what went wrong leaves the organization no wiser, and the next program inherits the same doors.`}
       ]},
-    { id:`f15s10`, domain:`People`, task:`P3`, approach:`agile`, title:`The next ship`,
+    { id:`f15s10`, domain:`People`, task:`P3`, approach:`agile`, title:`The next ship`, q:`Hale's office wants Quinn in April, and Garrett wants to keep her. What should Sam do?`,
       text:(s,all,G)=>{const E=ending(s,all,G), F=flew(s,all,G);
         const next=E===`petrel`
           ?(F?`The ARA had decided on Monday to stand up a program for the 2065 window, with a new departure stage for a ship that was still in orbit, and that window was now the only one Ares Station had.`:`The ARA had decided on Monday to stand up a program to fly Halcyon in the 2065 window, and that window was now the only one Ares Station had.`)
@@ -395,7 +395,7 @@ SC=[
           after:`He asks, and then waits, which takes longer than asking. She wants it. She wants to finish the final report's schedule section first, because it's hers, and she wants Delphine's Thursdays to keep going. They settle on Friday, March 23. Corinne takes the integrated plan's closeout and Peg takes the procurement archive, and both initial it. Then he writes Hale's office a page about her, the plain way: the poll she wouldn't move on from at propulsion, the 12 on the whiteboard, two years of being the one who knew where the schedule was wrong. He shows it to her before he sends it. She reads it with her hands flat on the desk and asks him to take out one adjective. He does.`,
           why:`Lead by empowering the person, not deciding for her: ask what she wants, support it, release her on a date that works, hand her work to named owners, and give the next organization an honest account of what she can do.`}
       ]},
-    { id:`f15s11`, domain:`People`, task:`P7`, approach:`hybrid`, title:`Hers`,
+    { id:`f15s11`, domain:`People`, task:`P7`, approach:`hybrid`, title:`Hers`, q:`The archivist wants Ruth's pages in Monday's records. How should Sam handle them?`,
       text:(s,all,G)=>{
         return [`Saturday, March 10. 10:00 AM. Golden. The garage door was up when he pulled in, which it had never been, and in the middle of the concrete floor, on its tripod, was the telescope. The case was open on the workbench behind it, the foam still holding the shape of what had come out.`,
         `Ruth was at the kitchen table where she'd been in January of 2061, with coffee and the green cloth binder, and the green pen lying across the cover. She started before he'd sat down, the way she started pages.`,
@@ -420,7 +420,7 @@ SC=[
           after:`The next program finds what matters fast. It doesn't find the reasoning behind the criteria, the consents, or the run sheets, because those were working files, and in 2064 it writes its own criteria from nothing.`,
           why:`Archiving only the polished outputs loses the reasoning and evidence the next team needs most. Archive project information completely, organized so it can be used.`}
       ]},
-    { id:`f15s12`, domain:`Process`, task:`R10`, approach:`predictive`, title:`Final report`,
+    { id:`f15s12`, domain:`Process`, task:`R10`, approach:`predictive`, title:`Final report`, q:`Hale wants a final report that's true and one the partners can vote for. How should Sam write it?`,
       text:(s,all,G)=>{const E=ending(s,all,G), F=flew(s,all,G), p=(s&&s.picks)||{};
         const ship={clean:`Halcyon was twenty two days out. The Breather was in its module, cold, with six months of cruise and an install between it and anybody breathing what it made.`,
           eyes:`Halcyon was twenty two days out and eight days from its correction burn, on Tuesday, March 20. Arrival was September 25 now, nineteen days late, inside both reserves because of a bay in C ring.`,

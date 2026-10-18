@@ -187,7 +187,7 @@
     video: [`VniTBauAyMc`,`Project Life Cycles and Phase Gates`,`David McLachlan`,`4:33`]
   },
   scenes: [
-    { id:`f14s1`, domain:`Process`, task:`R7`, approach:`hybrid`, title:`Written first`,
+    { id:`f14s1`, domain:`Process`, task:`R7`, approach:`hybrid`, title:`Written first`, q:`The board needs criteria for the valve test on orbit. What should Sam propose?`,
       text:(s,all,G)=>{const ct=G.crashedtest, pt=G.r_protectedtest;
         return [`Wednesday, January 3. 9:00 AM. The board's small room on the fourth floor, not the hearing room. No camera and no gallery, and a whiteboard somebody had cleaned badly, so last month's arrows still showed through like old tire tracks.`,
         `Esther Quayle sat at the end of the table with a kitchen timer in front of her. Ruth was two seats down, in the gray cardigan, with the green pen. Lorna Whitcombe had brought her propulsion officer, a young man with a laptop and very straight posture. Garrett and Hana sat for Tallgrass. Sam and Quinn sat for the program. On the screen at the far end, from crew quarters at the Cape, were all four of the crew, and behind Haddad somebody's drawing of a rocket with four stick figures waving from the windows was taped to the wall.`,
@@ -210,7 +210,7 @@
           after:`Ruth looks at him over her glasses for the first time that morning. <span class="said" data-who="Ruth" data-tone="Quiet, rueful, low.">"That's how I did it,"</span> she says, quietly, to her pad, and nobody writes anything for a while. The chair thanks the program for its view and asks the crew and flight operations to stay after. The criteria get written that afternoon, and the program's seat at the table stays empty while they are.`,
           why:`Setting the limits after you've seen the result means the result chooses the limits. Uncertainty is the reason to write criteria in advance, with margin, not a reason to wait.`}
       ]},
-    { id:`f14s2`, domain:`Business Environment`, task:`B5`, approach:`predictive`, title:`Consent`,
+    { id:`f14s2`, domain:`Business Environment`, task:`B5`, approach:`predictive`, title:`Consent`, q:`Hale's office has sent the crew a consent form. How should Sam handle the consent?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Thursday, January 4. 11:10 AM. The form came from Hale's deputy, with a short note on top and a deadline under it in bold.`,
         `<prop type="doc" title="ARES RELIEF AUTHORITY · CREW RISK CONSENT · MOIV-1 (DRAFT FOR SIGNATURE BEFORE CREW LAUNCH)">I, THE UNDERSIGNED MEMBER OF THE HALCYON CREW, CONSENT TO FLY MOIV-1 WITH THE CR 62-311 WORKAROUND IF THE INDEPENDENT READINESS BOARD ACCEPTS THE RESIDUAL RISK.<br>SIGNATURE: ________ DATE: ________<br>RETURN BY 1700 FRIDAY, JANUARY 5.</prop>`,
@@ -231,7 +231,7 @@
           after:`They sign on Friday in quarantine. Brandvold asks what she's agreeing to, and the form doesn't say, so she signs anyway, because it's four days before launch and everyone is tired. On the 22nd the board's counsel says a consent before the data isn't consent under Rule A, and the forms are void. The crew finds out from a memo.`,
           why:`A consent signed before anyone knows the result is a signature, not consent to a known risk. It also puts pressure on people at their most pressured moment. Ask after the data, each person, with a real option to say no.`}
       ]},
-    { id:`f14s3`, domain:`Process`, task:`R8`, approach:`predictive`, title:`Either answer`,
+    { id:`f14s3`, domain:`Process`, task:`R8`, approach:`predictive`, title:`Either answer`, q:`Garrett doesn't want crew days spent on a spacewalk they may not need. What should Sam do with the schedule?`,
       text:(s,all,G)=>{const ai=G.trustedai, rr=G.r_reserve;
         return [`Friday, January 5. 7:30 AM. Flight control at Watkins, the planning room behind Lorna's floor.`,
         `Quinn had the on orbit timeline on the wall, from docking on Wednesday, January 10, to the burn on Sunday, February 18. Checkout of the habitat and the Breather module until the 29th. The cold soak from 4 PM on Monday, January 29. The test at 2 PM on the 30th. Then two paths. The workaround, which needed no crew time. The spacewalk, which needed nine days of it: two spacewalks and a retest, January 31 to February 8, if everything for it was ready the morning after the test.`,
@@ -258,7 +258,7 @@
           after:`Lorna moves the three and a half days into the checkout weeks, in blocks that don't touch the soak or the test: suits on the 15th, the airlock on the 18th, the valve out of its case on the 22nd, the rehearsal on the 25th. If the test misses, the first spacewalk starts Wednesday morning and the path ends February 8. If it passes, the crew has spent three and a half days on a spacewalk nobody makes. Quinn writes INSURANCE beside the blocks in her own capitals. Garrett reads it and doesn't send another note.`,
           why:`Fast track the preparation, which is cheap to waste, and protect the test, which can't be compressed without changing what it tells you. Keeping both paths ready is what lets the decision be made on the data instead of on the calendar.`}
       ]},
-    { id:`f14s4`, domain:`Process`, task:`R7`, approach:`predictive`, title:`The card`,
+    { id:`f14s4`, domain:`Process`, task:`R7`, approach:`predictive`, title:`The card`, q:`Quinn found three problems in the cards this morning, and the crew launches tomorrow. What should Sam do?`,
       text:(s,all,G)=>{const sk=G.skippedwendell;
         return [`Monday, January 8. 9:20 AM. The crew would launch in the morning, and the cards would launch with them.`,
         `There were two procedures: the workaround's conditioning cycle and cutoff, revision F, and the January 30 test, which used most of the same steps. They'd be on the crew's tablets and printed on cards in a binder clipped to the bulkhead, because Haddad wanted paper for anything she'd do with her hand on a switch.`,
@@ -281,7 +281,7 @@
           after:`The argument for it is consistency, and it lasts until Lorna reads card 6. She won't run a test with a wrong limit printed on the crew's page, and the ground runs didn't use step 14's order anyway. The cards get fixed on the 12th, from orbit, without a review.`,
           why:`Keeping a test consistent is a fair aim, but not by keeping known errors in a procedure people will execute. Fix the defects, verify the fixed procedure against the ground sequence, and the test stays consistent.`}
       ]},
-    { id:`f14s5`, domain:`Process`, task:`R9`, approach:`hybrid`, title:`Forty one days`,
+    { id:`f14s5`, domain:`Process`, task:`R9`, approach:`hybrid`, title:`Forty one days`, q:`Ada's Bay D could add forty one days to the margin. What should Sam do with that?`,
       text:(s,all,G)=>{const ex=G.exposedada;
         const A=229, R=236, arr=238, A2=270, R2=277;
         const hi=ex
@@ -321,7 +321,7 @@
           after:`The status goes at noon with nothing in it. On Monday Hollis Bayne's weekly report goes to the ARA with Bay D in its third line. Hale calls at 7:15 and asks one question: whether the program knew. He tells her the truth, and she asks him what else the program's reports don't say.`,
           why:`Withholding information to steer a decision, even toward caution, is still withholding (Code 5.3.1). The criteria are already frozen; that's what protects the test. Report what you know.`}
       ]},
-    { id:`f14s6`, domain:`Process`, task:`R3`, approach:`hybrid`, title:`Ninety sols`,
+    { id:`f14s6`, domain:`Process`, task:`R3`, approach:`hybrid`, title:`Ninety sols`, q:`Hale's office, Hollis and the ARA each want a different benefit measure. How should Sam track it?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Monday, January 15. 6:30 AM. Hollis Bayne's Monday report posted to the ARA's site, the way it had every Monday for three years. It was longer than usual.`,
         `<prop type="doc" title="ARES STATION · DIRECTOR'S WEEKLY REPORT TO THE ARA · MONDAY, JANUARY 15, 2063 (EXTRACT)">OXYGEN PLANT OPERATING WITHIN PROJECTED DEGRADATION.<br>MARGIN: 232 DAYS (ARA MODEL).<br>BAY D (HYDROPONICS, C RING): AN UNAUTHORIZED MODIFICATION, BUILT BY A. OKAFOR AND HER TEAM. REPORTED TO THIS OFFICE BY ITS BUILDER, SOL 4229. INSPECTED BY STATION SAFETY, SOL 4231. ACCEPTED WITH THREE CORRECTIONS: COMPRESSOR RELOCATED, TANK RELIEF VALVES REPLACED, FIRE DETECTION ADDED. TIED INTO THE MAIN AIR LOOP, SOL 4232.<br>CREDIT: 41 DAYS (17 STORED, BY GAUGE; 24 PROJECTED). NOT INCLUDED IN THE MARGIN ABOVE. PENDING ARA MISSION ASSURANCE REVIEW.<br>A. OKAFOR IS NAMED BAY D LEAD. A NOTE OF THE UNAUTHORIZED WORK IS IN HER FILE. A NOTE IS IN MINE.<br>SHE HID IT BECAUSE I WOULD HAVE SHUT IT. THE RULE THAT MADE THAT TRUE WAS MINE, AND IT IS WITHDRAWN. ANY RESIDENT MAY NOW PROPOSE A MODIFICATION TO THIS OFFICE AND WILL HAVE AN ANSWER IN SEVEN SOLS.<br>MORALE: I HAVE WRITTEN STRONG IN THIS LINE FOR THREE YEARS. THIS WEEK IT IS BETTER THAN THAT.</prop>`,
@@ -347,7 +347,7 @@
           after:`The families won't care. The next relief ship's planners will. In October, when Bay D restarts on Halcyon's salts, its air lands in the Breather's column, and the plant looks a quarter better than it is. The ARA sizes its next order of stacks on that number.`,
           why:`Combining sources of value hides which one is working. Keep each benefit on its own line, so decisions made on the measurement are made on the truth.`}
       ]},
-    { id:`f14s7`, domain:`Process`, task:`R3`, approach:`agile`, title:`Eighty four hours`,
+    { id:`f14s7`, domain:`Process`, task:`R3`, approach:`agile`, title:`Eighty four hours`, q:`There are eighty four crew hours left and nine requests for them. How should Sam decide what fits?`,
       text:(s,all,G)=>{const cr=G.cutregression;
         return [`Wednesday, January 17. 8:00 AM. Flight control. The crew had been aboard Halcyon for a week, and Lorna had a number on her whiteboard in red: 84. Crew hours left before the soak, outside the checkout and the spacewalk preparation.`,
         `Under it, Quinn had stuck up nine cards, one for each request that had come in since launch. Each said who wanted it and how many crew hours it took.`,
@@ -371,7 +371,7 @@
           after:`They go card by card, with Haddad on the screen and Lorna at the board, and ask one question of each: if this found a problem, would anybody decide anything differently before the burn? Regression: yes, it's the burn's software, all six hours on the flight computers. The second spacewalk rehearsal: yes. The Breather's thermal checkout, short version: yes. Backup communications: yes. Medical baselines: yes, Dr. Rao says, flatly. The lander check moves to cruise week two. Half the stowage audit and the photo survey go to cruise too. The cabin camera comes out, and Sam calls Hale's office himself before lunch to say why. Fifty eight hours of eighty four. Haddad initials the board from orbit, which is to say she holds up her initials on a card and Quinn copies them.`,
           why:`Prioritize work by value with the key stakeholders. On a deadline, value means what an item would change in the decisions ahead, so keep what informs the go/no-go and defer what doesn't, openly.`}
       ]},
-    { id:`f14s8`, domain:`Process`, task:`R9`, approach:`predictive`, title:`Open items`,
+    { id:`f14s8`, domain:`Process`, task:`R9`, approach:`predictive`, title:`Open items`, q:`Garrett wants one green box for the partners. How should Sam run the readiness review?`,
       text:(s,all,G)=>{const ta=G.r_testarticle, p=s.picks||{};
         return [`Friday, January 19. 9:00 AM. The ARA's integrated readiness review, the last one before the poll, in the big room at flight control. Hale in the chair for the agency. Lorna, Garrett, Hana, Corinne, Rafa, the crew on the loop, two of the partners' liaisons, and an observer from the board's staff at the back with a notebook.`,
         `The first item wasn't on the agenda. The ARA's mission assurance office had checked Bay D's gauge log and the six night runs, and it adopted the forty one days at 9:05, with a footnote: seventeen days verified by gauge, twenty four projected and to be remeasured every week. The agency's figure went from 228 to 269. Arrival was day 230. Plus thirty nine, the first plus on the ARA's line since July. `+(p[4]===2?`Hale read the footnote out loud and then the name in it, and didn't look at Sam.`:`Nobody at the table said anything about where the bay had been for twenty one months.`),
@@ -394,7 +394,7 @@
           after:`It saves a day. The other twenty two items wait eleven days without a review, and two of them turn out to need crew time that's already been spent by the time anyone looks.`,
           why:`One open item doesn't make the others wait. Review readiness on schedule, so everything that can close does, and the decision on the 30th has only the valve left in it.`}
       ]},
-    { id:`f14s9`, domain:`Business Environment`, task:`B6`, approach:`agile`, title:`Rehearsal`,
+    { id:`f14s9`, domain:`Business Environment`, task:`B6`, approach:`agile`, title:`Rehearsal`, q:`The rehearsal turned up fourteen items, and Hale's office wants to cancel Friday's second rehearsal. What's Sam's best move?`,
       text:(s,all,G)=>{
         return [`Tuesday, January 23. 1:00 PM. The full countdown rehearsal for the burn, in flight control, with Lorna's twelve controllers, the program's consoles, and the crew on the loop from orbit. Quinn ran it from the countdown lead's desk with the procedure open in front of her and a cup of tea she forgot about at 1:05. Brandvold flew the simulated burn.`,
         `At T minus twenty minutes Quinn called the poll. Each station answered in turn. When she got to propulsion, Arlo said, <span class="said" data-who="Arlo">"Prop is"</span>, and stopped, and then said, <span class="said" data-who="Arlo">"go,"</span> and Quinn moved on to guidance, because the next name on her sheet was guidance.`,
@@ -416,7 +416,7 @@
           after:`Hale's office thanks him. The crew gets three hours back. The fourteen fixes are never tried with everybody on the loop at once, and the first time anyone uses the new poll order is the morning of February 18.`,
           why:`A fix that hasn't been tried isn't a fix yet. Rehearse again with the changes in place, so the improvement is proven before the day it's needed.`}
       ]},
-    { id:`f14s10`, domain:`Process`, task:`R8`, approach:`hybrid`, title:`Two and a half days`,
+    { id:`f14s10`, domain:`Process`, task:`R8`, approach:`hybrid`, title:`Two and a half days`, q:`The crew's checkout is running two and a half days behind plan. How should Sam respond?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Thursday, January 25. 6:00 AM. Quinn had been in since five, and the chart on her screen had two lines on it that had come apart.`,
         `The crew's checkout plan was four hundred task points from January 10 to January 29, twenty days. At the end of Wednesday, day fifteen, they'd earned 236. The plan said 284. On the plan, 236 had been due halfway through day thirteen.`,
@@ -438,7 +438,7 @@
           after:`It recovers the days on paper. Ground acceptance isn't on orbit checkout; launch loads move things. The pump that started grinding on Saturday had passed on the ground, too.`,
           why:`Skipping verification to save time accepts risk nobody has evaluated. The checkout exists because the environment changed. Find the days in sequencing and resources, not in cutting the tests.`}
       ]},
-    { id:`f14s11`, domain:`People`, task:`P6`, approach:`hybrid`, title:`Same words`,
+    { id:`f14s11`, domain:`People`, task:`P6`, approach:`hybrid`, title:`Same words`, q:`Frances asks what Tuesday means, and why Ada's name isn't on anything the agency's put out. How should Sam answer?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Friday, January 26. 10:00 AM. Hale's office had a plan for Monday night, and it came with a run of show.`,
         `A press event in Denver at seven, with families in the front rows. The first item: ARA SUPPORTED STATION INITIATIVE EXTENDS COLONY MARGIN BY 41 DAYS. The second: a live broadcast of Tuesday's test from Halcyon's cabin, with a countdown graphic and Commander Haddad narrating each close. `+(p[6]===3?`The cabin camera was already out of the crew's timeline, so the plan said the camera would go back in.`:`The camera was on the crew's timeline for this week.`),
@@ -459,7 +459,7 @@
           after:`It takes two calls with Hale and one with Lorna. What goes out is one page, at the same hour, to the families' list and the press: the six criteria, the four rules, both paths and their dates, and when people will hear. Measured values by 6 PM Tuesday, the board's ruling when it sits, and Sam on the families' line the same day it posts. The forty one days are credited to Ada Okafor and the Bay D team on Ares Station, with the station director's safety staff, measured there and checked by the ARA's mission assurance office. There's no cabin camera. The crew works, and the public feed carries flight control's own loop. Greaves runs the page in full and answers his own question on air. <span class="said" data-who="Simon">"Fourteen would pass C1, and it wouldn't explain the valve, and they told us so first."</span> Frances texts at 8:40 PM. <b>They're calling it Ada's bay. I told them that's what it's called.</b>`,
           why:`Before a critical decision, manage expectations with the truth: how the result will be judged, what each outcome triggers, and when they'll hear, in the same words for everyone at once. Credit good news to the people who earned it (Code 5.2, comment).`}
       ]},
-    { id:`f14s12`, domain:`People`, task:`P1`, approach:`hybrid`, title:`Clean data`,
+    { id:`f14s12`, domain:`People`, task:`P1`, approach:`hybrid`, title:`Clean data`, q:`Brandvold asks the program a plain question: are we hoping tomorrow, or testing? What should Sam do tonight?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Monday, January 29. 4:00 PM. On orbit, MOIV-1's heaters went off, and the cold soak began. Twenty two hours. Over the high bay doors the clock said 20.`,
         `In flight control the room had split without anybody deciding it would. Rafa's team had a sprint goal on their whiteboard in green marker: <b>SPRINT GOAL: TEST PASSES 1/30.</b> Somebody in Tallgrass's propulsion group had ordered T shirts that said PASS IT, and a box of them was open on a chair. Garrett hadn't ordered them, and had said so, and was wearing one.`,

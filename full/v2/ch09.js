@@ -205,7 +205,7 @@
     video: [`4Ok2BKSuAew`,`ADKAR: What is Prosci's ADKAR Model of Change?`,`Online PM Courses (Mike Clayton)`,`6:39`]
   },
   scenes: [
-    { id:`f9s1`, domain:`Business Environment`, task:`B7`, approach:`predictive`, title:`Three sixty five`,
+    { id:`f9s1`, domain:`Business Environment`, task:`B7`, approach:`predictive`, title:`Three sixty five`, q:`Hana's message asks what happens now. How should Sam respond?`,
       text:(s,all,G)=>{const re=G.r_reopened, hid=G.hidnumbers;
         return [`Saturday, February 18. 6:50 AM. He hadn't slept much. Page nine was on the kitchen table, and Hana's email beside it, and the two of them said the same thing twenty four years apart in different typefaces.`,
         `At 6:52 his phone lit up. <b>I haven't slept. Tell me what happens now.</b>`,
@@ -230,7 +230,7 @@
           after:`HR opens a file on Tuesday and asks Hana not to discuss the matter with colleagues, which means she can't run her own meetings. The ARA's ethics office asks Sam for evidence of misconduct. He has an engineer's honest recommendation and a room that agreed to it. The inquiry closes in April with no finding, and the stand crew learns from it exactly what telling the truth costs at Tallgrass.`,
           why:`Treating a good faith admission as misconduct turns a reporting culture into a hiding one. Whether anything more is warranted is for the anomaly process to judge, not you to prejudge; file complaints only when facts support them (Code 2.3.4).`}
       ]},
-    { id:`f9s2`, domain:`Business Environment`, task:`B7`, approach:`hybrid`, title:`One team`,
+    { id:`f9s2`, domain:`Business Environment`, task:`B7`, approach:`hybrid`, title:`One team`, q:`Garrett is merging the stand and integration teams and says not to make it a project. What should Sam do?`,
       text:(s,all,G)=>{const ta=G.r_testarticle;
         return [`Tuesday, February 28. 4:30 PM. Garrett's memo came to Sam forty eight hours before the all hands, which Garrett's assistant said was a courtesy.`,
         `<prop type="doc" title="TALLGRASS AEROSPACE · OFFICE OF THE CEO · ORGANIZATION ANNOUNCEMENT (DRAFT, FOR RELEASE THU MAR 2)">Effective Monday, April 3, 2062, Halcyon Vehicle Integration (48) and Propulsion Test (19) combine as one Integration and Test team (67), led by Corinne Mathers. One management structure. One technician pool. One shift schedule. This change supports the efficiency goals set by our investor board on February 22 and positions Tallgrass for the launch campaign.</prop>`,
@@ -251,7 +251,7 @@
           after:`He, Corinne, and Quinn walk both buildings on Wednesday. In the high bay the artifacts are laminated checklists and a whiteboard that says DAYS SINCE LAST CRANE STOP. At the stand they're a coffee can on the console older than Corinne, and a rule nobody wrote down: the console belongs to whoever's qualified, and nobody else touches it, whatever their badge says. The high bay's assumption is that the schedule wins ties. The stand's is that the data does. They write the impacts down: life test coverage, cryogenic permit authority, the stage's ship date, root cause staffing. Then the required actions. Console and permit authority stay with qualified stand people, and Hana keeps technical authority over propulsion tests. The stand's night shift doesn't change until the stage ships. Corinne gets a stand mentor. Sam takes the list to Garrett at seven on Wednesday night. Garrett reads it, crosses out nothing, and says, <span class="said" data-who="Garrett" data-tone="Clipped, grudging, flat.">"Fine. The date stays."</span> <span class="said" data-who="Sam" data-tone="Slow, level, respectful.">"Yes, sir."</span> Thursday's memo has four new lines.`,
           why:`Supporting organizational change starts with assessing the culture and evaluating the change's impact on the project, then determining the actions it requires and bringing them to the decision makers before it lands.`}
       ]},
-    { id:`f9s3`, domain:`People`, task:`P1`, approach:`hybrid`, title:`What we're for`,
+    { id:`f9s3`, domain:`People`, task:`P1`, approach:`hybrid`, title:`What we're for`, q:`Someone just took a dig at the stand crew. How should Sam bring the two groups together?`,
       text:(s,all,G)=>{const p=s.picks||{}, ps=G.pushedstand;
         return [`Monday, March 13. 7:00 AM. Sixty seven people in the high bay, which was the only room big enough, standing among the work stands under the departure stage's empty cradle. The stand crew stood together near the doors, in insulated coveralls, as if they might need to leave.`,
         (p[1]===3?`Thursday's memo had said the stand's night shift stayed as it was until July, and that console and permit authority stayed with qualified stand people. The stand crew had read those four lines more than the rest of it.`
@@ -273,7 +273,7 @@
           after:`Corinne puts the numbers on the screen. The stand crew learns precisely how much money it saves Tallgrass for them to be uncomfortable. A man near the back asks if the savings come out of the stand's overtime, and the answer is partly, and the meeting is over after that whatever the agenda says.`,
           why:`The reason for a change matters, but cost savings aren't a vision a crew can work toward. Build the team's purpose around the work and the people it serves.`}
       ]},
-    { id:`f9s4`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`The closure history`,
+    { id:`f9s4`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`The closure history`, q:`Garrett wants a statement naming Hana as the engineer behind the closure. How should Sam respond?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Friday, March 17. 8:00 AM. The board had sat on Wednesday, downtown, in the federal building with the bad coffee. Ruth had been on the bench. Sam had watched the feed from the program room.`,
         `The first item was the ARA's margin model. The board found that it credited six spare stacks that had been installed in 2060, directed the ARA's mission assurance office to rebuild the model from the station's plant log, and asked for it at the July session. Until then, the minutes said, the ARA's figure would carry a footnote: UNDER BOARD REVIEW. The second item was AR 2207. The board asked Tallgrass for the anomaly's full closure history, who recommended what and when, by its next session.`,
@@ -296,7 +296,7 @@
           after:`Hana says to put her name in it, because she said it was hers and she meant it. The statement goes to the board, and only to the board, with her name and nobody else's. She's being honest. The statement isn't, and she won't see that until somebody quotes it back to her.`,
           why:`Respecting her say is right, which is why this isn't a zero. But the board's record isn't hers to simplify, and her willingness to carry it doesn't make one name the whole story. Give governance the full history.`}
       ]},
-    { id:`f9s5`, domain:`Business Environment`, task:`B7`, approach:`hybrid`, title:`Desire`,
+    { id:`f9s5`, domain:`Business Environment`, task:`B7`, approach:`hybrid`, title:`Desire`, q:`Corinne's cross training sheet has been up for nine days with no names on it. What's Sam's best move?`,
       text:(s,all,G)=>{const ps=G.pushedstand, p=s.picks||{};
         return [`Wednesday, March 22. Corinne's cross training sign up sheet had been on the blockhouse door for nine days. It had space for nineteen names. It had none.`,
         `Everybody on the stand crew had been to both briefings. Every one of them could tell you what the merger was, when it started, and what the new shift schedule looked like. Corinne had scheduled a third briefing for Friday, with slides.`,
@@ -318,7 +318,7 @@
           after:`The stand crew is relieved. The high bay crew is furious, since they changed and the stand didn't, and Corinne now runs one team with two rule books. Garrett hears about the exemption from his CFO and reverses it on a Tuesday afternoon by email, which is the worst possible way for the stand to get the change after all.`,
           why:`Exempting resisters postpones the change and splits the team, and it can't be kept if the organization won't back it. Diagnose and address the reason for the resistance instead.`}
       ]},
-    { id:`f9s6`, domain:`People`, task:`P2`, approach:`agile`, title:`In the huddle`,
+    { id:`f9s6`, domain:`People`, task:`P2`, approach:`agile`, title:`In the huddle`, q:`The huddle turned on Hana, and Wendell just walked to his truck. What should Sam do right now?`,
       text:(s,all,G)=>{const p=s.picks||{}, sac=s.flags.sacrificedhana;
         return [`Tuesday, March 28. 6:30 AM. The stand crew's huddle was fifteen minutes at the blockhouse, standing up, before the morning chilldown. Hana came on Tuesdays.`,
         (sac?`The program's statement to the board had gone out the week before with one name in it. Everybody at the stand had read it, or read the feed's version, which was shorter.`
@@ -342,7 +342,7 @@
           after:`Hana's reports are excellent and nobody reads them. The stand crew takes her absence the way absences get taken. And the next time the data says something odd, the person who knows the valve best is a PDF.`,
           why:`Separating people avoids the conflict without resolving it, and it removes the team's best technical voice from where it's needed. Resolve the conflict where it lives.`}
       ]},
-    { id:`f9s7`, domain:`Business Environment`, task:`B4`, approach:`hybrid`, title:`Week one`,
+    { id:`f9s7`, domain:`Business Environment`, task:`B4`, approach:`hybrid`, title:`Week one`, q:`Corinne has a long list of merger problems and can't do them all today. How should Sam handle the list?`,
       text:(s,all,G)=>{const ta=G.r_testarticle, p=s.picks||{};
         return [`Monday, April 10. Integration and Test had existed for one week. Corinne had kept a list of what had broken, on a legal pad, and by Monday morning it ran to the bottom of the second page. She put it on Sam's desk without a word and sat down across from him.`,
         `The company's personnel system had moved the stand technicians under the high bay's shift supervisors, and only stand leads were qualified to sign cryogenic operations permits. On Thursday night nobody on shift could sign one, and a chilldown had been scrubbed at the gate. `+(ta?`The second test article's life test in Building 6 had lost a night, its first since November.`:`The weekly review of Aldergrove's cold bench data had been put off a night, the first time since December.`),
@@ -364,7 +364,7 @@
           after:`They rank it together in twenty minutes. The permit gap is first, because it stops work every night. By two o'clock Hana has signed an interim delegation naming the three qualified stand leads as permit signers on any shift, whoever they report to on paper, and HR has a ticket to fix the system properly by the end of the month. The shift change goes second; Quinn takes it to scheduling, and the stand's night crew comes off the May 1 rotation until the stage ships. Badges go to Corinne by Wednesday. Overtime goes to the shift leads, with authority to approve up to a cap and send anything over it to Corinne. Sam writes the four owners and dates on her legal pad, and they agree to look at the list again every Friday until it's empty. On Friday it has one line left.`,
           why:`Evaluate the impact of each impediment, prioritize, apply an intervention strategy with clear owners, and reassess continually. When a risk like the permit authority becomes an issue, act on it the same day.`}
       ]},
-    { id:`f9s8`, domain:`Business Environment`, task:`B8`, approach:`agile`, title:`Sundog`,
+    { id:`f9s8`, domain:`Business Environment`, task:`B8`, approach:`agile`, title:`Sundog`, q:`Rafa has Sundog's filing for a relay that could fly in 2064. What should Sam do about it?`,
       text:(s,all,G)=>[`Tuesday, April 18. Countdown to Ares ran it as the lead item on Monday night. A company called Sundog Relay, eighteen months old, with a ground station in New Mexico and a very good animation, announced that it would put a relay spacecraft in an orbit well off the line between Earth and Mars, where it could pass messages around the Sun when the Sun was in the way. No more conjunction blackouts, the animation said.`,
         `By Tuesday morning Families of Ares had a petition with forty thousand names on it. It asked the ARA to rent Sundog's relay, or to put a relay on Halcyon, so families could hear from the station during the silence. Frances had sent it to Sam personally, with one line: <b>Is this real?</b>`,
         `Hale's chief of staff called at nine. <span class="said" data-who="woman">"The Director would like to know whether Halcyon can carry one of these. Or whether we can buy time on theirs. Before May, ideally."</span>`,
@@ -384,7 +384,7 @@
           after:`Hana finds the margin she has left after the bridge stacks, and it's the margin she was saving for things nobody has thought of yet. A relay would also need power, pointing, a software interface, and an orbit Halcyon doesn't fly. The study takes two weeks of her team before it says no.`,
           why:`Adding scope because stakeholders want it, without assessing whether it would even work, spends real margin on an expectation. Evaluate the external change's impact before acting on it.`}
       ]},
-    { id:`f9s9`, domain:`Process`, task:`R8`, approach:`predictive`, title:`Pull it forward`,
+    { id:`f9s9`, domain:`Process`, task:`R8`, approach:`predictive`, title:`Pull it forward`, q:`Quinn found eleven activities in the gray that need something from Mars. How should Sam handle them?`,
       text:(s,all,G)=>[`Wednesday, May 3. Quinn had drawn the line on the integrated plan in red marker, top to bottom across every sheet: Thursday, May 25, 4:15 PM. Twenty two days later, a second line. Between them she'd shaded the plan gray, and the gray covered more than anybody had expected.`,
         `The ARA's rule was simple. While Mars was within three degrees of the Sun, nothing personal went either way, no commands went to the station, and the relay network carried only a short station status beacon, once a sol, repeated until it got through.`,
         `Quinn had found eleven activities inside the gray that needed something from Mars. The largest was the cargo manifest. It closed on Thursday, June 1, and the station had to sign off the bridge stacks' mounting interface and the cutover procedure that used them before it could. Two joint bench runs of the Breather's control code on the station's bench were scheduled for June 7 and June 14. The cutover inventory needed the station's count. Rafa's next release demo used bench data.`,
@@ -404,7 +404,7 @@
           after:`Quinn sends the list to the station in the morning packet with the reason for each date. Okonkwo's answer comes back the next sol. <b>Q1 understood as: Earth wants our answers before we can't give them. Yes. Bench run moved to Sol 3994 and 3995. Interface sign off by Sol 3999.</b> The bench runs move to May 15 and 16. The station signs off the bridge stacks' interface and the cutover procedure on May 19, a week before the line. Three activities move to the week of June 19, inside float Quinn has counted twice. The last two, the station's own plant decisions and what Rafa's release does without bench data, go to Sam's list for decision rights. Quinn redraws the gray, and it's smaller.`,
           why:`Coordinating with operations means finding the dependent work, sequencing it around a known constraint, and agreeing it with the people on the other end. Pull forward, resequence on real float, and turn what's left into decisions to delegate.`}
       ]},
-    { id:`f9s10`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`Who decides`,
+    { id:`f9s10`, domain:`Business Environment`, task:`B1`, approach:`predictive`, title:`Who decides`, q:`Some decisions are still left over from the schedule. How should Sam answer Okonkwo?`,
       text:(s,all,G)=>{const auto=G.r_autonomy, p=s.picks||{};
         return [`Wednesday, May 17. Quinn's draft decision matrix was one page. Down the side, the decisions that might come up in twenty two days of silence. Across the top, the people who might make them: Hollis Bayne as station director, Okonkwo as Breather operations, Sam, the ARA's mission operations, the ARA's public affairs office, and the leads. In the boxes, R, A, C, and I.`,
         `It had problems, and she knew it, which was why it said DRAFT across the top in red. Two decisions had two people accountable. Two had nobody. One box said TBD in her handwriting, with a question mark after it, which was the most honest thing on the page.`,
@@ -426,7 +426,7 @@
           after:`Nobody decides who decides. On Earth two offices brief the families on the same day with different words. On the station Okonkwo works from her own list, which is good, and which nobody on Earth has seen.`,
           why:`You can't predict every event, but you can decide who owns each kind of decision and what will trigger a response. That's what makes a blackout survivable.`}
       ]},
-    { id:`f9s11`, domain:`People`, task:`P6`, approach:`hybrid`, title:`The gate`,
+    { id:`f9s11`, domain:`People`, task:`P6`, approach:`hybrid`, title:`The gate`, q:`Frances and the families are holding a vigil outside. What should Sam do?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Sunday, May 21. 6:40 PM. The wind had been at thirty five since noon, and it was carrying dust off the fields east of the campus in long brown sheets. Families of Ares had been at the main gate since four. About sixty people, in coats, with photographs in plastic sleeves taped to sticks, and candles in mason jars that kept going out and being lit again.`,
         `Security had called at five. So had Garrett. <span class="said" data-who="Garrett">"Have them moved to the county road. It's a liability."</span> Hale's office had sent a statement for public affairs to read. It was three paragraphs long and said the ARA was committed.`,
@@ -447,7 +447,7 @@
           after:`It's a kind thing to promise and it takes the station's whole packet allowance for three days to try. A hundred and sixty one messages get through. Fifty one families get nothing, and they find out on Thursday which fifty one they are.`,
           why:`A promise you can't keep sets an expectation that guarantees disappointment. Tell people what's possible, and commit only to that.`}
       ]},
-    { id:`f9s12`, domain:`People`, task:`P5`, approach:`hybrid`, title:`Log twenty four`,
+    { id:`f9s12`, domain:`People`, task:`P5`, approach:`hybrid`, title:`Log twenty four`, q:`Sam has one last log before the silence. What should he tell Ada?`,
       text:(s,all,G)=>{const ex=G.exposedada, rosy=G.rosylog, p=s.picks||{};
         const open=ex
           ?`Hi, Dad. Log twenty four. Sol 4004. This goes through the director's office, like they all do, so hi, director's office, and see you in three weeks.<br><br>`

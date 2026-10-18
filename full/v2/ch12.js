@@ -172,7 +172,7 @@
     video: [`lpzPCmrybHw`,`4.4 Manage Project Knowledge`,`David McLachlan`,`11:20`]
   },
   scenes: [
-    { id:`f12s1`, domain:`People`, task:`P3`, approach:`hybrid`, title:`Light duty`,
+    { id:`f12s1`, domain:`People`, task:`P3`, approach:`hybrid`, title:`Light duty`, q:`Wendell wants to read Tuesday night's run, and the site has four stories going about him. What should Sam do?`,
       text:(s,all,G)=>{const ps=G.pushedstand, ta=G.r_testarticle;
         return [`Monday, November 13. 6:05 AM. Wendell's truck was at the stand gate when Sam got there, with the engine off and the window down its inch. Wendell was in the blockhouse in his canvas jacket, pouring coffee from the thermos, as if Thursday had been somebody else's.`,
         `He had a sheet from the hospital folded in quarters in his shirt pocket, and he handed it over without being asked, which was how Sam knew he'd decided to fight. Discharged Friday afternoon. Low blood pressure, a medication to stop, a cardiology appointment in December. Under restrictions, in a doctor's handwriting: <b>No night work. No working alone. No more than five hours a day, three days a week. Light duty until cleared.</b>`,
@@ -196,7 +196,7 @@
           after:`The rumors stop. So does Wendell, mostly. He comes in on Tuesday and every tech on the shift asks him how his heart is. He says fine eleven times before noon. On Wednesday he asks Corinne whether there's anyplace on the site that doesn't have people in it.`,
           why:`A person's medical information is theirs. Tell the team only what they need to work safely, and give any watching job to a named second, not to everyone.`}
       ]},
-    { id:`f12s2`, domain:`People`, task:`P7`, approach:`predictive`, title:`What he knows`,
+    { id:`f12s2`, domain:`People`, task:`P7`, approach:`predictive`, title:`What he knows`, q:`Everyone wants Wendell's time, and he has about seventy five hours through December 15. How should the team use them?`,
       text:(s,all,G)=>{const p=s.picks||{}, ai=G.trustedai;
         return [`Tuesday, November 14. 7:30 AM. `+(p[0]===1?`Wendell was in the big room at seven thirty because seven thirty was inside his five hours. He'd brought the thermos.`:p[0]===0?`Wendell was on the speakerphone from Byers, in the middle of the table, because he'd been sent home for two weeks and nobody had told him he couldn't call in.`:`Wendell was in the big room because Sam had asked him, and he sat at the end of the table with the thermos and didn't take his jacket off.`),
         `Everybody wanted something from him, and everybody had written it down. Garrett's email had come in at 6:02 with a subject line in capitals. <b>KNOWLEDGE CAPTURE. GET IT ALL. EVERY PAGE, EVERY RUN, EVERY STORY.</b> Hana wanted his read of every cycle three since 2059, for the root cause team. Commander Haddad, on the screen from Houston, wanted to know what she'd be looking at on her display at cutoff, and what it would mean. Lorna Whitcombe, who ran the ARA's flight operations and would fly Halcyon after it left, wanted the console calls. Quinn wanted the propulsion poll.`,
@@ -216,7 +216,7 @@
           after:`It takes the morning, with Wendell and Quinn at the whiteboard and everybody else sent out. They work backward from the dates. December 14, the board picks between the workaround and the spacewalk. January 9, the crew launches. February 18, the burn. Then they ask what each of those needs from Wendell's head, and in whose head it has to be by then. It comes to seven lines. Running a cold soak campaign and reading cycle three live: Arlo, by December 15. Telling a seat from ice from a lying sensor on a trace: the crew, Hana, and Lorna's controllers, by January 9. The propulsion poll: Quinn. His read of every cycle three since 2059: Hana's root cause team, before the board. The rest, the Petrel's campaigns and nearly fifty years of notebooks, goes in a column headed LATER, OR NEVER, in Wendell's own hand.`,
           why:`Identify the knowledge critical to the project with the person who holds it: tie it to the decisions and operations it supports, name who needs it, and set the date. Then you know what to gather.`}
       ]},
-    { id:`f12s3`, domain:`People`, task:`P7`, approach:`hybrid`, title:`Who he teaches`,
+    { id:`f12s3`, domain:`People`, task:`P7`, approach:`hybrid`, title:`Who he teaches`, q:`Brandvold asks if Wendell can teach the crew to see what he sees. What should Sam set up?`,
       text:(s,all,G)=>{const p=s.picks||{}, ra=G.r_autonomy;
         const run=p[0]===1
             ?`The run was on at the stand, cycles eleven to twenty after a long soak, with Arlo at the console and Wendell in the chair beside it with a headset on.`
@@ -243,7 +243,7 @@
           after:`Seven in the morning to six at night: eleven hours, on a doctor's five. Wendell does it anyway, because the crew flew in. By two he's sitting down, the crew are writing down what he says, and nobody has touched a trace. Haddad thanks him at the door. <span class="said" data-who="Wendell">"You didn't learn anything,"</span> he tells her. <span class="said" data-who="Wendell">"I talked."</span>`,
           why:`One long lecture doesn't transfer a skill, and here it also broke the medical limits you'd agreed. Tacit knowledge needs repeated practice with the expert, spread over time.`}
       ]},
-    { id:`f12s4`, domain:`People`, task:`P7`, approach:`hybrid`, title:`The kitchen table`,
+    { id:`f12s4`, domain:`People`, task:`P7`, approach:`hybrid`, title:`The kitchen table`, q:`Garrett's release form says everything becomes Tallgrass property. What should Sam do at Wendell's table?`,
       text:(s,all,G)=>{const p=s.picks||{}, rw=s.flags.r_wendell, sk=s.flags.skippedwendell;
         return [`Sunday, November 19. 2:00 PM. Byers. Wendell's kitchen had one window and it faced the grain elevator, and he'd put the table under it so he could see the weather coming. Sam had brought the small green envelope. Quinn had brought the recorder, `+(rw?`for the sessions Wendell had said yes to,`:sk?`for the dictation,`:`for whatever this turned out to be,`)+` and a folder from Tallgrass legal.`,
         `Wendell read Ruth's page with his reading glasses pushed down his nose and his lips moving a little. He read it twice. He stopped at the thirteen forty one line for a long time.`,
@@ -266,7 +266,7 @@
           after:`Wendell takes his glasses off. <span class="said" data-who="Wendell">"That's hers to ask. She hasn't."</span> He doesn't say anything else that afternoon. In the car Quinn says she's sorry, which she has no reason to be.`,
           why:`Pressing someone on the most painful thing they carry, in their own kitchen, isn't fostering an environment for knowledge transfer. It isn't even the knowledge the project needs. Focus on what's critical, on terms he trusts.`}
       ]},
-    { id:`f12s5`, domain:`Process`, task:`R4`, approach:`predictive`, title:`Dates on a page`,
+    { id:`f12s5`, domain:`Process`, task:`R4`, approach:`predictive`, title:`Dates on a page`, q:`Garrett, Hale's office and flight ops each want something different for Corinne's people. How should Sam handle the releases?`,
       text:(s,all,G)=>{
         return [`Monday, December 4. 8:00 AM. The high bay was empty for the first time since the summer of 2059. All three of Halcyon's modules had left it, and the floor where they'd stood was swept, and the overhead cranes were parked at the far end with their hooks up, like birds on a wire. The last of the three launches had flown in November. Corinne's people were still on the payroll, sixty seven of them, and most of them had nothing left to build.`,
         `She had the plan on her legal pad, copied from the merger's resource plan in April, which had given every person a date. Thirty eight people released on Friday, December 15: some to Tallgrass's next program, some to the end of their contracts, eleven to jobs elsewhere that started the week after. Seventeen more on Friday, January 12, once the crew had launched. Twelve kept through Friday, February 23, the sustaining team for departure. She'd told all of them in April, in writing, and again in September.`,
@@ -287,7 +287,7 @@
           after:`Most people choose sensibly. The propellant loading crew all choose the same week in January, because it's the week before a holiday weekend, and Corinne finds out on a Thursday that she'll have none of them on the Monday of the line check.`,
           why:`Releasing resources is planned work. Let people's needs shape the plan, but the plan decides when each role ends, based on what the work still needs.`}
       ]},
-    { id:`f12s6`, domain:`Process`, task:`R2`, approach:`agile`, title:`What the crew needs`,
+    { id:`f12s6`, domain:`Process`, task:`R2`, approach:`agile`, title:`What the crew needs`, q:`Haddad wants all of it, and the crew's requests run far past the hours they have. What should Sam do?`,
       text:(s,all,G)=>{const p=s.picks||{}, rw=s.flags.r_wendell, sk=s.flags.skippedwendell;
         return [`Tuesday, December 5. 9:00 AM. The crew's training backlog lived on a board in the sim bay, because Haddad said a thing she could see across a room was a thing she'd actually do. It had grown. Every card on it was somebody's good idea.`,
         `Between now and quarantine on December 26 the crew had about a hundred and forty hours left that weren't already spoken for. The cards on the board asked for two hundred and three.`,
@@ -308,7 +308,7 @@
           after:`They take the cards down one at a time, all two hundred and three hours of them, and Haddad asks each card the same thing out loud, the way a customs officer would: in flight, what do we do with you, and when? If there's an answer, the card stays, broken down to the task. If the answer is on Mars, it goes in a cardboard box Quinn labels CRUISE in marker. Two hundred days is a lot of reading time. No answer, and it goes back to whoever sent it, with a sticky note from Quinn. The media block becomes one hour. The documentary goes back to Garrett. Echeverría's sixty hours become eight, on the valves he'd actually touch, and the drawings go into the cruise box. The board comes to 131 hours, nine under. Haddad initials the bottom corner with a marker. <span class="said" data-who="Yusra">"Now it's mine."</span>`,
           why:`Define scope by the work and decisions it has to support, break it down, and get the customer's agreement on what's in and what isn't. On an adaptive backlog, the product owner orders it and parks what can wait.`}
       ]},
-    { id:`f12s7`, domain:`Process`, task:`R10`, approach:`predictive`, title:`Acceptance`,
+    { id:`f12s7`, domain:`Process`, task:`R10`, approach:`predictive`, title:`Acceptance`, q:`Garrett wants the hand off at cutoff. Lorna wants to know everything she's taking. How should Sam set it up?`,
       text:(s,all,G)=>{const p=s.picks||{}, ra=G.r_autonomy;
         return [`Wednesday, December 6. 10:00 AM. Flight control at Watkins was a low building with a wind sock, and the wind sock was straight out. Lorna Whitcombe met Sam at the door with two coffees and the face of someone who'd been handed a lot of ships.`,
         `She'd flown four cargo landers to the Moon's south pole for the ARA, and one of them had landed on its side and kept working, and she had a photograph of it on her console. Her twelve controllers would fly Halcyon from the minute the program let go of it until it reached Mars, and then support the crew on the ground there. They'd sat in on every sim since August. They'd never owned anything on it.`,
@@ -329,7 +329,7 @@
           after:`Quinn closes fourteen of the nineteen by the 20th, most of them honestly. Five she can't close, and the pressure to close them is in every meeting. One of the five is I-62-117. Hana reads the plan to close it and asks, in writing, whether anybody in the building has read page nine of Ruth Calder's binder.`,
           why:`Closing issues to make a hand off look clean is how the last ship was lost. Residual risks and open issues are transferred to owners who accept them, with their status as it really is.`}
       ]},
-    { id:`f12s8`, domain:`People`, task:`P7`, approach:`agile`, title:`Blind reads`,
+    { id:`f12s8`, domain:`People`, task:`P7`, approach:`agile`, title:`Blind reads`, q:`Arlo scored ninety percent on the blind reads, and Garrett says sign him off. What's Sam's best move?`,
       text:(s,all,G)=>{const p=s.picks||{}, rw=s.flags.r_wendell, sk=s.flags.skippedwendell;
         return [`Friday, December 8. 7:30 AM. It had been Wendell's idea, which surprised nobody who knew him. On Thursday he'd picked twenty cycle threes out of the archive himself, from 2059 to last week, and stripped the dates and the run numbers off them. Six were real, by his reading: the seat doing the thing nobody could explain. The rest were ice, or the stand, or a sensor telling a lie. He'd sealed his answers in an envelope and given it to Hana.`,
         `Three people had read them blind. `+(rw?(p[0]===0?`Arlo and Quinn had been beside him on live runs since he'd come back from his two weeks at home.`:`Arlo and Quinn had been beside him for three weeks of live runs.`)+` Haddad had had her two sessions in the sim bay and a printout she'd marked up on the plane.`:sk?`Arlo and Quinn had the hundred and twelve pages and a week of runs. Haddad had read the package on the plane to Houston.`:p[2]===3?`The crew had had their long day in the sim bay. Arlo and Quinn had what Wendell could spare.`:`Arlo had his weeks at the console. Quinn and Haddad had Arlo's notes and what Wendell could spare.`),
@@ -351,7 +351,7 @@
           after:`All three pass. The criteria sheet goes into the file with the ninety crossed out and an eighty five written above it. Lorna reads it in January and asks who changed the standard after seeing the scores.`,
           why:`Moving the bar after the results defeats the point of setting it beforehand. If the criteria are wrong, say so before the test.`}
       ]},
-    { id:`f12s9`, domain:`People`, task:`P5`, approach:`hybrid`, title:`Mentors`,
+    { id:`f12s9`, domain:`People`, task:`P5`, approach:`hybrid`, title:`Mentors`, q:`Quinn asks who she should ask before her first real count. How should Sam answer her?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Saturday, December 9. 11:00 AM. Quinn came into the program room on a Saturday with two coffees and put one in front of Sam, which was the order things had always gone in between them.`,
         `She'd been named the countdown lead in November, in a memo from the program that the board had noted without comment. She'd run every rehearsal since. She ran them well. She sat down and put both hands flat on the table, which Sam had learned two years ago meant the news was bad, or that she was about to ask for something.`,
@@ -371,7 +371,7 @@
           after:`Ruth answers by return mail, one line in green ink: <b>I sit on the board that will judge her count. Ask Delphine.</b> Quinn reads it and says she should have thought of that. So should Sam.`,
           why:`A mentor who sits on the body that will judge the mentee's work has a conflict of interest. Find mentors without one.`}
       ]},
-    { id:`f12s10`, domain:`People`, task:`P1`, approach:`hybrid`, title:`Air, not a date`,
+    { id:`f12s10`, domain:`People`, task:`P1`, approach:`hybrid`, title:`Air, not a date`, q:`Okonkwo's team asks how anyone on Earth will know the Breather worked. What's the right move?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Monday, December 11. 8:15 AM. There was a new poster on the wall of flight control. Lorna's controllers had made it themselves over the weekend, and it was good, in the way of things made by tired people who like each other: Halcyon in silhouette, the wind sock, and in big letters, <b>LAUNCH FEB 18. DELIVER THE BREATHER.</b>`,
         `The engineering packet from Ares Station had come in overnight, from Chiamaka Okonkwo's Breather operations team, in the format they always used. Item four was a question. <b>Who on Earth measures whether this worked, and when do they stop measuring? Our people are asking what success is. Most of them think it is breathing.</b>`,
@@ -391,7 +391,7 @@
           after:`It takes two sessions, because the station is fifteen minutes away by light and answers a day later. Quinn writes the draft with Lorna, Haddad, and Rafa in one room, and sends it up in the packet, and Okonkwo's team sends it back marked up. What comes out is half a page. The benefit is the station's oxygen reserve rising instead of falling, measured on Ares Station, every sol, from the day the Breather starts until ninety sols after. The owner is someone on the station, named by the station before the crew leaves Earth, who reports to the board through the director's packet. Assumptions and risks underneath, in a list. Lorna's controllers take their poster down on Wednesday and put it back up with one line added under it in marker, in a controller's block capitals: <b>AND THEN 90 SOLS OF AIR.</b>`,
           why:`Help ensure a shared vision with key stakeholders, find the root cause of the misunderstanding (each group's picture ended with its own job), and keep it current at transition by making the benefit measurable, with an owner and a timeframe.`}
       ]},
-    { id:`f12s11`, domain:`Business Environment`, task:`B6`, approach:`hybrid`, title:`Two logs`,
+    { id:`f12s11`, domain:`Business Environment`, task:`B6`, approach:`hybrid`, title:`Two logs`, q:`New lessons from Wendell's work are in the register. What should Sam do with them?`,
       text:(s,all,G)=>{const p=s.picks||{}, ex=G.exposedada, rosy=G.rosylog, spun=G.spunmedia;
         const A=259, R=266, arr=268;
         const open=ex
@@ -432,7 +432,7 @@
           after:`In March half the people who'd know the answers have been released, as planned. Wendell's two entries are in the register, but the man who could explain them is in Byers, and the March retrospective spends an hour working out what he meant.`,
           why:`Lessons are captured throughout the project, by the people doing the work, while they're still there. Waiting for closeout loses both the people and the chance to use them.`}
       ]},
-    { id:`f12s12`, domain:`Process`, task:`R10`, approach:`predictive`, title:`Last shift`,
+    { id:`f12s12`, domain:`Process`, task:`R10`, approach:`predictive`, title:`Last shift`, q:`Garrett ordered a plaque, and Wendell wants to go home with his thermos. How should Sam handle the send off?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Wednesday, December 13. 9:00 AM. The last ground run of the workaround campaign, cycles thirty one to forty, after the longest soak yet. The board's data closed at five that afternoon, for the session in the morning.`,
         (p[7]===2

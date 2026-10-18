@@ -218,7 +218,7 @@
     video: [`JWI_wZeebO8`,`Types of Contracts`,`David McLachlan`,`6:31`]
   },
   scenes: [
-    { id:`f8s1`, domain:`Process`, task:`R5`, approach:`predictive`, title:`The letter`,
+    { id:`f8s1`, domain:`Process`, task:`R5`, approach:`predictive`, title:`The letter`, q:`Aldergrove is claiming far more than clause 14 allows, and legal has a denial drafted. What should Sam do?`,
       text:(s,all,G)=>{const ta=G.r_testarticle;
         return [`Tuesday, November 29. 7:30 AM. Peg had spent the evening with the contract, all two hundred and twelve pages of it, and had come in with eleven sticky flags along its edge in four colors, which she said was a system.`,
         (ta?`The life test on the second test article had been extended twice and was past six thousand cold cycles in Building 6, all of them clean, which Wendell said had taught them a great deal about what the cause wasn't. Aldergrove's engineers were at the console beside him most nights.`
@@ -239,7 +239,7 @@
           after:`Nell's engineers stop on Wednesday morning, because they were asked to. The cold data stops coming. For three weeks AR 2207 has nobody on it who has ever built the valve, and Peg points out, too late, that the contract's own disputes clause assumed both sides would keep working while they argued.`,
           why:`Stopping the work to stop the cost trades a money problem for a safety and schedule problem. Contracts expect both parties to keep performing while a claim is resolved. Keep the work going and settle the claim beside it.`}
       ]},
-    { id:`f8s2`, domain:`Business Environment`, task:`B5`, approach:`hybrid`, title:`Another supplier`,
+    { id:`f8s2`, domain:`Business Environment`, task:`B5`, approach:`hybrid`, title:`Another supplier`, q:`Garrett wants to move the valve work to Kestrel. What's Sam's best move?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Thursday, December 1. 7:00 AM. Garrett was in the big room before anyone else, with a single page on the table and his reading glasses on top of it.`,
         `<prop type="doc" title="KESTREL FLOW CONTROLS · COLORADO SPRINGS · LETTER OF INTEREST">KESTREL CAN DELIVER A QUALIFIED CRYOGENIC ISOLATION VALVE FOR THE HALCYON DEPARTURE STAGE BY MAY 2062. FIRM FIXED PRICE. WE DON'T DO CLAIMS.</prop>`,
@@ -263,7 +263,7 @@
           after:`Quinn and Hana have the comparison by four. Kestrel's valve has never closed cold at this size. Replacing the installed valve means destacking, a new qualification of at least seven months, and a second acceptance firing, and the stage misses its slot at the Cape and the window behind it. Peg adds the contract side: Aldergrove isn't in default, and a wrongful default becomes a termination for convenience, so the program would pay Aldergrove's costs and lose its engineers too. Sam writes it into the risk register as R-0517, claim unresolved with the sole qualified supplier, response mitigate, by negotiation. At the bottom of the page is one more line: Kestrel's board chair sits on Tallgrass's investor board. Sam sends it to Garrett first, alone. Garrett calls him in eleven minutes. <span class="said" data-who="Garrett" data-tone="Stung, defensive, cold.">"You think I'd put a valve on a ship for a friend?"</span> <span class="said" data-who="Sam">"No, sir. I think the change board should know, so nobody else has to wonder."</span> A long pause. <span class="said" data-who="Garrett" data-tone="Clipped, grudging, tight.">"Fine. Put it in."</span> On Wednesday the board records it with a mitigation: any decision involving Kestrel comes to the board without Garrett's vote, and Garrett agrees.`,
           why:`Assess a supplier switch as a risk decision, with data: qualification, schedule, and the people who know the part. Termination needs grounds and has consequences. A link between a decision maker and a bidder is a conflict of interest to disclose (Code 4.3.1), whoever holds it.`}
       ]},
-    { id:`f8s3`, domain:`Process`, task:`R5`, approach:`predictive`, title:`Which contract`,
+    { id:`f8s3`, domain:`Process`, task:`R5`, approach:`predictive`, title:`Which contract`, q:`Peg has three contract drafts, and Garrett's office sent a fourth. Which one should Sam pick?`,
       text:(s,all,G)=>{const ta=G.r_testarticle;
         return [`Monday, December 5. Peg had divided the big room whiteboard down the middle with a line of blue tape. On the left, in her capitals, WHAT WE KNOW. On the right, WHAT WE DON'T.`,
         `The left side was short. The valve was a 7740 rev F. It had one real event on record, 40 milliseconds, the third close after a cold soak. `+(ta?`A second test article had cycled six thousand times without doing it again.`:`Nobody had been able to make it do it again.`)+` The right side ran down to the floor. Why. How many cycles. Whether the answer needed a teardown. Whether there would be a fix, and what it would cost, and who would build it.`,
@@ -284,7 +284,7 @@
           after:`Aldergrove's lawyer asks one question in writing: who in the office of the CEO decides the award, and against which criteria? There aren't any criteria. Peg tries to write some, and the first one she's handed from upstairs is Responsiveness to Tallgrass leadership. Nell sends it back with a single question mark. By Wednesday's board Peg has redrafted it as cost plus incentive fee, and the program has lost half a week.`,
           why:`An award fee fits work whose quality can only be judged, and the buyer always sets it. Here the thing to control is cost, which an incentive fee measures directly, and an award set by the CEO's office with no written criteria pays the seller to please people when the job is to find an answer.`}
       ]},
-    { id:`f8s4`, domain:`Business Environment`, task:`B3`, approach:`hybrid`, title:`Wednesday`,
+    { id:`f8s4`, domain:`Business Environment`, task:`B3`, approach:`hybrid`, title:`Wednesday`, q:`Garrett tells Peg to sign the modification today. What should Sam do?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Wednesday, December 7. The program's change board met at two, as it did every Wednesday, in the big room with the integrated plan on the wall and a plate of somebody's cookies going stale in the middle of the table.`,
         `The first item on the agenda was Aldergrove: settle the past hours, and move the remaining root cause work out of the fixed price into a separate task order, `+(p[2]===2?`cost plus incentive fee, as drafted on Monday.`:`cost plus incentive fee, as Peg had redrafted it for the board.`),
@@ -304,7 +304,7 @@
           after:`The side letter takes a day. In February Aldergrove's first invoice has no contract line to bill against, Tallgrass's accounts office won't pay it, and the ARA's auditors, on their regular visit, can't find the arrangement anywhere in the contract file. Neither can Peg, who wasn't told about it.`,
           why:`Changes made outside the contract and the change process leave no authority, no record, and no baseline. Fast and invisible is how disputes start.`}
       ]},
-    { id:`f8s5`, domain:`People`, task:`P4`, approach:`hybrid`, title:`Who goes`,
+    { id:`f8s5`, domain:`People`, task:`P4`, approach:`hybrid`, title:`Who goes`, q:`Everyone wants a seat at Wednesday's meeting with Aldergrove. How should Sam staff it?`,
       text:(s,all,G)=>[`Friday, December 9. The meeting was set for Wednesday the 14th, at ten, at Aldergrove's plant on the south side of Pueblo. Aldergrove would bring its president, Nell, and its lawyer.`,
         `Garrett wanted to lead it. <span class="said" data-who="Garrett">"CEO to CEO. They'll want to see the man who signs."</span> Tallgrass's legal office wanted to send two lawyers and keep it formal. Hana had already cleared the day. Hale's chief of staff had called to ask, carefully, whether the ARA should know anything before Wednesday, since the ARA would be the one explaining any of it to the board and the partners.`,
         `Peg had made a list of who could go and what each of them would change by being in the room. She'd written GARRETT at the top and then, beside it in smaller letters, phone.`],
@@ -322,7 +322,7 @@
           after:`Nell meets him for coffee on Saturday, and they agree on most of it in an hour, because they want the same thing. Then Aldergrove's president hears that his account lead negotiated a contract over coffee without him, and Peg finds two things Sam promised that are above anything Garrett would sign. Monday goes on unwinding it. Wednesday stays on the calendar, with Peg leading, Garrett's signed limit of $1.0 million on the past hours, Garrett on the phone at 10:30, and a president who will arrive wary.`,
           why:`A personal connection helps, but a negotiation needs people with the authority to agree and the knowledge to get it right. Going around the other side's leadership, and around your own, makes the deal harder to keep.`}
       ]},
-    { id:`f8s6`, domain:`Process`, task:`R5`, approach:`hybrid`, title:`The prep sheet`,
+    { id:`f8s6`, domain:`Process`, task:`R5`, approach:`hybrid`, title:`The prep sheet`, q:`Peg is running the prep session, and Garrett's text says open at 200K. How should they prepare?`,
       text:(s,all,G)=>[`Monday, December 12. Peg ran the prep session in the big room with the door shut: Sam, Hana, Quinn, and a yellow legal pad she'd divided into columns with a ruler.`,
         `The first column was POSITIONS. Aldergrove: $1,008,000 for the past hours, and a cost type contract for the rest. Tallgrass legal: nothing for the past hours, and the fixed price stands. She read them both out and then drew a line under them.`,
         `<span class="said" data-who="Peg">"Those are positions,"</span> she said. <span class="said" data-who="Peg">"I don't negotiate positions. I negotiate what's under them. If we go down there and trade numbers, we'll end up halfway between two numbers nobody believes, and we'll all feel very grown up about it."</span>`,
@@ -342,7 +342,7 @@
           after:`The pad fills up. Aldergrove's interests: being paid for work done, a contract that doesn't punish it for finding the answer, cash in March for sixty people, and the truth about cycle 3. Tallgrass's: the root cause before the stage ships, cost it can explain to an auditor, and Aldergrove's engineers still at the table in June. Then the alternatives, with numbers, which Quinn checks twice. If there's no deal, the claim goes to arbitration; Peg's estimate of what that would cost Tallgrass, and of what it would net Aldergrove, gives each side's walk away point and a wide zone between them. Then the standard: the program's own work orders. Thirty six hundred hours at Aldergrove's audited rate is $864,000. It sits inside the zone. <span class="said" data-who="Peg">"Nobody has to win that number,"</span> she says. <span class="said" data-who="Peg">"It's ours, and it's true."</span> Then she picks up her phone and answers Garrett's text with one word. <b>No.</b>`,
           why:`Prepare a negotiation on interests, not positions: know both sides' alternatives, find the zone where an agreement beats both, and bring an objective standard. A bluff about an alternative is dishonest, and it's also bad preparation.`}
       ]},
-    { id:`f8s7`, domain:`People`, task:`P2`, approach:`hybrid`, title:`On speaker`,
+    { id:`f8s7`, domain:`People`, task:`P2`, approach:`hybrid`, title:`On speaker`, q:`Garrett just threatened Aldergrove over the speaker. What should Sam do now?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Wednesday, December 14. Pueblo. They drove down I-25 in the dark and got there early. Aldergrove's plant was a long brick building on the south side with a newer metal one bolted to its end, and the conference room was upstairs in the old part, with a window that looked straight across the road at the steel mill: a long brown shed with steam rising from one end, rail cars stacked with pipe, and a crane that never seemed to move until you looked away and back.`,
         `Aldergrove's president was a big quiet man in his sixties with a notebook he didn't open. Their lawyer was a woman with a laptop she did. Nell sat at the end of the table nearest the window with a folder in front of her and the old steel badge on its lanyard that Sam had noticed in April.`,
@@ -364,7 +364,7 @@
           after:`Peg won't do it, so Sam does. Aldergrove's number comes down a little. Their lawyer's notes go into a file. Nell doesn't look away from the window again until they leave, and when she shakes Sam's hand at the car, she says, <span class="said" data-who="Nell" data-tone="Quiet, cool, disappointed.">"I'd heard you were different."</span>`,
           why:`Using a statement you know is untrue as leverage is bad faith (Code 3.3.1) and deceptive (5.3.1). It also turns a conflict inside your own team into one with the supplier.`}
       ]},
-    { id:`f8s8`, domain:`Process`, task:`R5`, approach:`predictive`, title:`The mill`,
+    { id:`f8s8`, domain:`Process`, task:`R5`, approach:`predictive`, title:`The mill`, q:`Aldergrove wants $1,008,000 for the past hours. What should Sam agree to pay?`,
       text:(s,all,G)=>[`During the recess Nell didn't go for coffee. She stood at the window with her arms folded and looked at the mill, and after a minute Sam went and stood beside her, because it seemed she'd wanted somebody to.`,
         `<span class="said" data-who="Nell">"My father used to bring me up here on Saturdays when I was a kid,"</span> she said. <span class="said" data-who="Nell">"This was his office, before it was a conference room. He liked to watch the mill. He said it was the only thing in Pueblo that worked harder than he did."</span> She turned the steel badge on its lanyard so he could read it. It wasn't her name. E. GARRITY. PRESIDENT.`,
         `<span class="said" data-who="Nell" data-tone="Low, steady, grief held in.">"The agency terminated us for default in September of 2035. Every contract we had with them, the same week. We had four hundred and ten people. By 2037 we had sixty one. It took an appeals board four years to say we hadn't been in default, that the valve met everything the contract asked of it. They changed it to a termination for convenience and paid us our costs, and nobody put that in the paper. By then it was 2039 and he was the man who'd killed the Petrel, in every bar on this side of town."</span>`,
@@ -386,7 +386,7 @@
           after:`Peg points out quietly that it's over Garrett's signed limit. Sam calls Garrett from the hall, and Garrett agrees to it on the phone, because he's still embarrassed about 10:30. Aldergrove is grateful and a little puzzled. Back at Watkins Peg writes into the file that the program paid for six hundred hours of somebody else's archive work, at a rate nobody negotiated, because it was a long morning.`,
           why:`Giving in to end the discomfort pays for work nobody verified, takes a phone call to get past the limit you brought into the room, and teaches both sides that the opening number is the price. Settle on the standard you prepared.`}
       ]},
-    { id:`f8s9`, domain:`Process`, task:`R6`, approach:`predictive`, title:`Where it comes from`,
+    { id:`f8s9`, domain:`Process`, task:`R6`, approach:`predictive`, title:`Where it comes from`, q:`Osterhout asks where the money's coming from, and whether his number moves. How should Sam answer?`,
       text:(s,all,G)=>{const p=s.picks||{}, hid=G.hidnumbers;
         const S=[864000,936000,490000,1008000][p[7]===undefined?0:p[7]]||864000;
         const tp=4.32, over=(S/1e6+tp-1.9).toFixed(1);
@@ -409,7 +409,7 @@
           after:`Quinn moves the money on Tuesday and writes down where it came from: the settlement and the task order's target price, out of contingency, against the AR 2207 line and then the general pool for the rest. She works the estimate at completion again. The July bottom up had carried an allowance for most of it, so the bottom up stays about 2,600, and she shows the Aldergrove line on its own row so anyone can see it. She adds the one thing a cost type contract changes: there's no ceiling, so the estimate has a range, and she shows it. Sam calls Osterhout back at four with all of it. There's a pause on the line. <span class="said" data-who="Calvin">"That's the first time this year anyone's told me where money came from before I had to ask,"</span> he says. <span class="said" data-who="Calvin">"I'll fight you on the next one anyway."</span>`,
           why:`Pay for an identified risk from the contingency held for it, record the draw, update the forecast, and report it through governance with the source. Management reserve waits for what nobody saw coming.`}
       ]},
-    { id:`f8s10`, domain:`Process`, task:`R1`, approach:`hybrid`, title:`Nothing on the shelf`,
+    { id:`f8s10`, domain:`Process`, task:`R1`, approach:`hybrid`, title:`Nothing on the shelf`, q:`The station's stores have none of the spare stacks everyone counts on. How should Sam respond?`,
       text:(s,all,G)=>{const ex=G.exposedada, rosy=G.rosylog, auto=G.r_autonomy, res=G.r_reserve;
         const open=ex
           ?`Hi, Dad. Log one. Sol 3866. This goes through the director's office, like they all do now, so hi again, director's office, and happy new year.<br><br>`
@@ -445,7 +445,7 @@
           after:`It holds for nine days. Then the ARA's mission assurance office, which reads every packet, asks why the program hasn't said anything about a packet it received on January 4. Frances Odum hears about it from a friend in the agency in the same week, and asks Sam what else he's waiting to fix before he mentions it.`,
           why:`Withholding a material fact until you have a fix makes the fix look like a cover. Code 5.2.3 asks for accurate information in a timely manner. Report the gap and the plan together, through governance.`}
       ]},
-    { id:`f8s11`, domain:`Process`, task:`R5`, approach:`predictive`, title:`Six stacks`,
+    { id:`f8s11`, domain:`Process`, task:`R5`, approach:`predictive`, title:`Six stacks`, q:`Rio Puerco makes two offers, and Garrett wants to build at Watkins. How should the six stacks be sourced?`,
       text:(s,all,G)=>[`Monday, January 9. One way or another, the program had to buy six RP-55 stacks, and they had to be in Watkins by May 15 to make the cargo module's manifest closeout on June 1.`,
         `Rio Puerco had built the station's plant in 2055. Paloma called from Albuquerque at eight with her safety glasses on her head and a stack of old binders behind her. <span class="said" data-who="Paloma">"I ran RP-55 acceptance my first year here. I was twenty eight. The tooling's in the back of Building 3 under a tarp with my handwriting on it."</span> Rio Puerco's offer was an incentive contract: target cost $12.0 million, target fee $1.2 million, target price $13.2 million, share 80/20, ceiling $14.4 million. Or a firm fixed price of $15.1 million, which Paloma said, without being asked, was the same work with the line's restart risk priced in.`,
         `Garrett wanted to build them at Watkins. <span class="said" data-who="Garrett">"We've got a stack assembly line. It's paid for. We keep the capability."</span> Quinn had the numbers for that too. Restarting an RP-55 line at Tallgrass meant new tooling, a requalification of a design nobody there had touched, and training: $5.0 million fixed, then about $1.6 million a stack. And Tallgrass's stack assembly line was the Breather's critical path, which it had been since March.`],
@@ -463,7 +463,7 @@
           after:`Two suppliers decline to bid, because they'd have to reverse engineer a 2055 design from drawings they don't have. The third bids high and late. Six weeks are gone, and Rio Puerco's slot for the restart has gone to another customer. The stacks reach Watkins on May 30, two days before closeout, with Hana standing at the dock.`,
           why:`Competition usually serves the buyer. When only one source has the tooling and the qualification, and the schedule is fixed, a sole source buy with a sound contract is the honest choice. Document why.`}
       ]},
-    { id:`f8s12`, domain:`Business Environment`, task:`B3`, approach:`hybrid`, title:`Cost plus`,
+    { id:`f8s12`, domain:`Business Environment`, task:`B3`, approach:`hybrid`, title:`Cost plus`, q:`Hana brings a $600,000 materials study, and Garrett says cost plus means just do it. How should Sam handle it?`,
       text:(s,all,G)=>[`Wednesday, February 8. Hana came to the change board with a proposal from the root cause team. The seat insert in the 7740 was a fluoropolymer, and two lots of it from 2058 had come from different batches of raw material. Nobody had ever compared them cold. Aldergrove's engineers wanted a materials lab to do it: six weeks and about $600,000.`,
         `Under the incentive fee task order, every dollar of it would be an allowable cost. The target cost had been $4.0 million since December.`,
         `Aldergrove's engineers had already asked the lab for a sample shipping kit. Garrett, at the end of the table, didn't see a problem. <span class="said" data-who="Garrett">"It's cost plus. Tell them to do it. That's the whole point of cost plus."</span>`,

@@ -33,7 +33,7 @@ if(C.lesson){const {segs,say,pause}=mk();say(MV,CID||V2?`${C.lesson.title}.`:`Ru
 // scenes and outcomes
 C.scenes.forEach((sc,i)=>{
   {const {segs,say,pause}=mk();say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);sc.text(BEST[i],{},{}).forEach(p=>{say('narrator',p);pause(0.35)});
-   say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)});pages['s'+i]=segs}
+   if(sc.q){say('narrator',sc.q);pause(0.45)}say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)});pages['s'+i]=segs}
   sc.opts.forEach((o,j)=>{const {segs,say,pause}=mk();say('narrator',o.after);pause(0.5);say(MV,RUTH_LEADS[o.s][i%3]+' '+o.why);
     if(!o.best){const b=sc.opts.find(x=>x.best);pause(0.3);say(MV,'The best answer: '+b.t+' '+b.why)}pages[`o${i}_${j}`]=segs});
 });
@@ -41,7 +41,7 @@ C.scenes.forEach((sc,i)=>{
 {const {segs,say,pause}=mk();C.closing(FINAL,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});pages.end=segs}
 // alternates: same page as a middling run would see it, when the wording differs
 C.scenes.forEach((sc,i)=>{if(!same(sc.text(BEST[i],{},{}),sc.text(st,{},{}))){const {segs,say,pause}=mk();say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);sc.text(st,{},{}).forEach(p=>{say('narrator',p);pause(0.35)});
-  say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)});pages['s'+i+'_alt']=segs}});
+  if(sc.q){say('narrator',sc.q);pause(0.45)}say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)});pages['s'+i+'_alt']=segs}});
 if(!same(C.closing(FINAL,{},{}),C.closing(st,{},{}))){const {segs,say,pause}=mk();C.closing(st,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});pages.end_alt=segs}
 // variants: a decision or closing page can read differently for every reader (picks, flags, score, meters, and flags carried over
 // from earlier chapters as G). The best path and the middling run above cover two readers. Playing the chapter through VARIANT_RUNS
@@ -66,7 +66,7 @@ if(!same(C.closing(FINAL,{},{}),C.closing(st,{},{}))){const {segs,say,pause}=mk(
  const build=(pid,paras)=>{const {segs,say,pause}=mk();
    if(pid==='end'){paras.forEach(p=>{say('narrator',p);pause(0.5)})}
    else{const i=+pid.slice(1),sc=C.scenes[i];say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);paras.forEach(p=>{say('narrator',p);pause(0.35)});
-     say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)})}
+     if(sc.q){say('narrator',sc.q);pause(0.45)}say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)})}
    return segs};
  let nv=0,nf=0;
  for(const pid in seen){

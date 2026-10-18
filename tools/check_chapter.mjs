@@ -1,4 +1,4 @@
-// Lints chapter files: schema, one best per scene, answer-length tells, dashes.
+// Lints chapter files: schema, one best per scene, the decision question, answer-length tells, dashes.
 // usage: node tools/check_chapter.mjs full/v2/ch02.js [more chapter files]   (v1 files push to window.HALCYON, v2 to window.HALCYON_FULL)
 import fs from 'fs';
 global.window={};
@@ -18,6 +18,7 @@ for(const c of chapters){
     const spread=Math.round((max-min)/max*100);
     lines.push(`${sc.id} best=#${rank} longest  lens=${L.join("/")} spread=${spread}%`);
     if(sc.opts.filter(o=>o.best).length!==1||sc.opts[b].s!==3){console.log("SCHEMA",sc.id);bad++}
+    if(sc.q!==undefined&&(typeof sc.q!=="string"||!/\?$/.test(sc.q.trim())||/[<>]/.test(sc.q))){console.log("QUESTION must be plain text ending in ?",sc.id);bad++} // the decision question (2026-10-18), read before the options
   });
   const txt=JSON.stringify(c)+c.scenes.map(s=>(typeof s.text==="function"?s.text({flags:{},score:20},{},{}):[]).join(" ")).join(" ")+c.closing({flags:{},score:20},{},{}).join(" ");
   const dashes=(txt.match(/[–—]/g)||[]).length;

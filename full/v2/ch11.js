@@ -199,7 +199,7 @@
     video: [`n3h-Ht4PMhk`,`4.6 Perform Integrated Change Control`,`David McLachlan`,`15:22`]
   },
   scenes: [
-    { id:`f11s1`, domain:`People`, task:`P4`, approach:`hybrid`, title:`Nine Mountain`,
+    { id:`f11s1`, domain:`People`, task:`P4`, approach:`hybrid`, title:`Nine Mountain`, q:`Garrett texts to say nothing until the lawyers meet at seven. What should Sam do?`,
       text:(s,all,G)=>{const ct=G.crashedtest, hid=G.buriedar||G.hidnumbers, bu=G.buriedar, re=G.r_reopened, sac=G.sacrificedhana;
         const day=ct?`Saturday, September 30`:`Friday, October 6`;
         return [day+`. 12:20 AM. `+(hid
@@ -233,7 +233,7 @@
           after:`Greaves takes the call at 12:50 and records forty minutes. It's honest and thorough, and at nine it's the spine of the segment. Commander Haddad hears about it when her oldest texts her a clip from Aurora. Frances hears it from the feed with everyone else. Hale's office learns that its program manager gave an interview at one in the morning from the interview.`,
           why:`Telling the press the truth is right, which is why this isn't a zero. But the people whose lives are tied to the project should hear it from you before they hear it on air, and the sponsor shouldn't be surprised.`}
       ]},
-    { id:`f11s2`, domain:`People`, task:`P5`, approach:`hybrid`, title:`Twenty minutes`,
+    { id:`f11s2`, domain:`People`, task:`P5`, approach:`hybrid`, title:`Twenty minutes`, q:`Four groups have asked for four different things since the broadcast. How should Sam respond?`,
       text:(s,all,G)=>{const ct=G.crashedtest, hid=G.buriedar||G.hidnumbers, bu=G.buriedar, ex=G.exposedada, rosy=G.rosylog, spun=s.flags.spunmedia, p=s.picks||{};
         const sol=ct?4129:4135, A=ct?332:326, R=ct?339:333, arr=ct?341:335, lt=ct?`19 min 34 s`:`19 min 18 s`, ltw=ct?`thirty four`:`eighteen`;
         const other=hid?(bu?`the folder moved into an archive in February 2061 by the man now speaking`:`the numbers rounded for the partners in July 2061`)+(G.buriedar&&G.hidnumbers?`, and the numbers rounded for the partners that July`:``):``;
@@ -278,7 +278,7 @@
           after:`It takes the morning. He asks each of them what they need and why, and writes it on the whiteboard in their words. Under all four, it turns out, is one thing: nobody wants to learn something from the feed again. So they agree on that. The board gets the facts first and the crew the same hour, the families the same day, the public the day after, in the same words. Hale's office reviews for accuracy in four hours, not for tone. Frances gets a weekly call with whoever owns the answer, Sam or Hana or Quinn, and the colonists' messages stay theirs. Only named people speak for Tallgrass, which Garrett can live with. Greaves gets the same weekly note the families get, a day later, and says that's fair. Haddad reads the whiteboard from Houston. <span class="said" data-who="Yusra">"Write the crew line in pen."</span>`,
           why:`Aligning expectations means categorizing the stakeholders, finding out what each one actually expects, and facilitating a discussion that lands on terms they all accept. The agreement is the deliverable.`}
       ]},
-    { id:`f11s3`, domain:`Business Environment`, task:`B3`, approach:`predictive`, title:`Two answers`,
+    { id:`f11s3`, domain:`Business Environment`, task:`B3`, approach:`predictive`, title:`Two answers`, q:`The team now has two answers for the valve. What should Sam do with them?`,
       text:(s,all,G)=>{const ta=G.r_testarticle, ct=G.crashedtest, sq=G.squeezedaldergrove;
         return [`Wednesday, October 11. Page eleven had been on the mat when he got home on `+(ct?`Sunday`:`Saturday`)+`, green ink, Golden postmark, mailed before any of it aired. He'd read it at the kitchen table and then sat for a long time with the 1902 line.`,
         `At nine Hana brought the root cause team's answer to the room, which was two answers. She'd written them on one page because she said she wanted nobody to be able to read one without the other.`,
@@ -301,7 +301,7 @@
           after:`Nothing moves for a week. Aldergrove holds the lot open past its date as a courtesy, and says so. On the 19th the board orders both responses developed anyway, keeps the choice for December, and asks why it had to be the one to say so.`,
           why:`Protecting the evidence matters, but the response to an issue can't wait for a root cause that may not come in time. Analyze the responses now, protect the data, and let governance decide.`}
       ]},
-    { id:`f11s4`, domain:`Business Environment`, task:`B8`, approach:`hybrid`, title:`Partner 09`,
+    { id:`f11s4`, domain:`Business Environment`, task:`B8`, approach:`hybrid`, title:`Partner 09`, q:`Partner 09 is cutting its share, and Garrett wants cuts made today. What's Sam's best move?`,
       text:(s,all,G)=>{const ra=G.r_autonomy, hid=G.hidnumbers, ct=G.crashedtest;
         return [`Sunday, October 15. One of the eleven partner governments held a general election. Quinn had it on the program calendar, in pencil, because Hale's office had mentioned it in June. By Monday morning the government that had signed the ARA's founding agreement was out, and the one coming in had campaigned on, among other things, a television segment it had watched on a `+(ct?`Saturday`:`Friday`)+`.`,
         `Wednesday, October 18. The letter came to the Partner Finance Committee at 4 AM Mountain and to Sam at 4:06.`,
@@ -325,7 +325,7 @@
           after:`Greaves gives him ten minutes on Thursday. Sam is careful and fair. The new government's minister answers him on the feed on Friday, and now it's a public argument between a program manager and a government, and Hale has to spend her first meeting in their capital apologizing for it.`,
           why:`Partner funding is a governance relationship that belongs to the sponsor. Assess the impact and give the sponsor options. Don't take a partner's decision to the press.`}
       ]},
-    { id:`f11s5`, domain:`Process`, task:`R6`, approach:`predictive`, title:`The funding line`,
+    { id:`f11s5`, domain:`Process`, task:`R6`, approach:`predictive`, title:`The funding line`, q:`Garrett says spend to plan, and Hana says leave the ground runs alone. How should Sam handle the money?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Monday, October 23. 7:30 AM. `+(p[3]===2?`Hale had flown out with Friday's page in her bag. Osterhout's office wanted the program's funding plan for the committee's call on Friday.`:`Hale was on her way to Partner 09's capital. Osterhout's office wanted the program's funding plan for the committee's call on Friday.`),
         `Quinn had the numbers on one sheet, the way she liked them, in pencil first.`,
@@ -346,7 +346,7 @@
           after:`Every account loses five percent of what it has left. That includes the workaround's ground runs and the crew's last training block, which were the cheapest things to trim and the most expensive things to lose. Hana asks for her five percent back by email, with the board's minutes attached.`,
           why:`Across the board cuts treat all work as equally valuable, and it never is. Reconcile funding by period and prioritize by value and risk, with governance.`}
       ]},
-    { id:`f11s6`, domain:`Process`, task:`R6`, approach:`predictive`, title:`The reserve`,
+    { id:`f11s6`, domain:`Process`, task:`R6`, approach:`predictive`, title:`The reserve`, q:`Osterhout could close the gap from the reserve by lunch. Garrett says take the deal. How should Sam answer?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Wednesday, October 25. 9:00 AM. Osterhout called the program room himself, which he'd never done. `+(p[4]===1?`He had Quinn's page in front of him and he said so.`:`He'd heard about the gap from Hale's office and wanted to hear it from Sam.`),
         `<span class="said" data-who="Calvin">"Mr. Okafor. You have seventy two million of management reserve, undrawn, in the agency's account. Partner 09 has taken sixteen. I could have this closed by lunch. Tell me why I shouldn't."</span>`,
@@ -366,7 +366,7 @@
           after:`He puts it in numbers on the call. Seventy two undrawn. If the board chooses the spacewalk in December, about thirty five of it goes there, on top of the lot already paid for. That leaves thirty seven for whatever four months of launch bring, on a program that has met something it didn't plan for about once a quarter. Draw sixteen for the partner and it's twenty one. <span class="said" data-who="Sam">"Sir, the reserve is for the thing we haven't met yet. The partner is a thing we've met. I'd ask the other ten first."</span> Osterhout is quiet long enough that Quinn checks the line. <span class="said" data-who="Calvin">"Put that on paper. I'll take it to the committee with my name next to yours."</span>`,
           why:`Manage reserves for what they're for. Quantify the risks still ahead against the reserve, show the sponsor what a draw would leave, and keep a funding problem in the funding process unless governance decides otherwise.`}
       ]},
-    { id:`f11s7`, domain:`Process`, task:`R3`, approach:`hybrid`, title:`Cheaper`,
+    { id:`f11s7`, domain:`Process`, task:`R3`, approach:`hybrid`, title:`Cheaper`, q:`Kittiwake offers a cheaper flight, but Garrett won't walk away from two point three billion. What should Sam do?`,
       text:(s,all,G)=>{const ra=G.r_autonomy;
         return [`Friday, October 27. The letter had gone to Osterhout on Thursday, copied to Hale, and by Friday morning everyone had read it except, it seemed, the people who'd have to fly it.`,
         `<prop type="doc" title="KITTIWAKE ORBITAL · OFFER TO THE ARES RELIEF AUTHORITY · THU OCT 26 2062">WE PROPOSE TO CARRY THE BREATHER AND ITS LANDER TO MARS ON OUR CARGO TUG, UNCREWED, DEPARTING IN THE 2063 WINDOW ON A MINIMUM ENERGY TRANSFER OF 259 DAYS.<br>FIXED PRICE: $185 MILLION, INCLUDING LAUNCH.<br>OUR TUG HAS FLOWN TWICE IN EARTH ORBIT.<br>WE BELIEVE THIS OFFERS THE PARTNERS A SUBSTANTIAL SAVING AGAINST THE COST OF COMPLETING HALCYON.</prop>`,
@@ -387,7 +387,7 @@
           after:`Kittiwake says it can't go faster with that tug and offers a lower price instead. The offer stays open for three weeks, and every week a partner asks whether the program is still thinking about replacing itself.`,
           why:`Looking into an opportunity is reasonable, which is why this isn't a zero. But first check it against the value it has to deliver. This one couldn't arrive in time at any price.`}
       ]},
-    { id:`f11s8`, domain:`Business Environment`, task:`B3`, approach:`agile`, title:`Ahead of the board`,
+    { id:`f11s8`, domain:`Business Environment`, task:`B3`, approach:`agile`, title:`Ahead of the board`, q:`Rafa's twelve line pulse is in Wednesday's build, and it might fix the valve. How should Sam handle it?`,
       text:(s,all,G)=>{const cr=G.cutregression, ta=G.r_testarticle, p=s.picks||{};
         return [`Monday, October 30. 7:10 AM. Rafa's team had closed its sprint on Friday with a demo of the workaround software: the conditioning cycle, MOIV-2's close at cutoff, the new crew display, all of it running on the bench. The demo had gone well. `+(p[2]===0?`The work was CR 62-311's, line for line, as the board had approved it.`:`The work was meant to be CR 62-311's, as the board had approved it.`),
         `Thandi Mokoena's note was the first thing in Sam's inbox. <b>Build 11.4 contains a change not in CR 62-311: a 30 millisecond pre close pulse on MOIV-1 at cutoff. Not requested, not analyzed, not approved. It is loaded for Wednesday's ground runs.</b>`+(cr?` Thandi had a long memory for last November, and she'd put the word loaded in bold herself.`:``),
@@ -407,7 +407,7 @@
           after:`The board's clerk logs the report, and the pulse comes out. Rafa's team spends the rest of the week writing explanations instead of code, and nobody on the software side brings Sam an idea again for a month.`,
           why:`Deal with a process slip directly with the people involved and fix the process. Don't escalate a correctable mistake as a discipline matter. Then route the idea through change control.`}
       ]},
-    { id:`f11s9`, domain:`Business Environment`, task:`B8`, approach:`hybrid`, title:`The delta rule`,
+    { id:`f11s9`, domain:`Business Environment`, task:`B8`, approach:`hybrid`, title:`The delta rule`, q:`A new council rule could add seven days to the lander's path. What should Sam do first?`,
       text:(s,all,G)=>[`Tuesday, October 31. 8:00 AM. The Mars Surface Accord had eleven signatures on it, all eleven of the ARA's partners, and a science council that met twice a year. In June the council had adopted a rule, and it took effect tomorrow. Nobody at Tallgrass had read it until the ARA's sustainability office forwarded it at 7:52 with one word in the subject line: <b>Lander?</b>`,
         `<prop type="doc" title="MARS SURFACE ACCORD · SCIENCE COUNCIL · RULE 14 (EXTRACT)">EFFECTIVE NOVEMBER 1, 2062.<br>ANY LANDER LAUNCHED ON OR AFTER THAT DATE WHOSE LANDING SITE IS WITHIN 10 KM OF A PROTECTED SAMPLE SITE IN THE JEZERO DELTA SHALL HAVE ITS SURFACE CONTACT HARDWARE DRY HEAT TREATED AND SHALL CARRY A BIOBURDEN ASSAY CERTIFIED BY THE COUNCIL.</prop>`,
         `The Breather's lander would set down at Ares Station, in the old delta, 3.2 kilometers from the nearest protected site. Launch 3 was Thursday, November 16.`,
@@ -427,7 +427,7 @@
           after:`Hana and the ARA's sustainability office are on a call with the council's secretariat by noon. The rule is narrower than its headline: the footpads and the gear struts, the parts that touch the ground, and nothing above them. Thirty hours at 112 degrees Celsius in a sealed bag, the way the old landers that went looking for life on Mars were done, plus the time to bag, ramp, cool, and reinstall: five days. Then two for the assay. CR 62-341 goes to the change board on Wednesday with the seven days on it and the reason in one line. The station's medical officer, who once asked in a packet who decided things, writes back that the colony would rather not be the first people on Mars to contaminate the delta, and thank you.`,
           why:`When the external environment changes, confirm what the change requires of your project, assess its impact on scope and schedule, and bring it in through change control. A rule you'd rather not meet is still a rule.`}
       ]},
-    { id:`f11s10`, domain:`Process`, task:`R8`, approach:`predictive`, title:`The slot`,
+    { id:`f11s10`, domain:`Process`, task:`R8`, approach:`predictive`, title:`The slot`, q:`Launch 3's path no longer fits the November 16 slot. What's the best call?`,
       text:(s,all,G)=>{const p=s.picks||{}, rr=G.r_reserve;
         return [`Thursday, November 2. 7:00 AM. `+(p[8]===3?`CR 62-341 had come out of the change board on Wednesday approved, seven days and all.`:p[8]===0?`The council had answered the exemption request overnight: no, with a note about June. Two days of processing had gone by without the oven in the plan.`:`The seven days were coming whatever anyone thought of them. The council's secretariat had made that plain.`),
         `Delphine had been clear about the range. Launch 3 had a slot on Thursday, November 16. The next one the range could give a heavy lifter was Thursday, November 30, fourteen days later, and fourteen days was more than the plan had in front of the crew launch. `+(rr?`After that it came out of the window's fourteen days, the reserve Quinn had drawn a box around in July of last year.`:`After that it came out of the window.`),
@@ -448,7 +448,7 @@
           after:`The oven needs the lander bagged and closed, and the stowage needs it open. By Tuesday each team is waiting on the other, and the overlap has cost two days instead of saving five.`,
           why:`Fast tracking only works where activities can really overlap. When they need the same hardware in different states, it adds rework and delay. Check the dependency before you overlap.`}
       ]},
-    { id:`f11s11`, domain:`Business Environment`, task:`B8`, approach:`agile`, title:`The wall`,
+    { id:`f11s11`, domain:`Business Environment`, task:`B8`, approach:`agile`, title:`The wall`, q:`Three of the four surprises could have been seen coming. What should Sam put in place?`,
       text:(s,all,G)=>{const p=s.picks||{}, ct=G.crashedtest;
         return [`Friday, November 3. Quinn had started a wall in the program room the week of the broadcast, without telling anybody, on the long blank stretch between the window and the door. By Friday it had four sheets on it, one for each thing that had walked in from outside in `+(ct?`five`:`four`)+` weeks.`,
         `A leaked record. An election. A company's offer. A rule. Under each, in her small hand, a date: when it could first have been known. The election had been on a calendar for a year. The rule had been published in June. Kittiwake had flown its tug twice, in public, and talked about Mars on its website. Only the leak had come with no warning, and even that, Quinn had written, had been sitting in somebody's drawer for three years waiting for a bad week.`,
@@ -468,7 +468,7 @@
           after:`Quinn does it well for three weeks. In the fourth, with launch 3 in the same week, she doesn't, and nobody notices that the scan had only ever been one person.`,
           why:`One capable person doing it is better than nobody, which is why this isn't a zero. But a scan that lives in one head is a single point of failure. Give each category an owner.`}
       ]},
-    { id:`f11s12`, domain:`Process`, task:`R1`, approach:`hybrid`, title:`One plan`,
+    { id:`f11s12`, domain:`Process`, task:`R1`, approach:`hybrid`, title:`One plan`, q:`Hale wants a new plan before launch 3, and Garrett wants a new schedule. What's Sam's best move?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Monday, November 6. The integrated plan on the program's shared drive was version 14, dated September 11, the day the Cape reopened. It described a world before the feed.`,
         `Since then: CR 62-311, approved in part by the board, with Aldergrove's lot started and the workaround in ground runs. `+(p[7]===2?`CR 62-334, Rafa's pulse, proposed and on the change board's agenda.`:p[7]===0?`Rafa's pulse, still in the load, unapproved.`:`Rafa's pulse, which had been in a build and out of it.`)+` CR 62-341, the oven and the assay, seven days on the lander's path`+(p[9]===0?`, bought back for 4.0 million to hold the 16th.`:p[9]===2?`. Launch 3 had moved to the 30th.`:`, and a slot in question.`)+` Partner 09's sixteen million, with the committee's answer still to come. `+(p[6]===0?`Kittiwake's offer, declined for this mission and on file.`:p[6]===1?`Kittiwake's offer, off the docket after two meetings.`:p[6]===2?`Kittiwake's offer, turned down on the spot.`:`Kittiwake's offer, still drifting around the partners' inboxes.`)+` `+(p[1]===3?`A communications agreement on a whiteboard, written in pen where the crew had asked.`:`Four groups' rules about who could say what.`),

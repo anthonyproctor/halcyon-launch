@@ -221,7 +221,7 @@
     video: [`iVcFpzmqtzA`,`The ISSUE LOG`,`David McLachlan`,`3:53`]
   },
   scenes: [
-    { id:`f10s1`, domain:`Process`, task:`R10`, approach:`predictive`, title:`Closeout`,
+    { id:`f10s1`, domain:`Process`, task:`R10`, approach:`predictive`, title:`Closeout`, q:`Corinne has forty one open items, and twenty two people move on July 5. How should Sam close the phase?`,
       text:(s,all,G)=>{const ex=G.exposedada, rosy=G.rosylog;
         const open=ex
           ?`Hi, Dad. Log twenty five. Sol 4027. Director's office, hello again, it's been a while. Dad, skip to the end if you want. There's a number.<br><br>`
@@ -257,7 +257,7 @@
           after:`The Cape's checklist is good at what the Cape needs: lifting points, purge connections, power. It doesn't ask about deviations or about the harness, because nobody at the Cape knows to. The phase closes to someone else's list, and the questions only Watkins could answer stay in Watkins.`,
           why:`The receiving team's needs matter, but the phase's exit criteria belong to the phase that's closing. Validate their readiness to receive and your readiness to hand over, against criteria you set together.`}
       ]},
-    { id:`f10s2`, domain:`Business Environment`, task:`B2`, approach:`predictive`, title:`Four columns`,
+    { id:`f10s2`, domain:`Business Environment`, task:`B2`, approach:`predictive`, title:`Four columns`, q:`Hale's office wants a yes or no on compliance. Quinn has 214 unsorted lines. What's the right move?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Monday, July 17. He opened page ten in a room on the fourth floor of a hotel in Cocoa Beach, with the air conditioner rattling and the window open anyway, because he wanted to hear the water. He read it once. Then he sat on the end of the bed with it on his knees for a long time, until the light in the parking lot came on.`,
         `He'd heard a squadron ops room go quiet once, in Arizona, in 2041. He knew what the bottom of the page sounded like.`,
@@ -280,7 +280,7 @@
           after:`It takes Quinn and Corinne two days and a whiteboard with four columns: security, health and safety, sustainability, regulatory. The 214 lines become 197. Every one gets an owner, and every owner confirms it in writing. Eleven aren't met yet, and two of those are threats with a date on them: the ARA's thirty day disposal rule for launch 1's upper stage, and the state's transport permit for hot fire 2's methane. For each of the eleven they write what happens if it isn't met, to whom, and when it closes. Sam answers Hale's office the next Thursday at nine. <span class="said" data-who="Sam">"Not yet, ma'am. One ninety seven requirements, all owned. Eleven open, two of them serious, every one with a date. I'll send the list every Friday until it's zero."</span> A pause on the line. <span class="said" data-who="Imogen">"That's a better answer than yes."</span>`,
           why:`Confirm the compliance requirements, classify them, determine threats and the consequences of noncompliance, and measure the extent of compliance. An honest not yet with dates is what governance can act on.`}
       ]},
-    { id:`f10s3`, domain:`Business Environment`, task:`B2`, approach:`hybrid`, title:`Disposal`,
+    { id:`f10s3`, domain:`Business Environment`, task:`B2`, approach:`hybrid`, title:`Disposal`, q:`Garrett says a one launch waiver of S-12 is fine. The launch is fifteen days out. What's Sam's best move?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Thursday, August 3. Delphine Varga was Coquina Launch Services' mission manager for all three Halcyon launches, which meant she owned the rocket and everything about it that wasn't the payload. She was fifty, ran on iced coffee, and had a whiteboard in her office with the last forty launches from the pad written on it in green and two in red.`,
         `The habitat and cargo module had come in 530 kilograms over its contracted mass. Four hundred thirty of that was the six bridge stacks and their mounts, which were on the manifest when it closed on June 1. The rest was the station's medical resupply. Coquina could still lift it. But the heavy lifter's upper stage would reach orbit with very little propellant left, and the ARA's Sustainment Rule S-12 said a spent upper stage had to come down by a controlled burn within thirty days, over empty ocean.`,
@@ -301,7 +301,7 @@
           after:`The resupply comes off. It gets the mass back and puts a hundred kilos of medicine on launch 3, in November, if there's room, which there may not be. On Ares Station the medical officer reads the change in a packet and asks, in one line, who decided.`,
           why:`Cutting scope to avoid a compliance question trades one requirement for another stakeholder's need. Analyze the requirement and look for a compliant option before changing what the project delivers.`}
       ]},
-    { id:`f10s4`, domain:`Process`, task:`R5`, approach:`predictive`, title:`Clause 22`,
+    { id:`f10s4`, domain:`Process`, task:`R5`, approach:`predictive`, title:`Clause 22`, q:`Peg says Clause 22 leaves the real storm questions open. How should Sam handle the contract?`,
       text:(s,all,G)=>[`Thursday, August 31. The National Hurricane Center's outlook had an orange X on it east of the Leeward Islands, and a forty percent chance of something in the next seven days. Delphine had pinned it to the wall by the coffee maker. Nobody had said anything about it.`,
         `Peg had flown down on Tuesday with the Coquina contract in a binder with tabs. She'd read it on the plane twice. She put it on the folding table open at Clause 22.`,
         `<prop type="doc" title="COQUINA LAUNCH SERVICES · LAUNCH SERVICES AGREEMENT TL-61-0402 · CLAUSE 22 (EXTRACT)">22.1 Neither party is liable for delay caused by Force Majeure, which includes named tropical storms and hurricanes.<br>22.2 The Contractor may stand down launch operations when, in its judgment, weather presents an unacceptable risk to the launch vehicle or personnel.<br>22.3 The Contractor will use reasonable efforts to protect the Customer's payload during a stand down.<br>22.4 Each party bears its own costs arising from Force Majeure.</prop>`,
@@ -321,7 +321,7 @@
           after:`Coquina's insurer says no in an hour. Delphine says, kindly, that no launch company on Earth takes that risk, and that she'd rather talk about what her people and Sam's people will actually do. They don't get to it before the weekend.`,
           why:`Trying to transfer a risk the vendor can't reasonably carry wastes the time you need to settle who does what. Negotiate the practical terms first.`}
       ]},
-    { id:`f10s5`, domain:`Business Environment`, task:`B5`, approach:`predictive`, title:`Hester`,
+    { id:`f10s5`, domain:`Business Environment`, task:`B5`, approach:`predictive`, title:`Hester`, q:`Delphine called about the storm, and Garrett wants her to wait for the morning advisory. What should Sam tell her?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Sunday, September 3. The orange X had become a tropical storm at the five o'clock advisory, off the north coast of Cuba, and the hurricane center had given it a name: Hester. By the eleven o'clock advisory that night it was forecast to be a hurricane by Monday evening and to run north along Florida's east coast, offshore, with its closest approach to the Cape on Tuesday night.`,
         `The heavy lifter for launch 2 was on the pad. It had finished its wet dress rehearsal on Saturday, fueled and drained, and the plan had been to leave it there until the stage was mated in two weeks. The stage itself was in the processing facility, under a nitrogen purge, waiting for hot fire 2.`,
@@ -342,7 +342,7 @@
           after:`The rocket goes back to the hangar on time. Tallgrass's people work Monday in a processing facility with the doors banging, and leave Tuesday on a causeway with the first rain bands coming in sideways. Nobody's hurt. Two of them say afterward they won't do it again.`,
           why:`Backing the rollback is right, which is why this isn't a zero. But the contingency plan protects people as well as hardware, and keeping a team on site into the storm to save a day of setup spends their margin.`}
       ]},
-    { id:`f10s6`, domain:`Business Environment`, task:`B2`, approach:`predictive`, title:`Ride out`,
+    { id:`f10s6`, domain:`Business Environment`, task:`B2`, approach:`predictive`, title:`Ride out`, q:`The stage's purge has to run through the storm, and Arlo has volunteered to stay. What should Sam do?`,
       text:(s,all,G)=>{const ps=G.pushedstand, p=s.picks||{};
         return [`Monday, September 4. 1:00 PM. The processing facility was an old building, rated for winds of a hundred and ten miles an hour, which was more than Hester was forecast to bring and less than anyone wanted to bet on. Coquina's own ride out team, seven volunteers, would spend the storm in its launch control center six kilometers inland, which was rated for a hundred and fifty.`,
         `The stage's purge ran off the facility's nitrogen line. If the facility lost power and the line dropped, humid air would get into the stage's propellant lines in a few hours, and into MOIV-1's seat cavity with them. Hana had said it at the morning call in a flat voice: <span class="said" data-who="Hana">"If that valve gets wet, I can't tell you what anything it does afterward means."</span>`,
@@ -363,7 +363,7 @@
           after:`Everybody leaves. The facility loses power on Tuesday night and the purge with it, and the stage sits unpurged in the dark for thirty one hours. Afterward, Hana's team spends three days drying and inspecting the propellant lines, and for the rest of the campaign every reading from MOIV-1 comes with a question about Tuesday night attached.`,
           why:`People first is exactly right, which is why this isn't a zero. But protecting people doesn't mean abandoning the hardware when a method exists to protect it without them. Use one.`}
       ]},
-    { id:`f10s7`, domain:`Process`, task:`R8`, approach:`predictive`, title:`Eight days`,
+    { id:`f10s7`, domain:`Process`, task:`R8`, approach:`predictive`, title:`Eight days`, q:`The storm took eight days, and the Director would like to hold September 21. How should Sam handle the date?`,
       text:(s,all,G)=>{const p=s.picks||{};
         return [`Saturday, September 9. Hester had passed forty miles east of the Cape on Tuesday night as a Category 2, and gone on north and out to sea, and left the Space Coast with downed lines, a flooded causeway, and a sky so clear on Friday that it looked like an apology. The curfew lifted Friday at noon. Sam had driven back from Orlando behind a utility truck convoy.`,
         `The heavy lifter was fine in its hangar. The processing facility had lost a strip of roof flashing and taken water in a corridor that wasn't the clean room. `+(p[5]===0?`The stage's purge had held on the bottles from 9:14 Tuesday night until power came back on Thursday, and its pressure trace was a flat line on Wendell's laptop.`:p[5]===1?`The stage's purge had held because two men had switched it to bottles by flashlight and then spent four hours in a stairwell.`:`The stage had gone thirty one hours without a purge, and Hana's team had started drying the propellant lines on Thursday night.`)+` The propulsion test cell needed its cable trays inspected before anybody chilled anything. The range said it would be back on Monday.`,
@@ -383,7 +383,7 @@
           after:`Quinn takes the change to the board on Monday morning: launch 2 on September 29, three days of float left, and the reason in one paragraph. With it she shows two recovery options that don't touch a test. A second shift on encapsulation and mate cuts that work from seven days to five, for 1.4 million and twelve more people. Overlapping the pad's post storm sweep with the heavy lifter's rollout prep saves a day, if the range agrees. The risk register gets a new line: a second storm before November 30, with its own trigger. Sam calls Hale's chief of staff back that Saturday afternoon at four, before any of it goes to the board. <span class="said" data-who="Sam">"No, ma'am. The 29th. Here's what it does to the float, and here's how we'll try to buy some back. I'd say it the same way to the feed."</span> Hale's office posts the 29th on Monday, after the board, with the reason.`,
           why:`Execute the schedule management plan: analyze the variation, rebaseline through change control, show the remaining float and the downstream risk, and identify recovery options, then communicate the new date with its reason.`}
       ]},
-    { id:`f10s8`, domain:`Process`, task:`R7`, approach:`hybrid`, title:`The second hot fire`,
+    { id:`f10s8`, domain:`Process`, task:`R7`, approach:`hybrid`, title:`The second hot fire`, q:`Garrett wants to delete hot fire 2 to win back six days. How should Sam respond?`,
       text:(s,all,G)=>{const ta=G.r_testarticle, sac=G.sacrificedhana, p=s.picks||{};
         return [`Sunday, September 10. 7:00 AM. Garrett had flown in on the first flight into Orlando after the airport opened, and he came into the Tallgrass office at the Cape in a Tallgrass polo and a good mood, which was the thing to watch.`,
         `He had a proposal and he'd written it on one page. <span class="said" data-who="Garrett">"Delete hot fire 2. Six days. The stage passed its hot fire at Watkins in June, every cycle under four milliseconds. Nothing has happened to it since but a plane ride and a storm it slept through. Mate it Tuesday, launch on the 23rd, and the float goes from three to nine in the worst month of the season. That's not a shortcut. That's arithmetic."</span>`,
@@ -406,7 +406,7 @@
           after:`The test stays, because Garrett won't fight about it in front of twelve people. But he's been threatened in his own office by his own program lead, and for the rest of the campaign he takes his questions to Corinne, and his worries to Hale, and nothing to Sam.`,
           why:`Protecting the test is right, but a public refusal and a threat turn a quality decision into a power struggle. Approach the person directly and privately, then use the governance process, not the press, as the lever.`}
       ]},
-    { id:`f10s9`, domain:`Business Environment`, task:`B1`, approach:`hybrid`, title:`Before the data`,
+    { id:`f10s9`, domain:`Business Environment`, task:`B1`, approach:`hybrid`, title:`Before the data`, q:`Garrett's office wants line 10 to stay, with the CEO signing the go. How should the launch criteria be set?`,
       text:(s,all,G)=>{const ct=s.flags.crashedtest;
         return [`Monday, September 11. The launch readiness review for launch 2 was set for `+(ct?`Thursday, September 21, two days before the new launch date.`:`Wednesday, September 27, two days before the launch.`)+` Quinn had drafted the commit criteria for the stage over the weekend, ten lines, and she'd put DRAFT across the top in red, because she'd learned that from somebody.`,
         `<prop type="doc" title="HALCYON · LAUNCH 2 · DEPARTURE STAGE · COMMIT CRITERIA (DRAFT 1)">1. Stage structural inspection after storm: complete, no findings open. Owner C. Mathers.<br>2. Purge and dew point in propellant lines within limits. Owner H. Iwasaki.<br>3. MOIV-1 performance acceptable. Owner TALLGRASS PROGRAM.<br>4. Flight software load verified against the configuration record. Owner R. Quintero.<br>5. Range flight safety analysis approved. Owner: none listed.<br>6. Disposal plan for the upper stage per S-12. Owner D. Varga.<br>7. Telemetry encryption keys loaded and verified. Owner: none listed.<br>8. Weather at launch within Coquina's rules. Owner D. Varga, C. Mathers.<br>9. Open items list reviewed. Status nominal. Owner S. Okafor.<br>10. Business decision to fly: go recorded on the poll. Owner G. LYLE.</prop>`,
@@ -427,7 +427,7 @@
           after:`It's tidy. It also means the man who wanted the hot fire deleted is the man who judges the valve, and everybody at the table knows it, and Hana stops putting her own name on anything she can avoid.`,
           why:`One owner per criterion is right, but the owner has to have the technical authority and no stake in a particular answer. Concentrating every line in the sponsor removes the independence the criteria exist to provide.`}
       ]},
-    { id:`f10s10`, domain:`Process`, task:`R4`, approach:`hybrid`, title:`Two shifts`,
+    { id:`f10s10`, domain:`Process`, task:`R4`, approach:`hybrid`, title:`Two shifts`, q:`Five Cape technicians have storm damage at home, and Watkins can send eight. How should Sam staff the Cape?`,
       text:(s,all,G)=>{const ct=s.flags.crashedtest;
         return [`Tuesday, September 12. 7:30 AM. `+(ct?`The stage would be mated starting Wednesday, and two shifts would buy back the day the paperwork had cost.`:`Hot fire 2 had started at six. The 29th, with two days bought back, needed two shifts in the processing facility as soon as the hot fire was done.`),
         `Corinne had the roster on her legal pad. Tallgrass had twenty four technicians at the Cape. Nine of them lived in Brevard County and had been hired there. Five of the nine had storm damage at home: two roofs, a flooded ground floor in Titusville, a car under a tree, and a technician named Rosa who'd been sleeping at her sister's with her two kids since Wednesday and had come to work every day anyway.`,
@@ -447,7 +447,7 @@
           after:`Corinne talks to every one of the nine by noon, sitting down, one at a time. The five get the week off with pay and the company's storm assistance, and Corinne makes the call to the assistance office herself so nobody has to fill out the form twice. Two of the five say they'd rather work, days only, and they do. Rosa gets a hotel room near the Cape for the three of them, on the program, until her sister's house has power. The six certified people from Watkins fly in Wednesday. The other two take Coquina's course Wednesday and Thursday and are on the roster from Friday, paired with people who've done it before. The second shift starts the night the mating work begins. It holds.`,
           why:`Managing resources means planning them against the real requirements, including people's availability and qualifications, and adjusting with them when circumstances change. Ask, then staff with qualified people.`}
       ]},
-    { id:`f10s11`, domain:`Business Environment`, task:`B4`, approach:`hybrid`, title:`Cycle three`,
+    { id:`f10s11`, domain:`Business Environment`, task:`B4`, approach:`hybrid`, title:`Cycle three`, q:`Cycle three on orbit read forty milliseconds, and a controller says to run four and five. What should Sam do?`,
       text:(s,all,G)=>{const ct=s.flags.crashedtest, ta=G.r_testarticle, p=s.picks||{};
         const day=ct?`Wednesday, September 27`:`Tuesday, October 3`;
         return [(ct?`The stage went up on Saturday, September 23, at 7:12 in the morning, into a sky with nothing in it. Sam watched from the roof of the processing facility with the Cape team.`
@@ -471,7 +471,7 @@
           after:`The duty member asks what the data show. Sam doesn't know yet. The duty member asks who owns the issue. Nobody yet. The duty member says, kindly, that they'd be glad to rule on something when there's something to rule on, and to call back when there's an owner.`,
           why:`Escalate promptly, but escalate an issue that's been logged, owned, and characterized. Asking governance to decide before the team has done the first hour's work skips the PM's job.`}
       ]},
-    { id:`f10s12`, domain:`People`, task:`P8`, approach:`hybrid`, title:`Who hears it`,
+    { id:`f10s12`, domain:`People`, task:`P8`, approach:`hybrid`, title:`Who hears it`, q:`Public affairs has a statement ready that calls the stage nominal. How should Sam handle the news?`,
       text:(s,all,G)=>{const ct=s.flags.crashedtest, p=s.picks||{};
         const day=ct?`Thursday, September 28`:`Wednesday, October 4`;
         return [day+`. 6:30 AM. `+(p[10]===0?`I-62-117 had nine lines in its log and an owner. The board's duty member had been told at 10:31 the morning before.`:p[10]===3?`The duty member had sent him away to find an owner. I-62-117 had one now.`:`The checkout report had been written. Nobody outside flight control had seen it yet.`),

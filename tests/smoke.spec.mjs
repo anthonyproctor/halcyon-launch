@@ -63,6 +63,7 @@ for (const c of COURSES) {
     await expect(page.locator("#page .chmap")).toBeVisible();
     await noSideScroll(page, "chapter 1 opening");
     for (let i = 0; i < 6 && !(await page.locator("#page .choice").count()); i++) await page.locator("#fnext").click();
+    if (c.id === "pmp") await expect(page.locator("#page .story b.dq")).toHaveText(/\?$/); // the decision question, read before the options (2026-10-18)
     await page.locator("#page .choice").first().click();
     await expect(page.locator("#page .outcome")).toBeVisible();
     await noSideScroll(page, "first decision");
