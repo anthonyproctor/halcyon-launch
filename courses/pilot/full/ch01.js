@@ -66,7 +66,7 @@
           after:`She reads the fine print an hour later. BasicMed requires that you've held an FAA medical certificate at some point after July 14, 2006. She never has.`,
           why:`BasicMed is real, but it isn't a way to start. You need to have held a medical certificate after July 2006 to use it. A brand new student goes through an AME.`}
       ]},
-    { id:`f1s2`, domain:`Preflight`, task:`I.A`, title:`Which medical`,
+    { id:`f1s2`, domain:`Preflight`, task:`I.A`, title:`Which medical`, q:`Under 14 CFR Part 61, what medical certificate fits Jordan's goal?`,
       text:(s,all,G)=>[`Abby called on Wednesday to confirm Saturday. She talked fast, like someone who billed in tenths of an hour.`,`<span class="said" data-who="Abby">"Do you have a medical yet? Doesn't matter for Saturday. Matters for everything after."</span>`,`Jordan had the MedXPress page open in another tab. There were three classes, and the form wanted to know which one.`],
       opts:[
         {t:`A first class, since it's the highest and covers everything she could ever need.`, s:1, d:{trust:0,conf:1,health:0},
@@ -82,7 +82,7 @@
           after:`Abby pauses. <span class="said" data-who="Abby">"A second class medical doesn't make you a commercial pilot. A commercial certificate does. Different thing."</span>`,
           why:`The medical class and the pilot certificate are separate. Carrying passengers for hire takes a commercial pilot certificate, not just a second class medical. For a private pilot, a third class is the requirement.`}
       ]},
-    { id:`f1s3`, domain:`Preflight`, task:`I.A`, title:`Choosing an instructor`,
+    { id:`f1s3`, domain:`Preflight`, task:`I.A`, title:`Choosing an instructor`, q:`Russ says the club's instructor will leave for the airlines, like they all do. What should Jordan do?`,
       text:(s,all,G)=>[`Russ Kim, the partner Jordan had never met, added her to the club group chat on Thursday. The first message was a welcome. The second was advice nobody asked for.`,`<prop type="chat" from="Russ Kim" time="8:14 PM">welcome jordan. sorry about danny, he was the best of us. unsolicited tip: abby's great but she's leaving for the airlines eventually, they all do. the 141 school at the north end has a 35 hr minimum. just saying</prop>`,`Jordan had read about Part 141 too. She'd also read Abby's bio, which said she was at 1,040 hours and counting.`],
       opts:[
         {t:`Switch to the Part 141 school, since 35 hours is cheaper than 40.`, s:1, d:{trust:-1,conf:0,health:-1},
@@ -98,7 +98,7 @@
           after:`Danny's instructor retired to Arizona in 2019. Jordan sits with that longer than she expected to.`,
           why:`Wanting to learn the way your brother did is understandable. It isn't a training plan. You need an instructor who's here now and fits how you learn.`}
       ]},
-    { id:`f1s4`, domain:`Preflight`, task:`I.H`, title:`Anything I should know`,
+    { id:`f1s4`, domain:`Preflight`, task:`I.H`, title:`Anything I should know`, q:`Abby asks everyone the same fitness question before a flight. How should Jordan answer?`,
       text:(s,all,G)=>[`Saturday came in clear and cold. Centennial sat at the south edge of the city, flat and wide, with the mountains standing up along the whole west side like a wall someone forgot to finish.`,`Abby met her in the club office with a clipboard and a cup of coffee she didn't offer to share. She was shorter than Jordan had pictured, with a pencil behind her ear and the expression of someone running numbers.`,`<span class="said" data-who="Abby">"Before we go out. Anything I should know? Sleep, meds, sick, anything. I ask everybody."</span>`,`Jordan had slept about four hours. She'd been sleeping about four hours since March.`],
       opts:[
         {t:`Say she's fine. It's a demo flight with an instructor, so what she's carrying doesn't matter.`, s:0, d:{trust:-3,conf:0,health:-3},
@@ -114,7 +114,7 @@
           after:`<span class="said" data-who="Abby">"Everybody's tired,"</span> she says, and they go. She plans a full hour of maneuvers Jordan doesn't have in her.`,
           why:`A half truth gets you a half plan. The instructor heard "tired" and planned for tired. She didn't know to plan for grief.`}
       ]},
-    { id:`f1s5`, domain:`Preflight`, task:`II`, title:`The walkaround`,
+    { id:`f1s5`, domain:`Preflight`, task:`II`, title:`The walkaround`, q:`Jordan has the club's worn checklist and her first preflight inspection ahead. How should she do it?`,
       text:(s,all,G)=>[`Biscuit sat on the ramp in a row of tied down Cessnas, white with a maroon stripe, a little faded. Jordan knew her from Danny's photos, always with his thumb in the corner. In person she was smaller. She looked like a used car somebody loved.`,`Abby handed her a laminated checklist, worn soft at the corners, with a coffee ring on the back. <span class="said" data-who="Abby">"You do the walkaround. I'll follow you and keep my mouth shut. Mostly."</span>`],
       opts:[
         {t:`Do it from memory, the way the pilot did it in the video she watched last night.`, s:0, d:{trust:-2,conf:-2,health:-3},
@@ -130,7 +130,7 @@
           after:`<span class="said" data-who="Abby">"No,"</span> she says, cheerfully. <span class="said" data-who="Abby">"Your hands. My eyes."</span>`,
           why:`You learn a preflight by doing it. Watching feels efficient and teaches almost nothing.`}
       ]},
-    { id:`f1s6`, domain:`Preflight`, task:`II`, title:`The bead in the cup`,
+    { id:`f1s6`, domain:`Preflight`, task:`II`, title:`The bead in the cup`, q:`What should Jordan do about what she found in the fuel sample?`,
       text:(s,all,G)=>[`Under the left wing, Abby handed her a clear plastic tube with a pin on the end. <span class="said" data-who="Abby">"Fuel sample. Push it up into the drain, fill the cup, look at it."</span>`,`The fuel was pale blue, the color of a swimming pool in a commercial. At the bottom of the cup sat a small clear bead that didn't mix, like a drop of oil in reverse.`],
       opts:[
         {t:`Pour the sample back in through the filler cap so the fuel isn't wasted.`, s:0, d:{trust:-2,conf:-2,health:-4},
@@ -146,7 +146,7 @@
           after:`Abby sees the cup over Jordan's shoulder. Doesn't say a word. Just holds her hand out for the tester and starts draining it herself, which is somehow worse than a lecture.`,
           why:`One bead in the cup can mean a lot more sitting in the tank. Get enough of it in the line and the engine coughs, or quits, usually right after takeoff because that's how the universe works. We don't fly with it. Ever.`}
       ]},
-    { id:`f1s7`, domain:`Preflight`, task:`I.G`, title:`The sticky selector`,
+    { id:`f1s7`, domain:`Preflight`, task:`I.G`, title:`The sticky selector`, q:`What should Jordan do when a checklist item doesn't go as written before engine start?`,
       text:(s,all,G)=>[`Abby put her in the left seat like it was nothing. It wasn't nothing. Danny's seat. Jordan ran a hand over the panel: six round gauges, a radio stack, a GPS bolted in sometime this century, a crack in the glare shield held together with silver tape. A sticker by the mag switch said HI DAD in a little kid's handwriting. She looked at it a while.`,`Down on the floor between the seats was the fuel selector, a red handle. The checklist said: Fuel selector valve, BOTH. She turned it. It stuck a few degrees short of the click and wouldn't go.`],
       opts:[
         {t:`Leave it where it stopped. It's close enough to BOTH.`, s:0, d:{trust:-2,conf:-2,health:-4},
@@ -162,7 +162,7 @@
           after:`It's a real fuel position, so the engine would run. Abby turns it back. <span class="said" data-who="Abby">"Checklist says BOTH for takeoff. We don't freelance."</span>`,
           why:`LEFT works. The engine would've run fine. But we fly the checklist, and when something on it doesn't work, that's a squawk, not a workaround.`}
       ]},
-    { id:`f1s8`, domain:`Preflight`, task:`I.G`, title:`Explain it back`,
+    { id:`f1s8`, domain:`Preflight`, task:`I.G`, title:`Explain it back`, q:`In a left roll with hands only, what makes the nose swing right?`,
       text:(s,all,G)=>[`They took off on runway three five right behind a Cirrus. Biscuit's door popped open with a bang at rotation, which Abby had warned her about and which still nearly stopped her heart. Abby latched the top and said, <span class="said" data-who="Abby">"Biscuit does that. Danny never fixed it. Said it kept him humble."</span> It was the first time anyone had said Danny's name like it was normal.`,`East of the airport the city gave up and the plains took over, brown squares and a few center pivots and a feedlot you could smell at altitude, honestly. Abby kept tapping the chart on her knee where the Class B shelf sat over their heads like a low ceiling. Then she let go of the yoke. <span class="said" data-who="Abby">"Yours. Roll left. Just your hands. Feet flat. Watch the nose, not me."</span>`,`She rolled. The nose did a little shrug to the right, wrong way, then came around. <span class="said" data-who="Abby" data-tone="Pointed, curious, testing.">"See that? Why'd it do that?"</span> The yoke was cold under her fingers.`,],
       opts:[
         {t:`Right aileron went down, so that wing's got more lift and drag. Left rudder fixes it.`, s:3, best:true, d:{trust:3,conf:4,health:3},
@@ -178,7 +178,7 @@
           after:`<span class="said" data-who="Abby">"Sort of. Airplanes are slow. But that swing has a name, and you've got two feet that fix it."</span>`,
           why:`Waiting a beat isn't dumb, Biscuit's a 1978 Cessna, she's not a fighter jet. But the nose went the wrong direction first. That's not slow. That's adverse yaw, and it's your feet's job.`}
       ]},
-    { id:`f1s9`, domain:`Airport and flight`, task:`V`, title:`Look first`,
+    { id:`f1s9`, domain:`Airport and flight`, task:`V`, title:`Look first`, q:`During clearing turns, Jordan sees an airplane that may be on a collision course. What should she do first?`,
       text:(s,all,G)=>[`<span class="said" data-who="Abby">"Okay. Before anything fun, we look around. Every single time. I'll do the first one."</span> Ninety degrees left, ninety back right, her head on a swivel the entire time, chattering about how she once found a hot air balloon this way.`,`Second turn was Jordan's. Bottom right corner of the windshield, a dot. Two o'clock-ish, below them. She watched it for a full breath waiting for it to drift. It didn't drift. It got bigger.`],
       opts:[
         {t:`Call "Traffic, two o'clock low," and point.`, s:3, best:true, d:{trust:3,conf:3,health:5},
@@ -194,7 +194,7 @@
           after:`<span class="said" data-who="Abby">"That's a Piper, and it's closing. Next time, just call it."</span>`,
           why:`Asking beats sitting there quiet. But skip the question and just call it: clock position, high or low, fast. Bird, airplane, balloon, I don't care. Call it.`}
       ]},
-    { id:`f1s10`, domain:`Preflight`, task:`I.G`, title:`Heavy hands`,
+    { id:`f1s10`, domain:`Preflight`, task:`I.G`, title:`Heavy hands`, q:`Jordan is holding Biscuit level by pushing on the yoke. What should she do?`,
       text:(s,all,G)=>[`Back up to altitude. Five minutes later Jordan's right forearm was on fire. Biscuit wanted up. Jordan wanted level. So she pushed. And pushed. Her watch buzzed to tell her her heart rate was elevated, which, thanks. She did a quick inventory: wrist sore, forearm burning, altimeter creeping, attitude indicator a hair nose high, Abby's coffee untouched on the floor by her boot.`,`Abby looked at Jordan's arm. Then out the window. Then at the arm. She didn't say anything. Jordan was starting to learn that Abby not saying anything was a kind of saying something.`],
       opts:[
         {t:`Keep pushing. Fifteen more minutes, she's done worse at the gym.`, s:0, d:{trust:0,conf:-1,health:-2},

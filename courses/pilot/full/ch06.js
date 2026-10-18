@@ -147,7 +147,7 @@
     ]
   },
   scenes: [
-    { id:`f6s1`, domain:`Preflight`, task:`II`, title:`Cord`,
+    { id:`f6s1`, domain:`Preflight`, task:`II`, title:`Cord`, q:`The left main tire shows white cord on its inside shoulder. What should Jordan do?`,
       text:(s,all,G)=>[`Tuesday, September 29, 6:40 in the morning. Walt was already in the hangar when Jordan got there, with Biscuit's logbooks open on Marisol's bench and his reading glasses on his head instead of his face, which meant he was done reading and waiting for something else.`,(G.rushedpreflight?`<span class="said" data-who="Walt">"Abby told me about the Tuesday in May. The one where you skipped what Marisol touched."</span> He put the glasses on his face. <span class="said" data-who="Walt">"I'm going to watch your walkaround. All of it. Don't mind me."</span> He followed her out to the ramp with his coffee and stood two feet from every station on the checklist like a building inspector, and she felt her ears get hot by the left wing and stay hot.`:`<span class="said" data-who="Walt">"Logbook's fine,"</span> he said. <span class="said" data-who="Walt">"I'll walk out with you."</span> He didn't say why. He stood by the tail with his coffee while she went down the checklist, and didn't say anything at all, which was louder.`),`She got to the left main gear and crouched. The tire had the usual flat spot shine from a month of landings. Turning it a little by hand, she saw it: on the inside shoulder, a strip about the size of her thumbnail where the rubber was gone and something white and stringy showed through, like the weave inside a bandage.`,`Walt was looking at the hangar roof.`],
       opts:[
         {t:`Ground the airplane, write up the tire, and call Marisol before anybody flies it.`, s:3, best:true, d:{trust:4,conf:3,health:5},
@@ -163,7 +163,7 @@
           after:`Walt sets his coffee on the horizontal stabilizer, which Marisol would kill him for, and crouches next to her with a knee that pops. He puts his thumb on the white spot. <span class="said" data-who="Walt">"Holding air right now. After six landings on a gusty day, maybe."</span> He stands up. <span class="said" data-who="Walt">"Call Marisol. I'll wait."</span>`,
           why:`Holding air isn't the standard. Cord showing means the tread and casing are worn through to the structure. Flying on it risks a blowout on landing, which at 50 knots on a runway is a loss of control. Write it up and get it fixed before flight.`}
       ]},
-    { id:`f6s2`, domain:`Airport and flight`, task:`III.A`, title:`Monitor`,
+    { id:`f6s2`, domain:`Airport and flight`, task:`III.A`, title:`Monitor`, q:`At a towered field, what does Ground's last instruction allow Jordan to do?`,
       text:(s,all,G)=>[`The ATIS said wind zero six zero at seven, ten miles, few clouds at one two thousand, altimeter three zero zero four, landing and departing runway three five right. Jordan called ground the way the FAA sheet in the briefing room said Centennial wanted it: who, what type, VFR, which way, and the ATIS letter.`,`<span class="said" data-who="man">"Cessna Four Seven Niner One Echo, Centennial Ground, runway three five right, taxi via Alpha."</span>`,`She read it back. Runup at the south end of Alpha, by the 35R threshold. Mags, carb heat, mixture, the door top latch, twice. She told ground she was ready for departure, and ground came back with three words: <span class="said" data-who="man">"Niner One Echo, monitor tower."</span> Then she rolled up to the hold short line for 35R, with its two solid yellow lines facing her and the red sign with 35R in white beside it, and switched the radio to tower. A Cirrus was on a mile final. The frequency was busy. Abby had her hands folded.`],
       opts:[
         {t:`Call tower and tell them they're holding short of runway three five right, ready for departure.`, s:1, d:{trust:0,conf:1,health:0},
@@ -179,7 +179,7 @@
           after:`Ground answers kindly and with a little edge. <span class="said" data-who="man">"One Echo, you're on tower now. Monitor tower, they'll call you."</span> Abby says nothing. She's said it all with her eyebrows.`,
           why:`Asking when unsure is the right instinct, and 91.123 says to ask. But ground already told you what to do. Listening on tower at the hold short line was the whole instruction.`}
       ]},
-    { id:`f6s3`, domain:`Airport and flight`, task:`III.B`, title:`Seven hundred feet`,
+    { id:`f6s3`, domain:`Airport and flight`, task:`III.B`, title:`Seven hundred feet`, q:`Biscuit is climbing out and drifting off course. How should Jordan respond?`,
       text:(s,all,G)=>[`Off 35R she pitched for best rate of climb and watched the airspeed. It was a nice morning, the air cool and thick for Centennial, and Biscuit climbed like she was sorry about August.`,`At four hundred feet Abby said, <span class="said" data-who="Abby">"Look out your left window."</span>`,`Jordan looked. Runway 35L was right there. Closer than it should have been, even for two runways seven hundred feet apart. Biscuit's nose was pointed straight down the runway heading, 350, but the ground under her was sliding to the left. On 35L, a business jet was rolling.`],
       opts:[
         {t:`Turn the nose a few degrees right, into the wind, and crab so her track stays on 35R's centerline.`, s:3, best:true, d:{trust:4,conf:4,health:5},
@@ -195,7 +195,7 @@
           after:`Tower's busy and says, <span class="said" data-who="woman">"One Echo, maintain runway alignment."</span> Which is a polite way of saying fix it. Abby: <span class="said" data-who="Abby">"Talking's good. Talking while drifting isn't. Crab first."</span>`,
           why:`Talking to the tower isn't wrong, but it doesn't stop the drift. Aviate first: correct for the wind so you stay over your own extended centerline, then communicate.`}
       ]},
-    { id:`f6s4`, domain:`Airport and flight`, task:`III.B`, title:`The Cub`,
+    { id:`f6s4`, domain:`Airport and flight`, task:`III.B`, title:`The Cub`, q:`Tower says number two, follow the Cub, and Jordan's gaining on it. What should she do?`,
       text:(s,all,G)=>[`Fourth lap. Right downwind for 35R at 6,900, ninety knots, Biscuit trimmed and quiet. Tower had a lot of people that morning.`,`<span class="said" data-who="woman">"Cessna Niner One Echo, number two, follow the Cub turning right base. Runway three five right, cleared to land."</span>`,`There was a Cub. Yellow, of course, a little shape well out ahead and below, slow as a bicycle, and getting closer fast.`],
       opts:[
         {t:`Report the Cub in sight, slow to approach speed now, and extend downwind to space behind it.`, s:3, best:true, d:{trust:4,conf:4,health:5},
@@ -211,7 +211,7 @@
           after:`It works, roughly. The airplane behind her on downwind, which she hadn't seen yet, calls tower about the Cessna weaving in front of it. Abby says, <span class="said" data-who="Abby">"Slow first. Then extend. S turns are for when slow isn't enough, and then you tell people."</span>`,
           why:`S turns can make space, but unannounced weaving surprises traffic behind you and you're turning away from where you need to look. Reducing speed and extending downwind are simpler, and the tower should know if you can't make the spacing.`}
       ]},
-    { id:`f6s5`, domain:`Airport and flight`, task:`III.B`, title:`Caution wake turbulence`,
+    { id:`f6s5`, domain:`Airport and flight`, task:`III.B`, title:`Caution wake turbulence`, q:`Jordan is number two behind a landing Citation in light wind. How should she fly the approach?`,
       text:(s,all,G)=>[`Seventh lap. The ATIS had changed to calm, and the wind on the field was doing that nothing that isn't quite nothing.`,`<span class="said" data-who="woman">"Cessna Niner One Echo, number two following a Citation on a three mile final, runway three five right, cleared to land. Caution wake turbulence."</span>`,`Jordan found it. A white jet, gear down, settling toward the runway ahead of her base turn, sliding down a line she was about to join. She remembered the whiteboard. Below and behind.`],
       opts:[
         {t:`Fly a normal approach, aim for the usual spot near the numbers, and just watch for bumps.`, s:0, d:{trust:-2,conf:-2,health:-4},
@@ -227,7 +227,7 @@
           after:`Tower gives her a 360 on downwind without complaint. It works. Abby says, <span class="said" data-who="Abby">"That's fine. Time helps. Today the bigger thing is where you put your wheels, so do both."</span>`,
           why:`More time behind a larger aircraft is always good, and asking for spacing is legitimate. But you still need to fly at or above its path and land beyond its touchdown point. Spacing alone doesn't put you above the wake.`}
       ]},
-    { id:`f6s6`, domain:`Airport and flight`, task:`IV`, title:`Fourteen gusting twenty`,
+    { id:`f6s6`, domain:`Airport and flight`, task:`IV`, title:`Fourteen gusting twenty`, q:`The wind is 300 at 14 gusting 20, and the ATIS only offers the 35s. What should Jordan do?`,
       text:(s,all,G)=>[`Saturday, October 3, 6:55 AM. The METAR on her phone said wind three one zero at one four, gusting two zero. The ATIS, when she called it from the car at the gate, said wind three zero zero at one four gust two zero, runway three five right and three five left in use.`,`Walt was at the fence. Chain link, at the end of the hangar row, with a view of everything. He stood there in a canvas Carhartt jacket with his hands in his pockets like a man waiting for a bus he didn't expect to like.`,(G.ignoredwind?`Jordan looked at the card on her kneeboard and thought about the Thursday in May when she'd flown one lap over it, eleven minutes with both hands clamped on the yoke. She hadn't told Walt about that. She was pretty sure she didn't have to. Abby had the look of someone who'd decided not to bring it up and was going to see if Jordan did.`:`Jordan looked at the card on her kneeboard. STUDENT LIMITS. WIND 15. GUSTS NO MORE THAN 10 OVER. CROSSWIND 8. She'd done the math in the car with the engine off and the heater on.`),`<span class="said" data-who="Abby">"Your call,"</span> Abby said. <span class="said" data-who="Abby">"Show me."</span>`],
       opts:[
         {t:`Ask for runway 28. On 35R the crosswind is about 11, over her card. On 28 it's about 5.`, s:3, best:true, d:{trust:4,conf:4,health:5},
@@ -259,7 +259,7 @@
           after:`Half helps. Early doesn't. Biscuit leaves the runway a few knots before she really wants to, slides left, and kisses the pavement again, crabwise, for one long second Jordan feels in her teeth. Then she flies. <span class="said" data-who="Abby">"Full in at the start,"</span> Abby says. <span class="said" data-who="Abby">"And hold her down longer. People get that one backward every fall."</span>`,
           why:`Some aileron is better than none. But the AFH says to start with full aileron and to hold the airplane on the runway slightly longer in a strong crosswind, then lift off firmly, so it doesn't settle back while drifting.`}
       ]},
-    { id:`f6s8`, domain:`Airport and flight`, task:`IV`, title:`Wing low`,
+    { id:`f6s8`, domain:`Airport and flight`, task:`IV`, title:`Wing low`, q:`Crabbed right on short final for 28, what should Jordan do for the landing?`,
       text:(s,all,G)=>[`Tower worked them into the pattern for 28. On final, at about four hundred feet, Biscuit was crabbed a few degrees right, the runway sitting off to the left of the nose like a TV seen from the kitchen. The path ran down the centerline anyway. The two PAPI lights were one white and one red.`,`<span class="said" data-who="Abby">"Okay,"</span> Abby said. <span class="said" data-who="Abby">"Time to stop crabbing. Show me."</span>`],
       opts:[
         {t:`Left rudder to line the nose up with the runway, then right aileron to stop the drift.`, s:3, best:true, d:{trust:4,conf:4,health:5},
@@ -275,7 +275,7 @@
           after:`Abby lets her. Seventy five knots on short final, and Biscuit floats past the blocks, drifting left the whole way. <span class="said" data-who="Abby">"Half the gust factor. That's three. You added ten."</span> Go around. Again.`,
           why:`A gusty crosswind calls for adding half the gust factor, here about 3 knots. Extra speed beyond that adds float, and float in a crosswind is just more time to drift. Correct the drift with a sideslip.`}
       ]},
-    { id:`f6s9`, domain:`Airport and flight`, task:`IV`, title:`The balloon`,
+    { id:`f6s9`, domain:`Airport and flight`, task:`IV`, title:`The balloon`, q:`A gust has lifted Biscuit fifteen feet in the flare, nose high and slowing. What's Jordan's move?`,
       text:(s,all,G)=>[`Third lap on 28. Sixty eight knots, centerline, right wing down, and going well, which Jordan decided later was the problem. She started the flare at the thousand foot blocks and a gust off the right came through and lifted Biscuit like a hand under a tray. Ten feet. Fifteen. Nose high, 55 knots and unwinding toward the bottom of the white arc, and the blocks slid by underneath. 4,800 feet of runway, minus the ones already behind her.`,`Abby's hands stayed in her lap. Walt was at the fence.`],
       opts:[
         {t:`Hold the nose where it is and let her settle back onto the runway. There's still plenty left.`, s:0, flag:`forcedlanding`, d:{trust:-3,conf:-2,health:-5},
@@ -291,7 +291,7 @@
           after:`It works, technically. Biscuit floats like she's thinking it over, touches down well past where Jordan wanted, and the rollout ends with more of the far end in the windshield than she'd care to describe. <span class="said" data-who="Abby">"A little power for a little balloon, sure,"</span> Abby says. <span class="said" data-who="Abby">"That was not little. On a short runway that's a fence."</span>`,
           why:`A touch of power can soften a slight balloon. A large balloon with airspeed decaying and the touchdown point behind you is a go-around, especially on a 4,800 foot runway. The AFH says when ballooning is excessive, go around immediately.`}
       ]},
-    { id:`f6s10`, domain:`Navigation and emergencies`, task:`IX`, title:`The breaker`,
+    { id:`f6s10`, domain:`Navigation and emergencies`, task:`IX`, title:`The breaker`, q:`The flap breaker popped on downwind. How should Jordan handle the approach?`,
       text:(s,all,G)=>[`Downwind, abeam the numbers, 1,500 RPM, carb heat on, flap switch to 10. Nothing. The indicator stayed at zero. Out the window the flap sat flush with the wing. On the panel the FLAP breaker stood a quarter inch proud of its neighbors, like a kid with a question.`,`Abby saw it the same second. <span class="said" data-who="Abby">"Leave the breaker. You just lost flaps. Keep flying."</span>`,`So she flew a no flap pattern without meaning to, and on final she was high. Both PAPI lights on 28 white.`],
       opts:[
         {t:`Power to idle, lower the right wing, left rudder, and slip down to the glidepath at the same speed.`, s:3, best:true, d:{trust:4,conf:4,health:5},
@@ -323,7 +323,7 @@
           after:`Flashing green, a minute later. Jordan starts her base turn. Abby: <span class="said" data-who="Abby">"Flashing in the air, come back around. Steady, land. Flashing on the ground, taxi. The test loves that one."</span> Steady green on short final, half a mile out.`,
           why:`In flight, flashing green means return for landing, to be followed by a steady green at the proper time. Steady green is cleared to land. On the ground, flashing green means cleared to taxi, which is the mixup the test is fishing for.`}
       ]},
-    { id:`f6s12`, domain:`Airport and flight`, task:`XII`, title:`Every part of the airplane`,
+    { id:`f6s12`, domain:`Airport and flight`, task:`XII`, title:`Every part of the airplane`, q:`When is Biscuit clear of the runway on a taxiway exit?`,
       text:(s,all,G)=>[`Saturday, October 10. The 7 AM weather: wind calm, four degrees Celsius, altimeter thirty point one eight. Landing number nine. Sixty five knots over the fence, centerline under the nose, mains on about two hundred feet past the aiming point blocks, one chirp from the stall horn. Jordan knew before the wheels touched. Good, not perfect. At the fence Walt's hand went up, and she was too busy to count.`,`<span class="said" data-who="woman">"Cessna Niner One Echo, turn right at Alpha seven, contact ground."</span>`,`Alpha seven came up on the right. She slowed to a walk, turned off, and rolled toward the hold short lines. Dashed side toward her this time. Solid side beyond.`],
       opts:[
         {t:`Stop just after turning off the runway and switch to ground, since she's off the runway surface now.`, s:0, d:{trust:-1,conf:-1,health:-2},

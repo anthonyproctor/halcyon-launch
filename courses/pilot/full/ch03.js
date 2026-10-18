@@ -98,7 +98,7 @@
     ]
   },
   scenes: [
-    { id:`f3s1`, domain:`Preflight`, task:`I.C`, title:`Sixteen gusting twenty seven`,
+    { id:`f3s1`, domain:`Preflight`, task:`I.C`, title:`Sixteen gusting twenty seven`, q:`The METAR shows 16 gusting 27, and the TAF builds the wind at 1600Z. What should Jordan do?`,
       text:(s,all,G)=>[`At 5:55 the wind outside her bedroom window was pushing the neighbor's recycling bin up the sidewalk one lurch at a time. Jordan sat on the edge of the bed with her phone and pulled the weather before she'd put her feet on the floor.`,`<prop type="doc" title="KAPA, Thursday 5:53 AM"><code>METAR KAPA 141153Z 31016G27KT 10SM FEW080 SCT120 12/M03 A3002 RMK AO2 PK WND 31031/1128 SLP148 T01171028<br><br>TAF KAPA 141120Z 1412/1512 31016G27KT P6SM FEW080 SCT120<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FM141600 32020G32KT P6SM SCT100<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FM150200 33010KT P6SM SKC</code></prop>`,`Taped inside her kneeboard was the card Abby had written for her after the carb ice lesson, in blocky marker: STUDENT LIMITS. YOURS UNTIL I SAY. WIND 15. GUSTS NO MORE THAN 10 OVER. CROSSWIND 8. YOU MAKE THE CALL. I'LL TELL YOU IF IT'S WRONG.`,`It was 6:00. The lesson was at 7.`],
       opts:[
         {t:`Fly it. The strong wind doesn't start until FM141600, and that's four this afternoon.`, s:0, flag:`ignoredwind`, d:{trust:-2,conf:-2,health:-4},
@@ -114,7 +114,7 @@
           after:`The answer comes back fast. <b>What does the card say?</b> Jordan looks at it. <b>Then you know. I said you make the call.</b>`,
           why:`Asking an instructor is never a crime. But Abby handed you this job on purpose, and you had everything you needed to do it. Make the call, show the numbers, and let her tell you if you're wrong.`}
       ]},
-    { id:`f3s2`, domain:`Preflight`, task:`I.C`, title:`After RMK`,
+    { id:`f3s2`, domain:`Preflight`, task:`I.C`, title:`After RMK`, q:`How should Jordan decode the remarks in the morning METAR?`,
       text:(s,all,G)=>[`The briefing room window buzzed in its frame whenever a gust came over the ramp, and by 8:15 it was buzzing pretty much full time. Somebody had taped a sign over the light switch that said DO NOT TOUCH THERMOSTAT (RUSS). Abby had copied the morning METAR onto the whiteboard in red marker, all of it, and drawn a fat lopsided box around the end.`,`<span class="said" data-who="Abby">"Everything after RMK. People skip it. A machine stood out on that field all night measuring this stuff for you, and people skip it."</span> She capped the marker. <span class="said" data-who="Abby">"AO2. And the T group. Go."</span>`],
       opts:[
         {t:`AO2 means an observer added to the report. The T group is the temperature, 11.7 and 10.28.`, s:0, d:{trust:-1,conf:-2,health:-1},
@@ -130,7 +130,7 @@
           after:`<span class="said" data-who="Abby">"That's not a forecast, that already happened. 1128 Zulu. Twenty five minutes before this report."</span>`,
           why:`A METAR is an observation, so everything in it is the past. PK WND 31031/1128 is a peak wind from 310 at 31 knots that occurred at 28 minutes past 11 Zulu, since the last report.`}
       ]},
-    { id:`f3s3`, domain:`Preflight`, task:`I.C`, title:`Twelve hundred`,
+    { id:`f3s3`, domain:`Preflight`, task:`I.C`, title:`Twelve hundred`, q:`Walt's January METAR has scattered, broken and overcast layers. What's the ceiling?`,
       text:(s,all,G)=>[`Walt came in at nine with a box of grocery store donuts, set it on the table, and didn't sit down. <span class="said" data-who="Walt">"Russ says you canceled."</span>`,`<span class="said" data-who="Jordan">"I did."</span>`,`<span class="said" data-who="Walt">"Hm."</span> He picked up a marker, uncapped it, and wrote a METAR on the board from memory in small square capitals, the way a man writes something he's written ten thousand times. <span class="said" data-who="Walt">"Denver, January, some year. I was on shift. Where's the ceiling?"</span>`,`<code>METAR KDEN 140453Z 03011KT 3SM -SN BR SCT006 BKN012 OVC030 M01/M02 A3008</code>`],
       opts:[
         {t:`600 feet. The lowest layer reported is the ceiling, whatever the coverage says.`, s:0, d:{trust:-1,conf:-2,health:-1},
@@ -146,7 +146,7 @@
           after:`<span class="said" data-who="Walt">"Broken counts. Five eighths of the sky is plenty of sky to hit."</span>`,
           why:`Broken and overcast both count. BKN means five to seven eighths of the sky is covered. Waiting for overcast to call it a ceiling puts you in the clouds.`}
       ]},
-    { id:`f3s4`, domain:`Preflight`, task:`I.C`, title:`Zulu`,
+    { id:`f3s4`, domain:`Preflight`, task:`I.C`, title:`Zulu`, q:`What local time is FM141600 in Colorado in May?`,
       text:(s,all,G)=>[`After Walt left, Abby turned around the whiteboard, where she'd already written the morning TAF, and underlined FM141600 twice.`,`<span class="said" data-who="Abby">"Last thing before the boring part. When does this start? On a watch. Not a computer."</span>`,`The coffee maker gurgled. Out on the ramp a Piper Warrior strained at its tiedowns like a dog that wanted to go for a walk.`],
       opts:[
         {t:`Ten this morning. Mountain Daylight Time is six hours behind Zulu.`, s:3, best:true, d:{trust:3,conf:4,health:3},
@@ -162,7 +162,7 @@
           after:`<span class="said" data-who="Abby">"Wrong direction. Zulu's ahead of us. Count backward."</span>`,
           why:`Colorado is behind UTC, so you subtract. Adding sends you twelve hours wrong, which is the worst possible answer, because it's wrong and it still sounds like a real time.`}
       ]},
-    { id:`f3s5`, domain:`Preflight`, task:`I.C`, title:`The blanks`,
+    { id:`f3s5`, domain:`Preflight`, task:`I.C`, title:`The blanks`, q:`What does the DEN 9,000 foot group say, and what do the empty columns mean?`,
       text:(s,all,G)=>[`Friday night Abby sent homework instead of a time.`,`<prop type="text" from="Abby Strand" time="8:47 PM">Sat 7am if it's legal and smart. We're climbing to 7,500 over Bennett. Decode the DEN line for me. Why is half of it missing?</prop>`,`<prop type="doc" title="Winds and temperatures aloft, valid 1200Z Saturday"><code>FT&nbsp;&nbsp;3000&nbsp;&nbsp;&nbsp;&nbsp;6000&nbsp;&nbsp;&nbsp;&nbsp;9000&nbsp;&nbsp;&nbsp;&nbsp;12000&nbsp;&nbsp;&nbsp;18000&nbsp;&nbsp;&nbsp;24000&nbsp;&nbsp;&nbsp;30000<br>DEN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2614+05&nbsp;2725-01&nbsp;2741-14&nbsp;2752-26&nbsp;760241</code></prop>`,`Jordan worked it out on the back of a pizza flyer. Then she stared at the gaps for a while, the way she'd stare at an empty line on a patient chart.`],
       opts:[
         {t:`9,000: 260 at 14, plus 5°C. Nothing at 6,000 because the winds there are light and variable.`, s:1, d:{trust:0,conf:1,health:0},
@@ -178,7 +178,7 @@
           after:`<b>Only above 24,000. Under that the sign's printed, and that one's a plus.</b>`,
           why:`The sign is printed from 6,000 through 24,000 feet. It's dropped only above 24,000, where temperatures are always negative. At 9,000 the forecast is plus 5°C.`}
       ]},
-    { id:`f3s6`, domain:`Preflight`, task:`I.C`, title:`Tango over the Divide`,
+    { id:`f3s6`, domain:`Preflight`, task:`I.C`, title:`Tango over the Divide`, q:`Russ says AIRMETs are for gliders and nervous people. How should Jordan answer him?`,
       text:(s,all,G)=>[`Twenty five minutes later the club chat lit up.`,`<prop type="chat" from="Russ Kim" time="9:12 PM">taking biscuit to steamboat sunday morning, it's on the calendar, don't @ me. yes i see the airmets. they're airmets. sigmets are the scary ones. airmets are for gliders and nervous people</prop>`,`Jordan opened the graphical AIRMETs on the aviation weather site. Over the mountains west of Denver on Sunday morning there was a Tango box, moderate turbulence below 18,000, and a Sierra box stuck to the high terrain for mountain obscuration. She'd known Russ for about three weeks, and most of it had been skull emojis.`],
       opts:[
         {t:`Agree with him. AIRMETs are the mild ones, and the real warnings come as SIGMETs.`, s:0, d:{trust:-2,conf:-2,health:-4},
@@ -194,7 +194,7 @@
           after:`She closes the app. The chat moves on to a fight about the fuel card.`,
           why:`He is the pilot in command, and it is his decision. But a co-owner who sees a hazard over the route and says nothing has decided something too. You can be respectful and still say it.`}
       ]},
-    { id:`f3s7`, domain:`Preflight`, task:`I.C`, title:`Sugar on the wing`,
+    { id:`f3s7`, domain:`Preflight`, task:`I.C`, title:`Sugar on the wing`, q:`The wings are frosted at sunrise after a night tied down at minus one. What should Jordan do?`,
       text:(s,all,G)=>[`Saturday came up clear and dead calm. ATIS: minus one, dewpoint minus three. Biscuit had spent the night tied down on the ramp like always, and in the blue light before sunrise her wings had gone fuzzy. Powdered sugar. On May 16th. Colorado.`,`Jordan dragged a fingertip down the leading edge and it left a clean wet stripe of maroon paint. You could read the N number on the tail right through the stuff. Abby's text said ten minutes out.`],
       opts:[
         {t:`Go. It's so thin it'll blow off in the first few seconds of the takeoff roll.`, s:0, d:{trust:-2,conf:-2,health:-5},
@@ -210,7 +210,7 @@
           after:`<span class="said" data-who="Abby">"Who told you that?"</span> <span class="said" data-who="Jordan">"A forum."</span> <span class="said" data-who="Abby">"Forums are where old ideas go to live forever."</span>`,
           why:`Polishing frost is an old practice, and it isn't what the FAA teaches student pilots now. The standard is clean and free of frost. Smooth frost is still frost.`}
       ]},
-    { id:`f3s8`, domain:`Preflight`, task:`I.C`, title:`Flat on the bottom`,
+    { id:`f3s8`, domain:`Preflight`, task:`I.C`, title:`Flat on the bottom`, q:`Which answer is the real reason cumulus bases line up?`,
       text:(s,all,G)=>[`Sunday was a cookout at Claire's in Parker. Burgers, on the enormous grill Danny bought the summer he decided he was a grill guy and then used maybe nine times. The patio umbrella was still in its winter cover. His orange Broncos camp chair was still folded up against the back fence with a dried leaf stuck in the hinge. It had been there since March.`,`Ellie was flat on her back on the trampoline in shin guards and one sock, eating a pickle. Ellie's other sock was on the grass, nowhere near the trampoline. Above her the clouds were coming off the foothills in a herd, big lumpy white ones, and every last one had a bottom so flat you could've set a level on it. Same height, every one. Like a glass shelf.`,`<span class="said" data-who="Ellie">"Aunt Jordan. Why are clouds flat on the bottom?"</span>`,`Somewhere down the block a dog kept barking at nothing. Claire looked over from the grill with the spatula in her hand. She didn't say anything. Danny had been the one for questions like this.`],
       opts:[
         {t:`Warm air rises and cools, and the cloud starts at the height where it cools to its dewpoint.`, s:3, best:true, d:{trust:4,conf:4,health:5},
@@ -242,7 +242,7 @@
           after:`<span class="said" data-who="Abby">"Glider pilots train for it, have oxygen, and don't have a door that pops open."</span>`,
           why:`Wave soaring is real, in aircraft and with training built for it. For a student in a 172, climbing into the wave means turbulence, big altitude swings, and the rotor on the way in. The hazard isn't worth the view.`}
       ]},
-    { id:`f3s10`, domain:`Preflight`, task:`I.C`, title:`Moderate`,
+    { id:`f3s10`, domain:`Preflight`, task:`I.C`, title:`Moderate`, q:`What does Denver Approach need to hear about the bumps near Bennett?`,
       text:(s,all,G)=>[`The first week of June turned hot. Abby moved the lessons earlier, and still, by 10 a.m. the air over the plains east of the airport was boiling up off the wheat fields. At 7,500 over Bennett, Biscuit hit a bump that lifted Jordan off the seat against her belt, and then another one, and the coffee cup in the side pocket jumped out and rolled under the rudder pedals.`,`It went on like that for a couple of minutes. Not dangerous. Not fun either. The airspeed needle wandering ten knots each way. Abby's pen bouncing on her kneeboard.`,`<span class="said" data-who="Abby">"Nobody's reported this. We're on with Denver Approach. Give them a PIREP."</span>`],
       opts:[
         {t:`Tell Approach it's pretty bumpy out by Bennett, so other pilots know to watch for it.`, s:1, d:{trust:0,conf:1,health:0},
@@ -258,7 +258,7 @@
           after:`She keys the mic and it comes out almost the way Abby taught her. <span class="said" data-who="Jordan">"Denver Approach, Cessna Four Seven Niner One Echo, PIREP. Over Bennett, seven thousand five hundred, Cessna One Seventy Two, moderate turbulence, last two minutes."</span> The controller reads it back and thanks her. Thirty seconds later he passes it to a Bonanza inbound from the east. Abby writes PIREP on her kneeboard and draws a star next to it.`,
           why:`Location, time, altitude MSL, aircraft type, and the hazard with an intensity. That's the required core of a PIREP, plus at least one weather element. Moderate means real changes in altitude or attitude with the airplane under control at all times.`}
       ]},
-    { id:`f3s11`, domain:`Preflight`, task:`I.C`, title:`East wind`,
+    { id:`f3s11`, domain:`Preflight`, task:`I.C`, title:`East wind`, q:`The METAR shows a one degree spread and a 400 foot overcast after a front. What should Jordan decide?`,
       text:(s,all,G)=>[`A cold front came down the plains on a Friday night in June, and by Saturday morning the whole city had a lid on it. Jordan woke at 5 to a world the color of dishwater. Her own street ended in gray after about four houses.`,`<prop type="doc" title="KAPA, Saturday 5:53 AM"><code>METAR KAPA 061153Z 07009KT 2SM BR OVC004 09/08 A3021 RMK AO2 SLP232 T00890078<br><br>TAF KAPA 061120Z 0612/0712 07010KT 2SM BR OVC004<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMPO 0612/0615 1/2SM FG OVC002<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FM062000 05008KT 5SM BR BKN012<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FM070100 33006KT P6SM SCT050</code></prop>`,`The lesson was at nine. Abby hadn't texted. Jordan understood by now that this was on purpose.`],
       opts:[
         {t:`Wait an hour or two. Morning fog always burns off once the sun gets going.`, s:1, d:{trust:0,conf:0,health:0},
@@ -274,7 +274,7 @@
           after:`<b>Canceling. East at 9, spread 1, upslope. TAF keeps it upslope all day, northeast at 2000Z, and doesn't turn it northwest till 0100Z, 7 PM.</b> Abby: <b>Agree. Go back to bed.</b> Then: <b>You're getting annoying to teach.</b> Then: <b>Compliment.</b> Jordan gets back under the covers and doesn't sleep. Outside a garbage truck works its way down the block, invisible, beeping.`,
           why:`East wind, a tiny spread, a low overcast after a front: textbook upslope fog. It forms when moist, stable air is pushed up rising terrain and it needs the wind to keep going. It won't burn off like radiation fog while that wind blows.`}
       ]},
-    { id:`f3s12`, domain:`Preflight`, task:`I.C`, title:`The Palmer Divide`,
+    { id:`f3s12`, domain:`Preflight`, task:`I.C`, title:`The Palmer Divide`, q:`A cell over the Palmer Divide is towering, with rain falling out of its base. What's Jordan's best move?`,
       text:(s,all,G)=>[`Saturday the 13th of June was the first true summer day. The TAF had a line Jordan read three times before she left the house.`,`<prop type="doc" title="KAPA terminal forecast, Saturday 5:20 AM"><code>TAF KAPA 131120Z 1312/1412 VRB04KT P6SM FEW120<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FM131700 09008KT P6SM SCT080<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FM132000 13012G20KT P6SM SCT070 BKN120<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PROB30 1321/1324 TSRA BKN060CB<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FM140200 18006KT P6SM SCT120</code></prop>`,`Wheels up 10:30. By ten after twelve they were doing power off stalls over the practice area, and each time she rolled out of a clearing turn the stuff to the south had grown. One cloud over the Palmer Divide, twenty five miles off, maybe, had quit being a cloud. It was a tower now. Cauliflower on top, white as a fridge, still going up, and a gray smear hanging under one side of it with ragged strings falling out of the bottom and quitting halfway to the ground.`,(s.flags.ignoredwind||G.ignoredwind)?`A month back she'd flown eleven minutes of pattern in wind like that. Her stomach remembered it before her head did.`:`On an ambulance she'd have called it a scene she didn't like the look of. She knew that feeling. She'd never had it at 7,500 feet.`,`Abby, who'd seen it ten minutes ago, said nothing at all.`],
       opts:[
         {t:`Keep flying. The TAF says storms after 2100Z, and that's only a 30 percent chance.`, s:0, d:{trust:-2,conf:-2,health:-5},

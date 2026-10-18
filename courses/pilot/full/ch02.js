@@ -75,7 +75,7 @@
     video: [`2x47_jAkwrs`,`Carburetor Ice in a Cessna: what you need to know`,`FLY8MA.com Flight Training`,`2:37`]
   },
   scenes: [
-    { id:`f2s1`, domain:`Preflight`, task:`I.G`, title:`Treat it like it's live`,
+    { id:`f2s1`, domain:`Preflight`, task:`I.G`, title:`Treat it like it's live`, q:`With the cowling off for an oil change, how should Jordan treat Biscuit's propeller?`,
       text:(s,all,G)=>[`Hangar Six was the sixth door in a long row of corrugated steel hangars on the north side of the field, and inside it Biscuit sat with her nose naked. The cowling lay on a moving blanket like a shell somebody had cracked open. Under it the engine was smaller than Jordan expected, four fat finned cylinders laid flat, two on each side, wires and tubes everywhere like the inside of a ten year old's model kit.`,`Marisol was on a rolling stool with a drain pan and did not get up. She was shorter than Jordan, with forearms like rope and a pencil behind each ear. A radio on the workbench was playing classic rock, volume at about two. On the back wall of the hangar was a whiteboard, half covered in block capitals Jordan knew from a lifetime of birthday cards. DUE LIST. ANNUAL AUGUST 2026. TRANSPONDER OCTOBER 2026. ELT BATTERY MARCH 2026. It hadn't been touched in a while. There was a calendar next to it from a parts supplier, still on March. A coffee can of spare fuel caps sat on the shelf under the board.`,`<span class="said" data-who="Marisol">"You're Jordan."</span> Not a question. <span class="said" data-who="Marisol">"Okay. Lesson one. Go turn the prop for me, slowly, so you can feel the compression in each cylinder."</span> She went back to the oil filter.`],
       opts:[
         {t:`Check that the key is out of the ignition and lying on the seat, then turn it.`, s:1, d:{trust:1,conf:0,health:-1},
@@ -107,7 +107,7 @@
           after:`<span class="said" data-who="Marisol">"Nope. That's airframe ice. Different problem, worse day."</span>`,
           why:`The carburetor makes its own cold. The temperature drop happens inside, so you can get carb ice on a warm day with clear skies. Waiting to see ice on the wings means you're waiting for the wrong thing.`}
       ]},
-    { id:`f2s3`, domain:`Preflight`, task:`I.G`, title:`Black plug`,
+    { id:`f2s3`, domain:`Preflight`, task:`I.G`, title:`Black plug`, q:`What does a dry, sooty plug say about how Biscuit's engine was run?`,
       text:(s,all,G)=>[`Marisol had all eight spark plugs out in a tray with numbered holes, a habit, she said, from a guy who once put them back in the wrong cylinders and spent an afternoon learning humility. She held one up to the light. The business end was crusted black and dry, like a match somebody blew out.`,`<span class="said" data-who="Marisol">"This one's from the bottom of number three. Tell me why it looks like that."</span>`,`Jordan thought about the discovery flight. Abby taxiing out, the long wait behind a Cirrus at the runup area, the mixture knob all the way in the whole time because nobody told her to touch it.`],
       opts:[
         {t:`Mixture too lean. The engine ran hot and burned the plug black.`, s:0, d:{trust:-1,conf:-2,health:-2},
@@ -123,7 +123,7 @@
           after:`<span class="said" data-who="Marisol">"Lower grade fuel gives you detonation and a very bad day. This is just soot."</span>`,
           why:`Wrong fuel is a real problem, and it shows up as detonation and high temperatures. This plug is telling you something boring: too rich.`}
       ]},
-    { id:`f2s4`, domain:`Preflight`, task:`I.G`, title:`The mud dauber`,
+    { id:`f2s4`, domain:`Preflight`, task:`I.G`, title:`The mud dauber`, q:`What should Jordan do about what she found under the left wing?`,
       text:(s,all,G)=>[`Marisol sent her to walk the airplane while the oil drained. <span class="said" data-who="Marisol">"Everything you looked at Saturday with Abby, look at again. I'll know if you didn't."</span>`,`Under the left wing, behind the strut, the little bent fuel vent tube hung down like a soda straw. Jordan crouched to look up into it. It was packed with something gray and papery. When she tapped it, a wasp walked out, looked at her, and flew away unbothered.`],
       opts:[
         {t:`Leave it. The fuel caps have their own vents, so this one doesn't matter.`, s:0, d:{trust:-2,conf:-2,health:-4},
@@ -139,7 +139,7 @@
           after:`Marisol crouches beside her, looks up the tube, and swears quietly in two languages. She clears it with a wire and blows air through until Jordan, standing at the fuel cap, can hear it whistle. <span class="said" data-who="Marisol">"That's the third one this spring. They love this airplane."</span> She writes it on a squawk sheet. Then she writes the date.`,
           why:`Blocked vent, no fuel flow, quiet engine, usually right when you least want it. Show the mechanic, clear it properly, prove air moves through it. Then write it down so the next person knows to look.`}
       ]},
-    { id:`f2s5`, domain:`Preflight`, task:`I.G`, title:`The battery is a clock`,
+    { id:`f2s5`, domain:`Preflight`, task:`I.G`, title:`The battery is a clock`, q:`The ammeter sits left of center at night over Limon. Which response is right?`,
       text:(s,all,G)=>[`By ten thirty the new oil was in and Marisol was safety wiring the oil filter. She finished it, looked at it for a while, snipped it off with a pair of dikes, and started over. The first one had looked perfect to Jordan, a tight little braid. She kept that to herself. Out on the ramp a fuel truck backed up with that beeping that never stops. Somebody out there was trying to start a Cherokee and it wasn't going well.`,`<span class="said" data-who="Marisol">"Next quiz, since you're just standing there. Night flight, you're over Limon on the way home, and the ammeter needle slides left of center and sits there, a steady discharge. What's happening, and what do you do?"</span>`,`She didn't look up from the wire. Jordan was getting the idea that this was what Marisol sounded like when she liked you.`],
       opts:[
         {t:`Ignore it for now. The battery is probably just charging after the engine start.`, s:0, d:{trust:-1,conf:-2,health:-3},
@@ -171,7 +171,7 @@
           after:`<span class="said" data-who="Marisol">"Altimeter, yes. And the other two? You'd be flying a pattern with an airspeed indicator that's lying to you."</span>`,
           why:`You got the altimeter, and a GPS altitude is a real backup. But the static port feeds the airspeed indicator and the VSI too. Miss that and you're trusting the wrong airspeed on final.`}
       ]},
-    { id:`f2s7`, domain:`Preflight`, task:`I.B`, title:`Nobody reads those`,
+    { id:`f2s7`, domain:`Preflight`, task:`I.B`, title:`Nobody reads those`, q:`Marisol says the whiteboard has everything that matters. What should Jordan do?`,
       text:(s,all,G)=>[`At noon they ate gas station sandwiches on overturned buckets. The square of blue tape from the static port was stuck to Jordan's kneeboard now. Marisol had peeled it off and pressed it there herself. <span class="said" data-who="Marisol" data-tone="Gruff, plain, matter-of-fact.">"Keep that. It's a good reminder."</span> Jordan asked where the maintenance logbooks were.`,`Marisol pointed her sandwich at a fireproof file box on the workbench. <span class="said" data-who="Marisol">"Airframe, engine, prop. Fifty years of other people's handwriting. Everything that matters is on the board."</span> She meant Danny's whiteboard. <span class="said" data-who="Marisol" data-tone="Gruff, plain, matter-of-fact.">"Nobody reads those cover to cover. Owners never do."</span>`,`At work, Jordan read every line of every run report she signed, including the ones she wrote, because the time you skim is the time a dose is wrong. She looked at the box. She looked at the board, which hadn't been touched since March.`],
       opts:[
         {t:`Trust the whiteboard and Marisol. She's the mechanic, and keeping track is her job.`, s:0, d:{trust:-1,conf:-2,health:-3},
@@ -187,7 +187,7 @@
           after:`The annual is clean, signed, last August. She closes the book. It feels like enough.`,
           why:`The annual is the big one, so checking it is smart. But the ELT, the transponder, and any recurring ADs all run on their own clocks. Spot checking the biggest item misses the small ones.`}
       ]},
-    { id:`f2s8`, domain:`Preflight`, task:`I.B`, title:`03/2026`,
+    { id:`f2s8`, domain:`Preflight`, task:`I.B`, title:`03/2026`, q:`Jordan has found something overdue that's been on the whiteboard all along. How should she raise it?`,
       text:(s,all,G)=>[`It took her an hour and forty minutes. The annual: August 14 last year, signed by Marisol with her IA number. The transponder and static system checks: October two years ago, at the avionics shop on the south side. The ELT inspection: done with the annual. All of it matched the board.`,`Then a three year old entry for an ELT battery replacement, with a line at the end in Marisol's neat capitals: NEW BATTERY EXPIRATION MARCH 2026. Jordan got up, walked to the tail, and opened the access panel where Marisol had shown her the ELT that morning. The label on the side of the transmitter said the same thing. REPLACE BATTERY MARCH 2026. It had been on the board all morning, too. ELT BATTERY MARCH 2026. She'd read it at eight and walked right past it.`,`It was May. Danny had died in March. Out in the hangar, Marisol was singing along to a classic rock station, badly, and fixing the fuel selector detent for the second time that day.`],
       opts:[
         {t:`Say nothing. Marisol did the annual. She must already know about it.`, s:0, d:{trust:-2,conf:-2,health:-4},
@@ -203,7 +203,7 @@
           after:`Marisol reads the logbook line. Then the label. Then the logbook line again. She doesn't say anything for long enough that the song on the radio ends. Then she says, very calmly, <span class="said" data-who="Marisol" data-tone="Very calm, tight, quietly furious.">"I wrote that. I wrote it right there in my own handwriting, and I told him to put it on the board, and he did."</span> She sets the logbook down too carefully. <span class="said" data-who="Marisol" data-tone="Very calm, tight, quietly furious.">"And then I stopped looking at the board, because he always looked at the board."</span>`,
           why:`Just the facts and the dates, to the person who owns the records, in person. No blame in it. You'd be amazed how fast that gets a problem fixed.`}
       ]},
-    { id:`f2s9`, domain:`Preflight`, task:`I.B`, title:`Can it fly Tuesday`,
+    { id:`f2s9`, domain:`Preflight`, task:`I.B`, title:`Can it fly Tuesday`, q:`Marisol's replacement part arrives Monday. What does that mean for Tuesday's lesson?`,
       text:(s,all,G)=>[`Marisol was on the phone with the parts counter at the shop across the field within two minutes. They'd have a battery Monday. She hung up and kicked the rolling stool across the hangar, not hard, and then went and got it and sat on it.`,`<span class="said" data-who="Marisol">"Russ flew it to Steamboat in April. Over the Divide. With a dead ELT battery, and I'm the one who should've caught it."</span> She wasn't talking to Jordan, exactly.`,`Jordan had a lesson with Abby on Tuesday morning. Her shifts didn't move. She asked the only question she had.`,`By then Marisol had put it in the partners' chat. Russ answered first.`,`<prop type="chat" from="Russ Kim" time="1:58 PM">wait. i flew it over the divide last month. with an expired elt battery. cool. cool cool cool. marisol i'm buying you a beer and also never flying again</prop>`],
       opts:[
         {t:`Fly Tuesday as planned. The annual is current, so the airplane is airworthy.`, s:0, d:{trust:-2,conf:-2,health:-4},
@@ -219,7 +219,7 @@
           after:`Marisol nods once. <span class="said" data-who="Marisol">"Monday. I'll swap it, run the test, mark the new date on the case and in the book. You fly Tuesday."</span> She stands up, walks to the whiteboard, and draws a box around the ELT battery line without erasing it.`,
           why:`91.207(c): when half the battery's useful life is gone, it gets replaced, and the new expiration goes on the outside of the transmitter and in the maintenance record. One day of waiting and the airplane is right everywhere it goes.`}
       ]},
-    { id:`f2s10`, domain:`Preflight`, task:`I.B`, title:`Who provides the airplane`,
+    { id:`f2s10`, domain:`Preflight`, task:`I.B`, title:`Who provides the airplane`, q:`Which answer to Walt holds up under 14 CFR 91.409?`,
       text:(s,all,G)=>[`Walt came by at three, as promised, for the first of his monthly logbook checks. He read Jordan's pilot logbook, all 0.9 hours of it, with his glasses on the end of his nose, initialed the bottom of the page, and then listened to Marisol tell him about the ELT battery without interrupting once.`,`When she finished he said, <span class="said" data-who="Walt">"That's on all four of us."</span> Then he picked up Jordan's legal pad and read her due list. At the bottom she'd written: 100 HOUR, DUE AT TACH 2,441.8? WHY? She'd circled WHY twice.`,`<span class="said" data-who="Walt" data-tone="Dry, patient, unhurried.">"Go ahead,"</span> he said. <span class="said" data-who="Walt" data-tone="Dry, patient, unhurried.">"Tell me why you think Biscuit gets a 100 hour."</span>`],
       opts:[
         {t:`It's required by law because Abby is being paid to give her instruction.`, s:1, d:{trust:0,conf:1,health:0},
@@ -235,7 +235,7 @@
           after:`<span class="said" data-who="Walt">"Splitting the bills isn't flying for hire. Nobody's paying anybody to ride."</span>`,
           why:`Co-ownership isn't carriage for hire. The 100 hour turns on carrying people for hire or giving instruction for hire in an airplane the instructor provides.`}
       ]},
-    { id:`f2s11`, domain:`Preflight`, task:`II`, title:`Twenty minutes`,
+    { id:`f2s11`, domain:`Preflight`, task:`II`, title:`Twenty minutes`, q:`They're short on time this morning. How much of the checklist should Jordan run?`,
       text:(s,all,G)=>[`Tuesday came in gray and damp. It had rained overnight and the ramp was still dark with it, puddles in the tie down rings, the windsock limp. Biscuit had a new ELT battery, a new date in marker on the transmitter, a new line in the logbook in Marisol's capitals, and a fresh box drawn on the whiteboard.`,`<prop type="text" from="Abby Strand" time="7:41 AM">10 min out. Tower closes the north runway at 9 for paint, so we're on a clock. Be ready to start when I get there.</prop>`,`Jordan had the checklist in her hand. Marisol had been through every inch of this engine on Saturday. The oil was brand new. The cowling had been off and on and signed for.`],
       opts:[
         {t:`Skip the items Marisol worked on Saturday. She's an A&P, and she signed for them.`, s:0, flag:`rushedpreflight`, d:{trust:-2,conf:-1,health:-4},
@@ -251,7 +251,7 @@
           after:`Everything checks out. Abby pulls the dipstick herself on her lap around, reads it, and slides it back without comment. The without comment is the comment.`,
           why:`You did almost everything. But a logbook entry says what went in on Saturday, not what's in there now. Pull the dipstick. It takes ten seconds.`}
       ]},
-    { id:`f2s12`, domain:`Navigation and emergencies`, task:`IX`, title:`Rough`,
+    { id:`f2s12`, domain:`Navigation and emergencies`, task:`IX`, title:`Rough`, q:`After a low power descent on a humid morning, the engine loses RPM and shakes. What should Jordan do?`,
       text:(s,all,G)=>[`They took off on 35R and the door popped at rotation, like always. Jordan reached up and latched the top before Abby could open her mouth, and Abby snorted into the intercom. Out east the plains had gone green overnight, the air smooth and heavy as soup. The ATIS said thirteen degrees Celsius, dewpoint ten. She'd written that on her kneeboard right next to the strip of blue tape.`,`Abby had her fly a long slow descent at low power, 7,500 down to 6,500, then level off. Jordan pushed the throttle in. The RPM came up about halfway and quit coming. Then Biscuit started to shake, an ugly lopsided shudder through the floor and up into the yoke, a washing machine with one wet towel in it.`,(s.flags.rushedpreflight||G.rushedpreflight)?`For one bad second all she could think about was the dipstick she hadn't pulled.`:`For one bad second all she could think about was the phone call from Claire in March.`,`Abby didn't touch anything. <span class="said" data-who="Abby">"Your airplane. Talk to me."</span>`],
       opts:[
         {t:`Pull carb heat for a few seconds, and push it back in when the shaking gets worse.`, s:1, d:{trust:0,conf:0,health:-2},

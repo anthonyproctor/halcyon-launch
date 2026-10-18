@@ -118,7 +118,7 @@
     ]
   },
   scenes: [
-    { id:`f4s1`, domain:`Preflight`, task:`I.E`, title:`Eighty`,
+    { id:`f4s1`, domain:`Preflight`, task:`I.E`, title:`Eighty`, q:`Over Centennial, the sectional shows a blue 80. What does it tell Jordan?`,
       text:(s,all,G)=>[`Saturday at seven the briefing room smelled like burnt coffee and the dry erase markers somebody had left uncapped all week. Abby had taped Jordan's new sectional to the wall over the whiteboard, flat, with blue painter's tape at the corners. She didn't say good morning. She tapped the blue 80 over Centennial with a pen.`,`<span class="said" data-who="Abby">"This one. What is it, and what does it mean for us in about four minutes after takeoff?"</span>`,`Jordan had Danny's old chart in her flight bag, folded to the same panel, with the same number circled in red three times. She didn't take it out.`],
       opts:[
         {t:`It's the Class B floor, 8,000 feet MSL. At and above that, she needs a clearance to be there.`, s:3, best:true, d:{trust:4,conf:4,health:4},
@@ -134,7 +134,7 @@
           after:`<span class="said" data-who="Abby">"Upside down. Bottom number's the floor."</span> She points to the top number in the same blue fraction. <span class="said" data-who="Abby">"That's where it ends. You're living underneath this thing, not on top of it."</span>`,
           why:`In a Class B fraction the top figure is the ceiling and the bottom figure is the floor. The 80 is the floor, so the airspace starts at 8,000 MSL over the field and goes up from there.`}
       ]},
-    { id:`f4s2`, domain:`Preflight`, task:`I.A`, title:`Ninety days`,
+    { id:`f4s2`, domain:`Preflight`, task:`I.A`, title:`Ninety days`, q:`Under 14 CFR 61.95, can a student pilot ever solo in Denver's Class B?`,
       text:(s,all,G)=>[`Abby went through the whole cake, layer by layer, drawing it from the side on the whiteboard in blue marker until it looked like a stack of pancakes somebody had dropped. Jordan asked the question she'd been holding since Tuesday.`,`<span class="said" data-who="Jordan">"After I solo. Could I ever fly up there by myself? Through the Bravo, over Denver International. Just to see it."</span>`,`Abby capped the marker and looked at her for a second, like she was deciding which answer to give and then deciding to give the real one.`],
       opts:[
         {t:`No. Student pilots are banned from all Class B airspace until they're certificated.`, s:1, d:{trust:0,conf:0,health:1},
@@ -150,7 +150,7 @@
           after:`<span class="said" data-who="Abby">"Right. Ground and flight training on Denver's Bravo, the flying done in it, and my signature in your logbook within the last ninety days saying you can solo in it. Taking off or landing at an airport inside it takes another one for that airport."</span> She smiles, which is rare enough that Jordan notices. <span class="said" data-who="Abby">"Danny asked me the same thing once, years after his checkride. I wasn't his instructor. I told him to go buy his instructor a burrito."</span>`,
           why:`61.95(a): ground and flight training from an authorized instructor on that specific Class B, flight training received in it, and a logbook endorsement dated within the preceding 90 days for solo in that airspace. 61.95(b) adds a separate endorsement for an airport inside it.`}
       ]},
-    { id:`f4s3`, domain:`Preflight`, task:`I.E`, title:`The veil`,
+    { id:`f4s3`, domain:`Preflight`, task:`I.E`, title:`The veil`, q:`The ADS-B annunciator reads FAULT on a perfect morning under the Mode C veil. What should Jordan do?`,
       text:(s,all,G)=>[`Sunday morning, before a lesson, Jordan turned the master on for the preflight and a small amber light lit up on the panel next to the transponder. ADS-B. The label under it, in Marisol's label maker capitals, said FAULT.`,`Marisol was across the ramp with her head in someone else's cowling. Abby's text said she was fifteen minutes out. The sky was perfect, a calm blue morning, the windsock hanging straight down like it had given up on life.`,`Jordan looked at the light. The transponder itself was fine. It showed 1200 and the little reply light blinked when she pressed the test.`],
       opts:[
         {t:`Fly the lesson. The transponder works and reports altitude, and that covers the veil.`, s:0, d:{trust:-2,conf:-2,health:-3},
@@ -166,7 +166,7 @@
           after:`Abby, on the phone: <span class="said" data-who="Abby">"There's a deviation for flying a broken box to the shop or to where you were going. A lesson that ends where it started isn't really that. Show Marisol."</span>`,
           why:`91.225(g) lets you ask ATC to fly with an inoperative ADS-B Out to your destination or to a repair shop, so the instinct to ask is sound. But using it to go do a training flight when the mechanic is fifty yards away is the wrong tool.`}
       ]},
-    { id:`f4s4`, domain:`Airport and flight`, task:`III.A`, title:`Ground, Cessna`,
+    { id:`f4s4`, domain:`Airport and flight`, task:`III.A`, title:`Ground, Cessna`, q:`Which initial call to Centennial Ground has everything the AIM format asks for?`,
       text:(s,all,G)=>[`The next Saturday was all radio. Abby said so on the walk out. <span class="said" data-who="Abby">"You make every call today. Ground, Tower, Approach, all of it. I'm going to sit here and be a passenger with opinions."</span>`,`Jordan had the ATIS written on her kneeboard: Information Lima, wind calm, runway 35R in use. She had a script written under it, then crossed it out, then written it again. Her thumb was on the push to talk switch. On a medical channel she could talk a crew through a cardiac arrest without thinking. She had no idea why this was harder.`,`<span class="said" data-who="Abby">"Whenever you're ready. They're not going anywhere."</span>`],
       opts:[
         {t:`"Centennial Ground, Cessna Niner One Echo, ready to taxi to the active runway."`, s:0, d:{trust:-1,conf:-2,health:-1},
@@ -182,7 +182,7 @@
           after:`<span class="said" data-who="man">"Cessna Four Seven Niner One Echo, say direction of flight, and verify you have Lima."</span> She gives it. It works. It just took two calls to do the job of one.`,
           why:`Good structure and the full call sign. But Ground wants your direction of flight and the ATIS letter on the first call, so they can plan your taxi and know you have the weather. Leave those out and they'll ask.`}
       ]},
-    { id:`f4s5`, domain:`Airport and flight`, task:`III.A`, title:`Monitor`,
+    { id:`f4s5`, domain:`Airport and flight`, task:`III.A`, title:`Monitor`, q:`What does Ground's instruction to monitor Tower ask of Jordan?`,
       text:(s,all,G)=>[`The run up went fine. Jordan called it complete. Ground came back fast.`,`<span class="said" data-who="man">"Cessna Niner One Echo, hold short runway three five right at Alpha, monitor Tower."</span>`,`She read back the hold short, dialed the tower frequency off her kneeboard, switched over, and rolled up to the hold short line. Four yellow stripes, two solid and two dashed, solid on her side. Tower was a mess. A jet checking in from the north. A helicopter with a long request about the reservoir. Some guy asking about fuel prices, on tower, like it was a drive thru. The runway just sat there in front of her, empty, pointed at the mountains. Nobody said Niner One Echo.`],
       opts:[
         {t:`Call Tower and tell them she's holding short of three five right at Alpha, ready to go.`, s:1, d:{trust:0,conf:0,health:0},
@@ -198,7 +198,7 @@
           after:`Ground's got a fuel truck and a Bonanza that can't find Alpha. Abby gives it a minute. Then she reaches over and does it herself. Tower's already talking, and it's saying Jordan's call sign. <span class="said" data-who="Abby">"They've been calling you."</span> They had. Twice.`,
           why:`Monitor Tower is an instruction to change frequencies. If you stay on Ground, the tower can't reach you, and they'll be calling a pilot who isn't listening.`}
       ]},
-    { id:`f4s6`, domain:`Airport and flight`, task:`III.A`, title:`Aircraft calling`,
+    { id:`f4s6`, domain:`Airport and flight`, task:`III.A`, title:`Aircraft calling`, q:`Tower said standby, but didn't name anyone. What should Jordan do before she reaches the Class D?`,
       text:(s,all,G)=>[`After an hour over the plains the radio had stopped being terrifying and started being annoying. Abby said that was the correct order. Coming home, she listened to the ATIS, wrote it down, and called the tower about twelve miles east of the airport, outside the dashed blue line, at 7,500, under the shelf.`,`<span class="said" data-who="Jordan">"Centennial Tower, Cessna Four Seven Niner One Echo, one two miles east, seven thousand five hundred, landing with Mike."</span>`,`The reply came after a few seconds, clipped and busy.`,`<span class="said" data-who="man">"Aircraft calling Centennial Tower, standby."</span>`,`At a hundred knots the edge of the Class D was about three minutes away.`],
       opts:[
         {t:`Keep heading in. The tower heard her and answered, so two way contact is established.`, s:0, d:{trust:-2,conf:-2,health:-3},
@@ -214,7 +214,7 @@
           after:`She keys up on top of somebody else. Squeal. The tower: <span class="said" data-who="man">"Two stations at once. Aircraft calling, standby."</span> Abby: <span class="said" data-who="Abby">"He said standby. He meant it. Stay outside and let him get to you."</span>`,
           why:`Wanting to be identified is right. But the controller told you to wait, and calling again right away clogs a busy frequency. Stay outside the Class D and let them come back to you.`}
       ]},
-    { id:`f4s7`, domain:`Preflight`, task:`I.E`, title:`Two and a half miles`,
+    { id:`f4s7`, domain:`Preflight`, task:`I.E`, title:`Two and a half miles`, q:`Centennial's METAR shows two and a half miles in smoke. What should Jordan decide?`,
       text:(s,all,G)=>[`On the first of July a fire started in the foothills west of Sedalia, southwest of the airport, and by the second the whole south end of the metro was the color of weak tea. Jordan could smell it from her driveway in Aurora at five in the morning. The sun came up red and stayed red.`,`<prop type="doc" title="KAPA, Thursday 6:53 AM"><code>METAR KAPA 021253Z 21006KT 2 1/2SM FU SCT150 18/06 A3022 RMK AO2 SLP151 T01780061</code></prop>`,`<prop type="text" from="Lourdes Reyes" time="5:58 AM">Mija the fire is on channel 9. Tell me you are not flying in that smoke.</prop>`,`The lesson was at seven. Abby hadn't texted. Jordan had learned what that meant.`],
       opts:[
         {t:`Go. Two and a half miles is close to three, and it'll be clearer out east of the smoke.`, s:0, d:{trust:-2,conf:-2,health:-4},
@@ -230,7 +230,7 @@
           after:`At nine it's still 2 1/2. At ten, 3 miles exactly, and she sits in the car looking at the haze and doesn't feel like going. She texts Abby. <b>Three. Still don't love it.</b> <b>Then don't. That feeling is information too.</b>`,
           why:`Waiting for it to come up to legal minimums is legal. But a value right at the minimum in smoke isn't a margin, it's the edge. The minimum is where you stop, not where you aim.`}
       ]},
-    { id:`f4s8`, domain:`Preflight`, task:`I.E`, title:`The fire`,
+    { id:`f4s8`, domain:`Preflight`, task:`I.E`, title:`The fire`, q:`Russ swapped into Jordan's Saturday slot to show his nephew the fire under a TFR. What should Jordan do?`,
       text:(s,all,G)=>[`Friday night the club chat went off like a car alarm.`,`<prop type="chat" from="Russ Kim" time="8:02 PM">swapped myself into biscuit sat 7-9. taking my nephew to see the fire, it's the coolest thing in colorado right now. jordan you can have sun, sun is better anyway</prop>`,`<prop type="chat" from="Russ Kim" time="8:03 PM">before anyone says it yes there's a tfr. it's a tfr, not a wall</prop>`,`<prop type="chat" from="Walt Herrera" time="8:09 PM">Calendar is first come. Who booked Saturday?</prop>`,`Jordan had booked Saturday on the 20th of June. She had also, an hour earlier, pulled the NOTAMs for the weekend, because now she couldn't not.`,`<prop type="doc" title="TFR, pulled Friday 7:04 PM"><code>!FDC 6/4471 ZDV CO..AIRSPACE 8NM W SEDALIA, CO..TEMPORARY FLIGHT RESTRICTIONS. PURSUANT TO 14 CFR SECTION 91.137(A)(2) TEMPORARY FLIGHT RESTRICTIONS ARE IN EFFECT WI AN AREA DEFINED AS 5NM RADIUS OF 392630N1050800W SFC-11500FT MSL TO PROVIDE A SAFE ENVIRONMENT FOR FIRE FIGHTING ACFT OPS. DOUGLAS COUNTY SHERIFF TEL 303-555-0142 IS IN CHARGE OF ON SCENE EMERG RESPONSE ACTIVITY. DENVER /ZDV/ ARTCC TEL 303-555-0188 IS THE FAA CDN FAC. 2607011800-2607122359</code></prop>`],
       opts:[
         {t:`Let Russ have the slot and say nothing about the TFR, so the club doesn't end up fighting.`, s:0, d:{trust:-1,conf:-2,health:-3},
@@ -246,7 +246,7 @@
           after:`Walt replies to her directly: <b>Good catch. Post it in the chat. It's your slot and your NOTAM.</b>`,
           why:`Walt should know, and going to him isn't wrong. But you found it, you're a partner, and it was your booking. Putting the facts where everyone can see them keeps it from turning into a private squabble.`}
       ]},
-    { id:`f4s9`, domain:`Navigation and emergencies`, task:`VI`, title:`Flight following`,
+    { id:`f4s9`, domain:`Navigation and emergencies`, task:`VI`, title:`Flight following`, q:`The trip to Rocky Mountain Metro winds under the Class B shelves. Which choice about ATC services fits?`,
       text:(s,all,G)=>[`The smoke cleared out on the eighth when the wind went northwest. On Saturday the 11th Abby planned a short dual cross country, Centennial to Rocky Mountain Metro and back, the long way around the west side of Denver under the Class B shelves. On the chart it looked like walking through a house in the dark where somebody keeps moving the furniture.`,`<span class="said" data-who="Abby">"Your trip, your plan. After Tower lets you go, do you want flight following or not? I'm not voting."</span>`,`On the kneeboard Jordan had the shelf floors along the route written down in a column, in MSL. She'd planned to cruise at 7,500. Some of the floors were not very far above that.`],
       opts:[
         {t:`Skip it. Under the shelves she doesn't need to talk to anyone, and the frequency is busy.`, s:0, flag:`noflightfollowing`, d:{trust:-1,conf:-1,health:-3},
@@ -262,7 +262,7 @@
           after:`<span class="said" data-who="Abby">"Legal with me in the right seat. But you don't ask for a Bravo transition because the long way is annoying. Solo, you'd need my ninety day endorsement first."</span>`,
           why:`A student flying with an instructor can get a Class B clearance, and later can solo in it only with a 61.95 endorsement. But planning a route through busy Class B to save a few minutes isn't what the AIM asks for. It encourages VFR traffic to stay above or below Class B, or use the published VFR corridors.`}
       ]},
-    { id:`f4s10`, domain:`Airport and flight`, task:`III.A`, title:`Steady red`,
+    { id:`f4s10`, domain:`Airport and flight`, task:`III.A`, title:`Steady red`, q:`What does a steady red light gun signal require of an airplane in flight?`,
       text:(s,all,G)=>[`On the way home, over Littleton, the radio went quiet. Not static. Nothing. Approach had told them to contact Centennial Tower, she'd dialed it in and called, and nothing came back. She called again. Her own voice came back to her in the headset the way it always did, and that was all, on a frequency that hadn't shut up for one second all morning.`,`She checked the volume. The squelch. Both headset plugs. The frequency, twice, out loud. Abby tried hers. Nothing.`,`<span class="said" data-who="Abby">"Okay. This is real. What now?"</span>`,`Jordan squawked 7600. They found the edge of the Class D, then the tower cab, and she joined the downwind for 35R with her head turned toward it like she was trying to hear a conversation two tables over. Abeam the numbers, a light came out of the cab at them. Red. It didn't blink.`],
       opts:[
         {t:`Land anyway. She's VFR, squawking 7600, and the tower knows exactly who she is.`, s:0, d:{trust:-3,conf:-2,health:-5},
@@ -294,7 +294,7 @@
           after:`<span class="said" data-who="Walt">"Calling is right. Right away, shaking, with your mouth going faster than your head, is how people talk themselves into trouble. Write it down first. Sit. Then call."</span>`,
           why:`Calling is the right move, and you should. But the warning exists to give you time to collect your thoughts. Write down what happened while it's fresh, then call. And file the NASA report.`}
       ]},
-    { id:`f4s12`, domain:`Preflight`, task:`I.E`, title:`Seven thousand eight hundred`,
+    { id:`f4s12`, domain:`Preflight`, task:`I.E`, title:`Seven thousand eight hundred`, q:`Denver Approach said radar contact, and the climb hasn't stopped. What should Jordan do now?`,
       text:(s,all,G)=>[`Saturday the 18th, clear, calm, the kind of morning that makes people buy airplanes. Abby said almost nothing on the walk out, which Jordan had learned meant a test.`,`Off 35R with a right turn east. Tower handed her to Denver Approach on the climb, and the controller gave her a squawk code. Jordan read it back, wrote it on her kneeboard, dialed it in, checked it, and the reply light blinked.`,`<span class="said" data-who="woman">"Cessna Four Seven Niner One Echo, radar contact, three miles east of Centennial."</span>`,`Good. In the system. The reservoir was off the left wing, way too blue for Colorado, and she was half thinking about the practice area and the steep turns she'd botched last week and the 7,500 she was supposed to level at for them out in the practice area. She cranked in some trim. She looked at the reservoir again, because it was right there.`,(s.flags.noflightfollowing||G.noflightfollowing)?`She was on with Approach this time. She'd made a point of it, after the Bonanza over Englewood.`:`She was on with Approach, like always. Radar contact. In the system.`,`Something moved in the corner of her eye. Abby's finger, on the glass of the altimeter, just resting there. The nail was chipped.`,`7,800. Still climbing.`,`<span class="said" data-who="Abby">"Where's the shelf?"</span>`],
       opts:[
         {t:`Keep climbing. They're a few miles out, and the shelf has to step up soon out this way.`, s:0, d:{trust:-3,conf:-2,health:-5},
