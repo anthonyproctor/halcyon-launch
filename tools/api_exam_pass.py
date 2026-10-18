@@ -7,17 +7,27 @@ wrong keys, arguable keys, outdated terms, explanation errors, task-code mismatc
 replacement text. Reports land in ~/Documents/halcyon-private/reviews/api-exam-pass-<date>/ (private: they quote the course).
 Nothing in the repo is edited; halcyon-copilot reads the reports, verifies each finding, and applies what holds up.
 
-The API key comes from the macOS keychain (generic password, account "halcyon", service "anthropic-api-key"), is passed
-only in the request header, and is never printed.
+By default the files go out as one Message Batches job (half price; results usually within an hour, at most 24). The batch
+id is saved in the output folder, so if you stop the script while it waits, run the same command again to collect.
+--now sends one request per file and waits for each (full price, results right away).
 
-usage: tools/api_exam_pass.py [--only ch03,process] [--model MODEL] [--dry-run]
+The API key comes from the macOS keychain (generic password, account "halcyon", service "anthropic-api-key"), is passed
+only to the SDK client, and is never printed. Runs on the repo's .apivenv (python3 -m venv .apivenv; .apivenv/bin/pip install anthropic).
+
+usage: .apivenv/bin/python tools/api_exam_pass.py [--only ch03,process] [--model MODEL] [--now] [--dry-run] [--out DIR]
 """
-import argparse, datetime, json, os, re, subprocess, sys, time, urllib.request, urllib.error
+import argparse, datetime, json, os, re, subprocess, sys, time
+
+try:
+    import anthropic
+except ImportError:
+    sys.exit("needs the anthropic SDK: python3 -m venv .apivenv && .apivenv/bin/pip install anthropic, then run with .apivenv/bin/python")
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REF = os.path.expanduser("~/Documents/halcyon-private/sources/PMBOK8_reference.md")
 WS = os.environ.get("HALCYON_API_WORKSPACE", "")  # needed when the key isn't scoped to a workspace (Console > Settings > Workspaces, wrkspc_...)
 OUT = os.path.expanduser(f"~/Documents/halcyon-private/reviews/api-exam-pass-{datetime.date.today().isoformat()}")
+MAX_TOKENS = 32000
 
 SYSTEM = """You are an exam-accuracy reviewer for a PMP study course told as a story. The learner studies by listening, so a wrong key teaches him something false.
 Check every quiz item, its key and explanation, every decision scene's options and which one is scored best (s:3), every drill's math (exact), every exercise item, and the lesson text, against the current PMP exam and PMBOK Guide 8th edition (use the reference notes given) and PMI's current Examination Content Outline.
@@ -25,11 +35,12 @@ Report only real problems. For each: where (scene id or quiz index), what is wro
 Sort findings into MUST FIX (wrong), ARGUABLE (a strong test taker could defend another answer), and NITS. Also flag any item whose task code doesn't match what it tests, and any text that looks copied from the PMBOK Guide.
 If the file is clean, say PASS and list what you checked. Be concise. Don't rewrite story."""
 
-def key():
+def client():
     try:
-        return subprocess.check_output(["security", "find-generic-password", "-a", "halcyon", "-s", "anthropic-api-key", "-w"], stderr=subprocess.DEVNULL).decode().strip()
+        k = subprocess.check_output(["security", "find-generic-password", "-a", "halcyon", "-s", "anthropic-api-key", "-w"], stderr=subprocess.DEVNULL).decode().strip()
     except subprocess.CalledProcessError:
         sys.exit("no API key: add one with  security add-generic-password -a halcyon -s anthropic-api-key -w  (it prompts; paste the key)")
+    return anthropic.Anthropic(api_key=k, default_headers={"anthropic-workspace-id": WS} if WS else None, max_retries=4)
 
 def tasks():
     s = open(os.path.join(ROOT, "engine.js")).read()
@@ -44,45 +55,75 @@ def files(only):
         fs = [f for f in fs if any(w in f for w in want)]
     return fs
 
-def call(k, model, ref, tl, rel):
-    body = {"model": model, "max_tokens": 32000, "system": SYSTEM,
+def cid(rel):  # custom_id: letters, digits, _ and - only; also the report's file name
+    return os.path.basename(os.path.dirname(rel)) + "-" + os.path.basename(rel).replace(".js", "")
+
+def params(model, ref, tl, rel, ttl):
+    cc = {"type": "ephemeral", **({"ttl": "1h"} if ttl else {})}
+    return {"model": model, "max_tokens": MAX_TOKENS, "system": SYSTEM,
             "messages": [{"role": "user", "content": [
-                {"type": "text", "text": ref if tl is None else f"PMP task codes used by the course:\n{tl}\n\nPMBOK 8 reference notes (private, for checking only):\n{ref}", "cache_control": {"type": "ephemeral"}},
+                {"type": "text", "text": ref if tl is None else f"PMP task codes used by the course:\n{tl}\n\nPMBOK 8 reference notes (private, for checking only):\n{ref}", "cache_control": cc},
                 {"type": "text", "text": f"File to review: {rel}\n\n{open(os.path.join(ROOT, rel)).read()}"}]}]}
-    req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=json.dumps(body).encode(),
-                                 headers={"x-api-key": k, "anthropic-version": "2023-06-01", "content-type": "application/json", **({"anthropic-workspace-id": WS} if WS else {})})
-    for attempt in range(4):
-        try:
-            with urllib.request.urlopen(req, timeout=600) as r:
-                d = json.load(r)
-            text = "".join(b.get("text", "") for b in d.get("content", []))
-            if d.get("stop_reason") == "max_tokens": text += "\n\n[TRUNCATED: hit max_tokens; rerun this file]"
-            return text, d.get("usage", {})
-        except urllib.error.HTTPError as e:
-            msg = e.read().decode(errors="replace")[:300]
-            if e.code in (429, 500, 529) and attempt < 3:
-                time.sleep(20 * (attempt + 1)); continue
-            raise SystemExit(f"{rel}: HTTP {e.code} {msg}")
+
+def write(out, rel, model, msg, tot):
+    text = "".join(b.text for b in msg.content if b.type == "text")
+    if msg.stop_reason == "max_tokens": text += "\n\n[TRUNCATED: hit max_tokens; rerun this file]"
+    if msg.stop_reason == "refusal": text += "\n\n[REFUSED: the model declined this file; rerun it with --now]"
+    open(os.path.join(out, cid(rel) + ".md"), "w").write(f"# API exam pass: {rel} ({model}, {datetime.datetime.now():%Y-%m-%d %H:%M})\n\n{text}\n")
+    u = msg.usage
+    for x in tot: tot[x] += getattr(u, x, 0) or 0
+    verdict = "PASS" if re.search(r"\bPASS\b", text[:400]) and "MUST FIX" not in text else "findings"
+    print(f"done {rel}: {verdict} (in {u.input_tokens}, cached {u.cache_read_input_tokens}, out {u.output_tokens})", flush=True)
+
+def run_now(c, model, todo, ref, tl, out, tot):
+    for f in todo:
+        with c.messages.stream(**params(model, ref, tl, f, ttl=False)) as s:
+            write(out, f, model, s.get_final_message(), tot)
+
+def run_batch(c, model, todo, ref, tl, out, tot):
+    state = os.path.join(out, "batch.json")
+    if os.path.exists(state):
+        st = json.load(open(state)); print(f"resuming batch {st['id']}")
+    else:
+        if not todo: print("nothing to send"); return
+        b = c.messages.batches.create(requests=[{"custom_id": cid(f), "params": params(model, ref, tl, f, ttl=True)} for f in todo])
+        st = {"id": b.id, "model": model, "files": {cid(f): f for f in todo}, "created": datetime.datetime.now().isoformat(timespec="seconds")}
+        json.dump(st, open(state, "w"), indent=1)
+        print(f"batch {b.id} sent: {len(todo)} requests. Safe to stop now; run the same command again to collect.", flush=True)
+    while True:
+        b = c.messages.batches.retrieve(st["id"])
+        if b.processing_status == "ended": break
+        n = b.request_counts
+        print(f"{datetime.datetime.now():%H:%M} {b.processing_status}: {n.processing} waiting, {n.succeeded} done, {n.errored} errored", flush=True)
+        time.sleep(60)
+    retry = []
+    for r in c.messages.batches.results(st["id"]):  # any order: key by custom_id
+        rel = st["files"].get(r.custom_id)
+        if rel is None: continue
+        if r.result.type == "succeeded":
+            write(out, rel, st["model"], r.result.message, tot)
+        else:
+            detail = getattr(getattr(r.result, "error", None), "error", None)
+            print(f"{r.result.type} {rel}: {getattr(detail, 'message', '') or r.result.type}", flush=True); retry.append(rel)
+    os.rename(state, state.replace(".json", f"-{st['id'][-8:]}-done.json"))
+    if retry: print("not done, rerun these:", ",".join(cid(f) for f in retry))
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--only"); ap.add_argument("--model", default=os.environ.get("HALCYON_API_MODEL", "claude-opus-5-5")); ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--only"); ap.add_argument("--model", default=os.environ.get("HALCYON_API_MODEL", "claude-opus-5-5"))
+    ap.add_argument("--now", action="store_true", help="one request at a time, full price, results right away")
+    ap.add_argument("--dry-run", action="store_true"); ap.add_argument("--out", default=OUT)
     a = ap.parse_args()
     fs = files(a.only); ref = open(REF).read(); tl = tasks()
-    print(f"{len(fs)} files, model {a.model}, out {OUT}")
+    todo = [f for f in fs if not os.path.exists(os.path.join(a.out, cid(f) + ".md"))]
+    print(f"{len(fs)} files ({len(fs) - len(todo)} already done), model {a.model}, {'now' if a.now else 'batch'}, out {a.out}")
     if a.dry_run:
-        for f in fs: print(" ", f)
+        for f in todo: print(" ", f, "->", cid(f))
         return
-    k = key(); os.makedirs(OUT, exist_ok=True); tot = {"input_tokens": 0, "output_tokens": 0, "cache_read_input_tokens": 0}
-    for f in fs:
-        dest = os.path.join(OUT, os.path.basename(os.path.dirname(f)) + "-" + os.path.basename(f).replace(".js", ".md"))
-        if os.path.exists(dest): print("skip (done)", f); continue
-        text, u = call(k, a.model, ref, tl, f)
-        open(dest, "w").write(f"# API exam pass: {f} ({a.model}, {datetime.datetime.now():%Y-%m-%d %H:%M})\n\n{text}\n")
-        for x in tot: tot[x] += u.get(x, 0) or 0
-        verdict = "PASS" if re.search(r"\bPASS\b", text[:400]) and "MUST FIX" not in text else "findings"
-        print(f"done {f}: {verdict} (in {u.get('input_tokens')}, cached {u.get('cache_read_input_tokens')}, out {u.get('output_tokens')})", flush=True)
-    print("totals", tot)
+    os.makedirs(a.out, exist_ok=True); tot = {"input_tokens": 0, "output_tokens": 0, "cache_read_input_tokens": 0, "cache_creation_input_tokens": 0}
+    c = client()
+    (run_now if a.now else run_batch)(c, a.model, todo, ref, tl, a.out, tot)
+    print("totals", tot, "" if a.now else "(batch: billed at half price)")
 
 if __name__ == "__main__":
     main()

@@ -20,3 +20,4 @@ cast/voice/*.mp3
 cast/v2/voice/*.mp3
 courses/*/cast/voice/*.mp3
 *.mp3
+.apivenv
