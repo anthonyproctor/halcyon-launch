@@ -1,0 +1,124 @@
+{
+ "full": {
+  "2": {
+   "story": {
+    "src": "audio/story/full-ch02.mp3",
+    "min": 13.5
+   },
+   "study": {
+    "src": "audio/full-ch02.mp3",
+    "min": 31.2
+   }
+  },
+  "3": {
+   "story": {
+    "src": "audio/story/full-ch03.mp3",
+    "min": 12.2
+   },
+   "study": {
+    "src": "audio/full-ch03.mp3",
+    "min": 29.4
+   }
+  },
+  "1": {
+   "story": {
+    "src": "audio/story/full-ch01.mp3",
+    "min": 14.8
+   },
+   "study": {
+    "src": "audio/full-ch01.mp3",
+    "min": 31.6
+   }
+  },
+  "4": {
+   "story": {
+    "src": "audio/story/full-ch04.mp3",
+    "min": 15.1
+   },
+   "study": {
+    "src": "audio/full-ch04.mp3",
+    "min": 33.9
+   }
+  },
+  "5": {
+   "story": {
+    "src": "audio/story/full-ch05.mp3",
+    "min": 18.2
+   },
+   "study": {
+    "src": "audio/full-ch05.mp3",
+    "min": 35.5
+   }
+  },
+  "6": {
+   "story": {
+    "src": "audio/story/full-ch06.mp3",
+    "min": 19.9
+   },
+   "study": {
+    "src": "audio/full-ch06.mp3",
+    "min": 39.0
+   }
+  },
+  "7": {
+   "story": {
+    "src": "audio/story/full-ch07.mp3",
+    "min": 20.8
+   },
+   "study": {
+    "src": "audio/full-ch07.mp3",
+    "min": 39.3
+   }
+  },
+  "8": {
+   "story": {
+    "src": "audio/story/full-ch08.mp3",
+    "min": 19.1
+   },
+   "study": {
+    "src": "audio/full-ch08.mp3",
+    "min": 37.0
+   }
+  },
+  "9": {
+   "story": {
+    "src": "audio/story/full-ch09.mp3",
+    "min": 27.5
+   },
+   "study": {
+    "src": "audio/full-ch09.mp3",
+    "min": 46.6
+   }
+  },
+  "10": {
+   "story": {
+    "src": "audio/story/full-ch10.mp3",
+    "min": 20.9
+   },
+   "study": {
+    "src": "audio/full-ch10.mp3",
+    "min": 38.0
+   }
+  },
+  "11": {
+   "story": {
+    "src": "audio/story/full-ch11.mp3",
+    "min": 26.1
+   },
+   "study": {
+    "src": "audio/full-ch11.mp3",
+    "min": 43.3
+   }
+  },
+  "12": {
+   "story": {
+    "src": "audio/story/full-ch12.mp3",
+    "min": 25.8
+   },
+   "study": {
+    "src": "audio/full-ch12.mp3",
+    "min": 44.4
+   }
+  }
+ }
+}
