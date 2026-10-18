@@ -60,7 +60,7 @@
           after:`Pavel takes the crate, and the cost of three changes, one of which would have been cheaper on FRO's side. The change notice he sends back a week later is Tamarack's, not theirs.`,
           why:`Telling the other side to change everything isn't an impact assessment. Each mismatch gets assessed on both sides and fixed where it costs the system least.`}
       ]},
-    { id:`f6s2`, domain:`Agreement and organizational`, task:`A1`, title:`What we bought`,
+    { id:`f6s2`, domain:`Agreement and organizational`, task:`A1`, title:`What we bought`, q:`FRO's purchase agreement with Tamarack has no ICD in it. How should FRO contract for the rework?`,
       text:(s,all,G)=>{const noIC=G&&G.nointerfacecontrol;return [`Tuesday afternoon Amara pulled up FRO's purchase agreement with Tamarack, signed by FRO's buyer in week three from Tamarack's proposal. She read the first line out loud. <span class="said" data-who="Amara">"One air revitalization rack, Tamarack standard configuration, per proposal."</span> Below it were a performance spec for carbon dioxide and humidity removal, delivery in week twenty two, and Tamarack's standard acceptance test. The agreement didn't name an ICD.`,
         (noIC
           ?`No one at FRO had ever asked Tamarack for one, either. The data Jun loaded in week nine had come forwarded twice, from a thread Wes was copied on. Jun had turned the thread into a draft ICD in week ten. Nobody at Tamarack had signed it.`
@@ -80,7 +80,7 @@
           after:`It takes two days and three calls. The SOW names the work on each interface, makes the ICD the controlling definition by revision, lists the data FRO gets and when, and sets six milestones, each with the evidence that closes it. Amara takes the cost from her reserve without arguing, because the gap was in FRO's paper. Pavel reads the draft and says it's the first time a customer has told him what they wanted before he built it.`,
           why:`In acquisition the agreement defines what's bought. A statement of work says what the supplier will do: tasks, deliverables, data, reviews, milestones and schedule, with interfaces named by ICD revision. When the agreement left them out, the fix is a modification both sides accept.`}
       ]},
-    { id:`f6s3`, domain:`Agreement and organizational`, task:`A2`, title:`Thursday at one`,
+    { id:`f6s3`, domain:`Agreement and organizational`, task:`A2`, title:`Thursday at one`, q:`Halo's monthly program review is coming, and the rack isn't on Amara's agenda. What should Nadia do?`,
       text:(s,all,G)=>[`Halo's monthly program review was Thursday at one. Amara had the agenda done by Wednesday night, and the rack wasn't on it.`,`<span class="said" data-who="Amara">"I'd rather bring them a problem and a fix in the same breath,"</span> she said. <span class="said" data-who="Amara">"We'll have the fix in two weeks."</span> She'd stood on the crate in week ten, said on schedule, and left out the word rack. Nadia had stood by the urn and left it out too. It had felt like waiting for a fix. From here it looked like something else. HEARTH's agreement with Halo asked FRO to report, at the next review, anything that could touch cost, schedule or crew safety. The rack was what scrubbed the crew's air.`],
       opts:[
         {t:`Leave the rack off the agenda as a matter between FRO and its supplier.`, s:0, d:{trust:2,conf:-2,health:-4},
@@ -96,7 +96,7 @@
           after:`Halo calls Pavel. Pavel tells them it'll drop right in. Now Halo has two stories, and its agreement is with FRO.`,
           why:`The acquirer's agreement is with FRO, which manages its own suppliers. Sending the acquirer around it splits the accountability the agreement set up.`}
       ]},
-    { id:`f6s4`, domain:`Cross-cutting`, task:`X4`, title:`Two week pieces`,
+    { id:`f6s4`, domain:`Cross-cutting`, task:`X4`, title:`Two week pieces`, q:`The flight software lead wants two week sprints with Tamarack's engineer at every demo. What should Nadia tell her?`,
       text:(s,all,G)=>[`Monday of week thirteen the flight software lead brought her team's plan to the HEARTH room. Four people would write HEARTH's half of the new rack link: the commands, the telemetry, and what HEARTH does when the rack goes quiet. Tamarack's firmware engineer would write the other half in Frederick. She wanted two week sprints, a working build at the end of each, and Tamarack's engineer at every demo.`,`Wes read the plan the way he read everything, from the bottom. <span class="said" data-who="Wes">"The rest of this module gets a design review,"</span> he said. <span class="said" data-who="Wes">"Then it gets built. I don't see where the review goes."</span> The messages between the rack and HEARTH were still being settled on the change notice.`],
       opts:[
         {t:`Freeze every software requirement first, then build all of it in one pass.`, s:0, d:{trust:3,conf:-2,health:-3},
@@ -112,7 +112,7 @@
           after:`The team ships a build every two weeks to whoever's around. At the design review the rack link is a slide of velocity charts.`,
           why:`Agile inside a program still answers to the program. The iterations have to tie into its interfaces, requirements and reviews.`}
       ]},
-    { id:`f6s5`, domain:`Agreement and organizational`, task:`A1`, title:`Sixty one`,
+    { id:`f6s5`, domain:`Agreement and organizational`, task:`A1`, title:`Sixty one`, q:`Thirty eight of Tamarack's sixty one people are on HEARTH's rack. How should FRO keep track of the rework?`,
       text:(s,all,G)=>{const blamed=(s.flags&&s.flags.blamedsupplier)||(G&&G.blamedsupplier);return [`Wednesday Nadia and Tiago drove up to Frederick. Tamarack was a low metal building past the grain elevator, a tractor dealership once, with a clean room built into the old service bays.`,
         (blamed
           ?`Pavel met them at the door with Tamarack's contracts manager beside him, and the contracts manager stayed for the whole tour.`
@@ -136,7 +136,7 @@
           after:`The calls are friendly and short. Every week the rack is on track, right up until the week it isn't.`,
           why:`A friendly call isn't evidence, and neither is heritage. Monitoring needs measures and milestones both sides can see.`}
       ]},
-    { id:`f6s6`, domain:`Technical management`, task:`M2`, title:`The wall`,
+    { id:`f6s6`, domain:`Technical management`, task:`M2`, title:`The wall`, q:`Pavel's whiteboard has four green magnets, and another customer has the test slot. What date should HEARTH plan on?`,
       text:(s,all,G)=>[`Before they left, Pavel took them into his office. One wall was a whiteboard schedule, drawn by hand: the rework in twenty work packages across weeks twelve to nineteen, two weeks of acceptance testing after that, then delivery in week twenty two, circled twice.`,`Tiago counted the green magnets on the finished packages. Four. The plan said five by the end of the week. Then he read the booking sheet for the test chamber, taped by the door. <span class="said" data-who="Tiago">"Your chamber's booked weeks twenty two and twenty three. Another customer."</span>`,`<span class="said" data-who="Pavel">"We'll move them,"</span> Pavel said. <span class="said" data-who="Pavel">"Week twenty two. We'll make it."</span>`],
       opts:[
         {t:`Keep week twenty two, and add a watch item to check it at the next review.`, s:1, d:{trust:3,conf:1,health:0},
@@ -152,7 +152,7 @@
           after:`They do it at his whiteboard with his magnets. Four packages in two weeks is two a week. Sixteen left is eight weeks, so the work ends in week twenty one. The chamber frees up in week twenty four. Two weeks of testing and the trip down puts the rack in FRO's high bay in week twenty six. Pavel doesn't say anything. Then he picks up the eraser.`,
           why:`Assessment compares actual progress with the plan using objective measures, finds the variance, and forecasts from what's really happening. A forecast built with the supplier, on its own data, is one both sides can act on.`}
       ]},
-    { id:`f6s7`, domain:`Cross-cutting`, task:`X4`, title:`Nine days`,
+    { id:`f6s7`, domain:`Cross-cutting`, task:`X4`, title:`Nine days`, q:`Each change notice goes through six signers in a fixed order. What should Nadia do?`,
       text:(s,all,G)=>[`Thursday afternoon the first change notice came back with its last signature. It had gone out the Tuesday before. The flight software team had been writing against a draft all week, because the signed version wasn't there yet.`,`<prop type="doc" title="HEARTH interface change notice ICN-014-01, routing record">Change: rack power input from 28 V DC to 120 V DC, converter inside the rack.<br>Affects: HEARTH to Tamarack air revitalization rack ICD.<br>Signers, in order: FRO interface owner, Tamarack, FRO power and thermal, configuration management, quality, chief engineer.<br>Opened Tuesday, week 12. Last signature Thursday, week 13. Nine days.<br>Time spent by all six signers: about 40 minutes.<br>Longest wait: chief engineer's inbox, three days.</prop>`,`Jun had added it up. <span class="said" data-who="Jun">"Forty minutes of work,"</span> he said. <span class="said" data-who="Jun">"Nine days of waiting. And eleven more of these are coming."</span> Wes, whose inbox had held it for three of those days, said every one of those signatures was there for a reason.`],
       opts:[
         {t:`Have Jun carry each notice desk to desk until all six signatures are on it.`, s:1, d:{trust:3,conf:1,health:0},
@@ -168,7 +168,7 @@
           after:`The monthly meeting is long and careful. Every notice in it has waited two weeks on average, and the sprints wait with them.`,
           why:`Bigger batches mean longer queues. Lean favors small batches that flow, so work reaches the next step sooner.`}
       ]},
-    { id:`f6s8`, domain:`Agreement and organizational`, task:`A2`, title:`Small thing`,
+    { id:`f6s8`, domain:`Agreement and organizational`, task:`A2`, title:`Small thing`, q:`Halo's ground controllers want to command the rack and see its telemetry every second. How should FRO respond?`,
       text:(s,all,G)=>[`Friday morning a note came from Helen. Halo's ground controllers had seen the new rack link on the interface list. Since the rack's software was being rewritten anyway, could they command its modes from the ground and get its telemetry once a second? It was a small thing, she thought.`,`Amara read it standing at Nadia's desk. <span class="said" data-who="Amara">"Say yes. Helen took six weeks from us without a fight."</span> Nadia had just spent a day in Frederick looking at what a quick yes turns into.`],
       opts:[
         {t:`Say yes and absorb it as a few messages in the sprints already planned.`, s:0, d:{trust:4,conf:-2,health:-3},
@@ -184,7 +184,7 @@
           after:`The assessment takes four days. It comes to two sprints for FRO, a firmware change for Tamarack, a new change notice, and a crew override, because Odette won't let the ground switch off a crew's air without one. Nadia sends Helen a priced change with a date. Helen signs it the same week and calls to say it was more than a few messages, and she's glad somebody looked.`,
           why:`In the supply process the supplier evaluates a request against its capability and its effect on cost, schedule and risk before it commits, then agrees a modification to the agreement. Committing first is how a supplier overcommits.`}
       ]},
-    { id:`f6s9`, domain:`Technical management`, task:`M2`, title:`The long pole`,
+    { id:`f6s9`, domain:`Technical management`, task:`M2`, title:`The long pole`, q:`Tamarack's own numbers put the rack in the high bay in week twenty six. How should integration proceed?`,
       text:(s,all,G)=>[`Monday of week fourteen Tiago laid the integration sequence across the conference table. The rack went in during week twenty four, right after the coolant loop was proved, because the loop couldn't be proved under load without something on it. By now Tamarack's own numbers said the rack would reach the high bay in week twenty six, whatever anybody had said out loud.`,`<span class="said" data-who="Tiago">"I don't need the rack in week twenty four,"</span> Tiago said. <span class="said" data-who="Tiago">"I need something that weighs what it weighs, runs as hot as it runs, and has its connectors. I've integrated around a fake before."</span> Nadia still had Amara's card in her badge holder, the one from the crate. Amara saw it there and didn't ask for it back. <span class="said" data-who="Amara">"I told four hundred people six weeks,"</span> she said. <span class="said" data-who="Amara">"I'm not getting back up there to say nine."</span>`],
       opts:[
         {t:`Ask Tamarack to add a second shift and buy back week twenty two that way.`, s:1, d:{trust:3,conf:1,health:0},
@@ -200,7 +200,7 @@
           after:`Tamarack is glad to skip it. Acceptance moves to FRO's high bay, without Tamarack's equipment, and whatever's wrong turns up after FRO owns it.`,
           why:`Cutting the acceptance test trades schedule for risk the acquirer then carries. Corrective action should protect the checks that decide whether to take delivery.`}
       ]},
-    { id:`f6s10`, domain:`Agreement and organizational`, task:`A1`, title:`Who signs for it`,
+    { id:`f6s10`, domain:`Agreement and organizational`, task:`A1`, title:`Who signs for it`, q:`Pavel's acceptance section is Tamarack's standard test and his own certificate. What should the new agreement say?`,
       text:(s,all,G)=>[`Tuesday Pavel sent the acceptance section for the new agreement: Tamarack's standard acceptance test, run in Frederick, and a certificate of conformance with his signature. Every rack Tamarack had ever sold had shipped under that same page.`,`Tiago read it over Nadia's shoulder. <span class="said" data-who="Tiago">"That's how they'll know it's done. It says nothing about how we'll know, or how the thing gets here."</span>`],
       opts:[
         {t:`Accept the rack when it lands, and catch problems in HEARTH's own tests.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -216,7 +216,7 @@
           after:`Tamarack builds to criteria that don't exist yet. When the data comes in, the argument is about what it should have shown.`,
           why:`Criteria set after the work get bent to fit the results. Agree them up front, so both sides build and test to the same target.`}
       ]},
-    { id:`f6s11`, domain:`Agreement and organizational`, task:`O1`, title:`The next one`,
+    { id:`f6s11`, domain:`Agreement and organizational`, task:`O1`, title:`The next one`, q:`Amara has asked whether the notice queue is HEARTH's problem or FRO's. What should happen to the fixes?`,
       text:(s,all,G)=>[`Wednesday Jun had a chart of every notice so far: forty minutes of work in each, and days of waiting between the boxes. Amara forwarded it to FRO's process owner, who kept the standard procedures every FRO program started from, with a one line note: is this HEARTH's, or ours?`,`It wasn't only the queue. FRO's standard purchase agreement had no line for interfaces at all. Wes's cargo programs had never needed one, because Wes had always walked over to the supplier's bench and looked.`],
       opts:[
         {t:`Keep the new review as HEARTH's own practice and leave FRO's procedures alone.`, s:0, d:{trust:2,conf:-1,health:-3},
@@ -232,7 +232,7 @@
           after:`The process owner spends an hour with Nadia and Jun and changes two documents. The change procedure gets the twice weekly review, and the purchase agreement template gets an interface section a buyer can't sign without naming an ICD. Both go out to every program with the reasons attached. FRO's next supplier will get the paper Tamarack didn't.`,
           why:`Life cycle model management defines, maintains and improves the organization's standard processes. A fix proven on one project goes to the process owner, so every project starts from it.`}
       ]},
-    { id:`f6s12`, domain:`Agreement and organizational`, task:`A2`, title:`Out loud`,
+    { id:`f6s12`, domain:`Agreement and organizational`, task:`A2`, title:`Out loud`, q:`Halo's program manager wants week twenty two back, and Pavel says Tamarack can try. What should FRO commit to?`,
       text:(s,all,G)=>{const blamed=(s.flags&&s.flags.blamedsupplier)||(G&&G.blamedsupplier);return [`Thursday Halo called a schedule review just for the rack. Halo's program manager ran it with his assembly chart on the screen. `+(blamed?`Pavel was on the line from Frederick, and so was his contracts manager.`:`Pavel was on the line from Frederick.`)+` Amara sat next to Nadia.`,`The chart still had FRO's old plan on it, with the rack in week twenty two. <span class="said" data-who="man">"I'd like that date back,"</span> the program manager said. <span class="said" data-who="man">"Can Tamarack hold it?"</span>`,`There was a pause on the line from Frederick. Then Pavel, in the voice he'd sold the standard rack in: <span class="said" data-who="Pavel">"We can try for twenty two."</span>`,`Amara looked at Nadia. It was FRO's date to give, and Halo was waiting for it.`]},
       opts:[
         {t:`Give week twenty six as FRO's date, with the one condition that would move it.`, s:3, best:true, d:{trust:4,conf:5,health:5},

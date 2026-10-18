@@ -46,7 +46,7 @@
     ]
   },
   scenes: [
-    { id:`f12s1`, domain:`Technical`, task:`T10`, title:`A crate and a truck`,
+    { id:`f12s1`, domain:`Technical`, task:`T10`, title:`A crate and a truck`, q:`Halo's launch site team has sent questions on fixtures, storage, training, spares and checkout. What should FRO do?`,
       text:(s,all,G)=>[`Tuesday of week thirty three, the week before the detectors came, Wes wrote SHIP on the HEARTH room whiteboard, and under it Friday of week thirty eight, and underlined it twice. The integrated acceptance test had started the afternoon before, with fire detection held out of it until the detectors came. After that HEARTH would wait at the launch site for its rocket, under purge, checked every quarter. Halo wanted it there and ready the day the rocket was.`,`Halo's launch site team had sent forty questions that morning. What lifting fixture. What the container held for temperature and humidity. Who would train their technicians. Which spares came with the module, and which data. Who would check it when it got there, and against what.`,`Gus read the first ten over Nadia's shoulder. <span class="said" data-who="man">"Eleven cargo modules left here in a crate on a truck at night,"</span> he said. <span class="said" data-who="man">"The crate's already built. What's left to plan?"</span>`],
       opts:[
         {t:`Ship it the way the cargo modules went, with Halo's questions answered as they come.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -62,7 +62,7 @@
           after:`By week thirty seven the purge fittings come in on a rush order at triple the price, and the training still isn't scheduled.`,
           why:`Transition planning starts early, because its enabling systems and training take time to put in place. Waiting for the final configuration leaves too little.`}
       ]},
-    { id:`f12s2`, domain:`Technical`, task:`T12`, title:`Who flies it`,
+    { id:`f12s2`, domain:`Technical`, task:`T12`, title:`Who flies it`, q:`For fifteen years, Halo's control center will fly HEARTH. How should its controllers be prepared?`,
       text:(s,all,G)=>[`Monday of week thirty four Helen brought Halo's lead flight controller to the high bay. For fifteen years HEARTH would be flown from Halo's control center: power, air, heat, alarms, by people who'd never stood in this building. He walked the module with a notebook and asked good questions, mostly about what the rack did when it was unhappy.`,`Back in the HEARTH room he closed the notebook. <span class="said" data-who="man">"Send us the procedures and the drawings,"</span> he said. <span class="said" data-who="man">"My people read fast."</span>`],
       opts:[
         {t:`Send the procedures and drawings, with FRO's engineers on Halo's console for a month.`, s:1, d:{trust:3,conf:1,health:0},
@@ -78,7 +78,7 @@
           after:`Jun brings the model up to the as-built module and it becomes a trainer. Halo's controllers fly HEARTH's real procedures on it, fault by fault, until the rack's moods are familiar. They agree what Halo watches every shift, which numbers count as healthy, and how an anomaly reaches FRO under the sustaining option, with an engineer on call by name. The model keeps the job for fifteen years, the digital twin where every procedure change gets tried first.`,
           why:`Operation prepares trained operators and procedures, runs the system, monitors its performance, and records and passes on anomalies. A model kept in step with the real system makes a good trainer and test bed.`}
       ]},
-    { id:`f12s3`, domain:`Technical`, task:`T13`, title:`Six and a half fans`,
+    { id:`f12s3`, domain:`Technical`, task:`T13`, title:`Six and a half fans`, q:`Each rack fan will likely fail six or seven times in fifteen years. How should FRO plan spares?`,
       text:(s,all,G)=>{G=G||{};const blamed=G.blamedsupplier;return [
         (blamed
           ?`Thursday Tamarack's contracts manager dialed in instead of Pavel, and every sentence about fifteen years of support came with a price and a clause.`
@@ -101,7 +101,7 @@
           after:`Halo asks what the fans' failure rate is. Only FRO and Tamarack know it.`,
           why:`The operator owns maintenance, but logistics is planned from the design's own reliability data. The supplier supports it under the sustaining agreement.`}
       ]},
-    { id:`f12s4`, domain:`Cross-cutting`, task:`X4`, title:`The second one`,
+    { id:`f12s4`, domain:`Cross-cutting`, task:`X4`, title:`The second one`, q:`A second habitat with three quarters instead of four is on the table. How should FRO approach its design?`,
       text:(s,all,G)=>{G=G||{};const p7=(all&&all[7]&&all[7].picks)||{};const bid=p7[11]!==1;const gut=G.unweightedtrade;return [
         (bid
           ?`Monday of week thirty five Osprey's letter came: FRO had won its habitat module. A little shorter than HEARTH, three quarters instead of four, berthing to a smaller station in two years.`
@@ -124,7 +124,7 @@
           after:`The customer's station has room for three quarters and power for less. They say so politely, once.`,
           why:`A product line plans its variation around different customers' needs. Forcing one configuration on every customer isn't a product line.`}
       ]},
-    { id:`f12s5`, domain:`Agreement and organizational`, task:`O3`, title:`Three asks, one cell`,
+    { id:`f12s5`, domain:`Agreement and organizational`, task:`O3`, title:`Three asks, one cell`, q:`Three asks compete for the same cell, high bay, Wes and Tiago. What should Nadia recommend?`,
       text:(s,all,G)=>[`Thursday of week thirty five the board met in the conference room over the lobby, and this time the chair asked for Nadia by name. Three things were on the screen. The second module. Halo's sustaining option, fifteen years and a team of eight to start. And a call from the cargo customer FRO had grown up on, wanting two more cargo modules soon.`,`All three needed some of the same things: the test cell, the high bay, Wes, Tiago.`,`<span class="said" data-who="woman">"Ms. Brooks,"</span> the chair said. <span class="said" data-who="woman">"In the spring I asked whether we could build two of these at once. Now I'm asking about three."</span>`],
       opts:[
         {t:`Take all three on at once, with the revenue and the jobs they bring.`, s:0, d:{trust:4,conf:-2,health:-4},
@@ -140,7 +140,7 @@
           after:`The three agree on everything except the cell, Wes and Tiago, which is everything.`,
           why:`Shared resources across projects are allocated at the organization's level. That's portfolio management's job, not a negotiation between projects.`}
       ]},
-    { id:`f12s6`, domain:`Technical`, task:`T14`, title:`The last box`,
+    { id:`f12s6`, domain:`Technical`, task:`T14`, title:`The last box`, q:`The disposal planner asks what survives reentry, what's made safe, and who'll read the drawings. What should FRO do?`,
       text:(s,all,G)=>[`Friday of week thirty five Halo's disposal planner came to the HEARTH room with a laptop and a short list. She was new to everyone at FRO.`,`At the end of its life Halo would bring the whole station down at once, in one controlled reentry over the emptiest stretch of the South Pacific, and HEARTH would go down with it. She needed three things from FRO: what in HEARTH might survive reentry, what had to be made safe before the last crew left, and who would still be able to read HEARTH's drawings in fifteen years.`,`<span class="said" data-who="Amara">"That's fifteen years off,"</span> Amara said, not unkindly. <span class="said" data-who="Amara">"Does it have to be this week?"</span>`],
       opts:[
         {t:`Leave HEARTH's disposal to Halo, as part of its plan for the station's reentry.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -156,7 +156,7 @@
           after:`Jun runs the materials list for her survival analysis: most of the aluminum shell burns away, and the steel berthing bolts and the titanium hatch hinges might reach the water. HEARTH's end of life steps go into its procedures now. First line, crew items out. Nadia thinks of a photo with Scotch tape on it, and doesn't say so. Then the sorbent beds and batteries made safe, power off at the isolation points, fluid lines isolated. The information plan keeps the drawings and as-built record readable until the day it comes down, in formats picked for that.`,
           why:`Disposal is planned early and designed in: what survives, how the system is made safe and taken out of service, and records kept for the whole life. It's agreed with the stakeholders who'll carry it out.`}
       ]},
-    { id:`f12s7`, domain:`Technical`, task:`T10`, title:`On a scale`,
+    { id:`f12s7`, domain:`Technical`, task:`T10`, title:`On a scale`, q:`Tiago has three load cells booked under the lifting fixture for Wednesday. What should the launch provider get?`,
       text:(s,all,G)=>{G=G||{};const pad=G.paddedmargin;return [`Tuesday of week thirty six the launch provider's payload integration manager called from the coast. He was building the final loads analysis for the flight, and the trajectory behind it, and he needed HEARTH's mass, its center of gravity, and its moments of inertia.`,
         (pad
           ?`He had a number already. Halo's monthly chart, the one built on Wes's margin, said seventeen hundred kilograms under the allocation, and his last loads cycle had used it: 13,300.`
@@ -177,7 +177,7 @@
           after:`Halo's chart goes to the coast. Tiago's weigh comes in two days later, and the integration manager runs his loads again.`,
           why:`Contract channels matter, but the data has to describe the real system. The receiver needs measured values, whoever carries them.`}
       ]},
-    { id:`f12s8`, domain:`Technical`, task:`T14`, title:`What's left on the floor`,
+    { id:`f12s8`, domain:`Technical`, task:`T14`, title:`What's left on the floor`, q:`Stand-ins, the qualification hatch and the seal fixture are left on the floor. What should happen to them?`,
       text:(s,all,G)=>{G=G||{};const cut=G.cuttest;const p10=(all&&all[10]&&all[10].picks)||{};return [`Friday of week thirty six the acceptance test ended, and Tiago walked Nadia around what was left on the high bay floor. The stand-in rack, steel ballast with Tamarack's connectors still on its back. The stand-in's harness set, the dash ones,`+(p10[4]===0?` yellow tape at both ends,`:``)+` built from cargo wire. The forward hatch qualification article on its stand.`+(cut?` It had never had a leak test.`:``)+` The seal fixture. Two pallets of foam and strapping.`,
         `<span class="said" data-who="Tiago">"Scrap pile out back, same as always,"</span> Tiago said. <span class="said" data-who="Tiago">"The second module wants this floor. Do I call the recycler?"</span>`]},
       opts:[
@@ -194,7 +194,7 @@
           after:`The recycler pulls the dash ones off the pile and sells their connectors to a surplus dealer, labels and all.`,
           why:`Retired parts have to be kept from finding their way back into use. A scrap pile doesn't do that.`}
       ]},
-    { id:`f12s9`, domain:`Technical`, task:`T10`, title:`Ready`,
+    { id:`f12s9`, domain:`Technical`, task:`T10`, title:`Ready`, q:`Three items are still open at the pre-ship review, including the galley table's new latch. What should Nadia do?`,
       text:(s,all,G)=>{G=G||{};const p9=(all&&all[9]&&all[9].picks)||{};const kg=14206+(p9[2]===1?9:0)+(p9[5]===2?3:0);const kgs=`14,`+String(kg-14000).padStart(3,`0`);const margin=15000-kg;const pad=G.paddedmargin;const rushed=G.rushedtrr;return [
         `Monday of week thirty seven Amara ran the pre-ship review in the big conference room off the lobby. The weigh had come in at ${kgs} kilograms in flight configuration, ${margin} under the allocation, within twenty kilograms of Jun's prediction.`+(pad?` The launch provider had to run its loads cycle again with nine hundred more kilograms in it, and Halo's program manager had called Amara twice to ask why.`:``),
         (rushed
@@ -216,7 +216,7 @@
           after:`The criteria go on the screen first: verification closed or dispositioned, hazard reports closed at phase three, configuration audited against the as-built list, data package and transition items ready, and every open item with an owner and Halo's agreement. The latch travels, to be installed and verified by FRO's technicians at the launch site. So do the redline and the scuff. Halo's program manager initials all three. Amara asks the room. Nadia says ready, plainly, and means it.`,
           why:`A readiness review before shipping confirms, against criteria agreed with the receiver, that the system and everything going with it are ready to move, and that each open item has an owner, a plan and the receiver's agreement.`}
       ]},
-    { id:`f12s10`, domain:`Agreement and organizational`, task:`O1`, title:`The binder`,
+    { id:`f12s10`, domain:`Agreement and organizational`, task:`O1`, title:`The binder`, q:`Most of what HEARTH learned isn't in Wes's binder. What should happen to it?`,
       text:(s,all,G)=>{const p10=(all&&all[10]&&all[10].picks)||{};const p11=(all&&all[11]&&all[11].picks)||{};
         const extra=(p10[2]===2?` The design checklist's new line about single valves.`:``)+(p11[8]===0?` Ines's own check that every verification point for a hazard control sits where the crew will be.`:``);
         return [`Wednesday of week thirty seven Ines brought the binder to Nadia's desk, all three inches of it, Wes's Product Development Process from the cargo days. The crewed programs tab from week one had grown fat.`+extra+` The rest of what HEARTH had changed along the way was in HEARTH's own files, or in the heads of the people who'd done it.`,`<span class="said" data-who="woman">"The second module kicks off in three weeks,"</span> Ines said. <span class="said" data-who="woman">"Which of this do they open?"</span>`]},
@@ -234,7 +234,7 @@
           after:`Wes takes it about as well as he did in week one. The handbook is a reference, and FRO still needs its own process.`,
           why:`The handbook informs an organization's process. The organization still owns, assesses and improves its own life cycle model.`}
       ]},
-    { id:`f12s11`, domain:`Technical`, task:`T10`, title:`Remove before flight`,
+    { id:`f12s11`, domain:`Technical`, task:`T10`, title:`Remove before flight`, q:`Tess has her photo, and the certificate is ready to sign. How should FRO deliver HEARTH?`,
       text:(s,all,G)=>[`Wednesday of week thirty eight Tess Okonjo came back with Halo's two launch site technicians. The technicians would spend two days inside HEARTH with Gus and Tiago. Tess had asked for an hour.`,`She spent most of it in quarter four. Nadia found her sitting on the edge of the bunk under the new detector, looking at the photo. Then Tess worked the tape loose, slowly, so it wouldn't tear the corner, and put her boys in her chest pocket.`,`<span class="said" data-who="Tess">"It's on your list,"</span> she said. <span class="said" data-who="Tess">"Remove before flight. It goes up in my kit, and it goes back on that wall."</span> She buttoned the pocket. <span class="said" data-who="Tess">"Helen says you tested with it up."</span>`,`<span class="said" data-who="Nadia">"I did."</span>`,`<span class="said" data-who="Tess">"Good."</span>`,`Halo's program manager came by at four with the acceptance certificate in a folder. <span class="said" data-who="man">"I sign this on the dock Friday, and she's ours,"</span> he said. <span class="said" data-who="man">"What else do I need?"</span>`],
       opts:[
         {t:`Sign it on the dock, with the data package and procedures sent after it ships.`, s:1, d:{trust:3,conf:1,health:0},
@@ -250,7 +250,7 @@
           after:`Halo's technicians open the container at the launch site holding a procedure they've never practiced.`,
           why:`A signature isn't a transition. The receiver needs training, data and a checkout at the destination.`}
       ]},
-    { id:`f12s12`, domain:`Agreement and organizational`, task:`O6`, title:`Forty one lessons`,
+    { id:`f12s12`, domain:`Agreement and organizational`, task:`O6`, title:`Forty one lessons`, q:`Forty one lessons fill the whiteboard by five. How should FRO keep them for the second module?`,
       text:(s,all,G)=>{G=G||{};const blamed=G.blamedsupplier;const p10=(all&&all[10]&&all[10].picks)||{};const docs=p10[2]===1?`two hundred and fifteen`:`two hundred and fourteen`;return [
         `Thursday of week thirty eight Amara gave the lessons session the whole afternoon and the big room. Wes, Tiago, Jun, Odette, Ines, Gus, the harness lead, the flight software lead, and Helen on the screen.`+(blamed?` Tamarack sent a written list.`:` Pavel and Irena drove down from Frederick.`),
         `Nadia wrote the first one on the whiteboard herself: put verification points where the crew will be, not where the test will pass. Then they came fast. Name the ICD in the purchase agreement. Ask a supplier what changed in its process, not only whether the part met spec. Every swap in troubleshooting gets a restore step. One valve. Put the crew in it before you call it done. By five there were forty one.`,

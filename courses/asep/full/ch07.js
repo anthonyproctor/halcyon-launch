@@ -73,7 +73,7 @@
           after:`The register gets tidy, and it answers the board's questions. The board doesn't know what to ask about a hatch.`,
           why:`The register serves the program first. Listing only the risks a sponsor already expects leaves out the surprises, and the surprises are what it's for.`}
       ]},
-    { id:`f7s2`, domain:`Cross-cutting`, task:`X5`, title:`The cage`,
+    { id:`f7s2`, domain:`Cross-cutting`, task:`X5`, title:`The cage`, q:`Gus has given Nadia the 2019 seal's history at the coffee urn. What should she do with it?`,
       text:(s,all,G)=>[`Tuesday a test cell technician named Gus caught Nadia at the coffee urn. He'd been at FRO since the cargo days, and he'd read Nadia's seal line on the HEARTH room screen Monday, on his way through with a cart. His was one of the six names on the lockout tags by the cell's valve panel. He waited until the urn was empty.`,`<span class="said" data-who="man">"That 2019 seal,"</span> he said. <span class="said" data-who="man">"Wes tells it like he caught a bad seal. He did. He also put it in. We'd bought seals for two modules and the second one got canceled, so the spare sat in a bag in the cage for two years. Wes used it because it was there."</span> He refilled his cup. <span class="said" data-who="man">"I wasn't going to say that with him at the table."</span>`],
       opts:[
         {t:`Log the shelf life risk with no name on it, and keep Gus out of it.`, s:1, d:{trust:3,conf:1,health:0},
@@ -89,7 +89,7 @@
           after:`The register stays polite. Shelf life never makes it on, and HEARTH's spare seals will sit in the same cage.`,
           why:`Lessons from past programs are a primary source of risks. Leaving one out to spare someone's pride costs the next program the lesson.`}
       ]},
-    { id:`f7s3`, domain:`Technical management`, task:`M4`, title:`Where it sits`,
+    { id:`f7s3`, domain:`Technical management`, task:`M4`, title:`Where it sits`, q:`Amara's five level scales are ready for the new lines. How should the seal be rated?`,
       text:(s,all,G)=>[`Wednesday they rated the new lines. FRO's scales were Amara's, from week one, and they were good ones: five levels each, a probability band behind every likelihood, and a cost, a schedule slip, a performance loss and a crew safety effect behind every consequence.`,`The seal took longest. Brannock Seal, in Ohio, had molded the compound for twenty years, and its published aging data covered the equivalent of ten. HEARTH was built for fifteen. One FRO seal had failed before, after two years in a bag. If the seal let go in the module's later years, the hatch wouldn't hold when the crew needed it shut. Finding that out on the ground meant new seals, both hatches reworked and the testing done again.`,`<span class="said" data-who="Wes">"Likelihood one,"</span> Wes said. <span class="said" data-who="Wes">"It's flown for twenty years."</span>`],
       opts:[
         {t:`Record Wes's rating of one, on the strength of his twenty years of seal flights.`, s:0, d:{trust:4,conf:-2,health:-4},
@@ -105,7 +105,7 @@
           after:`Rework and retest come to a two on cost. The line sits in the middle of the matrix, measured in dollars, about a door that keeps the air in.`,
           why:`Consequence is judged across every area the scales define, at the worst credible one. Leaving safety to another document hides it from the register that sets priorities.`}
       ]},
-    { id:`f7s4`, domain:`Technical management`, task:`M4`, title:`Four ways`,
+    { id:`f7s4`, domain:`Technical management`, task:`M4`, title:`Four ways`, q:`The rated seal risk is back with four ways to handle it. Which should Nadia choose?`,
       text:(s,all,G)=>[`Thursday the seal came back to the HEARTH room with a rating on it and four ideas. Wes wanted to stop worrying about rubber altogether. Amara wanted Brannock to own it. Odette wanted the risk lower before anyone called it handled. <span class="said" data-who="Odette">"Lower first,"</span> she said. <span class="said" data-who="Odette">"Then we can use the word."</span>`,`Tiago pointed out that the hatch would be leak tested twice before it shipped, once in qualification and once as flight hardware, and that a bad seal would show. Nadia felt the pull of that one. Two leak tests. Two green passes.`],
       opts:[
         {t:`Accept it, with the two hatch leak tests before ship as the check.`, s:0, d:{trust:3,conf:-2,health:-5},
@@ -121,7 +121,7 @@
           after:`Wes prices it before lunch. Metal seals are made to be crushed once. A hatch opens hundreds of times. The new risk is bigger than the old one.`,
           why:`Avoidance removes a risk by changing the plan, and sometimes it's the best choice. It has to be weighed against the risks the change creates, and here the change creates a larger one.`}
       ]},
-    { id:`f7s5`, domain:`Technical management`, task:`M7`, title:`Four passes`,
+    { id:`f7s5`, domain:`Technical management`, task:`M7`, title:`Four passes`, q:`Brannock's lots read 14, 16, 19 and 22 percent against a 25 percent limit. What should Jun's chart show?`,
       text:(s,all,G)=>[`Monday of week sixteen Jun pulled Brannock's certificates for the compound's last four lots from receiving. Each showed the same test. Samples were aged in an oven, squeezed flat for a set time, then measured for how much they failed to spring back. That was compression set, and Brannock's limit was 25 percent. HEARTH's own lot, molded in week fifteen, was in Brannock's oven now. Its result would come at the end of week seventeen.`,`<prop type="doc" title="Brannock Seal certificates, HEARTH hatch seal compound, last four lots">First lot: compression set after aging 14 percent. PASS.<br>Second lot: 16 percent. PASS.<br>Third lot: 19 percent. PASS.<br>Fourth lot: 22 percent. PASS.<br>Limit: 25 percent.</prop>`,`<span class="said" data-who="Wes">"Four passes,"</span> Wes said.`],
       opts:[
         {t:`Chart each lot as a pass or a fail against Brannock's 25 percent limit.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -137,7 +137,7 @@
           after:`Delivery stays on plan. A seal can arrive on time and still be the wrong seal.`,
           why:`Schedule progress is a real measure, but it meets a different information need. It says nothing about whether the material is holding up.`}
       ]},
-    { id:`f7s6`, domain:`Technical management`, task:`M4`, title:`The line down`,
+    { id:`f7s6`, domain:`Technical management`, task:`M4`, title:`The line down`, q:`R-032 is up on the HEARTH room screen. How should its handling be followed over time?`,
       text:(s,all,G)=>{const pk=s.picks||{};const r=pk[2];const LC=r===0?[1,4]:r===1?[2,4]:r===3?[3,2]:[3,4];const mit=pk[3]===undefined||pk[3]===2;
         return [`Tuesday Jun put the seal's line up on the screen in the HEARTH room.`,`<prop type="doc" title="HEARTH risk register, R-032">Risk: if the hatch seal compound ages faster than its ten years of data show, then the forward and aft hatches may not hold their leak rate late in the fifteen year life, needing new seals, rework of both hatches and repeat testing.<br>Owner: N. Brooks. Likelihood ${LC[0]}. Consequence ${LC[1]}. Score ${LC[0]*LC[1]}.<br>Basis: Brannock aging data covers a ten year equivalent.${pk[1]===3?``:` One earlier FRO seal failure, 2019, after two years in storage.`}<br>Note, week 16: Brannock lot certificates trending up, latest 22 percent against a 25 percent limit. HEARTH lot result due end of week 17.</prop>`,(mit
           ?`The handling Odette had signed off on had three dated steps: Brannock's routine result on HEARTH's lot at the end of week seventeen, a qualified backup compound in week twenty, and the fifteen year aging result in week twenty four.`
@@ -157,7 +157,7 @@
           after:`The line comes down smoothly, because confidence does. None of the steps on it is a test.`,
           why:`Ratings move on evidence, not mood. A burn-down tied to dated handling steps shows what actually reduced the risk.`}
       ]},
-    { id:`f7s7`, domain:`Technical management`, task:`M2`, title:`Nine magnets`,
+    { id:`f7s7`, domain:`Technical management`, task:`M2`, title:`Nine magnets`, q:`Tiago's photo shows eight of twenty packages green, and the forecast said nine. What should Nadia do?`,
       text:(s,all,G)=>{const a6=all&&all[6];const p6=(a6&&a6.picks)||{};const mon=p6[4]===2;const stand=p6[8]===2;const blamed=G&&G.blamedsupplier;
         return [`Wednesday Tiago drove up to Frederick`+(mon?` for the first monthly review on Tamarack's floor.`:` to look at the rack, because the agreement still gave FRO no better way to see it.`)+(blamed?` Pavel's contracts manager walked him to the whiteboard and stood beside it the whole time.`:` Irena walked him to the whiteboard at the end of the clean room. She'd moved the magnets herself.`),
         `He came back with a photo. Eight of the twenty packages were green. The forecast from week fourteen, two a week, said nine by now.`,
@@ -179,7 +179,7 @@
           after:`The plan matches the count again. Next month it gets rebaselined again, and the drift never shows.`,
           why:`Re-baselining to absorb every variance erases the record that assessment depends on. Change the baseline through change control when the plan no longer works, not to hide a gap.`}
       ]},
-    { id:`f7s8`, domain:`Technical management`, task:`M4`, title:`One pumpdown`,
+    { id:`f7s8`, domain:`Technical management`, task:`M4`, title:`One pumpdown`, q:`The hatch and the seal fixture are booked weeks apart in the cell. How should Nadia handle Tiago's idea?`,
       text:(s,all,G)=>[`Thursday Tiago called her down to the test cell. He had the cell's schedule on the whiteboard by the valve panel, where the six lockout tags still hung.`,`In week eighteen the forward hatch's qualification article went into the chamber for its leak test: three days to pump down, hold and measure, and bring it back up. In week twenty one the seal fixture went in for its own leak test, a steel ring with the hatch's groove cut into it, and that was three more days. After that the cell was booked solid with the aft hatch.`,`<span class="said" data-who="Tiago">"The fixture fits on the hatch stand,"</span> he said. He'd already measured it. <span class="said" data-who="Tiago">"Same chamber, same helium, separate lines so the two leaks don't mix. One pumpdown. I get three days back, and I don't burn a second helium charge. The fixture has to be built and leak checked by the end of next week, or it doesn't work."</span>`],
       opts:[
         {t:`Tell Tiago to go ahead and build the fixture on his own schedule.`, s:1, d:{trust:4,conf:1,health:0},
@@ -195,7 +195,7 @@
           after:`The cell gets four days back. The hatch's leak rate is measured over half the time its procedure was written for.`,
           why:`Capturing an opportunity shouldn't weaken the checks it touches. Shortening a test to save time trades schedule for a weaker answer.`}
       ]},
-    { id:`f7s9`, domain:`Cross-cutting`, task:`X2`, title:`Year twelve`,
+    { id:`f7s9`, domain:`Cross-cutting`, task:`X2`, title:`Year twelve`, q:`Odette's hatch isolation report now points at the seal, and Halo reads every one. What should FRO plan?`,
       text:(s,all,G)=>[`Friday Helen called about the seal. Halo's crew office read every hazard report FRO sent, and Odette's report for losing hatch isolation now pointed at the seal.`,`<span class="said" data-who="Helen">"The day that seal matters is the day somebody shuts that hatch because something's wrong on one side of it,"</span> Helen said. <span class="said" data-who="Helen">"Suppose it's tired by then. Year twelve, say. What does my crew do?"</span>`],
       opts:[
         {t:`Put two seals in series in the hatch groove, each a backup for the other.`, s:1, d:{trust:3,conf:1,health:1},
@@ -211,7 +211,7 @@
           after:`The next supply flight after a leak report could be months away. The crew lives with the hatch it has until then.`,
           why:`Recovery that waits months for help isn't much recovery. A resilient design gives the people on board ways to withstand and recover on their own.`}
       ]},
-    { id:`f7s10`, domain:`Technical management`, task:`M7`, title:`What the board sees`,
+    { id:`f7s10`, domain:`Technical management`, task:`M7`, title:`What the board sees`, q:`The board chair wants one number before the vote, the count of red risks. What should Nadia give her?`,
       text:(s,all,G)=>[`Monday of week seventeen Amara came to Nadia's desk with a note from the chair of FRO's board. Osprey's request was real: one habitat module for a smaller station, proposals due in week twenty two. The board would vote on Thursday. Before it voted, the chair wanted to know whether HEARTH was healthy enough to bet a second module on, and she'd asked for one number: the count of red risks.`,`<span class="said" data-who="Amara">"I've stood on that crate with bad news once this year,"</span> Amara said. <span class="said" data-who="Amara">"I'd like to stand on it and say we're bidding on something."</span>`],
       opts:[
         {t:`Give the board the count of red and yellow risks each month, with its trend.`, s:1, d:{trust:3,conf:1,health:0},
@@ -227,7 +227,7 @@
           after:`Both numbers look fine. They looked fine in week nine too.`,
           why:`Progress and spend describe the past. They're lagging, and neither says anything about the risks ahead.`}
       ]},
-    { id:`f7s11`, domain:`Technical management`, task:`M4`, title:`Five lines`,
+    { id:`f7s11`, domain:`Technical management`, task:`M4`, title:`Five lines`, q:`Brannock's result on HEARTH's lot comes the day after the vote. How should the seal appear in the deck?`,
       text:(s,all,G)=>{const r=(s.picks||{})[2];return [`Tuesday Amara built the board's deck. HEARTH's five highest risks went on one slide. `+(r===0||r===1?`On Wednesday's rating the seal wasn't one of the five. Jun had added it under them anyway, after the certificates, with a note: our lot's result, due the day after the vote.`:r===3?`At a six, rated in dollars, the seal only just made the five.`:`At a twelve, the seal was one of the five.`),`Wes came in while she was arranging it. <span class="said" data-who="Wes">"Brannock's result on our lot comes Friday,"</span> he said. <span class="said" data-who="Wes">"If it passes, the seal comes off that slide. Don't put my hatch in front of the board for three days."</span>`,`Amara looked at Nadia. <span class="said" data-who="Amara">"It would be one meeting with good news in it,"</span> she said. She didn't say it like an order.`]},
       opts:[
         {t:`Keep the seal on Wes's own list until Friday, off the register the board sees.`, s:0, flag:`hidrisk`, d:{trust:4,conf:-3,health:-6},
@@ -243,7 +243,7 @@
           after:`The board takes it seriously. It takes the rest of the slide less seriously once the chair learns the rating was raised for the meeting.`,
           why:`Inflating a rating to get attention distorts the picture as much as hiding one. Report the rating the scales and the evidence give.`}
       ]},
-    { id:`f7s12`, domain:`Agreement and organizational`, task:`O3`, title:`Thursday's vote`,
+    { id:`f7s12`, domain:`Agreement and organizational`, task:`O3`, title:`Thursday's vote`, q:`Osprey's module needs FRO's high bay, test cell and HEARTH's people. What should Nadia tell the board?`,
       text:(s,all,G)=>{const hid=(s.flags&&s.flags.hidrisk)||G.hidrisk;const p=(s.picks||{})[10];
         return [`The board met Thursday afternoon in the conference room over the lobby: seven people, Amara at the screen, and Nadia in a chair by the wall, because the chair of the board had asked for HEARTH's systems engineer by title.`,`Osprey wanted a module like HEARTH, a little smaller, in two years. Building it would need FRO's high bay, its test cell and the people who had built HEARTH so far, while HEARTH was still being built.`,
         (hid

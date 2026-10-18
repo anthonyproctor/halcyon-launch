@@ -68,7 +68,7 @@
           after:`Helen answers it on her phone at the gate. The answers are short and polite, and the two days go to reading them aloud.`,
           why:`Surveys reach a lot of people fast and they're shallow. With your most important stakeholder in the building, use the time for methods that go deeper.`}
       ]},
-    { id:`f2s2`, domain:`Technical management`, task:`M1`, title:`Three weeks`,
+    { id:`f2s2`, domain:`Technical management`, task:`M1`, title:`Three weeks`, q:`How should Nadia account for the needs work in the program?`,
       text:(s,all,G)=>[`Thursday Amara caught Nadia at the coffee machine. <span class="said" data-who="Amara">"Helen's great. I love Helen. But I've got a requirements review on the calendar and Halo's crew office is about to own two of your weeks. How long does this take, and what do I get at the end?"</span>`],
       opts:[
         {t:`Write a one page plan for the needs work and tie it to the review date.`, s:3, best:true, d:{trust:4,conf:4,health:4},
@@ -84,7 +84,7 @@
           after:`The review happens on time with requirements that don't yet reflect what a crew does in an emergency. The scenarios, finished later, change six of them.`,
           why:`Planning fits the work to the schedule deliberately. Cutting the work that produces the requirements, to hold the date of the requirements review, defeats the review.`}
       ]},
-    { id:`f2s3`, domain:`Technical`, task:`T1`, title:`One sentence`,
+    { id:`f2s3`, domain:`Technical`, task:`T1`, title:`One sentence`, q:`Wes wants his line at the top of every HEARTH document. What should the problem statement say?`,
       text:(s,all,G)=>[`Wes wanted the problem statement on one line at the top of every HEARTH document, and he had his own draft.`,`<span class="said" data-who="Wes">"Deliver a ninety cubic meter habitat module for a crew of four, per the contract. Done. That's the problem."</span>`],
       opts:[
         {t:`Use Wes's line as he wrote it at the top of every HEARTH document.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -100,7 +100,7 @@
           after:`Helen's version is vivid and personal and mostly about fire. It leaves out living and working for six months, and FRO has to edit it anyway.`,
           why:`The stakeholder's words are essential input. Writing the problem statement is still the engineering team's job, balancing every stakeholder, not just one.`}
       ]},
-    { id:`f2s4`, domain:`Cross-cutting`, task:`X1`, title:`Where the box ends`,
+    { id:`f2s4`, domain:`Cross-cutting`, task:`X1`, title:`Where the box ends`, q:`Jun's context diagram has two boxes and a power line. Where should the system boundary go?`,
       text:(s,all,G)=>[`Jun had a context diagram up on the big screen. HEARTH was a box in the middle. Halo Station was a box off to one side with a power line drawn to it. There was no box for the crew and none for the ground.`,`<span class="said" data-who="Jun">"The crew aren't hardware,"</span> he said. <span class="said" data-who="Jun">"And ground control is Halo's. We don't build either one. Should they even be on here?"</span>`],
       opts:[
         {t:`Keep the context diagram to the hardware FRO itself is building.`, s:0, d:{trust:1,conf:-2,health:-5},
@@ -116,7 +116,7 @@
           after:`The station and ground are in. The crew, the one element that moves around inside the module during every emergency, still isn't.`,
           why:`Interfacing systems belong in the context. So do the people. On a crewed system, the crew's behavior is part of how the whole system performs.`}
       ]},
-    { id:`f2s5`, domain:`Technical`, task:`T2`, title:`A day in the life`,
+    { id:`f2s5`, domain:`Technical`, task:`T2`, title:`A day in the life`, q:`Nadia has notes from Helen's visit and a growing stakeholder list. What comes next?`,
       text:(s,all,G)=>[`By Friday of week two Nadia had a folder of notes from Helen's two days, a stakeholder list that kept growing, and Helen's sticky note photographed on her phone.`,`Wes came by with Halo's old requirements in a binder clip. <span class="said" data-who="Wes">"You've got plenty. Start writing shall statements. We'll figure out how the crew lives in it once there's something to live in."</span>`],
       opts:[
         {t:`Start the requirements from the notes and add an OpsCon later.`, s:0, flag:`skippedconops`, d:{trust:3,conf:-3,health:-6},
@@ -132,7 +132,7 @@
           after:`Halo sends back their station ConOps, which is about the whole station's business. HEARTH gets two paragraphs.`,
           why:`The customer's ConOps is the organization's view. The OpsCon for this system has to be built with the users by the team defining the needs, not handed off and waited on.`}
       ]},
-    { id:`f2s6`, domain:`Cross-cutting`, task:`X3`, title:`Jun's swim lanes`,
+    { id:`f2s6`, domain:`Cross-cutting`, task:`X3`, title:`Jun's swim lanes`, q:`Jun has the fire scenario as a SysML activity diagram with four lanes. How should the OpsCon be built?`,
       text:(s,all,G)=>[`Jun wanted to put the scenarios in the model. He'd sketched the fire scenario as a SysML activity diagram, with a lane each for the crew, HEARTH, the station and the ground.`,`Wes looked at it over his glasses. <span class="said" data-who="Wes">"Halo's going to read a document. Write a document."</span>`],
       opts:[
         {t:`Write the OpsCon as a document and keep Jun's diagrams as a reference.`, s:1, d:{trust:3,conf:1,health:1},
@@ -148,7 +148,7 @@
           after:`The model catches up in month three, rebuilt from a document that's already out of date.`,
           why:`A model that starts late starts as a copy. Building it with the OpsCon lets it carry the scenarios forward into requirements and architecture.`}
       ]},
-    { id:`f2s7`, domain:`Technical`, task:`T2`, title:`Write it for the people`,
+    { id:`f2s7`, domain:`Technical`, task:`T2`, title:`Write it for the people`, q:`Helen says Jun's draft is written for the fire, not the people. How should the scenario change?`,
       text:(s,all,G)=>[`The fire scenario was the hard one. Jun had numbered the quarters along the tape. One and two faced each other by the hatch. Three and four faced each other past the galley, the same walk on paper. Four's opening sat half behind the hygiene station's wall, the last bunk in the module. Tiago had started calling it the far quarter, and by Tuesday everyone did. Each quarter got a curtain instead of a door. It was one of the first things Helen asked for, and nobody argued.`,`Jun's first draft started with a galley fire and walked through the fire: detection, alarm, suppression. Helen read it on a video call from Halo and was quiet a moment. <span class="said" data-who="Helen">"You've written it for the fire,"</span> she said. <span class="said" data-who="Helen">"Write it for the people."</span>`,`Odette had been on the call the whole time without a word. <span class="said" data-who="Odette">"Put it in seconds,"</span> she said at the end. <span class="said" data-who="Odette">"People hide in minutes."</span>`],
       opts:[
         {t:`Rewrite the scenario from each of the four bunks, with times.`, s:3, best:true, d:{trust:5,conf:5,health:5},
@@ -164,7 +164,7 @@
           after:`Helen reads it and says, gently, that the old station's crew had somewhere else to go. Its procedure assumes a module you can leave in more than one direction.`,
           why:`A procedure from a different system describes that system. HEARTH's layout is new, so its scenario has to be walked on its own layout.`}
       ]},
-    { id:`f2s8`, domain:`Cross-cutting`, task:`X1`, title:`Every part passes`,
+    { id:`f2s8`, domain:`Cross-cutting`, task:`X1`, title:`Every part passes`, q:`Wes is defending his layout line by line in the high bay. What should Nadia do?`,
       text:(s,all,G)=>[`Wednesday of week three Wes went down the scenario line by line in the high bay, defending his layout. <span class="said" data-who="Wes">"Hatch opens in four seconds. The galley has an extinguisher. Every quarter meets its volume. Aisle's wider than the old station's. Show me the part that fails."</span>`,`He was right. Every part passed. Nadia felt how much she wanted that to be the end of it.`],
       opts:[
         {t:`Accept Wes's point that parts passing one at a time cover the scenario.`, s:0, d:{trust:4,conf:-3,health:-6},
@@ -180,7 +180,7 @@
           after:`Wes points out that the far end is where the hygiene station's plumbing has to go. The change starts a week of rework before anyone has written the need down.`,
           why:`The finding is right. Jumping to one fix skips writing the need and comparing options, and this one moves the problem somewhere else.`}
       ]},
-    { id:`f2s9`, domain:`Technical`, task:`T1`, title:`How Halo keeps score`,
+    { id:`f2s9`, domain:`Technical`, task:`T1`, title:`How Halo keeps score`, q:`Where should HEARTH's measures of effectiveness come from?`,
       text:(s,all,G)=>[`Amara wanted measures for the requirements review. <span class="said" data-who="Amara">"Halo's going to ask how we know HEARTH is a success. I'd like to say ninety cubic meters, delivered, on schedule. That's what's in the contract."</span>`],
       opts:[
         {t:`Report volume, delivery and schedule, the measures in the contract.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -196,7 +196,7 @@
           after:`They settle on five with Helen. The first one reads like her sticky note: all four crew at a safe location within the time each emergency scenario allows. Amara reads it and stops. <span class="said" data-who="Amara">"Halo will sign that."</span>`,
           why:`MOEs say how well the system achieves the mission from the stakeholder's view, without naming a solution. They start in mission analysis and get sharpened with the stakeholders, and later they're what validation checks.`}
       ]},
-    { id:`f2s10`, domain:`Technical`, task:`T2`, title:`From her words to a shall`,
+    { id:`f2s10`, domain:`Technical`, task:`T2`, title:`From her words to a shall`, q:`Which draft states Helen's fire need the way a requirement should?`,
       text:(s,all,G)=>[`Helen's need sat at the top of the needs list in her own words: if there's a fire at three in the morning, all four get out or to a safe place before the smoke gets them.`,`Nadia had to turn it into a stakeholder requirement by Friday. Jun had four drafts on the screen.`],
       opts:[
         {t:`"HEARTH shall have a second hatch at the far end, beside quarters three and four."`, s:0, d:{trust:1,conf:-2,health:-3},
@@ -212,7 +212,7 @@
           after:`Jun links it to Helen's need, the four fire scenarios and the first MOE. The time stays marked as to be determined, with the rationale noted: the old station's five minutes is the starting point, not the answer.`,
           why:`A stakeholder requirement turns the need into a checkable, solution independent statement with conditions and a measure, traced to where it came from. "To be determined" with a reason is honest. A design hidden in the requirement isn't.`}
       ]},
-    { id:`f2s11`, domain:`Technical`, task:`T11`, title:`How we'll know`,
+    { id:`f2s11`, domain:`Technical`, task:`T11`, title:`How we'll know`, q:`Nothing's built yet, so there's only the floor outline and Jun's model. What's Nadia's answer?`,
       text:(s,all,G)=>[`Tiago found her at the edge of the tape on Monday of week four, still in his coat. <span class="said" data-who="Tiago">"So. Helen's going to ask how we prove it. What do we show her?"</span>`],
       opts:[
         {t:`Plan timed crew runs on the tape now and in the flight module later.`, s:3, best:true, d:{trust:4,conf:5,health:5},
@@ -228,7 +228,7 @@
           after:`It saves FRO a test campaign and moves every surprise to orbit, where it's Halo's crew who finds them.`,
           why:`Validation intent belongs early, with the developer and the stakeholder together. Finding out on orbit is the most expensive and dangerous way to validate.`}
       ]},
-    { id:`f2s12`, domain:`Technical`, task:`T11`, title:`Who walks it`,
+    { id:`f2s12`, domain:`Technical`, task:`T11`, title:`Who walks it`, q:`Who should HEARTH's first validation run use?`,
       text:(s,all,G)=>[`They wanted a first timed walk on the tape before Jun built the depressurization scenario, to check the numbers in the model. Amara offered volunteers. <span class="said" data-who="Amara">"I've got six engineers who'd love to leave their desks for an afternoon."</span>`],
       opts:[
         {t:`Use Amara's six engineers and time them on the tape this afternoon.`, s:0, d:{trust:3,conf:-2,health:-4},

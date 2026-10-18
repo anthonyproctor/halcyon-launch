@@ -1,11 +1,11 @@
 // Lints chapter files: schema, one best per scene, the decision question, answer-length tells, dashes.
-// usage: node tools/check_chapter.mjs full/v2/ch02.js [more chapter files]   (v1 files push to window.HALCYON, v2 to window.HALCYON_FULL)
+// usage: node tools/check_chapter.mjs full/v2/ch02.js [more chapter files]   (v1 files push to window.HALCYON, v2 to window.HALCYON_FULL, course books to window.HALCYON_DATA[id].full)
 import fs from 'fs';
 global.window={};
 const files=process.argv.slice(2);
 for(const f of files){eval(fs.readFileSync(f,'utf8'));}
 let bad=0;
-const chapters=[...(window.HALCYON||[]),...(window.HALCYON_FULL||[])];
+const chapters=[...(window.HALCYON||[]),...(window.HALCYON_FULL||[]),...Object.values(window.HALCYON_DATA||{}).flatMap(d=>d.full||[])]; // course books push to window.HALCYON_DATA[id].full
 if(!files.length||!chapters.length){console.log('usage: node tools/check_chapter.mjs <chapter file>... (no chapters found)');process.exit(2)}
 for(const c of chapters){
   let longestBest=0,shortestBest=0;const lines=[];

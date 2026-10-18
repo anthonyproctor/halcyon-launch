@@ -67,7 +67,7 @@
           after:`The questions are good ones. They also sit in a file nobody reads while the layout picks up momentum, and by Friday three of them are harder to change.`,
           why:`Asking the questions is the right instinct. Asking them where they can't change the decision isn't enough. Mission analysis has to happen before the design hardens, and it has to be visible.`}
       ]},
-    { id:`f1s2`, domain:`Cross-cutting`, task:`X1`, title:`Skip to PDR`,
+    { id:`f1s2`, domain:`Cross-cutting`, task:`X1`, title:`Skip to PDR`, q:`Amara's schedule runs from contract award straight to PDR in month four. What should Nadia propose?`,
       text:(s,all,G)=>[`Tuesday morning Amara put the program schedule on the screen. It started with contract award and went straight to a preliminary design review in month four.`,`<span class="said" data-who="Amara">"The contract's signed, so we're past the concept stuff,"</span> she said. <span class="said" data-who="Amara">"We don't need a mission concept review or a requirements review. Halo already bought the module. I want to save the six weeks."</span>`],
       opts:[
         {t:`Agree to drop both reviews and win back the six weeks for design.`, s:0, d:{trust:2,conf:-2,health:-5},
@@ -83,7 +83,7 @@
           after:`The reviews happen and they're thorough. They also cost Amara the full six weeks and a lot of goodwill, and half the checklist items are for a program twice this size.`,
           why:`Keeping the gates is right. Running them unchanged from a template for a different kind of program isn't tailoring. Fit the review to the program's risk and size, and write down why.`}
       ]},
-    { id:`f1s3`, domain:`Technical management`, task:`M1`, title:`What's the plan`,
+    { id:`f1s3`, domain:`Technical management`, task:`M1`, title:`What's the plan`, q:`Halo's contract asks for an engineering plan in thirty days. What should Nadia produce?`,
       text:(s,all,G)=>[`Amara stopped by Nadia's desk after lunch. <span class="said" data-who="Amara">"I have a schedule. I don't have an engineering plan. Halo's contract asks for one in thirty days. What do you need from me?"</span>`,`Nadia had written test plans. She had never written a plan for how an entire program does its engineering.`],
       opts:[
         {t:`Rename FRO's last cargo module SEMP for HEARTH and send it to Halo on time.`, s:0, d:{trust:1,conf:-3,health:-4},
@@ -99,7 +99,7 @@
           after:`It's better than nothing. It shows who and when. It doesn't say how reviews, changes, or technical decisions will run, which is what Halo asked for.`,
           why:`A schedule says when. A SEMP says how. You need both, and they have to agree with each other.`}
       ]},
-    { id:`f1s4`, domain:`Agreement and organizational`, task:`O1`, title:`The cargo playbook`,
+    { id:`f1s4`, domain:`Agreement and organizational`, task:`O1`, title:`The cargo playbook`, q:`Every FRO program follows the Product Development Process binder. What should Nadia do for HEARTH?`,
       text:(s,all,G)=>[`FRO had a binder. Literally a binder, three inches thick, called the Product Development Process. Wes had written most of it ten years ago for cargo modules. Every program at FRO followed it.`,`Reading it Wednesday night, Nadia found what she half expected. There was no step for a crew safety review, no human factors evaluation, nothing about a hazard report. The binder had been built for modules that carried food and spare parts.`],
       opts:[
         {t:`Run HEARTH from the INCOSE handbook directly and set the binder aside.`, s:0, d:{trust:-5,conf:-1,health:0},
@@ -115,7 +115,7 @@
           after:`The owner turns out to be Wes. He reads her two pages, grumbles about the length, and signs it. <span class="said" data-who="Wes">"Should have done this when we bid it."</span> The binder gets a new tab: crewed programs.`,
           why:`Life cycle model management means the organization owns its processes and improves them deliberately. When a new kind of program shows up, you change the model through its owner. Next time the steps are already there.`}
       ]},
-    { id:`f1s5`, domain:`Technical`, task:`T2`, title:`Who cares about this module`,
+    { id:`f1s5`, domain:`Technical`, task:`T2`, title:`Who cares about this module`, q:`Jun's model lists two stakeholders, Halo Orbital and FRO. How should Nadia shape the list?`,
       text:(s,all,G)=>[`Jun had started a stakeholder list in the model. It had two names on it: Halo Orbital and FRO.`,`<span class="said" data-who="Jun">"That's who signed the contract,"</span> he said. <span class="said" data-who="Jun">"Who else is there?"</span>`],
       opts:[
         {t:`Keep the two contract parties for now and add others as they come up.`, s:0, d:{trust:1,conf:-3,health:-5},
@@ -131,7 +131,7 @@
           after:`Halo sends a list of their internal departments. It doesn't include FRO's own maintainers, the launch provider, or anyone who'll handle disposal.`,
           why:`The customer's view is one input. Your stakeholder analysis covers your system across its whole life, and the customer won't think of everyone.`}
       ]},
-    { id:`f1s6`, domain:`Agreement and organizational`, task:`A2`, title:`Ninety cubic meters`,
+    { id:`f1s6`, domain:`Agreement and organizational`, task:`A2`, title:`Ninety cubic meters`, q:`Nobody has said what habitable volume means in this contract. What should Nadia do?`,
       text:(s,all,G)=>[`Thursday, reading the statement of work line by line, Nadia found a sentence that bothered her. "Habitable volume shall be at least 90 cubic meters." There was no definition of habitable volume anywhere in the contract.`,`Pressurized volume, the inside of the shell, was about ninety. Habitable volume, the space a person can actually move in after the racks and quarters are installed, would be a lot less.`],
       opts:[
         {t:`Design to the pressurized volume HEARTH already meets.`, s:0, d:{trust:0,conf:-4,health:-5},
@@ -147,7 +147,7 @@
           after:`Wes laughs out loud. The launch fairing has a fixed diameter, and the mass budget already has no room. Bigger isn't a choice.`,
           why:`Overdesigning around an ambiguity costs money and margin you don't have, and it still leaves the term undefined. Resolve the ambiguity instead.`}
       ]},
-    { id:`f1s7`, domain:`Technical management`, task:`M6`, title:`Where things live`,
+    { id:`f1s7`, domain:`Technical management`, task:`M6`, title:`Where things live`, q:`Nadia has found three copies of the mission profile in three places. What's the right fix?`,
       text:(s,all,G)=>[`By Thursday afternoon Nadia had found three versions of the HEARTH mission profile. One was on Wes's laptop, one was attached to an email chain, and one was printed and pinned to the wall in the high bay with handwritten notes.`,`They disagreed about how long the crew stays. Ninety days on Wes's laptop. A hundred and eighty on the wall, in somebody's handwriting.`],
       opts:[
         {t:`Send everyone the newest version, and ask them to delete the rest.`, s:1, d:{trust:1,conf:1,health:1},
@@ -163,7 +163,7 @@
           after:`Nadia always knows which version is right. Nobody else does.`,
           why:`Personal tracking solves your problem, not the program's. Information management is for the team.`}
       ]},
-    { id:`f1s8`, domain:`Cross-cutting`, task:`X5`, title:`Saying it to Wes`,
+    { id:`f1s8`, domain:`Cross-cutting`, task:`X5`, title:`Saying it to Wes`, q:`The layout, the binder and the volume question all need to reach Wes. How should Nadia raise them?`,
       text:(s,all,G)=>[`By Thursday evening the pattern was clear. Wes made calls fast, and his calls were usually right, and nobody ever asked him why. Nadia had three things she needed to raise with him: the layout, the binder, and the volume question.`,`She was thirty one. He'd been building pressure vessels since before she was born. Her stomach did the thing it always did before she told somebody senior they might be wrong.`],
       opts:[
         {t:`Ask Wes for twenty minutes alone and hear his view on each first.`, s:3, best:true, d:{trust:6,conf:3,health:2},
@@ -179,7 +179,7 @@
           after:`By the time she's earned enough credibility, the layout is baselined and the volume question is a contract dispute.`,
           why:`Credibility comes from raising things well, not from waiting. The cost of an issue grows every week you sit on it.`}
       ]},
-    { id:`f1s9`, domain:`Technical`, task:`T11`, title:`The test engineer's instinct`,
+    { id:`f1s9`, domain:`Technical`, task:`T11`, title:`The test engineer's instinct`, q:`Tiago asks Nadia to help him start test planning now. What should she do?`,
       text:(s,all,G)=>[`Tiago pulled up a chair Friday morning. <span class="said" data-who="Tiago">"You're a test person. I'm a test person. Let's get ahead of it. Help me start the verification plan now and we'll be the only program at FRO that isn't scrambling at the end."</span>`,`It was exactly what Nadia was good at, and she felt the pull. She also knew what she was reaching for: the moment a test came back green and everybody got to go home.`],
       opts:[
         {t:`Start drafting the verification plan with Tiago this week.`, s:1, d:{trust:4,conf:1,health:1},
@@ -195,7 +195,7 @@
           after:`Tiago thinks about it and grins. <span class="said" data-who="Tiago">"Validation first. I like it."</span> They draft four questions for Halo about how a crew will actually live in and leave the module, and the first one is about a fire.`,
           why:`Validation asks whether you built the right thing for its intended use. Setting validation intent early means the requirements, and then the verification, point at what the crew actually needs.`}
       ]},
-    { id:`f1s10`, domain:`Agreement and organizational`, task:`O4`, title:`Jun's model`,
+    { id:`f1s10`, domain:`Agreement and organizational`, task:`O4`, title:`Jun's model`, q:`Amara has Jun's name down to draft Wes's layout drawings. What should Nadia do?`,
       text:(s,all,G)=>[`Amara needed a drafter for Wes's layout drawings and had Jun's name on a sticky note.`,`Jun had told Nadia on Tuesday that he'd joined FRO to do model-based systems engineering, and that this was the first program where anyone had let him open the modeling tool. He had a SysML model of the stakeholder list already. He'd built it on his own time.`],
       opts:[
         {t:`Let Amara put Jun on drafting for the first quarter of the program.`, s:0, d:{trust:-4,conf:0,health:-2},
@@ -211,7 +211,7 @@
           after:`Jun doesn't. He's twenty four and new, and the program manager wrote his name on a sticky note.`,
           why:`Self advocacy matters, but the people who see the fit have a role in making it happen. Speak up for the people whose skills the program needs.`}
       ]},
-    { id:`f1s11`, domain:`Cross-cutting`, task:`X2`, title:`Safety later`,
+    { id:`f1s11`, domain:`Cross-cutting`, task:`X2`, title:`Safety later`, q:`When should FRO's safety office first get involved in HEARTH?`,
       text:(s,all,G)=>[`At Friday's staff meeting Nadia suggested inviting someone from FRO's tiny safety office and a human factors specialist to the concept work.`,`<span class="said" data-who="Wes">"Safety reviews the design, test kid,"</span> Wes said. <span class="said" data-who="Wes">"They don't make it. They'll get it at PDR like always."</span>`],
       opts:[
         {t:`Leave the first safety review at PDR where FRO's binder puts it.`, s:0, d:{trust:3,conf:-2,health:-5},
@@ -227,7 +227,7 @@
           after:`Her list of hazards is thoughtful and has gaps a safety engineer would have caught in an hour.`,
           why:`Specialty engineering exists because these disciplines are deep. Systems engineering pulls in the specialists. It doesn't replace them.`}
       ]},
-    { id:`f1s12`, domain:`Technical`, task:`T2`, title:`Helen's question`,
+    { id:`f1s12`, domain:`Technical`, task:`T2`, title:`Helen's question`, q:`This was supposed to be a get to know you call. What should Nadia do with what Helen said?`,
       text:(s,all,G)=>[`Friday at four, Halo's director of crew operations called in for a get-to-know-you. Helen Cho-Ramirez had spent eleven years as a flight surgeon for long duration crews, and she didn't waste time.`,`<span class="said" data-who="Helen">"I read your contract. It says ninety cubic meters. That's not what I need. I need four people to live in there for six months, and if there's a fire in the galley at three in the morning, I need all four of them to get out, or to a safe place, before the smoke gets them. I don't see that anywhere in the paperwork."</span>`],
       opts:[
         {t:`Tell Helen the need isn't in the contract and would take a change order.`, s:0, d:{trust:-4,conf:-3,health:-2},

@@ -48,7 +48,7 @@
     ]
   },
   scenes: [
-    { id:`f10s1`, domain:`Technical`, task:`T8`, title:`Twenty one steps`,
+    { id:`f10s1`, domain:`Technical`, task:`T8`, title:`Twenty one steps`, q:`Tiago's integration sequence covers twenty one steps on his office wall. What order should integration follow?`,
       text:(s,all,G)=>{const p8=(all&&all[8]&&all[8].picks)||{};const ballast=p8[7]===0?`six hundred kilograms of steel ballast`:`its steel ballast built to the ICD's number`;return [`Monday of week twenty five Tiago's integration sequence covered most of the wall in his office off the high bay: twenty one steps, from the first breaker in HEARTH's power distribution to the rack making air. The stand-in had been in its bay since Thursday, ${ballast} with Tamarack's connectors on its back.`,`The real rack would reach the high bay in week twenty six and go into HEARTH in week twenty seven. Proof testing started in week twenty nine.`,`<span class="said" data-who="Amara">"Two weeks of steps on a steel box,"</span> Amara said. <span class="said" data-who="Amara">"Then we do them again on the real one. Tell me why I'm paying twice."</span> Wes, from the doorway: <span class="said" data-who="Wes">"Put the rack in first when it gets here. It's the one that's late. Build around it."</span>`]},
       opts:[
         {t:`Bring HEARTH up in stages on the stand-in, a check closing each one.`, s:3, best:true, d:{trust:4,conf:5,health:5},
@@ -64,7 +64,7 @@
           after:`The rack would go into a module whose power and data haven't been checked. Tiago won't power it until they are, so the rack's first two weeks in HEARTH go to checking what it's plugged into.`,
           why:`Here the rack depends on HEARTH's power and data, so it goes in after they're proven. Integrating critical elements early can be a sound strategy, but not before the interfaces they plug into have been checked.`}
       ]},
-    { id:`f10s2`, domain:`Technical`, task:`T7`, title:`Cargo stock`,
+    { id:`f10s2`, domain:`Technical`, task:`T7`, title:`Cargo stock`, q:`The flight wire ran out four harnesses short, and the supplier quotes five weeks. What should Nadia do?`,
       text:(s,all,G)=>[`Tuesday the harness shop's lead caught Nadia at the shop door with a spool in each hand. The stand-in's harnesses had come off his pegboards in week twenty three, built from the shop's cargo stock, which was fine for a steel box that would never leave the ground. Now he was building the flight set, and the wire the drawings called for had run out four harnesses short.`,`The supplier quoted five weeks. On his shelf sat two thousand meters of cargo wire, same gauge, same color code. He held that spool up.`,`<span class="said" data-who="man">"It's flown,"</span> he said. <span class="said" data-who="man">"I can have the set done Friday."</span>`],
       opts:[
         {t:`Build with the cargo wire, with the substitution written on every traveler.`, s:1, d:{trust:3,conf:1,health:0},
@@ -80,7 +80,7 @@
           after:`The set is done Friday, built with insulation that was never tested for a crewed cabin. Odette's materials list will find it, and four harnesses will be built twice.`,
           why:`Same gauge isn't the same design. Flight history in an uncrewed module says nothing about flammability or offgassing in a cabin with people in it.`}
       ]},
-    { id:`f10s3`, domain:`Agreement and organizational`, task:`O6`, title:`Document two hundred and fifteen`,
+    { id:`f10s3`, domain:`Agreement and organizational`, task:`O6`, title:`Document two hundred and fifteen`, q:`The shared lessons folder has two hundred fourteen documents, the newest eight years old. Where should this lesson go?`,
       text:(s,all,G)=>{const p9=(all&&all[9]&&all[9].picks)||{};const p7=(all&&all[7]&&all[7].picks)||{};const pad=G&&G.paddedmargin;const m=810-(p9[2]===1?9:0)-(p9[5]===2?3:0);
         return [`The board approved Wes's change on Tuesday. Wednesday morning Gus cut the safety wire and lifted the red valve out of the relief line, and Wes asked for it. It went on the shelf over his desk with its tag still on. Jun took a kilogram and a half off the mass roll-up. Every kilogram counted now, on a margin of about ${m}.`+(pad?` Halo's chart still said seventeen hundred.`:``),
         `Amara wanted the relief tee written up as a lesson learned before the week was out. FRO's lessons learned lived in a shared folder: two hundred and fourteen documents, the newest eight years old. Tiago said he'd opened it once, to see if it existed.`,
@@ -99,7 +99,7 @@
           after:`By week thirty eight three of the people who know the story are on other work, and the fix is one line in a list of forty.`,
           why:`Lessons fade fast. Capture them as they happen, while the people and the reasons are still in the room.`}
       ]},
-    { id:`f10s4`, domain:`Agreement and organizational`, task:`O2`, title:`Built for cargo`,
+    { id:`f10s4`, domain:`Agreement and organizational`, task:`O2`, title:`Built for cargo`, q:`HEARTH's proof test is set for a cell built for cargo modules. How should Nadia handle the cell?`,
       text:(s,all,G)=>{const p7=(all&&all[7]&&all[7].picks)||{};return [`Thursday Tiago walked Nadia and FRO's facilities manager through the pressure test cell. HEARTH's proof test was set for week twenty nine. The cell had been built for cargo modules, and the facilities manager had kept it running since the first one.`,`Tiago had his list on a clipboard. The nitrogen line into the cell was sized for a cargo module, and HEARTH's ninety cubic meters would take fourteen hours to fill. The cell's pressure gauges came due for calibration in week thirty, and the calibration lab was booked three weeks out. The compressor's yearly service sat on the facilities calendar in week twenty nine.`+(p7[11]===1?``:` A second module, if one came, would want the same cell the year after.`),`<span class="said" data-who="man">"It's run fine for eleven modules,"</span> the facilities manager said. <span class="said" data-who="man">"Tell me what's different."</span>`]},
       opts:[
         {t:`Book the calibration lab for the gauges today, ahead of the proof test.`, s:1, d:{trust:3,conf:1,health:0},
@@ -115,7 +115,7 @@
           after:`Tiago's clipboard turns into a page: what HEARTH needs from the cell, week by week, through ship. The compressor service moves to week twenty six. The gauges go to the calibration lab in week twenty seven, good through ship, not just through proof. A bigger nitrogen line goes on the facilities plan for the winter shutdown, with a trailer to cover HEARTH until then. The facilities manager adds the cell to the page he shows FRO's board every quarter, with HEARTH's dates and a blank row for the next module.`,
           why:`Infrastructure management provides and maintains the facilities, equipment and services projects need, across the life cycle. It plans capacity and upkeep from the projects' needs, at the organization's level.`}
       ]},
-    { id:`f10s5`, domain:`Technical`, task:`T7`, title:`Off the pegboard`,
+    { id:`f10s5`, domain:`Technical`, task:`T7`, title:`Off the pegboard`, q:`Flight harnesses are coming off the pegboards, W-114 and W-117 among them. How should the shop check them?`,
       text:(s,all,G)=>[`Sunday at eight she'd made her call to Pueblo and kept it to the weather. Callie had put a photo in the family thread that afternoon, no caption: the first red tomato off the plants out back, held up in both of Rosie's hands. Nadia typed three replies, deleted them, and sent a heart.`,`Monday the flight harnesses started coming off the shop's pegboards. Each label carried a drawing number and a dash: dash one for the stand-in set built in week twenty three, dash three for flight. The rack's power harness was W-114. Its data harness was W-117. On the cargo modules the shop had tested harnesses after they were installed, all of them in one day.`,`<span class="said" data-who="man">"Saves a day on the bench,"</span> the harness lead said. <span class="said" data-who="man">"We've always done it that way."</span>`],
       opts:[
         {t:`Test each harness on the bench, with a traveler that ships along with it.`, s:3, best:true, d:{trust:4,conf:5,health:5},
@@ -131,7 +131,7 @@
           after:`The labels are all correct. One harness has a pin pushed back in its connector, which a label doesn't show.`,
           why:`Inspection finds what can be seen. Electrical testing finds what can't, and implementation records both.`}
       ]},
-    { id:`f10s6`, domain:`Technical`, task:`T8`, title:`Fit isn't function`,
+    { id:`f10s6`, domain:`Technical`, task:`T8`, title:`Fit isn't function`, q:`The rack goes in Monday and powers up Tuesday. What should Nadia tell Tiago?`,
       text:(s,all,G)=>{const blamed=G&&G.blamedsupplier;const noic=G&&G.nointerfacecontrol;const wes=G&&G.acceptedwesreqs;return [
         (blamed
           ?`The rack came down from Frederick on Tuesday of week twenty six in a box truck, with a driver and a packet of paperwork. Pavel's note about it was copied to his contracts manager.`
@@ -152,7 +152,7 @@
           after:`Jun builds the checklist from the ICD, line by line. Every pin at HEARTH's harness ends. Voltage at the connector with a load on it. The rack's chassis bond to its mounts. Coolant pressure and flow at the quick disconnects, with water at temperature. On the rack's side, its connector pinouts against the same pages. Everything checks. One question goes on the open list: the ICD says how the rack's chassis bonds to HEARTH, and nothing about where the data cable's shield is grounded.`,
           why:`Integration checks each interface against its definition before elements are joined, so a mismatch shows up as a reading, not as damage. Fit isn't function, and the interface document is the reference.`}
       ]},
-    { id:`f10s7`, domain:`Technical`, task:`T7`, title:`Every day it's better`,
+    { id:`f10s7`, domain:`Technical`, task:`T7`, title:`Every day it's better`, q:`Wednesday's fix for a signing timeout sits on the software lead's branch. What should Tiago get for Tuesday?`,
       text:(s,all,G)=>[`Friday FRO's flight software lead brought HEARTH's half of the rack software to Tiago's integration meeting. Her team had been working in sprints since week twelve. The newest build on her branch had a fix in it from Wednesday, for a command signing timeout they'd hit in the lab.`,`<span class="said" data-who="woman">"I'll load whatever's newest Tuesday morning,"</span> she said. <span class="said" data-who="woman">"Every day it's better."</span>`],
       opts:[
         {t:`Load the newest branch build Tuesday, with Wednesday's fix in it.`, s:0, d:{trust:3,conf:-2,health:-3},
@@ -168,7 +168,7 @@
           after:`Integration exercises every function and finds two faults a unit test would have caught in a minute. Each one costs the bay half a day.`,
           why:`Unit testing checks an element before it's handed on. Integration is for how elements work together, not for finding faults inside one.`}
       ]},
-    { id:`f10s8`, domain:`Technical management`, task:`M6`, title:`Three hundred photos`,
+    { id:`f10s8`, domain:`Technical management`, task:`M6`, title:`Three hundred photos`, q:`By noon the records sit in Tiago's binder, Gus's phone and Jun's laptop. How should FRO manage them?`,
       text:(s,all,G)=>{const blamed=G&&G.blamedsupplier;return [`Monday of week twenty seven the real rack went into its bay. By noon HEARTH's integration had produced a binder of as-run procedures in Tiago's pencil, three hundred photos on Gus's phone, and the model check results on Jun's laptop.`,
         (blamed
           ?`Tamarack's acceptance data had come by email, every page stamped proprietary, with the contracts manager copied.`
@@ -188,7 +188,7 @@
           after:`Thursday someone needs Tuesday's as-run procedure, and it's in a binder in Tiago's truck.`,
           why:`Information spread across teams can't be found when it's needed. Plan where it lives before it piles up.`}
       ]},
-    { id:`f10s9`, domain:`Technical`, task:`T8`, title:`First power`,
+    { id:`f10s9`, domain:`Technical`, task:`T8`, title:`First power`, q:`W-114 and W-117 are mated, and Tiago has the power procedure open. How should first power go?`,
       text:(s,all,G)=>{const blamed=G&&G.blamedsupplier;return [`Tuesday evening, with the rack mated, Tiago stood at the power panel with the procedure clipped open. W-114 ran the rack's power down from the overhead channel. W-117 ran its data. Both were dash three, flight, off the shop's bench the week before.`+(blamed?``:` Irena stood at the rack's front face, where the controller's screen would come up.`),`<span class="said" data-who="Tiago">"The stand-in's been powered forty times,"</span> Tiago said. <span class="said" data-who="Tiago">"How careful do you want this?"</span>`]},
       opts:[
         {t:`Bring it up in steps with the current limited, checking each hold's readings.`, s:3, best:true, d:{trust:4,conf:5,health:5},
@@ -204,7 +204,7 @@
           after:`The rack runs fine on the lab supply. That's Tamarack's acceptance test again, and HEARTH's power is still untried with the rack on it.`,
           why:`Powering an element by itself repeats element testing. Integration checks it through the real interfaces it will use.`}
       ]},
-    { id:`f10s10`, domain:`Technical`, task:`T8`, title:`Nine drops`,
+    { id:`f10s10`, domain:`Technical`, task:`T8`, title:`Nine drops`, q:`The rack dropped off HEARTH's network nine times in fourteen hours. What should happen first?`,
       text:(s,all,G)=>{const p=s.picks||{};const sw=p[6]===1?`0.9.2`:p[6]===2?`0.9.2 plus two bench patches`:p[6]===3?`0.9.2, unit tests not run`:`branch build, no tag`;return [`Tiago had been running two shifts since the rack went in. When first shift came on Wednesday, second shift had left a page on the clipboard.`,`<prop type="doc" title="Integration anomaly report IAR-27-03, HEARTH rack bay (open)">Observed: rack controller drops off HEARTH's network. Nine times in fourteen hours, four to six seconds each.<br>Pattern: every drop within two seconds of the rack fans stepping up to high speed.<br>Configuration: real rack. W-114 dash 3, power. W-117 dash 3, data. Flight software ${sw}.<br>Effect: CO2 removal pauses during each drop. Rack recovers on its own.<br>Status: open.</prop>`,`Gus already had a spare harness over his shoulder. <span class="said" data-who="man">"Start swapping?"</span> he asked.`]},
       opts:[
         {t:`Start swapping harnesses one at a time, noting what changed after each swap.`, s:1, d:{trust:3,conf:1,health:0},
@@ -220,7 +220,7 @@
           after:`Amara says the rack isn't going back up the highway for a fault that hasn't been found. Gus starts swapping harnesses after lunch.`,
           why:`An integration anomaly lives at the interface until shown otherwise. Shipping an element back before the cause is known can lose the evidence.`}
       ]},
-    { id:`f10s11`, domain:`Technical management`, task:`M5`, title:`Dash one`,
+    { id:`f10s11`, domain:`Technical management`, task:`M5`, title:`Dash one`, q:`With the stand-in's data harness in the bay, the rack ran eleven hours clean. What should Nadia do?`,
       text:(s,all,G)=>{const p=s.picks||{};const blamed=G&&G.blamedsupplier;const noic=G&&G.nointerfacecontrol;return [`Wednesday night second shift put the stand-in's data harness into the rack bay, W-117 dash one, from the week twenty three set. It grounded the shield at HEARTH's end only, the old cargo way.`+(p[9]===2?` It was step six on Jun's plan.`:` It was one more harness in a long day.`),
         `By Thursday morning the rack had run eleven hours with its fans on high and hadn't dropped once.`+(blamed
           ?` Tamarack's engineer answered Jun's email at nine: yes, the rack had always grounded its shields at its own end.`
@@ -240,7 +240,7 @@
           after:`The drops come back within the hour. Tiago puts the dash one back in at lunch, and the bay is where it started, minus a morning.`,
           why:`Once the cause is shown, the job is to change the design through control, not to keep searching for a different answer.`}
       ]},
-    { id:`f10s12`, domain:`Technical management`, task:`M5`, title:`What's in it`,
+    { id:`f10s12`, domain:`Technical management`, task:`M5`, title:`What's in it`, q:`Odette won't sign HEARTH into the proof test until it matches its drawings. How should Nadia confirm that?`,
       text:(s,all,G)=>{const hid=G&&G.hidrisk;return [`Monday of week twenty eight Odette needed one thing before she'd sign HEARTH into the proof test: that the module in the cell would be the module on the drawings. Ines came up from quality to ask the same question her own way.`+(hid?` The board's chair had asked to see the answer.`:``),`Brannock's fifteen year aging result on the long cure lot was due Friday.`,`<span class="said" data-who="woman">"What's in it?"</span> Ines asked. <span class="said" data-who="woman">"Not what's on the list. What's in it."</span>`]},
       opts:[
         {t:`Check the as-built list against the drawing tree on screen, fixing any mismatch.`, s:1, d:{trust:3,conf:1,health:0},

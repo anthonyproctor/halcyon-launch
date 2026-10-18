@@ -49,7 +49,7 @@
     ]
   },
   scenes: [
-    { id:`f8s1`, domain:`Technical management`, task:`M2`, title:`Monday's pumpdown`,
+    { id:`f8s1`, domain:`Technical management`, task:`M2`, title:`Monday's pumpdown`, q:`Brannock's fourth lot seal sits in the qualification hatch, not one HEARTH will fly. How should the test run?`,
       text:(s,all,G)=>{const p7=(all&&all[7]&&all[7].picks)||{};const sep=p7[7]===1;const opp=p7[7]===2;const cut=p7[7]===3;
         return [`Monday of week eighteen the forward hatch's qualification article sat on Tiago's stand in the test cell, ready to go into the chamber. Gus was at the valve panel with his hand nowhere near a valve.`,
         (sep
@@ -71,7 +71,7 @@
           after:`The hatch passes. The report says hatch and seal qualified. The seal it qualified came off the short cure, and the flight seals won't.`,
           why:`A test qualifies the configuration that was tested and nothing more. Claiming more than the hardware represents puts a pass on the record for something that wasn't tested.`}
       ]},
-    { id:`f8s2`, domain:`Technical`, task:`T5`, title:`The package`,
+    { id:`f8s2`, domain:`Technical`, task:`T5`, title:`The package`, q:`The PDR package is due today with no aft loads, and the seal lot's on hold. What's Nadia's move?`,
       text:(s,all,G)=>{const hid=G&&G.hidrisk;return [`Tuesday was the day the review package had to go to Halo, forty eight hours ahead, by the review plan. Two things weren't in it. Halo's node team had promised the aft berthing loads in week seventeen and hadn't sent them, so the aft hatch's ring was still sized on the forward hatch's numbers. And the seal for both hatches was a lot on hold in Ohio.`,
         (hid
           ?`Since Friday Amara had read every page of the package herself before it went anywhere. The chair of FRO's board had asked for a seat at Thursday's review, and Amara had said yes before she was asked twice.`
@@ -91,7 +91,7 @@
           after:`The review stays on time and the aft end gets its own day in week twenty. The berthing ring between them belongs to neither one.`,
           why:`A separate review for a less mature element can be good tailoring. Splitting at an interface leaves the interface itself unreviewed.`}
       ]},
-    { id:`f8s3`, domain:`Technical management`, task:`M7`, title:`Forty one rows`,
+    { id:`f8s3`, domain:`Technical management`, task:`M7`, title:`Forty one rows`, q:`Forty one numbers have requirements behind them, and Amara wants one slide. What should Nadia tell Jun?`,
       text:(s,all,G)=>{const pk=s.picks||{};const ran=pk[0]===0||pk[0]===3;
         return [`Wednesday Jun was building the slide for HEARTH's technical measures. The model held forty one numbers with a requirement behind each one, from cabin noise to the hygiene station's flow rate. Amara wanted one slide.`,
         (ran
@@ -112,7 +112,7 @@
           after:`The chart climbs every week. It measures how much design is done, not whether the design will work.`,
           why:`Drawings and tests are progress measures. A TPM measures technical performance against a requirement.`}
       ]},
-    { id:`f8s4`, domain:`Technical`, task:`T5`, title:`Thirty one items`,
+    { id:`f8s4`, domain:`Technical`, task:`T5`, title:`Thirty one items`, q:`Mid review, the aft loads came in higher than the forward hatch's. What should Nadia recommend for PDR?`,
       text:(s,all,G)=>{const gut=G&&G.unweightedtrade;return [`PDR ran all Thursday in the conference room over the lobby. Halo sent its program manager, Helen, and a structures reviewer who read every load case before she said a word. Odette sat next to the hazard reports. Halo's aft loads arrived at noon, in the middle of it, and they were higher than the forward hatch's. The aft ring would need more metal.`,
         (gut
           ?`When the aft hatch came up, the structures reviewer asked for the trade behind it, since it cost mass. Nadia's record said four options had been looked at and the room had chosen. The reviewer wrote an item asking for the criteria.`
@@ -132,7 +132,7 @@
           after:`It runs to half past seven. Each item gets accepted or rejected with a reason, an owner and a date. One blocks detail on the aft ring until Wes resizes it for Halo's loads, by Wednesday. The board reads the exit criteria out one at a time. The design meets its allocated requirements with acceptable risk, so PDR passes with nineteen actions, and the allocated baseline is set.`,
           why:`A review closes on its exit criteria. Every item gets a disposition, and the review can pass with actions when none shows the design unfit to go on. The approved design becomes the baseline.`}
       ]},
-    { id:`f8s5`, domain:`Technical management`, task:`M5`, title:`Humor me`,
+    { id:`f8s5`, domain:`Technical management`, task:`M5`, title:`Humor me`, q:`Wes told Brannock long cure by phone, and the scheduler wants it in writing. How should Nadia answer?`,
       text:(s,all,G)=>[`Friday morning FRO's buyer forwarded Nadia a note from Brannock's scheduler. The new lot was set for Monday, long cure, per Wes Harland, by phone. Could someone send that in writing?`,`The seal's drawing named Brannock's material spec by number. Nothing on it said which cure, and the order said standard. Since last night the drawing was under the board, part of HEARTH's allocated baseline.`,`Wes read the note at his desk. <span class="said" data-who="Wes">"Merle's good for it,"</span> he said. <span class="said" data-who="Wes">"I told you that Saturday."</span>`],
       opts:[
         {t:`Let Wes's call to Merle stand as the direction for Monday's lot.`, s:0, d:{trust:4,conf:-2,health:-4},
@@ -148,7 +148,7 @@
           after:`Wes calls Merle back and tells him to wait. Amara gets him on the phone again an hour later, and the molding goes ahead Monday, on a phone call, with nothing on the drawing.`,
           why:`Waiting for a full root cause before any containment costs time the change process could have saved, with the same control.`}
       ]},
-    { id:`f8s6`, domain:`Agreement and organizational`, task:`O5`, title:`Both ends`,
+    { id:`f8s6`, domain:`Agreement and organizational`, task:`O5`, title:`Both ends`, q:`Ines is scoping the audit after Brannock's four cure cuts. Where should it look?`,
       text:(s,all,G)=>[`Brannock's first findings came Monday of week nineteen. Merle had found the count: four cuts to the post-cure since last spring, each approved inside Brannock as minor, each one judged by itself.`,`Ines, FRO's quality manager, brought the findings to the HEARTH room on Tuesday. FRO's quality system called for an audit after any nonconformance on flight hardware, and she was the one who scoped it. She was small and precise and had a habit of reading a document's revision letter before its title.`,`<span class="said" data-who="Wes">"Their oven,"</span> Wes said. <span class="said" data-who="Wes">"Their problem."</span> <span class="said" data-who="woman">"Maybe,"</span> Ines said. <span class="said" data-who="woman">"I wrote FRO's purchase template nine years ago. I'd like somebody who isn't me to tell me if I'm auditing the right end."</span>`],
       opts:[
         {t:`Scope the audit to Brannock's plant, where the cure was changed.`, s:0, d:{trust:3,conf:-1,health:-3},
@@ -164,7 +164,7 @@
           after:`Amara prices it before lunch: a new compound, new qualification, four months. Brannock stays, and the audit loses two days to the argument.`,
           why:`Switching suppliers without finding the cause moves the problem. Corrective action starts with where it really came from.`}
       ]},
-    { id:`f8s7`, domain:`Agreement and organizational`, task:`O5`, title:`What the order asked`,
+    { id:`f8s7`, domain:`Agreement and organizational`, task:`O5`, title:`What the order asked`, q:`The audit has a finding at Brannock and one at FRO. How should FRO respond to them?`,
       text:(s,all,G)=>{const p6=(s.picks||{})[5];return [`Thursday Ines put her findings on the HEARTH room screen. Two causes, one at each end of the order.`+(p6!==undefined&&p6!==1?` Ines had gone back through FRO's own receiving file anyway, because her procedure said to, and found the second cause herself on Wednesday night.`:``),`<prop type="doc" title="FRO quality audit, HEARTH hatch seal lot nonconformance, findings">Finding 1, Brannock: post-cure shortened four times since last spring. Each change classed as minor and judged alone. No review of the total. No notice to customers.<br>Finding 2, FRO: purchase order called for Brannock standard compound with a certificate of conformance. It did not require aging to the 15 year design life or notice of process changes. Receiving checked that each certificate read PASS.</prop>`,`<span class="said" data-who="Wes">"So whose is it?"</span> Wes asked. <span class="said" data-who="woman">"I'm not writing a name,"</span> Ines said. <span class="said" data-who="woman">"I'm writing two causes. One of them's my template."</span> She said it the way she read revision letters, first. <span class="said" data-who="woman">"Now I need the corrective action."</span>`]},
       opts:[
         {t:`Send Brannock a corrective action request and close FRO's finding as minor.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -180,7 +180,7 @@
           after:`Brannock changes its procedure so cure changes add up, and any change to a customer's material gets that customer's notice. FRO's process owner changes the purchase template: anything with a design life gets aging to that life in the order, and a process change clause. The buyer pulls every open order. Eleven have the same gap. Ines puts a date in week thirty to check the fixes held.`,
           why:`Quality management takes corrective action on causes, not symptoms: fix the process at each source, look for the same gap elsewhere, and check later that the fix holds.`}
       ]},
-    { id:`f8s8`, domain:`Technical management`, task:`M5`, title:`Forty kilograms`,
+    { id:`f8s8`, domain:`Technical management`, task:`M5`, title:`Forty kilograms`, q:`Tamarack's rack weighs six hundred kilograms, and ICD revision B says 560. What's Nadia's next step?`,
       text:(s,all,G)=>{const blamed=G&&G.blamedsupplier;return [`Monday of week twenty Tiago asked Tamarack for the rack's mass, so he could ballast the stand-in that would go into HEARTH in week twenty four. The real rack would follow in week twenty seven.`,
         (blamed
           ?`Pavel's answer came copied to his contracts manager, as everything did now.`
@@ -202,7 +202,7 @@
           after:`The allowance takes it on paper. The rack's mounts are still designed for 560.`,
           why:`Quietly absorbing a real change hides it from everyone who works to the baseline. It still needs a change request and an impact assessment.`}
       ]},
-    { id:`f8s9`, domain:`Technical management`, task:`M7`, title:`Measured, calculated, estimated`,
+    { id:`f8s9`, domain:`Technical management`, task:`M7`, title:`Measured, calculated, estimated`, q:`Every mass line now carries a maturity and a growth allowance. Which view belongs on Jun's CDR chart?`,
       text:(s,all,G)=>[`Tuesday Jun brought the CDR mass roll-up to Nadia's desk. Every line had a maturity next to it. Measured meant somebody had put it on a scale: the berthing mechanism off its vendor's truck, and a few hundred bought boxes weighed at the dock. Calculated meant it came from a released drawing. Estimated meant somebody's best guess, Tamarack's rack among them now. HEARTH's mass plan gave each a growth allowance, two percent, six and fifteen.`,`<prop type="doc" title="HEARTH mass roll-up for CDR, summary">Allocation, not to exceed: 15,000 kg.<br>Measured: 3,000 kg. Growth 2 percent.<br>Calculated: 8,500 kg. Growth 6 percent.<br>Estimated: 1,800 kg. Growth 15 percent.<br>CDR floor: margin of at least 5 percent of allocation.</prop>`,`<span class="said" data-who="Jun">"How do I show it?"</span> Jun asked.`],
       opts:[
         {t:`Show each subsystem's estimate against its own allocation, row by row.`, s:0, d:{trust:3,conf:-1,health:-3},
@@ -218,7 +218,7 @@
           after:`The total drops by six hundred kilograms, and so does the truth of it.`,
           why:`Leaving out unmeasured items makes margin look bigger. Estimates go in with their growth allowance until they're measured.`}
       ]},
-    { id:`f8s10`, domain:`Cross-cutting`, task:`X5`, title:`Wes's pocket`,
+    { id:`f8s10`, domain:`Cross-cutting`, task:`X5`, title:`Wes's pocket`, q:`Wes counts margin as seventeen hundred kilograms, and Jun's slide says 860. What should Nadia do?`,
       text:(s,all,G)=>{const hid=G&&G.hidrisk;return [`Wednesday Jun stood at Nadia's desk with his laptop and didn't sit down. Wes had seen the chart.`,`<span class="said" data-who="Jun">"He says margin is allocation minus today's estimate. Seventeen hundred kilograms, eleven percent. He says growth is his pocket. He's kept one on every module he ever built and never once put it on a customer's chart."</span> Jun scrolled to the slide, where his name sat in the corner. <span class="said" data-who="Jun">"He says eight sixty makes Halo nervous, and a nervous customer asks for mass back."</span>`,`Both numbers came out of the same spreadsheet. Neither one was false.`,
         (hid
           ?`Since the seal, Amara had stopped coming by Nadia's desk. She sent her questions in email now, and she'd send one about this number.`
@@ -237,7 +237,7 @@
           after:`They go to Wes's desk together. Nadia says the growth isn't a pocket, it's what the drawings will weigh once they're metal, and Halo's arm will lift what they weigh. Jun shows him the line. Wes looks at it a while. <span class="said" data-who="Wes">"Structure'll use all of its six,"</span> he says. <span class="said" data-who="Wes">"Always does."</span> Jun writes that in the notes under the chart, with Wes's name on it.`,
           why:`SE in practice includes reporting status honestly, with uncertainty in view, even when the number is unwelcome. INCOSE's code of ethics asks for honesty and objectivity, and decision makers can only act on what they're shown.`}
       ]},
-    { id:`f8s11`, domain:`Technical`, task:`T5`, title:`What it's built with`,
+    { id:`f8s11`, domain:`Technical`, task:`T5`, title:`What it's built with`, q:`Tiago and Wes disagree on what belongs in the CDR package. What should Nadia say?`,
       text:(s,all,G)=>[`Monday of week twenty one the CDR package went to Halo. Four hundred and twelve drawings, three hundred and eighty eight of them released, the aft ring's resized set among them.`,
         (G&&G.acceptedwesreqs
           ?`The overhead harness channel, one of Wes's three from week six, had come into the baseline with no parent and no change request. Its brackets weren't on any drawing. The harness lead found that on Friday and drew them over the weekend.`
@@ -257,7 +257,7 @@
           after:`Ninety four percent does clear the bar. Every fixture is in the other six.`,
           why:`A release count is a useful entry measure. It can't say whether the right things are in the package.`}
       ]},
-    { id:`f8s12`, domain:`Technical`, task:`T5`, title:`Ten past six`,
+    { id:`f8s12`, domain:`Technical`, task:`T5`, title:`Ten past six`, q:`The seal lot passed, and mass is a hundred and ten kilograms over the floor. What should Nadia recommend?`,
       text:(s,all,G)=>{const pad=(s.flags&&s.flags.paddedmargin)||(G&&G.paddedmargin);const p7=(all&&all[7]&&all[7].picks)||{};const bk=p7[3]===2;const both=(s.picks||{})[9]===1;
         return [`CDR ran Thursday and Friday. On Friday morning Brannock's routine result on the new lot came in: compression set 15 percent, long cure, a pass. The fifteen year aging result was due in week twenty eight.`+(bk?` Jun's backup compound had passed its own qualification on Wednesday, and a change request to add it to the drawing as an alternate was in the board's queue.`:``),
         (pad

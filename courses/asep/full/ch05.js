@@ -57,7 +57,7 @@
           after:`Helen writes back kindly that she'd like FRO to tell her, with numbers. That's what she's paying for.`,
           why:`Stakeholders help set the criteria and weights. Handing them the choice before any analysis skips the work the decision needs.`}
       ]},
-    { id:`f5s2`, domain:`Technical management`, task:`M3`, title:`Musts and wants`,
+    { id:`f5s2`, domain:`Technical management`, task:`M3`, title:`Musts and wants`, q:`Four options are on the board for the egress trade. How should the criteria be set up?`,
       text:(s,all,G)=>[`By Tuesday there were four options on the board. A: revision C as drawn, with a better emergency procedure. B: a faster hatch, with a lower sill and two handholds, plus small layout changes. C: the faster hatch, with all four quarters moved forward and the galley and hygiene station moved aft. D: a second way out. Halo's next node carries a docking port for a crew vehicle, and Halo's assembly plan could berth it at HEARTH's aft end instead of on the core module: HEARTH first, then the node, then the first crew. A second hatch there would put quarters three and four a few steps from a door, with a lifeboat past it.`,`Jun had started the criteria list. It had the 120 second limit on it, and cost, and mass, and crew comfort, and "Halo likes it," all in one column.`],
       opts:[
         {t:`Put every criterion into one weighted list, the 120 second limit included.`, s:1, d:{trust:2,conf:1,health:0},
@@ -73,7 +73,7 @@
           after:`Each option gets one number. When Amara asks why D scored a seven, Nadia can't say which part of the seven was safety and which was cost.`,
           why:`Criteria need to be separate and independent so the trade shows what's being given up for what. One blended score hides the trade.`}
       ]},
-    { id:`f5s3`, domain:`Technical management`, task:`M3`, title:`Who sets the weights`,
+    { id:`f5s3`, domain:`Technical management`, task:`M3`, title:`Who sets the weights`, q:`Three stakeholders want three different weights, and Wes wants none. How should Nadia handle it?`,
       text:(s,all,G)=>[`Wednesday the weights came up, and the room got louder. Helen, on the screen from Halo, wanted smoke on the escape path to count for half. Amara wanted cost at thirty percent. Odette wanted egress margin over everything and said so in one sentence. Wes said weights were a way to make a gut call look like math.`,`<span class="said" data-who="Wes">"I've picked hatches for thirty years,"</span> he said. <span class="said" data-who="Wes">"Show me the four and I'll tell you."</span>`],
       opts:[
         {t:`Skip the weights and let the room pick from the four options side by side.`, s:0, flag:`unweightedtrade`, d:{trust:4,conf:-3,health:-6},
@@ -89,7 +89,7 @@
           after:`The averages look fair. They also hide that Helen and Amara are thirty points apart on the same line, which is the conversation that needed to happen.`,
           why:`Getting every stakeholder's weights is right. Averaging them hides the disagreement the decision maker most needs to see.`}
       ]},
-    { id:`f5s4`, domain:`Technical`, task:`T6`, title:`The door`,
+    { id:`f5s4`, domain:`Technical`, task:`T6`, title:`The door`, q:`The four E2 times were each worked out on different assumptions. How should Nadia compare them?`,
       text:(s,all,G)=>{const a2=all&&all[2];const tr=!!(a2&&a2.picks&&a2.picks[11]===1);return [`Wednesday night Nadia was at her kitchen table with Jun's spreadsheet when her phone lit up. Callie. It was after ten, which meant nights.`,`<span class="said" data-who="Callie">"You called. Don't make it a thing."</span>`,`<span class="said" data-who="Nadia">"I'm not making it a thing."</span>`,`<span class="said" data-who="Callie">"You're making it a thing in your head. I can hear it."</span> Her crew was up a pole near Avondale swapping a transformer. She had twenty minutes. Nadia asked how she knew they were safe up there. <span class="said" data-who="Callie">"I know it's open at my switches. They test it before they touch it. When I climbed I did the same. Twice, with the right meter, where I'm touching. I got that in Dad's class."</span>`,`<span class="said" data-who="Nadia">"And if the meter's wrong?"</span>`,`<span class="said" data-who="Callie">"Then I've got two meters and a crew that isn't stupid."</span> A beat. <span class="said" data-who="Callie">"You do this. You call and then you check my work."</span>`,`<span class="said" data-who="Nadia">"I got it at the dinner table."</span>`,`<span class="said" data-who="Callie" data-tone="soft">"Yeah. I know you did."</span> Then, quicker: <span class="said" data-who="Callie">"He wants to see your module. He won't ask. Give him a day or he'll never come."</span> Nadia gave her Thursday of next week. Callie's radio went, and she was gone.`,`Nadia went back to the spreadsheet. Each option had one E2 time, and each had been worked out by the person who liked it. Wes's used the engineers' walking speed.`,(tr?`Tiago's used the slowest of Helen's trainers from week four.`:`Helen had sent three trainers on Tuesday to walk the tape lights out, so the trade would have real times. Tiago's used the best of them.`)]},
       opts:[
         {t:`Use each owner's own numbers, but mark on the chart where the assumptions differ.`, s:1, d:{trust:3,conf:1,health:0},
@@ -105,7 +105,7 @@
           after:`The averages are smooth, and wrong in ways that can't be traced, since each mixes three people's walking speeds.`,
           why:`Averaging inconsistent analyses doesn't remove the inconsistency. It hides it. Rerun them on common assumptions.`}
       ]},
-    { id:`f5s5`, domain:`Cross-cutting`, task:`X3`, title:`Smoke and people`,
+    { id:`f5s5`, domain:`Cross-cutting`, task:`X3`, title:`Smoke and people`, q:`FRO has never modeled smoke before. What should Nadia do with Jun's new model?`,
       text:(s,all,G)=>[`E2 was the leak. E1 was the fire, and fire needed smoke, which FRO had never modeled. Odette found a fire protection engineer she'd worked with before, and Amara signed her on for three weeks.`,`By Friday Jun had the engineer's smoke model joined to his own crew model: a food warmer fire at the galley, smoke moving with the cabin air, and four people walking from their bunks at speeds Jun typed in from the tape. On the screen they were four blue dots. It looked finished. She'd signed enough sheets to know what that was worth.`],
       opts:[
         {t:`Run it on the engineer's standard settings, the ones she uses on buildings.`, s:1, d:{trust:3,conf:1,health:0},
@@ -121,7 +121,7 @@
           after:`The pattern is revision C's. Options C and D change where people go, and the smoke goes somewhere else.`,
           why:`Each alternative has to be analyzed as itself. Results from one configuration don't carry over to a different layout.`}
       ]},
-    { id:`f5s6`, domain:`Technical`, task:`T6`, title:`Nine seconds`,
+    { id:`f5s6`, domain:`Technical`, task:`T6`, title:`Nine seconds`, q:`The E1 run puts revision C past the galley with nine seconds to spare. How should results be reported?`,
       text:(s,all,G)=>[`Monday of week eleven Jun ran E1 on every option and put revision C up first, because it was the one they'd have to beat.`,`<prop type="doc" title="HEARTH smoke and egress simulation, E1 (galley fire), revision C as drawn">Alarm at 0 seconds. Galley aisle impassable at 70 seconds.<br>Quarters 1 and 2: walk away from the galley to the hatch.<br>Quarters 3 and 4, revision C as drawn: past the galley at 61 seconds. Margin 9 seconds.<br>Same run, seat track on one side only: past the galley at 52 seconds. Margin 18 seconds.<br>Assumptions: cabin modeled as one open volume, fans at nominal flow.</prop>`,`The numbers came out clean, every row filled. She felt the small click she used to get from a green PASS, and let herself have it.`,`Wes was standing at the back. He didn't say anything. Jun's numbers were the averages of the trainers' runs, and the trainers had varied by six seconds either way.`],
       opts:[
         {t:`Report each option's best run, the one from the most practiced trainer.`, s:0, d:{trust:2,conf:-2,health:-4},
@@ -137,7 +137,7 @@
           after:`The finer runs take a week. They move every number by under a second.`,
           why:`Analysis supports a decision on a schedule. When the uncertainty is understood and stated, more resolution often changes nothing that matters.`}
       ]},
-    { id:`f5s7`, domain:`Technical management`, task:`M3`, title:`Turning the weights`,
+    { id:`f5s7`, domain:`Technical management`, task:`M3`, title:`Turning the weights`, q:`Amara wants to see the ranking with cost weighted higher. What should Nadia do?`,
       text:(s,all,G)=>{const gut=(s.flags&&s.flags.unweightedtrade)||G.unweightedtrade;
         return [`Tuesday morning there was a print on Nadia's chair. Revision D. Note eight now read SEAT TRACK ONE SIDE OF AISLE ONLY, and the aisle was back to the width of the tape. Wes had initialed it.`,
         (G.acceptedwesreqs
@@ -163,7 +163,7 @@
           after:`The slide is clean. In a month Amara runs it herself, finds the flip, and wonders what else was left off.`,
           why:`Hiding a result that cuts against your recommendation isn't analysis, it's advocacy. Decision makers need the robustness of the answer, good or bad.`}
       ]},
-    { id:`f5s8`, domain:`Cross-cutting`, task:`X2`, title:`Same door, less money`,
+    { id:`f5s8`, domain:`Cross-cutting`, task:`X2`, title:`Same door, less money`, q:`The aft hatch option costs four point six million of an eleven million reserve. How should Nadia handle cost?`,
       text:(s,all,G)=>[`D came in at four point six million dollars and six weeks. Amara's reserve for all of development had been eleven million when she signed.`,`<span class="said" data-who="Amara">"If it's D, it's D,"</span> she said on Wednesday. <span class="said" data-who="Amara">"Make it cost less."</span> Wes had already priced a custom berthing ring for the aft end and a new hatch to go in it.`],
       opts:[
         {t:`Save on the aft hatch with one latch in place of the forward hatch's two.`, s:0, d:{trust:2,conf:-2,health:-5},
@@ -179,7 +179,7 @@
           after:`By the end of design, the custom ring has drawings, tooling and a supplier, and it costs what it costs.`,
           why:`Cost is cheapest to change early. Waiting for design to finish locks in the expensive choices.`}
       ]},
-    { id:`f5s9`, domain:`Technical management`, task:`M4`, title:`Who checks these`,
+    { id:`f5s9`, domain:`Technical management`, task:`M4`, title:`Who checks these`, q:`Where does option D's dependence on Halo's schedule belong?`,
       text:(s,all,G)=>[`Thursday Frank drove up from Pueblo and was in the lot at eight, because he'd left at six to beat traffic that wasn't there. He wore his work jacket zipped to the collar, though the high bay was warm by then.`,`Tiago met them at the door. Frank shook his hand with his right. His left stayed in his jacket pocket, and it stayed there the whole tour. She'd meant to show him the model. He wanted the tape. At the end of it he stood in quarter four's square a while, the left hand still in the pocket. <span class="said" data-who="Frank">"That's the long way."</span>`,`<span class="said" data-who="Nadia">"That's the one I'm fixing."</span>`,`He looked at her instead of the tape, a beat past how he usually looked at anybody. Then they went out to the pressure test cell.`,`At the cell he stopped. Six red lockout tags hung on the valve panel, each with a name and a date. He read every one, bending for the ones down low.`,`<span class="said" data-who="Frank">"Who checks these?"</span>`,`<span class="said" data-who="Tiago">"I do,"</span> Tiago said. <span class="said" data-who="Tiago">"Then the person whose name is on it checks again. Only they take it off."</span> Frank nodded and touched the nearest tag with his right hand, squaring it on its wire.`,`In the lot he said it was a clean shop. She waited for the rest of it. There wasn't any. After his truck was gone she went back in and read the six tags herself.`,`That afternoon Helen wrote that Halo would work toward berthing its node at HEARTH's aft end before the first crew moved in. Work toward. If it slipped, she wrote, Halo would fly three until it berthed, and she'd be the one who told the fourth.`],
       opts:[
         {t:`Note it as an assumption in the trade record, to recheck at design review.`, s:1, d:{trust:2,conf:1,health:0},
@@ -195,7 +195,7 @@
           after:`Odette says no before Amara can. D stays on the board, the node still isn't on the register, and now Odette knows you wanted it gone.`,
           why:`Every option carries risk. Handle the risk and keep the decision on its criteria, rather than rejecting an option because a risk exists.`}
       ]},
-    { id:`f5s10`, domain:`Technical management`, task:`M3`, title:`Write it down`,
+    { id:`f5s10`, domain:`Technical management`, task:`M3`, title:`Write it down`, q:`Amara decides at nine on Friday, and the decision record is still blank. What should go in it?`,
       text:(s,all,G)=>[`Amara would decide at nine on Friday. Thursday night the HEARTH room emptied out around Nadia until it was her, the 133 in its red box, and a blank decision record.`,`Wes stuck his head in on his way out. <span class="said" data-who="Wes">"One page,"</span> he said. <span class="said" data-who="Wes">"Nobody reads two."</span>`],
       opts:[
         {t:`Write a record a stranger could check, with the reason for each number.`, s:3, best:true, d:{trust:3,conf:5,health:5},
@@ -211,7 +211,7 @@
           after:`The cost is easy to find. The rest is somewhere in a model only Jun opens.`,
           why:`Rationale filed out of sight isn't part of the record. Keep the decision and its reasons together under information management.`}
       ]},
-    { id:`f5s11`, domain:`Technical management`, task:`M7`, title:`What to watch`,
+    { id:`f5s11`, domain:`Technical management`, task:`M7`, title:`What to watch`, q:`Amara has signed for D and wants a weekly view of it. What should Nadia give her?`,
       text:(s,all,G)=>{const cost=(s.picks&&s.picks[7]===2)?`three point eight`:`four point six`;return [`At nine on Friday Amara chose D, the second egress path, and signed the bottom of the page. She looked at the schedule line a while and didn't say anything about it.`,`Then she capped her pen. <span class="said" data-who="Amara">"If I'm spending ${cost} million on this, I want to know every week whether it's still working. What do I look at?"</span>`]},
       opts:[
         {t:`Send her a weekly report with all the model and schedule can produce.`, s:0, d:{trust:2,conf:-1,health:-3},
@@ -227,7 +227,7 @@
           after:`Progress is a real measure, and Amara likes it. It can read a hundred percent on a design that's lost its margin.`,
           why:`Progress against plan is useful. It doesn't answer the main need here, whether the fix still gets the crew out in time.`}
       ]},
-    { id:`f5s12`, domain:`Technical`, task:`T5`, title:`Into the drawing`,
+    { id:`f5s12`, domain:`Technical`, task:`T5`, title:`Into the drawing`, q:`Wes has copied the forward drawings onto sheets marked AFT. What should Nadia do?`,
       text:(s,all,G)=>[`Friday afternoon Wes came by with a roll under his arm. He'd started the aft hatch from the forward hatch drawings, copied onto new sheets with AFT in the title block.`,`<span class="said" data-who="Wes">"It's the front door with a new name,"</span> he said. <span class="said" data-who="Wes">"I can have these out Monday."</span>`],
       opts:[
         {t:`Let Wes release the copied drawings Monday, with AFT in the title block.`, s:0, d:{trust:4,conf:-2,health:-4},

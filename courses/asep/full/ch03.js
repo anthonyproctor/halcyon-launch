@@ -59,7 +59,7 @@
           after:`Design starts against "the cabin shall be quiet." Three engineers pick three different noise limits.`,
           why:`Vague requirements don't get sharper during design. They get interpreted, differently, by each person who reads them. Fix them before the baseline.`}
       ]},
-    { id:`f3s2`, domain:`Technical`, task:`T3`, title:`And seal reliably`,
+    { id:`f3s2`, domain:`Technical`, task:`T3`, title:`And seal reliably`, q:`Jun's happy with line ninety as it stands. What should Nadia do with it?`,
       text:(s,all,G)=>[`Line ninety was the hatch. "The hatch shall open within 10 seconds and seal to the leak limit and be operable by one crew member from either side."`,`<span class="said" data-who="Jun">"It's all about the hatch,"</span> Jun said. <span class="said" data-who="Jun">"Isn't it cleaner in one place?"</span>`],
       opts:[
         {t:`Keep line ninety as written, a single requirement for a single component.`, s:0, d:{trust:1,conf:-2,health:-3},
@@ -75,7 +75,7 @@
           after:`The system requirement is now unverifiable, and the real requirements live in a design document that can change without anyone asking.`,
           why:`Pushing requirements into design hides them from the baseline. "Work properly" can't be verified at any level.`}
       ]},
-    { id:`f3s3`, domain:`Cross-cutting`, task:`X3`, title:`Where did this come from`,
+    { id:`f3s3`, domain:`Cross-cutting`, task:`X3`, title:`Where did this come from`, q:`Wes wants a spreadsheet per subsystem, and Jun wants every line linked to its source. Where should traceability live?`,
       text:(s,all,G)=>[`Wes wanted the requirements in a spreadsheet, the way FRO had always kept them, one tab per subsystem. Jun wanted them in the model, linked to the stakeholder needs and the scenarios.`,`<span class="said" data-who="Wes">"I can read a spreadsheet,"</span> Wes said. <span class="said" data-who="Wes">"Everybody can read a spreadsheet."</span>`],
       opts:[
         {t:`Keep Wes's spreadsheet and add a column for each line's parent requirement.`, s:1, d:{trust:3,conf:1,health:1},
@@ -91,7 +91,7 @@
           after:`Every line has a test. Nobody can say which ones the crew actually needs.`,
           why:`Downward trace shows how you'll verify. Upward trace shows why the requirement exists. Without both, you can't find unnecessary requirements or missing ones.`}
       ]},
-    { id:`f3s4`, domain:`Technical`, task:`T3`, title:`Quiet enough to sleep`,
+    { id:`f3s4`, domain:`Technical`, task:`T3`, title:`Quiet enough to sleep`, q:`Line forty one says only that the cabin shall be quiet. What should Nadia do with it?`,
       text:(s,all,G)=>[`Line forty one, the cabin shall be quiet, came from a stakeholder requirement about crew sleep. Helen's notes said the old station was so loud that some crews slept with earplugs every night, and under that, underlined: if it's quiet, they don't need earplugs, and they hear the alarm.`,`Tiago read it over Nadia's shoulder. <span class="said" data-who="Tiago">"How do I test quiet?"</span>`],
       opts:[
         {t:`Reword it as "as quiet as practical" to leave room for trades.`, s:0, d:{trust:1,conf:-2,health:-4},
@@ -107,7 +107,7 @@
           after:`The air system team designs to its own rules, which were written for cargo modules no one ever slept in.`,
           why:`A requirement with a real stakeholder need behind it is necessary. Leaving it to design rules means nobody owns the crew's sleep.`}
       ]},
-    { id:`f3s5`, domain:`Cross-cutting`, task:`X2`, title:`Three things to open it`,
+    { id:`f3s5`, domain:`Cross-cutting`, task:`X2`, title:`Three things to open it`, q:`Odette's first hazard is the hatch coming open by accident on a pressurized module. What should the requirement say?`,
       text:(s,all,G)=>[`Odette came to Wednesday's requirements meeting with a hazard list and one page of proposed safety requirements. The first hazard was the hatch opening by accident while the module was pressurized.`,`<span class="said" data-who="Odette">"That one's catastrophic,"</span> she said. <span class="said" data-who="Odette">"So. What has to break for that hatch to open with air behind it?"</span>`],
       opts:[
         {t:`Write that the hatch shall not open inadvertently and leave controls to design.`, s:1, d:{trust:2,conf:1,health:1},
@@ -123,7 +123,7 @@
           after:`Design goes ahead with one hatch latch. Adding two more later costs a redesign of the hatch frame.`,
           why:`Safety requirements shape the design. Waiting for the design to be done before writing them guarantees rework.`}
       ]},
-    { id:`f3s6`, domain:`Technical`, task:`T3`, title:`Sixty seconds`,
+    { id:`f3s6`, domain:`Technical`, task:`T3`, title:`Sixty seconds`, q:`Helen crossed out the egress value and wrote sixty seconds. What should Nadia do?`,
       text:(s,all,G)=>[`Helen's comments came back Thursday. On the egress requirement she'd crossed out the value and written 60 seconds, and under it, smaller: that's as long as I can watch the clock.`,`Jun pulled up the tape times. It took forty five seconds just to wake up and get out of a bunk.`],
       opts:[
         {t:`Write 60 seconds as Helen asked, as a hard target for the design.`, s:0, d:{trust:3,conf:-3,health:-4},
@@ -139,7 +139,7 @@
           after:`Helen is satisfied. The goal floats there with no owner and no verification, and engineers argue about which number counts.`,
           why:`Separating goals from requirements can work, if it's explicit how each is used. Here it mostly creates two numbers for one thing.`}
       ]},
-    { id:`f3s7`, domain:`Technical`, task:`T9`, title:`Same job`,
+    { id:`f3s7`, domain:`Technical`, task:`T9`, title:`Same job`, q:`Beto laughs at a verification column that says test on every line. How should Nadia set the methods?`,
       text:(s,all,G)=>[`Saturday she met Beto Salinas for coffee in Castle Rock, which Beto called halfway and wasn't. He still worked the bench in Colorado Springs. He took her laptop without asking, scrolled to the verification column, and laughed out loud.`,`<span class="said" data-who="Beto">"Test. Test. Test. Test,"</span> he read. <span class="said" data-who="Beto">"You still love a green PASS, Brooks."</span> He knew why. He'd never once asked her about it, which was one of the reasons they were still friends. <span class="said" data-who="Beto">"Same job, different hardware,"</span> he said, and pushed the laptop back across the table. <span class="said" data-who="Beto">"So do it the way you used to."</span>`],
       opts:[
         {t:`Keep test on every line, the strongest evidence for a crewed module.`, s:0, d:{trust:1,conf:-2,health:-4},
@@ -155,7 +155,7 @@
           after:`Tiago will do a good job. He'll also find thirty requirements he can't verify at all, months after they were written.`,
           why:`Asking the test lead is smart. Waiting means you find unverifiable requirements after the baseline instead of before.`}
       ]},
-    { id:`f3s8`, domain:`Technical`, task:`T9`, title:`Fifteen years of gravel`,
+    { id:`f3s8`, domain:`Technical`, task:`T9`, title:`Fifteen years of gravel`, q:`The shielding requirement holds for fifteen years in orbit. Which verification approach fits it?`,
       text:(s,all,G)=>[`One requirement made Tiago put his coffee down. The shielding had to keep the probability of a penetrating micrometeoroid or debris strike below a set value over fifteen years in orbit.`,`Then he picked it back up and grinned. <span class="said" data-who="Tiago">"There's a light gas gun in Ohio. It shoots panels, not years."</span> The question was what to call the rest of the proof.`],
       opts:[
         {t:`Use analysis with the debris model, anchored by impact tests on panels.`, s:3, best:true, d:{trust:4,conf:5,health:5},
@@ -171,7 +171,7 @@
           after:`Now it's easy to verify and doesn't say what the crew needs. Thickness is a design answer, not a protection level.`,
           why:`Don't bend a requirement to fit a convenient verification method. Keep the real need and choose the method that can prove it.`}
       ]},
-    { id:`f3s9`, domain:`Technical management`, task:`M6`, title:`Everyone wants the keys`,
+    { id:`f3s9`, domain:`Technical management`, task:`M6`, title:`Everyone wants the keys`, q:`Halo's program office wants to fix wording in FRO's model directly. What access should Halo get?`,
       text:(s,all,G)=>[`Halo's program office called Monday of week six. They wanted edit access to FRO's requirements in the model before the review, so their engineers could fix wording directly instead of sending comments.`,`<span class="said" data-who="Amara">"It would save a week of email,"</span> Amara said. <span class="said" data-who="Amara">"Your call."</span>`],
       opts:[
         {t:`Give Halo edit access to the requirements in the model before the review.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -187,7 +187,7 @@
           after:`Halo walks into the review seeing the set for the first time, with forty comments they could have sent in week four.`,
           why:`Locking stakeholders out doesn't protect the requirements. It just moves their input to the worst possible moment.`}
       ]},
-    { id:`f3s10`, domain:`Technical management`, task:`M5`, title:`Three obvious things`,
+    { id:`f3s10`, domain:`Technical management`, task:`M5`, title:`Three obvious things`, q:`The set froze for review Tuesday, and Wes has three lines he wants added. What should Nadia do?`,
       text:(s,all,G)=>[`The set froze for review on Tuesday of week six. On Wednesday Wes dropped a sticky note on Nadia's keyboard with three lines in his square capitals. Hatch handle on both sides, one hand, no tools. Seat track down both sides of the aisle for stowage. All harnesses in the overhead channel.`,`<span class="said" data-who="Wes">"Obvious stuff,"</span> he said. <span class="said" data-who="Wes">"Every cargo module had them. Just put them in."</span>`],
       opts:[
         {t:`Add the three lines to the frozen set before Thursday's review.`, s:0, flag:`acceptedwesreqs`, d:{trust:4,conf:-3,health:-6},
@@ -203,7 +203,7 @@
           after:`They're visible, which is good. The reviewers have no impact analysis, so they spend forty minutes guessing and then defer them.`,
           why:`Surfacing the change is right. A review isn't the place to assess it from scratch. Do the assessment first.`}
       ]},
-    { id:`f3s11`, domain:`Technical management`, task:`M5`, title:`What it touches`,
+    { id:`f3s11`, domain:`Technical management`, task:`M5`, title:`What it touches`, q:`Amara's first configuration control board meets Friday. What should Nadia bring it?`,
       text:(s,all,G)=>[[`Amara set up the first configuration control board for Friday after the review. Wes's three lines were already in the set, and she wanted the board to look at them anyway, after the fact. She asked Nadia what the board would need to decide.`,`Amara set up the first configuration control board for Friday after the review. Wes's three change requests were the first items on it. She asked Nadia what the board would need to decide.`,`Amara set up the first configuration control board for Friday after the review. Wes's three lines weren't on it. Nobody had written them up. She asked Nadia what the board would need if they ever got there.`,`Amara set up the first configuration control board for Friday after the review. Wes's three items were on it, deferred from the review with no analysis behind them. She asked Nadia what the board would need to decide.`][(s.picks&&s.picks[9]!==undefined)?s.picks[9]:((s.flags.acceptedwesreqs||G.acceptedwesreqs)?0:1)],`Wes, passing, said the board would need about thirty seconds.`],
       opts:[
         {t:`Each item's cost and schedule impact, for Amara to weigh against budget.`, s:1, d:{trust:3,conf:1,health:0},
@@ -219,7 +219,7 @@
           after:`They're approved. The assessment during design finds the aisle problem, which is now a change to an approved change.`,
           why:`Approving first and assessing later is backwards. The assessment is what makes the decision a decision.`}
       ]},
-    { id:`f3s12`, domain:`Technical`, task:`T3`, title:`What goes in the baseline`,
+    { id:`f3s12`, domain:`Technical`, task:`T3`, title:`What goes in the baseline`, q:`Jun's trace report shows eleven requirements still marked to be determined. What should happen at the review?`,
       text:(s,all,G)=>[`The night before the review Jun's trace report came to three hundred and ninety six requirements. Eleven still had values marked to be determined, including the egress layout's test conditions.`,`Wes wanted the review pushed until the open values were closed. Amara wanted to baseline it and stop talking about it.`],
       opts:[
         {t:`Push the review back until every one of the eleven TBDs is closed.`, s:0, d:{trust:2,conf:-1,health:-3},

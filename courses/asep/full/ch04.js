@@ -64,7 +64,7 @@
           after:`The frames release. By the design review there are tooling orders against them, and the aisle has a part number.`,
           why:`Waiting doesn't keep options open. It lets the physical design harden while the functions are still unwritten, and every week makes a change cost more.`}
       ]},
-    { id:`f4s2`, domain:`Technical`, task:`T4`, title:`Verbs, not boxes`,
+    { id:`f4s2`, domain:`Technical`, task:`T4`, title:`Verbs, not boxes`, q:`What should a functional architecture be built around?`,
       text:(s,all,G)=>[`Sunday at noon the alarm she'd set went off, and she made the call she'd promised. Monday she and Jun took the big conference room, the one with the old lighting diagram still ghosted under the whiteboard.`,`Jun had started a function list over the weekend. It was long, and it read like a parts catalog: air rack functions, thermal functions, power functions. <span class="said" data-who="Jun">"That's how Wes splits up the work,"</span> he said. <span class="said" data-who="Jun">"So that's how I split up the functions."</span>`],
       opts:[
         {t:`Keep Jun's subsystem lists and add a column for crossing functions.`, s:1, d:{trust:3,conf:1,health:1},
@@ -80,7 +80,7 @@
           after:`They save a week. Then they can't say which box wakes a sleeping crew member, because no box was ever asked to.`,
           why:`Going straight to physical elements skips the functional view, which is where you find the jobs no single box was given.`}
       ]},
-    { id:`f4s3`, domain:`Technical`, task:`T4`, title:`Sixty four squares`,
+    { id:`f4s3`, domain:`Technical`, task:`T4`, title:`Sixty four squares`, q:`Jun's N-squared draft has twenty one of fifty six cells marked. What should the team do with them?`,
       text:(s,all,G)=>[`By Thursday Jun had turned the functions and the subsystems into an N-squared diagram, printed on a plotter sheet that covered the conference table.`,`<prop type="doc" title="HEARTH N-squared diagram, draft 1 (excerpt)">On the diagonal: Structure, Air rack, Thermal, Power, Avionics, Fire detection, Crew systems, Halo Station.<br>Across a row: what that element sends. Down a column: what it receives.<br>Power sends to: air rack, thermal, avionics, fire detection, crew systems.<br>Air rack sends to: thermal (heat), avionics (status), crew systems (cabin air).<br>Thermal sends to: air rack (coolant), avionics (coolant), Halo Station (heat).<br>Halo Station sends to: power (station power), avionics (commands), thermal (radiator loop).<br>Marked cells: 21 of 56.</prop>`,`Tiago leaned on the table with both hands and tapped the air rack's row. <span class="said" data-who="Tiago">"That one's going to be trouble. Every mess I've ever had in a test cell started in a row like that."</span> Wes wanted to know what anybody planned to do with a chessboard.`],
       opts:[
         {t:`Put the matrix in the review package and walk the reviewers through it.`, s:1, d:{trust:2,conf:1,health:0},
@@ -112,7 +112,7 @@
           after:`Jun types every port: 120 volts DC, coolant at a set flow and temperature, a data link, cabin air. When he joins two ports of different types, the line turns red. He does it once on purpose so Wes can see. <span class="said" data-who="Wes">"Huh,"</span> Wes says. <span class="said" data-who="Wes">"It argues back."</span>`,
           why:`In SysML a block definition diagram shows what the system is made of, and an internal block diagram shows how the parts connect through ports, with typed flows. Typed ports let the model catch a mismatched interface before the hardware does.`}
       ]},
-    { id:`f4s5`, domain:`Technical`, task:`T4`, title:`Where each one lives`,
+    { id:`f4s5`, domain:`Technical`, task:`T4`, title:`Where each one lives`, q:`Each function is going to the element that performs it. How should egress be allocated?`,
       text:(s,all,G)=>[`By the end of week seven they were allocating. Each function went to the element that would perform it, and each got a verification point: the place Tiago would prove it worked.`,`Detect fire went to the fire detection and suppression subsystem. Tiago asked where he should verify it. Nadia picked the cabin smoke sensor in the main air return above the galley. Galleys were where fires started. Helen's had. And all of the cabin's air came back there to the fans. Tiago could hold a calibrated smoke source under it and watch it alarm. It was testable, and it would pass. In the verification point column she typed cabin smoke sensor, verified by test, and they moved to the next row.`,`The next row was egress. <span class="said" data-who="Wes">"Hatch,"</span> Wes said from the doorway. <span class="said" data-who="Wes">"Hatch is structure. Give it to me."</span>`],
       opts:[
         {t:`Allocate egress to structure as Wes asks, with the hatch as its home.`, s:0, d:{trust:4,conf:-2,health:-4},
@@ -128,7 +128,7 @@
           after:`The trade study starts with nothing to compare against, because there's no record of which element does what.`,
           why:`Allocations can be revised. Holding them back means the trade has no baseline to work from.`}
       ]},
-    { id:`f4s6`, domain:`Technical`, task:`T4`, title:`Five pictures`,
+    { id:`f4s6`, domain:`Technical`, task:`T4`, title:`Five pictures`, q:`Helen, OCSC, the station integrators and Tiago all want different things from the walkthrough. What should FRO show?`,
       text:(s,all,G)=>[`Halo wanted an architecture walkthrough in week eight. Helen wanted to see how a crew moved through the module. The observer from OCSC wanted the hazard controls. Halo's station integrators wanted interfaces. Tiago wanted to know where his test ports would be.`,`Wes had one answer for all of them. <span class="said" data-who="Wes">"Send them revision C. It's all on there."</span>`],
       opts:[
         {t:`Send revision C and the N-squared to everyone as one picture.`, s:0, d:{trust:3,conf:-2,health:-3},
@@ -144,7 +144,7 @@
           after:`Helen logs in once and calls Nadia. <span class="said" data-who="Helen">"I can't find the crew."</span>`,
           why:`Access isn't a view. Stakeholders need views that answer their concerns, not a whole model to dig through.`}
       ]},
-    { id:`f4s7`, domain:`Agreement and organizational`, task:`O4`, title:`Jun's turn`,
+    { id:`f4s7`, domain:`Agreement and organizational`, task:`O4`, title:`Jun's turn`, q:`Amara wants FRO's interface list presented at Halo's first working group. Who should present it, and how?`,
       text:(s,all,G)=>[`Halo's interface working group would meet for the first time at the end of week eight, and Amara wanted FRO's interface list presented. <span class="said" data-who="Amara">"You present it,"</span> she told Nadia. <span class="said" data-who="Amara">"Jun can run the slides."</span>`,`Jun had built every line of that list. He'd presented the trace at the SRR, from notes, to people who'd already read it. He'd never had to answer a customer who hadn't. He was already nodding at Amara.`],
       opts:[
         {t:`Do a dry run with Jun and have him present with her beside him.`, s:3, best:true, d:{trust:5,conf:4,health:3},
@@ -160,7 +160,7 @@
           after:`Jun gets a training budget and a certificate. He still hasn't spoken in front of the customer.`,
           why:`Training has its place. Competency also grows on the job, and the job was right there.`}
       ]},
-    { id:`f4s8`, domain:`Cross-cutting`, task:`X4`, title:`One box of six`,
+    { id:`f4s8`, domain:`Cross-cutting`, task:`X4`, title:`One box of six`, q:`On Halo's slide, HEARTH sits beside five other boxes with their own owners. How should FRO work within that?`,
       text:(s,all,G)=>[`Halo's station integration lead opened the working group with one slide. HEARTH was a small box on it, one of six: the core module, the power and radiator truss, the robotic arm, a lab module another company was building, the visiting crew vehicles, and the ground. Each box had a different owner and a different contract.`,`<span class="said" data-who="woman">"We don't build any of these,"</span> the lead said. <span class="said" data-who="woman">"We own the station."</span> Wes leaned over to Nadia. <span class="said" data-who="Wes">"Then who's in charge of ours?"</span>`],
       opts:[
         {t:`Get HEARTH right on its own terms for Halo to fit in later.`, s:0, d:{trust:1,conf:-2,health:-3},
@@ -176,7 +176,7 @@
           after:`Halo declines, politely. They have six contracts and no engineers to spare.`,
           why:`In an acknowledged SoS, constituents keep their own management. Handing over your design authority doesn't make the whole better run.`}
       ]},
-    { id:`f4s9`, domain:`Cross-cutting`, task:`X4`, title:`One alarm`,
+    { id:`f4s9`, domain:`Cross-cutting`, task:`X4`, title:`One alarm`, q:`Halo's station change replaces HEARTH's own alarm with the station's tones. How should FRO respond?`,
       text:(s,all,G)=>[`At the start of week nine Halo issued a station change. Every module would use the station's caution and warning tones and the station's panel, so a crew member heard one alarm language wherever they were. HEARTH's own alarm, which Helen had chosen to be heard in every quarter, was out.`,`Odette brought the page to Nadia's desk. <span class="said" data-who="Odette">"One alarm language in every module. That's the right rule,"</span> she said. <span class="said" data-who="Odette">"We picked ours so you'd hear it through a curtain, though. I want theirs to do the same."</span>`],
       opts:[
         {t:`Keep HEARTH's own alarm, which Helen chose for every quarter.`, s:0, d:{trust:2,conf:-2,health:-4},
@@ -192,7 +192,7 @@
           after:`Amara agrees it's a cost change. The alarm waits on contracts for six weeks, and on paper the crew still has two alarm languages.`,
           why:`Cost belongs in the agreement, worked in parallel. Holding a station safety rule hostage to payment puts the money ahead of the need.`}
       ]},
-    { id:`f4s10`, domain:`Cross-cutting`, task:`X3`, title:`The thread`,
+    { id:`f4s10`, domain:`Cross-cutting`, task:`X3`, title:`The thread`, q:`Tiago types every number in his procedures from the requirements PDF. What should tie the data together?`,
       text:(s,all,G)=>[`Tiago caught Nadia in the high bay with a draft test procedure in one hand. <span class="said" data-who="Tiago">"Every number in here I typed from the requirements PDF. If one changes, I won't know. Wes's CAD won't know either. The model knows, and that's it."</span>`,`Jun had ideas about that, and he had them at length. His roommate wrote discharge forecasting software at Halcyon AI, across town, and Jun liked to point out that his own model only had to predict a hatch.`],
       opts:[
         {t:`Move requirements, the model, CAD and test procedures into one new tool.`, s:0, d:{trust:0,conf:-2,health:-3},
@@ -208,7 +208,7 @@
           after:`By then there are four hundred requirements, two thousand drawings and nine hundred test steps to connect by hand.`,
           why:`The thread is cheapest while the data is being created. Building it afterward means reconstructing links nobody recorded.`}
       ]},
-    { id:`f4s11`, domain:`Technical`, task:`T6`, title:`Enough cold`,
+    { id:`f4s11`, domain:`Technical`, task:`T6`, title:`Enough cold`, q:`Jun asks whether HEARTH's coolant loop can take the air rack's heat. How should the team find out?`,
       text:(s,all,G)=>[`Tamarack's proposal gave one number for the heat the air rack would dump into HEARTH's coolant loop. Jun wanted to know whether the loop could take it in every mode the crew would use. Amara wanted the answer by Friday.`,`<span class="said" data-who="Amara">"Use their number,"</span> she said. <span class="said" data-who="Amara">"It's in a signed proposal."</span> Tiago, passing with a cart, said thermal vacuum testing would settle it for sure in about two years.`],
       opts:[
         {t:`Check Tamarack's proposal number against the loop's full capacity.`, s:0, d:{trust:3,conf:-2,health:-3},
@@ -224,7 +224,7 @@
           after:`Two years is a long time not to know whether the loop is big enough, and the loop's size gets frozen in five months.`,
           why:`Test confirms. Analysis is how you decide before the hardware exists.`}
       ]},
-    { id:`f4s12`, domain:`Cross-cutting`, task:`X3`, title:`Drop right in`,
+    { id:`f4s12`, domain:`Cross-cutting`, task:`X3`, title:`Drop right in`, q:`Pavel says Tamarack's rack will drop right in, with details sorted at integration. How should its interfaces be handled?`,
       text:(s,all,G)=>[`Halo sent its interface requirements for the berthing mechanism, station power, data and the radiator loop. The same afternoon Pavel Ruzicka at Tamarack sent an email. Their rack came from the same family they'd flown on the old station, he wrote. It would drop right in, and the details could be sorted out at integration, the way they always had been.`,`Jun's list had twenty one interfaces. Eleven had a definition both sides had signed.`],
       opts:[
         {t:`Run Halo's interfaces through ICDs and settle Tamarack's on email with Pavel.`, s:0, flag:`nointerfacecontrol`, d:{trust:3,conf:-3,health:-6},

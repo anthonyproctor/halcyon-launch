@@ -88,7 +88,7 @@
     ]
   },
   scenes: [
-    { id:`f9s1`, domain:`Cross-cutting`, task:`X4`, title:`Eleven modules`,
+    { id:`f9s1`, domain:`Cross-cutting`, task:`X4`, title:`Eleven modules`, q:`Nine of Odette's forty hazard reports lean on cargo heritage. How should Nadia treat Wes's rule?`,
       text:(s,all,G)=>[`Monday morning Wes's line was already in the tailoring draft, in his words, typed in himself: hardware with cargo flight heritage is accepted as built, no new analysis. Odette had the list of forty hazard reports for the phase two safety review in week twenty six. Nine of them leaned on cargo heritage, from the hatch latches to the cabin relief valves.`,`Nadia had driven back Sunday afternoon. Callie's truck never came down the street before she left.`,`<span class="said" data-who="Wes">"Eleven modules,"</span> Wes said from the doorway. <span class="said" data-who="Wes">"Not one squawk on orbit."</span> He didn't mention the week before one of them shipped, and neither did she.`],
       opts:[
         {t:`Check each of the nine against the new conditions, a crew aboard for fifteen years.`, s:3, best:true, d:{trust:3,conf:5,health:5},
@@ -104,7 +104,7 @@
           after:`Amara prices it at five months. Wes asks if they'll be requalifying aluminum too. The plan goes back in a drawer, and the nine items go in with no review at all.`,
           why:`Reuse with evidence is good engineering. Tailoring for a new system type means checking what changed, not throwing out what's known.`}
       ]},
-    { id:`f9s2`, domain:`Cross-cutting`, task:`X2`, title:`Twenty thousand hours`,
+    { id:`f9s2`, domain:`Cross-cutting`, task:`X2`, title:`Twenty thousand hours`, q:`Amara says a 20,000 hour fan MTBF covers a six month mission four times over. How should Nadia answer?`,
       text:(s,all,G)=>[`Tuesday Jun brought Tamarack's data sheet for the rack's main fan to Nadia's desk, with Halo's requirement highlighted beside it: ventilation MTBF of at least 20,000 hours. Tamarack rated the fan at 20,000.`,`Amara had already seen it. <span class="said" data-who="Amara">"Twenty thousand hours is two years and change,"</span> she said. <span class="said" data-who="Amara">"A mission's six months. We're covered four times over."</span>`,`Jun didn't say anything, which from Jun meant he thought she was wrong and wanted Nadia to be the one to say it.`],
       opts:[
         {t:`Close the requirement on Tamarack's rating of 20,000 hours against a 4,320 hour mission.`, s:0, d:{trust:4,conf:-2,health:-4},
@@ -120,7 +120,7 @@
           after:`Tamarack quotes a new fan design and nine months. The requirement still compares an average with a mission length.`,
           why:`A tighter number on a misread measure costs money without answering the question. Define reliability for the mission first.`}
       ]},
-    { id:`f9s3`, domain:`Cross-cutting`, task:`X2`, title:`Ninety days`,
+    { id:`f9s3`, domain:`Cross-cutting`, task:`X2`, title:`Ninety days`, q:`Pavel puts CO2 removal at 99.95 percent, and supply flights run every ninety days. What should Nadia do?`,
       text:(s,all,G)=>{const pad=G&&G.paddedmargin;return [`Wednesday Helen sent Halo's availability requirement for CO2 removal: ready 99 percent of the time. Pavel answered the same afternoon. The rack's controller card had an MTBF of 8,000 hours, and a crew could swap it in four. Eight thousand over 8,004, he wrote. 99.95 percent.`,`There was no spare card on board in the plan. The nearest one would be on the ground waiting for a supply flight, and Halo's flights ran every ninety days.`,
         (pad
           ?`A spare card weighed nine kilograms. Halo believed HEARTH had seventeen hundred kilograms of margin to spend. Nadia had done it again on the drive back from Pueblo: about 810, sixty over the floor.`
@@ -139,7 +139,7 @@
           after:`Pavel says the card is already good for its class. The wait for a supply flight is the same either way.`,
           why:`Better reliability helps, but here the downtime comes from logistics delay. Work on the biggest contributor.`}
       ]},
-    { id:`f9s4`, domain:`Technical`, task:`T13`, title:`Behind the card`,
+    { id:`f9s4`, domain:`Technical`, task:`T13`, title:`Behind the card`, q:`Reaching the rack's main fan takes six hours and two tools the station lacks. How should FRO handle maintenance?`,
       text:(s,all,G)=>{const blamed=G&&G.blamedsupplier;return [
         (blamed
           ?`Thursday Pavel came down from Frederick with the rack's maintenance drawing and his contracts manager.`
@@ -159,7 +159,7 @@
           after:`They sit at the drawing all afternoon. Jun lists every part with its failure rate. Four become ORUs: the fan, the controller card, the CO2 sorbent cartridges and the power card. Each has to come out from the front face, with captive fasteners, using tools already in the station's kit, in under an hour. The fan moves in front of the card. Tamarack says two weeks, inside its float. Pavel says Irena, on the frame bench, drew it that way in March, and he'd told her not to bother.`,
           why:`Maintainability is designed in. Orbital replacement units are chosen for failure rate and criticality, then designed so a crew can swap them with the tools and time they'll have on board.`}
       ]},
-    { id:`f9s5`, domain:`Technical`, task:`T13`, title:`Hours in a week`,
+    { id:`f9s5`, domain:`Technical`, task:`T13`, title:`Hours in a week`, q:`HEARTH's weekly tasks take five and a half crew hours, and Halo allows three. How should Nadia respond?`,
       text:(s,all,G)=>{const p7=(all&&all[7]&&all[7].picks)||{};return [`Friday Helen's crew office sent its maintenance budget: three crew hours a week for HEARTH, scheduled work only. Jun's list of HEARTH's scheduled tasks came to five and a half. Cabin filters, the hygiene station, water samples, sorbent cartridges, inspections.`+(p7[8]===1?` One of them was the ten minute hatch seal check Helen had asked for in writing in week seventeen.`:``),`Helen's note had one more line. The crew was up there to do work Halo's customers paid for, and every maintenance hour came out of it.`,`<span class="said" data-who="Jun">"Do I just send them the five and a half?"</span> Jun asked.`]},
       opts:[
         {t:`Budget crew time like mass and design down the largest tasks on Jun's list.`, s:3, best:true, d:{trust:4,conf:5,health:5},
@@ -175,7 +175,7 @@
           after:`The total fits. Filters cleaned every two weeks clog in ten days, and the fans work harder all mission.`,
           why:`Intervals come from how parts wear, not from the budget. Change the design, not just the schedule.`}
       ]},
-    { id:`f9s6`, domain:`Technical`, task:`T6`, title:`Two fans, one box`,
+    { id:`f9s6`, domain:`Technical`, task:`T6`, title:`Two fans, one box`, q:`Jun's parallel fans share one controller, and the loop comes to 0.9702 against 0.98. What should Nadia do?`,
       text:(s,all,G)=>[`Sunday night Nadia had called at eight. She'd had her first line ready since Thursday. Rosie answered. When Callie came on it was to say Dad was fine and the tomatoes were fine, and then she handed the phone back to Rosie.`,`Monday of week twenty three Jun put his block diagram for the cabin air loop on the HEARTH room screen. Two cabin fans side by side, in parallel, so either one could keep the air moving. Both ran through one fan controller.`,`<prop type="doc" title="Cabin air loop, reliability block summary, one 180 day mission">Fan A: 0.90. Fan B: 0.90. In parallel.<br>Fan controller, shared by both fans: 0.98. In series with the pair.<br>Loop reliability: 0.9702.<br>Requirement: 0.98.</prop>`,`<span class="said" data-who="Wes">"Two fans,"</span> Wes said. <span class="said" data-who="Wes">"We doubled it."</span>`],
       opts:[
         {t:`Add a third fan in parallel with the pair, on the same shared controller.`, s:0, d:{trust:3,conf:-1,health:-3},
@@ -191,7 +191,7 @@
           after:`Halo sends it back in a day. The requirement says 0.98, and the shared controller is still a single point.`,
           why:`Redundancy only counts where the branches are independent. A shared controller in series takes both fans with it.`}
       ]},
-    { id:`f9s7`, domain:`Cross-cutting`, task:`X2`, title:`Separate how`,
+    { id:`f9s7`, domain:`Cross-cutting`, task:`X2`, title:`Separate how`, q:`HR-07 lists three controls for CO2 buildup, each with its own verification. What should Nadia do with it?`,
       text:(s,all,G)=>{const hid=G&&G.hidrisk;return [`Tuesday Odette brought the first hazard report up to the HEARTH room: carbon dioxide buildup, catastrophic. Too much CO2 and a crew gets headaches, then slow, then wrong about things.`,`<prop type="doc" title="Hazard report HR-07, CO2 buildup, controls (draft)">Hazard: CO2 builds up in HEARTH's cabin. Severity: catastrophic. Two fault tolerance required.<br>Control 1: rack CO2 removal. Verified by rack acceptance test.<br>Control 2: station CO2 removal through intermodule ventilation. Verified by station analysis.<br>Control 3: crew recognizes symptoms and leaves the module. Verified by crew training.</prop>`,
         (hid
           ?`Since the seal, Amara read every hazard report herself before it went to Halo, and she was reading this one over Odette's shoulder.`
@@ -212,7 +212,7 @@
           after:`The third line goes first. By the time a crew feels CO2, the judgment it takes to leave is already going, so symptoms aren't a control. Odette swaps in portable CO2 monitors with their own batteries and alarms. Then they ask of every pair what one thing could stop both. The intermodule fan runs on station power, not HEARTH's, and the monitors run on themselves. Nothing shared. Each control gets its own verification. Nadia asks for the same pass on all forty. Odette says that's two weeks, and takes half.`,
           why:`Two fault tolerance means no two failures or operator errors cause the catastrophe. Controls count only if each can prevent the hazard alone, shares no common cause with the others, and is verified independently.`}
       ]},
-    { id:`f9s8`, domain:`Cross-cutting`, task:`X2`, title:`Who's asking`,
+    { id:`f9s8`, domain:`Cross-cutting`, task:`X2`, title:`Who's asking`, q:`The rack will take mode commands from Halo's ground through the station network. How should the rack treat them?`,
       text:(s,all,G)=>{const p6=(all&&all[6]&&all[6].picks)||{};return [
         (p6[7]===1
           ?`Halo's controllers had asked again in week twenty for ground commanding of the rack, and this time it went through as a priced change.`
@@ -232,7 +232,7 @@
           after:`Helen's controllers lose the commanding they planned on, and the crew gets woken for every mode change in its sleep period.`,
           why:`Removing a needed function to avoid a threat trades away the stakeholder's need. Secure the function instead.`}
       ]},
-    { id:`f9s9`, domain:`Cross-cutting`, task:`X2`, title:`Three names`,
+    { id:`f9s9`, domain:`Cross-cutting`, task:`X2`, title:`Three names`, q:`One fan fault shows up as E-47, ARS FLT 47 and a rack fan trip. What's the fix?`,
       text:(s,all,G)=>[`Thursday Helen's crew office sent back the rack's displays from their first walkthrough. Tamarack's panel showed faults as codes: E-47. Halo's ground screens showed the same fault as ARS FLT 47. HEARTH's draft procedures called it a rack fan trip. Three names for one fan.`,`Helen had put one question at the top. <span class="said" data-who="Helen">"What does my crew do first, and how would they know?"</span>`],
       opts:[
         {t:`Give each fault one shared name, then test the panel on Halo's trainers.`, s:3, best:true, d:{trust:4,conf:5,health:5},
@@ -248,7 +248,7 @@
           after:`They do learn them, slowly. The first real fault takes eleven minutes to name.`,
           why:`Training can't fix a design that fights its users. HSI designs the system so the human part works too.`}
       ]},
-    { id:`f9s10`, domain:`Technical`, task:`T12`, title:`Sleep period`,
+    { id:`f9s10`, domain:`Technical`, task:`T12`, title:`Sleep period`, q:`Nobody has decided who answers a rack fault yet. What should the concept say?`,
       text:(s,all,G)=>[`Friday Helen drove up from Halo to work the rack's operations concept with Nadia and Jun. The question on the whiteboard was short. The rack faults in the middle of the crew's sleep period. Who does what?`,`Halo's ground was staffed around the clock. The crew slept eight hours. FRO's sustaining engineers would be in Centennial, on call. And the aft node, still a watch item on Nadia's register, would change who could reach what once it berthed.`],
       opts:[
         {t:`Have the crew handle every rack fault, with the ground in support.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -264,7 +264,7 @@
           after:`Halo writes procedures for a rack it doesn't know. They assume the fan can be reached in five minutes.`,
           why:`The supplier knows how its system behaves and fails. The operations concept is shared work, and the design has to support it.`}
       ]},
-    { id:`f9s11`, domain:`Cross-cutting`, task:`X4`, title:`Six hundred pages`,
+    { id:`f9s11`, domain:`Cross-cutting`, task:`X4`, title:`Six hundred pages`, q:`OCSC's six hundred page standard was written for government programs with government staffs. How should FRO apply it?`,
       text:(s,all,G)=>{const hid=G&&G.hidrisk;const p7=(all&&all[7]&&all[7].picks)||{};return [`Monday of week twenty four OCSC's crew certification standard sat on the HEARTH room table, six hundred pages written for government programs with government staffs. Amara had flagged forty two pages of document formats, reports and review steps FRO couldn't staff.`,`Ines had come up from quality with FRO's own procedures under her arm, because half of what OCSC asked for, FRO already did under another name. Nadia still had Amara's card in her badge holder`+(p7[11]===2?`, the board's three conditions on the back.`:`.`)+(hid?` After the seal, the board's chair asked to see anything FRO sent OCSC before it went.`:``),`<span class="said" data-who="Amara">"Tailor it,"</span> Amara said. <span class="said" data-who="Amara">"Hard."</span>`]},
       opts:[
         {t:`Ask OCSC for a blanket waiver, given how the standard was written.`, s:0, d:{trust:3,conf:-2,health:-4},
@@ -280,7 +280,7 @@
           after:`Ines maps every line of the standard to FRO's own procedures in two days. Where FRO's document carries the same content, it stands in for OCSC's format. Two reports become one. Each change gets a reason. Nothing that touches the hazard controls, two fault tolerance or the safety reviews moves. OCSC's observer signs two hundred and one lines and asks questions on thirteen, and Amara gets back most of her forty two pages.`,
           why:`Tailoring adapts a process to the project's type, size and risk on purpose, with rationale agreed by the authority that imposed it. It changes how the work is done, not the requirements that protect people.`}
       ]},
-    { id:`f9s12`, domain:`Cross-cutting`, task:`X1`, title:`Cabin to vacuum`,
+    { id:`f9s12`, domain:`Cross-cutting`, task:`X1`, title:`Cabin to vacuum`, q:`HR-22 covers overpressure with the station's pressure control and two relief valves. How should Nadia review it?`,
       text:(s,all,G)=>[`Wednesday the relief valves came up, last on the heritage list. Odette had the hazard report open: cabin overpressure, catastrophic. If the station's pressure control ever failed open and kept feeding air, the shell would be pushed past what it was built to hold.`,`<prop type="doc" title="Hazard report HR-22, cabin overpressure, controls">Control 1: station pressure control. Verified by station analysis.<br>Control 2: positive pressure relief valve A. Verified by crack and reseat test.<br>Control 3: positive pressure relief valve B. Verified by crack and reseat test.</prop>`,`<span class="said" data-who="Wes">"Cargo flew one valve,"</span> Wes said. <span class="said" data-who="Wes">"We put the second one in at PDR, for your two faults."</span>`,`Three different things. It read like three different things.`],
       opts:[
         {t:`Trace the whole path from cabin air to vacuum, ground procedures included.`, s:3, best:true, d:{trust:3,conf:5,health:5},
