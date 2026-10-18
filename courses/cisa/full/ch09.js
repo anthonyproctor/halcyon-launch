@@ -131,7 +131,7 @@
     ]
   },
   scenes: [
-    { id:`f9s1`, domain:`Protection of Information Assets`, task:`5A1`, title:`The dull ones`,
+    { id:`f9s1`, domain:`Protection of Information Assets`, task:`5A1`, title:`The dull ones`, q:`SR-N1's screen lock exemption sits in the exception register from 2019. What should Henry conclude?`,
       text:(s,all,G)=>[`Meridian's access policy ran to eleven pages, and the first one was good. He'd have signed most of it himself.`,`<prop type="doc" title="Meridian information security policy, section 5, access (extract)">5.1 Every user has a unique ID. IDs, passwords, and signed in sessions are never shared.<br>5.2 Workstations lock after 10 minutes without use.<br>5.3 Settlement roles are granted on the business owner's approval and reviewed quarterly.<br>Approved: CIO, June 2019. Next review due: June 2021.</prop>`,`The exception register came stapled behind it, and he went down it again, this time looking for one desk.`,`<prop type="doc" title="Policy exception register (extract)">EX-2019-11. Workstation SR-N1, settlement night desk: exempt from 5.2. Screen lock disabled ("monitoring desk, attended at all times").<br>Requested by: Pellridge night operations. Approved by: CIO.<br>Compensating control: none stated. Expiry: none stated. Status: OPEN.</prop>`,`On the twelfth he'd gone past it with the laptop waiver and the printer, as one of the dull ones.`],
       opts:[
         {t:`Accept it. The CIO approved the exception, as the policy allows.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -147,7 +147,7 @@
           after:`That's writing Meridian's security standard for it, then auditing a claim that turns partly on whether Meridian kept its own.`,
           why:`Writing the auditee's policies is a management function and impairs independence. Report the gap.`}
       ]},
-    { id:`f9s2`, domain:`Protection of Information Assets`, task:`5A3`, title:`Two hats`,
+    { id:`f9s2`, domain:`Protection of Information Assets`, task:`5A3`, title:`Two hats`, q:`One Pellridge night ID can approve files and change merchants' bank details. What should Henry do?`,
       text:(s,all,G)=>[`The role assignments came as a spreadsheet of fourteen hundred rows. He sorted by role, then by user, and stopped at a user who turned up in two places a user shouldn't.`,`<prop type="doc" title="Settlement application, role assignments as of March 9 (extract)">APPROVER (second approval on files over $10,000): 14 users.<br>MERCHANT_MAINT (create merchants, change their bank details): 6 users.<br>Both: 1 user, pnop2. Type: Pellridge, night operations. APPROVER granted 2019-09-15 by conversion rule M-07 (legacy SUPERVISOR). MERCHANT_MAINT granted 2019-09-15, same batch. ID created for the cutover weekend.</prop>`,`<prop type="doc" title="Meridian segregation of duties matrix (extract)">SOD-03. MERCHANT_MAINT and APPROVER must not be held by the same user.<br>Enforced in application: no. Planned: release 2.</prop>`,`Nine approvers before the conversion and fourteen after it. He'd had those two numbers since last week. Now one of the five had a name, or at least a user ID.`],
       opts:[
         {t:`Conclude that pnop2 is how the 2,906 got paid.`, s:0, d:{trust:-3,conf:0,health:-4},
@@ -163,7 +163,7 @@
           after:`One user, two roles that Meridian's own matrix says must never sit together: one that can create a merchant and change where its money goes, and one that approves the payment as the second pair of eyes. Nobody granted it on purpose. A conversion rule in September 2019 turned every legacy supervisor into an approver, and an ID made for the cutover weekend came through holding both, and kept them. The matrix was written down and the application was never told; the check was planned for a release that didn't arrive until last Saturday. A conflict is a finding whether or not anyone used it, because the control should make it impossible. Whether anyone did goes to counsel as a separate question.`,
           why:`Incompatible duties, such as setting up payees and approving payments, should be separated and enforced by the system. A conflict is a finding even if it hasn't been exploited. Record how the access was granted so the cause can be fixed.`}
       ]},
-    { id:`f9s3`, domain:`Protection of Information Assets`, task:`5A3`, title:`The wrong half`,
+    { id:`f9s3`, domain:`Protection of Information Assets`, task:`5A3`, title:`The wrong half`, q:`Settlement access reviews ran quarterly from 2019 to 2022. What should Henry conclude about them?`,
       text:(s,all,G)=>[`The control that should have found pnop2 years ago was the quarterly access review. He went looking for the last one.`,`<prop type="doc" title="Settlement access reviews, 2019 to 2027 (Meridian access standard file, extract)">Q4 2019 to Q2 2022: completed each quarter, signed by Head of Settlement Operations.<br>Scope: Meridian staff IDs. Pellridge IDs excluded ("vendor manages its own staff").<br>Q2 2022 result: "Approver list reviewed. No changes."<br>Q3 2022 onward: not performed. Exception EX-2022-07.</prop>`,(G.trustedia?`Leonard's 2026 report had tested the access standard by reading it. On the ninth Henry had let that report stand in for his own work. He didn't, this time.`:`Leonard's 2026 report had tested the access standard by reading it. Henry put it to one side.`)],
       opts:[
         {t:`Note the reviews never covered Pellridge, then stopped altogether.`, s:3, best:true, d:{trust:3,conf:0,health:5},
@@ -179,7 +179,7 @@
           after:`The suspension goes down, dated, with the exception that allowed it. The scope line above it waits for later, and the scope line is the half that explains why pnop2 was never seen even when the reviews ran.`,
           why:`The suspension is a finding. So is a review that excluded the vendor's accounts, and that's the part that let the conflict sit unseen.`}
       ]},
-    { id:`f9s4`, domain:`Protection of Information Assets`, task:`5A2`, title:`Entry only`,
+    { id:`f9s4`, domain:`Protection of Information Assets`, task:`5A2`, title:`Entry only`, q:`The settlement room door log covers entries from midnight to eight. What can Henry say from it?`,
       text:(s,all,G)=>[`The badge records were two files: the door log for the settlement room, and the register that said whose badge was whose.`,`<prop type="doc" title="Ninth floor, settlement room door, entries 12:00 AM to 8:00 AM (extract, Denver time)">Wed Mar 3: 2:14 AM P-0117 (Pellridge, night operator). 6:47 AM P-0122 (Pellridge, night operator). 7:51 AM M-2231 (Meridian, settlement, day shift).<br>Thu Mar 4: 3:05 AM M-2187 (Meridian, night supervisor). 7:12 AM P-0117. 7:49 AM M-2252 (Meridian, settlement, day shift).<br>Badge M-2040 (B. Nyland): no reads at any Meridian door, March 1 to 12.<br>Reader: entry only. Exit reader: none. Anti-passback: off. Door held open alarm: disabled June 2024, at the night desk's request.<br>Camera, settlement room: recordings kept 14 days.</prop>`,`Seven forty four on the third, seven thirty nine on the fourth. On each morning the last badge through the door before the queue log moved was a night shift badge, and the first day shift badge came a few minutes after it.`],
       opts:[
         {t:`Name the night shift badge that came through last each morning.`, s:0, d:{trust:-3,conf:0,health:-4},
@@ -195,7 +195,7 @@
           after:`A list of entries isn't a list of people present. Nobody who came in before midnight is on it, nobody who left is on it, and nobody who followed someone else through is on it.`,
           why:`An entry only log without anti-passback can't show presence. Corroborate it with other records and state its limits.`}
       ]},
-    { id:`f9s5`, domain:`Protection of Information Assets`, task:`5A1`, title:`Section six`,
+    { id:`f9s5`, domain:`Protection of Information Assets`, task:`5A1`, title:`Section six`, q:`The overnight roster came to Henry secondhand, through Meridian's counsel. What should he do?`,
       text:(s,all,G)=>{const told=!!G.toldkade;
         return [...(told
           ?[`At 10:45 Meridian's counsel sent a report Henry hadn't asked for. Leonard Pratt's team had used the audit rights in the addendum dated Monday, March 15, for the first time, on three days' notice, and reviewed Pellridge itself.`,`<prop type="doc" title="Meridian internal audit, review of Pellridge Data Services, night operations, March 22 to 24 (extract)">Basis: right to audit, addendum of March 15, 2027.<br>Scope: design of overnight desk controls. Testing of operation: not in scope.<br>Conclusion: controls designed appropriately.<br>Appendix C, overnight roster, March 2 to 5, as provided by Pellridge: night operator 1 (P-0117), night operator 2 (P-0122), Meridian night supervisor (M-2187), each night.<br>Appendix D, Pellridge information security policy, section 6: "Credentials and workstations are personal and must never be shared."</prop>`,`A right he'd talked into being over coffee on the fifteenth, used for the first time by the insured, to look at its own vendor, and sent to him by the insured's lawyer. He held the copy by its edges. Pellridge had known for ten days which records the insurer would want, and Henry was the reason it knew.`]
@@ -215,7 +215,7 @@
           after:`He'd be ringing the vendor's engineer directly, outside the channel both counsels agreed, about a matter the bureau has taken up. Whatever the night lead said would be one person's word on the phone.`,
           why:`Contact goes through the agreed channel. An informal answer from the vendor's staff is weak evidence and can compromise an investigation.`}
       ]},
-    { id:`f9s6`, domain:`Operations and Resilience`, task:`4A11`, title:`Who holds the pen`,
+    { id:`f9s6`, domain:`Operations and Resilience`, task:`4A11`, title:`Who holds the pen`, q:`Before relying more on the queue log, Henry opens the database admin summary. What should he conclude?`,
       text:(s,all,G)=>[`The queue log was the best witness he had. Before he leaned on it any harder he wanted to know who could change what it said, so at half past eleven he opened the database summary that had come in Monday's batch and nobody had read.`,`<prop type="doc" title="Settlement database, privileged access and auditing (Pellridge administration summary, via counsel, extract)">Database administration: shared account pell_dba, used by 4 Pellridge staff. Rights: read and change any table, including the SETL-SUP disposition log.<br>Database auditing: sign ins, on. Changes to data in queue and settings tables, off since October 2019 ("performance").<br>Changes made directly in the database don't pass through the application or its user ID field.</prop>`],
       opts:[
         {t:`Rely on the queue log. It's the application's own record.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -231,7 +231,7 @@
           after:`The queue log says bnyland, SR-N1, 7:44. That's the application's account, and the application isn't the only way into the table. Four Pellridge administrators share one account that can change any row in it, and since October 2019 the database hasn't recorded changes to data there at all, to save a little speed. So the log is good evidence of what the application wrote, and no evidence that nobody wrote over it afterward. Database administrators need their own accounts, and their changes to production data need logging they can't switch off. Here a shared account held the pen and nobody kept the record.`,
           why:`Database administrators hold powerful access that bypasses application controls, so they should use individual accounts, and their changes to data should be logged and independently reviewed. Without that, the integrity of critical tables can't be assured.`}
       ]},
-    { id:`f9s7`, domain:`Operations and Resilience`, task:`4A11`, title:`What it calls itself`,
+    { id:`f9s7`, domain:`Operations and Resilience`, task:`4A11`, title:`What it calls itself`, q:`The data dictionary defines each field in the disposition table. What should Henry conclude about the workstation field?`,
       text:(s,all,G)=>{const lp=((all&&all[4]&&all[4].picks)||{})[6],yes=lp===3||lp===0;
         return [`At 12:15 his phone went.`,`<prop type="text" from="Maisie" time="12:15 PM">what do you have for breakfast at your flat. honestly</prop>`,`He wrote <b>Toast.</b>`,`<prop type="text" from="Maisie" time="12:16 PM">toast and what</prop>`,...(yes
           ?[`He thought about the kitchen, the three boxes against the wall, the one chair. She was coming on Monday for the week. There was a toaster now, still in its box. He wrote <b>Toast and whatever you put on the list. Send me a list.</b>`]
@@ -283,7 +283,7 @@
           after:`He sits, on a plastic chair next to a radiator that knocks. Irma puts off her round because the detective asked her to. The tunnel never went near the Navarre, she says, whatever the tour guides tell people, and her father kept the boilers down there twenty years and called it the run. It's Lou's file, is all. Whatever's down there, Lou has to see it first, and see where Henry's hands were. <span class="said" data-who="woman">"He bet me five dollars you'd sit,"</span> Irma says. She doesn't say which way she bet.`,
           why:`Physical evidence that may matter to an investigation is examined by the people responsible for it, with them present. Waiting protects the evidence and the investigator's credibility.`}
       ]},
-    { id:`f9s10`, domain:`Protection of Information Assets`, task:`5A2`, title:`One bulb in three`,
+    { id:`f9s10`, domain:`Protection of Information Assets`, task:`5A2`, title:`One bulb in three`, q:`Irma holds out a contractor badge so Henry won't get stuck behind a door. What should he do?`,
       text:(s,all,G)=>{const alone=!!(s.flags.wenttunnelalone||G.wenttunnelalone);
         return [(alone
           ?`Lou came down the stairs at 2:29. Irma told him before Henry could, and turned the screen so he could see the new line. Lou looked at it for a long time. <span class="said" data-who="Lou">"Now you're in my log,"</span> he said. Then, <span class="said" data-who="Lou">"Again. With me in front this time."</span>`
@@ -319,7 +319,7 @@
           after:`That's police evidence going home, in a death investigation, as the man whose card was in her hand.`,
           why:`Evidence stays with those responsible for it. Removing it breaks the chain of custody and compromises the investigation.`}
       ]},
-    { id:`f9s12`, domain:`Protection of Information Assets`, task:`5A3`, title:`Who keeps the keys`,
+    { id:`f9s12`, domain:`Protection of Information Assets`, task:`5A3`, title:`Who keeps the keys`, q:`The hotel's access system has one shared administrator account and no audit trail. What should Henry say to Lou?`,
       text:(s,all,G)=>{const lg=!!G.loggedin;
         return [`Lou had one more question for Irma, and it was the right one: who runs the system itself. She showed them on her own screen, with the air of someone who'd asked that herself, more than once, in writing.`,`<prop type="doc" title="Brown Palace access control system, administrator accounts (on screen)">Administrator: one shared account. Used by: engineering manager, two engineering leads, vendor support.<br>Rights: issue badges, set access levels, run reports, edit and annotate events.<br>Administrator audit trail: off.</prop>`,`The export in Lou's folder had been run on Tuesday the twenty third by the engineering manager, under that account.`,`Every door Henry had looked at this week had opened for a group. A deploy account six engineers shared. A night account with four names behind it. Internal audit's login in a drawer. A desk nobody owned. Twenty badges on a hook. Now this.${lg?` The drawer login had one more line on it than it should, at 12:41 on Wednesday morning, and the log would never say whose. He could.`:``}`]},
       opts:[

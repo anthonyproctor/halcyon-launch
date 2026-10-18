@@ -82,7 +82,7 @@
     ]
   },
   scenes: [
-    { id:`f2s1`, domain:`Auditing Process`, task:`1B4`, title:`The tall bar`,
+    { id:`f2s1`, domain:`Auditing Process`, task:`1B4`, title:`The tall bar`, q:`Benford's law predicts 567 settlements starting with 9, and Meridian's list has 3,340. What should Henry do?`,
       text:(s,all,G)=>[`By twenty past eight the chart was on the whiteboard in the Wazee Street office, under the order of work, the shopping list, and a line in his own capitals: THURS 6, BOULDER. Henry worked out what the law said should be there. Benford's share for a 9, just under four point six percent, came to 567 of the 12,400. Meridian's list had 3,340.`,`He knew one more thing already. On Tuesday night he'd counted 2,906 settlements between $9,000 and $9,999, just under the line where a second person had to look. Every one of them began with a 9.`,`He had a lot of feelings about the bar. Dot would have asked him which of them were evidence.`],
       opts:[
         {t:`Email Giles that the list fails Benford's law, which shows the fraud list was made up.`, s:0, d:{trust:-3,conf:0,health:-4},
@@ -98,7 +98,7 @@
           after:`He rubs out the chart. Two hours later he realizes the $10,000 isn't a limit at all. It's the point where a second approver looks, and payments go well above it every day.`,
           why:`Knowing when a test doesn't apply is good judgment, but check the facts first. An approval threshold isn't a cap, and Meridian's settlements range from a few dollars to millions.`}
       ]},
-    { id:`f2s2`, domain:`Auditing Process`, task:`1A2`, title:`As of a date`,
+    { id:`f2s2`, domain:`Auditing Process`, task:`1A2`, title:`As of a date`, q:`A SOC 1 report says dual authorization was suitably designed as of December 31. How should Henry treat it?`,
       text:(s,all,G)=>[`At 9:40 Meridian's broker sent a PDF with a cover note that said <b>This should settle the controls question.</b> It was a SOC 1 Type 1 report on Meridian's settlement services, issued by Hollins and Pike LLP, an outside audit firm.`,`<prop type="doc" title="Independent service auditor's report (extract)">Report on the description of Meridian Clearing's settlement system and the suitability of the design of its controls, as of December 31, 2026.<br>Opinion: the controls were suitably designed as of that date.<br>Control 4.2: Settlement files above $10,000 require approval by a second authorized user.</prop>`,`Henry read the date three times, which was becoming a habit.`],
       opts:[
         {t:`Accept it. An independent firm says the dual authorization control was in place.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -114,7 +114,7 @@
           after:`The partner's assistant is polite and immovable. The workpapers belong to the engagement, the engagement belongs to Meridian, and Mr. Ashby is welcome to ask Meridian.`,
           why:`A service auditor's workpapers are confidential to that engagement. You get access through the client, by agreement, not by phoning the firm.`}
       ]},
-    { id:`f2s3`, domain:`Auditing Process`, task:`1A2`, title:`Homework`,
+    { id:`f2s3`, domain:`Auditing Process`, task:`1A2`, title:`Homework`, q:`London's compliance team offers a controls questionnaire for Meridian to complete. How should Henry use it?`,
       text:(s,all,G)=>[`Giles rang at 10:30, which was half past five in London, and he sounded as if he'd walked to the phone from somewhere quite far away.`,`<span class="said" data-who="Giles">"Idea,"</span> he said. <span class="said" data-who="Giles">"Compliance has a questionnaire. Two hundred questions on controls. We send it to Meridian, they fill it in, you review the answers. Saves you days. Their internal audit chap's already offered to coordinate."</span>`],
       opts:[
         {t:`Send it, and use Meridian's answers as the evidence for his controls conclusion.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -130,7 +130,7 @@
           after:`Leonard returns it in a day, beautifully formatted. It matches his own report, which matches the CFO's view, which is where all of this started.`,
           why:`A function that reports to the CFO and has already concluded the controls were effective isn't the right party to answer for them again. You've added a layer, not a check.`}
       ]},
-    { id:`f2s4`, domain:`Operations and Resilience`, task:`4A11`, title:`The whole table`,
+    { id:`f2s4`, domain:`Operations and Resilience`, task:`4A11`, title:`The whole table`, q:`Henry wants every settlement from March 2 to 5, not just Meridian's chosen rows. How should he get them?`,
       text:(s,all,G)=>[`The list of 12,400 was Meridian's choice of rows. Henry wanted the rows they hadn't chosen: every settlement from March 2 to March 5, fraudulent or not, so he could see whether the list was complete and whether the strange 9s showed up anywhere else.`,(G.tippedmeridian?`Meridian's general counsel answered his request at 11:15 with a paragraph about Tuesday night. Given Mr. Ashby's direct contact with Meridian staff about a security matter, all further requests would go through counsel, in writing, and would be answered in the order received. It was perfectly reasonable, and it was a door closing quietly.`:`Meridian's general counsel answered his request at 11:15, copied to the broker, friendly and quick.`),(G.tippedmeridian?`<prop type="email" from="Office of General Counsel, Meridian Clearing" to="Henry Ashby" subject="Settlement data" time="11:15 AM">We will respond to written requests through counsel. Our database team can prepare a spreadsheet of the records you specify. Alternatively, a read only login to the settlement database can be arranged.</prop>`:`<prop type="email" from="Office of General Counsel, Meridian Clearing" to="Henry Ashby" subject="Settlement data" time="11:15 AM">Happy to help. Two options. Our database team can pull whatever you need into a spreadsheet today. Or, if you'd rather look yourself, we can set you up with a read only login to the settlement database by this afternoon.</prop>`)],
       opts:[
         {t:`Take the read only login. He can query exactly what he needs, when he needs it.`, s:0, d:{trust:-3,conf:0,health:-3},
@@ -146,7 +146,7 @@
           after:`He writes the request in five lines: every settlement record dated March 2 to 5, all fields except card and account numbers, the exact query used, the date and time it ran and by whom, and the system's own record count and dollar totals for those days. Through Vellacott's counsel, in writing. Counsel says tomorrow morning. Henry says that's fine, and it is.`,
           why:`Get data in a way you can stand behind. The query and run details show how it was produced. Control totals prove it's complete, and sending it through counsel keeps it usable as evidence.`}
       ]},
-    { id:`f2s5`, domain:`Operations and Resilience`, task:`4A11`, title:`Who set the flag`,
+    { id:`f2s5`, domain:`Operations and Resilience`, task:`4A11`, title:`Who set the flag`, q:`The NOTES tab says DBAs set the fraud indicator on March 6. What should Henry test?`,
       text:(s,all,G)=>[(G.tippedmeridian?`At 1:40 Vellacott's counsel forwarded a short note from Agent Obi. The FBI had sent Meridian a preservation letter that morning for the examiner portal logs. Meridian's reply said the account in question had already been disabled on Tuesday night, following a query from the insurer. Obi hadn't added a comment. She hadn't needed to.`:`At 1:40 Vellacott's counsel forwarded a short note from Agent Obi. The FBI had sent Meridian a preservation letter that morning for the examiner portal logs. Somewhere across town, a dead woman's sign in at 3:12 AM now had a case number, and Meridian still didn't know who'd found it.`),`At 2:05 he found the last tab of the claim spreadsheet, the one marked NOTES, which held three sentences.`,`<prop type="doc" title="Claim spreadsheet, tab NOTES">Fraud indicator set by Database Administration on March 6, 2027, using criteria agreed with Internal Audit.<br>Rows with indicator = Y are included in the claim.<br>Prepared by L. Pratt.</prop>`,`So somebody with administrator rights to the settlement database had gone through the table on the Saturday after the event and marked which payments were fraud. Every dollar of the 41 million rested on those marks.`],
       opts:[
         {t:`Accept the flags. The DBAs know Meridian's data better than anyone else does.`, s:0, d:{trust:-2,conf:0,health:-5},
@@ -162,7 +162,7 @@
           after:`The criteria come back the next day: two paragraphs, sensible enough. They tell him what the DBAs meant to do. They don't tell him what they did.`,
           why:`The criteria are worth having, and you should ask for them. But criteria describe intent. The change log shows what actually happened to the data, and by whom.`}
       ]},
-    { id:`f2s6`, domain:`Auditing Process`, task:`1B4`, title:`Electric bills`,
+    { id:`f2s6`, domain:`Auditing Process`, task:`1B4`, title:`Electric bills`, q:`Maisie's science fair poster has three Benford charts, including her mom's bills. How should Henry help her?`,
       text:(s,all,G)=>[(G.brushedmaisie?`At 4:10 his phone buzzed with a photo, no message. It came from Laura's number, and the photo was of a science fair poster on a kitchen table, half finished. Then a second text. <b>From Maisie. She won't ask you herself. Her third chart is broken and she's upset about it.</b>`:`At 4:10 his phone buzzed. <b>ok so you can see my project if you want. dont fix anything.</b> Then a photo of a poster on a kitchen table, half finished, and a second text. <b>the 3rd one is broken</b>`),`The poster was called <b>Who Made These Up?</b> It had three charts. The first was the population of every town and city in Colorado, and its bars fell away from 1 to 9 like a staircase. The second was ten made up numbers each from thirty one people in her class, and its bars were nearly flat. The third was her mom's electric bills for the last four years, forty eight of them, every one between $61 and $148, and its bars made no sense at all.`,`He rang. <span class="said" data-who="Maisie">"It doesn't work,"</span> she said, before he'd said hello. <span class="said" data-who="Maisie">"The bills are real. They're totally real. And they don't follow it, so either Benford's wrong or I am."</span>`],
       opts:[
         {t:`Two charts that work look cleaner. Tell her to take the bills off.`, s:0, d:{trust:-1,conf:-5,health:-2},
@@ -178,7 +178,7 @@
           after:`<span class="said" data-who="Maisie">"Thursday's the fair,"</span> she says, the way you'd read out a bus timetable, and she's gone before he's worked out what to say back.`,
           why:`She brought you a question at the moment it mattered to her. Answering when it's asked is the whole of it, and Thursday is after the deadline.`}
       ]},
-    { id:`f2s7`, domain:`Auditing Process`, task:`1B2`, title:`Forty rows`,
+    { id:`f2s7`, domain:`Auditing Process`, task:`1B2`, title:`Forty rows`, q:`Henry needs a sample of the claimed settlements to trace to source. How should he pick it?`,
       text:(s,all,G)=>[`At half past seven, with noodles again, he started on the sample. Whatever Meridian's data said, sooner or later he'd have to take individual settlements back to their source: the settlement instruction, the merchant on the other end, the approval record. That meant choosing which ones.`,`Some rows practically volunteered. Settlements of $9,990, $9,995, and $9,999.00, sent at three in the morning, one after another, to the same handful of accounts. He could see the case making itself.`],
       opts:[
         {t:`Take the forty strangest looking rows from the 2,906, the ones that best show the pattern.`, s:0, flag:`cherrypicked`, d:{trust:-4,conf:0,health:-6},
@@ -194,7 +194,7 @@
           after:`Two strata: the 2,906 between $9,000 and $9,999.99, and the other 9,494. Random selection within each, sized from a confidence level and tolerable error he writes down before he looks, with the seed beside them. Forty from the first group, sixty from the second. Then he writes the part he'd have skipped a year ago: how the sample was chosen and why, so somebody else could pick exactly the same rows.`,
           why:`Stratification splits a population into groups that behave differently and samples each, so a small important group gets proper coverage. Random selection lets you project, and writing down the method, size, and seed lets someone else re-perform it.`}
       ]},
-    { id:`f2s8`, domain:`Auditing Process`, task:`1B2`, title:`Two kinds of question`,
+    { id:`f2s8`, domain:`Auditing Process`, task:`1B2`, title:`Two kinds of question`, q:`Which sampling approach fits a test of whether Meridian's second approver control operated in 2026?`,
       text:(s,all,G)=>[`At ten past nine he found he'd written two questions at the top of the same page, and they weren't the same kind of question.`,`One was about the control. Through 2026, did a second approver actually sign off every settlement file over $10,000, the way the SOC report said the control was designed? The other was about the money. Of the 41 million, how much was really fraud? Dot's folder said the key control had failed years ago. The first question was the one that could prove her right.`],
       opts:[
         {t:`Use variable sampling on the 2026 files and estimate the dollars that lacked approval.`, s:1, d:{trust:0,conf:0,health:0},
@@ -210,7 +210,7 @@
           after:`Discovery sampling would tell him whether there was at least one. If Dot was right, there'll be more than one, and he'll want to know how many.`,
           why:`Discovery sampling is for very rare events where finding a single case is the point, like fraud. Here you need the rate at which the control failed, so use attribute sampling sized to estimate it.`}
       ]},
-    { id:`f2s9`, domain:`Auditing Process`, task:`1B6`, title:`12,401`,
+    { id:`f2s9`, domain:`Auditing Process`, task:`1B6`, title:`12,401`, q:`Maisie spotted that Henry's chart adds up to 12,401. What should Henry do?`,
       text:(s,all,G)=>[`At 10:40 he sent Maisie a photo of his chart, because she'd shown him hers. ${G.brushedmaisie?`He sent it to Laura's number too, in case.`:``}`,`The answer came back in four minutes.`,(G.brushedmaisie?`<prop type="text" from="Laura" time="10:44 PM">from maisie: your bars add up to 12401 not 12400. mum made me tell you</prop>`:`<prop type="text" from="Maisie" time="10:44 PM">ur bars add up to 12401 not 12400. which one is extra</prop>`),`He added them up. She was right. He opened the spreadsheet, scrolled to the bottom, and found it: the total row, $41,000,000, which began with a 4, sitting in his count like a passenger who'd got on without a ticket. The bar for 4 should have said 913.`],
       opts:[
         {t:`Fix the count quietly. It's one row, and nothing important changes.`, s:0, d:{trust:-3,conf:-1,health:-4},
@@ -226,7 +226,7 @@
           after:`<span class="said" data-who="Henry">"It's immaterial,"</span> he tells the empty office. It is. It's also the first number in his file that he knows is wrong and has decided to keep.`,
           why:`Materiality is about which errors change a conclusion. It isn't permission to leave a known error in your own workpaper. You correct it, and you say its effect is nil.`}
       ]},
-    { id:`f2s10`, domain:`Auditing Process`, task:`1B6`, title:`A second pair of eyes`,
+    { id:`f2s10`, domain:`Auditing Process`, task:`1B6`, title:`A second pair of eyes`, q:`The interim view goes to Giles tomorrow, and only Maisie has checked it. What should Henry do before then?`,
       text:(s,all,G)=>[`On Thursday at half past seven he had a workpaper, ${(s.picks||{})[8]===3?`a chart he knew was wrong by one`:`a corrected chart`}, a sampling plan, and a Friday interim view due to Giles in a little over twenty four hours. He also had nobody who had checked any of it except a fourteen year old.`,`He'd always worked alone. It had always seemed efficient. At 7:31 it seemed like the kind of thing Dot would have circled.`],
       opts:[
         {t:`Read the whole file again himself, slowly, now that he's slept.`, s:1, d:{trust:0,conf:0,health:1},
@@ -242,7 +242,7 @@
           after:`Leonard would be thrilled. He would also know, by lunchtime, every test the insurer was planning to run on his company.`,
           why:`The auditee can't review the audit. Sharing your plan and findings with the party under examination, before you report, compromises the work and possibly the evidence.`}
       ]},
-    { id:`f2s11`, domain:`Operations and Resilience`, task:`4A11`, title:`Tie it out`,
+    { id:`f2s11`, domain:`Operations and Resilience`, task:`4A11`, title:`Tie it out`, q:`Meridian's full extract has arrived with its query. What should Henry do with it?`,
       text:(s,all,G)=>[...((s.picks||{})[3]!==3?[`He'd sent the request he should have sent first on Wednesday night: the full table, the query, and the control totals, through counsel.`]:[]),`Meridian's extract arrived through counsel at 10:40, with a cover letter, the query it was run with, and a one page control report printed from the settlement system.`,`<prop type="doc" title="Settlement system control report, March 2 to 5, 2027">Settlement records: 184,212<br>Total settled: $2,871,406,233.17<br>Extract run: 2027-03-11 14:02 UTC by account DBA_RPT (read only reporting role)</prop>`,`Fourteen hundred UTC was seven that morning in Denver. A hundred and eighty four thousand rows, nearly three billion dollars, in four days. It was a big file, and he was about to build a lot on it.`],
       opts:[
         {t:`Start the analysis. A database extract is exact by definition.`, s:0, d:{trust:-1,conf:0,health:-4},
@@ -258,7 +258,7 @@
           after:`They agree. Counsel's letter took its figures from the same control report, so he's confirmed that Meridian agrees with Meridian.`,
           why:`Reconciling is right, but to a source that's independent of the file. A cover letter repeating the auditee's own figures isn't independent of anything.`}
       ]},
-    { id:`f2s12`, domain:`Auditing Process`, task:`1B2`, title:`Five thirty`,
+    { id:`f2s12`, domain:`Auditing Process`, task:`1B2`, title:`Five thirty`, q:`Halverson Forensics offers a 5:30 walkthrough, the evening Henry's due in Boulder. What should he do?`,
       text:(s,all,G)=>[`At 3:40 an email arrived from Marta Feld at Halverson Forensics, the firm Meridian had paid to validate the list.`,`<prop type="email" from="Marta Feld, Halverson Forensics" to="Henry Ashby" subject="Our validation" time="3:40 PM">Mr. Ashby, we understand you have questions about our review of the claimed settlements. Our team can walk you through our 25 item validation today at 5:30 PM at our 17th Street office. Our schedules are full after that until the week of March 22.</prop>`,`The science fair was at six, in Boulder, forty minutes away when the Turnpike behaved and an hour when it didn't.`,(G.brushedmaisie?`He'd told Laura he'd be there, in writing, and heard nothing back.`:`He'd told Maisie on the phone he'd be there, and she'd made it the price of borrowing her project.`)],
       opts:[
         {t:`Go to the walkthrough. It's the only slot, and Giles wants a view by Friday.`, s:0, flag:`missedfair`, d:{trust:-2,conf:-8,health:-1},

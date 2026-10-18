@@ -92,7 +92,7 @@
     ]
   },
   scenes: [
-    { id:`f3s1`, domain:`Governance and Management of IT`, task:`2A2`, title:`Who answers to whom`,
+    { id:`f3s1`, domain:`Governance and Management of IT`, task:`2A2`, title:`Who answers to whom`, q:`What should Henry conclude from Meridian's organization chart?`,
       text:(s,all,G)=>[`The radiator was knocking like someone who wanted to be let in when Henry turned to page 12 of the claim pack. It was Meridian's organization chart. He'd looked at it on Tuesday. This time he read it.`,`<prop type="doc" title="Meridian Clearing, organization chart (claim pack, page 12)">Board of Directors. Chairman: S. Kade, founder.<br>Audit Committee: three directors.<br>Chief Executive: S. Kade.<br>Chief Financial Officer: C. Wynn, reporting to the Chief Executive.<br>Reporting to the CFO: Settlement Operations; Finance and Reconciliation; Chief Information Officer; Internal Audit (L. Pratt).<br>Reporting to the CIO: Information Security; Database Administration; Security Monitoring (DOME).</prop>`,`He drew it again on the back of an envelope, with lines instead of boxes, the way Dot used to. All the lines went to the same place.`],
       opts:[
         {t:`Note that the chart looks normal for a firm of Meridian's size, and move on.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -108,7 +108,7 @@
           after:`Leonard explains, warmly and at length, that Carla has an open door. It's a nice thing to say about a boss. It isn't evidence about governance.`,
           why:`Inquiry of someone inside the structure you're assessing is the weakest evidence you can get, and Leonard sits inside it. Get the documents that show who actually reports to whom.`}
       ]},
-    { id:`f3s2`, domain:`Governance and Management of IT`, task:`2A2`, title:`Eight quarters`,
+    { id:`f3s2`, domain:`Governance and Management of IT`, task:`2A2`, title:`Eight quarters`, q:`Internal audit wasn't at any of eight audit committee meetings in two years. What follows for Henry's work?`,
       text:(s,all,G)=>[`Just after nine, Vellacott's counsel forwarded what he'd asked for on Wednesday: Meridian's board and audit committee minutes for 2025 and 2026. Eight quarters. He read every page, then made a table of them on a legal pad.`,`<prop type="doc" title="Henry's notes: audit committee minutes, Q1 2025 to Q4 2026">Meetings held: 8 of 8.<br>Present every time: three directors; S. Kade (Chairman, by invitation); C. Wynn (CFO).<br>Internal audit: not present at any meeting, not on any agenda.<br>Session without management present: none recorded.<br>IT or security on the agenda: once, Q2 2025, "DOME dashboard: noted."</prop>`,`One name sat in all eight meetings, by invitation. The chairman, who was also the chief executive, who was also the man the CFO reported to. Henry underlined it once and turned the page.`,(G.trustedia?`On Tuesday he'd cut back his own controls testing on the strength of Leonard's report, and told himself he'd come back to it. Here it was, coming back to him. For two years, the only person who'd told Meridian's audit committee anything about controls was the CFO whose systems they were.`:`On Tuesday he'd written that his reliance on Leonard's work was limited, pending review. Here was the review. For two years, the only person who'd told Meridian's audit committee anything about controls was the CFO whose systems they were.`)],
       opts:[
         {t:`Conclude the board can't have known about any weakness in dual authorization.`, s:0, d:{trust:-1,conf:0,health:-3},
@@ -124,7 +124,7 @@
           after:`He finds a number for the chair in the minutes and has it half dialed before he thinks about Agent Obi, the FBI's preservation letter, and Vellacott's counsel. He puts the phone down. It was a short call to nowhere, and the worst kind of short call.`,
           why:`Contacting the insured's directors around counsel, during a claim and a federal investigation, risks the evidence and the claim's process. Requests go through the channel the engagement sets.`}
       ]},
-    { id:`f3s3`, domain:`Governance and Management of IT`, task:`2A3`, title:`Three documents`,
+    { id:`f3s3`, domain:`Governance and Management of IT`, task:`2A3`, title:`Three documents`, q:`Three documents set Meridian's authorization rules. How should Henry use them?`,
       text:(s,all,G)=>[`Next he opened the folder Leonard had sent on Wednesday under the subject line <b>Everything you need on authorization!</b> It held three documents. He laid them out side by side on the desk, oldest on the left.`,`<prop type="doc" title="Settlement authorization: the three documents">Settlement Authorization Policy. Approved by the Board, March 2019. "All outgoing settlements shall be authorized in accordance with the Settlement Authorization Standard. This policy is reviewed annually."<br><br>Settlement Authorization Standard. Approved by the CFO, 2019. "Settlement files above $10,000 require approval by a second authorized user who did not prepare the file."<br><br>Desk Procedure SO-14, revised January 2026. "Step 6. Second approver confirms the file total and releases."</prop>`],
       opts:[
         {t:`Use the board's policy as his criteria. It's the document with authority.`, s:0, d:{trust:-1,conf:0,health:-3},
@@ -140,7 +140,7 @@
           after:`It would make next year tidier. It does nothing for the question of what the documents said, and what people did, in the first week of March.`,
           why:`Recommendations come after you've established the facts. The claim turns on what was in force and what happened, so test against the documents as they were.`}
       ]},
-    { id:`f3s4`, domain:`Governance and Management of IT`, task:`2A3`, title:`No end date`,
+    { id:`f3s4`, domain:`Governance and Management of IT`, task:`2A3`, title:`No end date`, q:`An open 2022 exception suspended reviews of who can approve settlements. What should Henry do?`,
       text:(s,all,G)=>[`The last thing in Leonard's folder was Meridian's policy exception register, a spreadsheet of nineteen rows going back to 2019. Most were dull: a laptop standard waived for a contractor, a password rule relaxed for a printer. One wasn't.`,`<prop type="doc" title="Policy exception register (extract)">EX-2022-07. Quarterly review of the authorized approver list, Settlement Authorization Standard section 4: suspended for Q3 and Q4 2022 due to staffing.<br>Requested by: Settlement Operations. Approved by: C. Wynn, CFO.<br>Compensating control: none stated. Expiry: none stated. Status: OPEN.</prop>`,`He checked the review log for the approver list. The last review was dated June 2022.`],
       opts:[
         {t:`Ignore it. It was approved, so it's not really an exception anymore.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -156,7 +156,7 @@
           after:`Leonard confirms within the hour that reviews "resumed on a business as usual basis." There are no dates and no documents attached.`,
           why:`A written assertion from the auditee isn't evidence that a control ran. Ask for the records of the reviews themselves: dates, reviewers, and what changed.`}
       ]},
-    { id:`f3s5`, domain:`Governance and Management of IT`, task:`2A5`, title:`Residual: low`,
+    { id:`f3s5`, domain:`Governance and Management of IT`, task:`2A5`, title:`Residual: low`, q:`Meridian's register scores its settlement fraud risk a five, last reviewed years ago. How should Henry read it?`,
       text:(s,all,G)=>[`Meridian's risk register was at the back of the Q4 2026 board pack, in an appendix nobody had bothered to number. Row seven was the one that mattered.`,`<prop type="doc" title="Meridian Clearing, enterprise risk register, row R-07">Risk: unauthorized or fraudulent settlement. Owner: CFO.<br>Inherent: likelihood 4, impact 5, score 20.<br>Key control: dual authorization (assessed effective, 2019 control assessment).<br>Residual: likelihood 1, impact 5, score 5 (LOW).<br>Board appetite: residual score above 8 requires a treatment plan reported to the board.<br>Last reviewed: 2019. Next review: 2020.</prop>`,`The settlement platform described in the claim pack had been built in 2019. He wrote a question he couldn't answer yet. Before, or after?`],
       opts:[
         {t:`Accept the rating. The board approved it, and it's their risk to rate.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -188,7 +188,7 @@
           after:`<span class="said" data-who="Giles">"Well, did it?"</span> Henry doesn't know yet. It's a sharp point, and a narrow one, and it leaves out everything their board was supposed to be doing in the meantime.`,
           why:`What the insured represented about its controls matters a great deal. But governance isn't only relevant through the proposal form. The board kept accountability for the risk, and that's part of the picture.`}
       ]},
-    { id:`f3s7`, domain:`Governance and Management of IT`, task:`2B3`, title:`All green`,
+    { id:`f3s7`, domain:`Governance and Management of IT`, task:`2B3`, title:`All green`, q:`Every box on Meridian's IT scorecard is green, all sourced from DOME. How should Henry use it?`,
       text:(s,all,G)=>[`Every director had read this page. You could tell from the coffee ring on Meridian's scanned copy. One page. Four measures. Eight quarters of them, and every box green.`,`<prop type="doc" title="Board pack, IT performance scorecard, Q4 2026">Settlement platform availability: 99.97% (target 99.9%).<br>Daily reconciliations completed: 100% (target 100%).<br>Security alerts triaged within service level: 100% (target 98%).<br>Critical patches applied within 30 days: 96% (target 95%).<br>Source for all measures: DOME. Prepared by: IT.</prop>`,`He read the footer twice. Don't trust the dome.`],
       opts:[
         {t:`Take the scorecard as evidence that Meridian's controls ran in 2026.`, s:0, d:{trust:-2,conf:0,health:-5},
@@ -204,7 +204,7 @@
           after:`He writes the three questions beside each line. The answers are already mostly on the page. All four come from DOME, all four were prepared by IT, and nobody outside IT checks them. And none of them measures whether the key control did its job. "Reconciliations completed" counts that the reconciliation ran. It doesn't say what it found.`,
           why:`Performance measures are only useful if they're relevant to the goal, clearly defined, and reliably sourced, with someone independent checking them. A scorecard drawn from one system and prepared by the team it measures is that system's view of itself.`}
       ]},
-    { id:`f3s8`, domain:`Governance and Management of IT`, task:`2B3`, title:`Completed`,
+    { id:`f3s8`, domain:`Governance and Management of IT`, task:`2B3`, title:`Completed`, q:`The reconciliation sheets show three days completed, two with differences carried forward. What should Henry conclude?`,
       text:(s,all,G)=>[`Agent Obi rang at half past twelve to say the bureau's formal request for the claim file had gone to Vellacott's counsel that morning. It took her about ninety seconds. Then, in the same even voice, <span class="said" data-who="Nkechi">"You were Intelligence Corps."</span>`,`<span class="said" data-who="Henry">"Is that in a file somewhere?"</span>`,`<span class="said" data-who="Nkechi">"It's in how you stood on your landing on Tuesday. Like you'd already counted the exits."</span> She rang off before he'd decided whether it was a compliment.`,`The reconciliations arrived after lunch, the ones he'd put at the top of his list on Tuesday. Meridian had sent the sign off sheets for the week of the event.`,`<prop type="doc" title="Daily settlement reconciliation against the Federal Reserve record, sign off sheets">Tue, Mar 2 (settlements of Mar 1): completed 7:41 AM. Difference: none.<br>Wed, Mar 3 (settlements of Mar 2): completed 7:44 AM. Difference: YES. Disposition: timing difference, carried forward. Supervisor's initials: B.N.<br>Thu, Mar 4 (settlements of Mar 3): completed 7:39 AM. Difference: YES. Disposition: timing difference, carried forward. Supervisor's initials: B.N.<br>Fri, Mar 5 (settlements of Mar 4): not performed. Incident declared 4:40 AM.</prop>`],
       opts:[
         {t:`Conclude the detective control worked, since it ran on every day it could.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -220,7 +220,7 @@
           after:`It's a good measure. He writes it down, and realizes he's designed next year's scorecard before writing up what happened on March 3.`,
           why:`Recommendations follow findings. First record what the evidence shows about this year's control and this year's reporting.`}
       ]},
-    { id:`f3s9`, domain:`Auditing Process`, task:`1B5`, title:`Four parts`,
+    { id:`f3s9`, domain:`Auditing Process`, task:`1B5`, title:`Four parts`, q:`Henry has three hours to draft Giles's interim view. How should its conclusions be laid out?`,
       text:(s,all,G)=>[`He started the interim view itself at ten past two. He'd promised it to Giles by five, Denver time, so it would be the first thing Giles read in the morning. He had a blank page and three hours, and he had a great many things he believed.`,(G.cherrypicked?`The sampling section was the one he'd been avoiding. Forty rows, chosen on Wednesday night because they looked like fraud, and a neat paragraph about them that didn't say so. He'd have to decide what to do with it before anyone in London read it.`:`The sampling section was easy. Two strata, random selection, seeds written down. It was the governance section that worried him, because it was about people.`)],
       opts:[
         {t:`Lead with his theory that the claim is a fraud. That's what Giles needs.`, s:0, d:{trust:-3,conf:0,health:-5},

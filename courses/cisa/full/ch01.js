@@ -105,7 +105,7 @@
     ]
   },
   scenes: [
-    { id:`f1s1`, domain:`Protection of Information Assets`, task:`5B6`, title:`Hands in pockets`,
+    { id:`f1s1`, domain:`Protection of Information Assets`, task:`5B6`, title:`Hands in pockets`, q:`Left alone at a death scene, Henry can almost read Dot's working papers. What should he do?`,
       text:(s,all,G)=>[`Lou's radio muttered on his shoulder. He listened, said <span class="said" data-who="Lou">"Coming,"</span> and pointed at the carpet in front of Henry's shoes. <span class="said" data-who="Lou">"Medical investigator's van. I'm going to be ninety seconds. You stay there. You don't touch anything. That includes the coffee you're holding, which you can't put down."</span> The door clicked shut behind him.`,`Henry stood where he'd been put. From the doorway he could see the folder's top sheet, and beneath it the corner of a second sheet that had slipped a quarter inch out of line. On that corner, in the same green ink, was <b>W/P 17</b> and half a word that might have been LATT.`,`Somewhere down the hall a vacuum started up and stopped again. Nobody had moved Dot's glasses since Lou put them down. They sat folded by the teapot with the chain in a little heap next to them.`],
       opts:[
         {t:`Step over and nudge the top sheet aside with his pen to read the page under it.`, s:0, flag:`liftedpage`, d:{trust:-2,conf:0,health:-6},
@@ -137,7 +137,7 @@
           after:`Lou shrugs. <span class="said" data-who="Lou">"Plenty of people dislike me, and my wife's one of them. Give me names or it's just weather."</span> Henry hasn't got names. He's got a feeling, and Lou has written it down as one.`,
           why:`Character and gossip aren't observations of the scene. They can point you somewhere later, but offered first they crowd out the evidence in front of you.`}
       ]},
-    { id:`f1s3`, domain:`Auditing Process`, task:`1B5`, title:`Never mind`,
+    { id:`f1s3`, domain:`Auditing Process`, task:`1B5`, title:`Never mind`, q:`Maisie rang at 6:47 and then texted never mind. What should Henry do?`,
       text:(s,all,G)=>[`In the corridor, by a window that looked down past the iron balconies to the lobby, he finally listened to the voicemail he'd seen at 5:40 and had been too busy getting his trousers on to play.`,`<prop type="doc" title="Voicemail, Monday, 11:48 PM">Lime Street. It's Dot. I know it's late, go back to sleep after this. I'm at the Brown Palace, don't laugh, I wanted one good bed in my life. Come at seven. They're filing in the morning and you're going to get it, and I want you to have my papers before you read a word of theirs. Bring a pen. Bring two. Goodnight.</prop>`,`He played it twice. Then he saw the other notification, the one under it. A missed call at 6:47 from <b>Maisie</b>. And a text, two minutes later.`,`<prop type="text" from="Maisie" time="6:49 AM">never mind</prop>`,`Maisie was fourteen. She hadn't rung him in six weeks. It was 7:05, and the school bus in Boulder came at half past.`],
       opts:[
         {t:`Ring her now. Tell her a friend of his died this morning, and that he's glad she called.`, s:3, best:true, d:{trust:1,conf:6,health:0},
@@ -153,7 +153,7 @@
           after:`She listens to about half of it. <span class="said" data-who="Maisie">"Dad. I have to get the bus."</span> After she hangs up he realizes he's just described an open police scene to a fourteen year old on a speakerphone in her mum's kitchen.`,
           why:`Right audience, right level of detail. A report full of facts the reader can't use, or shouldn't have, is a bad report. And the details of a police scene aren't yours to spread.`}
       ]},
-    { id:`f1s4`, domain:`Auditing Process`, task:`1A1`, title:`The notice`,
+    { id:`f1s4`, domain:`Auditing Process`, task:`1A1`, title:`The notice`, q:`The claim names Dot as the insured's examiner for nine years, and Henry knew her. What should he do?`,
       text:(s,all,G)=>[`His office was two rooms above a bicycle shop on Wazee Street in LoDo, with a brass plate on the door that the landlord had called "a choice." He was hanging up his coat at 9:06 when the email came in, and at 9:10 his phone rang with a London number.`,`<prop type="email" from="Vellacott Claims, One Lime Street" to="Henry Ashby, Denver" subject="NEW CLAIM: Meridian Clearing, Inc. Cyber policy, notice of loss" time="9:06 AM">Insured: Meridian Clearing, Inc., Denver, Colorado (payment processing and settlement).<br>Event: Ransomware and unauthorized access, discovered Friday, March 5, 2027, 4:40 AM local.<br>Amount claimed: US$300,000,000 (policy limit).<br>Prior regulatory examinations of insured's IT, disclosed per proposal form: federal banking regulator, 2018 to 2026. Examiner in charge: D. Kessler.<br>Assigned: H. Ashby.</prop>`,`<span class="said" data-who="Giles">"Henry. It's Giles. You've seen it? Three hundred million, the whole limit, and the reinsurers are already ringing. It's yours. You're the only one of us in the same time zone as the damage."</span> Giles Fenwick, claims director, said it the way he said everything, as though he'd just come in from a brisk walk.`,`Henry read the line about prior examinations again. D. Kessler. Nine years. <b>MC 2018 to 2026.</b> Bring the claim.`],
       opts:[
         {t:`Accept, and say nothing. Dot's dead, so there's no conflict left to declare.`, s:0, flag:`hidconflict`, d:{trust:-4,conf:0,health:-3},
@@ -169,7 +169,7 @@
           after:`Priyanka in London says she'd be happy to, then asks why. He tells her. She stops being happy to.`,
           why:`Hiding who did the work doesn't remove a conflict. It adds a concealment to it. The reader of a report has a right to know who stands behind it.`}
       ]},
-    { id:`f1s5`, domain:`Auditing Process`, task:`1B1`, title:`By Friday`,
+    { id:`f1s5`, domain:`Auditing Process`, task:`1B1`, title:`By Friday`, q:`Giles wants a view on a $300 million claim by Friday. What should Henry do first?`,
       text:(s,all,G)=>[`<span class="said" data-who="Giles">"Now, don't overthink it,"</span> Giles said. <span class="said" data-who="Giles">"Pop down to Meridian this afternoon, have a poke about, see what they've got, and give me a view by Friday. The board will ask on Monday and I'd like to have something better than a shrug."</span>`,`Friday was three days away. The claim was the size of a small country's defense budget. Henry looked at the whiteboard on his office wall, which still had a shopping list on it.`],
       opts:[
         {t:`Drive to Meridian's office this afternoon and ask for whatever they'll show him.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -185,7 +185,7 @@
           after:`<span class="said" data-who="Giles">"The board doesn't meet when it's done, Henry. It meets on Monday."</span> He isn't wrong.`,
           why:`Refusing a timeline isn't managing one. Agree to what you can deliver on time, say what it won't include, and put both in writing.`}
       ]},
-    { id:`f1s6`, domain:`Auditing Process`, task:`1A3`, title:`Four hundred pages`,
+    { id:`f1s6`, domain:`Auditing Process`, task:`1A3`, title:`Four hundred pages`, q:`Which part of Meridian's loss summary deserves Henry's attention first?`,
       text:(s,all,G)=>[`The claim pack arrived at 11:34 from Meridian's broker, as a single PDF of 412 pages and a spreadsheet. Henry printed the summary page, because he thought better on paper and because Dot had once told him a man who reads loss figures on a screen is a man who'll believe them.`,`<prop type="doc" title="Meridian Clearing, claim summary (insured's figures)">Business interruption, 9 days, estimated: $182,000,000<br>Restoration and forensic costs: $52,000,000<br>Fraudulent settlements during the event: $41,000,000<br>Third party liability, merchant claims: $25,000,000<br>Total claimed: $300,000,000 (policy limit; amounts above limit not shown)</prop>`,`Supporting documents ran from page 5 to page 412 and were in no particular order. He had three days.`],
       opts:[
         {t:`Start on page 5 and read straight through to page 412, so nothing gets missed.`, s:0, d:{trust:-1,conf:0,health:-3},
@@ -201,7 +201,7 @@
           after:`The merchant claims are tidy, and he clears them by two o'clock. He feels productive. He's also spent three hours on eight percent of the money.`,
           why:`Quick wins are pleasant, and the liability claims still need testing. But effort follows risk and value, not comfort. Start where a mistake would cost the most.`}
       ]},
-    { id:`f1s7`, domain:`Auditing Process`, task:`1A1`, title:`Helpful Leonard`,
+    { id:`f1s7`, domain:`Auditing Process`, task:`1A1`, title:`Helpful Leonard`, q:`Leonard Pratt, who reports to the CFO, offers internal audit's clean ITGC report. What should Henry do with it?`,
       text:(s,all,G)=>[`At 12:15 an email arrived from Meridian's director of internal audit, a man named Leonard Pratt, who had evidently been told an investigator had been assigned and had decided to get ahead of it.`,`<prop type="email" from="Leonard Pratt, Director, Internal Audit, Meridian Clearing" to="Henry Ashby" subject="Saving you some time" time="12:15 PM">Mr. Ashby, welcome aboard. Attached is our 2026 IT general controls report, signed off by our CFO, Carla Wynn, to whom I report. Conclusion: controls effective, no significant findings. Happy to walk you through it so you don't have to reinvent the wheel. Best, Leonard.</prop>`,`Henry read <b>to whom I report</b> three times. Dot used to say that the most important line in any audit report is the one about who the auditor works for, and that it's usually in the smallest type.`],
       opts:[
         {t:`Take the report at face value and cut back his own controls testing to match.`, s:0, flag:`trustedia`, d:{trust:-2,conf:0,health:-5},
@@ -233,7 +233,7 @@
           after:`<span class="said" data-who="Henry">"When, Dad? What year? Which risk?"</span> His father goes quiet, and then angry, and then asks for his own father, who died in 1988.`,
           why:`Pressure distorts testimony. Leading, rapid questions get you answers shaped like the questions. Open questions and patience get you something closer to what the person actually knows.`}
       ]},
-    { id:`f1s9`, domain:`Auditing Process`, task:`1A4`, title:`The control that failed`,
+    { id:`f1s9`, domain:`Auditing Process`, task:`1A4`, title:`The control that failed`, q:`Meridian says an intruder beat dual authorization, and fraud ran for three days. What should Henry check first?`,
       text:(s,all,G)=>[`Meridian's own account of the attack, on page 31, was confident. An intruder using an administrator's account had got past the dual authorization on outgoing settlement files, and 41 million dollars in fraudulent settlements had gone out over three days before anyone noticed.`,`Dual authorization: two people must approve before a file goes out. The claim pack called it Meridian's key control, and said it had failed.`,`Henry thought about the three days. Three days was a long time for 41 million dollars to be missing from a company whose whole business was knowing where money was.`],
       opts:[
         {t:`Accept that the intruder beat the key control. Determined criminals do beat controls.`, s:0, d:{trust:-1,conf:0,health:-3},
@@ -265,7 +265,7 @@
           after:`Her face doesn't move at all. <span class="said" data-who="Nkechi">"I'll pretend you didn't offer to trade confidential documents for information about an open federal investigation."</span>`,
           why:`Bargaining with confidential information is a breach of the trust it was given in, and offering it to law enforcement as a trade is worse. It also tells the agent everything she needs to know about you.`}
       ]},
-    { id:`f1s11`, domain:`Auditing Process`, task:`1B4`, title:`Twelve thousand four hundred`,
+    { id:`f1s11`, domain:`Auditing Process`, task:`1B4`, title:`Twelve thousand four hundred`, q:`How should Henry test Meridian's list of fraudulent settlements?`,
       text:(s,all,G)=>[`By seven the office smelled of reheated noodles. The claim spreadsheet held the settlements Meridian said were fraudulent: 12,400 rows, one for each payment, with an amount, a date and time, a destination account, and a merchant code. The total at the bottom said $41,000,000.`,`Meridian's forensic firm had "validated" the list by reviewing 25 of them.`],
       opts:[
         {t:`Accept the forensic firm's validation, since this is their speciality.`, s:0, d:{trust:-1,conf:0,health:-4},
@@ -281,7 +281,7 @@
           after:`Three short queries in the free database tool he keeps for exactly this. No duplicates. Most of the payments went out between two and four in the morning, Denver time, when nobody at Meridian would be at a desk. Then something he doesn't like at all: 2,906 of them sit between $9,000 and $9,999, just under the $10,000 line where Meridian's second approver is supposed to look. Whoever chose those amounts knew where the line was. He writes it down with the query beside it and circles it in green.`,
           why:`Data analytics, sometimes called CAATs, let you test the entire population instead of a slice of it. Use them to find the patterns, then sample the flagged items for detailed vouching. Amounts that cluster just under an approval limit are a classic red flag.`}
       ]},
-    { id:`f1s12`, domain:`Protection of Information Assets`, task:`5B6`, title:`3:12 AM`,
+    { id:`f1s12`, domain:`Protection of Information Assets`, task:`5B6`, title:`3:12 AM`, q:`Appendix C shows Dot's account signing in hours after she died. What should Henry do with it?`,
       text:(s,all,G)=>[`At 8:10 his phone buzzed on the desk.`,
         `<prop type="text" from="Lou" time="8:10 PM">Medical examiner's prelim. Time of death between midnight and 1:30. No cause yet, tox in two weeks. That stays with you.${(s.flags.liftedpage||G.liftedpage)?` So does my opinion of your pen.`:``}</prop>`,
         `Henry wrote the times on the whiteboard, under the order of work and the shopping list, and went back to the claim pack. At 9:40, on page 388, he reached Appendix C. Meridian had attached it to show the intruder's movements. It listed every outside account that could reach Meridian's systems, and every sign in since March 1, with the times in UTC. The export had been run that morning, a few hours before the broker sent the pack.`,

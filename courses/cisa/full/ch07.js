@@ -123,7 +123,7 @@
     ]
   },
   scenes: [
-    { id:`f7s1`, domain:`Operations and Resilience`, task:`4B1`, title:`Home by noon`,
+    { id:`f7s1`, domain:`Operations and Resilience`, task:`4B1`, title:`Home by noon`, q:`With Meridian's continuity file open, which document should Henry read first?`,
       text:(s,all,G)=>{const c6=((all&&all[6]&&all[6].picks)||{}),sealed=c6[2]===2,logs=!sealed&&c6[9]===2;
         return [`He read them in the car outside Laura's house with the engine off. Teresa Vreeland never said hello in a text either.`,`<prop type="text" from="Teresa Vreeland" time="9:20 AM">Meridian's continuity file came in overnight. Business impact analysis, DR plan, last DR test, a year of backup reports, the business continuity plan, the full restoration report, and their workings for the business interruption figure. In your inbox.</prop>`,
         (sealed
@@ -146,7 +146,7 @@
           after:`The plan promises recovery in four hours. Four hours according to what? He has to go and find the document the number came from, and it's the one he skipped.`,
           why:`The recovery plan is built to meet targets set elsewhere. Read the impact analysis first, so you know what the plan was supposed to achieve.`}
       ]},
-    { id:`f7s2`, domain:`Operations and Resilience`, task:`4B1`, title:`Six point eight`,
+    { id:`f7s2`, domain:`Operations and Resilience`, task:`4B1`, title:`Six point eight`, q:`The impact analysis puts a figure on one day's outage. What should Henry do with it?`,
       text:(s,all,G)=>[`The page that mattered in the impact analysis was a table, and the row that mattered was the first.`,`<prop type="doc" title="Meridian business impact analysis, approved Tuesday, May 14, 2024 (extract)">Process: settlement release. Criticality: 1 of 5.<br>Maximum tolerable downtime: 24 hours. Recovery time objective: 4 hours. Recovery point objective: 15 minutes.<br>Estimated impact of a full day's outage: $6,800,000 (lost fees $2.9M; penalties to client banks $3.1M; other $0.8M).<br>Prepared by: IT, with Pellridge. Approved: CIO. Process owner sign off (Head of Settlement Operations): none.</prop>`,`He laid the claim summary beside it, the page he'd marked up on the first morning. Business interruption, nine days: $182,000,000.`],
       opts:[
         {t:`Log both figures, who made each, when, and on what basis.`, s:3, best:true, d:{trust:3,conf:0,health:5},
@@ -162,7 +162,7 @@
           after:`The request goes off through counsel. The answer will come from the people who built the larger number. Meanwhile, who made the smaller one, and when, is printed at the bottom of it.`,
           why:`Asking is reasonable, but first record what each figure is, who produced it, and when. The source and timing of each estimate is evidence in itself.`}
       ]},
-    { id:`f7s3`, domain:`Operations and Resilience`, task:`4B3`, title:`The same minute`,
+    { id:`f7s3`, domain:`Operations and Resilience`, task:`4B3`, title:`The same minute`, q:`Meridian's backup reports show a year of PASS results. What should Henry conclude?`,
       text:(s,all,G)=>[`The backup reports were a year of the same line, three hundred and sixty five times. He took one night at random, then ten more, and then all of them.`,`<prop type="doc" title="Backup report, settlement database, 2026 (extract)">Nightly full backup, 1:00 AM. Transaction log backups every 15 minutes.<br>Typical night: backup ended 2:47 AM. Restore test: PASS, 2:47 AM.<br>Restore test result, 2026: PASS, 365 of 365. Restore test time equal to backup end time: 365 of 365.<br>Restore test job in the scheduler: none found.</prop>`,`Leonard's 2026 report had tested the same thing. Twenty five nightly backups sampled, each completed, each with restore test PASS. Conclusion: effective.${G.trustedia?` On the ninth he'd let a line like that do his testing for him.`:``}`],
       opts:[
         {t:`Restore a backup himself on a spare machine to see if it works.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -178,7 +178,7 @@
           after:`He notes backups as tested. Three hundred and sixty five passes, and internal audit's twenty five on top. Every one of them came out of the same column.`,
           why:`A status field isn't a test. Check what the "restore test" actually did before relying on it, and don't treat internal audit's reading of the same field as corroboration.`}
       ]},
-    { id:`f7s4`, domain:`Operations and Resilience`, task:`4B3`, title:`Every copy in reach`,
+    { id:`f7s4`, domain:`Operations and Resilience`, task:`4B3`, title:`Every copy in reach`, q:`Ransomware encrypted the database, its replica and the backup server on March 5. What should Henry make of that?`,
       text:(s,all,G)=>[`Pages 61 to 64 of the restoration report were the part of the claim nobody had asked him to read closely, so he read them closely.`,`<prop type="doc" title="Restoration report, settlement environment (Pellridge for Meridian), pages 61 to 64 (extract)">Friday, March 5: production settlement database encrypted. Replica at the secondary site encrypted within the same minutes. Backup server and its disk copies encrypted.<br>Weekly offline copy: discontinued June 2023 ("replaced by replication").<br>Recovery source: Pellridge settlement file archive. First restore from this archive. Procedure written during recovery.<br>Settlement processing resumed: Sunday, March 14.</prop>`,`The archive was the one he'd found in Pellridge's invoices at $8,400 a month, the copy Meridian's own data inventory didn't know it had.`],
       opts:[
         {t:`Ask Halverson for its account of how the backups were reached.`, s:1, d:{trust:0,conf:0,health:1},
@@ -194,7 +194,7 @@
           after:`Three copies, and all of them in reach. The replica copied the damage, which is what replicas do. The backup server sat on the same network as production. The one copy kept offline was stopped in June 2023 with a note saying replication had replaced it, which replaced a backup with a mirror. What saved the company was a copy no plan of Meridian's listed, restored for the first time, with the procedure written as it went. Most of nine days are in that sentence.`,
           why:`At least one backup should be kept offline or immutable, and offsite, out of reach of anything that can reach production. Replication isn't a backup. A recovery source that has never been restored is untested, and recovery from it will be slow.`}
       ]},
-    { id:`f7s5`, domain:`Operations and Resilience`, task:`4B2`, title:`Ten o'clock`,
+    { id:`f7s5`, domain:`Operations and Resilience`, task:`4B2`, title:`Ten o'clock`, q:`The DR plan's resilience design replicates the database to a second site. What should Henry conclude?`,
       text:(s,all,G)=>[`He was home by seven, in the flat where three boxes from April still stood against the kitchen wall, labeled in his own hand. He'd told Maisie yes. He sat down and wrote it before the yes could go stale.`,`<b>Maisie says you cut the London slide every time and put it back. Keep it in. Find the two minutes somewhere else. I remember that work.</b>`,`<prop type="text" from="Laura" time="7:16 PM">She told you about the river.</prop>`,`<prop type="text" from="Laura" time="7:31 PM">I'll think about it.</prop>`,`It was more than he'd expected, and he left it there.`,`At ten, across town, Pellridge's engineers would be starting on the release service. ${(((all&&all[6]&&all[6].picks)||{})[2]===3)?`He'd offered to be there, on Thursday, and Teresa had explained slowly why not.`:`Nobody had asked him to be there, and he'd made sure nobody would.`} He made tea in a pot that kept no heat, and opened the resilience design from the back of the DR plan.`,`<prop type="doc" title="Settlement platform, resilience design (Pellridge, 2019, extract)">Primary: Meridian data center. Secondary: Pellridge facility.<br>Settlement database replicated synchronously to the secondary. Automatic failover within 5 minutes. Designed availability: 99.95 percent.<br>Recovery from data corruption: restore from backup (see backup standard).</prop>`],
       opts:[
         {t:`Note it guards against losing a site, not against bad data.`, s:3, best:true, d:{trust:3,conf:0,health:5},
@@ -210,7 +210,7 @@
           after:`It is, against the things it was built for. On March 5 it failed over nothing, because both sites held the same encrypted database within minutes.`,
           why:`Redundancy protects against component or site failure. Judge a resilience design against the events it has to survive, including corrupted or encrypted data.`}
       ]},
-    { id:`f7s6`, domain:`Operations and Resilience`, task:`4B3`, title:`What was kept`,
+    { id:`f7s6`, domain:`Operations and Resilience`, task:`4B3`, title:`What was kept`, q:`Meridian offers to restore the release service's old settings from Pellridge's backups. How should Henry respond?`,
       text:(s,all,G)=>{const c6=((all&&all[6]&&all[6].picks)||{}),sealed=c6[2]===2,logs=!sealed&&c6[9]===2;
         return [...(sealed
           ?[`Teresa's email was waiting when he woke on Sunday, sent at 6:52, with a one page note attached. A firm both counsels had agreed on had come to the release service at nine on Saturday night and gone before ten, before the window opened.`,`<prop type="doc" title="Note of preservation, release service (forensic firm agreed by both counsels)">Saturday, March 20, 9:12 PM to 9:48 PM: complete copy of the release service's configuration, settings tables, and logs. Hashes recorded at capture.<br>Sunday, March 21, 6:05 AM: copy restored once to an isolated machine. Hashes match.<br>Held under seal. Hash list held by both counsels.</prop>`,`He stopped at the second line and stayed there a while. Somebody had made a copy, and before telling anyone it was safe, had got it back out to make sure. It held the settings table as it stood on Saturday night. With no change history, that was the nearest anyone could now get to March 5, and it was a great deal nearer than nothing.`]
@@ -232,7 +232,7 @@
           after:`Meridian's sentence goes into the file as Meridian's, with the time and the signature. Under it go the facts that bear on it: the backups were made under a standard whose restore tests pass in the minute the backup ends, so nothing shows any of them can be read back. If the insurer ever needs one, it'll be restored by someone Meridian doesn't control, with hashes, and both counsels told. Then, on its own line, what he actually holds of the release service as it stood before Saturday, and what his report can't say without the rest.`,
           why:`An untested backup is a claim about recoverability, not evidence of it. Where evidence must be recovered, the restore should be done under independent control with integrity checks, and the auditor states plainly what was preserved and what the report can't cover.`}
       ]},
-    { id:`f7s7`, domain:`Operations and Resilience`, task:`4B5`, title:`Passed`,
+    { id:`f7s7`, domain:`Operations and Resilience`, task:`4B5`, title:`Passed`, q:`What should Henry make of November's DR test report?`,
       text:(s,all,G)=>[`The November test report was two pages, and the second page was signatures.`,`<prop type="doc" title="Disaster recovery test report, settlement platform, Thursday, November 19, 2026">Test type: walkthrough. Scenario: loss of the primary data center.<br>Participants: Pellridge service manager, three Pellridge engineers, Meridian CIO.<br>Systems failed over: none. Data restored: none.<br>Recovery time objective, 4 hours: achievable.<br>Result: PASSED. Signed: Pellridge service manager. Acknowledged: CIO.</prop>`],
       opts:[
         {t:`Ask Meridian to run a full DR test this week to settle it.`, s:0, d:{trust:-2,conf:-1,health:-3},
@@ -248,7 +248,7 @@
           after:`They'll show who sat in the room. The report says what the room did, which was talk.`,
           why:`More detail is reasonable to request. The report shows the test type and that nothing was recovered, so the finding can be made now.`}
       ]},
-    { id:`f7s8`, domain:`Operations and Resilience`, task:`4B5`, title:`Written for the old one`,
+    { id:`f7s8`, domain:`Operations and Resilience`, task:`4B5`, title:`Written for the old one`, q:`Meridian's DR plan was last revised in October 2018. What should Henry make of it?`,
       text:(s,all,G)=>[`The plan itself came after lunch. He'd left it till then because the test had told him what to expect, and he wanted to be wrong.`,`<prop type="doc" title="Settlement disaster recovery plan, version 3 (extract)">Last revised: October 2018.<br>Systems in scope: legacy settlement system; legacy release gateway.<br>Recovery team: 7 named (2 still employed by Meridian).<br>Recovery site: Pellridge facility, added by memo November 2019. Procedures: "to follow."<br>Settlement file archive: not mentioned.</prop>`,(G.skippedpir
         ?`On Thursday he'd written "PIR not required (sponsor)" under Longitude and gone on to the next thing. A review in 2020 would have asked what the new platform did to the plan for getting it back. He found the line in his file and reopened it.`
         :(((all&&all[6]&&all[6].picks)||{})[4]===2)
@@ -268,7 +268,7 @@
           after:`It exists. It recovers a system nobody has used since 2019, with a team that mostly left.`,
           why:`A DR plan has to match the systems actually in production and be kept current. Existence isn't adequacy.`}
       ]},
-    { id:`f7s9`, domain:`Operations and Resilience`, task:`4B2`, title:`One door`,
+    { id:`f7s9`, domain:`Operations and Resilience`, task:`4B2`, title:`One door`, q:`Henry has listed the ways Meridian could have restored settlement. What should he make of the list?`,
       text:(s,all,G)=>[`By six on Sunday evening the whiteboard had a new list under the shopping list, one line for each way Meridian could have got its settlement service back.`,`<prop type="doc" title="Routes back to service, from the continuity file">Secondary site: Pellridge. Settlement file archive: Pellridge. Restore procedure: written by Pellridge, during the event.<br>Release service hosting and its backups: Pellridge. Last DR test: run and signed by Pellridge.<br>Pellridge contract, 2019: availability 99.95 percent. Recovery commitments, incident terms, continuity plan: none.</prop>`,`He looked at the right hand column for a long time. It said the same word on every line.`,`At 6:12 his phone buzzed.`,`<prop type="text" from="Maisie" time="6:12 PM">she ran it twice today. i didnt time it. she asked me not to</prop>`,`He read it as good news and wasn't sure it was.`],
       opts:[
         {t:`Rely on Pellridge's 99.95 percent availability figure.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -284,7 +284,7 @@
           after:`A single point of failure doesn't have to be a box. Here it's a company. The standby site, the archive, the backups of the release service, the people who wrote the restore as they went, and the people who marked the last test passed are all Pellridge, under a contract with no recovery terms. If Pellridge failed, or wouldn't help, Meridian had no route back at all. And it's the vendor whose own release on February 26 still has no ticket.`,
           why:`Resilience design should remove single points of failure, including dependence on a single supplier for every recovery path. Critical vendors need contractual recovery commitments that the customer tests.`}
       ]},
-    { id:`f7s10`, domain:`Operations and Resilience`, task:`4B4`, title:`Call tree`,
+    { id:`f7s10`, domain:`Operations and Resilience`, task:`4B4`, title:`Call tree`, q:`Meridian's continuity plan for settlement operations is owned and approved by the CIO. What should Henry take from it?`,
       text:(s,all,G)=>[`On Monday he was at the desk by half past six, with the bicycle shop's shutters still down, and the business continuity plan was the first thing he opened. The DR plan was IT's. This one was supposed to be the business's.`,`<prop type="doc" title="Meridian business continuity plan, settlement operations, version 2 (2020, extract)">Owner: CIO. Approved: CIO.<br>Invocation: outage of settlement processing over 4 hours.<br>Call tree: 22 names (9 no longer employed).<br>Alternate procedures: "Client banks to be advised. Settlement deferred until systems restored."<br>Tests: none recorded. Training: none recorded.</prop>`],
       opts:[
         {t:`Ring a few names on the call tree to see who picks up.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -300,7 +300,7 @@
           after:`It goes on the list. Then he notices he's asking Meridian to tell him something its plan wrote down in two words, and crosses it off.`,
           why:`Training matters, and asking is fine. The plan's own record shows no training or testing, and the ownership problem needs no answer from anyone.`}
       ]},
-    { id:`f7s11`, domain:`Operations and Resilience`, task:`4B4`, title:`Where the plan was`,
+    { id:`f7s11`, domain:`Operations and Resilience`, task:`4B4`, title:`Where the plan was`, q:`The incident log shows what happened to the continuity plan on March 5. What should Henry do?`,
       text:(s,all,G)=>[`The incident log had come in Thursday's batch, under the job record he'd read for the hold at 4:52. He'd read it for the times. Now he read it for the plan.`,`<prop type="doc" title="Meridian incident log, settlement outage (extract)">Friday, March 5, 4:40 AM: incident declared.<br>Business continuity plan: not invoked. Plan held on corporate file share (unavailable).<br>Monday, March 8, 9:05 AM: BCP invoked. Printed copy located in the CFO's office.<br>Monday, March 8, 11:30 AM: client banks notified.</prop>`,`At 12:40 his phone buzzed.`,`<prop type="text" from="Lou" time="12:40 PM">Done. Labels only, like I said. I'll bring it by at six.</prop>`,`He wrote <b>I'll be here.</b>`],
       opts:[
         {t:`Mark where the plan was kept, and when it was finally used.`, s:3, best:true, d:{trust:3,conf:0,health:5},
@@ -316,7 +316,7 @@
           after:`It was. A copy turned up three days into a nine day outage, and the banks heard on Monday morning.`,
           why:`A continuity plan has to be available during the disruption it's for. The delay is a control failure, not bad luck.`}
       ]},
-    { id:`f7s12`, domain:`Operations and Resilience`, task:`4B5`, title:`The form`,
+    { id:`f7s12`, domain:`Operations and Resilience`, task:`4B5`, title:`The form`, q:`Meridian's December renewal form answers questions on backups, offline copies and DR tests. What should Henry do?`,
       text:(s,all,G)=>[`At two, which was eight in the evening in London, he opened the underwriting file. When Meridian renewed its cover in December, it had answered the underwriters' questions about recovery, months before it had any reason to want the answers read closely.`,`<prop type="doc" title="Renewal proposal form, December 2026, recovery section (extract)">Are backups of critical systems tested by restoring them at least quarterly? Yes.<br>Is at least one backup copy kept offline, out of reach of the production network? Yes.<br>Date and result of last disaster recovery test: November 19, 2026, passed.<br>Time to restore critical settlement systems: 4 hours.</prop>`,`His father had read forms like this for forty years. He'd said once that the answers were the cheapest part of any risk, because the people who wrote them never had to pay for them.`],
       opts:[
         {t:`Leave the form out. Coverage questions aren't his job.`, s:0, d:{trust:-2,conf:0,health:-4},

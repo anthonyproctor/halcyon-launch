@@ -105,7 +105,7 @@
     ]
   },
   scenes: [
-    { id:`f5s1`, domain:`Acquisition and Implementation`, task:`3A1`, title:`Whose project`,
+    { id:`f5s1`, domain:`Acquisition and Implementation`, task:`3A1`, title:`Whose project`, q:`The project charter for Longitude names Pellridge as project manager and no business owner. What should Henry do?`,
       text:(s,all,G)=>[...(G.hidconflict
         ?[`Priyanka's review of Monday and Tuesday had come in at ten to five, which was the middle of her morning. Nine notes, numbered, in the dry style she used for people she'd decided to take seriously. Seven were fair. He cleared those first and wrote his answers under the other two, so she could see he'd read them.`]
         :[]),...((s.flags.toldkade||G.toldkade)
@@ -127,7 +127,7 @@
           after:`Counsel stops him at the word "ring." Pellridge is Meridian's vendor, and its project manager's memory of 2019 is the vendor's account of its own work, by phone, years later.`,
           why:`Contact with the insured's vendors goes through the agreed channel. And the vendor's recollection is the weakest evidence about a project the vendor ran. Start with the documents.`}
       ]},
-    { id:`f5s2`, domain:`Acquisition and Implementation`, task:`3A1`, title:`Green`,
+    { id:`f5s2`, domain:`Acquisition and Implementation`, task:`3A1`, title:`Green`, q:`Every monthly status report Pellridge sent the sponsor has a green circle on top. How should Henry read it?`,
       text:(s,all,G)=>[`At half past eight he opened the steering committee folder. It was thin. There were minutes for April, May, and June 2019, each a page long, each ending "next meeting in one month." After June there was nothing, and the project still had three months to run.`,`What there was, after June, was a status report a month from Pellridge's project manager to the sponsor. Every one of them had a large green circle at the top. He went to the last one.`,`<prop type="doc" title="Project Longitude, monthly status report, Friday, August 30, 2019 (extract)">Overall status: GREEN.<br>Budget at completion: $5,000,000.<br>Planned value to date: $4,000,000. Earned value to date: $3,200,000. Actual cost to date: $5,600,000.<br>Go live: on track for September 16.</prop>`],
       opts:[
         {t:`Accept the GREEN. The sponsor got a report every month and raised nothing.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -143,7 +143,7 @@
           after:`An overrun isn't padding. It can be bad estimating, changing scope, or a dozen other things, and he hasn't seen a single invoice from 2019.`,
           why:`A cost overrun is a project management finding. It isn't evidence of fraud. Report what the figures show, and don't go past them.`}
       ]},
-    { id:`f5s3`, domain:`Acquisition and Implementation`, task:`3A2`, title:`The case for Longitude`,
+    { id:`f5s3`, domain:`Acquisition and Implementation`, task:`3A2`, title:`The case for Longitude`, q:`The business case for Longitude promised savings, fewer errors and triple capacity. What should Henry make of it?`,
       text:(s,all,G)=>[`The policy in Leonard's folder said only "Approved by the Board, March 2019." Last night's batch had the minutes. Tuesday, March 19, 2019: the settlement authorization policy at item four, the one nobody had reviewed since, and Longitude's business case at item five.`,`<prop type="doc" title="Project Longitude, business case, March 2019 (extract)">One off cost: $5,000,000.<br>Benefits: IT running costs down $2,000,000 a year from 2020 (in house IT team reduced from 16 to 5). Settlement errors down 80 percent. Capacity tripled.<br>Payback: 2.5 years.<br>Benefits owner: not stated. Benefits review: to be scheduled.</prop>`,`He asked counsel for anything that measured those benefits after 2019. The answer came back in twenty minutes. There wasn't anything.`],
       opts:[
         {t:`Accept the case. The board approved it, and the board owns it.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -159,7 +159,7 @@
           after:`Over budget, yes. Failed is a conclusion about benefits, and there's no evidence about the benefits either way. That's rather the point.`,
           why:`Cost overrun alone doesn't make a project a failure. Judging it needs the benefits measured against the case, which is the very thing missing here.`}
       ]},
-    { id:`f5s4`, domain:`Acquisition and Implementation`, task:`3A2`, title:`One option`,
+    { id:`f5s4`, domain:`Acquisition and Implementation`, task:`3A2`, title:`One option`, q:`Kade's foreword says he trusts the team building Longitude completely. What should Henry make of the options section?`,
       text:(s,all,G)=>[`The options section was a page and a half. The foreword above it was signed.`,`<prop type="doc" title="Project Longitude, business case, foreword and options (extract)">"This is the platform that will carry Meridian for the next twenty years. I've asked a team I know well to build it, and I trust them completely. S. Kade."<br><br>Option A: do nothing. Not viable.<br>Option B: Pellridge Data Services to build and operate. Recommended.<br>Other vendors approached: none. Technical feasibility: confirmed by Pellridge.</prop>`,`He went back to the filing he'd pulled on Tuesday, for the line he'd only noted the year of. Formed Tuesday, January 22, 2019. Eight weeks to the day before it was the only option in front of Meridian's board.`],
       opts:[
         {t:`Conclude the choice was rigged so Kade's friends got the work.`, s:0, d:{trust:-3,conf:0,health:-4},
@@ -175,7 +175,7 @@
           after:`He'd be building a business case of his own, eight years late, for a decision he doesn't own. It would prove nothing about what Meridian considered in 2019.`,
           why:`Evaluate the organization's decision process with its own records. Producing your own alternatives is consulting work, and it isn't evidence of what management did.`}
       ]},
-    { id:`f5s5`, domain:`Acquisition and Implementation`, task:`3A3`, title:`Two week sprints`,
+    { id:`f5s5`, domain:`Acquisition and Implementation`, task:`3A3`, title:`Two week sprints`, q:`Pellridge's notes describe a different method from the one the charter promised. What should Henry make of it?`,
       text:(s,all,G)=>[`At ten past ten he found the method. The charter promised Meridian's own life cycle, five phase gates, each approved by the sponsor. Pellridge's progress notes from May onward described something else.`,`<prop type="doc" title="Project Longitude, method (extracts)">Pellridge progress note, May 2019: "Delivery moved to two week sprints. Backlog maintained by Pellridge."<br>Email, C. Wynn to Pellridge, July 22, 2019: "Gates 3 and 4 waived to protect the date. Carry on."<br>Requirements baseline: last approved version, April 2019. Backlog items deferred to release 2 at go live: 41.</prop>`],
       opts:[
         {t:`Make agile itself the finding. The method didn't suit a payment system.`, s:0, d:{trust:-1,conf:0,health:-3},
@@ -191,7 +191,7 @@
           after:`He goes looking for what took the gates' place. Acceptance criteria on the backlog items: none. A product owner from the business: none, since the backlog was Pellridge's. A record of who approved the forty one deferrals: none. The sprints weren't the problem. The problem was that when the gates went, nothing went in where they'd been.`,
           why:`Agile can be well controlled if its own controls are in place: a product owner for the business, acceptance criteria, a definition of done, and recorded decisions about scope. Waiving the gates without putting those in removes the approvals and puts nothing in their place.`}
       ]},
-    { id:`f5s6`, domain:`Acquisition and Implementation`, task:`3A3`, title:`Licensed, not owned`,
+    { id:`f5s6`, domain:`Acquisition and Implementation`, task:`3A3`, title:`Licensed, not owned`, q:`The contract leaves Longitude's software Pellridge's property, licensed to Meridian. How should Henry treat that?`,
       text:(s,all,G)=>[`At twenty to eleven he went back to the Pellridge contract, the nine pages he'd read on Tuesday, and went back to the clause he'd passed over then as boilerplate.`,`<prop type="doc" title="Pellridge master services agreement, July 2019, intellectual property (extract)">All software developed under this agreement remains the property of Pellridge. Meridian receives a license to use it for the term of the agreement.<br>Source code escrow: not addressed.<br>System documentation: maintained by Pellridge, available to Meridian on request.</prop>`,`Counsel confirmed by email that Meridian had never asked for the documentation.`],
       opts:[
         {t:`Set it aside. Who owns the code has nothing to do with the claim.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -207,7 +207,7 @@
           after:`It's a recommendation, and possibly a good one, for a finding he hasn't written yet.`,
           why:`Record the condition and its risk first. Recommendations follow findings, and how to fix it is management's decision.`}
       ]},
-    { id:`f5s7`, domain:`Acquisition and Implementation`, task:`3A4`, title:`R-14`,
+    { id:`f5s7`, domain:`Acquisition and Implementation`, task:`3A4`, title:`R-14`, q:`In the traceability matrix, the preparer rule was deferred by Pellridge. What should Henry do with it?`,
       text:(s,all,G)=>[`At five to eleven he opened the requirements traceability matrix, a spreadsheet four hundred rows long, and searched it for the words from the standard he'd read on Friday: did not prepare the file.`,`<prop type="doc" title="Project Longitude, requirements traceability matrix, row R-14">Requirement: "The system shall prevent the user who prepared a settlement file from approving it." Source: Settlement Authorization Standard, section 2.<br>Design: deferred to release 2. Test: UAT-031, not run (deferred).<br>Deferral approved by: project manager (Pellridge), August 2019.<br>Compensating control: desk procedure.<br>Release 2: not started.</prop>`,`He had twenty five minutes before the bus. He used ten of them on this row.`],
       opts:[
         {t:`Accept the deferral. It was approved, and a compensating control was named.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -247,7 +247,7 @@
           after:`Leonard says, slowly, <span class="said" data-who="Leonard">"Is that a finding?"</span> It isn't, and Henry has just told the auditee what to put in front of its own board, and implied why.`,
           why:`What management takes to its board is management's decision. Directing it interferes with the auditee's governance and signals what you've found.`}
       ]},
-    { id:`f5s9`, domain:`Acquisition and Implementation`, task:`3A4`, title:`A number in a table`,
+    { id:`f5s9`, domain:`Acquisition and Implementation`, task:`3A4`, title:`A number in a table`, q:`Longitude's design spec shows how second approval is set up. How should Henry read it?`,
       text:(s,all,G)=>{const p4=((all&&all[4]&&all[4].picks)||{})[6];
         return [`Back on Wazee Street Maisie took the client chair, put her feet on the radiator, and opened a paperback with a dragon on it. Henry turned his screen away from the chair without thinking. She noticed, and approved, in the way she approved of things, by not mentioning it.`,`After a while she got up and stood at the whiteboard. ${(p4===3||p4===0)?`She took the cap off his marker and wrote TOASTER at the top of the shopping list nobody had erased, and underlined it twice.`:`She read the shopping list nobody had erased, all of it, as if it might be evidence.`} Then she looked at the years under it.`,`<span class="said" data-who="Maisie">"What's 1994?"</span>`,`<span class="said" data-who="Henry">"Something she wrote. I don't know yet."</span>`,`<span class="said" data-who="Maisie">"Okay."</span> She went back to the dragon.`,`He opened Longitude's design specification at the section on authorization.`,`<prop type="doc" title="Project Longitude, design specification, section 6 (extract)">Second approval threshold: configuration setting, default $10,000.<br>Authorized approver list: configuration setting.<br>Settings maintained by: system administrator (Pellridge).<br>Change history for configuration settings: release 2.</prop>`]},
       opts:[
@@ -264,7 +264,7 @@
           after:`He writes it beside R-14. The threshold that defines the capstone, and the list of who may approve, are settings in a table. The vendor administers the table. No change to it was ever logged, because logging was another thing put off to release 2. So nobody, not even Meridian, can show what the line was on March 5, or who was on the list. He asks counsel for whatever exists, and for a statement of how the settings are protected.`,
           why:`Configurable controls need their settings protected: changes authorized, logged, and reviewed by someone independent of the person making them. A key threshold changeable by a vendor, with no audit trail, is a control designed with a hole in it.`}
       ]},
-    { id:`f5s10`, domain:`Acquisition and Implementation`, task:`3B1`, title:`Signed after`,
+    { id:`f5s10`, domain:`Acquisition and Implementation`, task:`3B1`, title:`Signed after`, q:`Longitude's acceptance test summary shows 197 of 212 cases passed. What should Henry conclude?`,
       text:(s,all,G)=>[`At ten to four he walked her back to Union Station. At the top of the escalator she stopped, with people going round her on both sides.`,`<span class="said" data-who="Maisie">"Do you still go? Saturdays?"</span>`,`<span class="said" data-who="Henry">"I haven't."</span>`,`<span class="said" data-who="Maisie">"You could. I could come."</span> She said it to the escalator, not to him.${(s.picks||{})[7]===0?` A beat. <span class="said" data-who="Maisie">"If you don't take calls."</span>`:``}`,`<span class="said" data-who="Henry">"Nine o'clock,"</span> he said. <span class="said" data-who="Henry">"I'll come up for you at eight."</span>`,`<span class="said" data-who="Maisie">"You don't have to."</span>`,`<span class="said" data-who="Henry">"I know,"</span> he said. <span class="said" data-who="Maisie">"Okay,"</span> she said, and went down without looking back, which at fourteen was the same as waving.`,`At twenty past four he was back at the desk with the user acceptance test summary.`,`<prop type="doc" title="Project Longitude, user acceptance testing, summary sign off">Test cases: 212. Passed: 197. Failed: 4 (fixed). Not run: 11.<br>Testers: Pellridge test team.<br>Accepted for Settlement Operations by: project manager (Pellridge).<br>Date: Friday, October 4, 2019.</prop>`,`Go live had been Monday, September 16, 2019.`],
       opts:[
         {t:`Accept it. It's signed, dated, and 197 of 212 cases passed.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -280,7 +280,7 @@
           after:`He'd need access he shouldn't have to a system that's changed every year since. Whatever he found would say nothing about whether it was ready in September 2019.`,
           why:`The auditor evaluates whether acceptance happened. Running the auditee's tests on today's system isn't the auditor's job, and it can't show the readiness at go live.`}
       ]},
-    { id:`f5s11`, domain:`Acquisition and Implementation`, task:`3B1`, title:`A copy of everyone`,
+    { id:`f5s11`, domain:`Acquisition and Implementation`, task:`3B1`, title:`A copy of everyone`, q:`The test plan says where Longitude's test data came from. What should Henry do?`,
       text:(s,all,G)=>[`At 5:12 his phone lit up.`,`<prop type="text" from="Maisie" time="5:12 PM">home. mum asked what we had for lunch and i said tea and she said AT THE DINER? and did a face</prop>`,`<prop type="text" from="Maisie" time="5:13 PM">a good face</prop>`,`He wrote to Laura before he could think better of it. <b>Saturday, the diner, nine. I'll fetch her at eight and have her back by noon.</b> The answer came in under a minute. <b>Okay.</b> Then: <b>Thank you for telling me.</b>`,`He sat with that for a minute. Then he opened the test plan, because the eleven cases nobody ran weren't the only thing wrong with the testing, and he wanted to know what the other two hundred had been run on.`,`<prop type="doc" title="Project Longitude, UAT environment (extract)">Environment: hosted by Pellridge.<br>Test data: full copy of production merchant file, March 2019 (merchant names, bank account and routing numbers). Masking: none.<br>Disposal of test data after go live: not recorded.</prop>`],
       opts:[
         {t:`Fine. Real data makes for the most realistic test there is.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -296,7 +296,7 @@
           after:`Counsel refuses on two grounds before he's finished the sentence: it's other people's bank data, held by a vendor, and he'd be making his own copy of a problem.`,
           why:`Collect only what your objective needs, through the agreed channel. Asking a vendor for a full copy of personal financial data repeats the risk you've just found.`}
       ]},
-    { id:`f5s12`, domain:`Acquisition and Implementation`, task:`3B1`, title:`Sunday night`,
+    { id:`f5s12`, domain:`Acquisition and Implementation`, task:`3B1`, title:`Sunday night`, q:`Longitude went live on a CFO email with acceptance pending and no rollback plan. What should Henry conclude?`,
       text:(s,all,G)=>[`The cutover papers were the last folder in the file. He opened them at twenty to eight, with the bicycle shop shut downstairs and the radiator knocking.`,`<prop type="doc" title="Project Longitude, go live readiness (extract)">Readiness criteria: UAT accepted by the business (status: pending). Parallel run: not planned. Rollback plan: not required.<br>Changeover: direct, over the weekend of September 14 and 15, 2019. Legacy settlement system retired Sunday night.<br>Go live approval: email, C. Wynn, Friday, September 13, 2019, 6:10 PM. "Approved. Let's go."</prop>`,`At ten past nine counsel sent the last answer of the day: the 2019 control assessment that risk register row R-07 had rested on ever since, which he'd asked for with the project file.`,`<prop type="doc" title="Control assessment, settlement dual authorization (2019)">Fieldwork: April 8 to April 19, 2019.<br>System tested: legacy settlement system.<br>Conclusion: effective.</prop>`],
       opts:[
         {t:`It's run for seven and a half years. How it went live hardly matters now.`, s:0, d:{trust:-2,conf:0,health:-4},

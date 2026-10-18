@@ -106,7 +106,7 @@
     ]
   },
   scenes: [
-    { id:`f6s1`, domain:`Operations and Resilience`, task:`4A8`, title:`Two lists`,
+    { id:`f6s1`, domain:`Operations and Resilience`, task:`4A8`, title:`Two lists`, q:`Leonard's ITGC report tested 25 change tickets, all approved. How should Henry test change management?`,
       text:(s,all,G)=>[(G.trustedia
         ?`First he found the note he'd written on Tuesday the ninth, the day Dot died, about Leonard's report: <b>IT controls report 2026, effective. Rely on it; cut own testing to match.</b> He'd cut it. He drew a line through the note now, put the date beside the line, and put the testing back.`
         :`He pulled up Leonard's 2026 report, the one that had come with a welcome on the first day, and opened it at the section on change.`),
@@ -125,7 +125,7 @@
           after:`Leonard says not to his knowledge, promptly, and Henry believes he means it. Everything Leonard knows about changes came out of the ticket system.`,
           why:`Inquiry is the weakest evidence, and here the person asked had tested from the same tickets. Use the system's own record.`}
       ]},
-    { id:`f6s2`, domain:`Operations and Resilience`, task:`4A8`, title:`One name for six`,
+    { id:`f6s2`, domain:`Operations and Resilience`, task:`4A8`, title:`One name for six`, q:`The deployment tool's access list shows who can build, approve and deploy. What should Henry conclude?`,
       text:(s,all,G)=>[...((s.picks||{})[0]!==2
         ?[`At half past eight he set the two lists against each other one more time, as totals this time, and they didn't agree. Fifty eight tickets. Fifty nine releases. He went down the log until he found the line with no partner: 2027-02-27 06:14 UTC, which was 11:14 PM on Friday, February 26 in Denver, before the clocks changed. A release to the settlement release service, package 4.11.2, by the account pellridge-deploy. No ticket, no approver. The test he'd started with would never have found it. The totals had.`]
         :[]),`At nine the directors would be sitting down across town. Henry was looking at who had pressed the button.`,`<prop type="doc" title="Deployment tool, production access (extract)">pellridge-deploy: shared account, used by Pellridge release engineers (6 named people). Rights: build, approve, deploy to production.<br>meridian-ops: 2 users. Rights: view.<br>Settlement application developers: Pellridge, the same 6 people.</prop>`,`All fifty nine releases had gone in under pellridge-deploy. The six people who wrote Meridian's settlement software were the six who put it into production, under one name, on an account that could approve its own work.`],
@@ -143,7 +143,7 @@
           after:`He writes it in two parts. Separation: the developers move their own code into production, and approve it, with nobody at Meridian in between. Accountability: they do it as one account, so no release can be tied to a person by the tool's own record, the one on February 26 included. Then he asks counsel for anything Pellridge keeps on who used the account and when, and for any sign that someone at Meridian ever looked at a release after it went in.`,
           why:`Developers shouldn't migrate their own code into production; an independent group should, or at least review every move. A shared account removes individual accountability, so nobody can be held to a change.`}
       ]},
-    { id:`f6s3`, domain:`Acquisition and Implementation`, task:`3B3`, title:`Saturday night`,
+    { id:`f6s3`, domain:`Acquisition and Implementation`, task:`3B3`, title:`Saturday night`, q:`Teresa sends the remediation plan the board approved this morning. What should Henry do about it?`,
       text:(s,all,G)=>{const p5=((all&&all[5]&&all[5].picks)||{})[7];
         return [...(p5===1
           ?[`Most of the first hour that morning had gone on a footnote. Meridian's board pack said the remediation plan had been "discussed with the insurer's investigator," and it took Vellacott's counsel two emails and a phone call to have it struck before nine. The pack went to the directors at 8:52 without it.`]
@@ -163,7 +163,7 @@
           after:`Teresa says no on his behalf, and then explains it, slowly. An investigator in the room during the change is part of the change.`,
           why:`Taking part in the auditee's implementation impairs independence and makes you a witness to changes in your own evidence.`}
       ]},
-    { id:`f6s4`, domain:`Acquisition and Implementation`, task:`3B3`, title:`Nine became fourteen`,
+    { id:`f6s4`, domain:`Acquisition and Implementation`, task:`3B3`, title:`Nine became fourteen`, q:`Henry has finally opened Longitude's data conversion summary. What should he make of it?`,
       text:(s,all,G)=>[`The conversion papers had come with the project file on Wednesday, and he'd left them till last, the way you leave the box marked miscellaneous. At half past two he opened it.`,`<prop type="doc" title="Project Longitude, data conversion summary, Sunday, September 15, 2019">Merchant records: legacy 48,210. Loaded 48,163. Rejected (exception log) 31. Rejected records later keyed by hand: count not recorded.<br>Settlement approver list: legacy 9 users. Loaded 14 users (mapping rule M-07: legacy SUPERVISOR to APPROVER).<br>Reconciliation: performed by Pellridge. Data owner sign off: none.<br>Legacy database: decommissioned, deleted after 90 days.</prop>`],
       opts:[
         {t:`Log it: unreconciled, unowned, and five new approvers.`, s:3, best:true, d:{trust:3,conf:0,health:6},
@@ -179,7 +179,7 @@
           after:`He'd be reconstructing Meridian's access control from his own guesswork, years late, and the database that could have told him the truth is gone.`,
           why:`The auditor evaluates the organization's conversion controls. Rebuilding the auditee's records isn't evidence of what happened, and the missing legacy data is itself the finding.`}
       ]},
-    { id:`f6s5`, domain:`Acquisition and Implementation`, task:`3B4`, title:`Stable`,
+    { id:`f6s5`, domain:`Acquisition and Implementation`, task:`3B4`, title:`Stable`, q:`Pellridge's closure memo, approved by the sponsor, ended Longitude as a project. What should Henry take from it?`,
       text:(s,all,G)=>[`At a quarter past four he found the last page Longitude had produced as a project.`,`<prop type="doc" title="Project Longitude, closure memo, Friday, November 1, 2019">System live since September 16 and stable. Benefits on track.<br>Post implementation review: not required.<br>Open items: 41 backlog items to release 2.<br>Signed: project manager (Pellridge). Approved: C. Wynn, sponsor.</prop>`,`Six weeks from go live to stable, on the word of the company that had built it.`],
       opts:[
         {t:`Accept it. The sponsor approved closing without a review.`, s:0, flag:`skippedpir`, d:{trust:-3,conf:0,health:-5},
@@ -195,7 +195,7 @@
           after:`He'd be doing Meridian's own review for it, years late, as the insurer's investigator. His conclusions would be Meridian's PIR in everything but name.`,
           why:`The PIR is the organization's process. The auditor evaluates whether it happened and what it would have shown, without performing it for them.`}
       ]},
-    { id:`f6s6`, domain:`Operations and Resilience`, task:`4A3`, title:`Held at 4:52`,
+    { id:`f6s6`, domain:`Operations and Resilience`, task:`4A3`, title:`Held at 4:52`, q:`The scheduler export lists three untracked job updates and one operator hold. What should Henry conclude?`,
       text:(s,all,G)=>[`At seven he ate a sandwich from the place on the corner, standing at the window, and opened the job scheduler export counsel had sent at six.`,`<prop type="doc" title="Job scheduler, settlement jobs (extract)">SETL_BUILD, nightly, 10:00 PM. SETL_RELEASE, nightly, 11:30 PM. RECON_DAILY, daily, 6:30 AM.<br>Job definition changes, January 1 to March 9: 3. Change tickets that mention the scheduler: 0.<br>Operator action, Friday, March 5, 4:52 AM: RECON_DAILY placed on HOLD. User: OPS_NIGHT.<br>OPS_NIGHT: shared operator account, 4 users (2 Meridian, 2 Pellridge).</prop>`,`Twelve minutes after the incident was declared, somebody had stopped the morning's reconciliation, the one that would have compared March 4 with the Fed.`],
       opts:[
         {t:`Accept it. Holding jobs during an incident is normal practice.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -211,7 +211,7 @@
           after:`It's a story with one fact in it. Holds happen in incidents for dull reasons, and he has no evidence of this one's.`,
           why:`A control weakness shows what was possible. It isn't evidence of intent. Report the weakness and keep the theory out of it.`}
       ]},
-    { id:`f6s7`, domain:`Operations and Resilience`, task:`4A3`, title:`Carried forward`,
+    { id:`f6s7`, domain:`Operations and Resilience`, task:`4A3`, title:`Carried forward`, q:`What should Henry make of the reconciliation job's own definition?`,
       text:(s,all,G)=>[`At twenty to nine he opened the reconciliation job's own definition. He'd been carrying the March 3 and 4 sign off sheets around since Friday. Now he wanted the machine that made them.`,`<prop type="doc" title="Job scheduler, RECON_DAILY definition (extract)">Compares the settlement ledger with the Federal Reserve record. Differences written to exception queue SETL-SUP.<br>Queue access: settlement supervisors. Dispositions available: resolved; timing difference, carried forward.<br>Escalation: none. Age limit for carried forward items: none. Independent review of dispositions: none.</prop>`,`One supervisor could carry a difference forward for as long as that supervisor liked. Two had been carried since March 3 and March 4, by somebody who signed B.N.`],
       opts:[
         {t:`Accept the design. Supervisors are the right people to clear exceptions.`, s:0, d:{trust:-2,conf:0,health:-3},
@@ -227,7 +227,7 @@
           after:`Meridian would run its own job, on its own ledger, against whatever it now calls the Fed's record, and hand him the answer.`,
           why:`Reperformance by the auditee isn't independent evidence. Wait for the third party record and test it yourself.`}
       ]},
-    { id:`f6s8`, domain:`Acquisition and Implementation`, task:`3B2`, title:`Not yet`,
+    { id:`f6s8`, domain:`Acquisition and Implementation`, task:`3B2`, title:`Not yet`, q:`Three records disagree about the release service's current version. How should Henry treat it?`,
       text:(s,all,G)=>[`Priyanka rang at half past six on Friday morning, half past twelve in London, with what sounded like a sandwich in its wrapper on the desk beside her.`,(G.hidconflict
         ?`Since Monday every workpaper of his had gone to her before it went anywhere else, and she'd sent back about a third. This wasn't about any of them.`
         :`She reviewed large losses for a living, and this was a large one. This call wasn't about his workpapers.`),`<span class="said" data-who="Priyanka">"You asked for Meridian's policy history. It's short and dull. So I pulled every Denver payments risk the archive holds, because the archive files by city and class, and I don't trust it to know anybody's old names."</span>`,`<span class="said" data-who="Henry">"And?"</span>`,`<span class="said" data-who="Priyanka">"The archive keeps a log of requests against old slips. One of the Denver risks has an entry. A 1994 slip. Last October somebody wrote from a private address in Denver asking for a copy. Not a party, so the archive refused. There's a reply on file."</span>`,`<span class="said" data-who="Henry">"Read it to me."</span>`,`Paper moved in London. <span class="said" data-who="Priyanka">"'That's the right answer. Thank you.'"</span> A pause. <span class="said" data-who="Priyanka">"That's all of it. The sender's details are blacked out. Private individual."</span>`,`It was an odd thing to write to people who'd just told you no. He could think of one person who would have.`,`Neither of them said anything. On the whiteboard, under the shopping list, 1994 was where he'd written it a week ago.`,...((((all&&all[1]&&all[1].picks)||{})[7]===2)
@@ -247,7 +247,7 @@
           after:`It's the one record that agrees with the deploy log. He's about to call it a typo for agreeing with the evidence.`,
           why:`Don't explain away a discrepancy. Investigate it against the other records first.`}
       ]},
-    { id:`f6s9`, domain:`Operations and Resilience`, task:`4A8`, title:`Raised on the eighth`,
+    { id:`f6s9`, domain:`Operations and Resilience`, task:`4A8`, title:`Raised on the eighth`, q:`Meridian says the February 26 release was an emergency, ticketed on March 8. What should Henry do?`,
       text:(s,all,G)=>[`Meridian's answer about February 26 came through Teresa at ten past nine.`,`<prop type="email" from="Teresa Vreeland, forwarding Meridian's general counsel" to="Henry Ashby" subject="February 26" time="9:10 AM">The release of February 26 was an emergency change to correct a fault in the release service. Change ticket CHG-2207 was raised on Monday, March 8, and approved by Pellridge's service manager the same day. We trust this resolves the question.</prop>`,`He searched Meridian's incident system for February 26 while the kettle boiled. There was no fault on record that day, or the day before.`],
       opts:[
         {t:`Accept it. Emergency changes are allowed to skip the normal queue.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -263,7 +263,7 @@
           after:`Teresa reminds him that Pellridge is reached through Meridian, and that the service manager approved the ticket. He'd be hearing the approver explain his own approval.`,
           why:`Contact goes through the agreed channel. And an explanation from the person who approved the change is the least independent evidence there is.`}
       ]},
-    { id:`f6s10`, domain:`Operations and Resilience`, task:`4A8`, title:`Both belong to Meridian`,
+    { id:`f6s10`, domain:`Operations and Resilience`, task:`4A8`, title:`Both belong to Meridian`, q:`Page 52's timeline, drawn from DOME, shows no production changes in February. What should Henry do?`,
       text:(s,all,G)=>[`<prop type="text" from="Lou" time="10:48 AM">Doing her place Monday. I'll send you the list. Labels only, before you ask.</prop>`,`He wrote back <b>Thank you.</b> Then, because that didn't seem like enough, <b>Thank you, Lou.</b>`,`At eleven he went back to the claim pack, to the incident timeline, which had been sitting on page 52 since the first morning.`,`<prop type="doc" title="Claim pack, incident timeline, page 52 (drawn from DOME)">Change monitoring, settlement components, February 1 to March 4: no production changes detected.<br>Event discovered: Friday, March 5, 4:40 AM.</prop>`,`The deployment tool said one thing about the night of February 26. The monitoring platform every page of the claim was drawn from said another. Both belonged to Meridian.`],
       opts:[
         {t:`Go with DOME. The whole claim is built on it, and so is Meridian's.`, s:0, flag:`trusteddome`, d:{trust:-3,conf:0,health:-6},
@@ -279,7 +279,7 @@
           after:`Meridian will pick the one that agrees with its claim, in writing, and he'll have asked it to.`,
           why:`The auditee's preference between its own records isn't evidence. Look for an independent source.`}
       ]},
-    { id:`f6s11`, domain:`Operations and Resilience`, task:`4A3`, title:`To the cent`,
+    { id:`f6s11`, domain:`Operations and Resilience`, task:`4A3`, title:`To the cent`, q:`The Fed's totals have arrived, sealed, through Teresa. What should Henry do with them?`,
       text:(s,all,G)=>[`At 1:31 his phone buzzed.`,`<prop type="text" from="Maisie" time="1:31 PM">is it still tomorrow</prop>`,`He wrote <b>Yes. Eight.</b>`,`<prop type="text" from="Maisie" time="1:32 PM">ok. what do people wear to a diner</prop>`,`He wrote <b>Clothes.</b>`,`<prop type="text" from="Maisie" time="1:32 PM">wow</prop>`,`He looked at that for a while, and then wrote one more. <b>Dot brought her own tea cozy. Knitted it herself. Wear something warm, the window booth's cold.</b>`,`At twenty past two Teresa Vreeland came up the stairs past the bicycle shop herself, which she had never done, with a sealed envelope and a laptop bag. The bank had sent the totals that morning, to her and to nobody else.`,`<span class="said" data-who="Teresa">"It came from the bank to me, and from me to you. Nobody at Meridian has touched it. Write that down before you open it."</span>`,`He wrote it down, with the time, and she watched him do it. On the way out she looked at the whiteboard, the shopping list and the years under it, and didn't ask.`,`<prop type="doc" title="Federal Reserve settlement totals, Meridian Clearing, March 2 to 5, 2027 (from the bank, via counsel)">Four days: 184,212 entries, $2,871,406,233.17.<br>Daily totals attached.</prop>`,`${((all&&all[2]&&all[2].picks)||{})[10]===2?`Meridian's extract, the one he'd counted on the eleventh, said 184,212 rows and $2,871,406,233.17.`:`Meridian's extract had come on the eleventh with its own control report. He'd never counted it himself. He did now, before anything else, and got 184,212 rows and $2,871,406,233.17.`} Day by day it tied as well, to the cent. Then he took out the sheets for March 3 and 4, and Meridian's open items list as of Wednesday, which had come in Thursday's batch. Both differences were still on it, two weeks on. Both still said timing difference, carried forward.`],
       opts:[
         {t:`Accept "timing." Totals that tie mean nothing was missing.`, s:0, d:{trust:-2,conf:0,health:-4},
@@ -295,7 +295,7 @@
           after:`He'd be asking the insured's staff to name a colleague in the middle of a fraud claim, by phone. The answer would reach B.N. well before it reached him.`,
           why:`Don't alert people who may be involved before the evidence is secured. Ask for identities in writing, through the agreed channel.`}
       ]},
-    { id:`f6s12`, domain:`Acquisition and Implementation`, task:`3B4`, title:`A seat at the review`,
+    { id:`f6s12`, domain:`Acquisition and Implementation`, task:`3B4`, title:`A seat at the review`, q:`Meridian invites Henry to join internal audit's review of the weekend change. What should he do?`,
       text:(s,all,G)=>{const p5=((all&&all[5]&&all[5].picks)||{})[7];
         return [`At half past four Teresa forwarded one more letter from Meridian's general counsel, with no comment of her own, which was a comment.`,`<prop type="doc" title="Letter, Meridian's general counsel to Vellacott's counsel, Friday, March 19 (extract)">Meridian would welcome the insurer's investigator joining internal audit's post implementation review of this weekend's change, and proposes that the review's conclusions be accepted by both parties as resolving the control questions raised in the claim.</prop>`,(p5===2
           ?`On Wednesday Leonard had drafted the design for that change, and then told Carla in writing that internal audit shouldn't own it. Now internal audit was to review it.`
