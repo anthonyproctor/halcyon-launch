@@ -167,6 +167,9 @@
   },
   "lsat": {
    "narrator": {"voice": "en-us-techagent-7", "style": "General American accent. Warm, steady audiobook narrator. Close, unhurried, clear."},
+   "Meredith": {"voice": "en-us-storyteller-6", "style": "A woman's voice. Precise, unhurried, courteous.", "run": true, "gender": "f", "f0_low": 120, "f0_char_low": 140, "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Esquibel": {"voice": "Alnilam", "style": "An older man's voice. Dry, brief, careful.", "run": true, "gender": "m"},
+   "Shannon": {"voice": "en-us-csagent-10", "style": "A woman's voice. Guarded, tired, low.", "run": true, "gender": "f", "f0_low": 115, "f0_char_low": 130},
    "man": {"voice": "Schedar", "style": "A man's voice. Natural and conversational.", "run": true, "gender": "m"},
    "woman": {"voice": "Callirrhoe", "style": "A woman's voice. Natural and conversational.", "run": true, "gender": "f"},
    "Joel": {"voice": "Orus", "style": "A man's voice. Even, kind, plainspoken.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
