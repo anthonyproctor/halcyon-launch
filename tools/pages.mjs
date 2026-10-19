@@ -3,6 +3,7 @@
 // --v2: the PMP v2 draft in full/v2/chNN.js, with the v2 mentor leads from full/v2/preview.js; render_pages.py then writes audio/v2/pages/fN so v1 audio is never overwritten
 import fs from 'fs';
 import {segments} from './voices.mjs';
+import {introSegs,courseIntroSegs} from './intro_v2.mjs';
 const A=process.argv.slice(2);const [track,nArg,outPath]=A;const n=+nArg;const STORY=A.includes('--story');const CID=A.includes('--course')?A[A.indexOf('--course')+1]:null;const V2=A.includes('--v2')&&!CID;
 globalThis.window={};
 let C,CO={},SRC='';
@@ -78,9 +79,10 @@ if(!same(C.closing(FINAL,{},{}),C.closing(st,{},{}))){const {segs,say,pause}=mk(
    if(all.length>MAXV)console.error(`${pid}: ${all.length} wordings, narrated as best path, middling run and fixed paragraphs only (${fixed.length} of ${best.length})`)}
  if(nv||nf)console.error(`${nv} variant pages, ${nf} fixed pages`)}
 // whole-episode plan: page ids in order, with the best outcome after each decision
-const plan=['open',...(C.lesson?['lesson']:[]),...C.scenes.flatMap((sc,i)=>['s'+i,`o${i}_${sc.opts.findIndex(o=>o.best)}`]),'end'];
+if(track==='full'){const I=V2?introSegs(n,false,mk):CID?courseIntroSegs(CID,n,false,mk):null;if(I)pages.intro=I}
+const plan=[...(pages.intro?['intro']:[]),'open',...(C.lesson?['lesson']:[]),...C.scenes.flatMap((sc,i)=>['s'+i,`o${i}_${sc.opts.findIndex(o=>o.best)}`]),'end'];
 if(STORY){ // novel edition: story only, best path, no options, no lesson, no debriefs
-  const {segs,say,pause}=mk();say('narrator',`Chapter ${W[C.num]}. ${C.title}.`);pause(1);C.opening.forEach(p=>{say('narrator',p);pause(0.5)});pause(1.2);
+  const {segs,say,pause}=mk();if(track==='full'){const I=V2?introSegs(n,true,mk):CID?courseIntroSegs(CID,n,true,mk):null;if(I){segs.push(...I)}}say('narrator',`Chapter ${W[C.num]}. ${C.title}.`);pause(1);C.opening.forEach(p=>{say('narrator',p);pause(0.5)});pause(1.2);
   C.scenes.forEach((sc,i)=>{const paras=sc.text(BEST[i],{},{}).filter(p=>!(/\?\s*$/.test(p.replace(/<[^>]+>/g,'').trim())&&p.replace(/<[^>]+>/g,'').split(/\s+/).length<14));paras.forEach(p=>{say('narrator',p);pause(0.45)});pause(0.6);
     const b=sc.opts.find(o=>o.best);say('narrator',b.after);pause(1.4)});
   C.closing(FINAL,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});

@@ -81,7 +81,10 @@
    "Ilse": {"voice": "en-us-fola", "style": "A woman's voice. Curious, plainspoken, steady.", "run": true, "gender": "f"},
    "Nell": {"voice": "en-gb-podcaster-10", "style": "A woman's voice. Warm and clear.", "run": true, "gender": "f"},
    "Owen": {"voice": "Schedar", "style": "A man's voice. Soft spoken, careful, plain.", "run": true, "gender": "m"},
-   "man": {"voice": "Schedar", "style": "General American accent, natural and conversational.", "run": true},
+   "Rafa": {"voice": "Sadachbia", "style": "A man's voice. Relaxed, casual, quick.", "run": true, "gender": "m", "_recast": "2026-10-19 from Umbriel: too close to Sam, Wendell and Garrett by ear (voice director audit)"},
+   "Yusra": {"voice": "en-us-storyteller-6", "style": "A woman's voice. Direct, precise, driven.", "run": true, "gender": "f", "f0_low": 120, "f0_char_low": 130, "_recast": "2026-10-19 from Autonoe: blended with Quinn and the other women"},
+   "Frances": {"voice": "Pulcherrima", "style": "A woman's voice. Determined, emotion held in.", "run": true, "gender": "f", "f0_low": 110, "f0_char_low": 120, "_recast": "2026-10-19 from Erinome: blended with Ada, Lorna and Esther"},
+   "man": {"voice": "en-us-podcaster-1", "style": "General American accent, natural and conversational.", "run": true, "_recast": "2026-10-19 from Schedar: same voice as Owen, close to Sam"},
    "woman": {"voice": "Callirrhoe", "style": "General American accent, natural and conversational.", "run": true}
   },
   "pilot": {

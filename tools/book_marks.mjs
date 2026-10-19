@@ -24,7 +24,7 @@ const STING=[dur('audio/sting-open.mp3'),dur('audio/sting-close.mp3')]; // tools
 function timed(C,ed,mp3){ // page timings -> [[word, time]] on the episode clock, or null when they don't match this mp3
   const tf=`${ADIR}/pages/f${C.num}${ed==='story'?'s':''}/timings.json`;if(!fs.existsSync(tf)||!fs.existsSync(mp3))return null;
   const T=JSON.parse(fs.readFileSync(tf,'utf8'));
-  const plan=ed==='story'?['story']:['open',...(C.lesson?['lesson']:[]),...C.scenes.flatMap((sc,i)=>['s'+i,`o${i}_${sc.opts.findIndex(o=>o.best)}`]),'end']; // = tools/pages.mjs plan
+  const plan=ed==='story'?['story']:[...(T.intro?['intro']:[]),'open',...(C.lesson?['lesson']:[]),...C.scenes.flatMap((sc,i)=>['s'+i,`o${i}_${sc.opts.findIndex(o=>o.best)}`]),'end']; // = tools/pages.mjs plan
   if(plan.some(p=>!T[p]))return null;
   const out=[];let off=STING[0];
   for(const p of plan){for(const [w,a] of T[p].w){const x=norm(w);if(!x.length)out.push(['#',off+a]);for(const y of x)out.push([y,off+a])}off+=T[p].d+(p.startsWith('s')&&p!=='story'?4:1.2)} // pauses = render_pages*.py episode
