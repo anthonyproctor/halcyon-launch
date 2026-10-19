@@ -275,7 +275,7 @@
     (s.score>=28
       ?`It had been a good week, and she knew it. She'd given Wes a problem instead of a fight, kept the gates without wasting the schedule, and gotten the volume question in writing before anyone built to the wrong number. On his way out Wes stopped at her desk. <span class="said" data-who="Wes">"Night, Brooks."</span> She was halfway to the car before she noticed.`
       :`It had been a mixed week. Some of her calls had cost her trust she'd have to earn back, and Colleen would probably tell her which ones before she finished her coffee on Monday. But she'd found the question. That was the part that mattered. <span class="said" data-who="Wes">"Night, test kid,"</span> Wes said on his way out. He didn't look up.`),
-    `On the drive home she called her father. He picked up on the first ring, the way he always did.`,
+    `On the drive home she called her father. Frank Brooks picked up on the first ring, the way he always did.`,
     `<span class="said" data-who="Frank">"So,"</span> he said. <span class="said" data-who="Frank">"They figure out what they hired yet?"</span>`,
     `<span class="said" data-who="Nadia">"I think I found a question nobody's asked,"</span> she said. She told him about Helen, about the galley fire at three in the morning, about four people in a can two hundred and fifty miles up with nowhere to go.`,
     `He was quiet for a while. He went quiet like that whenever work got anywhere close to the year he stopped climbing.`,

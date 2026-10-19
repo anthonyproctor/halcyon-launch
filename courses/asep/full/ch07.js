@@ -5,7 +5,7 @@
     [`Gus`,`Test cell technician at FRO since the cargo days. One of the six names on the lockout tags by the valve panel.`]
   ],
   opening: [
-    `Her father called Sunday night, a little after eight. That was the hour she called Callie now, most Sundays since week five, and Callie put Rosie on and handed the phone to him last if he was still up. Tonight he called first.`,
+    `Her father, Frank, called Sunday night, a little after eight. That was the hour she called Callie now, most Sundays since week five, and Callie put Rosie on and handed the phone to him last if he was still up. Tonight he called first.`,
     `On Saturday Nadia had texted him a photo from the test cell: HEARTH's forward hatch bolted to Tiago's stand, bare aluminum with blue tape on its edges, the first piece of the module that looked like it was going to space. He hadn't texted back. He had it open now. She could tell, because he talked the way he read the paper, a few words and then a stop.`,
     `<span class="said" data-who="Frank">"That black ring. Around the door. That rubber?"</span>`,
     `<span class="said" data-who="Nadia">"Silicone. It's the seal for the hatch."</span>`,

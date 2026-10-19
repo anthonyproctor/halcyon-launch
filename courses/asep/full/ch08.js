@@ -184,7 +184,7 @@
       text:(s,all,G)=>{const blamed=G&&G.blamedsupplier;return [`Monday of week twenty Tiago asked Tamarack for the rack's mass, so he could ballast the stand-in that would go into HEARTH in week twenty four. The real rack would follow in week twenty seven.`,
         (blamed
           ?`Pavel's answer came copied to his contracts manager, as everything did now.`
-          :`Pavel called back within the hour.`),
+          :`Pavel, Tamarack's account lead, called back within the hour.`),
         `Six hundred kilograms. ICD revision B said 560. The 120 volt power card was most of it, then the rear face plumbing and the Ethernet board, all things FRO had asked for.`,(blamed
           ?`<span class="said" data-who="Tiago">"He'll never say he should've sent it,"</span> Tiago said. <span class="said" data-who="Tiago">"Not with that cc on it."</span>`
           :`<span class="said" data-who="Pavel">"I should've sent it when the card went in,"</span> Pavel said. <span class="said" data-who="Pavel">"I thought somebody would weigh it later."</span>`)]},
@@ -323,7 +323,7 @@
     (hid
       ?`The chair of FRO's board had sat in the back row both days, which she'd never done for a design review. When it was over she asked Amara for the full register, every line, and Amara handed it to her printed.`
       :`Amara walked Halo's people down to the lobby.`+osp+` Wes went back to his desk, because the aft ring's drawings still had a week of changes in them.`),
-    `Her bag was already in the car. She was halfway across the high bay to the side door when Tiago called her over. He had the forward hatch's qualification article off its stand and hanging from the crane on its sling, with a load cell between the hook and the sling. Gus kept a hand on the tag line so it wouldn't turn.`,
+    `Her bag was already in the car. She was halfway across the high bay to the side door when Tiago called her over. He had the forward hatch's qualification article off its stand and hanging from the crane on its sling, with a load cell between the hook and the sling. Gus, the test cell technician, kept a hand on the tag line so it wouldn't turn.`,
     (cut
       ?`It had never been in the chamber. With no leak test left on the schedule it had sat on the stand for three weeks, and Tiago wanted one number off it before it went to storage.`
       :wait

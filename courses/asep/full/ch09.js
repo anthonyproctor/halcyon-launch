@@ -8,8 +8,8 @@
     `<span class="said" data-who="Nadia">"The cargo modules didn't have anybody in them."</span>`,
     `<span class="said" data-who="Wes">"The air didn't know that."</span> She told him she'd have an answer Monday. He tapped the roof of her car twice and walked back to his own truck.`,
     `She drove south with the radio off. Past Castle Rock the traffic thinned. Past Colorado Springs, where her old shop's lights still showed from the highway, there was only the road and the dark line of the mountains on her right. Two hours. It used to be one.`,
-    `Her father's porch light was on. He was in his chair with the ballgame on and the sound down, and he got up when she came in as if he hadn't been watching the window since eight. <span class="said" data-who="Frank">"You eat?"</span> She hadn't. He made her eggs with his right hand on the pan and his left in the pocket of his cardigan.`,
-    `Callie came Saturday at five with Rosie and a bowl of potato salad under foil, in Mom's good yellow bowl. Rosie ran right past Nadia to the fridge. The purple rocket was up there under a trout magnet from some bait shop in Salida, and Rosie jabbed a finger at the back of it, where a door had been added in green crayon. The handle was bigger than the door. That one was Nadia's, she said. Mommy said. Nadia asked if it opened. Both ways, Rosie said, obviously, and took off yelling for Grandpa.`,
+    `Her father's porch light was on. Frank was in his chair with the ballgame on and the sound down, and he got up when she came in as if he hadn't been watching the window since eight. <span class="said" data-who="Frank">"You eat?"</span> She hadn't. He made her eggs with his right hand on the pan and his left in the pocket of his cardigan.`,
+    `Her sister Callie came Saturday at five with Rosie and a bowl of potato salad under foil, in Mom's good yellow bowl. Rosie ran right past Nadia to the fridge. The purple rocket was up there under a trout magnet from some bait shop in Salida, and Rosie jabbed a finger at the back of it, where a door had been added in green crayon. The handle was bigger than the door. That one was Nadia's, she said. Mommy said. Nadia asked if it opened. Both ways, Rosie said, obviously, and took off yelling for Grandpa.`,
     `First time all three of them at that table since Christmas. Mom's chair was still on the end by the window. Rosie knelt on it so she could reach.`,
     `Her dad had shoved his sleeves up to cut tomatoes. Store ones, two ninety nine a pound, which he called robbery, because his own were knee high and green in their wire cages out back. In the kitchen light the whole arm showed. The scar ran from the wrist most of the way to the elbow, pale and shiny, skin pulled tight like candle wax that ran and set. His left hand sat on the oilcloth half closed. The fingers quit where they always quit, short of a fist. She'd grown up seeing that hand a piece at a time. A cuff. A work glove. A jacket pocket in Tiago's high bay, the whole tour. She had never seen him just leave it out on a table.`,
     `Rosie hooked her finger in the curl of his like it was a mug handle. He lifted. Her hand came up an inch off the table and she shrieked, so he set it down, so she made him do it again. Five times. To Rosie that was what Grandpa's hand was for.`,
@@ -40,7 +40,7 @@
     `Callie turned the water off. <span class="said" data-who="Callie">"Say what you mean."</span>`,
     `<span class="said" data-who="Nadia">"I mean you tell a crew a line is dead from a room thirty miles away, and they go up."</span>`,
     `<span class="said" data-who="Callie">"They go up after they test it where they're touching and hang grounds on both sides,"</span> Callie said, <span class="said" data-who="Callie">"because he taught every one of them, or he taught the guys who taught them. You think I don't know whose story that is? I hear it every time I key the radio. That's why it's never one call. That's the whole thing he just told you."</span>`,
-    `<span class="said" data-who="Nadia">"It was one call that night."</span>`,
+    `<span class="said" data-who="Nadia">"It was one call that night,"</span> Nadia said.`,
     `<span class="said" data-who="Callie">"And it's three now, because of that night. That's what he did with it."</span>`,
     `<span class="said" data-who="Nadia">"And the night somebody's tired and leaves the tester in the truck."</span>`,
     `Callie dropped the towel on the counter. <span class="said" data-who="Callie">"Then I've got a crew lead who knows I'll pull him off that pole, and a crew that won't let him up it. At some point you trust the check, Nadia. Or nobody climbs."</span>`,
@@ -142,8 +142,8 @@
     { id:`f9s4`, domain:`Technical`, task:`T13`, title:`Behind the card`, q:`Reaching the rack's main fan takes six hours and two tools the station lacks. How should FRO handle maintenance?`,
       text:(s,all,G)=>{const blamed=G&&G.blamedsupplier;return [
         (blamed
-          ?`Thursday Pavel came down from Frederick with the rack's maintenance drawing and his contracts manager.`
-          :`Thursday Pavel brought the rack's maintenance drawing down from Frederick himself.`),
+          ?`Thursday Pavel, Tamarack's account lead, came down from Frederick with the rack's maintenance drawing and his contracts manager.`
+          :`Thursday Tamarack's account lead, Pavel, brought the rack's maintenance drawing down from Frederick himself.`),
         `The main fan sat behind the 120 volt card Tamarack had added in week twelve. To reach it, a crew member would have to pull the card first: twenty two fasteners, two tools that weren't in the station's kit, about six hours.`,`<span class="said" data-who="Pavel">"On the old station the integrator decided what the crew could swap,"</span> Pavel said. <span class="said" data-who="Pavel">"We never had to."</span>`]},
       opts:[
         {t:`Keep the layout as drawn, with six hours of crew time booked for each fan change.`, s:0, d:{trust:3,conf:-2,health:-4},

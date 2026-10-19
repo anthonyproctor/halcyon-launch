@@ -3,7 +3,7 @@
   tasks: [`A1`,`A2`,`M2`,`M5`,`O1`,`T3`,`T8`,`T10`,`X1`,`X4`,`X5`],
   cast: [],
   opening: [
-    `Pavel Ruzicka was in the lobby at a quarter past seven on Tuesday of week twelve, before the receptionist, with a gray plastic crate at his feet. He'd driven down from Frederick in the dark. He was shorter than his emails. He had on a pressed shirt and a Tamarack jacket that had been through the wash a lot of times, and he stood up when he saw her badge.`,
+    `Pavel Ruzicka, Tamarack's account lead, was in the lobby at a quarter past seven on Tuesday of week twelve, before the receptionist, with a gray plastic crate at his feet. He'd driven down from Frederick in the dark. He was shorter than his emails. He had on a pressed shirt and a Tamarack jacket that had been through the wash a lot of times, and he stood up when he saw her badge.`,
     `<span class="said" data-who="Pavel">"Nadia,"</span> he said, as if they'd met. <span class="said" data-who="Pavel">"I owe you an answer. I wanted to bring it."</span>`,
     `He set the crate on the lobby table and took the lid off. Inside, each in its own bag with a label in neat print, were a gray box with a fan grille on one end, a short cable with a different connector at each end, and two brass fittings.`,
     `<span class="said" data-who="Pavel">"Power converter, off our ground test set. A hundred and twenty in, twenty eight out. A bridge from fifteen fifty three to Ethernet, off a bench in our lab. And reducers for the coolant."</span> He held one of the fittings up to the window. <span class="said" data-who="Pavel">"Two weekends. It plugs in now."</span>`,
