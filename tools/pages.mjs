@@ -85,7 +85,15 @@ if(STORY){ // novel edition: story only, best path, no options, no lesson, no de
   const {segs,say,pause}=mk();if(track==='full'){const I=V2?introSegs(n,true,mk):CID?courseIntroSegs(CID,n,true,mk):null;if(I){segs.push(...I)}}say('narrator',`Chapter ${W[C.num]}. ${C.title}.`);pause(1);C.opening.forEach(p=>{say('narrator',p);pause(0.5)});pause(1.2);
   // Ruth's console page (PMP v2): the story leans on its lines, so the novel edition plays the page alone where the lesson sits, no teaching (2026-10-20)
   if(V2&&C.lesson){const L=C.lesson.sections.flatMap(s=>s.body).filter(p=>/kind="consolelog"/.test(p));L.forEach(p=>{say(MV,p);pause(0.6)});if(L.length)pause(0.8)}
-  C.scenes.forEach((sc,i)=>{const paras=sc.text(BEST[i],{},{}).filter(p=>!(/\?\s*$/.test(p.replace(/<[^>]+>/g,'').trim())&&p.replace(/<[^>]+>/g,'').split(/\s+/).length<14));paras.forEach(p=>{say('narrator',p);pause(0.45)});pause(0.6);
+  // course books: the lesson's story paragraphs (marked <!--story--> at the start) play where the lesson sits, no teaching (Hearth, 2026-10-20)
+  // the narrator reads them and Colleen voices her own tagged lines; lesson.storyAt (a scene index) plays them before that scene, on her Saturday
+  const mentorBeat=()=>{const L=C.lesson.sections.flatMap(s=>s.body).filter(p=>typeof p==='string'&&p.startsWith('<!--story-->'));L.forEach(p=>{say('narrator',p.replace('<!--story-->',''));pause(0.5)});if(L.length)pause(0.8)};
+  const AT=CID&&C.lesson?(Number.isInteger(C.lesson.storyAt)?C.lesson.storyAt:0):-1;
+  C.scenes.forEach((sc,i)=>{if(i===AT)mentorBeat();
+    // short game prompts go; in course books a short question someone actually says (a data-who line) stays
+    let paras=sc.text(BEST[i],{},{}).filter(p=>!(/\?\s*$/.test(p.replace(/<[^>]+>/g,'').trim())&&p.replace(/<[^>]+>/g,'').split(/\s+/).length<14&&!(CID&&/data-who=/.test(p))));
+    // course books: a short narrator question ending the scene's last paragraph ("What does Nadia do?") is the game's prompt, not the novel's (2026-10-20)
+    if(CID&&paras.length){const k=paras.length-1,q=paras[k].match(/^([\s\S]*[.!"”])\s+([^.!?"“”<>]{3,80}\?)\s*$/);if(q&&q[2].split(/\s+/).length<14)paras=[...paras.slice(0,k),q[1]]}paras.forEach(p=>{say('narrator',p);pause(0.45)});pause(0.6);
     const b=sc.opts.find(o=>o.best);say('narrator',b.after);pause(1.4)});
   // the novel ends on the story, not the game's ending card or readiness meter (2026-10-20)
   C.closing(FINAL,{},{}).filter(p=>!/^(<b>)?Your ending:|readiness in this chapter ended at/.test(p.trim())).forEach(p=>{say('narrator',p);pause(0.5)});

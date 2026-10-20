@@ -16,32 +16,32 @@
     `<span class="said" data-who="Wes">"Merle's word's been good since before you were born."</span> He stood, folded the glasses into his shirt pocket, and looked at the tag again. Her name, the lot number, yesterday's date. <span class="said" data-who="Wes">"Tiago's rule?"</span>`,
     `<span class="said" data-who="Nadia">"Tiago's rule."</span>`,
     `<span class="said" data-who="Wes">"It's a good rule."</span>`,
-    `The preliminary design review was Thursday. The critical one was planned three weeks after that, at the end of week twenty one. Most of HEARTH's structure came off Wes's cargo drawings, so detail had run alongside, and Halo's node team couldn't finish its own design until HEARTH's was set. That weekend she'd be in Pueblo. She'd texted her father the date with him still on the line.`,
+    `The preliminary design review, PDR, was Thursday. The critical design review, CDR, was planned three weeks after that, at the end of week twenty one. Most of HEARTH's structure came off Wes's cargo drawings, so detail had run alongside, and Halo's node team couldn't finish its own design until HEARTH's was set. That weekend she'd be in Pueblo. She'd texted her father the date with him still on the line.`,
     `The wire on the tag had slipped a little overnight. She left him on the stool with the tag. At the top of the stairs she looked back, and he hadn't moved.`
   ],
   lesson: {
     title: `Colleen's Flight Notes: what it really weighs`,
     sections: [
       { h: `The paper airplane`,
-        body: [`On Saturday Colleen had her airplane weighed. A shop at the Erie airport drained the fuel, rolled it onto three platform scales, one under each wheel, and read the numbers off a gray box on a cord while Nadia held the clipboard. The empty weight in the logbook had been worked out on paper for decades. A radio in, a heater out, each change added or subtracted with a pencil. The scales said thirty four pounds more than the paper.`,
-          `<span class="said" data-who="Colleen">"Nobody lies on a weight and balance sheet,"</span> Colleen said. <span class="said" data-who="Colleen">"They just stop checking it."</span>`,
+        body: [`<!--story-->On Saturday Colleen had her airplane weighed. A shop at the Erie airport drained the fuel, rolled it onto three platform scales, one under each wheel, and read the numbers off a gray box on a cord while Nadia held the clipboard. The empty weight in the logbook had been worked out on paper for decades. A radio in, a heater out, each change added or subtracted with a pencil. The scales said thirty four pounds more than the paper.`,
+          `<!--story--><span class="said" data-who="Colleen" data-tone="Dry, wry, unhurried.">"Nobody lies on a weight and balance sheet,"</span> Colleen said. <span class="said" data-who="Colleen" data-tone="Dry, wry, unhurried.">"They just stop checking it."</span>`,
           `Design definition is the process that takes the architecture down to the detail needed to build each element. For every element it sets the design characteristics, the values that matter, such as dimensions, materials, mass and power, using design enablers, the equations, models, drawings and heuristics that work them out. It also plans for the enabling systems the element needs, the fixtures and facilities that make, test and handle it. It produces the design artifacts: drawings, specifications, models and parts lists, each traced to requirements and the architecture, with the reasons for the choices recorded. It decides how each element will be obtained, whether made, bought or reused, and checks any reused design against its new conditions. Once approved, the result is the baseline that implementation builds to.`],
         terms: [[`Design definition`,`The process that provides enough detailed data about the system and its elements to build them, consistent with the architecture and requirements.`],[`Design enabler`,`A means used to work out and express a design, such as equations, models, drawings, tables of margins, patterns or heuristics.`]],
         exam: `Design definition turns architecture into buildable detail: characteristics, enablers, artifacts and rationale, traced to requirements. Its output is the design baseline.` },
       { h: `Two gates`,
-        body: [`Colleen did two checks before every trip that mattered. The night before, at her kitchen table, she worked the route, the weather and the weights to see whether the trip made sense at all. At the end of the runway, engine running, she checked that this airplane, today, was ready to go.`,
+        body: [`<!--story-->Colleen did two checks before every trip that mattered. The night before, at her kitchen table, she worked the route, the weather and the weights to see whether the trip made sense at all. At the end of the runway, engine running, she checked that this airplane, today, was ready to go.`,
           `Design has two gates like that. A preliminary design review asks whether the preliminary design meets the allocated requirements with acceptable risk, so detailed design can start. On many programs it sets the allocated baseline. A critical design review asks whether the detailed design is complete, meets its requirements with adequate margin, and is ready to build, code and integrate. Passing it usually sets the product baseline, the build to set.`,
           `Each review has entry criteria, which say what has to exist before it's worth holding: a data package with evidence, sent ahead so reviewers can read it. Exit criteria say what the review must show to close. Reviews are event driven. They happen when the entry criteria are met, not because a date arrived. Every reviewer's item gets a disposition, accepted or rejected with a reason, an owner and a date. A review can pass, pass with actions, or say not yet, and the last one is a legitimate answer.`],
         terms: [[`Entry criteria`,`The conditions that must be met, with evidence, before a review is held.`],[`Exit criteria`,`What a review must demonstrate to be closed, such as design maturity, margins and dispositioned review items.`]],
         exam: `PDR: preliminary design meets allocated requirements with acceptable risk, ready for detail. CDR: detailed design complete, meets requirements, ready to build; sets the product baseline. Reviews are event driven.` },
       { h: `What's left over`,
-        body: [`Colleen redid her numbers with the new weight. Her must from the legal pad, full fuel and two passengers, still held, with nineteen pounds to spare instead of fifty three. <span class="said" data-who="Colleen">"I flew the old number for two years,"</span> she said. <span class="said" data-who="Colleen">"I was fine. I just didn't know by how much."</span>`,
+        body: [`<!--story-->Colleen redid her numbers with the new weight. Her must from the legal pad, full fuel and two passengers, still held, with nineteen pounds to spare instead of fifty three. <span class="said" data-who="Colleen" data-tone="Rueful, honest, quiet.">"I flew the old number for two years,"</span> she said. <span class="said" data-who="Colleen" data-tone="Rueful, honest, quiet.">"I was fine. I just didn't know by how much."</span>`,
           `Measurement collects and reports data so the project can decide things in time. For the design, the measures that matter most are technical performance measures. A technical performance measure follows one critical parameter, such as mass, power, heat rejection or leak rate, against a planned profile over time, with thresholds that trigger action before the requirement is missed. Mass properties is one of the quality characteristics: mass, center of gravity and inertia, estimated early and confirmed by weighing. Many programs split mass this way. The current best estimate is what the design weighs now. A growth allowance, sized by maturity, covers what it's expected to gain: small for parts already weighed, more for parts calculated from drawings, most for estimates. Estimate plus growth is the predicted mass, and margin is what's left between that and the allocation. The trend matters as much as today's number.`,
           `Reporting margin honestly is part of the work. A number can be arithmetically true and still mislead. INCOSE's code of ethics asks its members to be honest and objective in what they report, and the people deciding can only act on what they're shown.`],
         terms: [[`Technical performance measure (TPM)`,`A measure of a critical technical parameter, tracked against a planned profile and thresholds to show whether a requirement will be met.`],[`Margin`,`The difference between an allocation or requirement and the predicted value, after growth allowance.`]],
         exam: `Predicted mass is the current estimate plus growth allowance. Margin is allocation minus predicted. Growth allowance isn't margin. TPMs show trends against a plan, early enough to act.` },
       { h: `Who signs for a change`,
-        body: [`The shop's mechanic had written up the radio. A different person, an inspector, had signed it off. <span class="said" data-who="Colleen">"He doesn't work for the mechanic,"</span> Colleen said. <span class="said" data-who="Colleen">"That's the point of him."</span>`,
+        body: [`<!--story-->The shop's mechanic had written up the radio. A different person, an inspector, had signed it off. <span class="said" data-who="Colleen" data-tone="Dry, plain, sure.">"He doesn't work for the mechanic,"</span> Colleen said. <span class="said" data-who="Colleen" data-tone="Dry, plain, sure.">"That's the point of him."</span>`,
           `Configuration management controls changes to anything baselined. A change request says what and why. Each affected area assesses the impact. A configuration control board approves, rejects or defers it. The change is carried into every document and order it touches, and status accounting records where everything stands.`,
           `Two processes look after quality. Quality management works at the organization's level: it sets the quality policy, objectives and system, often built on a standard such as ISO 9001, checks whether they're working, and takes corrective action when they aren't. Quality assurance works inside a project: it evaluates the project's products and processes to make sure the organization's quality procedures are being applied, and records the problems it finds. An audit follows a problem wherever it leads, including into the organization's own paperwork. Corrective action fixes the cause, looks for the same gap elsewhere, and checks later that the fix held.`],
         terms: [[`Configuration control board`,`The group with authority to approve, reject or defer changes to baselined items, after impact assessment.`],[`Quality management vs. quality assurance`,`Quality management sets and improves the organization's quality system. Quality assurance checks that a project applies it.`]],
@@ -91,21 +91,21 @@
           after:`The review stays on time and the aft end gets its own day in week twenty. The berthing ring between them belongs to neither one.`,
           why:`A separate review for a less mature element can be good tailoring. Splitting at an interface leaves the interface itself unreviewed.`}
       ]},
-    { id:`f8s3`, domain:`Technical management`, task:`M7`, title:`Forty one rows`, q:`Forty one numbers have requirements behind them, and Amara wants one slide. What should Nadia tell Jun?`,
+    { id:`f8s3`, domain:`Technical management`, task:`M7`, title:`Fifty two rows`, q:`Fifty two numbers have requirements behind them, and Amara wants one slide. What should Nadia tell Jun?`,
       text:(s,all,G)=>{const pk=s.picks||{};const ran=pk[0]===0||pk[0]===3;
-        return [`Wednesday Jun was building the slide for HEARTH's technical measures. The model held forty one numbers with a requirement behind each one, from cabin noise to the hygiene station's flow rate. Amara wanted one slide.`,
+        return [`Wednesday Jun was building the slide for HEARTH's technical measures. The model held fifty two numbers with a requirement behind each one, from cabin noise to the hygiene station's flow rate. Amara wanted one slide.`,
         (ran
           ?`The hatch was in the chamber, a day into its hold, and its leak rate so far was a third of what it was allowed. It was the first measured number for anything on the slide.`
           :`There'd be no measured leak rate from the forward hatch before PDR. Every number on the slide would be a prediction.`),
         `<span class="said" data-who="Jun">"Which ones go on it?"</span> he asked. <span class="said" data-who="Jun">"If I pick wrong, it's the one nobody looked at that bites us."</span>`]},
       opts:[
-        {t:`Put all forty one on the slide, each with its requirement and today's value.`, s:0, d:{trust:3,conf:-1,health:-3},
-          after:`Forty one rows in small type. The reviewers find mass on the second page, under the hygiene station's flow rate.`,
+        {t:`Put all fifty two on the slide, each with its requirement and today's value.`, s:0, d:{trust:3,conf:-1,health:-3},
+          after:`Fifty two rows in small type. The reviewers find mass on the second page, under the hygiene station's flow rate.`,
           why:`TPMs are a few parameters chosen for importance and risk. Tracking everything at once hides the ones that matter.`},
         {t:`Pick a few tied to key requirements or risks, each with a planned profile.`, s:3, best:true, d:{trust:4,conf:5,health:5},
           after:`Four lines: mass, power, heat rejection and leak rate. Each gets its requirement, the value planned for every review from now to ship, a threshold that triggers action, and today's estimate with its margin. Jun draws mass first, a planned line climbing toward the allocation and today's estimate under it. Margin today is 1,010 kilograms.`,
           why:`A TPM tracks a critical parameter against a planned profile, with thresholds, so a bad trend shows before a requirement is missed. Choose them for the requirements and risks that matter most.`},
-        {t:`Track mass on its own chart, and check the other forty at each design review.`, s:1, d:{trust:3,conf:1,health:0},
+        {t:`Track mass on its own chart, and check the others at each design review.`, s:1, d:{trust:3,conf:1,health:0},
           after:`Mass gets a careful chart. Heat rejection, which the rack's new power card just raised by two hundred watts, waits for CDR to get a look.`,
           why:`Mass is a good TPM. One isn't enough when other critical parameters can drift just as far.`},
         {t:`Track drawings released and tests passed each week as the design's progress.`, s:0, d:{trust:3,conf:-2,health:-3},
@@ -113,11 +113,11 @@
           why:`Drawings and tests are progress measures. A TPM measures technical performance against a requirement.`}
       ]},
     { id:`f8s4`, domain:`Technical`, task:`T5`, title:`Thirty one items`, q:`Mid review, the aft loads came in higher than the forward hatch's. What should Nadia recommend for PDR?`,
-      text:(s,all,G)=>{const gut=G&&G.unweightedtrade;return [`PDR ran all Thursday in the conference room over the lobby. Halo sent its program manager, Helen, and a structures reviewer who read every load case before she said a word. Odette sat next to the hazard reports. Halo's aft loads arrived at noon, in the middle of it, and they were higher than the forward hatch's. The aft ring would need more metal.`,
+      text:(s,all,G)=>{const gut=G&&G.unweightedtrade;return [`PDR ran all Thursday in the conference room over the lobby. Halo sent its program manager, Ken Mallory, with Helen and a structures reviewer who read every load case before she said a word. Odette sat next to the hazard reports. Halo's aft loads arrived at noon, in the middle of it, and they were higher than the forward hatch's. The aft ring would need more metal.`,
         (gut
           ?`When the aft hatch came up, the structures reviewer asked for the trade behind it, since it cost mass. Nadia's record said four options had been looked at and the room had chosen. The reviewer wrote an item asking for the criteria.`
           :`When the aft hatch came up, the structures reviewer asked for the trade behind it, read the weights and the mass score, and moved on.`),
-        `By five there were thirty one review items on the whiteboard. Some were typos. One said the aft ring couldn't be detailed until it was resized. Halo's program manager capped his pen. <span class="said" data-who="man">"Where does that leave us?"</span>`]},
+        `By five there were thirty one review items on the whiteboard. Some were typos. One said the aft ring couldn't be detailed until it was resized. Mallory capped his pen. <span class="said" data-who="Ken">"Where does that leave us?"</span>`]},
       opts:[
         {t:`Call PDR passed, with every chart shown and no objections raised.`, s:0, d:{trust:4,conf:-2,health:-4},
           after:`The minutes say passed. The thirty one items go out on Monday with no owners, and the aft ring's sits on the list beside a typo.`,
@@ -149,7 +149,7 @@
           why:`Waiting for a full root cause before any containment costs time the change process could have saved, with the same control.`}
       ]},
     { id:`f8s6`, domain:`Agreement and organizational`, task:`O5`, title:`Both ends`, q:`Ines is scoping the audit after Brannock's four cure cuts. Where should it look?`,
-      text:(s,all,G)=>[`Brannock's first findings came Monday of week nineteen. Merle had found the count: four cuts to the post-cure since last spring, each approved inside Brannock as minor, each one judged by itself.`,`Ines, FRO's quality manager, brought the findings to the HEARTH room on Tuesday. FRO's quality system called for an audit after any nonconformance on flight hardware, and she was the one who scoped it. She was small and precise and had a habit of reading a document's revision letter before its title.`,`<span class="said" data-who="Wes">"Their oven,"</span> Wes said. <span class="said" data-who="Wes">"Their problem."</span> <span class="said" data-who="woman">"Maybe,"</span> Ines said. <span class="said" data-who="woman">"I wrote FRO's purchase template nine years ago. I'd like somebody who isn't me to tell me if I'm auditing the right end."</span>`],
+      text:(s,all,G)=>[`Brannock's first findings came Monday of week nineteen. Merle had found the count: four cuts to the post-cure since last spring, each approved inside Brannock as minor, each one judged by itself.`,`Ines, FRO's quality manager, brought the findings to the HEARTH room on Tuesday. FRO's quality system called for an audit after any nonconformance on flight hardware, and she was the one who scoped it. She was small and precise and had a habit of reading a document's revision letter before its title.`,`<span class="said" data-who="Wes">"Their oven,"</span> Wes said. <span class="said" data-who="Wes">"Their problem."</span> <span class="said" data-who="Ines">"Maybe,"</span> Ines said. <span class="said" data-who="Ines">"I wrote FRO's purchase template nine years ago. I'd like somebody who isn't me to tell me if I'm auditing the right end."</span>`],
       opts:[
         {t:`Scope the audit to Brannock's plant, where the cure was changed.`, s:0, d:{trust:3,conf:-1,health:-3},
           after:`Ines spends two days in Ohio and comes back with three findings, all Brannock's. FRO's order, which never asked for anything past Brannock's standard, never comes up in Ohio.`,
@@ -165,7 +165,7 @@
           why:`Switching suppliers without finding the cause moves the problem. Corrective action starts with where it really came from.`}
       ]},
     { id:`f8s7`, domain:`Agreement and organizational`, task:`O5`, title:`What the order asked`, q:`The audit has a finding at Brannock and one at FRO. How should FRO respond to them?`,
-      text:(s,all,G)=>{const p6=(s.picks||{})[5];return [`Thursday Ines put her findings on the HEARTH room screen. Two causes, one at each end of the order.`+(p6!==undefined&&p6!==1?` Ines had gone back through FRO's own receiving file anyway, because her procedure said to, and found the second cause herself on Wednesday night.`:``),`<prop type="doc" title="FRO quality audit, HEARTH hatch seal lot nonconformance, findings">Finding 1, Brannock: post-cure shortened four times since last spring. Each change classed as minor and judged alone. No review of the total. No notice to customers.<br>Finding 2, FRO: purchase order called for Brannock standard compound with a certificate of conformance. It did not require aging to the 15 year design life or notice of process changes. Receiving checked that each certificate read PASS.</prop>`,`<span class="said" data-who="Wes">"So whose is it?"</span> Wes asked. <span class="said" data-who="woman">"I'm not writing a name,"</span> Ines said. <span class="said" data-who="woman">"I'm writing two causes. One of them's my template."</span> She said it the way she read revision letters, first. <span class="said" data-who="woman">"Now I need the corrective action."</span>`]},
+      text:(s,all,G)=>{const p6=(s.picks||{})[5];return [`Thursday Ines put her findings on the HEARTH room screen. Two causes, one at each end of the order.`+(p6!==undefined&&p6!==1?` Ines had gone back through FRO's own receiving file anyway, because her procedure said to, and found the second cause herself on Wednesday night.`:``),`<prop type="doc" title="FRO quality audit, HEARTH hatch seal lot nonconformance, findings">Finding 1, Brannock: post-cure shortened four times since last spring. Each change classed as minor and judged alone. No review of the total. No notice to customers.<br>Finding 2, FRO: purchase order called for Brannock standard compound with a certificate of conformance. It did not require aging to the 15 year design life or notice of process changes. Receiving checked that each certificate read PASS.</prop>`,`<span class="said" data-who="Wes">"So whose is it?"</span> Wes asked. <span class="said" data-who="Ines">"I'm not writing a name,"</span> Ines said. <span class="said" data-who="Ines">"I'm writing two causes. One of them's my template."</span> She said it the way she read revision letters, first. <span class="said" data-who="Ines">"Now I need the corrective action."</span>`]},
       opts:[
         {t:`Send Brannock a corrective action request and close FRO's finding as minor.`, s:0, d:{trust:3,conf:-2,health:-4},
           after:`Brannock fixes its side. FRO's template still buys standard, and the next order for a fifteen year part goes out the same way.`,
@@ -185,12 +185,12 @@
         (blamed
           ?`Pavel's answer came copied to his contracts manager, as everything did now.`
           :`Pavel, Tamarack's account lead, called back within the hour.`),
-        `Six hundred kilograms. ICD revision B said 560. The 120 volt power card was most of it, then the rear face plumbing and the Ethernet board, all things FRO had asked for.`,(blamed
+        `Six hundred kilograms. The interface control document, ICD revision B, said 560. The 120 volt power card was most of it, then the rear face plumbing and the Ethernet board, all things FRO had asked for.`,(blamed
           ?`<span class="said" data-who="Tiago">"He'll never say he should've sent it,"</span> Tiago said. <span class="said" data-who="Tiago">"Not with that cc on it."</span>`
           :`<span class="said" data-who="Pavel">"I should've sent it when the card went in,"</span> Pavel said. <span class="said" data-who="Pavel">"I thought somebody would weigh it later."</span>`)]},
       opts:[
         {t:`Open an ICD change for the mass and assess its impact across HEARTH.`, s:3, best:true, d:{trust:4,conf:5,health:5},
-          after:`The impact sheet is full by Tuesday: mount loads up four percent and still inside the brackets' margin, the center of gravity eleven millimeters aft, and forty kilograms plus growth on the mass roll-up. The board approves revision C on Wednesday, and Pavel signs from Frederick. Tiago ballasts the stand-in to six hundred.`,
+          after:`Nadia opens a change to the ICD that afternoon. The impact sheet is full by Tuesday: mount loads up four percent and still inside the brackets' margin, the center of gravity eleven millimeters aft, and forty kilograms plus growth on the mass roll-up. The board approves revision C on Wednesday, and Pavel signs from Frederick. Tiago ballasts the stand-in to six hundred.`,
           why:`An interface property such as mass is part of the ICD baseline. Changing it takes a change request, impact assessment on every affected item, a board decision, and the new revision issued and recorded.`},
         {t:`Put six hundred in the mass roll-up, and fix the ICD at its next revision.`, s:1, d:{trust:3,conf:1,health:0},
           after:`The roll-up is right. The ICD still says 560, and the stand-in crew builds its ballast to the ICD.`,
@@ -238,7 +238,7 @@
           why:`SE in practice includes reporting status honestly, with uncertainty in view, even when the number is unwelcome. INCOSE's code of ethics asks for honesty and objectivity, and decision makers can only act on what they're shown.`}
       ]},
     { id:`f8s11`, domain:`Technical`, task:`T5`, title:`What it's built with`, q:`Tiago and Wes disagree on what belongs in the CDR package. What should Nadia say?`,
-      text:(s,all,G)=>[`Monday of week twenty one the CDR package went to Halo. Four hundred and twelve drawings, three hundred and eighty eight of them released, the aft ring's resized set among them.`,
+      text:(s,all,G)=>[`Monday of week twenty one the CDR package went to Halo. Four hundred and ten drawings, three hundred and eighty six of them released, the aft ring's resized set among them.`,
         (G&&G.acceptedwesreqs
           ?`The overhead harness channel, one of Wes's three from week six, had come into the baseline with no parent and no change request. Its brackets weren't on any drawing. The harness lead found that on Friday and drew them over the weekend.`
           :`The overhead harness channel Wes had taken through the board in week six was on its own released drawing, brackets and all.`),
@@ -261,23 +261,23 @@
       text:(s,all,G)=>{const pad=(s.flags&&s.flags.paddedmargin)||(G&&G.paddedmargin);const p7=(all&&all[7]&&all[7].picks)||{};const bk=p7[3]===2;const both=(s.picks||{})[9]===1;
         return [`CDR ran Thursday and Friday. On Friday morning Brannock's routine result on the new lot came in: compression set 15 percent, long cure, a pass. The fifteen year aging result was due in week twenty eight.`+(bk?` Jun's backup compound had passed its own qualification on Wednesday, and a change request to add it to the drawing as an alternate was in the board's queue.`:``),
         (pad
-          ?`The mass chart said seventeen hundred kilograms of margin. Halo's program manager glanced at it and turned the page.`
+          ?`The mass chart said seventeen hundred kilograms of margin. Mallory glanced at it and turned the page.`
           :both
-          ?`The mass chart showed both numbers. Halo's program manager read the bigger one and turned the page.`
-          :`The mass chart said 860 kilograms, a hundred and ten over the floor. Halo's program manager stopped on it. Helen asked what the crew would lose first if it went under, and Wes said stowage, before Nadia could.`),
-        `At twenty to six the board had heard everything. Halo's program manager looked at his watch and then at Nadia. <span class="said" data-who="man">"Does it pass?"</span>`]},
+          ?`The mass chart showed both numbers. Mallory read the bigger one and turned the page.`
+          :`The mass chart said 860 kilograms, a hundred and ten over the floor. Mallory stopped on it. Helen asked what the crew would lose first if it went under, and Wes said stowage, before Nadia could.`),
+        `At twenty to six the board had heard everything. Mallory looked at his watch and then at Nadia. <span class="said" data-who="Ken">"Does it pass?"</span>`]},
       opts:[
         {t:`Pass it with actions and put the mass margin on watch with a trigger.`, s:3, best:true, d:{trust:3,conf:5,health:5},
-          after:`The board reads the exit criteria aloud. The detailed design is complete and meets its requirements, every margin clears its floor, and every review item has a disposition. CDR passes with fourteen actions at ten past six. The released drawings become the product baseline, under the board from tonight. Jun adds one line to the register: mass on watch, trigger at 750 kilograms, with the savings Wes has priced.`,
+          after:`<span class="said" data-who="Nadia">"With actions,"</span> Nadia says. <span class="said" data-who="Nadia">"And mass goes on watch."</span> The board reads the exit criteria aloud. The detailed design is complete and meets its requirements, every margin clears its floor, and every review item has a disposition. CDR passes with fourteen actions at ten past six. The released drawings become the product baseline, under the board from tonight. Jun adds one line to the register: mass on watch, trigger at 750 kilograms, with the savings Wes has priced.`,
           why:`CDR closes on its exit criteria: a complete detailed design that meets its requirements with adequate margin, ready to build. Passing sets the build to baseline. A margin that clears its floor by a little still gets watched, with a trigger.`},
         {t:`Pass it on the exit criteria, with every margin clearing its CDR floor.`, s:1, d:{trust:3,conf:1,health:0},
           after:`It's true, and the minutes say so. Mass goes into the build with no trigger on it, so the first warning will be a weigh-in.`,
           why:`Clearing the floor meets the criterion. A thin margin still needs active tracking with a trigger after the review.`},
         {t:`Keep CDR open until the mass margin is back above ten percent.`, s:0, d:{trust:2,conf:-1,health:-3},
-          after:`Halo's program manager hears her out, then reads the exit criteria aloud himself, one at a time. Every one is met. The board passes it at ten past six over her objection, and the margin goes into the build with no trigger on it.`,
+          after:`Mallory hears her out, then reads the exit criteria aloud himself, one at a time. Every one is met. The board passes it at ten past six over her objection, and the margin goes into the build with no trigger on it.`,
           why:`The exit criteria were met. Margin is managed through the TPM and its triggers, not by holding the review past its criteria.`},
         {t:`Pass it, and ask Halo to raise the mass allocation now for later growth.`, s:0, d:{trust:3,conf:-1,health:-3},
-          after:`Halo's program manager says he'll ask his arm team. To him it sounds like FRO doesn't believe its own numbers.`,
+          after:`Mallory says he'll ask his arm team. To him it sounds like FRO doesn't believe its own numbers.`,
           why:`An allocation is a requirement from the customer. Asking to change it without a need, at the review, weakens the case the review just made.`}
       ]}
   ],
@@ -314,7 +314,7 @@
   ],
   closing:(s,all,G)=>{G=G||{};const pad=(s.flags&&s.flags.paddedmargin)||G.paddedmargin;const cut=(s.flags&&s.flags.cuttest)||G.cuttest;const hid=G.hidrisk;const wait=(s.picks||{})[0]===1;const pk=s.picks||{};const both=pk[9]===1;const wes=pk[9]===3;const p7=(all&&all[7]&&all[7].picks)||{};const osp=p7[11]===2?` The Osprey go or no go was Monday, and she'd want this weekend's numbers.`:p7[11]===1?``:` Osprey's proposal was due next week, and she'd want this weekend's numbers in it.`;
     return [
-    `CDR closed at ten past six on Friday. Halo's program manager signed the minutes standing up, with his coat on, because his flight left at eight.`,
+    `CDR closed at ten past six on Friday. Mallory signed the minutes standing up, with his coat on, because his flight left at eight.`,
     (pad
       ?`The mass chart in his bag said seventeen hundred kilograms of margin, eleven percent. It had gone through two days of review without a question.`
       :both
@@ -332,7 +332,7 @@
     `<span class="said" data-who="Tiago">"First piece we've built ourselves on a scale,"</span> he said. <span class="said" data-who="Tiago">"Sling's zeroed out."</span>`,
     `Jun's roll-up had the hatch assembly, door, frame and ring, at 850 kilograms, calculated from released drawings, with six percent on top for growth. Fifty one kilograms of room.`,
     `The display climbed, wavered while the hatch settled, and stopped.`,
-    `Gus read it off. <span class="said" data-who="man">"Nine oh six."</span>`,
+    `Gus read it off. <span class="said" data-who="Gus">"Nine oh six."</span>`,
     `Fifty six over the drawings. Five past its whole allowance, on the first part FRO had made with its own hands. She did the rest standing there. If every calculated part came in like this one, growth would run fifty kilograms past what Jun had allowed, and the margin would come down to 810. Sixty over the floor.`+(pad||both?` Not seventeen hundred. Not anything like what Halo had taken home.`:``)+(wes?` Wes had said structure would use all of its six percent. This piece had used all of it, and five kilograms more.`:``),
     `<span class="said" data-who="Tiago">"That's still a pass,"</span> Tiago said. It was. It was inside everything anyone had promised.`,
     `<span class="said" data-who="Nadia">"Weigh it again?"</span>`,
