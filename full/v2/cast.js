@@ -221,6 +221,12 @@ window.HALCYON_CAST=[
     {unlock:12, title:`Who she is`, body:[`Dr. Rao will be Ares Station's second physician. Her own card on the crew's training board was medical, and short.`]}],
    quote:{unlock:12, text:`My list is medical, and it's short.`},
    ties:[{unlock:12,id:`yusra`,text:`Her commander.`}] },
+ { id:`gwen`, intro:`Gwen Talley. I run the Director's office at the ARA. When Imogen Hale needs a number by five, I'm the one who calls you at ten to ask whether five is going to happen. I'm polite about it. I'm also writing down what you say.`, name:`Gwen Talley`, role:`Chief of staff to Imogen Hale, ARA Director. The voice on the phone from Hale's office.`, firstChapter:1, speaker:`Gwen`,
+   look:`Woman in her fifties, straight dark hair to the collar, a navy suit, a phone she never puts face down, reading glasses she only puts on to read something back to you.`,
+   sections:[
+    {unlock:1, title:`Who she is`, body:[`Gwen Talley has been Hale's chief of staff since before the ARA had a ship to worry about. Requests, deadlines and bad news reach the Director through her, usually by phone, usually early.`]}],
+   quote:{unlock:5, text:`The variances start at zero. It's cleaner.`},
+   ties:[{unlock:1,id:`imogen`,text:`Her chief of staff.`},{unlock:1,id:`sam`,text:`Calls him when Hale needs something. Asks carefully.`}] },
  { id:`lorna`, intro:`Lorna Whitcombe, flight operations director, ARA. My controllers fly the ship from the minute the program lets go of it until it gets where it's going. I've flown four landers to the Moon's south pole. One of them landed on its side and kept working. Tell me what I'm taking. All of it.`, name:`Lorna Whitcombe`, role:`ARA flight operations director. Takes Halcyon after departure.`, firstChapter:12, speaker:`Lorna`,
    look:`Black woman of fifty six, close cropped gray hair, rimless glasses, an ARA fleece over a collared shirt, a coffee in each hand.`,
    sections:[

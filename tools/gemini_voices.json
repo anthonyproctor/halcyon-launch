@@ -84,6 +84,7 @@
    "Rafa": {"voice": "Sadachbia", "style": "A man's voice. Relaxed, casual, quick.", "run": true, "gender": "m", "_recast": "2026-10-19 from Umbriel: too close to Sam, Wendell and Garrett by ear (voice director audit)"},
    "Yusra": {"voice": "en-us-storyteller-6", "style": "A woman's voice. Direct, precise, driven.", "run": true, "gender": "f", "f0_low": 120, "f0_char_low": 130, "_recast": "2026-10-19 from Autonoe: blended with Quinn and the other women"},
    "Frances": {"voice": "Pulcherrima", "style": "A woman's voice. Determined, emotion held in.", "run": true, "gender": "f", "f0_low": 110, "f0_char_low": 120, "_recast": "2026-10-19 from Erinome: blended with Ada, Lorna and Esther"},
+   "Gwen": {"voice": "Gacrux", "style": "General American accent. A political chief of staff in her fifties: even, careful, polite, never in a hurry.", "run": true, "gender": "f", "_cast": "2026-10-20: Gwen Talley, Hale's chief of staff, named after the listenability audit (she shared the generic woman voice with four others). Gacrux is unused in PMP and clear of Imogen, Quinn and Hana."},
    "man": {"voice": "en-us-podcaster-1", "style": "General American accent, natural and conversational.", "run": true, "_recast": "2026-10-19 from Schedar: same voice as Owen, close to Sam"},
    "woman": {"voice": "Callirrhoe", "style": "General American accent, natural and conversational.", "run": true}
   },

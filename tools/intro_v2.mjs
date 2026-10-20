@@ -24,7 +24,12 @@ export function introSegs(n,story,mk){
   const back=[],fresh=[];
   // spoke in an earlier chapter but has no recap line yet (Leo, ch10 then ch13): not new, so not in the new list
   const spokeBefore=id=>{for(let k=1;k<n;k++){if(new RegExp(`data-who=\\\\?"${id}"`,'i').test(fs.readFileSync(`full/v2/ch${String(k).padStart(2,'0')}.js`,'utf8')))return true}return false};
-  for(const [id,o] of seen){if(id==='sam')continue;const k=known(id);if(k)back.push([o.name,first(k)]);else if(!spokeBefore(id))fresh.push(o.name)}
+  // who's who = only the people you'll actually hear in this chapter, in the order they first speak, at most 8
+  // (Anthony, 2026-10-20 listenability audit: 20 names before ch13 was the heaviest load in the book)
+  const src=fs.readFileSync(`full/v2/ch${String(n).padStart(2,'0')}.js`,'utf8'),order=[];
+  for(const m of src.matchAll(/data-who=\\?"([^"\\]+)/g)){const id=m[1].toLowerCase();if(!order.includes(id))order.push(id)}
+  const ids=[...seen.keys()].filter(id=>id!=='sam'&&order.includes(id)).sort((a,b)=>order.indexOf(a)-order.indexOf(b));
+  for(const id of ids){const o=seen.get(id);const k=known(id);if(k){if(back.length<8)back.push([o.name,first(k)])}else if(!spokeBefore(id))fresh.push(o.name)}
   const {segs,say,pause}=mk();
   if(prev.length){say('narrator',n===1?'Before you start.':'Previously.');pause(0.6);prev.forEach(p=>{say('narrator',p);pause(0.4)});pause(0.8)}
   if(back.length||fresh.length){say('narrator',n===1?'The people you\'ll hear from first.':'Who\'s who in this chapter.');pause(0.5);

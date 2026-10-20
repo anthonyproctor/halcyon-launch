@@ -83,9 +83,12 @@ if(track==='full'){const I=V2?introSegs(n,false,mk):CID?courseIntroSegs(CID,n,fa
 const plan=[...(pages.intro?['intro']:[]),'open',...(C.lesson?['lesson']:[]),...C.scenes.flatMap((sc,i)=>['s'+i,`o${i}_${sc.opts.findIndex(o=>o.best)}`]),'end'];
 if(STORY){ // novel edition: story only, best path, no options, no lesson, no debriefs
   const {segs,say,pause}=mk();if(track==='full'){const I=V2?introSegs(n,true,mk):CID?courseIntroSegs(CID,n,true,mk):null;if(I){segs.push(...I)}}say('narrator',`Chapter ${W[C.num]}. ${C.title}.`);pause(1);C.opening.forEach(p=>{say('narrator',p);pause(0.5)});pause(1.2);
+  // Ruth's console page (PMP v2): the story leans on its lines, so the novel edition plays the page alone where the lesson sits, no teaching (2026-10-20)
+  if(V2&&C.lesson){const L=C.lesson.sections.flatMap(s=>s.body).filter(p=>/kind="consolelog"/.test(p));L.forEach(p=>{say(MV,p);pause(0.6)});if(L.length)pause(0.8)}
   C.scenes.forEach((sc,i)=>{const paras=sc.text(BEST[i],{},{}).filter(p=>!(/\?\s*$/.test(p.replace(/<[^>]+>/g,'').trim())&&p.replace(/<[^>]+>/g,'').split(/\s+/).length<14));paras.forEach(p=>{say('narrator',p);pause(0.45)});pause(0.6);
     const b=sc.opts.find(o=>o.best);say('narrator',b.after);pause(1.4)});
-  C.closing(FINAL,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});
+  // the novel ends on the story, not the game's ending card or readiness meter (2026-10-20)
+  C.closing(FINAL,{},{}).filter(p=>!/^(<b>)?Your ending:|readiness in this chapter ended at/.test(p.trim())).forEach(p=>{say('narrator',p);pause(0.5)});
   fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages:{story:segs},plan:['story'],outkey:(track==='ref'?'r':'f')+n+'s',...(V2?{audio:'audio/v2'}:{}),narrator:CO&&CO.narratorVoice||undefined}));console.log('story edition');process.exit(0)}
 fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages,plan,narrator:CO&&CO.narratorVoice||undefined,...(V2?{audio:'audio/v2'}:{})}));
 console.log(Object.keys(pages).length,'pages');
