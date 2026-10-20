@@ -21,7 +21,7 @@ function episodeWords(plan, T) {
   for (const p of plan) { for (const [w, a] of T[p].w) out.push([w, off + a]); off += T[p].d + (p.startsWith("s") && p !== "story" ? 4 : 1.2); }
   return out;
 }
-// the study edition's page order: opening, lesson, then each decision and its best outcome, then the ending (tools/pages.mjs plan)
+// the study edition's page order: the spoken intro (previously + who's who) when the chapter has one, opening, lesson, then each decision and its best outcome, then the ending (tools/pages.mjs plan)
 const studyPlan = page => page.evaluate(() => { const c = window.HALCYON_FULL.find(x => x && x.num === 1);
   return ["open", ...(c.lesson ? ["lesson"] : []), ...c.scenes.flatMap((sc, i) => ["s" + i, `o${i}_${sc.opts.findIndex(o => o.best)}`]), "end"]; });
 
@@ -84,8 +84,8 @@ test("study edition, chapter 1: lesson, decisions and debriefs show, and the hig
   const errs = watchErrors(page);
   await page.goto("/#pmp/listen");
   await playChapter(page, "study");
-  const plan = await studyPlan(page);
   const T = J("audio/v2/pages/f1/timings.json");
+  const plan = [...(T.intro ? ["intro"] : []), ...await studyPlan(page)];
   const W = episodeWords(plan, T);
   await expect(page.locator("#bfollow .bfhead")).toContainText("Story + lessons");
   expect((await hl(page)).n).toBe(W.length);
@@ -170,7 +170,7 @@ test("seek bar: a tick at each scene start seeks to the bookmark, and dragging s
   // each tick is drawn where its time sits on the track (thumb travel = track width minus the 16px thumb)
   const sb = await page.locator("#narseek").boundingBox(), dur0 = await page.evaluate(() => window.__nar.audio.duration);
   for (let k = 0; k < n; k++) { const b = await ticks.nth(k).boundingBox(); expect(Math.abs(b.x + b.width / 2 - (sb.x + 8 + (sb.width - 16) * want[k] / dur0)), `tick ${k} position`).toBeLessThan(2); }
-  await expect(ticks.first()).toHaveAttribute("aria-label", /^Opening, 0:\d\d$/);
+  await expect(ticks.first()).toHaveAttribute("aria-label", /^Opening, \d+:\d\d$/); // after the spoken intro
   await expect(ticks.last()).toHaveAttribute("aria-label", /^Chapter ending, \d+:\d\d$/);
   // drag the thumb: the bubble and the time label show where you'd land, before you let go
   const sk = await page.locator("#narseek").boundingBox();
@@ -265,7 +265,7 @@ for (const [w, h] of [[390, 844], [1280, 900]]) for (const theme of ["light", "d
     await page.emulateMedia({ colorScheme: theme });
     await page.goto("/#pmp/listen");
     await playChapter(page, "study");
-    const W = episodeWords(await studyPlan(page), J("audio/v2/pages/f1/timings.json"));
+    const T1 = J("audio/v2/pages/f1/timings.json"), W = episodeWords([...(T1.intro ? ["intro"] : []), ...await studyPlan(page)], T1);
     await seek(page, W[2500][1] + 0.04);
     await page.waitForTimeout(400);
     await noSideScroll(page, `audiobook follow-along ${w}px`);
