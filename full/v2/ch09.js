@@ -143,6 +143,7 @@
   ],
   lesson: {
     title: `Ruth's Console Log, page nine: I said yes`,
+    storyBridge: `Sam's opening this one with a butter knife. It's a review room, the last one before the Petrel flew, and my signature.`, // Story only: Ruth says this right before her console log page (Anthony, 2026-10-22)
     sections: [
       { h: `Page nine`,
         body: [`<prop type="doc" kind="consolelog" title="PETREL FLOW · L MINUS 15 DAYS · MAY 28 2035">0700 FLIGHT READINESS REVIEW. BLDG 4, ROOM 210. OPEN ITEMS 3.<br>0740 ITEMS 1 AND 3 CLOSED.<br>0742 ITEM 2. ISOL VLV 2, CYCLE 3, OCT 18. PENDING 7 MONTHS.<br>0745 PROP RECOMMENDS DOWNGRADE TO CRIT 2. CLOSE UNR. TWO CLEAN RETESTS. NO RECURRENCE IN FLIGHT VALVE CHECKOUT.<br>0750 WENDELL: NO RECURRENCE BECAUSE NOBODY HAS RUN IT COLD 500 TIMES. ASKED FOR THE SHELF VALVE AGAIN.<br>0752 ADMINISTRATOR: THE SHELF VALVE IS IN PUEBLO AND THE WINDOW IS IN JUNE.<br>0800 A CRIT 1 OPEN AT THIS REVIEW NEEDS A WAIVER. FD SIGNS.<br>0815 ROOM WAITED. NOBODY SAID SIGN IT. NOBODY HAD TO.<br>0820 WAIVER 35-114. ISOL VLV 2 CLOSED UNR AT CRIT 2. LOT LIFE TEST WAIVED. MY SIGNATURE.<br>0821 WENDELL LEFT. DIDN'T SLAM THE DOOR. WORSE.<br>1600 LISE AT MY CONSOLE AFTER THE CREW BRIEF. ASKED IF I WAS SURE.<br>1601 I SAID YES.<br>1730 L MINUS 15. I SAID YES.</prop>`,
@@ -349,7 +350,7 @@
         `Badge access had been reset for everyone in the new team. Four high bay technicians on stand rotation couldn't get through the stand's gate, and two stand technicians couldn't get into Building 6.`,
         `Overtime requests for all sixty seven people now went to Corinne. She had forty one waiting.`,
         `And the new shift schedule had put the stand's night crew on the high bay's rotating shifts starting May 1`+(p[1]===3?`, which the memo had said wouldn't happen until July. Somebody in scheduling hadn't read the memo.`:`, with the life test and the night chilldowns still on the calendar.`),
-        `<span class="said" data-who="Corinne">"I can do all of it,"</span> Corinne said. <span class="said" data-who="Corinne">"I can't do all of it today."</span>`];},
+        `<span class="said" data-who="Corinne" data-tone="Dry, even, unhurried.">"I can do all of it,"</span> Corinne said. <span class="said" data-who="Corinne" data-tone="Dry, even, unhurried.">"I can't do all of it today."</span>`];},
       opts:[
         {t:`Log every item, and work them through together at the merged team's monthly review.`, s:0, d:{trust:-3,conf:-1,health:-5},
           after:`The issue log is thorough and the monthly review is on May 8. In the four weeks before it, two more chilldowns are scrubbed for want of a signature, and the stand crew starts calling the merger the permit.`,
@@ -367,7 +368,7 @@
     { id:`f9s8`, domain:`Business Environment`, task:`B8`, approach:`agile`, title:`Sundog`, q:`Rafa has Sundog's filing for a relay that could fly in 2064. What should Sam do about it?`,
       text:(s,all,G)=>[`Tuesday, April 18. Countdown to Ares ran it as the lead item on Monday night. A company called Sundog Relay, eighteen months old, with a ground station in New Mexico and a very good animation, announced that it would put a relay spacecraft in an orbit well off the line between Earth and Mars, where it could pass messages around the Sun when the Sun was in the way. No more conjunction blackouts, the animation said.`,
         `By Tuesday morning Families of Ares had a petition with forty thousand names on it. It asked the ARA to rent Sundog's relay, or to put a relay on Halcyon, so families could hear from the station during the silence. Frances Odum, who chaired the group, had sent it to Sam personally, with one line: <b>Is this real?</b>`,
-        `Gwen Talley, Hale's chief of staff, called at nine. <span class="said" data-who="Gwen" data-tone="Even, careful, unhurried.">"The Director would like to know whether Halcyon can carry one of these. Or whether we can buy time on theirs. Before May, ideally."</span>`,
+        `Gwen Talley, Hale's chief of staff, called at nine. <span class="said" data-who="Gwen">"The Director would like to know whether Halcyon can carry one of these. Or whether we can buy time on theirs. Before May, ideally."</span>`,
         `Rafa had already read Sundog's regulatory filing, because Rafa read filings for fun. He came in with it folded open. First launch no earlier than late 2063, it said. Operational in 2064, if everything worked the first time, which, Rafa said, it wouldn't.`,
         `Commander Yusra Haddad, the release backlog's product owner, had the next review on Thursday.`],
       opts:[

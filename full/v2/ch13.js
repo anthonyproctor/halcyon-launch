@@ -94,6 +94,7 @@
   ],
   lesson: {
     title: `Ruth's Console Log, page thirteen: The door in it`,
+    storyBridge: `Sam's driving downtown to a hearing. Before he gets there, here's my kitchen on the morning I wrote Flight Rule 2.36.`, // Story only: Ruth says this right before her console log page (Anthony, 2026-10-22)
     sections: [
       { h: `Page thirteen`,
         body: [`<prop type="doc" kind="consolelog" title="PETREL · AFTER · L PLUS 282 DAYS · MAR 20 2036">0600 KITCHEN. COFFEE. LEGAL PAD. GREEN PEN. HOUSE QUIET.<br>0610 DRAFT 9. FLIGHT RULE 2.36.<br>0615 LINE 1. NO CRIT 1 ANOMALY CLOSES UNEXPLAINED WITHOUT 3 INDEPENDENT REPRO ATTEMPTS AND THE FD'S SIGNATURE.<br>0640 WHY 3. TWO IS WHAT WE HAD TIME FOR.<br>0700 READ IT TO THE WINDOW. WHO FINDS THE WAY AROUND IT.<br>0705 DOWNGRADE IT FIRST. THEN IT ISN'T CRIT 1. THAT'S THE WAY.<br>0710 LINE 2. NO CRIT 1 IS DOWNGRADED WITHOUT THE SAME 3 ATTEMPTS AND THE SAME SIGNATURE.<br>1000 AGENCY, 7TH FLOOR. COUNSEL READ IT. THE ADMINISTRATOR'S DEPUTY READ IT.<br>1040 LINE 2 STRUCK. TOO BROAD. A RULE NOBODY CAN MEET ISN'T A RULE.<br>1041 TOLD THEM SOMEBODY WILL MEET IT BY DOWNGRADING. DEPUTY SAID THAT'S WHAT ENGINEERING JUDGMENT IS FOR.<br>1045 SIGNED LINE 1. LET LINE 2 GO.<br>1400 RULE 2.36 IN THE BOOK. MY NAME ON IT.<br>1730 L PLUS 282. A RULE WITH A DOOR IN IT. I KNOW WHERE THE DOOR IS.</prop>`,
@@ -410,7 +411,7 @@
         return [`1:30 PM. Watkins, the program room. Tallgrass's communications office had sent a draft statement at noon, for release at five, with a headline in bold. <b>HALCYON ON TRACK FOR FEBRUARY 18 AFTER READINESS REVIEW.</b> Under it was a quote from Garrett about engineering excellence and a space left for a quote from the program manager.`,
         `Hale's office had sent its own draft, which agreed with Tallgrass's on the date and on nothing else. Greaves had sent a question at 12:40, one line. <b>Is February 18 a date or a promise?</b>`,
         `Quinn had both drafts up on the big screen beside the countdown board, which said 65. Across the road, in flight control, the controllers' poster still said LAUNCH FEB 18 in the biggest letters on it.`,
-        `Rafa came in with a sandwich and read the headline over Quinn's shoulder. <span class="said" data-who="Rafa">"On track for what? The board hasn't decided anything."</span> Quinn said that was the trouble. Everybody had a picture of what the ship was for, and every picture stopped at a date. Rafa's sprint goal stopped at cutoff. The press stopped at liftoff. Since last night the families stopped at the word waiver.`,
+        `Rafa came in with a sandwich and read the headline over Quinn's shoulder. <span class="said" data-who="Rafa" data-tone="Low, dry, skeptical.">"On track for what? The board hasn't decided anything."</span> Quinn said that was the trouble. Everybody had a picture of what the ship was for, and every picture stopped at a date. Rafa's sprint goal stopped at cutoff. The press stopped at liftoff. Since last night the families stopped at the word waiver.`,
         (spun
           ?`The last statement the program had given Greaves, in `+(G.crashedtest?`September`:`October`)+`, had called AR 2207 history. He'd quoted it on air last night, right after Ruth.`
           :nc

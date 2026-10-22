@@ -134,6 +134,7 @@
   ],
   lesson: {
     title: `Ruth's Console Log, page eleven: No comment`,
+    storyBridge: `Sam's deciding who hears it from him first. After the Petrel, I let counsel decide that for me, and the families heard nothing.`, // Story only: Ruth says this right before her console log page (Anthony, 2026-10-22)
     sections: [
       { h: `Page eleven`,
         body: [`<prop type="doc" kind="consolelog" title="PETREL · INVESTIGATION · L PLUS 90 DAYS · SEP 10 2035">0610 TWO VANS ON THE STREET. ONE IN THE NEIGHBOR'S DRIVEWAY. THE NEIGHBOR MADE THEM MOVE IT. IN A ROBE.<br>0700 BOARD, DAY 90. ISOL VLV 2 TIMELINE. READ MY OWN LINES INTO THE RECORD. 0905 WROTE CLEAN.<br>1015 COUNSEL: NO COMMENT TO PRESS. ON ADVICE. ALL OF US.<br>1200 AGENCY STATEMENT. A RIGOROUS PROCESS WAS FOLLOWED. TRUE.<br>1430 THE COMMITTEE CUTS NEXT YEAR'S MARS LINE BY 40 PERCENT. THE CARGO FLIGHT GOES. NOBODY ASKED US WHICH.<br>1600 TATE'S MOTHER ON THE NEWS. ASKED WHY NOBODY TOLD THE FAMILIES ABOUT THE VALVE. NOBODY HAS ANSWERED HER.<br>1900 HOME. REPORTER ON THE STEP. YOUNG. POLITE. ASKED IF I SIGNED IT.<br>1901 NO COMMENT.<br>1902 I SIGNED IT.<br>2300 GARAGE. TELESCOPE. DIDN'T OPEN THE CASE.</prop>`,

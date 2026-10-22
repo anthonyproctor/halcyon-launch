@@ -16,6 +16,9 @@ const unent=s=>s.replace(/&(#?\w+);/g,(m,k)=>k in ENT?ENT[k]:/^#\d+$/.test(k)?St
 const lines=b=>b.split(/(?:<br\s*\/?>\s*)+/).map(x=>unent(x.replace(/<[^>]+>/g,' ')).replace(/\s+/g,' ').trim()).filter(Boolean).map(x=>/[.!?:"”']$/.test(x)?x:x+'.').join(' ');
 const said=(who,t)=>`<span class="said" data-who="${who}">${t}</span>`;
 function propSpeech(html){return html.replace(/<prop\s+([^>]*)>([\s\S]*?)<\/prop>/g,(_,attrs,body)=>{const a={};attrs.replace(/(\w+)="([^"]*)"/g,(m,k,v)=>a[k]=v);
+  // say="...": what a listener hears instead of the prop's text (a nav log, METAR, code, a table); the screen still shows the prop.
+  // by="Who" voices it as that speaker. Write quotes inside it as &quot; (2026-10-22)
+  if(a.say!==undefined){const t=unent(a.say).trim();return a.by?said(a.by,t):t}
   if(a.type==='doc'&&a.kind==='vlog'){const tp=(a.title||'').split(/\s*·\s*/),who=a.name||(tp[0]?tc(tp[0]):a.from||'someone'),where=a.station||(tp[1]?tc(tp[1]):'');
     const head=[`A log from ${who}${where?`, ${where}`:''}.`,a.sol?`Sol ${a.sol}.`:'',a.delay?`One way, ${units(a.delay)}.`:'',a.margin?`Margin, ${a.margin}.`:''].filter(Boolean).join(' ');
     return `${head} ${said(a.from||'narrator',lines(body))}`}

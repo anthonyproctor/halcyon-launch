@@ -108,6 +108,7 @@ test("QA bar follows Listen playback and its Flag button captures the audio spot
   await expect(page.locator("#qainfo")).toContainText("f1 open");
   await expect(page.locator("#qainfo")).toContainText("Ch 1");
   await noSideScroll(page, "QA bar");
+  await page.locator("#qapill").click(); // the QA bar is a pill now (2026-10-22): tap it for the details and Flag
   await page.locator("#qaflagbtn").click();
   await expect(page.locator("#qatype option").nth(2)).toHaveText("Text doesn't match audio");
   await page.locator("#qatype").selectOption("highlight_off");

@@ -482,6 +482,7 @@ SC=[
   ],
   lesson: {
     title: `Ruth's Console Log, page fifteen: The blank page`,
+    storyBridge: `Every page I've mailed Sam had writing on it. I kept this one back, because I still don't know what goes on it.`, // Story only: Ruth says this right before her console log page (Anthony, 2026-10-22)
     sections: [
       { h: `Page fifteen`,
         body: [`<prop type="doc" kind="consolelog" title="PETREL · AFTER · PAGE 15"> </prop>`,
@@ -637,7 +638,7 @@ SC=[
     `Sam read him the line. Ray was quiet so long Sam checked the screen to see if the call had dropped.`,
     `<span class="said" data-who="Ray" data-tone="Gruff, low, serious.">"You know how you signed this one,"</span> Ray said. <span class="said" data-who="Ray" data-tone="Gruff, low, serious.">"That's the one you get to keep. Doc's the one you carry."</span> A screen door, and something that creaked when Ray sat on it. <span class="said" data-who="Ray" data-tone="Gruff, low, serious.">"The jet doesn't care how you feel."</span>`,
     `<span class="said" data-who="Sam">"Doesn't mean I don't get to feel it,"</span> Sam said.`,
-    `<span class="said" data-who="Ray">"Now you're quoting me,"</span> Ray said. <span class="said" data-who="Ray">"Go to bed, Okafor."</span>`,
+    `<span class="said" data-who="Ray">"Now you're quoting me,"</span> Ray said. <span class="said" data-who="Ray" data-tone="Gruff, warm, unhurried.">"Go to bed, Okafor."</span>`,
     (s&&s.score>=27
       ?`He'd done most of the last of it the slow way, out loud, with the people who'd have to live with it. It hadn't felt like winning. Ruth would have said that was how you could tell.`
       :`He could name the places at the end where he'd taken the quick way, and who'd paid for each one. The binder on the shelf had taught him to make the list. Making it was most of what he could do now.`),

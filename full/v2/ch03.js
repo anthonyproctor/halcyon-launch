@@ -97,6 +97,7 @@
   ],
   lesson: {
     title: `Ruth's Console Log, page three: a very pretty chart`,
+    storyBridge: `Sam's getting new scheduling software this week. We got some too, that summer on the Petrel. Listen for Wendell on the loop.`, // Story only: Ruth says this right before her console log page (Anthony, 2026-10-22)
     sections: [
       { h: `Page three`,
         body: [`<prop type="doc" kind="consolelog" title="PETREL FLOW · L MINUS 327 DAYS · JUL 20 2034">0700 FIRST INTEGRATED SCHEDULE REVIEW. NEW SCHEDULING SOFTWARE. EVERY BAR A DIFFERENT COLOR. ADMINISTRATOR SAYS IT LOOKS LIKE A QUILT.<br>0815 CRITICAL PATH RUNS THROUGH PROP QUAL. ISOL VLV CYCLE TESTS, 3 CAMPAIGNS, 14 WEEKS.<br>0830 PROGRAM WANTS 4 WEEKS BACK. OPTIONS: SECOND SHIFT ON THE STAND, OR OVERLAP VLV CAMPAIGN 3 WITH STAGE INTEGRATION.<br>0905 CHOSE BOTH.<br>0910 PROP OBJECTS. WENDELL ON THE LOOP: IF CAMPAIGN 3 FINDS SOMETHING, IT'S ALREADY BOLTED IN.<br>0912 OVERRULED. NOTED HIS OBJECTION. HE ASKED ME TO NOTE IT TWICE. NOTED IT TWICE.<br>1300 NEW CHART PRINTED. 4 WEEKS OF FLOAT ON THE LAST BAR. VERY PRETTY.<br>1730 L MINUS 327. WENDELL'S TRUCK STILL IN THE LOT.</prop>`,

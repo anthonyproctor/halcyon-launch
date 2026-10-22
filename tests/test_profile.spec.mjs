@@ -272,11 +272,14 @@ test("the Test profile banner shows on every screen; the switches show only in Q
   await expect(page.locator("#tpbadge")).toHaveCount(0);
 });
 
+// the QA bar is a pill (2026-10-22): open its details unless this device left them open
+async function openQA(page) { if (await page.locator("#qapill").getAttribute("aria-expanded") !== "true") await page.locator("#qapill").click(); await expect(page.locator("#qapanel")).toBeVisible(); }
 test("the QA bar's Test profile button switches profiles while a page plays", async ({ page }) => {
   noDialogs(page);
   await page.goto("/?qa=1#pmp/full/1");
   await page.locator("#narplay").click();
   await expect(page.locator("#qabar")).toBeVisible({ timeout: 15_000 });
+  await openQA(page);
   const btn = page.locator("#qatpbtn");
   await expect(btn).toHaveAttribute("aria-pressed", "false");
   expect((await btn.boundingBox()).height).toBeGreaterThanOrEqual(24);
@@ -289,6 +292,7 @@ test("the QA bar's Test profile button switches profiles while a page plays", as
   await page.goto("/?qa=1#pmp/full/1");
   await page.locator("#narplay").click();
   await expect(page.locator("#qabar")).toBeVisible({ timeout: 15_000 });
+  await openQA(page);
   await expect(page.locator("#qatpbtn")).toHaveAttribute("aria-pressed", "true");
   await page.waitForTimeout(1500);
   await page.locator("#narplay").click();

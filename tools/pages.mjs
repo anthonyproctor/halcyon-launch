@@ -18,7 +18,15 @@ const MV=CID?CO.mentor:'ruth'; // mentor's voice
 new Function('window',fs.readFileSync('order.js','utf8'))(globalThis.window);
 globalThis.window.HalcyonOrder.build([{key:(track==='ref'?'ref':'full')+C.num+'dec',items:C.scenes.map(sc=>({id:sc.id,n:sc.opts.length,correct:sc.opts.findIndex(o=>o.best)}))}]);
 const order=(id,len)=>globalThis.window.HalcyonOrder.get(id,len);
-const RUTH_LEADS=CO.leads||{3:["That's the move.","Good. That's what I'd want from a flight director.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best answer.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have stopped you there.","Let's talk about that one."]};
+const RUTH_LEADS0={3:["That's the move.","Good. That's what I'd want from a flight director.","Exactly right."],1:["Close, but not quite.","Defensible. Not the best answer.","You're in the neighborhood."],0:["That one's going to cost you.","I'd have stopped you there.","Let's talk about that one."]};
+// same fallback as engine.js LEADS(): only Ruth gets the flight director line; another mentor without leads says "That's the call."
+const RUTH_LEADS=CO.leads||(MV==='ruth'||MV==='Ruth'?RUTH_LEADS0:{...RUTH_LEADS0,3:["That's the move.","Good. That's the call.","Exactly right."]});
+// earlier chapters on the best-answer path (picks by chapter, and their flags), the path both Audiobook editions play.
+// Pages used to get {} {} here, so a page that recalls an earlier chapter played the wording of a reader who chose nothing (2026-10-22).
+const AB={},GB={};if(track==='full'&&(CID||V2)){const ld=k=>{const w={},nn=String(k).padStart(2,'0');
+  if(CID){const f=`courses/${CID}/full/ch${nn}.js`;if(!fs.existsSync(f))return null;new Function('window',fs.readFileSync(f,'utf8'))(w);return (w.HALCYON_DATA[CID].full||[]).find(c=>c.num===k)}
+  const f=`full/v2/ch${nn}.js`;if(!fs.existsSync(f))return null;new Function('window',fs.readFileSync(f,'utf8'))(w);return w.HALCYON_FULL[0]};
+ for(let k=1;k<n;k++){const P=ld(k);if(!P)continue;const picks={},flags={};P.scenes.forEach((sc,i)=>{const j=sc.opts.findIndex(o=>o.best);picks[i]=j;if(sc.opts[j].flag)flags[sc.opts[j].flag]=true});AB[k]={picks,flags};Object.assign(GB,flags)}}
 const W=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen'];
 const st={flags:{},score:24,m:{trust:60,conf:60,health:60}}; // a middling run: kept as the _alt version of any page whose text depends on how you've played
 // the Audiobook plays the best-answer path, so pages are narrated with that path's state (state before each decision, and at the end)
@@ -30,20 +38,21 @@ const mk=()=>{const segs=[];const say=(v,t)=>segments(String(t),v).forEach(x=>se
 // opening
 {const {segs,say,pause}=mk();say('narrator',`Chapter ${W[C.num]}. ${C.title}.`);pause(0.8);C.opening.forEach(p=>{say('narrator',p);pause(0.5)});pages.open=segs}
 // lesson (full only)
-if(C.lesson){const {segs,say,pause}=mk();say(MV,CID||V2?`${C.lesson.title}.`:`Ruth's whiteboard. ${C.lesson.title}.`);pause(0.6);C.lesson.sections.forEach(s=>{say(MV,s.h+'.');pause(0.3);s.body.forEach(p=>{say(MV,p);pause(0.35)});if(s.exam){say(MV,'How the exam asks it. '+s.exam);pause(0.5)}});pages.lesson=segs}
+// course.lessonVoice (GH-300, 2026-10-22): a lesson written as narration about the mentor reads in that voice; the mentor's own tagged lines keep hers
+if(C.lesson){const LV=CO.lessonVoice||MV;const {segs,say,pause}=mk();say(LV,CID||V2?`${C.lesson.title}.`:`Ruth's whiteboard. ${C.lesson.title}.`);pause(0.6);C.lesson.sections.forEach(s=>{say(LV,s.h+'.');pause(0.3);s.body.forEach(p=>{say(LV,String(p).replace('<!--story-->',''));pause(0.35)});if(s.exam){say(LV,'How the exam asks it. '+s.exam);pause(0.5)}});pages.lesson=segs}
 // scenes and outcomes
 C.scenes.forEach((sc,i)=>{
-  {const {segs,say,pause}=mk();say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);sc.text(BEST[i],{},{}).forEach(p=>{say('narrator',p);pause(0.35)});
+  {const {segs,say,pause}=mk();say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);sc.text(BEST[i],AB,GB).forEach(p=>{say('narrator',p);pause(0.35)});
    if(sc.q){say('narrator',sc.q);pause(0.45)}say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)});pages['s'+i]=segs}
   sc.opts.forEach((o,j)=>{const {segs,say,pause}=mk();say('narrator',o.after);pause(0.5);say(MV,RUTH_LEADS[o.s][i%3]+' '+o.why);
     if(!o.best){const b=sc.opts.find(x=>x.best);pause(0.3);say(MV,'The best answer: '+b.t+' '+b.why)}pages[`o${i}_${j}`]=segs});
 });
 // closing
-{const {segs,say,pause}=mk();C.closing(FINAL,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});pages.end=segs}
+{const {segs,say,pause}=mk();C.closing(FINAL,AB,GB).forEach(p=>{say('narrator',p);pause(0.5)});pages.end=segs}
 // alternates: same page as a middling run would see it, when the wording differs
-C.scenes.forEach((sc,i)=>{if(!same(sc.text(BEST[i],{},{}),sc.text(st,{},{}))){const {segs,say,pause}=mk();say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);sc.text(st,{},{}).forEach(p=>{say('narrator',p);pause(0.35)});
+C.scenes.forEach((sc,i)=>{if(!same(sc.text(BEST[i],AB,GB),sc.text(st,{},{}))){const {segs,say,pause}=mk();say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);sc.text(st,{},{}).forEach(p=>{say('narrator',p);pause(0.35)});
   if(sc.q){say('narrator',sc.q);pause(0.45)}say('narrator','Your options.');pause(0.25);order(sc.id,sc.opts.length).forEach((j,pos)=>{say('narrator',`${'ABCD'[pos]}. ${sc.opts[j].t}`);pause(0.3)});pages['s'+i+'_alt']=segs}});
-if(!same(C.closing(FINAL,{},{}),C.closing(st,{},{}))){const {segs,say,pause}=mk();C.closing(st,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});pages.end_alt=segs}
+if(!same(C.closing(FINAL,AB,GB),C.closing(st,{},{}))){const {segs,say,pause}=mk();C.closing(st,{},{}).forEach(p=>{say('narrator',p);pause(0.5)});pages.end_alt=segs}
 // variants: a decision or closing page can read differently for every reader (picks, flags, score, meters, and flags carried over
 // from earlier chapters as G). The best path and the middling run above cover two readers. Playing the chapter through VARIANT_RUNS
 // times (from random picks to nearly all best, earlier-chapter flags set at random) finds the other wordings, and:
@@ -63,7 +72,7 @@ if(!same(C.closing(FINAL,{},{}),C.closing(st,{},{}))){const {segs,say,pause}=mk(
      const bi=sc.opts.findIndex(o=>o.best),j=rnd()<pb?bi:Math.floor(rnd()*sc.opts.length),o=sc.opts[j];
      const nx={flags:{...s.flags},score:s.score+o.s,m:{...s.m},picks:{...s.picks,[i]:j}};for(const k in (o.d||{}))nx.m[k]=clamp(nx.m[k]+o.d[k]);if(o.flag)nx.flags[o.flag]=true;s=nx});
    add('end',C.closing(s,{},{...prev,...s.flags}))}
- const textOf=(pid,state)=>pid==='end'?C.closing(state,{},{}):C.scenes[+pid.slice(1)].text(state,{},{});
+ const textOf=(pid,state,a={},g={})=>pid==='end'?C.closing(state,a,g):C.scenes[+pid.slice(1)].text(state,a,g);
  const build=(pid,paras)=>{const {segs,say,pause}=mk();
    if(pid==='end'){paras.forEach(p=>{say('narrator',p);pause(0.5)})}
    else{const i=+pid.slice(1),sc=C.scenes[i];say('narrator',`Decision ${W[i+1]}. ${sc.title||sc.task}.`);pause(0.5);paras.forEach(p=>{say('narrator',p);pause(0.35)});
@@ -71,7 +80,7 @@ if(!same(C.closing(FINAL,{},{}),C.closing(st,{},{}))){const {segs,say,pause}=mk(
    return segs};
  let nv=0,nf=0;
  for(const pid in seen){
-   const best=textOf(pid,pid==='end'?FINAL:BEST[+pid.slice(1)]);(seen[pid]).set(key(best),best);(seen[pid]).set(key(textOf(pid,st)),textOf(pid,st));
+   const best=textOf(pid,pid==='end'?FINAL:BEST[+pid.slice(1)],AB,GB);(seen[pid]).set(key(best),best);(seen[pid]).set(key(textOf(pid,st)),textOf(pid,st));
    const all=[...seen[pid].values()];if(all.length<2)continue;
    const known=new Set([key(best),...(pages[pid+'_alt']?[key(textOf(pid,st))]:[])]),extra=all.filter(t=>!known.has(key(t)));
    if(all.length<=MAXV)extra.forEach((t,v)=>{pages[`${pid}_v${v+1}`]=build(pid,t);nv++});
@@ -91,12 +100,16 @@ if(STORY){ // novel edition: story only, best path, no options, no lesson, no de
   const AT=CID&&C.lesson?(Number.isInteger(C.lesson.storyAt)?C.lesson.storyAt:0):-1;
   C.scenes.forEach((sc,i)=>{if(i===AT)mentorBeat();
     // short game prompts go; in course books a short question someone actually says (a data-who line) stays
-    let paras=sc.text(BEST[i],{},{}).filter(p=>!(/\?\s*$/.test(p.replace(/<[^>]+>/g,'').trim())&&p.replace(/<[^>]+>/g,'').split(/\s+/).length<14&&!(CID&&/data-who=/.test(p))));
+    let paras=sc.text(BEST[i],AB,GB).filter(p=>!(/\?\s*$/.test(p.replace(/<[^>]+>/g,'').trim())&&p.replace(/<[^>]+>/g,'').split(/\s+/).length<14&&!(CID&&/data-who=/.test(p))&&!/<prop\b/.test(p))); // a text or note that ends in a question is story, not a prompt (2026-10-22)
     // course books: a short narrator question ending the scene's last paragraph ("What does Nadia do?") is the game's prompt, not the novel's (2026-10-20)
     if(CID&&paras.length){const k=paras.length-1,q=paras[k].match(/^([\s\S]*[.!"”])\s+([^.!?"“”<>]{3,80}\?)\s*$/);if(q&&q[2].split(/\s+/).length<14)paras=[...paras.slice(0,k),q[1]]}paras.forEach(p=>{say('narrator',p);pause(0.45)});pause(0.6);
-    const b=sc.opts.find(o=>o.best);say('narrator',b.after);pause(1.4)});
+    const b=sc.opts.find(o=>o.best);
+    // course.voiceBest (The Appeal, 2026-10-22): when the best choice is a line the hero says, Story only says it in their voice first,
+    // so the after answers something the listener heard
+    if(CO.voiceBest&&!b.typed){const t=String(b.t).trim();if(/^["“]/.test(t)){say(CO.voiceBest,t.replace(/^["“]/,'').replace(/["”]$/,''));pause(0.6)}}
+    say('narrator',b.after);pause(1.4)});
   // the novel ends on the story, not the game's ending card or readiness meter (2026-10-20)
-  C.closing(FINAL,{},{}).filter(p=>!/^(<b>)?Your ending:|readiness in this chapter ended at/.test(p.trim())).forEach(p=>{say('narrator',p);pause(0.5)});
+  C.closing(FINAL,AB,GB).filter(p=>!/^(<b>)?Your ending:|readiness in this chapter ended at/.test(p.trim())).forEach(p=>{say('narrator',p);pause(0.5)});
   fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages:{story:segs},plan:['story'],outkey:(track==='ref'?'r':'f')+n+'s',...(V2?{audio:'audio/v2'}:{}),narrator:CO&&CO.narratorVoice||undefined}));console.log('story edition');process.exit(0)}
 fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages,plan,narrator:CO&&CO.narratorVoice||undefined,...(V2?{audio:'audio/v2'}:{})}));
 console.log(Object.keys(pages).length,'pages');

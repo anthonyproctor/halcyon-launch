@@ -279,3 +279,24 @@ test("stall guard: playing with a frozen clock for 3 seconds gets one recovery (
   await expect.poll(() => page.evaluate(() => window.__nar.stall.fixed > 0), { timeout: 10_000 }).toBe(true);
   await expect.poll(() => page.evaluate(() => window.__nar.audio.paused), { timeout: 10_000 }).toBe(false);
 });
+
+test("sleep timer on an iPhone: iOS ignores audio.volume, so there's no fade, it just pauses on time and saves the spot", async ({ page }) => {
+  await page.addInitScript(() => { // what iOS does: volume reads back 1 and setting it does nothing
+    const P = HTMLMediaElement.prototype;
+    Object.defineProperty(P, "volume", { configurable: true, get() { return 1 }, set() {} });
+  });
+  await playBook(page);
+  const T = { timeout: 10_000 };
+  await page.evaluate(() => window.__sleep.set("15", 2500, 2000));
+  await expect.poll(() => page.evaluate(() => window.__nar.audio.paused), T).toBe(true);
+  const st = await page.evaluate(() => window.__sleep.state());
+  expect(st.mode).toBe("off"); expect(st.fading).toBe(false);
+  const t = await page.evaluate(() => window.__nar.audio.currentTime);
+  await expect.poll(async () => { const L = await saved(page); return L && L.book && Math.abs(L.book.t - t) < 0.6 }, T).toBe(true);
+  // the menu opens with a tap and fits the phone
+  await page.locator("#narsleep").tap();
+  const m = await page.locator("#narsleepmenu").boundingBox(), vw = page.viewportSize().width;
+  expect(m.x).toBeGreaterThanOrEqual(0); expect(m.x + m.width).toBeLessThanOrEqual(vw);
+  await page.locator("#narsleepmenu").getByRole("menuitemradio", { name: "45 minutes" }).tap();
+  await expect(page.locator("#narsleept")).toHaveText("45m");
+});

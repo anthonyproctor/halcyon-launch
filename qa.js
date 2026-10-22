@@ -57,16 +57,23 @@ function context(li){const st=ST();li=li||{};
     route:String(location.hash||"").slice(1,80),ua:navigator.userAgent.slice(0,300)}}
 const fmt=t=>t==null?"":`${Math.floor(t/60)}:${(t%60).toFixed(1).padStart(4,"0")}`;
 
-/* ===== the QA bar, while a page plays ===== */
-function bar(){let b=$("qabar");if(b)return b;b=document.createElement("div");b.id="qabar";b.hidden=true;b.setAttribute("role","status");
-  b.innerHTML=`<span class="qainfo" id="qainfo"></span>${PROF?`<button type="button" class="qatp" id="qatpbtn" aria-pressed="${PROF.test}" title="Use a separate scratch profile while you test">Test profile</button>`:""}<button type="button" class="qaflag" id="qaflagbtn">Flag</button>`;document.body.appendChild(b);
+/* ===== the QA bar, while a page plays (2026-10-22: moved off the player) =====
+   A small "QA" pill docked at the top right, in a band QA mode keeps clear at the top of the page, so it never sits on the player or
+   the text being read. Tap it to open the details: the exact spot, Test profile and Flag. Open or closed is remembered on this device. */
+function bar(){let b=$("qabar");if(b)return b;b=document.createElement("div");b.id="qabar";b.hidden=true;
+  const open=!!store.get("qa.open",false);
+  b.innerHTML=`<button type="button" class="qapill" id="qapill" aria-expanded="${open}" aria-controls="qapanel"><span class="qapl">QA</span> <span class="qapt" id="qapt"></span><span class="qacar" aria-hidden="true"></span><span class="sr">details</span></button>
+   <div class="qapanel2" id="qapanel" role="group" aria-label="QA details" ${open?"":"hidden"}><span class="qainfo" id="qainfo"></span><span class="qabtns">${PROF?`<button type="button" class="qatp" id="qatpbtn" aria-pressed="${PROF.test}" title="Use a separate scratch profile while you test">Test profile</button>`:""}<button type="button" class="qaflag" id="qaflagbtn">Flag</button></span></div>`;document.body.appendChild(b);
+  $("qapill").onclick=()=>setOpen($("qapanel").hidden);
+  $("qapanel").addEventListener("keydown",e=>{if(e.key==="Escape"){e.preventDefault();setOpen(false);$("qapill").focus()}});
   $("qaflagbtn").onclick=()=>openForm(playingLine());if($("qatpbtn"))$("qatpbtn").onclick=()=>PROF.setTest(!PROF.test);return b}
+function setOpen(on){const p=$("qapanel");if(!p)return;p.hidden=!on;$("qapill").setAttribute("aria-expanded",String(!!on));store.set("qa.open",!!on)}
 function barTick(){const st=ST();const show=CAN&&QA.on&&!!st.src&&st.mode!=="read"&&(!st.paused||st.t>0);const b=$("qabar")||(show?bar():null);if(!b)return;
   b.hidden=!show;if(!show)return;
-  const nb=$("narbar");b.style.bottom=((nb&&!nb.hidden?nb.offsetHeight:0)+8)+"px";
   const li=st.mode==="page"?playingLine():null;
   const parts=[st.chapter!=null?"Ch "+st.chapter:"",[st.key,st.page].filter(Boolean).join(" "),li&&li.line>=0?"line "+li.line:"",li?li.speaker+(li.voice?" ("+li.voice+")":""):"",fmt(st.t)].filter(Boolean);
   const s=parts.join(" · ");const i=$("qainfo");if(i.dataset.s!==s+st.book){i.dataset.s=s+st.book;i.innerHTML=`<span class="qabook">${esc(st.book)} · </span>${esc(s)}`;i.title=(st.book?st.book+" · ":"")+s}
+  const pt=$("qapt"),tt=st.t==null?"":`${Math.floor(st.t/60)}:${String(Math.floor(st.t%60)).padStart(2,"0")}`;if(pt.textContent!==tt)pt.textContent=tt;
   if($("page")&&$("page").dataset.qav!==(voiceMap(st)?"1":""))markSpeakers()}
 setInterval(()=>{if(QA.on)barTick()},250);
 
@@ -142,5 +149,5 @@ function allowChanged(can){CAN=!!can;QA.on=CAN&&!!store.get("qa",false);
   applyMode();onPage();badge()}
 if(PROF&&PROF.onAllow)PROF.onAllow.push(allowChanged);
 applyMode();onPage();
-window.HalcyonQA={setQA,setWho,openForm,context,lineInfo};
+window.HalcyonQA={setQA,setWho,openForm,context,lineInfo,setOpen};
 })();

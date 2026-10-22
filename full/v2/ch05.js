@@ -117,6 +117,7 @@
   ],
   lesson: {
     title: `Ruth's Console Log, page five: point nine`,
+    storyBridge: `Sam's buried in numbers this month. Here's the morning I carried mine to headquarters and rounded them for the man I worked for.`, // Story only: Ruth says this right before her console log page (Anthony, 2026-10-22)
     sections: [
       { h: `Page five`,
         body: [`<prop type="doc" kind="consolelog" title="PETREL FLOW · L MINUS 181 DAYS · DEC 13 2034">0700 AGENCY BUDGET REVIEW, HQ, 9TH FLOOR. COFFEE WORSE THAN THE NUMBERS.<br>0730 NUMBERS. CPI 0.87. SPI 0.84.<br>0745 STAND SECOND SHIFT SINCE JULY PAID FROM MANAGEMENT RESERVE. NO CHANGE REQUEST. EVERYBODY KNEW. NOBODY WROTE IT DOWN. WRITING IT DOWN NOW.<br>0800 RESERVE LEFT: 11 PERCENT OF WHAT WE STARTED WITH.<br>0830 ADMINISTRATOR: CAN I SAY NINETY. I SAID CALL IT 0.9. HE SAID 0.9 AND IMPROVING. I DIDN'T SAY IMPROVING. I DIDN'T SAY NOT.<br>0900 SLIDE 6: RESERVE ADEQUATE. MY INITIALS ON IT.<br>1100 OVERSIGHT STAFFER ASKS WHAT ADEQUATE MEANS. ADMINISTRATOR ANSWERS. I LET HIM.<br>1400 DID THE ARITHMETIC ON THE PLANE. THE ROUNDING IS 46.4 MILLION. A SHELF VALVE ON A STAND WAS 3.<br>1730 L MINUS 181. WROTE THIS IN THE AIR SO I'D HAVE TO.</prop>`,
