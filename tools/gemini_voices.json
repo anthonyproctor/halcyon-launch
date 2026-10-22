@@ -159,7 +159,7 @@
    "man": {"voice": "Schedar", "style": "A man's voice. Natural and conversational.", "run": true, "gender": "m"},
    "woman": {"voice": "Callirrhoe", "style": "A woman's voice. Natural and conversational.", "run": true, "gender": "f"},
    "Helen": {"voice": "en-us-podcaster-3", "style": "A woman's voice. Calm, warm, direct.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
-   "Odette": {"voice": "en-us-tutor-21", "style": "A woman's voice. Quiet, exact, unhurried.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Odette": {"voice": "en-us-tutor-21", "style": "A woman's voice. Quiet, exact, unhurried.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88, "f0_char_low": 145},
    "Callie": {"voice": "en-us-assistant-8", "style": "A woman's voice. Warm, quick, teasing.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Rosie": {"voice": "Leda", "style": "A little girl. Curious, earnest, simple.", "run": true, "gender": "f"},
    "Nadia": {"voice": "en-us-sola", "style": "A woman's voice. Sharp, careful, plainspoken.", "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88, "run": true}
