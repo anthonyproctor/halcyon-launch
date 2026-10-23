@@ -122,7 +122,10 @@ function propSay(a){const tc=x=>String(x||"").toLowerCase().replace(/\b\w/g,c=>c
   if(a.say!==undefined){const d=document.createElement("textarea");d.innerHTML=a.say;return d.value.trim()} // say="...": the listener hears this instead of the prop (tools/voices.mjs, 2026-10-22)
   if(a.type==="doc"&&a.kind==="vlog"){const tp=(a.title||"").split(/\s*·\s*/),who=a.name||(tp[0]?tc(tp[0]):a.from||"someone"),where=a.station||(tp[1]?tc(tp[1]):"");
     return [`A log from ${who}${where?`, ${where}`:""}.`,a.sol?`Sol ${a.sol}.`:"",a.delay?`One way, ${units(a.delay)}.`:"",a.margin?`Margin, ${a.margin}.`:""].filter(Boolean).join(" ")}
-  if(a.type==="doc"&&a.kind==="consolelog")return `Ruth's console log. ${(a.title||"").split(/\s*·\s*/).map(x=>tc(x).replace(/\b[A-Z][a-z]{2,3}\b/g,w=>PSAY_MON[w.toUpperCase()]||w)).join(". ")}.`;
+  if(a.type==="doc"&&a.kind==="consolelog"){const T=a.title||"",mi=T.match(/L MINUS (\d+) DAYS/),pl=T.match(/L PLUS (\d+) DAYS/); // same heading as tools/voices.mjs (2026-10-22)
+    const when=/LAUNCH DAY|L MINUS 0\b/.test(T)?"launch day":mi?`${mi[1]} days before launch`:pl?`${pl[1]} days after launch`:/PAGE 15\b/.test(T)?"the last page":null;
+    if(when)return a.bare?when[0].toUpperCase()+when.slice(1)+".":`Ruth's console log, ${when}.`;
+    return `Ruth's console log. ${T.split(/\s*·\s*/).map(x=>tc(x).replace(/\b[A-Z][a-z]{2,3}\b/g,w=>PSAY_MON[w.toUpperCase()]||w)).join(". ")}.`}
   if(a.type==="email")return `An email from ${a.from||"someone"}${a.subject?`. Subject: ${a.subject}`:""}.`;
   if(a.type==="chat")return `A message from ${a.from||"someone"}.`;
   if(a.type==="text")return `A text from ${a.from||"someone"}.`;

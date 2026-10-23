@@ -1601,10 +1601,10 @@ R.ch[10]={
    who:[`imogen`,`quinn`]},
   s2:{d:`2062-08-03`,here:`Disposal`,
    short:[`The rebuilt margin model put the agency's own number below the arrival day, 412 days of air against arrival on day 414. Hale's office asked whether the launch campaign was in compliance, yes or no.`],
-   full:[`In a hotel in Cocoa Beach, Sam read page ten: the Petrel's launch day, ending in LOS, loss of signal.`,
+   full:[`In a hotel in Cocoa Beach, Sam read page ten: the Petrel's launch day, ending in LOS, loss of signal. It took him back to Arizona in 2041, and to Captain Leo Marchetti.`,
     `On July 19 the board made the rebuilt margin model, 412 days, the agency's figure, so with arrival on day 414 even the agency's number has the ship two days late, and Ada's is 405.`,
     `Hale's office asked, yes or no, whether the launch campaign is in compliance, and Quinn found 214 lines of requirements from four sources.`],
-   who:[`garrett`]},
+   who:[`garrett`,`leo`]},
   s3:{d:`2062-08-31`,here:`Clause 22`,
    short:[`Coquina's mission manager, Delphine Varga, couldn't promise both the habitat module's insertion and the required disposal burn, and asked for a waiver.`],
    full:[`The habitat and cargo module came in 530 kilograms heavy, most of it the six bridge stacks.`,
@@ -2578,7 +2578,7 @@ const PEOPLE={
  anjali:[`Dr. Anjali Rao`,[[7,`s6`,`The doctor on Halcyon's crew.`]]],
  lorna:[`Lorna Whitcombe`,[[12,`s1`,`The ARA's flight operations director. Her team flies Halcyon once the program hands it over.`]]],
  esther:[`Esther Quayle`,[[13,`s4`,`Chair of the Independent Readiness Board, with thirty years on a range safety console.`]]],
- leo:[`Leo Marchetti`,[[13,`s11`,`Sam's friend, an F-16 pilot. In 2041 he flew a jet Sam signed off in Arizona, and didn't come home.`]]]};
+ leo:[`Leo Marchetti`,[[10,`s2`,`Sam's pilot in Arizona in 2041, an F-16 captain who called him Chief. He once put his cap on little Ada's head at a family day.`],[13,`s11`,`Sam's friend, an F-16 pilot. In 2041 he flew a jet Sam signed off in Arizona, and didn't come home.`]]]};
 for(const [id,[name,lines]] of Object.entries(PEOPLE)) R.people[id]={name,lines};
 
 // ---------- Helpers ----------
