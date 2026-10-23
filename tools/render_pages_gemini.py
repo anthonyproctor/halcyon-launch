@@ -38,6 +38,11 @@ SAY = {"Lupe": "LOO-peh", "Lupe's": "LOO-peh's", "LUPE": "LOO-peh", "Esquibel": 
        "OKAFOR": "Oh-kuh-for", "ARES": "AIR-eez",
        "Bea": "Bee", "Bea's": "Bee's", "BEA": "Bee",  # 2026-10-11: plain "Bea" (Bea Kowal) was heard as "Bia"
        "Hana": "Hannah", "Hana's": "Hannah's", "HANA": "Hannah"}  # 2026-10-11: plain "Hana" came out "Hahna"; Anthony wants "Hannah"  # all caps forms in PMP v2 rosters and signs ("OKAFOR, ADA N." came back "Okaphor")
+# GH-300 identifiers kept on screen, spoken plainly (2026-10-23 listener lint: underscores and file names read aloud)
+SAY.update({"prevent_destroy": "prevent destroy", "pre_admissions.csv": "pre admissions dot C S V", "pre_admissions": "pre admissions",
+            "copilot.content_exclusion_changed": "copilot dot content exclusion changed", "run_forecasts.pl": "run forecasts dot P L",
+            "scheduler.ts": "scheduler dot T S", "86400000": "eighty six million, four hundred thousand",
+            "CO2": "C O two", "BKN012": "broken zero one two", "FM141600": "from the fourteenth at sixteen hundred Zulu", "760241": "seven six zero two four one", "2614+05": "two six one four, plus zero five", "91.155(d)": "ninety one point one fifty five D", "91.137(a)(2)": "ninety one point one thirty seven, A two", "AO2": "A O two", "AO1": "A O one", "KAPA": "K A P A", "pell_dba": "pell D B A", "ISO 42010": "I S O forty two oh ten", "ISO/IEC/IEEE 42010": "I S O, I E C, I triple E, forty two oh ten"})  # Hearth (2026-10-23)
 SAY_RE = re.compile(r"(?<![\w-])(" + "|".join(map(re.escape, sorted(SAY, key=len, reverse=True))) + r")(?![\w-])")
 def say(t): return SAY_RE.sub(lambda m: SAY[m.group(1)], t)
 # a source word heard as one of these in its segment means a mispronunciation: the segment is re-rolled
@@ -71,12 +76,14 @@ def tone_style(st, tone, gender=None):
     keep = [x for x in re.split(r"(?<=\.)\s+", st.strip()) if x and _IDENT.search(x)]
     if gender in _GSENT and not re.search(r"\b(?:woman|man|girl|boy)\b", " ".join(keep), re.I): keep = [_GSENT[gender]] + keep
     return " ".join(keep + [tone]).strip()
+def _ctx(seg, st):  # short replies: the line they answer, as delivery metadata (see SHORT_MAX below); never spoken
+    return (st + ' Replying to: "' + seg["ctx"].replace('"', "'") + '". Say only the line.').strip() if seg.get("ctx") else st
 def cast_seg(seg):
     v, st = cast(seg["v"])
     hint = seg.get("pace_hint")  # set only by the pace pass on a re-roll (see "pace" below); a line without one is sent as always
-    if not seg.get("tone"): return (v, PG.with_hint(st, hint)) if hint else (v, st)
+    if not seg.get("tone"): return (v, _ctx(seg, PG.with_hint(st, hint))) if hint else (v, _ctx(seg, st))
     c = CMAP.get(seg["v"]) or DMAP.get(seg["v"]) or DMAP["woman"]
-    return v, tone_style(st, PG.with_hint(seg["tone"], hint) if hint else seg["tone"], c.get("gender"))
+    return v, _ctx(seg, tone_style(st, PG.with_hint(seg["tone"], hint) if hint else seg["tone"], c.get("gender")))
 def runs_on(who):  # casting "run": true -> this character's lines on a page go to Gemini as one request (see RUNS below)
     c = CMAP.get(who) or DMAP.get(who) or DMAP["woman"]
     return bool(c.get("run")) and os.environ.get("GEMINI_RUNS") != "0"
@@ -106,6 +113,23 @@ def enc(audio, path, title=None):
 # one line on the page sends exactly the request it always did, so its cache entry is unchanged. GEMINI_RUNS=0 turns runs off.
 # A flagged line re-rolls its whole run. Cuts: midway between the last word of a line and the first word of the next.
 RUN_MAX = int(os.environ.get("GEMINI_RUN_MAX_CHARS", "1500"))
+# ---- short replies (2026-10-23, Anthony: "No, ma'am." after "You've never run a project." had odd cadence and inflection).
+# A run joins a character's lines into one request, so a two word reply was read as the start of a monologue, with no idea what it
+# answers. A line of SHORT_MAX words or fewer (not narrator or mentor prose) now leaves its run and goes alone, with the line just
+# before it named in the style ("Replying to: ..."). The style is delivery metadata, never spoken. GEMINI_SHORT_CTX=0 turns it off.
+SHORT_MAX = int(os.environ.get("GEMINI_SHORT_MAX", "3"))
+def _last_sentence(t, n=24):
+    t = re.sub(r"\s+", " ", t).strip(); parts = re.split(r"(?<=[.!?])\s+", t); w = parts[-1].split()
+    return " ".join(w[-n:])
+if os.environ.get("GEMINI_SHORT_CTX") != "0":
+    for pid, segs in spec["pages"].items():
+        prev = None
+        for i, seg in enumerate(segs):
+            if "pause" in seg: continue
+            if "t" not in seg: continue
+            if seg["v"] not in MENTORS and len(gem_text(seg).split()) <= SHORT_MAX and prev and prev["v"] != seg["v"]:
+                seg["ctx"] = _last_sentence(prev["t"])
+            prev = seg
 RUN_OF = {}  # (pid, seg index) -> (run request text, piece index, [piece texts])
 # Toned lines (data-tone) never change the runs of the untoned lines around them: runs are cut exactly as if no line had a tone,
 # so an untoned line keeps the request text, cache entry and pinned take it always had (2026-10-12: grouping by tone instead
@@ -114,7 +138,7 @@ RUN_OF = {}  # (pid, seg index) -> (run request text, piece index, [piece texts]
 for pid, segs in spec["pages"].items():
     by_who = {}
     for i, seg in enumerate(segs):
-        if "t" in seg and runs_on(seg["v"]): by_who.setdefault(seg["v"], []).append(i)
+        if "t" in seg and runs_on(seg["v"]) and not seg.get("ctx"): by_who.setdefault(seg["v"], []).append(i)
     for idx in by_who.values():
         chunks = [[]]
         for i in idx:
@@ -213,14 +237,14 @@ def assemble(segs, page=None):
         v, st = cast_seg(seg)
         if prev is not None and prev != v: sil(0.18)
         text = gem_text(seg); short = seg["v"] not in MENTORS and len(text.split()) <= 2
-        if short: sil(0.12)
+        if short: sil(0.04)
         run = RUN_OF.get((pid, i))
         if run: a = run_piece(run, v, st, page, t0)
         else: a = jobs[(v, st, say(text))] if page is None else take_like(say(text), v, st, page, t0)
         if a is None: return None, None  # RETIME: this segment isn't in the cache (text changed since the render)
         spans.append({"i": i, "v": seg["v"], "voice": v, "style": st, "src": text, "sent": say(text), "req": run[0] if run else say(text), "tone": seg.get("tone"), "s": t0, "e": t0 + len(a) / SR})
         parts.append(a); t0 += len(a) / SR
-        if short: sil(0.2)
+        if short: sil(0.08)
         prev = v
     audio = np.concatenate(parts) if parts else np.zeros(SR // 10, np.float32)
     return audio, spans

@@ -118,7 +118,7 @@ buildOrders();
 /* The header the narration speaks before a prop's body, built exactly as tools/voices.mjs propSpeech builds it ("A text from Maisie.", "An email from X. Subject: Y.", a doc's title).
    Some of those words aren't on the screen ("A text from"), so narAttach must not count them as words another reader would see. */
 const PSAY_MON={JAN:"January",FEB:"February",MAR:"March",APR:"April",MAY:"May",JUN:"June",JUL:"July",AUG:"August",SEP:"September",SEPT:"September",OCT:"October",NOV:"November",DEC:"December"};
-function propSay(a){const tc=x=>String(x||"").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()),units=x=>String(x||"").replace(/(\d+)\s*min\b/gi,"$1 minutes").replace(/(\d+)\s*s\b/gi,"$1 seconds");
+function propSay(a){const tc=x=>String(x||"").toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()),units=x=>String(x||"").replace(/(\d+)\s*min\b/gi,(m,n)=>n+(n==="1"?" minute":" minutes")).replace(/(\d+)\s*s\b/gi,(m,n)=>n+(n==="1"?" second":" seconds"));
   if(a.say!==undefined){const d=document.createElement("textarea");d.innerHTML=a.say;return d.value.trim()} // say="...": the listener hears this instead of the prop (tools/voices.mjs, 2026-10-22)
   if(a.type==="doc"&&a.kind==="vlog"){const tp=(a.title||"").split(/\s*·\s*/),who=a.name||(tp[0]?tc(tp[0]):a.from||"someone"),where=a.station||(tp[1]?tc(tp[1]):"");
     return [`A log from ${who}${where?`, ${where}`:""}.`,a.sol?`Sol ${a.sol}.`:"",a.delay?`One way, ${units(a.delay)}.`:"",a.margin?`Margin, ${a.margin}.`:""].filter(Boolean).join(" ")}

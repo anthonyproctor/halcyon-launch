@@ -3,37 +3,37 @@
   "1": {
    "story": {
     "src": "audio/story/full-ch01.mp3",
-    "min": 15.6
+    "min": 18.1
    },
    "study": {
     "src": "audio/full-ch01.mp3",
-    "min": 33.1
+    "min": 33.2
    }
   },
   "2": {
    "story": {
     "src": "audio/story/full-ch02.mp3",
-    "min": 18.4
+    "min": 21.7
    },
    "study": {
     "src": "audio/full-ch02.mp3",
-    "min": 38.5
+    "min": 38.7
    }
   },
   "3": {
    "story": {
     "src": "audio/story/full-ch03.mp3",
-    "min": 20.3
+    "min": 22.5
    },
    "study": {
     "src": "audio/full-ch03.mp3",
-    "min": 38.2
+    "min": 38.3
    }
   },
   "4": {
    "story": {
     "src": "audio/story/full-ch04.mp3",
-    "min": 20.5
+    "min": 24.2
    },
    "study": {
     "src": "audio/full-ch04.mp3",
@@ -43,7 +43,7 @@
   "5": {
    "story": {
     "src": "audio/story/full-ch05.mp3",
-    "min": 20.8
+    "min": 24.0
    },
    "study": {
     "src": "audio/full-ch05.mp3",
@@ -53,21 +53,21 @@
   "6": {
    "story": {
     "src": "audio/story/full-ch06.mp3",
-    "min": 20.7
+    "min": 23.8
    },
    "study": {
     "src": "audio/full-ch06.mp3",
-    "min": 43.9
+    "min": 44.1
    }
   },
   "7": {
    "story": {
     "src": "audio/story/full-ch07.mp3",
-    "min": 21.7
+    "min": 25.2
    },
    "study": {
     "src": "audio/full-ch07.mp3",
-    "min": 42.8
+    "min": 42.7
    }
   }
  }

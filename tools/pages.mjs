@@ -108,8 +108,13 @@ if(STORY){ // novel edition: story only, best path, no options, no lesson, no de
     const b=sc.opts.find(o=>o.best);
     // course.voiceBest (The Appeal, 2026-10-22): when the best choice is a line the hero says, Story only says it in their voice first,
     // so the after answers something the listener heard
-    if(CO.voiceBest&&!b.typed){const t=String(b.t).trim();if(/^["“]/.test(t)){say(CO.voiceBest,t.replace(/^["“]/,'').replace(/["”]$/,''));pause(0.6)}}
-    say('narrator',b.after);pause(1.4)});
+    if(CO.voiceBest&&!b.typed){const t=String(b.t).trim();if(b.say||/^["“]/.test(t)){ // option.say:true: the hero says an unquoted best answer too (2026-10-23)
+      say(CO.voiceBest,t.replace(/^["“]/,'').replace(/["”]$/,''));pause(0.6)}}
+    // 2026-10-23 (Anthony): the mentor's take after each call stays in Story only, the best-answer line the full edition already voices
+    // (same text and voice, so it comes from the cache)
+    // Story only drops the stock lead ("That's the move." played 28 to 48 times a book and put the mentor in scenes she isn't in) and keeps
+    // the take itself after a longer beat; scene.storyQuiet:true holds it entirely where it would land inside a big moment (2026-10-23 listener pass)
+    say('narrator',b.after);if(!sc.storyQuiet&&b.why){pause(1.0);say(MV,b.why)}pause(1.4)});
   // the novel ends on the story, not the game's ending card or readiness meter (2026-10-20)
   C.closing(FINAL,AB,GB).filter(p=>!/^(<b>)?Your ending:|readiness in this chapter ended at/.test(p.trim())).forEach(p=>{say('narrator',p);pause(0.5)});
   fs.writeFileSync(outPath,JSON.stringify({track,num:n,title:C.title,pages:{story:segs},plan:['story'],outkey:(track==='ref'?'r':'f')+n+'s',...(V2?{audio:'audio/v2'}:{}),narrator:CO&&CO.narratorVoice||undefined}));console.log('story edition');process.exit(0)}
