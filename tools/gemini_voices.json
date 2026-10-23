@@ -168,8 +168,9 @@
   },
   "gh300": {
    "Elena": {"voice": "Callirrhoe", "style": "General American accent. A CEO, confident and friendly."},
-   "Joyce": {"voice": "Gacrux", "style": "General American accent. A CTO sponsoring the rollout. Composed, decisive."},
-   "Renata": {"voice": "Leda", "style": "General American accent. A junior engineer in her first month. Curious, eager, asks the question everyone else won't."},
+   "Joyce": {"voice": "en-us-tutor-13", "style": "A woman's voice. Composed, decisive, brief.", "run": true, "gender": "f"},
+   "Renata": {"voice": "Zephyr", "style": "A young woman's voice. Curious, eager, quick.", "run": true, "gender": "f"},
+   "Priya": {"voice": "Autonoe", "style": "A woman's voice. Careful, sharp, quietly determined.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Asha": {"voice": "Kore", "style": "An older woman, a retired ER charge nurse. Calm, warm, direct.", "run": true, "gender": "f"},
    "Anders": {"voice": "Fenrir", "style": "General American accent, a skeptical, sardonic senior engineer.", "gender": "m"},
    "Raj": {"voice": "en-us-storyteller-12", "style": "A man's voice. Warm, dry, plainspoken.", "run": true, "gender": "m"}

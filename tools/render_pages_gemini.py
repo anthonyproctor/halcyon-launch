@@ -29,7 +29,8 @@ WHISPER_MODEL = os.path.expanduser(os.environ.get("WHISPER_MODEL", "~/.cache/whi
 # Checked with whisper 2026-10-11: plain "Okafor" came back "Okaphor", plain "Ares Station" came back "Air Station", "En-KAY-chee" came
 # back "and Keiichi" / "Nketchy" while "In-KAY-chee" came back "Nkechi", "Tomasz" came back "Tomas". "Sol 3518" came back "Seoul 3518"
 # twice in the v2 pilot; "Soll" came back "Sol". "AIR-eez" comes back "Aries" (right) and now and then "Airy" (caught by HEARD_WRONG).
-SAY = {"Teo": "TAY-oh", "Teo's": "TAY-oh's", "Vigil": "vee-HEEL", "Vigil's": "vee-HEEL's", "Galvan": "gahl-VAHN", "Galvan's": "gahl-VAHN's", "Abeyta": "ah-BAY-tah", "Abeyta's": "ah-BAY-tah's", "Okafor": "Oh-kuh-for", "Okafors": "Oh-kuh-fors", "Okafor's": "Oh-kuh-for's", "Halcyon": "HAL-see-un", "Halcyon's": "HAL-see-un's",
+SAY = {"Lupe": "LOO-peh", "Lupe's": "LOO-peh's", "LUPE": "LOO-peh", "Esquibel": "ess-kee-BELL", "Esquibel's": "ess-kee-BELL's", "Baca": "BAH-kah", "Baca's": "BAH-kah's", "BACA": "BAH-kah", "GALVAN": "gahl-VAHN", "TEO": "TAY-oh", "Iker": "EE-ker", "Pruneda": "proo-NEH-dah", "Carvalho": "kar-VAHL-yoh", "Southwark": "SUTH-erk", "Le Verrier": "luh vair-YAY", "Szabo": "SAH-boh", "Tove": "TOO-veh", "Oduya": "oh-DOO-yah", # The Appeal only (2026-10-22)
+       "Teo": "TAY-oh", "Teo's": "TAY-oh's", "Vigil": "vee-HEEL", "Vigil's": "vee-HEEL's", "Galvan": "gahl-VAHN", "Galvan's": "gahl-VAHN's", "Abeyta": "ah-BAY-tah", "Abeyta's": "ah-BAY-tah's", "Okafor": "Oh-kuh-for", "Okafors": "Oh-kuh-fors", "Okafor's": "Oh-kuh-for's", "Halcyon": "HAL-see-un", "Halcyon's": "HAL-see-un's",
        "Nkechi": "In-KAY-chee", "Nkechi's": "In-KAY-chee's", "Lutine": "LOO-teen", "Ares": "AIR-eez", "Sol": "Soll",
        "LoDo": "LOH-doh", "Lindqvist": "LIND-kvist", "Ochoa": "oh-CHO-uh", "Ochoa's": "oh-CHO-uh's", "Tomasz": "TOH-mahsh",
        "Kraków": "KRAH-koof", "Krakow": "KRAH-koof", "Nowak": "NOH-vahk", "Adeyemi": "ah-day-YEH-mee", "ADKAR": "ADD-kar",
@@ -40,7 +41,7 @@ SAY = {"Teo": "TAY-oh", "Teo's": "TAY-oh's", "Vigil": "vee-HEEL", "Vigil's": "ve
 SAY_RE = re.compile(r"(?<![\w-])(" + "|".join(map(re.escape, sorted(SAY, key=len, reverse=True))) + r")(?![\w-])")
 def say(t): return SAY_RE.sub(lambda m: SAY[m.group(1)], t)
 # a source word heard as one of these in its segment means a mispronunciation: the segment is re-rolled
-HEARD_WRONG = {"bea": {"bia"}, "sol": {"seoul", "soul"}, "ares": {"airy", "air", "area", "areas"}, "okafor": {"okaphor", "okafo", "okufo"}, "halcyon": {"halcion"}}
+HEARD_WRONG = {"lupe": {"loop", "loupe"}, "teo": {"theo"}, "bea": {"bia"}, "sol": {"seoul", "soul"}, "ares": {"airy", "air", "area", "areas"}, "okafor": {"okaphor", "okafo", "okufo"}, "halcyon": {"halcion"}}
 
 spec = json.load(open(sys.argv[1]))
 course = os.environ.get("GEMINI_COURSE")

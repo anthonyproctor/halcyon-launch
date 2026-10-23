@@ -93,7 +93,9 @@ const plan=[...(pages.intro?['intro']:[]),'open',...(C.lesson?['lesson']:[]),...
 if(STORY){ // novel edition: story only, best path, no options, no lesson, no debriefs
   const {segs,say,pause}=mk();if(track==='full'){const I=V2?introSegs(n,true,mk):CID?courseIntroSegs(CID,n,true,mk):null;if(I){segs.push(...I)}}say('narrator',`Chapter ${W[C.num]}. ${C.title}.`);pause(1);C.opening.forEach(p=>{say('narrator',p);pause(0.5)});pause(1.2);
   // Ruth's console page (PMP v2): the story leans on its lines, so the novel edition plays the page alone where the lesson sits, no teaching (2026-10-20)
-  if(V2&&C.lesson){const L=C.lesson.sections.flatMap(s=>s.body).filter(p=>/kind="consolelog"/.test(p));L.forEach(p=>{say(MV,p);pause(0.6)});if(L.length)pause(0.8)}
+  // 2026-10-22: a longer beat on each side, and Ruth's lesson.storyBridge first so a listener knows whose words these are and when
+  if(V2&&C.lesson){const L=C.lesson.sections.flatMap(s=>s.body).filter(p=>/kind="consolelog"/.test(p)),BR=C.lesson.storyBridge;
+    if(L.length){pause(1.8);if(BR){say(MV,BR);pause(0.8)}L.forEach(p=>{say(MV,BR?p.replace(/<prop /,'<prop bare="1" '):p);pause(0.6)});pause(2.4)}}
   // course books: the lesson's story paragraphs (marked <!--story--> at the start) play where the lesson sits, no teaching (Hearth, 2026-10-20)
   // the narrator reads them and Colleen voices her own tagged lines; lesson.storyAt (a scene index) plays them before that scene, on her Saturday
   const mentorBeat=()=>{const L=C.lesson.sections.flatMap(s=>s.body).filter(p=>typeof p==='string'&&p.startsWith('<!--story-->'));L.forEach(p=>{say('narrator',p.replace('<!--story-->',''));pause(0.5)});if(L.length)pause(0.8)};

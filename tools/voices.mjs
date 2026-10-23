@@ -15,16 +15,22 @@ const ENT={nbsp:' ',amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",'#39':"'",mdash:'—
 const unent=s=>s.replace(/&(#?\w+);/g,(m,k)=>k in ENT?ENT[k]:/^#\d+$/.test(k)?String.fromCharCode(+k.slice(1)):m); // HTML entities in cards (&nbsp; in METAR/TAF columns) are spacing, never words to send to the voice
 const lines=b=>b.split(/(?:<br\s*\/?>\s*)+/).map(x=>unent(x.replace(/<[^>]+>/g,' ')).replace(/\s+/g,' ').trim()).filter(Boolean).map(x=>/[.!?:"”']$/.test(x)?x:x+'.').join(' ');
 const said=(who,t)=>`<span class="said" data-who="${who}">${t}</span>`;
-function propSpeech(html){return html.replace(/<prop\s+([^>]*)>([\s\S]*?)<\/prop>/g,(_,attrs,body)=>{const a={};attrs.replace(/(\w+)="([^"]*)"/g,(m,k,v)=>a[k]=v);
+const qa=t=>t.replace(/(^|<br\s*\/?>\s*|>\s*)Q\. /g,'$1Question. ').replace(/(^|<br\s*\/?>\s*|>\s*)A\. (?=<span|[A-Z"“])/g,'$1Answer. ');
+function propSpeech(html){return qa(html).replace(/<prop\s+([^>]*)>([\s\S]*?)<\/prop>/g,(_,attrs,body)=>{const a={};attrs.replace(/(\w+)="([^"]*)"/g,(m,k,v)=>a[k]=v);
   // say="...": what a listener hears instead of the prop's text (a nav log, METAR, code, a table); the screen still shows the prop.
   // by="Who" voices it as that speaker. Write quotes inside it as &quot; (2026-10-22)
   if(a.say!==undefined){const t=unent(a.say).trim();return a.by?said(a.by,t):t}
   if(a.type==='doc'&&a.kind==='vlog'){const tp=(a.title||'').split(/\s*·\s*/),who=a.name||(tp[0]?tc(tp[0]):a.from||'someone'),where=a.station||(tp[1]?tc(tp[1]):'');
     const head=[`A log from ${who}${where?`, ${where}`:''}.`,a.sol?`Sol ${a.sol}.`:'',a.delay?`One way, ${units(a.delay)}.`:'',a.margin?`Margin, ${a.margin}.`:''].filter(Boolean).join(' ');
     return `${head} ${said(a.from||'narrator',lines(body))}`}
-  if(a.type==='doc'&&a.kind==='consolelog'){const head=`Ruth's console log. ${(a.title||'').split(/\s*·\s*/).map(x=>tc(x).replace(/\b[A-Z][a-z]{2,3}\b/g,w=>MON[w.toUpperCase()]||w)).join('. ')}.`.replace(/\.\.$/,'.');
+  if(a.type==='doc'&&a.kind==='consolelog'){const T=a.title||'',mi=T.match(/L MINUS (\d+) DAYS/),pl=T.match(/L PLUS (\d+) DAYS/);
+    // the heading says only when it is, in plain words (2026-10-22): the date and flow name were four facts in one breath
+    const when=/LAUNCH DAY|L MINUS 0\b/.test(T)?'launch day':mi?`${mi[1]} days before launch`:pl?`${pl[1]} days after launch`:/PAGE 15\b/.test(T)?'the last page':null;
+    const old=`Ruth's console log. ${T.split(/\s*·\s*/).map(x=>tc(x).replace(/\b[A-Z][a-z]{2,3}\b/g,w=>MON[w.toUpperCase()]||w)).join('. ')}.`.replace(/\.\.$/,'.');
+    const head=!when?old:a.bare?when[0].toUpperCase()+when.slice(1)+'.':`Ruth's console log, ${when}.`;
     return `${head} ${said('Ruth',uncaps(lines(body.replace(/(^|<br\s*\/?>\s*)(\d{4})\b/g,(m,p,t)=>p+hhmm(t)+','))))}`}
-  const b=body.replace(/<br\s*\/?>/g,'. ');
+  // a line that already ends in punctuation gets no extra period ("flan.. TAF" read as an odd pause, 2026-10-22)
+  const b=body.replace(/([.!?:"”'])?((?:<\/[^>]+>)*)\s*<br\s*\/?>\s*/g,(m,p,t)=>p?p+t+' ':t+'. ');
   if(a.type==='email')return `An email from ${a.from||'someone'}${a.subject?`. Subject: ${a.subject}`:''}. ${b}`;
   if(a.type==='chat')return `A message from ${a.from||'someone'}. ${b}`;
   if(a.type==='text')return `A text from ${a.from||'someone'}. ${b}`;

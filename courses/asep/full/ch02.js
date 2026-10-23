@@ -11,10 +11,10 @@
     `She stood on the red X for a long time. Then she walked the length of the module slowly, heel to toe, counting under her breath, and stopped in the square that was the galley.`,
     `<span class="said" data-who="Helen">"Can I tell you why I'm going to be difficult about this?"</span> she said.`,
     `<span class="said" data-who="Nadia">"You haven't been difficult,"</span> Nadia said.`,
-    `<span class="said" data-who="Helen" data-tone="dry">"Give it a week."</span> She looked down at the tape. <span class="said" data-who="Helen">"Nine years ago I was the flight surgeon on console the night the old station's galley caught fire. A food warmer. Three in the morning their time. I had the crew loop in one ear and the cabin numbers in front of me, and for five minutes the only useful thing I could do was write down the time."</span>`,
+    `<span class="said" data-who="Helen" data-tone="Dry, wry, unhurried.">"Give it a week."</span> She looked down at the tape. <span class="said" data-who="Helen">"Nine years ago I was the flight surgeon on console the night the old station's galley caught fire. A food warmer. Three in the morning their time. I had the crew loop in one ear and the cabin numbers in front of me, and for five minutes the only useful thing I could do was write down the time."</span>`,
     `She took out her wallet and unfolded a yellow sticky note that had stopped being sticky a long time ago.`,
-    `<prop type="doc" title="Sticky note, Helen's wallet">0312 alarm<br>0313 masks<br>0315 commander: smoke in galley<br>0317 all four at node<br>0331 air clear</prop>`,
-    `<span class="said" data-who="Helen" data-tone="quiet">"Nobody was hurt,"</span> she said. <span class="said" data-who="Helen">"People say that like it's the end of the story. It was five minutes. One of them had earplugs in and his door shut, and he was the last one out, and I watched that clock the whole time he wasn't answering."</span> She folded the note along its old crease and put it back. <span class="said" data-who="Helen">"I've carried this around for nine years. I'd like it to be the only one."</span>`,
+    `<prop say="The sticky note from Helen's wallet. 3:12, alarm. 3:13, masks. 3:15, the commander says smoke in the galley. 3:17, all four at the node. 3:31, air clear." type="doc" title="Sticky note, Helen's wallet">0312 alarm<br>0313 masks<br>0315 commander: smoke in galley<br>0317 all four at node<br>0331 air clear</prop>`,
+    `<span class="said" data-who="Helen" data-tone="Quiet, clear, steady.">"Nobody was hurt,"</span> she said. <span class="said" data-who="Helen">"People say that like it's the end of the story. It was five minutes. One of them had earplugs in and his door shut, and he was the last one out, and I watched that clock the whole time he wasn't answering."</span> She folded the note along its old crease and put it back. <span class="said" data-who="Helen">"I've carried this around for nine years. I'd like it to be the only one."</span>`,
     `Then she straightened up. <span class="said" data-who="Helen">"Now show me where they sleep."</span>`,
     `Rosie had asked Nadia the same thing about the purple rocket on the fridge. Nadia still didn't have an answer. She walked Helen down the tape.`
   ],
@@ -284,7 +284,7 @@
   ],
   closing:(s,all,G)=>[
     `Jun ran the depressurization scenario on Thursday night of week four, in the high bay, with his laptop on a folding table at the edge of the tape. Halo's reference leak. Alarm at zero. The target was all four through the hatch and the hatch closed by one hundred and twenty seconds. Jun had typed in the times from the tape, to the second.`,
-    `<prop type="doc" title="HEARTH operational concept, scenario E2, model run 1">Quarter 4 through at 113.<br>Hatch closed at 133.<br>Result: NOT MET, 13 seconds over.</prop>`,
+    `<prop say="Jun's first model run of scenario E2. Quarter four was through at 113 seconds, and the hatch closed at 133. Not met, 13 seconds over." type="doc" title="HEARTH operational concept, scenario E2, model run 1">Quarter 4 through at 113.<br>Hatch closed at 133.<br>Result: NOT MET, 13 seconds over.</prop>`,
     `Nobody said anything. Quarter four's bar, with the hatch time stacked on the end of it, ran past the red line on Jun's screen. It was a short way past, which somehow made it worse.`,
     ((s.flags.skippedconops||G.skippedconops)
       ?`She'd written shall statements in week two, before there was an operations concept. Not one of them had a number for the walk from quarter four. The scenario put one there.`
@@ -296,7 +296,7 @@
     `She called Helen from there. It was late in Halo's time zone and Helen picked up anyway.`,
     `<span class="said" data-who="Nadia">"We timed it,"</span> Nadia said. <span class="said" data-who="Nadia">"Depressurization. A hundred and thirty three seconds. The scenario allows a hundred and twenty."</span>`,
     `There was a pause on the line, long enough that Nadia could hear Helen breathing.`,
-    `<span class="said" data-who="Helen" data-tone="quiet">"Which quarters?"</span>`,
+    `<span class="said" data-who="Helen" data-tone="Quiet, careful, steady.">"Which quarters?"</span>`,
     `<span class="said" data-who="Nadia">"Three and four. Four's the last one out."</span>`,
     `<span class="said" data-who="Helen">"Okay,"</span> Helen said, and Nadia heard a wallet open on the other end. <span class="said" data-who="Helen">"Now we know. Write it down exactly like you just said it to me."</span>`
   ],

@@ -13,7 +13,7 @@
   "3": {
    "story": {
     "src": "audio/story/full-ch03.mp3",
-    "min": 15.9
+    "min": 15.8
    },
    "study": {
     "src": "audio/full-ch03.mp3",
@@ -27,63 +27,63 @@
    },
    "study": {
     "src": "audio/full-ch01.mp3",
-    "min": 35.6
+    "min": 35.7
    }
   },
   "4": {
    "story": {
     "src": "audio/story/full-ch04.mp3",
-    "min": 18.2
+    "min": 18.0
    },
    "study": {
     "src": "audio/full-ch04.mp3",
-    "min": 37.0
+    "min": 36.7
    }
   },
   "5": {
    "story": {
     "src": "audio/story/full-ch05.mp3",
-    "min": 22.3
+    "min": 22.0
    },
    "study": {
     "src": "audio/full-ch05.mp3",
-    "min": 39.3
+    "min": 39.2
    }
   },
   "6": {
    "story": {
     "src": "audio/story/full-ch06.mp3",
-    "min": 22.8
+    "min": 22.7
    },
    "study": {
     "src": "audio/full-ch06.mp3",
-    "min": 42.1
+    "min": 41.9
    }
   },
   "7": {
    "story": {
     "src": "audio/story/full-ch07.mp3",
-    "min": 24.0
+    "min": 23.8
    },
    "study": {
     "src": "audio/full-ch07.mp3",
-    "min": 42.2
+    "min": 42.1
    }
   },
   "8": {
    "story": {
     "src": "audio/story/full-ch08.mp3",
-    "min": 22.6
+    "min": 22.9
    },
    "study": {
     "src": "audio/full-ch08.mp3",
-    "min": 40.5
+    "min": 40.7
    }
   },
   "9": {
    "story": {
     "src": "audio/story/full-ch09.mp3",
-    "min": 31.3
+    "min": 31.4
    },
    "study": {
     "src": "audio/full-ch09.mp3",
@@ -93,31 +93,31 @@
   "10": {
    "story": {
     "src": "audio/story/full-ch10.mp3",
-    "min": 24.1
+    "min": 23.9
    },
    "study": {
     "src": "audio/full-ch10.mp3",
-    "min": 41.5
+    "min": 41.3
    }
   },
   "11": {
    "story": {
     "src": "audio/story/full-ch11.mp3",
-    "min": 29.8
+    "min": 30.1
    },
    "study": {
     "src": "audio/full-ch11.mp3",
-    "min": 47.6
+    "min": 47.7
    }
   },
   "12": {
    "story": {
     "src": "audio/story/full-ch12.mp3",
-    "min": 30.1
+    "min": 30.5
    },
    "study": {
     "src": "audio/full-ch12.mp3",
-    "min": 48.4
+    "min": 48.7
    }
   }
  }
