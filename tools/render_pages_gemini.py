@@ -609,10 +609,7 @@ if pin or reverted:
 if PACE:
     flags, _ = PG.check_pages(pace_lines(built_all), {pid: sp for pid, (_, sp) in built_all.items()}, REROLL_SKIP); pace_report(flags)
 if GATE:
-    by = {}
-    for L in voice_lines(built_all):
-        if not L.get("tone"): by.setdefault(L["who"], []).append(L["emb"])  # toned lines don't move the book voice
-    BOOK.save(key, by)
+    BOOK.save(key, VG.book_voice(voice_lines(built_all)))  # untoned takes, each once; an all-toned character's go under "<who>#toned"
 gate = {"voice_flags_first": gate_first, "voice_flags_final": sum(len(r.get("voice_flags", [])) for r in report.values()),
         "pace_flags_first": pace_first, "pace_flags_final": sum(len(r.get("pace_flags", [])) for r in report.values()),
         "coverage_fail_pages": sorted(pid for pid, r in report.items() if r.get("coverage_fail")), "characters": gate_summary,

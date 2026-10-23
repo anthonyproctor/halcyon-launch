@@ -35,7 +35,10 @@ M["full"]=dict(sorted(M["full"].items(),key=lambda kv:int(kv[0])))
 json.dump(M,open(m,"w"),indent=1);print("manifest",n,M["full"][n])
 PY
   zsh tools/book_marks.sh --v2 || exit 1
-  python3 tools/r2_sync.py --if-configured --quiet --course pmp --chapter $n || true # copy this chapter's mp3s to R2 (docs/AUDIO_HOSTING.md); silent no-op without keychain credentials
+  # copy this chapter's mp3s to R2 (docs/AUDIO_HOSTING.md); silent no-op without keychain credentials. A failed sync stops here, before the
+  # chapter is marked done, so a re-run picks it up (2026-10-20: `|| true` hid a network drop and left ch7 and ch9 stale on R2)
+  python3 tools/r2_sync.py --if-configured --quiet --course pmp --chapter $n || { rc=$?
+    echo "R2 SYNC FAILED pmp ch$n (exit $rc): not marking ch$n done. Retry: python3 tools/r2_sync.py --course pmp --chapter $n && echo $n >> $S/pmp-v2.done" >&2; exit 4 }
   grep -qx "$n" $S/pmp-v2.done || echo $n >> $S/pmp-v2.done; echo "ch$n: done"
 done
 echo "all requested chapters done"

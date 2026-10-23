@@ -19,7 +19,10 @@ every error is scrubbed of them, of the endpoint host and of anything shaped lik
 usage:
   tools/r2_sync.py [--course ID ...] [--chapter N | --cast] [--dry-run] [--force] [--prune [--yes]] [--if-configured] [--quiet]
   tools/r2_sync.py --check            local only: every manifest entry still matches its local file (run before a deploy; tools/pre-commit runs it)
-  tools/r2_sync.py --verify [--base URL] [--all]   public URLs answer 206 to a Range with the right type, ETag, CORS, cache and download headers
+  tools/r2_sync.py --verify [--base URL] [--all] [--course ID ...] [--chapter N] [--strict-cast | --no-local]
+                      first a local check: every local mp3 in scope is in audio-manifest.json with the hash of the file on disk (LOCAL FAIL
+                      otherwise; cast page samples only WARN unless --strict-cast; --no-local skips it), then the public URLs answer 206 to a
+                      Range with the right type, ETag, CORS, cache and download headers. --course/--chapter scope both parts.
   tools/r2_sync.py --pull [--base URL] [--course ID]  download the manifest's mp3s into a clone that doesn't have them (no credentials)
 Courses: pmp = audio/ (v2 pages, both Audiobook editions, ambience, stings) + cast/voice/ + cast/v2/voice/;
          any other id = courses/<id>/audio/ + courses/<id>/cast/voice/. No --course = every course.
@@ -27,11 +30,13 @@ Courses: pmp = audio/ (v2 pages, both Audiobook editions, ambience, stings) + ca
 --if-configured: no keychain credentials = exit 0 without a word (the render scripts' hook). It still drops manifest entries whose local file
   changed, so the re-render plays from this site's copy instead of R2's old take. Once config.js says HALCYON_AUDIO_REMOTE_ONLY (no site copy),
   that drop is reported loudly and exits 5: the chapter has no playable audio until a sync with credentials.
+Any sync that fails (non-zero exit, or an unexpected error) prints "R2 SYNC FAILED <course> ch<n> (exit <code>)" on stderr, even with --quiet,
+  so the render scripts can stop on it. When the R2 list call fails, stale manifest entries are still dropped and saved (never on --dry-run).
 Nothing is ever deleted from the bucket without --prune; more than 25 deletions also needs --yes.
 Test-only overrides: HALCYON_R2_ROOT, HALCYON_R2_MD5_CACHE, HALCYON_R2_LIVE_MANIFEST (tests/r2_sync.spec.mjs).
 """
 import time
-import argparse, base64, concurrent.futures as cf, hashlib, json, os, random, re, subprocess, sys, threading, urllib.error, urllib.parse, urllib.request
+import argparse, base64, concurrent.futures as cf, hashlib, json, os, random, re, subprocess, sys, threading, traceback, urllib.error, urllib.parse, urllib.request
 
 ROOT = os.environ.get("HALCYON_R2_ROOT") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST = os.path.join(ROOT, "audio-manifest.json")
@@ -75,6 +80,15 @@ def chapter_filter(course, n):
     pre = (f"{a}pages/f{n}/", f"{a}pages/f{n}s/")
     whole = {f"{a}full-ch{nn}.mp3", f"{a}story/full-ch{nn}.mp3"}
     return lambda rel: rel.startswith(pre) or rel in whole
+
+def is_cast(rel): return rel.startswith(("cast/voice/", "cast/v2/voice/")) or "/cast/voice/" in rel  # cast page samples
+
+def scope_of(args):
+    """(roots, keep) for --course / --chapter: the same scope a sync of those flags would cover"""
+    if args.chapter is not None and (not args.course or len(args.course) != 1): sys.exit("--chapter needs exactly one --course")
+    courses = args.course or course_ids()
+    keep = chapter_filter(courses[0], args.chapter) if args.chapter is not None else (lambda rel: True)
+    return [r for c in courses for r in roots_of(c)], keep
 
 def local_files(roots, keep):
     out = {}
@@ -243,12 +257,36 @@ def _base(args):
     return base
 def _url(base, rel, h): return f"{base}/{urllib.parse.quote(key_of(rel, h))}"
 
+def verify_local(args, files, roots, keep):
+    """every local mp3 in scope is in the manifest with the hash of the file on disk. A file missing from the manifest, or that differs
+    from the take the manifest names, is a LOCAL FAIL; cast page samples only WARN unless --strict-cast. -> number of failures"""
+    local = local_files(roots, keep); cache = load_md5_cache(); fails, cast_miss, cast_diff = [], [], []
+    for rel, p in sorted(local.items()):
+        h = md5_of(p, cache)[:HASH_LEN]
+        if rel not in files: prob = "not in audio-manifest.json (re-rendered or new, never synced)"
+        elif files[rel] != h: prob = f"the file on disk ({h}) isn't the take the manifest names ({files[rel]})"
+        else: continue
+        if is_cast(rel) and not args.strict_cast: (cast_miss if rel not in files else cast_diff).append(rel)
+        else: fails.append((rel, prob))
+    save_md5_cache(cache)
+    for rel, prob in fails: warn(f"LOCAL FAIL {rel}: {prob}")
+    if cast_miss or cast_diff:
+        warn(f"WARN cast samples: {len(cast_diff)} differ from the manifest's take, {len(cast_miss)} aren't in it "
+             f"(tools/r2_sync.py --cast syncs them; --strict-cast fails on them)")
+    nwarn = len(cast_miss) + len(cast_diff)
+    say(f"local: {len(local) - len(fails) - nwarn} mp3s match audio-manifest.json" + (f", {len(fails)} LOCAL FAIL" if fails else "")
+        + (f", {nwarn} cast samples warned" if nwarn else ""))
+    return len(fails)
+
 def cmd_verify(args):
     base = _base(args)
     if not base: return 2
     files = load_manifest()
     if not files: warn("audio-manifest.json is empty: sync first"); return 2
+    roots, keep = scope_of(args)
+    local_bad = 0 if args.no_local else verify_local(args, files, roots, keep)
     keys = sorted(files)
+    if args.course or args.chapter is not None: keys = [k for k in keys if keep(k) and any(k.startswith(r) for r in roots)]
     if not args.all:
         whole = [k for k in keys if "full-ch" in k]
         rest = [k for k in keys if k not in whole]
@@ -274,7 +312,7 @@ def cmd_verify(args):
             if prob: fails.append((rel, prob))
     for rel, prob in fails: warn(f"FAIL {rel}: {'; '.join(prob)}")
     say(f"verify {base}: {len(keys) - len(fails)}/{len(keys)} ok" + ("" if args.all else " (all whole chapters + 20 random clips; --all for every file)"))
-    return 1 if fails else 0
+    return 1 if (fails or local_bad) else 0
 
 def cmd_pull(args):
     """Fill a clone (or CI) with the takes the manifest names, from the public base. No credentials needed; local files that match are skipped."""
@@ -347,7 +385,15 @@ def cmd_sync(args):
     remote = {}
     try:
         for r in roots: remote.update(r2.list(r))
-    except RuntimeError as e: warn("R2 list failed: " + str(e)); return 4
+    except RuntimeError as e:
+        warn("R2 list failed: " + str(e))
+        # the stale entries still go: left in place they'd name R2's old take, which no longer matches this tree's timings
+        if stale and not args.dry_run: save_manifest(manifest)
+        if stale:
+            warn(f"{len(stale)} re-rendered file(s) aren't on R2" + (" and this site has no copy to fall back to (HALCYON_AUDIO_REMOTE_ONLY): they have "
+                 "NO playable audio" if remote_only() else ": they play from this site") + " until tools/r2_sync.py runs again with R2 reachable:")
+            for rel in stale[:20]: warn("  " + rel)
+        return 4
     todo, same = [], []
     for rel in sorted(local):
         d = md5[rel]; k = key_of(rel, d[:HASH_LEN]); o = remote.get(k)
@@ -395,7 +441,9 @@ def cmd_sync(args):
             try: r2.delete(k); say("  deleted " + k)
             except RuntimeError as e: warn(f"delete failed {k}: {e}")
     if manifest != before: save_manifest(manifest); print(f"audio-manifest.json updated ({len(manifest)} entries); commit it with the chapter")
-    if failed: warn(f"{len(failed)} upload(s) failed; those files play from this site until a re-run succeeds"); return 1
+    if failed:
+        warn(f"{len(failed)} upload(s) failed; " + ("this site has no copy to fall back to (HALCYON_AUDIO_REMOTE_ONLY), so those files have NO playable audio"
+             if remote_only() else "those files play from this site") + " until a re-run succeeds"); return 1
     return 0
 
 def main():
@@ -415,6 +463,8 @@ def main():
     ap.add_argument("--verify", action="store_true", help="check the public URLs")
     ap.add_argument("--base", help="public base URL for --verify/--pull (default: config.js HALCYON_AUDIO_BASE)")
     ap.add_argument("--all", action="store_true", help="--verify every manifest entry")
+    ap.add_argument("--no-local", action="store_true", help="--verify the URLs only, without the local manifest check")
+    ap.add_argument("--strict-cast", action="store_true", help="--verify fails on cast page samples that don't match the manifest (default: WARN)")
     ap.add_argument("--match", action="append", help="--pull only files whose repo path matches this regex (repeatable); CI uses it to fetch just what the tests play")
     ap.add_argument("--pull", action="store_true", help="download the manifest's mp3s from the public base into this tree (fresh clones, CI)")
     a = ap.parse_args()
@@ -422,7 +472,13 @@ def main():
     if a.check: return cmd_check(a)
     if a.verify: return cmd_verify(a)
     if a.pull: return cmd_pull(a)
-    return cmd_sync(a)
+    what = (",".join(a.course) if a.course else "all courses") + (f" ch{a.chapter}" if a.chapter is not None else "") + (" cast" if a.cast else "")
+    try: rc = cmd_sync(a)
+    except SystemExit: raise  # a usage error: argparse or sys.exit already said why
+    except Exception:
+        warn(f"R2 SYNC FAILED {what} (exit 1)"); traceback.print_exc(); return 1
+    if rc: warn(f"R2 SYNC FAILED {what} (exit {rc})")
+    return rc
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -19,5 +19,8 @@ M=json.load(open(r+"audio/audiobook.json")) if os.path.exists(r+"audio/audiobook
 M["full"][n]={"story":{"src":f"audio/story/full-ch{nn}.mp3","min":d(f"audio/story/full-ch{nn}.mp3")},"study":{"src":f"audio/full-ch{nn}.mp3","min":d(f"audio/full-ch{nn}.mp3")}}
 json.dump(M,open(r+"audio/audiobook.json","w"),indent=1);print("manifest",n,M["full"][n])
 PY
-python3 tools/r2_sync.py --if-configured --quiet --course $C --chapter $n || true # copy this chapter's mp3s to R2 (docs/AUDIO_HOSTING.md); silent no-op without keychain credentials
+# copy this chapter's mp3s to R2 (docs/AUDIO_HOSTING.md); silent no-op without keychain credentials. A failed sync is never swallowed: the
+# scene map is still written, then this exits 4 with the retry command (2026-10-20: `|| true` hid a network drop and left a chapter stale on R2)
+python3 tools/r2_sync.py --if-configured --quiet --course $C --chapter $n; rc=$?
 zsh tools/book_marks.sh $C
+(( rc == 0 )) || { echo "R2 SYNC FAILED $C ch$n (exit $rc): this chapter's audio isn't on R2. Retry: python3 tools/r2_sync.py --course $C --chapter $n" >&2; exit 4 }

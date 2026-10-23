@@ -9,8 +9,14 @@ wrong gender, so nobody has to catch it by ear.
   calibrated 2026-10-11 on the run-mode renders of Halcyon ch1 and ch2: the 5th percentile of character lines' similarity to
   their centroid, 123 lines), or when its pitch
   reads opposite to the character's cast gender ("gender": "f"/"m" in gemini_voices.json; no field = no pitch check).
-Only lines of at least MIN_S seconds are judged: shorter clips give unstable embeddings and pitch."""
-import json, os
+Only lines of at least MIN_S seconds are judged: shorter clips give unstable embeddings and pitch.
+- Each take counts once (uniq): render_pages_gemini caches one embedding per take, so the same take on variant pages (s9, s9_v1,
+  s9_v2, s9_fixed, s10_alt) has identical bytes. The baselines (f0 median, pitch_max_st median, mean_sim, the centroid, "lines") use
+  each take once; every copy is still judged and flagged on its own page ("line_copies" is the old count). pace_gate does the same.
+- A character with no untoned line in the book (every line carries a data-tone) gets a book voice of its own toned lines, stored as
+  "<who>#toned" (book_voice, Book.save). It is used only when the character has no untoned line this chapter and no untoned entry in
+  another chapter, so a toned chapter never moves an ordinary book voice; the summary marks it "book_voice": "toned only"."""
+import hashlib, json, os
 import numpy as np
 
 SR16 = 16000
@@ -87,11 +93,16 @@ class Book:
         try: self.d = json.load(open(self.p))
         except Exception: self.d = {}
 
-    def centroid(self, who, key, mine):
-        """book centroid for `who`: the other chapters' stored means plus this chapter's own lines (`mine`)"""
+    def centroid(self, who, key, mine, toned=False):
+        """book centroid for `who`: the other chapters' stored means plus this chapter's own lines (`mine`). toned=True (`mine` are
+        toned lines: the character has no untoned line this chapter): when no other chapter has an untoned entry either, the other
+        chapters' "<who>#toned" entries count, so an all-toned character still has a book voice"""
         vs, ws = [], []
         for k, (v, n) in self.d.get(who, {}).items():
             if k != key: vs.append(np.array(v)); ws.append(n)
+        if toned and not vs:
+            for k, (v, n) in self.d.get(who + "#toned", {}).items():
+                if k != key: vs.append(np.array(v)); ws.append(n)
         if len(mine): vs.append(np.mean(mine, 0)); ws.append(len(mine))
         if not vs: return None
         c = np.average(np.array(vs), axis=0, weights=ws); return c / np.linalg.norm(c)
@@ -112,6 +123,27 @@ class Book:
             tmp = self.p + f".{os.getpid()}.tmp"; json.dump(cur, open(tmp, "w")); os.replace(tmp, self.p)
 
 
+def uniq(lines):
+    """each take once, in order: the key is speaker, source text and an md5 of the embedding bytes. The same cached take on several
+    variant pages has identical bytes; a re-roll is a different take and stays separate."""
+    seen, out = set(), []
+    for L in lines:
+        k = (L.get("who"), L.get("src"), hashlib.md5(np.ascontiguousarray(L["emb"]).tobytes()).hexdigest())
+        if k not in seen: seen.add(k); out.append(L)
+    return out
+
+
+def book_voice(lines):
+    """{who: [emb]} for Book.save from a chapter's judged lines: each character's untoned takes, each once (toned lines don't move the
+    book voice). A character with no untoned line this chapter gives its toned takes instead, under "<who>#toned"."""
+    plain, toned = {}, {}
+    for L in uniq(lines): (toned if L.get("tone") else plain).setdefault(L["who"], []).append(L["emb"])
+    out = dict(plain)
+    for who, E in toned.items():
+        if who not in plain: out[who + "#toned"] = E
+    return out
+
+
 def judge(lines, book, key):
     """lines: [{"who", "gender" ("f"/"m"/None), "audio", "sr", ...}] (every judged line of the chapter, any extra fields are kept).
     Adds "sim" and "f0" to each line; returns (flagged lines, per-character summary)."""
@@ -121,18 +153,20 @@ def judge(lines, book, key):
     for L in lines: by.setdefault(L["who"], []).append(L)
     flagged, summary = [], {}
     for who, Ls in by.items():
-        plain = [L["emb"] for L in Ls if not L.get("tone")]  # the centroid is the character's ordinary voice when there is one
-        c = book.centroid(who, key, plain)
-        if c is None: c = book.centroid(who, key, [L["emb"] for L in Ls])
-        g = Ls[0].get("gender"); f0s = [L["f0"] for L in Ls if L["f0"]]
+        U = uniq(Ls)  # each take once for the baselines; every copy in Ls is still judged below
+        plain = [L["emb"] for L in U if not L.get("tone")]  # the centroid is the character's ordinary voice when there is one
+        c = book.centroid(who, key, plain); toned_only = False
+        if c is None: c = book.centroid(who, key, [L["emb"] for L in U], toned=True); toned_only = c is not None
+        others = len(book.d.get(who, {})) + (len(book.d.get(who + "#toned", {})) if toned_only else 0)
+        g = Ls[0].get("gender"); f0s = [L["f0"] for L in U if L["f0"]]
         med = float(np.median(f0s)) if f0s else None
         cfg = char_cfg(getattr(book, "course", None), who)
         smin, tmin, pst = float(cfg.get("sim_min", SIM_MIN)), float(cfg.get("tone_sim_min", TONE_SIM_MIN)), cfg.get("pitch_max_st")
         flo, fclo = float(cfg.get("f0_low", F_LOW)), float(cfg.get("f0_char_low", F_CHAR_LOW))  # per character floors: an older or lower woman Anthony approved by ear (Kendra, 2026-10-14)
-        pf = [L["f0"] for L in Ls if L["f0"] and not L.get("tone")]
+        pf = [L["f0"] for L in U if L["f0"] and not L.get("tone")]
         pmed = float(np.median(pf)) if pst is not None and len(pf) >= 5 else None
         for L in Ls:
-            L["sim"] = float(L["emb"] @ c) if c is not None and len(Ls) + len(book.d.get(who, {})) > 1 else None
+            L["sim"] = float(L["emb"] @ c) if c is not None and len(U) + others > 1 else None
             why = []
             lo = tmin if L.get("tone") else smin
             if L["sim"] is not None and L["sim"] < lo: why.append(f"voice {L['sim']:.2f} < {lo}")
@@ -141,8 +175,9 @@ def judge(lines, book, key):
             if pmed and L["f0"] and not L.get("tone") and abs(12 * np.log2(L["f0"] / pmed)) > float(pst):
                 why.append(f"pitch {L['f0']:.0f} Hz is {12 * np.log2(L['f0'] / pmed):+.1f} st from {who}'s {pmed:.0f}")
             if why: L["why"] = why; flagged.append(L)
-        sims = [L["sim"] for L in Ls if L["sim"] is not None]
-        summary[who] = {"lines": len(Ls), "mean_sim": round(float(np.mean(sims)), 3) if sims else None,
+        sims = [L["sim"] for L in U if L["sim"] is not None]
+        summary[who] = {"lines": len(U), "line_copies": len(Ls), "mean_sim": round(float(np.mean(sims)), 3) if sims else None,
                         "f0_median": round(med) if med else None, "gender": g,
                         "gender_fail": bool(med and ((g == "f" and med < fclo) or (g == "m" and med > M_CHAR_HIGH)))}
+        if toned_only: summary[who]["book_voice"] = "toned only"
     return flagged, summary

@@ -198,3 +198,57 @@ test("an error that names only the endpoint host never shows the account id", ()
   expect(r.code).toBe(4);
   expect(r.out).toContain("<redacted>");
 });
+
+test("a failed chapter sync is loud even with --quiet, and still drops the stale manifest entry", () => {
+  setup();
+  expect(sync("--quiet").code).toBe(0);
+  const f = "audio/v2/pages/f1/open.mp3", g = "audio/v2/pages/f1s/story.mp3", M1 = manifest();
+  fs.writeFileSync(path.join(W.repo, f), crypto.randomBytes(2600)); // a re-render, then the network drops before the list call answers
+  W.extraEnv = { FAKE_FAIL_WITH_HOST: "1" };
+  let r = sync("--if-configured", "--quiet", "--course", "pmp", "--chapter", "1", "--dry-run");
+  expect(r.code).toBe(4); expect(r.out).toContain("R2 SYNC FAILED pmp ch1 (exit 4)");
+  expect(manifest()[f], "--dry-run writes nothing").toBe(M1[f]);
+  r = sync("--if-configured", "--quiet", "--course", "pmp", "--chapter", "1");
+  expect(r.code).toBe(4);
+  expect(r.out).toContain("R2 SYNC FAILED pmp ch1 (exit 4)");
+  expect(r.out).toContain("they play from this site");
+  expect(manifest()[f], "R2's old take is no longer named").toBeUndefined();
+  expect(manifest()[g], "an unchanged file keeps its entry").toBe(M1[g]);
+  fs.writeFileSync(path.join(W.repo, "config.js"), 'window.HALCYON_AUDIO_BASE = "https://audio.example.com";\nwindow.HALCYON_AUDIO_REMOTE_ONLY = true;\n');
+  fs.writeFileSync(path.join(W.repo, g), crypto.randomBytes(2700));
+  r = sync("--if-configured", "--quiet", "--course", "pmp", "--chapter", "1");
+  expect(r.code).toBe(4); expect(r.out).toContain("NO playable audio"); expect(r.out).toContain(g);
+  expect(manifest()[g]).toBeUndefined();
+  W.extraEnv = {};
+  r = sync("--quiet", "--course", "pmp", "--chapter", "1"); expect(r.code, r.out).toBe(0); expect(r.out).not.toContain("R2 SYNC FAILED");
+  expect(manifest()[f]).toBe(md5(path.join(W.repo, f)).slice(0, 12));
+});
+
+test("--verify checks the local files against the manifest first; --course/--chapter scope it, cast samples only warn", async () => {
+  setup();
+  expect(sync("--quiet").code).toBe(0);
+  const srv = http.createServer((req, res) => { const k = decodeURIComponent(new URL(req.url, "http://x").pathname.slice(1)), mp = path.join(W.r2, "objects", k + ".meta.json");
+    if (!fs.existsSync(mp)) { res.writeHead(404); return res.end() } const m = JSON.parse(fs.readFileSync(mp, "utf8"));
+    res.writeHead(206, { "Content-Type": m.ContentType, "Cache-Control": m.CacheControl, ETag: `"${m.etag}"`, "Access-Control-Allow-Origin": "*", "Content-Range": "bytes 0-1/2000",
+      ...(m.ContentDisposition ? { "Content-Disposition": m.ContentDisposition } : {}) }); res.end("ab") });
+  await new Promise(ok => srv.listen(0, "127.0.0.1", ok));
+  const base = `http://127.0.0.1:${srv.address().port}`;
+  const verify = (...a) => new Promise(ok => { const c = spawn("python3", [path.join(ROOT, "tools/r2_sync.py"), "--verify", "--all", "--base", base, ...a], { env: { ...process.env, HALCYON_R2_ROOT: W.repo, HALCYON_R2_MD5_CACHE: path.join(W.d, "md5.json") } });
+    let out = ""; c.stdout.on("data", d => out += d); c.stderr.on("data", d => out += d); c.on("close", code => ok({ code, out })) });
+  try {
+    let r = await verify(); expect(r.code, r.out).toBe(0); expect(r.out).toContain(`local: ${FILES.length} mp3s match`); expect(r.out).toContain(`${FILES.length}/${FILES.length} ok`);
+    const extra = "audio/v2/pages/f3/open.mp3"; fs.mkdirSync(path.join(W.repo, "audio/v2/pages/f3"), { recursive: true }); fs.writeFileSync(path.join(W.repo, extra), crypto.randomBytes(1500));
+    r = await verify(); expect(r.code).toBe(1); expect(r.out).toContain(`LOCAL FAIL ${extra}: not in audio-manifest.json`);
+    r = await verify("--course", "pmp", "--chapter", "1"); expect(r.code, r.out).toBe(0); // f3 is out of scope
+    expect(r.out).toContain("local: 4 mp3s match"); expect(r.out).toContain("4/4 ok");
+    const f = "audio/v2/pages/f1/open.mp3"; fs.writeFileSync(path.join(W.repo, f), crypto.randomBytes(2100)); // re-rendered, not synced: the URL still answers
+    r = await verify("--course", "pmp", "--chapter", "1"); expect(r.code).toBe(1); expect(r.out).toContain(`LOCAL FAIL ${f}: the file on disk`); expect(r.out).toContain("4/4 ok");
+    r = await verify("--course", "pmp", "--chapter", "1", "--no-local"); expect(r.code, r.out).toBe(0); expect(r.out).not.toContain("LOCAL FAIL");
+    expect(sync("--quiet").code).toBe(0);
+    fs.writeFileSync(path.join(W.repo, "cast/v2/voice/sam.mp3"), crypto.randomBytes(1700)); fs.writeFileSync(path.join(W.repo, "cast/v2/voice/new.mp3"), crypto.randomBytes(1800));
+    r = await verify(); expect(r.code, r.out).toBe(0); expect(r.out).toContain("WARN cast samples: 1 differ from the manifest's take, 1 aren't in it"); expect(r.out).not.toContain("LOCAL FAIL");
+    r = await verify("--strict-cast"); expect(r.code).toBe(1); expect(r.out).toContain("LOCAL FAIL cast/v2/voice/sam.mp3"); expect(r.out).toContain("LOCAL FAIL cast/v2/voice/new.mp3");
+    r = await verify("--strict-cast", "--course", "pilot"); expect(r.code, r.out).toBe(0); expect(r.out).toContain("local: 2 mp3s match"); expect(r.out).toContain("2/2 ok");
+    expect(spawnSync("python3", [path.join(ROOT, "tools/r2_sync.py"), "--verify", "--chapter", "1", "--base", base], { encoding: "utf8", env: { ...process.env, HALCYON_R2_ROOT: W.repo, HALCYON_R2_MD5_CACHE: path.join(W.d, "md5.json") } }).status).not.toBe(0); // a chapter needs one course
+  } finally { await new Promise(ok => srv.close(ok)) }
+});
