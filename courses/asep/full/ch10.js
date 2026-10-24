@@ -10,7 +10,7 @@
     `<span class="said" data-who="Nadia">"And the proof test?"</span>`,
     `<span class="said" data-who="Wes">"Tiago pulls both valves and plugs the ports. Proof, leak, then the valves go back on and get their own leak check in place."</span>`,
     `<span class="said" data-who="Nadia">"And the night somebody leaves a plug in."</span>`,
-    `She heard it as it came out. Three weeks back, at Callie's sink, dish towel in hand, she'd said it nearly word for word, and Callie had dropped the towel on the counter.`,
+    `She heard it as it came out. Three weeks back, at her father's sink, dish towel in hand, she'd said it nearly word for word, and Callie had dropped the towel on the counter.`,
     `Wes didn't argue. Tiago did. He'd come in early too, and was leaning in the hatch with a coffee from the gas station on Arapahoe. <span class="said" data-who="Tiago">"Then the plug's got a handle on it as long as my forearm, painted red,"</span> he said. <span class="said" data-who="Tiago">"Make it so the vent cap won't go on with a plug in. You can't close the plate over one."</span> Wes looked at him, then wrote it on the drawing.`,
     `It was Callie's answer with a wrench in it. Build it so the crew won't let him up. Nadia kept that to herself.`,
     `Odette came up at nine and rewrote HR-22 at the HEARTH room table. The two relief valves would share only the tee and the fitting through the shell, passive metal, covered the way the shell itself was covered: design for minimum risk, big margins, proved at proof pressure with everything else. The plugs went on the closeout list as ground items. Two people would sign that both were out before the plate closed for flight.`,
@@ -83,9 +83,9 @@
       ]},
     { id:`f10s3`, domain:`Agreement and organizational`, task:`O6`, title:`Document two hundred and fifteen`, q:`The shared lessons folder has two hundred fourteen documents, the newest eight years old. Where should this lesson go?`,
       text:(s,all,G)=>{const p9=(all&&all[9]&&all[9].picks)||{};const p7=(all&&all[7]&&all[7].picks)||{};const pad=G&&G.paddedmargin;const m=810-(p9[2]===1?9:0)-(p9[5]===2?3:0);
-        return [`The board approved Wes's change on Tuesday. Wednesday morning Gus cut the safety wire and lifted the red valve out of the relief line, and Wes asked for it. It went on the shelf over his desk with its tag still on. Jun took a kilogram and a half off the mass roll-up. Every kilogram counted now, on a margin of about ${m}.`+(pad?` Halo's chart still said seventeen hundred.`:``),
+        return [`The board approved Wes's change on Tuesday. Wednesday morning Gus cut the safety wire and lifted the red valve out of the relief line, and Wes asked for it. It went on the shelf over his desk with its tag still on. Jun took a kilogram and a half off the mass roll-up. Every kilogram counted now, on a margin of about ${Math.round(m+1.5)}.`+(pad?` Halo's chart still said seventeen hundred.`:``),
         `Amara wanted the relief tee written up as a lesson learned before the week was out. FRO's lessons learned lived in a shared folder: two hundred and fourteen documents, the newest eight years old. Tiago said he'd opened it once, to see if it existed.`,
-        `<span class="said" data-who="Wes">"Lessons learned is where a lesson goes to die,"</span> Wes said. <span class="said" data-who="Wes">"I've got thirty years of these, and they're up here."</span> He tapped his temple with the pencil.`+(p7[11]===1?` FRO's next module, whenever it came, would start from HEARTH's drawings.`:` If a second module ever came, Osprey's or anyone's, it would start from HEARTH's drawings.`)]},
+        `<span class="said" data-who="Wes">"Lessons learned is where a lesson goes to die,"</span> Wes said. <span class="said" data-who="Wes">"I've got all of these, and they're up here."</span> He tapped his temple with the pencil.`+(p7[11]===1?` FRO's next module, whenever it came, would start from HEARTH's drawings.`:` If a second module ever came, Osprey's or anyone's, it would start from HEARTH's drawings.`)]},
       opts:[
         {t:`Keep the lesson in the HR-22 file, with the change request attached to it.`, s:0, d:{trust:3,conf:-2,health:-3},
           after:`The record is complete and correct. The next designer looking at a relief line will be looking at a drawing, not at a hazard report from another program.`,
@@ -154,7 +154,7 @@
           why:`Integration checks each interface against its definition before elements are joined, so a mismatch shows up as a reading, not as damage. Fit isn't function, and the interface document is the reference.`}
       ]},
     { id:`f10s7`, domain:`Technical`, task:`T7`, title:`Every day it's better`, q:`Wednesday's fix for a signing timeout sits on the software lead's branch. What should Tiago get for Tuesday?`,
-      text:(s,all,G)=>[`Friday FRO's flight software lead brought HEARTH's half of the rack software to Tiago's integration meeting. Her team had been working in sprints since week twelve. The newest build on her branch had a fix in it from Wednesday, for a command signing timeout they'd hit in the lab. She'd load whatever was newest Tuesday morning, she said. Every day it was better.`],
+      text:(s,all,G)=>[`Friday FRO's flight software lead brought HEARTH's half of the rack software to Tiago's integration meeting. Her team had been working in sprints since week thirteen. The newest build on her branch had a fix in it from Wednesday, for a command signing timeout they'd hit in the lab. She'd load whatever was newest Tuesday morning, she said. Every day it was better.`],
       opts:[
         {t:`Load the newest branch build Tuesday, with Wednesday's fix in it.`, s:0, d:{trust:3,conf:-2,health:-3},
           after:`Tuesday's build is Tuesday's build. By Thursday the bay can't say which one ran Tuesday night.`,
@@ -306,8 +306,8 @@
         :` It had yellow tape at both ends. It had been wearing it all week, under a cover that only comes off for maintenance.`)
       :``),
     `<span class="said" data-who="Tiago">"It's run clean all week,"</span> Tiago said.`,
-    `<span class="said" data-who="Nadia">"On that."</span>`+(pk[11]===3?` Ines's walk-down was Monday. It would have turned up then.`:``),
-    `The night somebody leaves a plug in. She'd said it at Callie's sink. It hadn't been a plug, and the man who'd left it was the one who carried it out of the cage. Callie would have something to say about that. Nadia didn't know yet what she'd say back.`,
+    `<span class="said" data-who="Nadia">"On cargo wire."</span>`+(pk[11]===3?` Ines's walk-down was Monday. It would have turned up then.`:``),
+    `The night somebody leaves a plug in. She'd said it to Callie over the dishes. It hadn't been a plug, and the man who'd left it was the one who carried it out of the cage. Callie would have something to say about that. Nadia didn't know yet what she'd say back.`,
     `Gus looked back at the cage. <span class="said" data-who="Gus">"There was a seal in a bag on that shelf for two years once,"</span> he said. <span class="said" data-who="Gus">"This one's been nine days."</span>`
   ]},
   episode:{src:`audio/full-ch10.mp3`, len:`about 35 minutes`},

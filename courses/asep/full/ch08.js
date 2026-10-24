@@ -259,7 +259,7 @@
       ]},
     { id:`f8s12`, domain:`Technical`, task:`T5`, title:`Ten past six`, q:`The seal lot passed, and mass is a hundred and ten kilograms over the floor. What should Nadia recommend?`,
       text:(s,all,G)=>{const pad=(s.flags&&s.flags.paddedmargin)||(G&&G.paddedmargin);const p7=(all&&all[7]&&all[7].picks)||{};const bk=p7[3]===2;const both=(s.picks||{})[9]===1;
-        return [`CDR ran Thursday and Friday. On Friday morning Brannock's routine result on the new lot came in: compression set 15 percent, long cure, a pass. The fifteen year aging result was due in week twenty eight.`+(bk?` Jun's backup compound had passed its own qualification on Wednesday, and a change request to add it to the drawing as an alternate was in the board's queue.`:``),
+        return [`CDR ran Thursday and Friday. On Friday morning Brannock's routine result on the new lot came in: compression set 15 percent, long cure, a pass. The new lot's fifteen year aging result was due in week twenty eight.`+(bk?` Jun's backup compound had passed its own qualification on Wednesday, and a change request to add it to the drawing as an alternate was in the board's queue.`:``),
         (pad
           ?`The mass chart said seventeen hundred kilograms of margin. Mallory glanced at it and turned the page.`
           :both
@@ -314,12 +314,12 @@
   ],
   closing:(s,all,G)=>{G=G||{};const pad=(s.flags&&s.flags.paddedmargin)||G.paddedmargin;const cut=(s.flags&&s.flags.cuttest)||G.cuttest;const hid=G.hidrisk;const wait=(s.picks||{})[0]===1;const pk=s.picks||{};const both=pk[9]===1;const wes=pk[9]===3;const p7=(all&&all[7]&&all[7].picks)||{};const osp=p7[11]===2?` The Osprey go or no go was Monday, and she'd want this weekend's numbers.`:p7[11]===1?``:` Osprey's proposal was due next week, and she'd want this weekend's numbers in it.`;
     return [
-    `CDR closed at ten past six on Friday. Mallory signed the minutes standing up, with his coat on, because his flight left at eight.`,
+    `CDR was over. Mallory signed the minutes standing up, with his coat on, because his flight left at eight.`,
     (pad
       ?`The mass chart in his bag said seventeen hundred kilograms of margin, eleven percent. It had gone through two days of review without a question.`
       :both
       ?`The mass chart in his bag showed both numbers, seventeen hundred and 860, and he'd circled the bigger one.`
-      :`The mass chart in his bag said 860 kilograms of margin, a hundred and ten over the floor, with the growth on its own line underneath. He'd circled the hundred and ten.`),
+      :`The mass chart in his bag had the growth on its own line underneath, and he'd circled the hundred and ten.`),
     (hid
       ?`The chair of FRO's board had sat in the back row both days, which she'd never done for a design review. When it was over she asked Amara for the full register, every line, and Amara handed it to her printed.`
       :`Amara walked Halo's people down to the lobby.`+osp+` Wes went back to his desk, because the aft ring's drawings still had a week of changes in them.`),

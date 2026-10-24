@@ -103,7 +103,7 @@
           after:`Helen gives a good answer and a number. It lives in a note, so the requirement still says quiet.`,
           why:`Going to the stakeholder is right. Her answer belongs in the requirement itself, as a measurable value with conditions.`},
         {t:`Set a noise limit in dBA at each bunk's head position in sleep mode.`, s:3, best:true, d:{trust:4,conf:5,health:5},
-          after:`They set 45 dBA at the head of each sleep station, with the module in its sleep mode, and trace it to crew sleep. Tiago nods. <span class="said" data-who="Tiago">"That I can put a microphone on."</span>`,
+          after:`They set forty five decibels, A weighted, at the head of each sleep station, with the module in its sleep mode, and trace it to crew sleep. Tiago nods. <span class="said" data-who="Tiago">"That I can put a microphone on."</span>`,
           why:`A verifiable requirement says what's measured, where, under what conditions, and to what limit. Now there's one reading and one way to prove it.`},
         {t:`Drop the line and leave noise to the air system's design rules.`, s:0, d:{trust:0,conf:-1,health:-3},
           after:`The air system team designs to its own rules, which were written for cargo modules no one ever slept in.`,
@@ -283,7 +283,7 @@
     [`Wes's three lines were in the baselined set, with no parent and no change request behind them. They read like everything else, and the review never asked where they came from.`,`Wes's three change requests sat in the board's queue for Friday, numbered, with his rationale in his square capitals. Outside the baseline, where they belonged until somebody decided.`,`Wes's three lines weren't in the set and weren't in the queue. He hadn't brought them up again, and she hadn't asked.`,`Wes's three items sat on Friday's agenda, deferred from the review, with no analysis behind them yet.`][(s.picks&&s.picks[9]!==undefined)?s.picks[9]:((s.flags.acceptedwesreqs||G.acceptedwesreqs)?0:1)],
     `Friday morning Nadia went to the structures area to borrow the latest hatch drawing. It was on Wes's plotter, still warm, revision C. She read the notes block out of habit.`,
     `<prop say="Notes seven, eight and nine on revision C of the hatch and aisle drawing. Hatch handle on both sides, one hand, no tools. Seat track on both sides of the aisle, full length. All harness routed in the overhead channel. Drawn by W. Harland, Monday of week six." type="doc" title="HEARTH primary structure, hatch and aisle, rev C, notes block (excerpt)">7. HATCH HANDLE BOTH SIDES. ONE HAND. NO TOOLS.<br>8. SEAT TRACK BOTH SIDES OF AISLE, FULL LENGTH.<br>9. ALL HARNESS ROUTED IN OVERHEAD CHANNEL.<br>Drawn: W. Harland. Date: Wk 6 Mon.</prop>`,
-    `Three notes, drawn into the structure three days before anybody had decided them. The aisle on the drawing was already eleven centimeters narrower than the aisle on the tape.`,
+    `Three notes, drawn into the structure before anybody had decided them. The aisle on the drawing was already eleven centimeters narrower than the aisle on the tape.`,
     `The baseline was fourteen hours old. Wes's drawing was three days older.`,
     ((s.picks&&s.picks[9]===2)
       ?`Nobody was going to decide it at all. Nadia rolled the sheet under her arm and walked it over to him.`

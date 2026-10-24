@@ -8,7 +8,7 @@
     `He set the crate on the lobby table and took the lid off. Inside, each in its own bag with a label in neat print, were a gray box with a fan grille on one end, a short cable with a different connector at each end, and two brass fittings.`,
     `<span class="said" data-who="Pavel">"Power converter, off our ground test set. A hundred and twenty in, twenty eight out. A bridge from fifteen fifty three to Ethernet, off a bench in our lab. And reducers for the coolant."</span> He held one of the fittings up to the window. <span class="said" data-who="Pavel">"Two weekends. It plugs in now."</span>`,
     `So that was why he hadn't written back. He'd spent his Saturdays building this.`,
-    `Nadia looked at the four bags. She'd built adapters like these herself, at the avionics shop, for units that sat on a bench and never left the building. Each one here was a box FRO hadn't asked for and a connection nobody had defined. The brass ones were two more joints where coolant could leak into a cabin where four people slept.`,
+    `Nadia looked at the four bags. She'd built adapters like these herself, at the avionics shop, for units that sat on a bench and never left the building. Each one here was a box FRO hadn't asked for and a connection nobody had defined. Each brass one was two more joints where coolant could leak into a cabin where four people slept.`,
     `<span class="said" data-who="Nadia">"You built all of this yourself,"</span> she said.`,
     `<span class="said" data-who="Pavel">"Who else?"</span> He was smiling. He was also watching her face to see whether it had worked.`
   ],
@@ -155,7 +155,7 @@
           why:`Assessment compares actual progress with the plan using objective measures, finds the variance, and forecasts from what's really happening. A forecast built with the supplier, on its own data, is one both sides can act on.`}
       ]},
     { id:`f6s7`, domain:`Cross-cutting`, task:`X4`, title:`Nine days`, q:`Each change notice goes through six signers in a fixed order. What should Nadia do?`,
-      text:(s,all,G)=>[`Thursday afternoon the first change notice came back with its last signature. It had gone out the Tuesday before. The flight software team had been writing against a draft all week, because the signed version wasn't there yet.`,`<prop type="doc" title="HEARTH interface change notice, routing record">Change: rack power input to 120 V DC.<br>Six signers, one at a time, in a fixed order.<br>Longest wait: chief engineer's inbox, three days.</prop>`,`Jun had added it up. <span class="said" data-who="Jun">"Forty minutes of work,"</span> he said. <span class="said" data-who="Jun">"Nine days of waiting. And eleven more of these are coming."</span> Wes, whose inbox had held it for three of those days, said every one of those signatures was there for a reason.`],
+      text:(s,all,G)=>[`Thursday afternoon the first change notice came back with its last signature. It had gone out the Tuesday before. The flight software team had been writing against a draft all week, because the signed version wasn't there yet.`,`<prop type="doc" title="HEARTH interface change notice, routing record">Change: rack power input to 120 volts DC.<br>Six signers, one at a time, in a fixed order.<br>Longest wait: chief engineer's inbox, three days.</prop>`,`Jun had added it up. <span class="said" data-who="Jun">"Forty minutes of work,"</span> he said. <span class="said" data-who="Jun">"Nine days of waiting. And eleven more of these are coming."</span> Wes, whose inbox had held it for three of those days, said every one of those signatures was there for a reason.`],
       opts:[
         {t:`Have Jun carry each notice desk to desk until all six signatures are on it.`, s:1, d:{trust:3,conf:1,health:0},
           after:`Jun walks the notices. It saves a few days and most of his week, and the notices still wait in line, one signer at a time.`,
@@ -295,12 +295,12 @@
       :`Halo's chart still said week twenty two. That was a letter for Monday, and Nadia would write it herself.`),
     (blamed
       ?`He walked them out past the floor without stopping. Through the door she could see his whiteboard. The twenty two was gone, and twenty six was there in his hand. It was the right date. She'd checked it three ways. What she hadn't done was earn the floor, and she knew the difference. No one from Tamarack would be riding down with the rack.`
-      :`Then he walked them out onto the floor. His whiteboard had moved out of his office to the end of the clean room, where everybody passed it. The twenty two was gone. Week twenty six was there in his neat print, with the chamber dates under it`+(stand?` and the stand-in's week beside them.`:`.`)),
+      :`Then Pavel walked them out onto the floor. His whiteboard had moved out of his office to the end of the clean room, where everybody passed it. The twenty two was gone. Week twenty six was there in his neat print, with the chamber dates under it`+(stand?` and the stand-in's week beside them.`:`.`)),
     ...(blamed?[]:[
     `A woman at the frame bench looked up from a torque wrench. She was in the first photo in the hallway, Nadia realized, one of the six. Her hair had been dark then.`,
-    `<span class="said" data-who="woman">"Is that the real one?"</span>`,
+    `<span class="said" data-who="Irena">"Is that the real one?"</span>`,
     `<span class="said" data-who="Pavel">"That's the real one, Irena."</span>`,
-    `She looked at the board the way people look at a date they're going to spend. <span class="said" data-who="woman">"Then I'm riding down with it,"</span> she said. <span class="said" data-who="woman">"And I'm taking my week at the lake in July."</span> She went back to her bolt.`,
+    `She looked at the board the way people look at a date they're going to spend. <span class="said" data-who="Irena">"Then I'm riding down with it,"</span> she said. <span class="said" data-who="Irena">"And I'm taking my week at the lake in July."</span> She went back to her bolt.`,
     `On the drive home Jun fell asleep against the window with the folder on his knees. Somewhere past the airport Nadia counted. Thirteen weeks since she'd told her father soon. She had a rate for everything else on the board.`])
   ]},
   episode:{src:`audio/full-ch06.mp3`, len:`about 35 minutes`},

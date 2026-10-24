@@ -8,7 +8,7 @@
   ],
   opening: [
     `Nadia Brooks found the note at ten to six, when she went looking for coffee in an apartment that still smelled like cardboard. Her sister Callie had driven up from Pueblo on Saturday in a borrowed truck with Rosie buckled in the back, carried boxes for six hours, and left before dark, because the drive home was close to two hours now. It used to be one.`,
-    `<prop type="doc" title="Sticky note on the coffee maker">Coffee's in the cabinet left of the sink. Rosie's rocket is on the fridge. She says yours needs a bathroom and a window. I've got Dad. Call him Friday anyway. He says he isn't counting. He's counting. Don't get so busy up there you forget the way down here. C</prop>`,
+    `<prop type="doc" title="Sticky note on the coffee maker">Coffee's in the cabinet left of the sink. Rosie's rocket is on the fridge. She says yours needs a bathroom and a window. I've got Dad. Call him Friday anyway. He says he isn't counting. He's counting. Don't get so busy up there you forget the way down here. Cal</prop>`,
     `The rocket was purple, with four stick people in the window, because Nadia had told Rosie on Saturday it was for four astronauts. Rosie had asked where they'd sleep. Nadia hadn't known. She stood in the kitchen looking at it longer than she meant to, then made the coffee.`,
     `At 6:40 she sat in her car in the Front Range Orbital lot and watched the sun come up behind a sign that still said Centennial Lighting Works.`,
     `The company had bought the old factory two years ago and never taken the sign down. Somebody had added a sticker under it, a little drawing of a space station, and that was the rebrand. Inside, she'd been told, was a high bay big enough to stand a city bus on its end, a pressure test cell, and four hundred people who built things that held air.`,
@@ -78,7 +78,7 @@
           why:`A signed contract settles who pays whom. It doesn't settle what the system needs to do. Reviews early in the life cycle are where you find out you're wrong cheaply. Skipping them moves the argument to a more expensive review.`},
         {t:`Fold the two reviews into one short gate sized to HEARTH's risk.`, s:3, best:true, d:{trust:1,conf:4,health:5},
           after:`Nadia proposes folding the two reviews into one short gate sized to HEARTH's risk. Amara pushes back, then agrees to a combined review in week six, one day long, with clear entry and exit criteria. It costs her two weeks instead of six, and she gets a written baseline she can hold Halo to.`,
-          why:`Life cycle stages end in decision gates, and the gate is where you're allowed to say not yet. Tailoring means right sizing the review, not deleting it. You kept the decision and cut the overhead.`},
+          why:`Life cycle stages end in decision gates, and a gate only works if somebody's willing to say not yet. Tailoring means right sizing the review, not deleting it. You kept the decision and cut the overhead.`},
         {t:`Ask Halo's program office whether FRO should hold the early reviews.`, s:0, d:{trust:0,conf:-3,health:-2},
           after:`Halo's program office says it's up to FRO. That doesn't help anybody decide anything.`,
           why:`How you run your technical reviews is your engineering responsibility. The customer can attend and should, but handing them your gate decisions is handing off your job.`},

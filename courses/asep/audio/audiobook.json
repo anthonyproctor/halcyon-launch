@@ -3,17 +3,17 @@
   "2": {
    "story": {
     "src": "audio/story/full-ch02.mp3",
-    "min": 16.9
+    "min": 19.6
    },
    "study": {
     "src": "audio/full-ch02.mp3",
-    "min": 34.5
+    "min": 34.4
    }
   },
   "3": {
    "story": {
     "src": "audio/story/full-ch03.mp3",
-    "min": 15.8
+    "min": 18.6
    },
    "study": {
     "src": "audio/full-ch03.mp3",
@@ -23,97 +23,97 @@
   "1": {
    "story": {
     "src": "audio/story/full-ch01.mp3",
-    "min": 18.8
+    "min": 21.6
    },
    "study": {
     "src": "audio/full-ch01.mp3",
-    "min": 35.7
+    "min": 35.5
    }
   },
   "4": {
    "story": {
     "src": "audio/story/full-ch04.mp3",
-    "min": 18.0
+    "min": 21.2
    },
    "study": {
     "src": "audio/full-ch04.mp3",
-    "min": 36.7
+    "min": 36.6
    }
   },
   "5": {
    "story": {
     "src": "audio/story/full-ch05.mp3",
-    "min": 22.0
+    "min": 24.9
    },
    "study": {
     "src": "audio/full-ch05.mp3",
-    "min": 39.2
+    "min": 39.1
    }
   },
   "6": {
    "story": {
     "src": "audio/story/full-ch06.mp3",
-    "min": 22.7
+    "min": 25.8
    },
    "study": {
     "src": "audio/full-ch06.mp3",
-    "min": 41.9
+    "min": 41.8
    }
   },
   "7": {
    "story": {
     "src": "audio/story/full-ch07.mp3",
-    "min": 23.8
+    "min": 26.9
    },
    "study": {
     "src": "audio/full-ch07.mp3",
-    "min": 42.1
+    "min": 42.0
    }
   },
   "8": {
    "story": {
     "src": "audio/story/full-ch08.mp3",
-    "min": 22.9
+    "min": 25.8
    },
    "study": {
     "src": "audio/full-ch08.mp3",
-    "min": 40.7
+    "min": 40.6
    }
   },
   "9": {
    "story": {
     "src": "audio/story/full-ch09.mp3",
-    "min": 31.4
+    "min": 34.1
    },
    "study": {
     "src": "audio/full-ch09.mp3",
-    "min": 50.4
+    "min": 50.1
    }
   },
   "10": {
    "story": {
     "src": "audio/story/full-ch10.mp3",
-    "min": 23.9
+    "min": 27.1
    },
    "study": {
     "src": "audio/full-ch10.mp3",
-    "min": 41.3
+    "min": 41.2
    }
   },
   "11": {
    "story": {
     "src": "audio/story/full-ch11.mp3",
-    "min": 30.1
+    "min": 32.7
    },
    "study": {
     "src": "audio/full-ch11.mp3",
-    "min": 47.7
+    "min": 47.5
    }
   },
   "12": {
    "story": {
     "src": "audio/story/full-ch12.mp3",
-    "min": 30.5
+    "min": 33.3
    },
    "study": {
     "src": "audio/full-ch12.mp3",

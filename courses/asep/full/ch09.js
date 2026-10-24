@@ -161,7 +161,7 @@
           why:`Maintainability is designed in. Orbital replacement units are chosen for failure rate and criticality, then designed so a crew can swap them with the tools and time they'll have on board.`}
       ]},
     { id:`f9s5`, domain:`Technical`, task:`T13`, title:`Hours in a week`, q:`HEARTH's weekly tasks take five and a half crew hours, and Halo allows three. How should Nadia respond?`,
-      text:(s,all,G)=>{const p7=(all&&all[7]&&all[7].picks)||{};return [`Friday Helen's crew office sent its maintenance budget: three crew hours a week for HEARTH, scheduled work only. Jun's list of HEARTH's scheduled tasks came to five and a half. Cabin filters, the hygiene station, water samples, sorbent cartridges, inspections.`+(p7[8]===1?` One of them was the ten minute hatch seal check Helen had asked for in writing in week seventeen.`:``),`Helen's note had one more line. The crew was up there to do work Halo's customers paid for, and every maintenance hour came out of it.`,`<span class="said" data-who="Jun">"Do I just send them the five and a half?"</span> Jun asked.`]},
+      text:(s,all,G)=>{const p7=(all&&all[7]&&all[7].picks)||{};return [`Friday Helen's crew office sent its maintenance budget: three crew hours a week for HEARTH, scheduled work only. Jun's list of HEARTH's scheduled tasks came to five and a half. Cabin filters, the hygiene station, water samples, sorbent cartridges, inspections.`+(p7[8]===1?` One of them was the ten minute hatch seal check Helen had asked for in writing in week sixteen.`:``),`Helen's note had one more line. The crew was up there to do work Halo's customers paid for, and every maintenance hour came out of it.`,`<span class="said" data-who="Jun">"Do I just send them the five and a half?"</span> Jun asked.`]},
       opts:[
         {t:`Budget crew time like mass and design down the largest tasks on Jun's list.`, s:3, best:true, d:{trust:4,conf:5,health:5},
           after:`Crew time goes on the measures list as its own line, with a budget and a trend. The biggest task is cleaning the cabin filters every week, an hour and a half. A bigger filter, changed monthly, cuts that to twenty minutes a week. Water sampling, eighty six minutes a week, goes to an inline monitor the ground can read. The list comes to two point nine hours. Helen asks to see the line every month.`,
@@ -197,7 +197,7 @@
         (hid
           ?`Since the seal, Amara read every hazard report herself before it went to Halo, and she was reading this one over Odette's shoulder.`
           :`Three controls, three verifications. It looked done.`),
-        `Down the list, the report for losing hatch isolation still pointed at the seal. The new lot's routine result had come back at 15 percent. Its fifteen year aging result was due in week twenty eight.`,
+        `Down the list, the report for losing hatch isolation still pointed at the seal, and the seal still had its long test to pass.`,
         `Nadia heard her father's question before she'd finished the third line. Separate how? She could still see his fork on the plate, tines down.`]},
       opts:[
         {t:`Send the report on to Halo with its three controls, each verified as listed.`, s:0, d:{trust:3,conf:-2,health:-5},
@@ -250,7 +250,7 @@
           why:`Training can't fix a design that fights its users. HSI designs the system so the human part works too.`}
       ]},
     { id:`f9s10`, domain:`Technical`, task:`T12`, title:`Sleep period`, q:`Nobody has decided who answers a rack fault yet. What should the concept say?`,
-      text:(s,all,G)=>[`Friday Helen drove up from Halo to work the rack's operations concept with Nadia and Jun. The question on the whiteboard was short. The rack faults in the middle of the crew's sleep period. Who does what?`,`Halo's ground was staffed around the clock. The crew slept eight hours. FRO's sustaining engineers would be in Centennial, on call. And the aft node, still a watch item on Nadia's register, would change who could reach what once it berthed.`],
+      text:(s,all,G)=>[`Friday Helen flew in from Halo to work the rack's operations concept with Nadia and Jun. The question on the whiteboard was short. The rack faults in the middle of the crew's sleep period. Who does what?`,`Halo's ground was staffed around the clock. The crew slept eight hours. FRO's sustaining engineers would be in Centennial, on call. And the aft node, still a watch item on Nadia's register, would change who could reach what once it berthed.`],
       opts:[
         {t:`Have the crew handle every rack fault, with the ground in support.`, s:0, d:{trust:3,conf:-2,health:-4},
           after:`The crew gets woken for a filter warning on the second night. By week three they're sleeping through the tone.`,

@@ -145,7 +145,7 @@
           why:`Fitting the picture to the audience is the right idea. Views built by hand, apart from the model, drift apart.`},
         {t:`Build each group a view from the model, framed by its concerns.`, s:3, best:true, d:{trust:4,conf:5,health:5},
           after:`Nadia builds each group its own view from the one model. Five views, each with its viewpoint written down: crew movement, hazard controls, station interfaces, test access, and a structural view for Wes, which he didn't ask for and reads first. They all come from one model, so when the hatch moves, it moves in all five.`,
-          why:`Under ISO/IEC/IEEE 42010, stakeholders have concerns, a viewpoint sets out how to build a view that frames them, and a view applies it to this system. Views drawn from one model stay consistent.`},
+          why:`Under the architecture description standard, ISO 42010, stakeholders have concerns, a viewpoint sets out how to build a view that frames them, and a view applies it to this system. Views drawn from one model stay consistent.`},
         {t:`Give every group read access to the whole model and let them search it.`, s:0, d:{trust:1,conf:-1,health:-2},
           after:`Helen logs in once and calls Nadia. <span class="said" data-who="Helen">"I can't find the crew."</span>`,
           why:`Access isn't a view. Stakeholders need views that answer their concerns, not a whole model to dig through.`}

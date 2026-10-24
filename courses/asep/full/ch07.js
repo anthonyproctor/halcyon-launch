@@ -5,7 +5,7 @@
     [`Gus`,`Test cell technician at FRO since the cargo days. One of the six names on the lockout tags by the valve panel.`]
   ],
   opening: [
-    `Her father, Frank, called Sunday night, a little after eight. That was the hour she called Callie now, most Sundays since week five, and Callie put Rosie on and handed the phone to him last if he was still up. Tonight he called first.`,
+    `Her father, Frank, called Sunday night, a little after eight. That was when she called Callie now. The noon alarm hadn't lasted, but the call mostly had, and Callie put Rosie on and handed the phone to him last if he was still up. Tonight he called first.`,
     `On Saturday Nadia had texted him a photo from the test cell: HEARTH's forward hatch bolted to Tiago's stand, bare aluminum with blue tape on its edges, the first piece of the module that looked like it was going to space. He hadn't texted back. He had it open now. She could tell, because he talked the way he read the paper, a few words and then a stop.`,
     `<span class="said" data-who="Frank">"That black ring. Around the door. That rubber?"</span>`,
     `<span class="said" data-who="Nadia">"Silicone. It's the seal for the hatch."</span>`,
@@ -26,7 +26,7 @@
     title: `Colleen's Flight Notes: what could go wrong, and what you'll do`,
     sections: [
       { h: `Personal minimums`,
-        body: [`<!--story-->The radio was in. On Saturday Colleen took the blue and white airplane up for the first time as its owner, with Nadia in the right seat. Before she untied it she pulled a laminated card from her flight bag and went down it out loud: the ceiling and visibility she'd fly in, the crosswind she'd land in, how much sleep she'd had, how long since she'd flown this kind of airplane. Most lines had a number. Two were close today, and she said so.`,
+        body: [`<!--story-->The radio was in. The day before her father called, Colleen took the blue and white airplane up for the first time as its owner, with Nadia in the right seat. Before she untied it she pulled a laminated card from her flight bag and went down it out loud: the ceiling and visibility she'd fly in, the crosswind she'd land in, how much sleep she'd had, how long since she'd flown this kind of airplane. Most lines had a number. Two were close today, and she said so.`,
           `<!--story--><span class="said" data-who="Colleen" data-tone="Serious, plain, honest.">"The card isn't for good days,"</span> she said. <span class="said" data-who="Colleen" data-tone="Serious, plain, honest.">"It's for the day I want to go."</span>`,
           `Risk management is the process for finding, analyzing, treating and watching risks, continually, across the whole life cycle. A risk is an uncertain event or condition that would hurt the project's objectives if it happened, and it has two parts: how likely it is and how bad it would be. Planning comes first. The program decides how it'll identify risks, the scales it'll rate them on, who owns them, how often they're reviewed and where they're kept. Identification works best from many directions at once: the architecture and its interfaces, requirements that are hard to meet, suppliers, hazard analyses, lessons from earlier programs, and the people closest to the work. Write each risk with a cause and a consequence: if this condition holds, then this could happen, and here's what it would cost. "Seals are a concern" is a worry. A statement is something you can handle.`],
         terms: [[`Risk`,`An uncertain event or condition that, if it occurs, affects the project's objectives. Rated by likelihood and consequence.`],[`Risk profile`,`The current set of risks with their ratings, owners, handling and status, kept up to date as the project runs.`]],
@@ -55,7 +55,7 @@
   },
   scenes: [
     { id:`f7s1`, domain:`Technical management`, task:`M4`, title:`Thirty one lines`,
-      text:(s,all,G)=>{const a5=all&&all[5];const node=!!(a5&&a5.picks&&a5.picks[8]===2);return [`Monday of week fifteen Nadia opened HEARTH's risk register. Amara had started it on the program's first day. It had thirty one lines, most of them cost and schedule, and eleven said owner TBD. The newest was two months old, with one exception.`,
+      text:(s,all,G)=>{const a5=all&&all[5];const node=!!(a5&&a5.picks&&a5.picks[8]===2);return [`Monday of week fifteen Nadia opened HEARTH's risk register. Amara had started it on the program's first day. It had thirty one lines, most of them cost and schedule, and eleven had no owner. The newest was two months old, with one exception.`,
         (node
           ?`The exception was the aft node, Nadia's own line from a month back, sitting at watch with its trigger untouched: Halo's next assembly plan not showing the node.`
           :`The exception was a line Jun had added on Friday, after he went looking for the aft node and didn't find it: a watch item, Nadia as owner, triggered if Halo's next assembly plan stopped showing the node. It should have been there for a month.`),
@@ -213,7 +213,7 @@
           why:`Recovery that waits months for help isn't much recovery. A resilient design gives the people on board ways to withstand and recover on their own.`}
       ]},
     { id:`f7s10`, domain:`Technical management`, task:`M7`, title:`What the board sees`, q:`The board chair wants one number before the vote, the count of red risks. What should Nadia give her?`,
-      text:(s,all,G)=>[`Monday of week seventeen Amara came to Nadia's desk with a note from the chair of FRO's board. Osprey's request was real: one habitat module for a smaller station, proposals due in five weeks. The board would vote on Thursday. Before it voted, the chair wanted to know whether HEARTH was healthy enough to bet a second module on, and she'd asked for one number: the count of red risks.`,`<span class="said" data-who="Amara">"I've stood on that crate with bad news once this year,"</span> Amara said. <span class="said" data-who="Amara">"I'd like to stand on it and say we're bidding on something."</span>`],
+      text:(s,all,G)=>[`Monday of week seventeen Amara came to Nadia's desk with a note from Margaret Doyle, who chaired FRO's board. Osprey's request was real: one habitat module for a smaller station, proposals due in five weeks. The board would vote on Thursday. Before it voted, the chair wanted to know whether HEARTH was healthy enough to bet a second module on, and she'd asked for one number: the count of red risks.`,`<span class="said" data-who="Amara">"I've stood on that crate with bad news once this year,"</span> Amara said. <span class="said" data-who="Amara">"I'd like to stand on it and say we're bidding on something."</span>`],
       opts:[
         {t:`Give the board the count of red and yellow risks each month, with its trend.`, s:1, d:{trust:3,conf:1,health:0},
           after:`The count is easy to read. It moves after a risk has already grown, and two of today's reds are red because of things that happened in week nine.`,
@@ -251,8 +251,8 @@
           ?`The risk slide showed four lines and the rack. The chair looked at it and nodded.`
           :p===1
             ?`The risk slide showed four lines and the rack. The seal was in the backup slides, and the chair didn't open them.`
-            :`The chair stopped on the risk slide, at the seal. <span class="said" data-who="woman">"Friday,"</span> she said. <span class="said" data-who="woman">"And if it fails?"</span> Amara told her what it would cost.`),
-        `Then the chair turned to the wall. <span class="said" data-who="woman">"Ms. Brooks. Can FRO build two of these at once?"</span>`]},
+            :`The chair stopped on the risk slide, at the seal. <span class="said" data-who="Margaret">"Friday,"</span> she said. <span class="said" data-who="Margaret">"And if it fails?"</span> Amara told her what it would cost.`),
+        `Then the chair turned to the wall. <span class="said" data-who="Margaret">"Ms. Brooks. Can FRO build two of these at once?"</span>`]},
       opts:[
         {t:`Recommend that FRO bid, and staff it from HEARTH's team as people free up.`, s:0, d:{trust:4,conf:-2,health:-4},
           after:`The board likes the answer. The bid plan it approves borrows the test cell in week twenty two, the week HEARTH's aft hatch needs it.`,
@@ -317,7 +317,7 @@
       ?`<span class="said" data-who="Tiago">"Somebody's name goes on it,"</span> he said, and waited. She wrote hers.`
       :`<span class="said" data-who="Tiago">"It's your line on the register,"</span> he said. <span class="said" data-who="Tiago">"Same rule as the lockouts. Your name goes on it, and only you take it off."</span> She wrote her name.`),
     `Under it she wrote the date, the way the date had been stamped on her father's gloves. She hung the tag on the fixture's valve and squared it on its wire.`,
-    `Wes came down while she was doing it. He looked at the tag. `+(sep?`Then he picked the bag up off the bench and turned the black ring over through the plastic, the way he'd been checking them for thirty years.`:`Then he ran his thumb around the seal in its groove, all the way around, the way he'd been seating them for thirty years.`)+` <span class="said" data-who="Wes">"In 2019 I put mine in myself, and I found it the week it shipped,"</span> he said. <span class="said" data-who="Wes">"This is week seventeen."</span> He went back up the stairs. A minute later she could hear him on the phone to Ohio.`,
+    `Wes came down while she was doing it. He looked at the tag. `+(sep?`Then he picked the bag up off the bench and turned the black ring over through the plastic, the way he'd checked every one he ever put in.`:`Then he ran his thumb around the seal in its groove, all the way around, the way he'd seated every one he ever put in.`)+` <span class="said" data-who="Wes">"In 2019 I put mine in myself, and I found it the week it shipped,"</span> he said. <span class="said" data-who="Wes">"This is week seventeen."</span> He went back up the stairs. A minute later she could hear him on the phone to Ohio.`,
     (hid
       ?`Upstairs she opened the program register to change the seal from a risk to an issue, and it wasn't there. She added it, already an issue, dated today. It was the first line about the hatch the board would ever see, and it would see it after the vote.`
       :burn
