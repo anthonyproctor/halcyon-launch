@@ -150,7 +150,8 @@ test("library hides listed:false books; Coming next and direct links keep them",
   const hearth = page.locator("#page .upshelf", { hasText: "Hearth" });
   await expect(hearth).toContainText("In production");
   await expect(hearth).toContainText("12 chapters out");
-  // a direct link still opens a book
+  // a direct link still opens a book (a fresh load, like a link from outside; a hash only change could race the Coming next render)
+  await page.goto("about:blank");
   await page.goto("/#gh300/full/1");
   await expect(page.locator("#page .chmap")).toBeVisible();
   expect(errs).toEqual([]);

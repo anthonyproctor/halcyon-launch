@@ -42,7 +42,7 @@ window.HALCYON_CAST=[
    sections:[
     {unlock:1, title:`Who he is`, body:[`Garrett is charming, quick, and hates being contradicted in public. He smiles hardest when he's losing an argument, so Sam reads the smile like a gauge. He holds all hands meetings standing on a pallet jack in the high bay, the way he did when the company was eleven people.`]},
     {unlock:1, title:`On track`, body:[`At the January 24 all hands Garrett told nine hundred people the program was on track for February 18, 2063. He has investors. He believes a date said out loud becomes more true.`]}],
-   quote:{unlock:1, text:`Eighteen. There was the crane.`},
+   quote:{unlock:1, text:`Nineteen. Every year he's had it.`},
    ties:[{unlock:1,id:`sam`,text:`Ran his building for nineteen years. Now runs his ship.`},{unlock:1,id:`imogen`,text:`His customer.`}] },
 
  { id:`quinn`, intro:`Quinn Abernathy. I build the schedule, which means I'm the one who knows where it's wrong. I was Bea's scheduler. Now I'm Sam's deputy, I think. Nobody's said the word, so I've been saying it for them.`, name:`Quinn Abernathy`, role:`Program scheduler, now Sam's deputy. Twenty six.`, firstChapter:1, speaker:`Quinn`,
