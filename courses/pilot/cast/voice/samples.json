@@ -1,0 +1,238 @@
+{
+ "_about": "Cast page voice samples. tools/cast_samples.py <course> remakes any sample whose line or casting (tools/gemini_voices.json) changed; 'made' is written by the tool, edit only who/line/from.",
+ "course": "pilot",
+ "audio": "audio",
+ "samples": {
+  "jordan": {
+   "who": "Jordan",
+   "line": "YouTube. Also a guy on B shift named Hector, who has nine fingers and tells everybody why.",
+   "from": "ch2",
+   "made": {
+    "hash": "275e146d913bdbd3",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Despina",
+    "style": "A woman's voice. Practical, steady, grief kept under control.",
+    "take": 3,
+    "takes": 4,
+    "sim": 0.983,
+    "prev_sim": 0.949,
+    "centroid_lines": 100,
+    "f0": 158,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 8.1,
+    "date": "2026-10-12"
+   }
+  },
+  "abby": {
+   "who": "Abby",
+   "line": "Nice call. That's the most important thing I'll ever teach you and you did it on day one. Don't get cocky.",
+   "from": "ch1",
+   "made": {
+    "hash": "313d81e2ee590f83",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Erinome",
+    "style": "A woman's voice. Conversational, dry and direct, a little wry.",
+    "take": 1,
+    "takes": 4,
+    "sim": 0.982,
+    "prev_sim": 0.919,
+    "centroid_lines": 1169,
+    "f0": 180,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 6.8,
+    "date": "2026-10-12"
+   }
+  },
+  "walt": {
+   "who": "Walt",
+   "line": "I want to see your logbook every month. And you come to the safety meetings.",
+   "from": "ch1",
+   "made": {
+    "hash": "25abdbb567023589",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "en-us-podcaster-1",
+    "style": "A man's voice. Deliberate, dry, careful.",
+    "take": 1,
+    "takes": 4,
+    "sim": 0.991,
+    "prev_sim": 0.903,
+    "centroid_lines": 70,
+    "f0": 107,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 6.8,
+    "date": "2026-10-12"
+   }
+  },
+  "marisol": {
+   "who": "Marisol",
+   "line": "Danny never leaned for taxi. I'd find these every oil change and yell at him, and he'd bring me a coffee, and we'd do it again.",
+   "from": "ch2",
+   "made": {
+    "hash": "3ed726202f5c3209",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Kore",
+    "style": "A woman's voice. Blunt, warm underneath.",
+    "take": 3,
+    "takes": 4,
+    "sim": 0.987,
+    "prev_sim": 0.984,
+    "centroid_lines": 127,
+    "f0": 189,
+    "gender": "f",
+    "heard": 0.995,
+    "seconds": 8.5,
+    "date": "2026-10-12"
+   }
+  },
+  "claire": {
+   "who": "Claire",
+   "line": "He called me from the vending machine. I remember. He said he was being responsible and he wanted credit for it.",
+   "from": "ch3",
+   "made": {
+    "hash": "2ff8b147ba4e01f2",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Vindemiatrix",
+    "style": "A woman's voice. Tired, gentle.",
+    "take": 0,
+    "takes": 4,
+    "sim": 0.966,
+    "prev_sim": 0.567,
+    "centroid_lines": 57,
+    "f0": 155,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 7.6,
+    "date": "2026-10-12"
+   }
+  },
+  "ellie": {
+   "who": "Ellie",
+   "line": "Aunt Jordan. Why are clouds flat on the bottom?",
+   "from": "ch3",
+   "made": {
+    "hash": "2e776283a42a748c",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Leda",
+    "style": "A young girl. Curious, bright, quick questions.",
+    "take": 3,
+    "takes": 4,
+    "sim": 0.978,
+    "prev_sim": 0.74,
+    "centroid_lines": 47,
+    "f0": 254,
+    "gender": "f",
+    "heard": 0.959,
+    "seconds": 3.6,
+    "date": "2026-10-12"
+   }
+  },
+  "lourdes": {
+   "who": "Lourdes",
+   "line": "Next time, you call me before. So I can worry on time.",
+   "from": "ch7 (her ch1 lines are under 3 s)",
+   "made": {
+    "hash": "0a172bc801c011e9",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "en-us-zali",
+    "style": "A woman's voice. Firm, worried, protective.",
+    "take": 3,
+    "takes": 4,
+    "sim": 0.951,
+    "prev_sim": 0.877,
+    "centroid_lines": 8,
+    "f0": 205,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 4.9,
+    "date": "2026-10-12"
+   }
+  },
+  "russ": {
+   "who": "Russ",
+   "line": "Russ Kim, fourth partner. I travel for work, so mostly I'm a voice in the group chat asking who left the tanks at a quarter.",
+   "from": "cast intro (no spoken lines)",
+   "made": {
+    "hash": "7c4b6781b17a1b93",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Iapetus",
+    "style": "General American accent. A 50-year-old who travels for work. Upbeat, busy, friendly.",
+    "take": 0,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 140,
+    "gender": null,
+    "heard": 1.0,
+    "seconds": 7.3,
+    "date": "2026-10-12"
+   }
+  },
+  "danny": {
+   "who": "Danny",
+   "line": "If found, I'm probably nearby. Danny Reyes. This is the notebook that lives in Biscuit's door pocket.",
+   "from": "cast intro (no spoken lines)",
+   "made": {
+    "hash": "33e1218b6c184317",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Puck",
+    "style": "General American accent. A 41-year-old pilot. Easygoing, a wide grin in his voice, warm.",
+    "take": 0,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 117,
+    "gender": null,
+    "heard": 1.0,
+    "seconds": 7.4,
+    "date": "2026-10-12"
+   }
+  },
+  "biscuit": {
+   "who": "Marisol",
+   "line": "And the tach reads fifty high, so do the math. Danny named her. I've stopped arguing about it.",
+   "from": "cast intro, in Marisol's voice",
+   "made": {
+    "hash": "8569dc0264473fb3",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Kore",
+    "style": "A woman's voice. Blunt, warm underneath.",
+    "take": 3,
+    "takes": 4,
+    "sim": 0.984,
+    "prev_sim": 0.978,
+    "centroid_lines": 127,
+    "f0": 184,
+    "gender": "f",
+    "heard": 0.936,
+    "seconds": 6.3,
+    "date": "2026-10-12"
+   }
+  },
+  "kendra": {
+   "who": "Kendra",
+   "line": "Jordan. Kendra. Sit wherever you like. We'll start with paper, because paper is where people lose the most time.",
+   "from": "ch12 (she first speaks there)",
+   "made": {
+    "hash": "bd62b65b37c3e341",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Pulcherrima",
+    "style": "General American accent. A pilot examiner in their fifties. Even, professional, fair.",
+    "take": 3,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 103,
+    "gender": null,
+    "heard": 1.0,
+    "seconds": 7.0,
+    "date": "2026-10-12"
+   }
+  }
+ }
+}

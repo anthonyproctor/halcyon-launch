@@ -1,0 +1,238 @@
+{
+ "_about": "Cast page voice samples. tools/cast_samples.py <course> remakes any sample whose line or casting (tools/gemini_voices.json) changed; 'made' is written by the tool, edit only who/line/from.",
+ "course": "cisa",
+ "audio": "audio",
+ "samples": {
+  "henry": {
+   "who": "Henry",
+   "line": "Breakfast. Most Saturdays, at a diner on Colfax. She taught me how you lot audit things.",
+   "from": "ch1",
+   "made": {
+    "hash": "82657be748d6eb71",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "en-gb-tutor-9",
+    "style": "Dry, precise, tired, understated.",
+    "take": 0,
+    "takes": 4,
+    "sim": 0.991,
+    "prev_sim": 0.916,
+    "centroid_lines": 21,
+    "f0": 92,
+    "gender": "m",
+    "heard": 0.978,
+    "seconds": 7.5,
+    "date": "2026-10-12"
+   }
+  },
+  "dot": {
+   "who": "Dot",
+   "line": "Lime Street. It's Dot. I know it's late, go back to sleep after this. Bring a pen. Bring two.",
+   "from": "ch1: her voicemail",
+   "made": {
+    "hash": "58f211710ed6aed7",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "en-us-tutor-9",
+    "style": "Conversational, sharp, amused, dry wit.",
+    "take": 0,
+    "takes": 4,
+    "sim": 0.98,
+    "prev_sim": 0.953,
+    "centroid_lines": 116,
+    "f0": 178,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 8.1,
+    "date": "2026-10-12"
+   }
+  },
+  "lou": {
+   "who": "Lou",
+   "line": "Plenty of people dislike me, and my wife's one of them. Give me names or it's just weather.",
+   "from": "ch1",
+   "made": {
+    "hash": "eee076222acd462a",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Algenib",
+    "style": "Gruff, flat, unimpressed.",
+    "take": 2,
+    "takes": 4,
+    "sim": 0.986,
+    "prev_sim": 0.907,
+    "centroid_lines": 34,
+    "f0": 95,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 7.1,
+    "date": "2026-10-12"
+   }
+  },
+  "giles": {
+   "who": "Giles",
+   "line": "Pop down to Meridian this afternoon, have a poke about, see what they've got, and give me a view by Friday.",
+   "from": "ch1",
+   "made": {
+    "hash": "0fc800b9f92e42f4",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "en-gb-training-1",
+    "style": "Brisk, plummy, in a hurry.",
+    "take": 2,
+    "takes": 4,
+    "sim": 0.99,
+    "prev_sim": 0.884,
+    "centroid_lines": 13,
+    "f0": 148,
+    "gender": "m",
+    "heard": 1.0,
+    "seconds": 4.7,
+    "date": "2026-10-12"
+   }
+  },
+  "nkechi": {
+   "who": "Nkechi",
+   "line": "I'd like your claim file, and anything Ms. Kessler sent you. Informally. Today.",
+   "from": "ch1",
+   "made": {
+    "hash": "6bd932d66c3d0183",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Kore",
+    "style": "Crisp, composed, watchful.",
+    "take": 0,
+    "takes": 4,
+    "sim": 0.98,
+    "prev_sim": 0.848,
+    "centroid_lines": 11,
+    "f0": 188,
+    "gender": null,
+    "heard": 1.0,
+    "seconds": 6.3,
+    "date": "2026-10-12"
+   }
+  },
+  "maisie": {
+   "who": "Maisie",
+   "line": "Mum said to ask if you want to come to the science fair. It's Thursday. Six. You don't have to.",
+   "from": "ch1",
+   "made": {
+    "hash": "bc215b587d80d154",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Leda",
+    "style": "A young teenager. Guarded, quiet, a little sullen.",
+    "take": 1,
+    "takes": 4,
+    "sim": 0.966,
+    "prev_sim": 0.861,
+    "centroid_lines": 5,
+    "f0": 188,
+    "gender": "f",
+    "heard": 0.986,
+    "seconds": 8.3,
+    "date": "2026-10-12"
+   }
+  },
+  "arthur": {
+   "who": "Arthur",
+   "line": "They rang the Lutine today. Twice. Good news. Somebody's ship came home.",
+   "from": "ch1",
+   "made": {
+    "hash": "cb3418ad39bf4485",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "en-gb-storyteller-4",
+    "style": "Gentle, kind, slightly frail and wandering.",
+    "take": 0,
+    "takes": 4,
+    "sim": 0.981,
+    "prev_sim": 0.512,
+    "centroid_lines": 8,
+    "f0": 133,
+    "gender": "m",
+    "heard": 0.956,
+    "seconds": 8.6,
+    "date": "2026-10-12"
+   }
+  },
+  "precious": {
+   "who": "Precious",
+   "line": "He's had a good day, Henry. He's been asking for you. I'll hold the phone, he keeps dropping it.",
+   "from": "ch1",
+   "made": {
+    "hash": "7e8def39d69b6fe6",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "en-gb-advisor-6",
+    "style": "Warm, practical, calm.",
+    "take": 0,
+    "takes": 4,
+    "sim": 0.996,
+    "prev_sim": 0.956,
+    "centroid_lines": 3,
+    "f0": 172,
+    "gender": null,
+    "heard": 1.0,
+    "seconds": 5.4,
+    "date": "2026-10-12"
+   }
+  },
+  "leonard": {
+   "who": "Leonard",
+   "line": "Great catch, and thanks for flagging! I've asked IT to disable the account and look into it first thing.",
+   "from": "ch1",
+   "made": {
+    "hash": "f1615fda97ad154c",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Iapetus",
+    "style": "Eager, polished, a bit too cheerful.",
+    "take": 0,
+    "takes": 4,
+    "sim": 1.0,
+    "prev_sim": 0.868,
+    "centroid_lines": 1,
+    "f0": 203,
+    "gender": null,
+    "heard": 1.0,
+    "seconds": 5.5,
+    "date": "2026-10-12"
+   }
+  },
+  "laura": {
+   "who": "Laura",
+   "line": "She has her science fair Thursday at six. She wanted to ask you herself this morning. Just so you know.",
+   "from": "ch1: her text",
+   "made": {
+    "hash": "499d9353b0d39c5e",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Aoede",
+    "style": "General American accent. A woman in her early forties. Tired but civil.",
+    "take": 1,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 151,
+    "gender": null,
+    "heard": 0.975,
+    "seconds": 6.6,
+    "date": "2026-10-12"
+   }
+  },
+  "priyanka": {
+   "who": "Priyanka",
+   "line": "Your first chart. Which file, which version, what query? I can't re-perform it from this.",
+   "from": "ch2",
+   "made": {
+    "hash": "448ddf32b4ad1304",
+    "model": "gemini-3.8-flash-tts",
+    "voice": "Erinome",
+    "style": "London accent. A woman in her late thirties on a work call. Brisk, exact, not unkind.",
+    "take": 1,
+    "takes": 4,
+    "sim": null,
+    "prev_sim": null,
+    "centroid_lines": 0,
+    "f0": 186,
+    "gender": "f",
+    "heard": 1.0,
+    "seconds": 5.6,
+    "date": "2026-10-12"
+   }
+  }
+ }
+}
