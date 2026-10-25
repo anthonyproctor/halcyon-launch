@@ -34,15 +34,21 @@ function propSpeech(html){return qa(html).replace(/<prop\s+([^>]*)>([\s\S]*?)<\/
   const b0=body.replace(/_{3,}/g,'blank').replace(/([.!?:;,"”'])?((?:<\/[^>]+>)*)\s*<br\s*\/?>\s*/g,(m,p,t)=>p?p+t+' ':t+'. ');
   // a message signed with the sender's initial ("G.", "K.") says the sender's first name: a lone letter sounds like a word (2026-10-23)
   const nm=String(a.from||'').replace(/^(Dr|Ms|Mr|Mrs)\.?\s+/,'').split(/[\s,]+/).filter(w=>/^[A-Z][a-z]/.test(w));
-  const b=nm.length&&/^(email|text|chat)$/.test(a.type)&&/<br\s*\/?>\s*[A-Z]\.?\s*$/.test(body)?b0.replace(/(^|[.!?]\s+|\s)([A-Z])\.?\s*$/,(m,p,l)=>{const w=nm.find(x=>x[0]===l);return w?p+w+'.':m}):b0;
+  const b=nm.length&&/^(email|text|chat)$/.test(a.type)&&/(<br\s*\/?>\s*[A-Z]\.?|[.!?]\s+[A-Z]\.)\s*$/.test(body)?b0.replace(/(^|[.!?]\s+|\s)([A-Z])\.?\s*$/,(m,p,l)=>{const w=nm.find(x=>x[0]===l);return w?p+w+'.':m}):b0;
   if(a.type==='email')return `An email from ${a.from||'someone'}${a.subject?`. Subject: ${a.subject}`:''}. ${b}`;
   if(a.type==='chat')return `A message from ${a.from||'someone'}. ${b}`;
   if(a.type==='text')return `A text from ${a.from||'someone'}. ${b}`;
   if(a.type==='doc')return `${a.title?a.title+'. ':''}${b}`;
   if(a.type==='chart')return `${a.title?a.title+'. ':''}${b}`;
   return b})}
+const SIGN_STOP=new Set('The Then That This There They Their She Her His Over After And But When Where What Sent Subject Monday Tuesday Wednesday Thursday Friday Saturday Sunday January February March April May June July August September October November December Mrs Miss'.split(' '));
 export function segments(html, base){
   html=propSpeech(html);
+  // a message quoted in bold in the narration and signed with an initial ("...Let's talk Monday. G.</b>") says the name the
+  // narration gave that sender just before it ("Garrett's email came in"): a lone letter sounds like a word (2026-10-25)
+  html=html.replace(/([.!?]\s+)([A-Z])\.(\s*<\/b>)/g,(m,p,l,e,off)=>{const pre=html.slice(0,off),o=pre.lastIndexOf('<b>');if(o<0)return m;
+    const ws=[...pre.slice(0,o).replace(/<[^>]+>/g,' ').matchAll(/\b([A-Z][a-z]{2,})(?:['’]s)?\b/g)].map(x=>x[1]).filter(w=>w[0]===l&&!SIGN_STOP.has(w));
+    return ws.length?p+ws[ws.length-1]+'.'+e:m});
   // optional data-tone="Angry, clipped, controlled." on a said span: a per-line delivery cue (never spoken or shown; the engine
   // ignores the attribute). The segment carries it as `tone`; a span without one gives exactly the segment it always did.
   const out=[];const re=/<span class="said"(?: data-who="([^"]+)")?(?: data-tone="([^"]+)")?>([\s\S]*?)<\/span>/g;let last=0,m;
