@@ -1,7 +1,8 @@
 // Exam week review (2026-10-25): #pmp/review, opened from the button in the home page's Practice exam card. Content comes from
 // courses/pmp/review.js; expected counts and text are read from window.HALCYON_REVIEW, never typed here.
-// Hearth (#asep/review) and The Copilot Rollout (#gh300/review) load courses/<id>/review.js from their scripts list and name their own
-// sections (D.sections); the tests at the end walk those sections from the data the same way.
+// Hearth (#asep/review), The Copilot Rollout (#gh300/review), Exception Noted (#cisa/review), Danny's Logbook (#pilot/review) and The
+// Appeal (#lsat/review) load courses/<id>/review.js from their scripts list and name their own sections (D.sections); the tests at the end
+// walk those sections from the data the same way.
 // Screenshots: set REVIEW_SHOTS to a folder to save 390px light and dark captures there (nothing is written without it).
 import { test, expect } from "@playwright/test";
 import { mkdirSync } from "node:fs";
@@ -96,7 +97,7 @@ for (const scheme of ["light", "dark"]) {
 }
 
 test("other books show no review button, and their review address falls back to the book's home", async ({ page }) => {
-  for (const id of ["cphims", "cisa", "lsat"]) {
+  for (const id of ["cphims"]) {
     await page.goto(`/#${id}/home`);
     await expect(page.locator("#page h1")).toBeVisible();
     await expect(page.locator("#page .mockhome, #page #mocksoon").first()).toBeAttached();
@@ -109,7 +110,8 @@ test("other books show no review button, and their review address falls back to 
   }
 });
 
-// ---- Hearth (asep) and The Copilot Rollout (gh300): sections come from D.sections, so the expected layout is read from the data ----
+// ---- Hearth (asep), The Copilot Rollout (gh300), Exception Noted (cisa), Danny's Logbook (pilot) and The Appeal (lsat): sections come
+// from D.sections, so the expected layout is read from the data ----
 const KIND_ITEM = { list: "list", formulas: "formula", terms: "term", rules: "rule", contrasts: "contrast" };
 const bookReview = (page, id) => page.evaluate(id => {
   const D = window.HALCYON_REVIEW[id];
@@ -122,7 +124,10 @@ const bookReview = (page, id) => page.evaluate(id => {
 }, id);
 const BOOKS = [
   { id: "asep", body: "INCOSE" },
-  { id: "gh300", body: "GitHub or Microsoft" }
+  { id: "gh300", body: "GitHub or Microsoft" },
+  { id: "cisa", body: "ISACA" },
+  // pilot joins when its new lesson sections ship with the recording (2026-10-25)
+  { id: "lsat", body: "LSAC" }
 ];
 
 for (const { id, body } of BOOKS) {
@@ -153,6 +158,7 @@ for (const { id, body } of BOOKS) {
   });
 
   test(`${id}: every link lands on an existing lesson section, labeled with its heading`, async ({ page }) => {
+    test.setTimeout(240_000); // the walk below opens every distinct lesson section the page links to, over a hundred for the pilot book
     await page.goto(`/#${id}/review`);
     await expect(page.locator("#page h1")).toHaveText("Exam week review");
     const bad = await page.evaluate(id => {
