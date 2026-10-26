@@ -110,7 +110,7 @@ test("a badge earned after the backfill toasts once; the toast waits out Focus m
 
   // the practice exam's intro screen holds them (anywhere in the mock flow until it's submitted or left)
   page.on("dialog", d => d.accept());
-  await page.goto("/#pmp/mock");
+  await page.goto("/#pmp/mock/1"); // two forms since 2026-10-26, so /mock alone is the picker
   await expect(page.locator("#exam")).toBeVisible();
   await page.clock.runFor(2000);
   await expect(page.locator("#toast .tcard")).toHaveCount(0);

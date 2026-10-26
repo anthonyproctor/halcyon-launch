@@ -177,9 +177,10 @@ test("other books' mocks are unchanged: no sitting card, and a sitting address f
   await expect(page.locator("#page")).not.toContainText("Full sitting");
   await page.goto("/#cphims/mock/sitting"); await page.reload();
   await expect(page.locator("#page .story").first()).toContainText("Two full practice exams.");
-  await page.goto("/#pmp/mock/sitting"); await page.reload();
+  await page.goto("/#pmp/mock/sitting"); await page.reload(); // PMP has two forms since 2026-10-26, so this is the picker too
   await expect(page.locator("#page h1")).toHaveText("PMP practice exam");
-  await expect(page.locator("#exam")).toBeVisible();
+  await expect(page.locator("#page .mockform")).toHaveCount(2);
+  await expect(page.locator("#page .story").first()).toContainText("Two full practice exams.");
   await expect(page.locator("#page")).not.toContainText("Full sitting");
   const sitKeys = await page.evaluate(() => Object.keys(localStorage).filter(k => { const n = +(/^halcyon\.c(\d+)$/.exec(k) || [])[1]; return n < 99000 && [990, 991].includes(n % 10000) }));
   expect(sitKeys).toEqual([]);

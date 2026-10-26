@@ -4,7 +4,7 @@
 import fs from 'fs';
 globalThis.window={};
 let files=process.argv.slice(2).filter(a=>a!=="--v2");
-if(!files.length){const w={};new Function('window',fs.readFileSync('full/v2/preview.js','utf8'))(w);files=[...(w.HALCYON_V2.files||[]).filter(f=>/^ch\d+\.js$/.test(f)).map(f=>'full/v2/'+f),'mock/people.js','mock/process.js','mock/business.js']}
+if(!files.length){const w={};new Function('window',fs.readFileSync('full/v2/preview.js','utf8'))(w);files=[...(w.HALCYON_V2.files||[]).filter(f=>/^ch\d+\.js$/.test(f)).map(f=>'full/v2/'+f),'mock/people.js','mock/process.js','mock/business.js',...['mock/form2_people.js','mock/form2_process.js','mock/form2_business.js'].filter(f=>fs.existsSync(f))]}
 const V2=true;
 const V2M=await import('./v2meta.mjs');
 for(const f of files) new Function('window',fs.readFileSync(f,'utf8'))(globalThis.window);
@@ -69,6 +69,15 @@ const MCASES=(window.HALCYON_MOCK||[]).flatMap(m=>m.cases||[]),MQS=(window.HALCY
 MCASES.forEach((k,i)=>{if(!k.id||!k.title||!Array.isArray(k.text)||!k.text.length)err(`mock case ${i} needs id, title, text[]`);if(MCASES.filter(c=>c.id===k.id).length>1)err(`mock case ${k.id} defined twice`);
   const cq=MQS.filter(x=>x.case===k.id).map(x=>x.cq).sort((a,b)=>a-b);if(cq.length<2)err(`mock case ${k.id} has ${cq.length} items`);if(cq.some((v,j)=>v!==j+1))err(`mock case ${k.id} cq ${cq} (want 1 to ${cq.length})`);
   if(dash([k.title,...k.text].join(" ")))err(`mock case ${k.id} dash`);console.log(`mock case ${k.id}: ${cq.length} items`)});
+// forms (2026-10-25): a part with form:n (or a part name "Mn:") belongs to form n, as engine.js partForm reads it. A case item must use a
+// case of its own form, question ids (part.slice(0,3)+index) must be unique across all forms, and each form reports its weights.
+const PF=p=>(p&&p.form!=null&&Number.isInteger(+p.form)&&+p.form>=1)?+p.form:((/^M(\d+):/.exec((p&&p.part)||"")||[])[1]|0||1);
+{const ids=new Set(),FS={};for(const m of (window.HALCYON_MOCK||[])){const f=PF(m),F=FS[f]=FS[f]||{n:0,dom:{},ap:{},tasks:new Set(),cases:new Set()};
+  (m.cases||[]).forEach(k=>F.cases.add(k.id));m.questions.forEach((x,i)=>{const id=m.part.slice(0,3)+i;if(ids.has(id))err(`mock id ${id} is used twice (part ${m.part})`);ids.add(id);
+    F.n++;F.dom[x.domain]=(F.dom[x.domain]||0)+1;F.ap[x.approach]=(F.ap[x.approach]||0)+1;F.tasks.add(x.task)})}
+  for(const m of (window.HALCYON_MOCK||[])){const F=FS[PF(m)];m.questions.forEach((x,i)=>{if(x.case!==undefined&&!F.cases.has(x.case))err(`${m.part} q${i} case ${x.case} isn't a case of form ${PF(m)}`)})}
+  for(const [f,F] of Object.entries(FS)){const miss=[...TASKS].filter(t=>!F.tasks.has(t));if(miss.length)err(`mock form ${f} has no item for ${miss.join(" ")}`);
+    console.log(`mock form ${f}: ${F.n} questions, ${JSON.stringify(F.dom)}, ${JSON.stringify(F.ap)}`)}}
 for(const m of (window.HALCYON_MOCK||[])){
   console.log(`mock part ${m.part}: ${m.questions.length} questions`);
   const pos=[0,0,0,0];let ql=0;const prose=[];

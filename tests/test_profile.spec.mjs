@@ -55,7 +55,7 @@ test("test profile: real progress, mocks, study log, place and Continue stay unt
   await page.goto("/#pmp/full/1");
   await decide(page, 0);
   await study(page, 2);
-  await mockAnswer(page, "/#pmp/mock");
+  await mockAnswer(page, "/#pmp/mock/1"); // two PMP forms since 2026-10-26
   await mockAnswer(page, "/#cphims/mock/2");
   await page.evaluate(() => { localStorage.setItem("halcyon.bookpos.pmp.3", "312.5"); localStorage.setItem("halcyon.carpos.f1-open", "41") });
   await page.goto("/#library");
@@ -84,7 +84,7 @@ test("test profile: real progress, mocks, study log, place and Continue stay unt
   expect(await page.evaluate(() => document.querySelectorAll("#page .outcome").length)).toBe(0); // the real decision isn't shown
   await decide(page, 1);
   await study(page, 3);
-  await mockAnswer(page, "/?qa=1#pmp/mock");
+  await mockAnswer(page, "/?qa=1#pmp/mock/1");
   await mockAnswer(page, "/?qa=1#cphims/mock/2");
   await mockAnswer(page, "/?qa=1#cphims/mock/1");
   await page.evaluate(() => { document.dispatchEvent(new Event("visibilitychange")); window.dispatchEvent(new Event("pagehide")) });
@@ -157,7 +157,7 @@ test("test profile: signed in online, nothing goes to /api/progress and the serv
   await decide(page, 1);
   expect(await page.evaluate(tp => localStorage.getItem(tp + "c201"), TP)).not.toContain("servermarker");
   await study(page, 2);
-  await mockAnswer(page, "http://halcyon.test/#pmp/mock");
+  await mockAnswer(page, "http://halcyon.test/#pmp/mock/1");
   // a hidden tab flushes the study log and the listening spot with keepalive writes in the real profile; in the test profile nothing
   await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, get: () => true }); document.dispatchEvent(new Event("visibilitychange")); window.dispatchEvent(new Event("pagehide")) });
   await page.evaluate(() => { delete document.hidden; document.dispatchEvent(new Event("visibilitychange")) }); // a visible tab pulls from the server in the real profile

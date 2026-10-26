@@ -67,7 +67,7 @@ test.describe("a course with no mock question bank (CISA)", () => {
     await page.goto("/#pmp/home");
     await expect(page.locator("#mockbtn")).toBeVisible();
     await expect(page.locator("#mocksoon")).toHaveCount(0);
-    await page.goto("/#pmp/mock");
+    await page.goto("/#pmp/mock/1"); // two forms since 2026-10-26, so /mock alone is the picker
     await expect(page.locator("#exam")).toBeVisible();
   });
 });
@@ -112,7 +112,7 @@ for (const width of [390, 1280]) {
     await page.goto("/#pmp/full/1"); await page.waitForSelector("#page .chmap"); await check("pmp ch1 open");
     await page.locator("#fnext").click(); await check("pmp ch1 lesson");
     await page.goto("/#pmp/listen"); await page.waitForSelector("#page h1"); await check("pmp audiobook");
-    await page.goto("/#pmp/mock"); await page.locator("#practice").click(); await check("pmp mock practice");
+    await page.goto("/#pmp/mock/1"); await page.locator("#practice").click(); await check("pmp mock practice");
     await page.goto("/#cisa/cast"); await page.waitForSelector("#page h1"); await check("cisa cast");
     expect(where, where.join("\n")).toEqual([]);
   });

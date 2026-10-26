@@ -8,7 +8,7 @@ async function seed(page, course, key, form) {
   await page.goto(`/#${course}/home`);
   await page.waitForFunction(c => { const d = c === "pmp" ? { mock: window.HALCYON_MOCK } : (window.HALCYON_DATA || {})[c]; return !!(d && d.mock && d.mock.length) }, course);
   const order = await page.evaluate(([c, f]) => { const d = c === "pmp" ? window.HALCYON_MOCK : window.HALCYON_DATA[c].mock, o = [];
-    d.forEach(p => { if (!/^M\d+:/.test(p.part) || p.part.startsWith(`M${f}:`)) p.questions.forEach((q, i) => o.push({ id: p.part.slice(0, 3) + i, c: q.case || "", cq: q.cq || 0 })) });
+    d.forEach(p => { const pf = p.form != null ? +p.form : +((/^M(\d+):/.exec(p.part) || [])[1] || 1); if (pf === f) p.questions.forEach((q, i) => o.push({ id: p.part.slice(0, 3) + i, c: q.case || "", cq: q.cq || 0 })) });
     const first = o.find(x => x.c).c; // the first case's items first, in cq order, then the rest
     return [...o.filter(x => x.c === first).sort((a, b) => a.cq - b.cq), ...o.filter(x => x.c !== first)].map(x => x.id) }, [course, form]);
   const st = { mode: "exam", form, order, ans: {}, flagged: {}, cur: 0, elapsed: 0, breaksTaken: [], onBreak: null, submitted: false, startedAt: "2026-10-25T10:00:00.000Z" };
@@ -36,6 +36,6 @@ test("other books keep the default labels: CPHIMS picker and PMP case header", a
   await page.goto("/#cphims/mock"); await page.reload();
   await expect(page.locator("#page .story").first()).toContainText("Two full practice exams. Each one has its own questions");
   await seed(page, "pmp", 900, 1);
-  await page.goto("/#pmp/mock"); await page.reload();
+  await page.goto("/#pmp/mock/1"); await page.reload(); // two forms since 2026-10-26, so /mock alone is the picker
   await expect(page.locator("#page details.qmcase summary .kicker")).toHaveText("Case study, question 1 of 5");
 });

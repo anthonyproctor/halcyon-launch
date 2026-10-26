@@ -15,7 +15,7 @@ async function bank(page, course) {
   await page.goto(`/#${course}/home`);
   await page.waitForFunction(c => { const d = c === "pmp" ? { mock: window.HALCYON_MOCK } : (window.HALCYON_DATA || {})[c]; return !!(d && d.mock && d.mock.length) }, course);
   return page.evaluate(c => { const d = c === "pmp" ? { mock: window.HALCYON_MOCK } : window.HALCYON_DATA[c]; const out = [];
-    d.mock.forEach(p => p.questions.forEach((q, i) => out.push({ id: p.part.slice(0, 3) + i, part: p.part, a: q.a, n: q.opts.length, task: q.task, domain: q.domain, scored: q.scored !== false }))); return out }, course);
+    d.mock.forEach(p => p.questions.forEach((q, i) => out.push({ id: p.part.slice(0, 3) + i, part: p.part, form: p.form != null ? +p.form : +((/^M(\d+):/.exec(p.part) || [])[1] || 1), a: q.a, n: q.opts.length, task: q.task, domain: q.domain, scored: q.scored !== false }))); return out }, course);
 }
 // stores an attempt; ans(q) gives the option to pick for question q, or undefined to leave it blank
 async function seedAttempt(page, key, qs, ans, extra = {}) {
@@ -128,19 +128,19 @@ test("two CPHIMS forms appear separately, each with its own attempt and history;
   await expect(t.locator("tr").nth(2).locator("td").nth(1)).toHaveText("1");
 });
 
-for (const [course, n] of [["pmp", 180]]) { // CISA has two forms since 2026-10-26 (test below)
-  test(`${course}: every mock part is one exam (${n} questions, no picker)`, async ({ page }) => {
-    await page.goto(`/#${course}/mock`);
-    await expect(page.locator("#exam")).toBeVisible();
-    await expect(page.locator("#page .mockform")).toHaveCount(0);
+test("pmp: two practice exam forms, each 180 questions, no handbook mode", async ({ page }) => { // form 2 since 2026-10-26
+  await page.goto("/#pmp/mock"); await page.reload();
+  await expect(page.locator("#page .mockform")).toHaveCount(2);
+  await expect(page.locator("#exam")).toHaveCount(0); // /mock alone is the picker
+  for (const f of [1, 2]) {
+    await page.goto(`/#pmp/mock/${f}`); await page.reload();
     await expect(page.locator("#handbook")).toHaveCount(0); // no unscored items, no handbook mode
-    await expect(page.locator("#page .story").first()).toContainText(`${n} questions.`);
+    await expect(page.locator("#page .story").first()).toContainText("180 questions.");
     await page.locator("#exam").click();
-    await expect(page.locator("#page .kicker")).toContainText(`Exam mode · Question 1 of ${n}`);
-    await expect(page.locator("#page .kicker")).not.toContainText("Practice exam 1");
-    expect(page.url()).toMatch(new RegExp(`#${course}/mock$`));
-  });
-}
+    await expect(page.locator("#page .kicker")).toContainText("Exam mode · Question 1 of 180");
+    expect(page.url()).toMatch(new RegExp(`#pmp/mock/${f}$`));
+  }
+});
 
 test("CPHIMS results: Systems Management by subdomain, and reread pointers for weak areas (every chapter is written, so every pointer links)", async ({ page }) => {
   const errs = []; page.on("pageerror", e => errs.push(e.message));
@@ -182,9 +182,9 @@ test("CPHIMS results: Systems Management by subdomain, and reread pointers for w
 });
 
 test("PMP and CISA results also point to chapters: PMP from its chapters' task tags, CISA from meta.js", async ({ page }) => {
-  const pmp = await bank(page, "pmp");
+  const pmp = (await bank(page, "pmp")).filter(q => q.form === 1); // form 1 only; form 2 ships in mock/form2_*.js (2026-10-26)
   await seedAttempt(page, 900, pmp, q => q.domain === "People" ? wrong(q) : q.a, { submitted: true });
-  await page.goto("/#pmp/mock"); await page.reload();
+  await page.goto("/#pmp/mock/1"); await page.reload(); // two forms, so /mock alone is the picker
   await expect(page.locator("#page .subgrid")).toHaveCount(0); // no subdomains
   const li = page.locator("#page ul.reread li");
   await expect(li).toHaveCount(1);

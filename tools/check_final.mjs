@@ -6,7 +6,7 @@ import fs from "fs";
 globalThis.window = {};
 const load = f => new Function("window", fs.readFileSync(f, "utf8"))(globalThis.window);
 load("final/pmp.js");
-["mock/people.js", "mock/process.js", "mock/business.js"].forEach(load);
+["mock/people.js", "mock/process.js", "mock/business.js", "mock/form2_people.js", "mock/form2_process.js", "mock/form2_business.js"].forEach(load);
 const w = {}; new Function("window", fs.readFileSync("full/v2/preview.js", "utf8"))(w);
 (w.HALCYON_V2.files || []).filter(f => /^ch\d+\.js$/.test(f)).forEach(f => load("full/v2/" + f));
 
