@@ -31,7 +31,7 @@ test("renders the headline, the six books (four with clips, The Appeal and Heart
   }
   await expect(page.locator(".book[data-book=pmp] h3")).toHaveText("The Halcyon Launch");
   await expect(page.locator(".book[data-book=pmp] .meta")).toHaveText("All 15 chapters out");
-  await expect(page.locator("footer")).toContainText("aren't affiliated with or endorsed by PMI, HIMSS, ISACA, INCOSE, LSAC, or the FAA");
+  await expect(page.locator("footer")).toContainText("aren't affiliated with or endorsed by PMI, HIMSS, ISACA, INCOSE, GitHub, Microsoft, LSAC, or the FAA");
   await expect(page.locator("footer")).toContainText("ASEP is an INCOSE certification.");
   const text = await page.locator("body").innerText();
   expect(text).not.toMatch(/\bapproved\b|guarantee|PDU|official/i);
