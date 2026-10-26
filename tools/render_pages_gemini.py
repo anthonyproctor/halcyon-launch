@@ -57,6 +57,17 @@ course = os.environ.get("GEMINI_COURSE")
 if not course:
     cwd = os.getcwd().split(os.sep)
     course = cwd[-1] if len(cwd) > 1 and cwd[-2] == "courses" else "pmp"
+# spoken forms for one book only: a key like "DEN" or "6/28" means something else elsewhere, and a global key would change other
+# books' recorded requests (2026-10-25, pilot listener pass 2)
+SAY_COURSE = {"pilot": {"35R": "three five right", "35L": "three five left", "17L": "one seven left",
+    "1600Z": "sixteen hundred Zulu", "2000Z": "two thousand Zulu", "0100Z": "oh one hundred Zulu", "M03": "minus three",
+    "DEN": "Denver", "APA": "A P A", "2 1/2": "two and a half", "1 SM": "one mile", "3 SM": "three miles", "25 NM": "twenty five miles",
+    "61.89(a)(6)": "sixty one point eight nine, A six", "61.93(a)": "sixty one point nine three, A",
+    "91.211(a)(1)": "ninety one point two one one, A one", "61.56(c)": "sixty one point five six, C", "61.43(e)": "sixty one point four three, E",
+    "6/28": "June 28", "50 hrs": "fifty hours", "36 hrs": "thirty six hours"}}
+if SAY_COURSE.get(course):
+    SAY.update(SAY_COURSE[course])
+    SAY_RE = re.compile(r"(?<![\w-])(" + "|".join(map(re.escape, sorted(SAY, key=len, reverse=True))) + r")(?![\w-])")
 VOICES = json.load(open(os.path.join(HERE, "gemini_voices.json")))
 CMAP, DMAP = VOICES["courses"].get(course, {}), VOICES["default"]
 def cast(who):
