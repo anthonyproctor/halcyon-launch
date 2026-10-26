@@ -46,7 +46,7 @@ test("a shared passage shows once above its three questions, folds on a phone, a
   await pass.locator("summary").click();
   await expect(pass).not.toHaveAttribute("open", "");
   // answer every item with its key and check: all right, passage still shown
-  const keys = await page.evaluate(() => window.HALCYON_DATA.lsat.full[0].quiz.map(q => q.a));
+  const keys = await page.evaluate(() => { const F = window.HALCYON_DATA.lsat.full; const ch = F.find(c => JSON.stringify(c).includes("First fixture passage paragraph")) || F[0]; return ch.quiz.map(q => q.a) }); // the fixture chapter, not whichever chapter loaded first (real chapters have 20 items since 2026-10-25)
   for (let qi = 0; qi < keys.length; qi++) await page.locator(`#quizform input[name=q${qi}][value="${keys[qi]}"]`).check({ force: true });
   await page.locator("#quizform button[type=submit], #quizform input[type=submit]").first().click();
   await expect(page.locator("#quizform .qopt.qright")).toHaveCount(18);
