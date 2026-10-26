@@ -1644,6 +1644,10 @@ function fgLink(){const pg=$("page");if(!pg||!(TRACK==="full"||TRACK==="ref")||!
 /* ===== exam week review (2026-10-25) =====
    One on screen page for the last days before the exam (never narrated): formulas, key terms, what the exam wants, agile vs predictive.
    A course's review file sets window.HALCYON_REVIEW[course id] (PMP: courses/pmp/review.js, loaded by pmpLoad; its header has the shape).
+   Other books load courses/<id>/review.js from their scripts list in courses.js (Hearth and The Copilot Rollout, 2026-10-25). A book's
+   sections default to PMP's four; D.sections ([[id, title, kind]], data in D[id]) sets its own. Kinds: formulas, terms, rules, contrasts
+   (labels from it.l, else D.vs, else Predictive and Agile; text from it.a and it.b, else it.pred and it.agile) and list (groups of
+   {name, where?, d} items, like formulas without the formula line).
    #<course>/review opens it, from the button in the home page's Practice exam card; a book without an entry has neither.
    Each item links to the lesson that teaches it (rvGo: openLesson, then the lesson section), labeled with that section's own heading. */
 const RV={y:0};
@@ -1656,15 +1660,17 @@ function rvGo(n,sec){RV.y=scrollY;openLesson(n);const pg=$("page");if(!pg)return
   const el=sec>=0?pg.querySelectorAll("section.lesson")[sec]:null;if(el){scrMine(700);el.scrollIntoView({block:"start"})}}
 function renderReview(){setTimeout(ambSync,0);const D=rvData();if(!D){renderHome();return}TRACK="review";CH=null;setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;
   const sec=(id,title,html)=>`<section class="rvsec" id="rv-${id}" aria-labelledby="rvh-${id}"><h2 id="rvh-${id}">${title}</h2>${html}</section>`;
-  const S=[["formulas","The formulas"],["terms","Key terms"],["rules","What the exam wants"],["contrasts","Agile vs. predictive"]];
-  const formulas=D.formulas.map(g=>`<h3 class="rvgroup">${esc(g.group)}</h3>${g.note?`<p class="rvnote">${esc(g.note)}</p>`:""}<div class="rvlist">${g.items.map(it=>`<div class="rvitem" data-rvitem="formula"><b>${esc(it.name)}</b><code class="rvf">${esc(it.f)}</code><p>${esc(it.means)}</p><p class="rvex"><span class="prog">Example:</span> ${esc(it.ex)}</p>${rvLink(it)}</div>`).join("")}</div>`).join("");
-  const terms=D.terms.map(g=>`<h3 class="rvgroup">${esc(g.group)}</h3><dl class="terms rvterms">${g.items.map(it=>`<dt data-rvitem="term">${esc(it.t)}</dt><dd>${esc(it.d)} ${rvLink(it)}</dd>`).join("")}</dl>`).join("");
-  const rules=`<ol class="rvrules">${D.rules.map(it=>`<li data-rvitem="rule"><b>${esc(it.r)}</b> ${esc(it.why)} ${rvLink(it)}</li>`).join("")}</ol>`;
-  const contrasts=`<div class="rvlist">${D.contrasts.map(it=>`<div class="rvitem rvvs" data-rvitem="contrast"><b>${esc(it.topic)}</b><div class="rvcols"><div><span class="kicker">Predictive</span><p>${esc(it.pred)}</p></div><div><span class="kicker">Agile</span><p>${esc(it.agile)}</p></div></div>${rvLink(it)}</div>`).join("")}</div>`;
+  const S=D.sections||[["formulas","The formulas","formulas"],["terms","Key terms","terms"],["rules","What the exam wants","rules"],["contrasts","Agile vs. predictive","contrasts"]];
+  const K={
+    formulas:L=>L.map(g=>`<h3 class="rvgroup">${esc(g.group)}</h3>${g.note?`<p class="rvnote">${esc(g.note)}</p>`:""}<div class="rvlist">${g.items.map(it=>`<div class="rvitem" data-rvitem="formula"><b>${esc(it.name)}</b><code class="rvf">${esc(it.f)}</code><p>${esc(it.means)}</p><p class="rvex"><span class="prog">Example:</span> ${esc(it.ex)}</p>${rvLink(it)}</div>`).join("")}</div>`).join(""),
+    list:L=>L.map(g=>`<h3 class="rvgroup">${esc(g.group)}</h3>${g.note?`<p class="rvnote">${esc(g.note)}</p>`:""}<div class="rvlist">${g.items.map(it=>`<div class="rvitem" data-rvitem="list"><b>${esc(it.name)}</b>${it.where?`<span class="prog rvwhere">${esc(it.where)}</span>`:""}<p>${esc(it.d)}</p>${rvLink(it)}</div>`).join("")}</div>`).join(""),
+    terms:L=>L.map(g=>`<h3 class="rvgroup">${esc(g.group)}</h3><dl class="terms rvterms">${g.items.map(it=>`<dt data-rvitem="term">${esc(it.t)}</dt><dd>${esc(it.d)} ${rvLink(it)}</dd>`).join("")}</dl>`).join(""),
+    rules:L=>`<ol class="rvrules">${L.map(it=>`<li data-rvitem="rule"><b>${esc(it.r)}</b> ${esc(it.why)} ${rvLink(it)}</li>`).join("")}</ol>`,
+    contrasts:L=>`<div class="rvlist">${L.map(it=>{const l=it.l||D.vs||["Predictive","Agile"];return `<div class="rvitem rvvs" data-rvitem="contrast"><b>${esc(it.topic)}</b><div class="rvcols"><div><span class="kicker">${esc(l[0])}</span><p>${esc(it.a!==undefined?it.a:it.pred)}</p></div><div><span class="kicker">${esc(l[1])}</span><p>${esc(it.b!==undefined?it.b:it.agile)}</p></div></div>${rvLink(it)}</div>`}).join("")}</div>`};
   $("page").innerHTML=`<div class="kicker"><button class="linkbtn" type="button" id="rvhome">${esc(COURSE.title)}</button> · Practice exam</div><h1>Exam week review</h1>
     <div class="story">${D.intro.map(p=>`<p>${esc(p)}</p>`).join("")}</div>
     <nav class="rvjump" aria-label="On this page">${S.map(([id,t])=>`<button class="btn small ghost" type="button" data-rvjump="${id}">${t}</button>`).join("")}</nav>
-    ${sec("formulas","The formulas",formulas)}${sec("terms","Key terms",terms)}${sec("rules","What the exam wants",rules)}${sec("contrasts","Agile vs. predictive",contrasts)}
+    ${S.map(([id,t,k])=>sec(id,t,K[k||id](D[id]))).join("")}
     ${hasMock()?`<div class="bar"><button class="btn" type="button" id="rvmock">Open the practice exam</button></div>`:""}`;
   const pg=$("page");$("rvhome").onclick=()=>{renderHome();top()};if($("rvmock"))$("rvmock").onclick=()=>openMock();
   pg.querySelectorAll("[data-rvjump]").forEach(b=>b.onclick=()=>{const el=$("rv-"+b.dataset.rvjump);if(el){scrMine(700);el.scrollIntoView({block:"start",behavior:"smooth"})}});
