@@ -44,6 +44,7 @@ SAY.update({"prevent_destroy": "prevent destroy", "pre_admissions.csv": "pre adm
             "scheduler.ts": "scheduler dot T S", "86400000": "eighty six million, four hundred thousand",
             "CO2": "C O two", "BKN012": "broken zero one two", "FM141600": "from the fourteenth at sixteen hundred Zulu", "760241": "seven six zero two four one", "2614+05": "two six one four, plus zero five", "91.155(d)": "ninety one point one fifty five D", "91.137(a)(2)": "ninety one point one thirty seven, A two", "AO2": "A O two", "AO1": "A O one", "KAPA": "K A P A", "pell_dba": "pell D B A", "ISO 42010": "I S O forty two oh ten", "ISO/IEC/IEEE 42010": "I S O, I E C, I triple E, forty two oh ten"})  # Hearth (2026-10-23)
 SAY.update({"starts with &": "starts with an ampersand"})  # GH-300 f6s7 (2026-10-25 listener pass 2)
+SAY.update({"bnyland": "B Nyland", "pnop2": "P N O P two"})  # CISA ch8, ch9 (2026-10-25 listener pass 2)
 SAY.update({"SoS": "system of systems"})  # Hearth ch4 (2026-10-25 listener pass 2)
 SAY.update({"EXT0412": "E X T zero four one two", "WPA2": "W P A two", "WPA3": "W P A three"})  # CISA ch10, ch12 (2026-10-25 listener lint)
 SAY_RE = re.compile(r"(?<![\w-])(" + "|".join(map(re.escape, sorted(SAY, key=len, reverse=True))) + r")(?![\w-])")
