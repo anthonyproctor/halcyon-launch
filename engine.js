@@ -1641,6 +1641,34 @@ function fgLink(){const pg=$("page");if(!pg||!(TRACK==="full"||TRACK==="ref")||!
 
 
 /* #labtest: every fixture lab in tools/lab_fixture.js on one page, for checking lab kinds no course uses yet. Saved on this device only. */
+/* ===== exam week review (2026-10-25) =====
+   One on screen page for the last days before the exam (never narrated): formulas, key terms, what the exam wants, agile vs predictive.
+   A course's review file sets window.HALCYON_REVIEW[course id] (PMP: courses/pmp/review.js, loaded by pmpLoad; its header has the shape).
+   #<course>/review opens it, from the button in the home page's Practice exam card; a book without an entry has neither.
+   Each item links to the lesson that teaches it (rvGo: openLesson, then the lesson section), labeled with that section's own heading. */
+const RV={y:0};
+function rvData(){const R=window.HALCYON_REVIEW;return COURSE&&R&&R[COURSE.id]||null}
+function rvLink(it){if(it.mock)return hasMock()?`<button class="linkbtn rvgo" type="button" data-rvmock="1">Taught in the practice exam</button>`:"";
+  const c=TRACKS.full.list().find(x=>x.num===it.ch);if(!c)return "";const s=c.lesson&&c.lesson.sections[it.sec];
+  return `<button class="linkbtn rvgo" type="button" data-rvch="${c.num}" data-rvsec="${s?+it.sec:-1}">Chapter ${c.num}${s?": "+esc(s.h):", the lesson"}</button>`}
+function rvGo(n,sec){RV.y=scrollY;openLesson(n);const pg=$("page");if(!pg)return;
+  const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button" id="rvback">← Back to the exam week review</button>`;pg.prepend(d);$("rvback").onclick=()=>{renderReview();scrMine(700);window.scrollTo(0,RV.y)};
+  const el=sec>=0?pg.querySelectorAll("section.lesson")[sec]:null;if(el){scrMine(700);el.scrollIntoView({block:"start"})}}
+function renderReview(){setTimeout(ambSync,0);const D=rvData();if(!D){renderHome();return}TRACK="review";CH=null;setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;
+  const sec=(id,title,html)=>`<section class="rvsec" id="rv-${id}" aria-labelledby="rvh-${id}"><h2 id="rvh-${id}">${title}</h2>${html}</section>`;
+  const S=[["formulas","The formulas"],["terms","Key terms"],["rules","What the exam wants"],["contrasts","Agile vs. predictive"]];
+  const formulas=D.formulas.map(g=>`<h3 class="rvgroup">${esc(g.group)}</h3>${g.note?`<p class="rvnote">${esc(g.note)}</p>`:""}<div class="rvlist">${g.items.map(it=>`<div class="rvitem" data-rvitem="formula"><b>${esc(it.name)}</b><code class="rvf">${esc(it.f)}</code><p>${esc(it.means)}</p><p class="rvex"><span class="prog">Example:</span> ${esc(it.ex)}</p>${rvLink(it)}</div>`).join("")}</div>`).join("");
+  const terms=D.terms.map(g=>`<h3 class="rvgroup">${esc(g.group)}</h3><dl class="terms rvterms">${g.items.map(it=>`<dt data-rvitem="term">${esc(it.t)}</dt><dd>${esc(it.d)} ${rvLink(it)}</dd>`).join("")}</dl>`).join("");
+  const rules=`<ol class="rvrules">${D.rules.map(it=>`<li data-rvitem="rule"><b>${esc(it.r)}</b> ${esc(it.why)} ${rvLink(it)}</li>`).join("")}</ol>`;
+  const contrasts=`<div class="rvlist">${D.contrasts.map(it=>`<div class="rvitem rvvs" data-rvitem="contrast"><b>${esc(it.topic)}</b><div class="rvcols"><div><span class="kicker">Predictive</span><p>${esc(it.pred)}</p></div><div><span class="kicker">Agile</span><p>${esc(it.agile)}</p></div></div>${rvLink(it)}</div>`).join("")}</div>`;
+  $("page").innerHTML=`<div class="kicker"><button class="linkbtn" type="button" id="rvhome">${esc(COURSE.title)}</button> · Practice exam</div><h1>Exam week review</h1>
+    <div class="story">${D.intro.map(p=>`<p>${esc(p)}</p>`).join("")}</div>
+    <nav class="rvjump" aria-label="On this page">${S.map(([id,t])=>`<button class="btn small ghost" type="button" data-rvjump="${id}">${t}</button>`).join("")}</nav>
+    ${sec("formulas","The formulas",formulas)}${sec("terms","Key terms",terms)}${sec("rules","What the exam wants",rules)}${sec("contrasts","Agile vs. predictive",contrasts)}
+    ${hasMock()?`<div class="bar"><button class="btn" type="button" id="rvmock">Open the practice exam</button></div>`:""}`;
+  const pg=$("page");$("rvhome").onclick=()=>{renderHome();top()};if($("rvmock"))$("rvmock").onclick=()=>openMock();
+  pg.querySelectorAll("[data-rvjump]").forEach(b=>b.onclick=()=>{const el=$("rv-"+b.dataset.rvjump);if(el){scrMine(700);el.scrollIntoView({block:"start",behavior:"smooth"})}});
+  pg.querySelectorAll("[data-rvch]").forEach(b=>b.onclick=()=>rvGo(+b.dataset.rvch,+b.dataset.rvsec));pg.querySelectorAll("[data-rvmock]").forEach(b=>b.onclick=()=>openMock())}
 function renderLabTest(){TRACK="labtest";$("railgame").hidden=true;$("mockcard").hidden=true;const L=(window.HALCYON_LABS||{}).__fixture||[];const st=store.get("labtest",{});
   $("page").innerHTML=`<div class="kicker">Lab test page</div><h1>Lab fixtures</h1><p class="lead">Test data for lab kinds. Answers save on this device only.</p>${L.map(l=>`<section class="lab" id="lab-${esc(l.id)}"></section>`).join("")}`;
   L.forEach((l,k)=>HalcyonLab.mount($("lab-"+l.id),l,st[l.id]||(st[l.id]={q:{}}),{R:x=>x,paras,mentor:"Fixture",k,n:L.length,save:()=>store.set("labtest",st)}))}
@@ -1699,7 +1727,7 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
   if($("guideup"))$("guideup").onclick=()=>{renderUpcoming();top()};if($("guidenotes"))$("guidenotes").onclick=()=>openNotes();$("pdbgt").onchange=e=>{PDBG.on=e.target.checked;store.set("pdbg",PDBG.on);if(!PDBG.on){const el=$("pdbg");if(el)el.remove()}else plog("diagnostics on")}}
 function lastPlaceLabel(){const lp=store.get("lastplace."+COURSE.id,null);if(!lp)return null;if(lp.t==="mock")return hasMock()?[multiForm()&&mockForms().some(x=>x.f===lp.f)?`Practice exam · ${formLabel(lp.f)}`:"Practice exam",()=>openMock(lp.f)]:null;const c=TRACKS[lp.t]&&TRACKS[lp.t].list().find(x=>x.num===lp.n);if(!c)return null;return[`${lp.t==="ref"?"Refresher":"Ch"} ${c.num} · ${c.title}`,()=>openChapter(lp.t,c.num)]}
 /* where you are lives in the address (#pmp/full/3, #guide), so a reload reopens the same screen */
-function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="me"?"me":TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="notes"?c+"/notes":TRACK==="cast"?c+"/cast":TRACK==="fguide"?c+"/guide"+(FG.id?"/"+FG.id:""):(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock"+(multiForm()&&MOCK_FORM?"/"+MOCK_FORM:""):(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
+function noteRoute(){if(!COURSE)return;const c=COURSE.id;const r=TRACK==="me"?"me":TRACK==="library"?"library":TRACK==="guide"?"guide":TRACK==="upcoming"?"upcoming":TRACK==="about"?c+"/about":TRACK==="book"?c+"/listen":TRACK==="notes"?c+"/notes":TRACK==="cast"?c+"/cast":TRACK==="review"?c+"/review":TRACK==="fguide"?c+"/guide"+(FG.id?"/"+FG.id:""):(TRACK==="dash"||TRACK==="practice"||TRACK==="logprint")?c+"/progress":TRACK==="final"?c+"/final":TRACK==="cert"?c+"/certificate":TRACK==="verify"?"verify":TRACK==="mock"?c+"/mock"+(multiForm()&&MOCK_FORM?"/"+MOCK_FORM:""):(TRACK==="full"||TRACK==="ref")&&CH?`${c}/${TRACK}/${CH.num}`:c+"/home";
   store.set("route",r);if(location.hash!=="#"+r)try{history.replaceState(null,"","#"+r)}catch(e){}pageview(r)}
 /* anonymous page views (Vercel Web Analytics, loaded in index.html): the route only, as a path. Never a name, email, id, or progress. */
 let LASTPV="";function pageview(r){if(TESTP||!r||r===LASTPV)return;LASTPV=r;try{if(window.va)window.va("pageview",{path:"/"+r})}catch(e){}}
@@ -1709,14 +1737,14 @@ async function routeTo(h){const p=String(h||"").replace(/^#/,"").split("/").filt
   const c=courseById(p[0]);if(!c||c.status!=="live")return false;if(c.id!==COURSE.id&&!(await useCourse(c.id)))return false;if(!c._loaded&&(c.scripts||c.labs))await useCourse(c.id);
   const v=p[1]||"home",n=+p[2];
   if((v==="full"||v==="ref")&&TRACKS[v].list().find(x=>x.num===n)){openChapter(v,n);return true}
-  if(v==="listen"){renderBook();return true}if(v==="notes"){renderNotes();return true}if(v==="about"){renderAbout();return true}if(v==="cast"||v==="world"){renderCast();return true}if(v==="guide"){renderFieldGuide(p[2]);return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
+  if(v==="listen"){renderBook();return true}if(v==="notes"){renderNotes();return true}if(v==="about"){renderAbout();return true}if(v==="cast"||v==="world"){renderCast();return true}if(v==="guide"){renderFieldGuide(p[2]);return true}if(v==="review"&&rvData()){renderReview();return true}if(v==="progress"){if(p[2]==="log")openLog();else renderDash();return true}if(v==="mock"){openMock(p[2]?n:undefined);return true}if(v==="final"&&c.final){await openFinal();return true}if(v==="certificate"&&c.final){await openCert();return true}
   renderHome();renderRail();return true}
 window.addEventListener("hashchange",()=>{const r=String(location.hash).replace(/^#/,"");if(r&&r!==store.get("route",""))routeTo(location.hash)});
 function navSync(){noteRoute();setTimeout(bdgToastNext,0);try{bookBarSync()}catch(e){console.error(e)}bmRail();const map={home:"homelink",library:"liblink",upcoming:"liblink",dash:"proglink",practice:"proglink",logprint:"proglink",final:"proglink",cert:"proglink",cast:"worldlink",fguide:"worldlink",book:"listenlink",guide:"guidelink",notes:"proglink",me:"username"};["liblink","homelink","proglink","worldlink","listenlink","guidelink","username"].forEach(id=>{const b=$(id);if(b)b.classList.remove("on")});
   const onId=!TRACK?"homelink":map[TRACK];if(onId&&$(onId))$(onId).classList.add("on");
   const cb=$("contlink");if(!cb)return;const lp=lastPlaceLabel();const inPlace=(TRACK==="full"||TRACK==="ref"||TRACK==="mock");
   if(lp&&!inPlace&&TRACK!==null){cb.hidden=false;cb.textContent="Continue: "+lp[0];cb.onclick=()=>{lp[1]();}}else cb.hidden=true;
-  if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="fguide"||TRACK==="dash"||TRACK==="practice"||TRACK==="book"||TRACK==="guide"||TRACK==="notes")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
+  if(!inPlace&&lp&&(TRACK==="cast"||TRACK==="fguide"||TRACK==="review"||TRACK==="dash"||TRACK==="practice"||TRACK==="book"||TRACK==="guide"||TRACK==="notes")){const pg=$("page");if(pg&&!pg.querySelector(".backlink")){const d=document.createElement("p");d.className="backlink";d.innerHTML=`<button class="linkbtn" type="button">← Back to ${esc(lp[0])}</button>`;d.firstChild.onclick=()=>lp[1]();pg.prepend(d)}}}
 
 
 /* ===== audiobook ===== */
@@ -1930,20 +1958,20 @@ function renderHome(){setTimeout(ambSync,0);setTimeout(navSync,0);
    ${labWaitHTML()}<h2>${esc(COURSE.fullName||"Full Course")} <span class="prog">${fullDone} of ${full.length} chapters done${COURSE.planned&&COURSE.planned>full.length?` (${COURSE.planned} planned, more on the way)`:""}${COURSE.fullHours?" · "+COURSE.fullHours:""}</span></h2>
    <div class="ctiles">${full.map(c=>tile("full",c)).join("")}</div>
    ${ref.length?`<h2>Refresher <span class="prog">${ref.length} chapters · a fast review</span></h2><div class="ctiles">${ref.map(c=>tile("ref",c)).join("")}</div>`:""}
-   <h2>Practice exam</h2><div class="card mockhome">${!hasMock()?`<p id="mocksoon">${MOCK_SOON}</p>`:`<p>${COURSE.mockShort||"A full practice exam."} ${last?(multiForm()?`${esc(formLabel(last.f))}. `:"")+lastLine(last):"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the practice exam</button>`}</div>
+   <h2>Practice exam</h2><div class="card mockhome">${!hasMock()?`<p id="mocksoon">${MOCK_SOON}</p>`:`<p>${COURSE.mockShort||"A full practice exam."} ${last?(multiForm()?`${esc(formLabel(last.f))}. `:"")+lastLine(last):"You haven't taken one yet."}</p><button class="btn" type="button" id="mockbtn">Open the practice exam</button>`}${rvData()?`<button class="btn ghost" type="button" id="rvbtn">Exam week review</button>`:""}</div>
    ${finalHomeHTML()}
    <div class="quick"><button class="card qlink" type="button" id="qprog"><b>Progress</b><span class="prog">Scores, the ${ALLT().length}-task map, practice sets</span></button><button class="card qlink" type="button" id="qcast"><b>World</b><span class="prog">The people, and the places they work</span></button></div>`;
   const pg=$("page");wireLabWait();wireFinalHome();
   $("resume").onclick=()=>lp?lp[1]():openChapter("full",1);
   $("hfree").onclick=async()=>{const B=await bookManifest();const lpv=store.get("lastplace."+COURSE.id,null);const ed=store.get("bookEd."+COURSE.id,"story");let n=lpv&&lpv.t==="full"?lpv.n:1;const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);if(!have.length)return renderBook();if(!have.includes(n))n=have.find(k=>k>=n)||have[have.length-1];renderBook();bookPlay(ed,n)};
   pg.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const [tr,n]=b.dataset.open.split(":");openChapter(tr,+n)});
-  $("tolib").onclick=()=>renderLibrary();$("toabout").onclick=()=>{renderAbout();top()};if($("mockbtn"))$("mockbtn").onclick=()=>openMock();$("qprog").onclick=()=>{renderDash();top()};$("qcast").onclick=()=>{renderCast();top()};
+  $("tolib").onclick=()=>renderLibrary();$("toabout").onclick=()=>{renderAbout();top()};if($("mockbtn"))$("mockbtn").onclick=()=>openMock();if($("rvbtn"))$("rvbtn").onclick=()=>{renderReview();top()};$("qprog").onclick=()=>{renderDash();top()};$("qcast").onclick=()=>{renderCast();top()};
   if($("planbtn")){const a=plan[0][2];$("planbtn").onclick=()=>{if(a.bm)return bmJump(bmFind(a.bm));if(a.mock)return openMock();if(a.task)return startPractice(a.task);openChapter("full",a.open)};$("seeplan").onclick=()=>{renderDash();top()}}
 }
 function openChapter(tr,n){libTouch({t:tr,n});store.set("lastplace."+COURSE.id,{t:tr,n});TRACK=tr;store.set("track",tr);store.set("lastch."+COURSE.id+"."+tr,n);CH=chapters().find(c=>c.num===n);S=load(tr,n)||(tr==="ref"?freshRef():freshFull());store.set("cur",keyOf(tr,n));recapResumeMark();render();top()}
 function resetChapter(n){if(!confirm(`Reset chapter ${n}? Your progress in this chapter will be cleared.`))return;const st=TRACK==="ref"?freshRef():freshFull();if(n===CH.num){S=st;save();render();top()}else{persist(TRACK,n,st);renderRail()}}
 function renderRail(){
-  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","fguide","book","library","about","guide","upcoming","logprint","notes"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
+  const rg=$("railgame");if(!TRACK||["mock","dash","practice","cast","fguide","review","book","library","about","guide","upcoming","logprint","notes"].includes(TRACK)){rg.hidden=true}else rg.hidden=false;
   $("trackname").textContent=TRACK?TRACKS[TRACK].name:"";
   if(TRACK==="mock"){if(!hasMock()){$("mockcard").hidden=true;return}$("mockcard").hidden=false;$("mockcard").innerHTML=MS&&!MS.submitted&&MS.order?`<h3>Practice exam</h3><p class="big" id="mocktime">${MS.mode!=="practice"?fmtTime(MOCK_LIMIT()-MS.elapsed):"Practice"}</p><p class="prog">${Object.keys(MS.ans).length} of ${MS.order.length} answered</p>`:`<h3>Practice exam</h3><p class="prog">${MOCK_FORM==null?"Pick a practice exam.":"Pick a mode to start."}</p>`;return}
   $("mockcard").hidden=true;if(!TRACK)return;
@@ -1963,7 +1991,7 @@ function renderRail(){
   recapRail();
 }
 function render(){fgClose(false);_render();try{fgLink()}catch(e){console.error(e)}castStrip();narAttach();navSync();ambSync();handoffOffer();whereSync();bdgToastNext()}
-function _render(){if(TRACK==="me")return renderMe();if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="fguide")return renderFieldGuide(FG.id);if(TRACK==="dash")return renderDash();if(TRACK==="notes")return renderNotes();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();if(TRACK==="final")return finalRender();if(TRACK==="cert")return renderCert();if(TRACK==="verify")return renderVerify();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
+function _render(){if(TRACK==="me")return renderMe();if(TRACK==="library")return renderLibrary();if(TRACK==="upcoming")return renderUpcoming();if(TRACK==="book")return renderBook();if(TRACK==="guide")return renderGuide();if(TRACK==="about")return renderAbout();if(TRACK==="cast")return renderCast();if(TRACK==="fguide")return renderFieldGuide(FG.id);if(TRACK==="review")return renderReview();if(TRACK==="dash")return renderDash();if(TRACK==="notes")return renderNotes();if(TRACK==="practice")return renderPractice();if(TRACK==="logprint")return renderLogPrint();if(TRACK==="final")return finalRender();if(TRACK==="cert")return renderCert();if(TRACK==="verify")return renderVerify();renderRail();if(!TRACK)return renderHome();if(TRACK==="mock")return mockRender();if(TRACK==="ref")return refRender();return fullRender()}
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
@@ -2065,7 +2093,7 @@ function renderLibrary(){setTimeout(ambSync,0);TRACK="library";CH=null;$("railga
   $("page").querySelectorAll("[data-course]").forEach(b=>b.onclick=async()=>{if(await useCourse(b.dataset.course)){renderHome();renderRail();top()}})}
 function resumeFrom(cur){const c=courseOfKey(cur||0);if(c.status==="live"&&c.id!==COURSE.id){useCourse(c.id).then(()=>resumeFrom(cur));return}cur=(cur||0)-COURSE.base;const FB=FULL_BASE();if(cur>=900&&hasMock()){const lp=store.get("lastplace."+COURSE.id,null);return openMock(lp&&lp.t==="mock"?lp.f:undefined)}if(cur>FB&&cur<FB+100){const L=TRACKS.full.list();if(L.find(c=>c.num===cur-FB))return openChapter("full",cur-FB)}else if(cur>=1&&cur<100){const L=TRACKS.ref.list();if(L.find(c=>c.num===cur))return openChapter("ref",cur)}renderHome()}
 /* PMP Full Course: full/v2/preview.js lists the live v2 files (cast.js and each chapter as it's written); they load in place from full/v2/ */
-async function pmpLoad(){window.HALCYON_FULL=[];await loadScripts(["full/v2/preview.js"]);const P=window.HALCYON_V2||{};await loadScripts([...(P.files||[]).map(f=>"full/v2/"+f),"courses/pmp/guide.js"]);buildOrders();
+async function pmpLoad(){window.HALCYON_FULL=[];await loadScripts(["full/v2/preview.js"]);const P=window.HALCYON_V2||{};await loadScripts([...(P.files||[]).map(f=>"full/v2/"+f),"courses/pmp/guide.js","courses/pmp/review.js"]);buildOrders();
   const pc=courseById("pmp");if(pc&&window.HALCYON_RECAPS&&!pc._recaps)pc._recaps=window.HALCYON_RECAPS} // full/v2/recaps.js ("Story so far") is one of the v2 files
 async function boot(){
   await AUD.ready; // instant when HALCYON_AUDIO_BASE is empty
