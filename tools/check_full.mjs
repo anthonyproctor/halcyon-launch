@@ -13,6 +13,15 @@ const DOM={P:"People",R:"Process",B:"Business Environment"};
 const FLAGS=V2M.V2_FLAGS;
 let bad=0;const err=(m)=>{console.log("  ERROR "+m);bad++};
 const dash=t=>/[–—]/.test(t);
+// an item's fig:"<prop ...></prop>" (engine.js figHTML/figChart): a prop the engine can draw, with the attributes its kind needs
+function figCheck(label,f){const m=/^<prop\s+((?:[^>"]|"[^"]*")*)>([\s\S]*)<\/prop>$/.exec(f||"");if(!m)return err(`${label} fig is not one <prop>`);const a={};m[1].replace(/(\w+)="([^"]*)"/g,(_,k,v)=>a[k]=v);
+  const nums=k=>(a[k]||"").split(",").filter(x=>x.trim()!=="").map(Number),bad=k=>!a[k]||nums(k).some(isNaN);if(!a.title)err(`${label} fig needs a title`);
+  if(a.type==="doc")return;if(a.type!=="chart")return err(`${label} fig type ${a.type}`);const n=(a.labels||"").split(",").length;
+  if(a.kind==="cfd"){const S=Object.keys(a).filter(k=>!["type","kind","title","labels","say"].includes(k));if(!a.labels||!S.length)err(`${label} cfd needs labels and states`);S.forEach(k=>{if(bad(k)||nums(k).length!==n)err(`${label} cfd ${k} needs ${n} numbers`)})}
+  else if(a.kind==="control"){for(const k of ["values","mean","ucl","lcl"])if(bad(k))err(`${label} control needs ${k}`);if(+a.lcl>=+a.mean||+a.mean>=+a.ucl)err(`${label} control wants lcl < mean < ucl`)}
+  else if(a.kind==="network"){const ids=new Set((a.nodes||"").split(",").map(s=>s.split(":")[0].trim()).filter(Boolean));if(!ids.size)err(`${label} network needs nodes`);(a.edges||"").split(",").forEach(e=>{const [x,y]=e.split(">").map(s=>(s||"").trim());if(!ids.has(x)||!ids.has(y))err(`${label} network edge ${e}`)})}
+  else if(a.kind==="evm"){for(const k of ["pv","ev","ac"])if(bad(k))err(`${label} evm needs ${k}`)}
+  else if(a.kind)err(`${label} unknown chart kind ${a.kind}`);else if(bad("values")||nums("values").length!==n)err(`${label} bar chart needs labels and values of one length`)}
 function lenCheck(label,texts,right){const L=texts.map(t=>t.length);const others=L.filter((_,k)=>k!==right);
   if(L[right]>1.12*Math.max(...others))err(`${label}: right answer much longer (${L.join("/")})`);
   return {longest:L[right]>Math.max(...others),shortest:L[right]<Math.min(...others)}}
@@ -39,7 +48,7 @@ for(const c of (window.HALCYON_FULL||[])){
   const q=c.quiz||[];if(q.length!==15)err(`quiz=${q.length} (want 15)`);
   const pos=[0,0,0,0];let ql=0;
   q.forEach((x,i)=>{if(x.opts.length!==4||x.a<0||x.a>3)err(`quiz ${i}`);pos[x.a]++;if(!TASKS.has(x.task))err(`quiz ${i} task`);else if(DOM[x.task[0]]!==x.domain)err(`quiz ${i} domain`);
-    if(lenCheck(`quiz ${i}`,x.opts,x.a).longest)ql++;prose.push(x.q,...x.opts,x.why);
+    if(lenCheck(`quiz ${i}`,x.opts,x.a).longest)ql++;prose.push(x.q,...x.opts,x.why);if(x.fig!==undefined){figCheck(`quiz ${i}`,x.fig);prose.push(x.fig)}
     if(V2&&!V2M.APPROACHES.has(x.approach))err(`quiz ${i} approach ${x.approach}`);if(x.case!==undefined&&!(c.cases||[]).some(k=>k.id===x.case))err(`quiz ${i} unknown case ${x.case}`)});
   (c.cases||[]).forEach((k,i)=>{if(!k.id||!k.title||!Array.isArray(k.text)||!k.text.length)err(`case ${i} needs id, title, text[]`);if(!q.some(x=>x.case===k.id))err(`case ${k.id} has no quiz items`);prose.push(k.title||"",...(k.text||[]))});
   if(Math.max(...pos)>6)err(`quiz answer positions ${pos}`); if(ql>5)err(`quiz right answer longest in ${ql}/15`);
@@ -55,10 +64,16 @@ for(const c of (window.HALCYON_FULL||[])){
   console.log(`  ok-ish: scenes ${(c.scenes||[]).length}, best longest ${lb}, shortest ${sb}, quiz pos ${pos}, drills ${(c.drills||[]).length}, exercise ${c.exercise?c.exercise.items.length:0}, lesson ${lw}w, total ${words}w`);
   if(process.env.DUMP)fs.writeFileSync(process.env.DUMP,all.replace(/<[^>]+>/g,""));
 }
+// mock case studies: cases:[{id,title,text[]}] on any part serve the whole exam; an item joins one with case:"id" and cq (its place, 1 to n)
+const MCASES=(window.HALCYON_MOCK||[]).flatMap(m=>m.cases||[]),MQS=(window.HALCYON_MOCK||[]).flatMap(m=>m.questions);
+MCASES.forEach((k,i)=>{if(!k.id||!k.title||!Array.isArray(k.text)||!k.text.length)err(`mock case ${i} needs id, title, text[]`);if(MCASES.filter(c=>c.id===k.id).length>1)err(`mock case ${k.id} defined twice`);
+  const cq=MQS.filter(x=>x.case===k.id).map(x=>x.cq).sort((a,b)=>a-b);if(cq.length<2)err(`mock case ${k.id} has ${cq.length} items`);if(cq.some((v,j)=>v!==j+1))err(`mock case ${k.id} cq ${cq} (want 1 to ${cq.length})`);
+  if(dash([k.title,...k.text].join(" ")))err(`mock case ${k.id} dash`);console.log(`mock case ${k.id}: ${cq.length} items`)});
 for(const m of (window.HALCYON_MOCK||[])){
   console.log(`mock part ${m.part}: ${m.questions.length} questions`);
   const pos=[0,0,0,0];let ql=0;const prose=[];
-  m.questions.forEach((x,i)=>{if(x.opts.length!==4||x.a<0||x.a>3)err(`q${i}`);pos[x.a]++;if(!TASKS.has(x.task))err(`q${i} task ${x.task}`);else if(DOM[x.task[0]]!==x.domain)err(`q${i} domain`);if(lenCheck(`q${i}`,x.opts,x.a).longest)ql++;prose.push(x.q,...x.opts,x.why)});
+  m.questions.forEach((x,i)=>{if(x.opts.length!==4||x.a<0||x.a>3)err(`q${i}`);pos[x.a]++;if(!TASKS.has(x.task))err(`q${i} task ${x.task}`);else if(DOM[x.task[0]]!==x.domain)err(`q${i} domain`);if(lenCheck(`q${i}`,x.opts,x.a).longest)ql++;prose.push(x.q,...x.opts,x.why);
+    if(x.case!==undefined&&!MCASES.some(k=>k.id===x.case))err(`q${i} unknown case ${x.case}`);if((x.case===undefined)!==(x.cq===undefined))err(`q${i} case and cq go together`);if(x.fig!==undefined){figCheck(`q${i}`,x.fig);prose.push(x.fig)}});
   if(Math.max(...pos)>Math.ceil(m.questions.length*0.32))err(`answer positions ${pos}`);if(ql>m.questions.length*0.33)err(`right answer longest in ${ql}`);
   if(dash(prose.join(" ")))err("dash");
   console.log(`  positions ${pos}, right-longest ${ql}`);

@@ -12,4 +12,8 @@ Each file:
     task:`P2`, domain:`People`, approach:`agile` }   // approach: agile | hybrid | predictive
 ]});
 ```
+Case studies and figures (2026-10-25):
+- A part may carry `cases:[{ id:`m1c1`, title:`Case: ...`, text:[`paragraph`, ...] }]` for the whole exam (PMP's two live on the Process part). An item in any part joins one with `case:`m1c1`, cq:2` (cq is its place in the case). The engine keeps a case's items together, in cq order, as one block wherever the shuffle puts it, shows the scenario above each of them, and moves a break that would fall inside a case to the case's end.
+- An item may carry `fig:`<prop ...></prop>``, drawn above the stem. Kinds: a bar chart (`labels`, `values`), `kind="evm"` (`pv`, `ev`, `ac`), `kind="cfd"` (one attribute per state, values are band widths stacked bottom up in the order written, for example `done`, `testing`, `doing`, `backlog`), `kind="control"` (`values`, `mean`, `ucl`, `lcl`), `kind="network"` (`nodes="A:3,B:5"`, `edges="A>B"`), or a `type="doc"` prop with an HTML table. Screen readers get every value.
+
 Rules: spread questions across every task in the domain roughly in proportion; about 60 percent agile or hybrid; scenario style like the real exam (a PM in a situation, "what should the project manager do first/next/best"), some calculation questions (EVM, PERT, channels, EMV, float, contract math) with exact numbers; four options within about 10 percent length of each other; correct answer position spread evenly; the correct answer not reliably longest; no em or en dashes; use generic fictional settings, NOT the Halcyon story (this is the neutral mock). Every `why` explains the PMI mindset. Validate with `node tools/check_full.mjs mock/<file>.js` (exit 0).

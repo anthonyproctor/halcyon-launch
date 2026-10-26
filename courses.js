@@ -27,7 +27,7 @@ window.HALCYON_COURSES=[
    labs:"courses/pmp/labs.js",
    taskDomain:{P:"People",R:"Process",B:"Business Environment"}, // refArt retired with the v1 Refresher
    fullName:"Full Course",fullHours:"about 15 to 20 hours",mockTitle:"PMP practice exam",mockMinutes:240,mockBreaks:[60,120],
-   mockBlurb:"Weighted like the July 2026 exam: People 33 percent, Process 41 percent, Business Environment 26 percent, about 60 percent agile or hybrid. All questions are single answer; the real exam opens with a case study section and also has multiple response, matching, point and click, and graphic-based items.",
+   mockBlurb:"Weighted like the July 2026 exam: People 33 percent, Process 41 percent, Business Environment 26 percent, about 60 percent agile or hybrid. It has two case studies, each one scenario with five questions, and six questions built on a chart or diagram. Every question is single answer. The real exam also has multiple response, matching, and point and click items.",
    mockShort:"180 questions in 240 minutes, weighted like the real exam.",
    // Final assessment and certificate of completion (2026-10-11). final/pmp.js is the 100 question bank, loaded when the assessment opens.
    // The wording below is a proposal waiting on Anthony's OK. Never "PMI approved", "accredited", "ATP", "contact hours", or "PMI accepts".

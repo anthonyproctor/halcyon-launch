@@ -413,6 +413,12 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 .pchart svg{display:block;width:100%;height:auto;padding:6px 10px;color:var(--ink)}.pchart path{fill:none;stroke-width:3.5}.lpv{stroke:#2d6b7a}.lev{stroke:#c9952f}.lac{stroke:#c0473b;stroke-dasharray:8 6}
 .legend{display:flex;flex-wrap:wrap;gap:12px;padding:0 12px 8px;font-size:12.5px;color:var(--muted)}.legend span::before{content:"";display:inline-block;width:14px;height:3px;margin-right:5px;vertical-align:middle}.kpv::before{background:#2d6b7a}.kev::before{background:#c9952f}.kac::before{background:#c0473b}
 .bars{padding:8px 12px;display:grid;gap:6px}.barrow{display:grid;grid-template-columns:minmax(80px,30%) 1fr auto;gap:8px;align-items:center;font-size:13.5px}.bt{height:10px;background:var(--soft);border-radius:5px;overflow:hidden}.bt span{display:block;height:100%;background:var(--accent)}
+/* figure charts in exam items (engine.js figChart, 2026-10-25): theme colors, so light and dark both read */
+.fchart text{font:20px var(--ui);fill:currentColor}.fchart .fnid{font-weight:700;font-size:22px}.fgrid{stroke:currentColor;opacity:.3;stroke-width:1.5}
+.cf0{fill:var(--good)}.cf1{fill:var(--accent)}.cf2{fill:var(--mid)}.cf3{fill:var(--muted);opacity:.55}.legend .cf0::before{background:var(--good)}.legend .cf1::before{background:var(--accent)}.legend .cf2::before{background:var(--mid)}.legend .cf3::before{background:var(--muted);opacity:.55}.legend [class^=cf]::before{height:10px;width:12px}
+.flim{stroke:var(--bad);stroke-width:2.5;stroke-dasharray:9 6}.fmean{stroke:var(--muted);stroke-width:2}.fline{fill:none;stroke:var(--accent);stroke-width:2;opacity:.6}.fdot{fill:var(--accent)}
+.fnode{fill:var(--soft);stroke:var(--accent);stroke-width:2.5}.farrow{stroke:currentColor;stroke-width:2.5;opacity:.75}.fhead{fill:currentColor;opacity:.75}
+.qfig .pdoc table{border-collapse:collapse;width:100%;font-family:var(--ui);font-size:14.5px}.qfig .pdoc th,.qfig .pdoc td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
 .ruthtake{margin:10px 0}.ruthtake summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:14px}
 .storyt{margin-right:6px}.ambvol{width:70px;height:24px;margin-right:8px}
 .handsfree{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--page);border:2px solid var(--accent);border-radius:12px;padding:12px 14px;margin:0 0 14px;cursor:pointer}
