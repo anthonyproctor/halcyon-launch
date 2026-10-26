@@ -184,6 +184,8 @@ test("need: the locked badge lines, no dashes", () => {
   assert.equal(HB.need({ rule: { type: "book" } }, ctx), "Finish all 15 chapters.");
   assert.equal(HB.need({ rule: { type: "readiness" } }, ctx), "Get your launch poll to 75.");
   assert.equal(HB.need({ rule: { type: "exam", min: 70 } }, { hasMock: false }), "The practice exam for this book is still being written.");
+  assert.equal(HB.need({ rule: { type: "exam", min: 70 } }, ctx), "Score 70 percent or better on a full practice exam.");
+  assert.equal(HB.need({ rule: { type: "exam", min: 70 } }, { ...ctx, mockOne: "one practice test section" }), "Score 70 percent or better on one practice test section.");
   assert.equal(HB.need({ hidden: true, rule: { type: "pick" } }, ctx), "Hidden. It shows up when you earn it.");
   for (const t of ["chapter", "book", "clean", "quiz", "exam", "final", "readiness", "streak", "all"]) assert.doesNotMatch(HB.need({ rule: { type: t, ch: 1, days: 3, min: 70 } }, ctx), /[–—]|\s-\s/);
 });

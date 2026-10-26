@@ -81,7 +81,7 @@ for (const c of COURSES) {
   if (per.streak !== 2) w(`${c.id}: ${per.streak} streak badges`);
   console.log(`  ${all.length} badges: ${planned} chapter, ${per.hidden} hidden live, ${per.pending} pending; target ${c.target}; ${def.chapters ? "shared chapter pattern" : "a badge per chapter"}`);
   // the requirement lines the shelf shows for locked badges
-  HB.expand(def, F).forEach(it => copy(HB.need(it, { planned, hasMock: true, meter: def.readiness.name, target: c.target }), `${c.id} ${it.id} need`));
+  HB.expand(def, F).forEach(it => copy(HB.need(it, { planned, hasMock: true, mockOne: c.mockOneLabel, meter: def.readiness.name, target: c.target }), `${c.id} ${it.id} need`));
   copy(HB.need({ rule: { type: "exam" } }, { hasMock: false }), "need without a mock");
 }
 if (process.env.DUMP) fs.writeFileSync(process.env.DUMP, [...strings].join("\n\n") + "\n");

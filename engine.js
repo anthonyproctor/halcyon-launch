@@ -179,7 +179,7 @@ function figChart(a,num){const tx=(x,y,s,o="")=>`<text x="${x}" y="${y}"${o?" "+
     N.forEach(x=>{const [cx,cy]=P[x.id];g+=`<rect x="${cx-W/2}" y="${cy-H/2}" width="${W}" height="${H}" rx="9" class="fnode"/>`+tx(cx,cy-5,x.id,mid+' class="fnid"')+tx(cx,cy+21,x.d,mid)});
     return {svg:svg(600,h,`${a.title||"Network diagram"}. Activities and durations: ${N.map(x=>`${x.id} ${x.d}`).join(", ")}. Each arrow means the first activity finishes before the next starts: ${E.map(e=>`${e[0]} to ${e[1]}`).join(", ")}.`,g),legend:""}}
   return null}
-function caseHTML(cs){return `<div class="qcase"><div class="kicker">Case study</div><h3>${esc(cs.title||"Case")}</h3>${paras([].concat(cs.text||[]))}</div>`}
+function caseHTML(cs){return `<div class="qcase"><div class="kicker">${esc(COURSE.caseLabel||"Case study")}</div><h3>${esc(cs.title||"Case")}</h3>${paras([].concat(cs.text||[]))}</div>`}
 /* shared reading passages (LSAT Reading Comprehension, 2026-10-15): a chapter may define passages:{p1:{title,text:[paragraphs]}} and a
    quiz item may carry passage:"p1". The passage shows once above its run of consecutive items (again whenever the passage changes),
    as an open <details> so a phone reader can fold it away. Same in the review after checking, and in practice sets. */
@@ -506,7 +506,7 @@ function loadMock(f){const st=store.get("c"+mockKey(f),null);if(!st||!Array.isAr
 let MCASE_OPEN=true;
 function mockCaseOf(q){return q&&q.case?(q.cases||[]).find(c=>c.id===q.case)||null:null}
 function mockCase(q,qs){const cs=mockCaseOf(q);if(!cs)return "";const L=qs.filter(x=>x.case===q.case).sort((x,y)=>(x.cq||0)-(y.cq||0)),k=L.indexOf(q)+1;
-  return `<details class="qpass qmcase"${MCASE_OPEN?" open":""}><summary><span class="kicker">Case study${k&&L.length>1?`, question ${k} of ${L.length}`:""}</span> <b>${esc(cs.title||"Case")}</b></summary>${paras([].concat(cs.text||[]))}</details>`}
+  return `<details class="qpass qmcase"${MCASE_OPEN?" open":""}><summary><span class="kicker">${esc(COURSE.caseLabel||"Case study")}${k&&L.length>1?`, question ${k} of ${L.length}`:""}</span> <b>${esc(cs.title||"Case")}</b></summary>${paras([].concat(cs.text||[]))}</details>`}
 function mockBreaks(byId){const o=MS.order,cs=k=>(byId[o[k]]||{}).case;return (COURSE.mockBreaks||[]).map(b=>{while(b>0&&b<o.length&&cs(b)&&cs(b)===cs(b-1))b++;return b})}
 function persistMock(){const f=MOCK_FORM||1,k=mockKey(f);if(MS&&MS.order&&!MS.submitted)store.set("lastplace."+COURSE.id,{t:"mock",f});store.set("c"+k,MS);store.set("cur",COURSE.base+900);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>{delete SPEND[k];SYNC(k,copy)},600);SPEND[k]=[k,copy]}}
 // f: the form to open. Left out with two or more forms, it opens the picker; with one form, that form.
@@ -516,7 +516,7 @@ function fmtTime(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Mat
 function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode==="practice")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT()-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT()){mockSubmit()}},1000)}
 function lastLine(last){return last?`Last attempt: <b>${last.right} of ${last.total}</b> (${last.total?Math.round(last.right/last.total*100):0}%) on ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}.`:""}
 function mockPicker(forms){
-  $("page").innerHTML=`<div class="kicker">Practice Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][forms.length]||forms.length} full practice exams. Each one has its own questions and keeps its own history. ${esc(COURSE.mockBlurb||"")}</p></div>
+  $("page").innerHTML=`<div class="kicker">Practice Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][forms.length]||forms.length} ${esc(COURSE.mockFormsLabel||"full practice exams")}. Each one has its own questions and keeps its own history. ${esc(COURSE.mockBlurb||"")}</p></div>
    <div class="grid2">${forms.map(x=>{const st=loadMock(x.f),inprog=!!(st&&!st.submitted),last=mockHist(x.f).slice(-1)[0];
      return `<div class="card mockform" data-formcard="${x.f}"><h3>${esc(x.label)}</h3><p>${inprog?"In progress. ":""}${last?lastLine(last):"You haven't taken this one yet."}</p><button class="btn" type="button" data-form="${x.f}">${inprog?"Continue":"Open"} ${esc(x.label)}</button></div>`}).join("")}</div>`;
   $("page").querySelectorAll("[data-form]").forEach(b=>b.onclick=()=>openMock(+b.dataset.form))}
@@ -1097,7 +1097,7 @@ function readyCardHTML(){const HB=window.HalcyonBadges;if(!HB)return "";const de
    <p class="rdfoot">A study meter built from your own answers in this course. It doesn't predict your exam score.</p></section>`}
 function shelfHTML(){const HB=window.HalcyonBadges,def=bdgDefs();if(!HB||!def)return `<div id="shelf"></div>`;
   const F=courseFacts(),items=HB.expand(def,F),rec=bdgGet()||{got:{}},got=rec.got,day=t=>new Date(t).toLocaleDateString("en-US",{month:"short",day:"numeric"});
-  const ctx={planned:F.planned,hasMock:F.hasMock,meter:def.readiness&&def.readiness.name,target:COURSE.target||75};
+  const ctx={planned:F.planned,hasMock:F.hasMock,mockOne:COURSE.mockOneLabel,meter:def.readiness&&def.readiness.name,target:COURSE.target||75};
   const tile=it=>{const g=got[it.id],k=HB.kind(it),n=it.rule&&it.rule.ch;
     if(g){const many=g.ch&&g.ch.length>1?` · ${g.ch.length} chapters`:"";
       return `<li class="bdg got${k==="hidden"?" hid":""}" data-badge="${esc(it.id)}">${HB.art(it,def,"got",56)}<span class="btxt"><b class="bname">${esc(it.name)}</b><span class="bline">${esc(it.line)}</span><span class="bdate">${k==="hidden"?"Hidden · ":""}Earned ${esc(day(g.at))}${many}</span></span></li>`}

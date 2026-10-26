@@ -119,7 +119,7 @@ H.need=function(it,ctx){const r=it.rule||{},c=ctx||{};
     case "book":return `Finish all ${c.planned||"the"} chapters.`;
     case "clean":return "Make the best call on every decision in one chapter, on your first try.";
     case "quiz":return `Score ${r.min??70} percent or better on a chapter quiz.`;
-    case "exam":return c.hasMock?`Score ${r.min??70} percent or better on a full practice exam.`:"The practice exam for this book is still being written.";
+    case "exam":return c.hasMock?`Score ${r.min??70} percent or better on ${c.mockOne||"a full practice exam"}.`:"The practice exam for this book is still being written.";
     case "final":return "Pass the final assessment.";
     case "readiness":return `Get your ${String(c.meter||"readiness").replace(/^\w/,x=>x.toLowerCase())} to ${c.target}.`;
     case "streak":return `Listen at least 10 minutes a day, ${r.days} days in a row.`;
