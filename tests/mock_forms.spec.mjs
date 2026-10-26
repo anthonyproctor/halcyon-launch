@@ -128,7 +128,7 @@ test("two CPHIMS forms appear separately, each with its own attempt and history;
   await expect(t.locator("tr").nth(2).locator("td").nth(1)).toHaveText("1");
 });
 
-for (const [course, n] of [["pmp", 180], ["cisa", 150]]) {
+for (const [course, n] of [["pmp", 180]]) { // CISA has two forms since 2026-10-26 (test below)
   test(`${course}: every mock part is one exam (${n} questions, no picker)`, async ({ page }) => {
     await page.goto(`/#${course}/mock`);
     await expect(page.locator("#exam")).toBeVisible();
@@ -190,12 +190,21 @@ test("PMP and CISA results also point to chapters: PMP from its chapters' task t
   await expect(li).toHaveCount(1);
   await expect(li).toContainText("People, 0 percent");
   await expect(li.locator("button", { hasText: /^Reread chapter \d+, / })).toHaveCount(3);
-  const cisa = await bank(page, "cisa");
+  const cisa = (await bank(page, "cisa")).filter(q => !/^M2:/.test(q.part)); // form 1 only; form 2 ships in mock2.js (2026-10-26)
   await seedAttempt(page, 50900, cisa, q => q.domain === "Acquisition and Implementation" ? wrong(q) : q.a, { submitted: true });
-  await page.goto("/#cisa/mock"); await page.reload();
+  await page.goto("/#cisa/mock/1"); await page.reload(); // two forms, so /mock alone is the picker
   const c = page.locator("#page ul.reread li");
   await expect(c).toHaveCount(1);
   await expect(c).toContainText("Acquisition and Implementation, 0 percent");
   await expect(c).toContainText("Reread chapter 5, The Build");
   await expect(c).toContainText("Reread chapter 6, Change Window");
+});
+
+test("cisa: two practice exam forms, each 150 questions", async ({ page }) => {
+  await page.goto("/#cisa/mock"); await page.reload();
+  await expect(page.locator("#page .mockform")).toHaveCount(2);
+  for (const f of [1, 2]) {
+    await page.goto(`/#cisa/mock/${f}`); await page.reload();
+    await expect(page.locator("#page .story").first()).toContainText("150 questions.");
+  }
 });
