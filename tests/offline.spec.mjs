@@ -27,6 +27,8 @@ function mp3(req, res, S, extra = {}) {
   const H = { ...extra, "Content-Type": "audio/mpeg", "Accept-Ranges": "bytes", "Content-Length": b - a + 1, ...(m ? { "Content-Range": `bytes ${a}-${b}/${size}` } : {}) };
   res.writeHead(m ? 206 : 200, H);
   if (req.method === "HEAD") return res.end();
+  if (S.stallAll) return; // headers sent, then nothing, like a frozen connection
+  if (S.slowMs) { let at = a; const tick = () => { if (S.cutAll || S.down) return req.socket.destroy(); if (at > b) return res.end(); res.write(FIXTURE.subarray(at, Math.min(at + 60000, b + 1))); at += 60000; setTimeout(tick, S.slowMs) }; return tick() }
   if (S.cutNext > 0) { S.cutNext--; res.write(FIXTURE.subarray(a, a + 300000)); setTimeout(() => req.socket.destroy(), 400); return } // the connection drops part way through
   res.end(FIXTURE.subarray(a, b + 1));
 }
@@ -42,6 +44,7 @@ function site(req, res) {
     res.end(JSON.stringify(u.searchParams.get("action") === "me" ? (S.signedIn ? { user: { ...USER }, progress: S.progress } : { user: null }) : { ok: true })); return;
   }
   if (u.pathname === "/api/progress") { let d = ""; req.on("data", x => d += x); req.on("end", () => { const b = JSON.parse(d); S.puts.push(b); S.progress[b.chapter] = b.state; res.writeHead(200, { "Content-Type": "application/json" }); res.end('{"ok":true}') }); return }
+  if (u.pathname === "/api/qa-report") { let d = ""; req.on("data", x => d += x); req.on("end", () => { S.diag = (S.diag || []).concat(JSON.parse(d).events); res.writeHead(200, { "Content-Type": "application/json" }); res.end('{"ok":true}') }); return }
   if (u.pathname.startsWith("/api/") || u.pathname.startsWith("/_vercel/")) { res.writeHead(404, { "Content-Type": "application/json" }); return res.end("{}") }
   if (/\.mp3$/i.test(u.pathname)) return mp3(req, res, S);
   if (u.pathname === "/audio-manifest.json" && S.newTake) { const j = JSON.parse(fs.readFileSync(path.join(ROOT, "audio-manifest.json"), "utf8")); j.files["audio/v2/story/full-ch01.mp3"] = S.newTake; res.writeHead(200, { "Content-Type": TYPES[".json"] }); return res.end(JSON.stringify(j)) }
@@ -54,7 +57,7 @@ function site(req, res) {
 }
 function audioHost(req, res) {
   const S = W.state;
-  if (S.down) return req.socket.destroy();
+  if (S.down || (S.cutAll && req.method !== "OPTIONS")) return req.socket.destroy();
   if (req.method === "OPTIONS") { res.writeHead(204, { ...cors, "Access-Control-Allow-Methods": "GET, HEAD" }); return res.end() }
   if (!/\.[0-9a-f]{12}\.mp3$/.test(req.url.split("?")[0])) { res.writeHead(404, cors); return res.end() }
   mp3(req, res, S, cors);
@@ -442,6 +445,75 @@ test("first open after the update, with no mark: chapter checks stay and nothing
   await page.evaluate(() => localStorage.setItem("halcyon.signedin", JSON.stringify({ email: "someone@else.test" })));
   await page.reload();
   await expect(page.locator('.brow[data-b="2"]')).not.toContainText("✓");
+});
+const hideApp = (page, hidden) => page.evaluate(h => { Object.defineProperty(document, "hidden", { configurable: true, get: () => h }); Object.defineProperty(document, "visibilityState", { configurable: true, get: () => h ? "hidden" : "visible" }); document.dispatchEvent(new Event("visibilitychange")) }, hidden);
+test("saving shows percent and MB from the first bytes, and says to keep the phone awake", async ({ page }) => {
+  await openApp(page);
+  W.state.slowMs = 120;
+  await saveBtn(page).click();
+  await expect(saveBtn(page).locator(".ot")).toHaveText(/^[1-9]\d?%$/, { timeout: 15_000 });
+  await expect(saveBtn(page).locator(".os")).toHaveText(/^\d+ of 1 MB$/);
+  await expect(page.locator("#offpanel")).toContainText("phone awake");
+  W.state.slowMs = 0;
+  await expect(saveBtn(page)).toHaveAttribute("data-off", "saved", { timeout: 30_000 });
+});
+test("each failure says why: no connection and text are told apart, and a failure is reported without the switch", async ({ page, browserName }) => {
+  await openApp(page);
+  W.state.textStatus = 500;
+  await saveBtn(page).click();
+  await expect(saveBtn(page)).toHaveAttribute("data-off", "failed", { timeout: 20_000 });
+  await expect(saveBtn(page).locator(".os")).toHaveText("No text");
+  await expect(page.locator("#offwhy")).toContainText("not the words");
+  await expect.poll(() => (W.state.diag || []).length, { timeout: 10_000 }).toBe(1);
+  const r = W.state.diag[0];
+  expect(r.ev).toBe("offline:save_failed");
+  expect(r.d).toMatchObject({ err: "text", got: FIXTURE.length, total: FIXTURE.length, sw: 1 });
+  expect(r.page).toBe("pmp-story-1");
+  expect(JSON.stringify(r)).not.toContain(USER.email);
+  W.state.textStatus = 0;
+  await saveBtn(page).click();
+  await expect(saveBtn(page)).toHaveAttribute("data-off", "saved", { timeout: 20_000 });
+  W.state.slowMs = 120;
+  await saveBtn(page, 2).click();
+  await expect(saveBtn(page, 2).locator(".ot")).toHaveText(/%$/, { timeout: 15_000 });
+  await goOffline(page, browserName);
+  await expect(saveBtn(page, 2).locator(".os")).toHaveText("No signal", { timeout: 20_000 });
+  await expect(page.locator("#offwhy")).toContainText("signal");
+});
+test("a save cut while the app is hidden doesn't burn its tries, and resumes with Range when the app is back", async ({ page }) => {
+  await openApp(page);
+  W.state.slowMs = 100;
+  await saveBtn(page).click();
+  await expect(saveBtn(page).locator(".ot")).toHaveText(/%$/, { timeout: 15_000 });
+  await hideApp(page, true);
+  W.state.cutAll = true; // every request fails while hidden, as on a suspended phone
+  W.state.mp3s = [];
+  await page.waitForTimeout(3000);
+  expect(await saveBtn(page).getAttribute("data-off")).toBe("saving"); // waiting, not failed
+  W.state.cutAll = false; W.state.slowMs = 0; W.state.mp3s = [];
+  await hideApp(page, false);
+  await expect(saveBtn(page)).toHaveAttribute("data-off", "saved", { timeout: 30_000 });
+  expect(W.state.mp3s[0].range).toMatch(/^bytes=[1-9]\d*-$/);
+  const size = await page.evaluate(async () => { const c = await caches.open("halcyon-offline-audio"), m = (await c.keys()).find(r => /\.mp3$/.test(r.url)); return (await (await c.match(m)).arrayBuffer()).byteLength });
+  expect(size).toBe(FIXTURE.length);
+});
+test("a stream that freezes without an error is cut and resumed when the app comes back", async ({ page }) => {
+  await openApp(page);
+  W.state.stallAll = true;
+  await saveBtn(page).click();
+  await expect(saveBtn(page)).toHaveAttribute("data-off", "saving");
+  await page.waitForTimeout(500);
+  W.state.stallAll = false;
+  await page.evaluate(() => { const n = Date.now; Date.now = () => n() + 60000 }); // the freeze lasted a minute
+  await hideApp(page, true); await hideApp(page, false);
+  await expect(saveBtn(page)).toHaveAttribute("data-off", "saved", { timeout: 30_000 });
+});
+test("a save never goes through the worker, even right after a restart", async ({ page }) => {
+  await openApp(page);
+  expect(fs.readFileSync(path.join(ROOT, "sw.js"), "utf8")).toMatch(/req\.cache==="no-store"\)return;/);
+  const cacheModes = await page.evaluate(() => new Request("/x.mp3", { cache: "no-store" }).cache);
+  expect(cacheModes).toBe("no-store");
+  await save(page);
 });
 test("rollout: a server record with no time beats an older offline copy, unless it's the copy that edit started from", async ({ page }) => {
   await page.goto(P("robots.txt"));

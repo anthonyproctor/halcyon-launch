@@ -157,7 +157,7 @@ async function netBack(){if(SIGNING_OUT||!ONLINE||TESTP||!SYNC||!offNet()||OB.bu
       if(n!==open&&M!==e.st)store.set("c"+n,recEmpty(M)?null:M);obAdopt(n,M);const h=recHash(M);const r=await obSend(n,{...obStrip(M),_t:recTime(M)},false,h);if(r.ok&&h!==e.h)obDone(n,e.h);if(!r.ok&&r.status!==400&&r.status!==413)break}
   }catch(e){}finally{OB.busy=false}
   if(!told){await listenPull();if(TRACK==="book"&&NAR.audio.paused&&!OFF.active)renderBook()}}
-function netWatch(){if(netWatch.on)return;netWatch.on=true;addEventListener("online",()=>{MARKS=null;Object.values(OFF.jobs).forEach(j=>{if(j.state==="failed"&&j.err==="net"){j.state="queued";OFF.queue.push(j)}});offPaint(true);offPump();netBack()});addEventListener("offline",()=>{MARKS=null;offPaint()});setInterval(()=>{if(OFFMODE||Object.keys(obGet()).length)netBack()},60000)}if(PROF.onLeave)PROF.onLeave.push(syncPending);
+function netWatch(){if(netWatch.on)return;netWatch.on=true;addEventListener("online",()=>{MARKS=null;offAuto();offPaint(true);offPump();netBack()});addEventListener("offline",()=>{MARKS=null;offPaint()});setInterval(()=>{if(OFFMODE||Object.keys(obGet()).length)netBack()},60000)}if(PROF.onLeave)PROF.onLeave.push(syncPending);
 function freshRef(){return{step:-1,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:Object.fromEntries(DOMS.map(d=>[d,[0,0]]))}}
 function freshFull(){return{pos:0,max:0,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:Object.fromEntries(DOMS.map(d=>[d,[0,0]])),drills:{},ex:null,quiz:null}}
 function keyOf(tr,n){return COURSE.base+TRACKS[tr].key(n)}
@@ -1961,32 +1961,49 @@ function offEnqueue(ed,n,M){if(!OFF.can)return;const k=offK(COURSE.id,ed,n),old=
   j.state="queued";j.err=null;j.cancel=false;OFF.jobs[k]=j;OFF.queue.push(j);offWant();
   if(!OFF.asked){OFF.asked=true;try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}}
   offPump();offPaint()}
-function offPump(){while(OFF.active<OFF.max&&OFF.queue.length&&offNet()){const j=OFF.queue.shift();if(j.cancel)continue;OFF.active++;offRun(j).catch(()=>{}).then(()=>{OFF.active--;offPump();offWant();offPaint(true)})}}
+function offPump(){while(OFF.active<OFF.max&&OFF.queue.length&&offNet()){const j=OFF.queue.shift();if(j.cancel)continue;OFF.active++;offRun(j).catch(e=>{j.state="failed";j.err="store";offReport(j,"store",e)}).then(()=>{OFF.active--;offPump();offWant();offPaint(true);offWake()})}}
 /* one file: read it in pieces, pick up with a Range request after a dropped connection, check the length before it counts */
-async function offPull(j,url){const h=j.got?{Range:`bytes=${j.got}-`}:{};const r=await fetch(url,{headers:h,cache:"no-store",signal:j.ctl.signal});
-  if(r.status===404||r.status===403){const e=new Error("gone");e.gone=true;throw e}if(!r.ok&&r.status!==206)throw new Error("status "+r.status);
-  if(j.got&&r.status!==206){j.chunks=[];j.got=0}
+async function offPull(j,url){j.ctl=new AbortController();if(!j.chunks||!j.chunks.length){j.chunks=[];j.got=0}const from=j.got,h=from?{Range:`bytes=${from}-`}:{};j.lastByte=Date.now();
+  const r=await fetch(url,{headers:h,cache:"no-store",signal:j.ctl.signal}); // no-store is also how sw.js knows this is a save and stays out of it
+  if(r.status===404||r.status===403){const e=new Error("gone");e.gone=true;throw e}if(!r.ok&&r.status!==206){if(from){j.chunks=[];j.got=0}throw new Error("status "+r.status)}
+  if(from&&r.status!==206){j.chunks=[];j.got=0}
   if(r.status===206){const m=/bytes (\d+)-(\d*)\/(\d+|\*)/.exec(r.headers.get("Content-Range")||"");if(!m||+m[1]!==j.got){j.chunks=[];j.got=0;throw new Error("bad range")}if(m[3]!=="*")j.total=+m[3]}else j.total=+r.headers.get("Content-Length")||0;
-  const rd=r.body.getReader();for(;;){const {done,value}=await rd.read();if(done)break;j.chunks.push(value);j.got+=value.length;offPaint()}
+  offPaint(true);const rd=r.body.getReader();for(;;){const {done,value}=await rd.read();if(done)break;j.chunks.push(value);j.got+=value.length;j.lastByte=Date.now();offPaint()}
   if(j.total?j.got!==j.total:j.got<1024){if(j.got>j.total){j.chunks=[];j.got=0}throw new Error("short")}}
-async function offRun(j){j.state="saving";j.err=null;j.ctl=new AbortController();j.chunks=j.chunks||[];j.got=j.got||0;offPaint(true);let ui=j.ui||0,tries=0;
-  while(!j.pulled){if(j.cancel)return;try{await offPull(j,j.urls[ui]);j.pulled=true}catch(e){if(j.cancel)return;
-      if(e.gone){if(++ui<j.urls.length){j.ui=ui;j.chunks=[];j.got=0;continue}j.state="failed";j.err="missing";j.chunks=null;j.got=0;return}
-      if(!offNet()||++tries>4){j.state="failed";j.err="net";return} // what's read stays in memory; Retry, or coming back online, continues from there
-      await new Promise(ok=>setTimeout(ok,tries*tries*400))}}
+/* iOS freezes a hidden app and its downloads: a retry made while hidden doesn't count, it waits until the app is back. A stream that froze without an error gets cut and resumed. */
+const offVisible=()=>document.hidden?new Promise(ok=>{const f=()=>{if(!document.hidden){document.removeEventListener("visibilitychange",f);ok()}};document.addEventListener("visibilitychange",f)}):Promise.resolve();
+function offStall(limit){const t=Date.now();Object.values(OFF.jobs).forEach(j=>{if(j.state==="saving"&&!j.pulled&&j.ctl&&j.lastByte&&t-j.lastByte>limit){j.lastByte=t;try{j.ctl.abort()}catch(e){}}})}
+setInterval(()=>{if(!document.hidden)offStall(45000)},5000);
+function offWake(){try{if(!OFF.can||!navigator.wakeLock)return;const want=OFF.active>0&&!document.hidden;if(want&&!OFF.lock&&!OFF.lockAsk){OFF.lockAsk=true;navigator.wakeLock.request("screen").then(l=>{OFF.lock=l;l.addEventListener("release",()=>{OFF.lock=null});if(!(OFF.active>0))l.release().catch(()=>{})}).catch(()=>{}).then(()=>{OFF.lockAsk=false})}else if(!want&&OFF.lock&&!document.hidden){OFF.lock.release().catch(()=>{})}}catch(e){}}
+/* one small record when a save fails, without the diagnostics switch. Kept until it can be sent, since the usual cause is no connection. Nothing personal: the book, chapter, numbers and error. The endpoint takes admins and testers only. */
+function offReport(j,err,e){try{if(TESTP||!ONLINE)return;const q=JSON.parse(localStorage.getItem("halcyon.offreport")||"[]");if(q.length>=5)return;
+    q.push({t:Date.now(),ev:"offline:save_failed",p:1,page:`${j.cid}-${j.ed}-${j.n}`,vis:document.hidden?"hidden":"visible",d:{err:String(err),name:String(e&&e.name||"").slice(0,40),msg:String(e&&e.message||"").slice(0,120),got:j.got||0,total:j.total||0,hidden:document.hidden?1:0,online:navigator.onLine?1:0,sw:navigator.serviceWorker&&navigator.serviceWorker.controller?1:0}});localStorage.setItem("halcyon.offreport",JSON.stringify(q));offReportSend()}catch(x){}}
+function offReportSend(){try{if(!offNet()||SIGNING_OUT)return;const q=JSON.parse(localStorage.getItem("halcyon.offreport")||"[]");if(!q.length)return;const body=JSON.stringify({events:q,sid:DIAG.sid,ua:navigator.userAgent,standalone:!!(navigator.standalone||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)),route:"offline-save"});
+    fetch("/api/qa-report?action=diag",{method:"POST",headers:{"Content-Type":"application/json"},body,keepalive:true,credentials:"same-origin"}).then(r=>{if(r.ok||r.status===401||r.status===403||r.status===400)localStorage.removeItem("halcyon.offreport")}).catch(()=>{})}catch(x){}}
+/* back in the app or back online: failed saves pick up on their own, from what's in memory */
+function offAuto(){offReportSend();offWake();if(!OFF.can||!offNet())return;offStall(8000);let any=false;Object.values(OFF.jobs).forEach(j=>{if(j.state==="failed"&&(j.err==="net"||j.err==="text")){j.state="queued";j.err=null;OFF.queue.push(j);any=true}});if(any){offPaint(true);offPump()}}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)offAuto()});addEventListener("pageshow",offAuto);
+async function offRun(j){j.state="saving";j.err=null;offWake();offPaint(true);let ui=j.ui||0,tries=0,stuck=0;
+  while(!j.pulled){if(j.cancel)return;const before=j.got||0;try{await offPull(j,j.urls[ui]);j.pulled=true}catch(e){if(j.cancel)return;
+      if(e.gone){if(++ui<j.urls.length){j.ui=ui;j.chunks=[];j.got=0;continue}j.state="failed";j.err="missing";offReport(j,"missing",e);j.chunks=null;j.got=0;return}
+      if(!offNet()){j.state="failed";j.err="net";offReport(j,"net",e);return}
+      if(j.got>before){tries=0;stuck=0}else if(before&&++stuck>=2){j.chunks=[];j.got=0;stuck=0} // Range isn't getting anywhere: start this file clean
+      if(document.hidden){await offVisible();continue} // doesn't count against the tries
+      if(++tries>8){j.state="failed";j.err="net";offReport(j,"net",e);return} // what's read stays in memory; offAuto or Retry continues from there
+      await new Promise(ok=>setTimeout(ok,Math.min(30000,tries*tries*400)))}}
   /* the take and its text are one unit: both are fetched and stored under this take's own keys, and meta moves to them only when both are safe. Until then the old take stays whole. */
   const url=j.urls[ui],textKey=`/__offline/text/${j.cid}-${j.ed}-${j.n}-${obHash(url).replace(":","-")}.json`;let c,text=null,marks;
   try{const r=await fetch(j.text,{cache:"no-cache",signal:j.ctl.signal});if(r.ok){text=await r.text();const J=JSON.parse(text);if(!(J.v===1&&J.n===j.n&&J.ed===j.ed&&Array.isArray(J.p)))throw new Error("bad text")}else if(r.status!==404)throw new Error("text "+r.status);
     const m=await fetch(j.marks,{cache:"no-cache",signal:j.ctl.signal});if(m.ok){const A=await m.json();marks=(A.full&&A.full[j.n]&&A.full[j.n][j.ed])||[]}else if(m.status===404)marks=[];else throw new Error("marks "+m.status);
     if(/\.[0-9a-f]{12}\.mp3$/.test(url)){const fm=await fetch("audio-manifest.json",{cache:"no-cache",signal:j.ctl.signal});if(fm.ok){const F=await fm.json(),rel=audRel(new URL(j.alias).pathname),h=F.files&&F.files[rel];if(h&&!url.endsWith(`.${h}.mp3`)){AUD.map=F.files;delete OFF.jobs[j.k];offSay("We've got a new recording of this one. Tap Update to grab it.");return}}} // a deploy landed mid save: this text belongs to a newer take
-  }catch(e){if(j.cancel)return;j.state="failed";j.err="net";return}
+  }catch(e){if(j.cancel)return;j.state="failed";j.err="text";offReport(j,"text",e);return}
   const old=OFF.meta.items[j.k];
   try{c=await caches.open(OFF.name);await c.put(url,new Response(new Blob(j.chunks,{type:"audio/mpeg"}),{headers:{"Content-Type":"audio/mpeg","Content-Length":String(j.got),"Accept-Ranges":"bytes"}}));if(text!=null)await c.put(textKey,new Response(text,{headers:{"Content-Type":"application/json"}}));
     if(!(await c.match(url))||(text!=null&&!(await c.match(textKey))))throw new Error("not stored");
     OFF.meta.items[j.k]={url,alias:j.alias,textKey:text!=null?textKey:null,marks,src:j.src,min:j.min,size:j.got,at:Date.now(),cid:j.cid,ed:j.ed,n:j.n};await offMetaPut();
     if(old&&old.url!==url)await c.delete(old.url);if(old&&old.textKey&&old.textKey!==textKey)await c.delete(old.textKey);
     j.chunks=null;delete OFF.jobs[j.k];offRoom()
-  }catch(e){if(old)OFF.meta.items[j.k]=old;else delete OFF.meta.items[j.k];try{if(c&&(!old||old.url!==url))await c.delete(url);if(c&&(!old||old.textKey!==textKey))await c.delete(textKey)}catch(x){}j.chunks=null;j.got=0;j.pulled=false;j.state="failed";j.err=e&&e.name==="QuotaExceededError"?"space":"store"}}
+  }catch(e){if(old)OFF.meta.items[j.k]=old;else delete OFF.meta.items[j.k];try{if(c&&(!old||old.url!==url))await c.delete(url);if(c&&(!old||old.textKey!==textKey))await c.delete(textKey)}catch(x){}j.chunks=null;j.got=0;j.pulled=false;j.state="failed";j.err=e&&e.name==="QuotaExceededError"?"space":"store";offReport(j,j.err,e)}}
 async function offRemove(ed,n,cid){const k=offK(cid||COURSE.id,ed,n),it=OFF.meta.items[k];if(!it)return;delete OFF.meta.items[k];try{const c=await caches.open(OFF.name);await c.delete(it.url);if(it.textKey)await c.delete(it.textKey);await offMetaPut()}catch(e){}offRoom();offPaint(true);if(TRACK==="book"&&NAR.page!=="book")setTimeout(()=>{if(TRACK==="book")renderBook()},0)}
 /* offline, a saved chapter uses what was saved with its take, whatever the shared files say by now */
 function offBook(M){Object.values(OFF.meta.items).forEach(x=>{if(x.cid!==COURSE.id)return;M.full=M.full||{};const r=M.full[x.n]=M.full[x.n]||{};r[x.ed]={...(r[x.ed]||{}),src:x.src||(r[x.ed]||{}).src,min:x.min!=null?x.min:(r[x.ed]||{}).min}})}
@@ -1996,10 +2013,11 @@ function offRoom(){try{if(navigator.storage&&navigator.storage.estimate)navigato
 let offMsgT=0;
 function offSay(msg){let el=$("offmsg");if(!el){el=document.createElement("div");el.id="offmsg";el.className="offmsg";el.setAttribute("role","status");document.body.appendChild(el)}el.textContent=msg;el.hidden=false;clearTimeout(offMsgT);offMsgT=setTimeout(()=>{el.hidden=true},9000)}
 NAR.audio.addEventListener("error",()=>{if(NAR.page!=="book"||!NAR.book||offItem(NAR.book.ed,NAR.book.n))return;NAR.listening=false;narUI();offSay(`Chapter ${NAR.book.n} won't load. Got no signal? Only saved ones play without it.`)});
+function offWhy(j){const c=`Chapter ${j.n}`;return {net:`Lost the signal on chapter ${j.n}. Come back to the app and it'll keep going.`,text:`Got the audio for chapter ${j.n} but not the words. Tap Retry to try again.`,store:`Your phone wouldn't store chapter ${j.n}. Tap Retry.`,space:`${c} didn't fit. This phone's out of room for it.`,missing:`Can't find chapter ${j.n} on our end. Try again later.`}[j.err]||`${c} stopped. Tap Retry.`}
 function offBtnState(n,ed){const it=offItem(ed,n),j=OFF.jobs[offK(COURSE.id,ed,n)],M=BOOK&&BOOK.full[n]&&BOOK.full[n][ed];
-  if(j&&j.state==="saving")return {s:"saving",t:j.total?Math.min(99,Math.floor(j.got/j.total*100))+"%":"Saving",sub:j.total?offMB(j.total):"",a:`Saving chapter ${n}. Tap to stop.`};
+  if(j&&j.state==="saving")return {s:"saving",t:j.pulled?"99%":j.total?Math.min(99,Math.floor(j.got/j.total*100))+"%":"Starting",sub:j.total?`${Math.round(j.got/1e6)} of ${Math.round(j.total/1e6)} MB`:"",a:`Saving chapter ${n}. ${j.total?`${Math.round(j.got/1e6)} of ${Math.round(j.total/1e6)} MB. `:""}Tap to stop.`};
   if(j&&j.state==="queued")return {s:"queued",t:"Waiting",a:`Chapter ${n} is waiting to save. Tap to stop.`};
-  if(j&&j.state==="failed")return {s:"failed",t:"Retry",sub:j.err==="space"?"No room":j.err==="missing"?"Not found":"Stopped",a:`Saving chapter ${n} stopped. Tap to try again.`,off:!offNet()};
+  if(j&&j.state==="failed")return {s:"failed",t:"Retry",sub:{space:"No room",missing:"Not found",net:"No signal",text:"No text",store:"Can't store"}[j.err]||"Stopped",a:`${offWhy(j)} Tap to try again.`,off:!offNet()};
   if(it&&M&&offNet()){const a=offAbs(AU(R(M.src)));if(a!==it.url&&a!==it.alias)return {s:"stale",t:"Update",sub:offMB(it.size),a:`A newer recording of chapter ${n} is out. Tap to save it.`}}
   if(it)return {s:"saved",t:"✓ Saved",sub:offMB(it.size),a:`Chapter ${n} is saved, ${offMB(it.size)}. Tap to remove it.`};
   if(!offNet())return {s:"none",t:"Not saved",a:`Chapter ${n} isn't saved. Connect to save it.`,off:true};
@@ -2007,13 +2025,13 @@ function offBtnState(n,ed){const it=offItem(ed,n),j=OFF.jobs[offK(COURSE.id,ed,n
 function offBtnHTML(n,ed){if(!OFF.can)return "";const b=offBtnState(n,ed);return `<button type="button" class="osave ${b.s}" data-osave="${n}" data-off="${b.s}" aria-label="${esc(b.a)}" ${b.off?"disabled":""}><span class="ot">${esc(b.t)}</span>${b.sub?`<span class="os">${esc(b.sub)}</span>`:""}</button>`}
 function offPanelHTML(){return OFF.can?`<div class="offcard" id="offpanel"></div>`:`<p class="prog">Tap ⬇ if you want the mp3 for some other player. We can't see what happens in there, so your spot won't move. Use Save if you care about that.</p>`}
 function offPanelInner(){const ed=store.get("bookEd."+COURSE.id,"story"),B=BOOK||{full:{}},L=TRACKS.full.list().filter(c=>B.full[c.num]&&B.full[c.num][ed]),items=Object.values(OFF.meta.items),used=items.reduce((a,x)=>a+(x.size||0),0);
-  const saved=L.filter(c=>offItem(ed,c.num)).length,left=L.filter(c=>!offItem(ed,c.num)),busy=L.filter(c=>{const j=OFF.jobs[offK(COURSE.id,ed,c.num)];return j&&(j.state==="saving"||j.state==="queued")});
+  const saved=L.filter(c=>offItem(ed,c.num)).length,left=L.filter(c=>!offItem(ed,c.num)),busy=L.filter(c=>{const j=OFF.jobs[offK(COURSE.id,ed,c.num)];return j&&(j.state==="saving"||j.state==="queued")}),fails=L.map(c=>OFF.jobs[offK(COURSE.id,ed,c.num)]).filter(j=>j&&j.state==="failed");
   const leftMin=left.reduce((a,c)=>a+(+B.full[c.num][ed].min||0),0),net=offNet();
   const room=OFF.free!=null?` About ${offMB(OFF.free)} of room left.`:"";
   return `<h3>Save for offline</h3>${net?"":`<p class="offline-note"><b>Offline right now.</b> Saved chapters will play, and your spot catches up later.</p>`}
    <p class="prog" id="offused">${saved} of ${L.length} chapters saved in ${offEdName(ed)}. All saved audio on this device: ${used?offMB(used):"nothing yet"}.${room}</p>
    <div class="offbtns">${busy.length?`<button class="btn small ghost" type="button" id="offstop">Stop saving (${busy.length} left)</button>`:left.length&&net?`<button class="btn small" type="button" id="offall">Save whole book, about ${offMB(leftMin*6e5)}</button>`:""}${saved?`<button class="btn small ghost" type="button" id="offrm">Remove saved chapters</button>`:""}</div>
-   <p class="prog">Save keeps your spot, signal or not. Tap ⬇ if you want the mp3 for some other player, but we can't see what happens in there, so your spot won't move.</p>${busy.length?`<p class="prog">Stay on this screen till it's done. Close Halcyon and saving stops. It'll start back up next time.</p>`:""}`}
+   <p class="prog">Save keeps your spot, signal or not. Tap ⬇ if you want the mp3 for some other player, but we can't see what happens in there, so your spot won't move.</p>${busy.length?`<p class="prog">Stay on this screen with your phone awake till it's done. Close Halcyon and saving stops. It'll start back up next time.</p>`:""}${fails.map(j=>`<p class="offline-note" id="offwhy">${esc(offWhy(j))}</p>`).join("")}`}
 function offPaint(now){if(!OFF.can||TRACK!=="book"||!$("offpanel"))return;const t=Date.now();if(!now&&t-OFF.paintAt<250)return;OFF.paintAt=t;const ed=store.get("bookEd."+COURSE.id,"story");
   const p=$("offpanel"),html=offPanelInner();if(p.__h!==html){p.innerHTML=html;p.__h=html;
     const a=$("offall");if(a)a.onclick=()=>{TRACKS.full.list().forEach(c=>{const M=BOOK.full[c.num]&&BOOK.full[c.num][ed];if(M&&!offItem(ed,c.num))offEnqueue(ed,c.num,M)})};
@@ -2283,7 +2301,7 @@ async function api(path,opts={}){if(/^\/api\/(progress|me)\b/.test(path)&&String
 async function listenPull(){if(SIGNING_OUT||TESTP||!ONLINE||!SYNC||!COURSE||!offNet())return;try{const me=await api("/api/auth?action=me");if(me.user&&TAB_USER!==null&&String(me.user.email)!==TAB_USER){acctLeave();return}
   // bookmarks: a newer record from another device replaces this one unless a write from here is still waiting (newest record wins)
   bdgPull(me.progress||{});bmCourses().forEach(c=>{const k=BMKEY(c),r=me.progress&&me.progress[k];if(r&&Array.isArray(r.list)&&(r.at||0)>(bmGet(c).at||0)&&!SPEND[k]&&!obGet()[k]){store.set("c"+k,r);bmRail();if(TRACK==="notes"&&$("bmbody")&&!$("bmbody").contains(document.activeElement)){$("bmbody").innerHTML=bmListHTML();bmNotesWire()}}});{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused&&!obGet()[LKEY()]){const LM=listenMerge(lget(),r);store.set("c"+LKEY(),LM);obAdopt(LKEY(),LM);if(!recSame(LM,r))SYNC(LKEY(),LM);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
-const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.qa.ok","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers","halcyon.outbox","halcyon.signedin","halcyon.offwant","halcyon.signingin"];
+const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.qa.ok","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers","halcyon.outbox","halcyon.signedin","halcyon.offwant","halcyon.signingin","halcyon.offreport"];
 function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.recap")||k.startsWith("halcyon.bookEd.")||k.startsWith("halcyon.bookdone.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
   document.querySelector(".rail").hidden=true;const signup=mode==="signup";
