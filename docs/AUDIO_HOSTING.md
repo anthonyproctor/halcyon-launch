@@ -23,8 +23,9 @@ take the mp3s out of git, and later rewrite history. Approved by Anthony 2026-10
 - **JSON stays on Vercel**: page timings, `audiobook.json`, `bookmarks.json`, `episodes/*.json`, `samples.json`. It deploys together with the
   manifest, so the words the app highlights always match the take the manifest points at. A tab left open across a deploy re-reads the
   manifest (at most once a minute) before it fetches a page's timings or the Audiobook list, so an old tab doesn't pair new timings with an old take.
-- **Service worker.** It never caches an mp3, no matter where it lives (`/audio/`, `courses/*/audio/`, or the R2 domain, which is cross-origin
-  and passes straight through). `config.js` is part of the app shell (cache `halcyon-v21`).
+- **Service worker.** It never caches an mp3 on its own, no matter where it lives (`/audio/`, `courses/*/audio/`, or the R2 domain, which is cross-origin
+  and passes straight through). The one exception is a chapter the reader saved for offline: engine.js puts it in the `halcyon-offline-audio` cache, and sw.js answers
+  that URL from there with a 200 or a 206. `config.js` is part of the app shell (cache `halcyon-v21`).
 - **QA reports** still record the file's path (`/audio/v2/pages/f1/open.mp3`), not the R2 host. `HalcyonState().src` maps it back.
 
 ### Why re-renders are safe (cache policy)

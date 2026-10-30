@@ -21,7 +21,7 @@ export default defineConfig({
     // the player bar on an iPhone: WebKit with the iPhone 15 profile (touch, mobile viewport), only for that spec
     // the off-site audio fallback on the iPhone's engine too (WebKit orders media errors and play() rejections its own way); the spec mutes every element
     { name: "webkit-audio", testMatch: /audio_hosting\.spec\.mjs/, use: { ...devices["iPhone 15"], serviceWorkers: "block" } },
-    { name: "webkit-iphone", testMatch: /(narbar|player)_ios\.spec\.mjs/, use: { ...devices["iPhone 15"], serviceWorkers: "block" } }, // WebKit can't be muted by a switch: the spec mutes every media element itself
+    { name: "webkit-iphone", testMatch: /((narbar|player)_ios|offline)\.spec\.mjs/, use: { ...devices["iPhone 15"], serviceWorkers: "block" } }, // offline.spec.mjs turns the service worker on itself. WebKit can't be muted by a switch: the spec mutes every media element itself
   ],
   webServer: {
     command: "node tests/serve.mjs",

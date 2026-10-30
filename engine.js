@@ -11,7 +11,8 @@ const NOAUD=()=>PMP2()&&!(window.HALCYON_V2||{}).audio; // v2 narration not swit
 /* the test profile (profile.js, QA only) moves every progress key to its own namespace; display preferences stay shared. Without profile.js it's "halcyon."+k */
 const PROF=window.HalcyonProfile||{test:false,key:k=>SP+k};
 const TESTP=!!PROF.test;
-const store={get(k,d){try{const v=localStorage.getItem(PROF.key(k));return v?JSON.parse(v):d}catch(e){return d}},set(k,v){if(PROF.frozen)return;try{localStorage.setItem(PROF.key(k),JSON.stringify(v))}catch(e){}}};
+let TAB_USER=null;let SIGNING_OUT=false; // from the moment sign out commits, nothing may write progress again: late player events and timers would put this account's data back after clearLocal
+const store={get(k,d){try{const v=localStorage.getItem(PROF.key(k));return v?JSON.parse(v):d}catch(e){return d}},set(k,v){if(PROF.frozen||SIGNING_OUT)return;if(acctOff()){acctLeave();return}try{localStorage.setItem(PROF.key(k),JSON.stringify(v))}catch(e){}}};
 const clamp=v=>Math.max(0,Math.min(100,v));
 let DOMS=["People","Process","Business Environment"];
 const PMP_METERS=[["trust","Team trust"],["conf","Stakeholder confidence"],["health","Delivery health"]];
@@ -61,6 +62,8 @@ function R(p){return /^(https?:|\/)/.test(p)?p:COURSE.root+p}
 const AUDIO_BASE=(()=>{const b=String(window.HALCYON_AUDIO_BASE||"").trim();if(!b)return "";try{const u=new URL(b);return /^https?:$/.test(u.protocol)?u.href.replace(/\/+$/,""):""}catch(e){return ""}})(); // normalized the way the browser writes el.src
 const AUDIO_REMOTE_ONLY=!!AUDIO_BASE&&window.HALCYON_AUDIO_REMOTE_ONLY===true;
 const AUD={map:null,bad:new Set(),log:null,at:0};
+const SW_OK=("serviceWorker" in navigator)&&(location.protocol==="https:"||/\.localhost$/.test(location.hostname)); // *.localhost is how tests/offline.spec.mjs reaches a real service worker; plain localhost keeps none, so dev and the other tests see no cache
+const offNet=()=>navigator.onLine!==false;
 const audRel=p=>String(p||"").replace(/[?#].*$/,"").replace(/^\/+/,"");
 const audKey=(rel,h)=>rel.replace(/\.mp3$/i,`.${h}.mp3`); // R2 key of one take: tools/r2_sync.py key_of() builds the same
 function AU(p){if(!AUDIO_BASE||!AUD.map||typeof p!=="string"||/^[a-z][a-z0-9+.-]*:/i.test(p))return p;const rel=audRel(p),h=AUD.map[rel];
@@ -82,10 +85,10 @@ const audWait=(p,ms)=>Promise.race([p,new Promise(ok=>setTimeout(ok,ms))]);
 // boot waits at most 1 s for the manifest (until it lands, mp3s play from this site); remote-only waits up to 10 s, since there's nothing else to play
 AUD.ready=!AUDIO_BASE?Promise.resolve():audWait(audLoad(),AUDIO_REMOTE_ONLY?10000:1000);
 // a tab left open across a deploy re-reads the manifest (at most once a minute) before it fetches a page's timings, so take and timings match
-function audFresh(){return AUDIO_BASE&&Date.now()-AUD.at>60000?audWait(audLoad(),AUDIO_REMOTE_ONLY?10000:1000):Promise.resolve()}
+function audFresh(){return offNet()&&AUDIO_BASE&&Date.now()-AUD.at>60000?audWait(audLoad(),AUDIO_REMOTE_ONLY?10000:1000):Promise.resolve()}
 function taskDomain(t){const TD=COURSE.taskDomain||{};return TD[t]||TD[t.split(".")[0]]||TD[t[0]]||DOMS[0]}
-function loadScripts(list){return Promise.all(list.map(src=>new Promise(ok=>{if(document.querySelector(`script[data-c="${src}"]`))return ok();const el=document.createElement("script");el.src=src;el.dataset.c=src;el.onload=ok;el.onerror=ok;document.head.appendChild(el)})))}
-async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")return false;if((c.scripts||c.labs)&&!c._loaded){await loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x));c._loaded=true}
+function loadScripts(list){return Promise.all(list.map(src=>new Promise(ok=>{if(document.querySelector(`script[data-c="${src}"]`))return ok(true);const el=document.createElement("script");el.src=src;el.dataset.c=src;el.onload=()=>ok(true);el.onerror=()=>{el.remove();ok(false)};/* a script that failed (offline) can be tried again later */document.head.appendChild(el)})))}
+async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")return false;if((c.scripts||c.labs)&&!c._loaded){await loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x)).then(r=>{c._loaded=r.every(Boolean)})}
   if(c.recaps&&c._recaps===undefined)await recapsLoad(c);
   const changed=COURSE.id!==c.id;COURSE=c;store.set("course",id);
   const meta=c.id==="pmp"?PMP_META:(((window.HALCYON_DATA||{})[id]||{}).meta||{});
@@ -96,7 +99,65 @@ async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")ret
 let TRACK=null,CH=null,S=null,SYNC=null,syncTimer=null;
 /* debounced progress writes still waiting to go (chapter, mock, final, listen state): a reload or a closed tab sends them right away with
    keepalive, so leaving the page (or switching to the test profile, which reloads) never drops a real change */
-let SPEND={};function syncPending(){if(SYNC)Object.values(SPEND).forEach(([k,c])=>SYNC(k,c,true));SPEND={}}addEventListener("pagehide",syncPending);if(PROF.onLeave)PROF.onLeave.push(syncPending);
+const SPEND=new Proxy({},{set(t,k,v){t[k]=v;if(SYNC)obHold(k,v[1]);return true}});function syncPending(){const L=Object.values(SPEND);Object.keys(SPEND).forEach(k=>delete SPEND[k]);if(SYNC)L.forEach(([k,c])=>SYNC(k,c,true))}addEventListener("pagehide",syncPending);
+/* ===== writes that wait for a connection =====
+   Every progress record goes into a small outbox in localStorage before it's sent, and leaves only when the server says ok. So a write made in
+   airplane mode, or one an app kill cut off, survives until the next chance to send: the online event, opening the app, coming back to it, or a
+   one minute retry. Each record sent up carries _t, the time its content last changed on a device. On the way back the newest wins (obMerge), so an
+   older server copy can't drag a device back, and an offline device with an older copy can't overwrite a newer one: netBack reads the server first.
+   Records that can be joined are joined: the listening record field by field, the study log, badges, and bookmarks (deletes leave a mark in gone). */
+const OB={key:"halcyon.outbox",sum:{},t:{},busy:false};let OFFMODE=false;
+function obGet(){try{return JSON.parse(localStorage.getItem(OB.key)||"{}")||{}}catch(e){return {}}}
+function obSet(q){if(SIGNING_OUT)return;try{if(Object.keys(q).length)localStorage.setItem(OB.key,JSON.stringify(q));else localStorage.removeItem(OB.key)}catch(e){}}
+function obStrip(st){if(!st||typeof st!=="object"||Array.isArray(st))return st;const {_t,...r}=st;return r}
+const canon=v=>Array.isArray(v)?v.map(canon):v&&typeof v==="object"?Object.keys(v).sort().reduce((o,k)=>(o[k]=canon(v[k]),o),{}):v; // the server (jsonb) reorders keys
+function obHash(s){let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return h+":"+s.length}
+const recTime=r=>Math.max(+(r&&r._t)||0,+(r&&r.at)||0,+(r&&r.upd)||0);
+const recHash=r=>obHash(JSON.stringify(canon(obStrip(r))));
+const recSame=(a,b)=>recHash(a)===recHash(b);
+const recEmpty=r=>!r||typeof r!=="object"||!Object.keys(obStrip(r)).length;
+function obAdopt(n,rec){OB.sum[n]=recHash(rec);OB.t[n]=recTime(rec)}
+function obSeed(){try{Object.keys(localStorage).forEach(k=>{const m=k.match(/^halcyon\.c(\d+)$/);if(m)obAdopt(m[1],JSON.parse(localStorage.getItem(k)||"null"))})}catch(e){}}
+/* the record to send: _t moves only when the content really changed, so saving an untouched page can't make an old copy look new */
+function obHold(n,st){if(acctOff())acctLeave();const h=recHash(st),was=OB.sum[n],same=was===h,t=same?(OB.t[n]||recTime(st)):Date.now();const rec=Array.isArray(st)?st:{...obStrip(st),_t:t};if(SIGNING_OUT)return {rec,h};OB.sum[n]=h;OB.t[n]=t;
+  const q=obGet();if(!same||q[n]){q[n]={st:rec,h,base:q[n]?q[n].base:was};obSet(q)}return {rec,h}} // base: the copy this edit started from, for a server record too old to carry a time
+function obDone(n,h){if(SIGNING_OUT)return;const q=obGet();if(q[n]&&(!h||q[n].h===h)){delete q[n];obSet(q)}}
+function obSend(n,rec,ka,h){if(!offNet()||acctBusy())return Promise.resolve({ok:false});
+  return api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:+n,state:rec}),keepalive:!!ka}).then(r=>{if(r.ok||r.status===400||r.status===413)obDone(n,h);return r}).catch(()=>({ok:false}))} // 400: the server will never take this one, don't retry it forever
+function obSync(n,st,ka){const {rec,h}=obHold(n,st);return obSend(n,rec,ka,h)}
+function listenMerge(a,b){if(!a||!a.at&&!a.book)return b||a;if(!b||!b.at&&!b.book)return a;const N=(a.at||0)>=(b.at||0)?a:b,O=N===a?b:a,M={...N};
+  const sp=L=>L.book?(L.book.at||L.at||0):(L.bookAt||0);if(sp(O)>sp(N)){M.book=O.book||null;if(O.bookAt)M.bookAt=O.bookAt;else delete M.bookAt}
+  if(O.page&&(O.page.at||0)>((N.page&&N.page.at)||0))M.page=O.page;if(O.prefs&&(O.prefs.at||0)>((N.prefs&&N.prefs.at)||0))M.prefs=O.prefs;M.at=Math.max(a.at||0,b.at||0);return M}
+function bmMerge(a,b){const N=(a.at||0)>=(b.at||0)?a:b,O=N===a?b:a,gone={...(O.gone||{}),...(N.gone||{})},by=new Map();
+  (N.list||[]).forEach(x=>by.set(x.id,x));(O.list||[]).forEach(x=>{if(!by.has(x.id))by.set(x.id,x)});
+  return {...N,list:[...by.values()].filter(x=>!((gone[x.id]||0)>(x.c||0))),gone,at:Math.max(a.at||0,b.at||0)}}
+function obMerge(n,mine,srv,base){if(!srv||recEmpty(srv)&&!recTime(srv))return mine;if(!mine)return srv;const kind=+n%10000;
+  if(kind===903||kind===904)return listenMerge(mine,srv);
+  if(kind===905&&mine.days&&srv.days)return {...logMerge(mine,srv),at:Math.max(mine.at||0,srv.at||0),_t:Math.max(recTime(mine),recTime(srv))};
+  if(kind===907&&Array.isArray(mine.list)&&Array.isArray(srv.list))return bmMerge(mine,srv);
+  if(kind===908&&window.HalcyonBadges&&mine.got&&srv.got){const M=window.HalcyonBadges.merge(mine,srv);if(M)return M}
+  const ts=recTime(srv);if(!ts)return base&&base===recHash(srv)?mine:srv; // written by an older app, so no time on it: the server's copy counts as newer, unless it's the very copy this device's edit started from
+  return recTime(mine)>=ts?mine:srv} // ties stay with this device
+/* one localStorage and one cookie per browser, so another tab can change the account under this one. This tab remembers whose it is (TAB_USER); the mark says
+   whose the device is now. They differ: stop the player, write nothing, send nothing, and reload into the current account. Sign in sets halcyon.signingin before its
+   request goes out, because the cookie changes before that tab can write the new mark: for that moment writes wait in the outbox. */
+function acctOff(){if(TAB_USER===null||SIGNING_OUT)return false;const m=meMark();return !m||String(m.email)!==TAB_USER}
+function acctBusy(){try{const t=+localStorage.getItem("halcyon.signingin")||0;return t>0&&Date.now()-t<30000}catch(e){return false}}
+function acctLeave(){if(SIGNING_OUT)return;SIGNING_OUT=true;SYNC=()=>Promise.resolve();try{NAR.listening=false;NAR.audio.pause()}catch(e){}Object.keys(SPEND).forEach(k=>delete SPEND[k]);location.reload()}
+addEventListener("storage",e=>{if((e.key==="halcyon.signedin"||e.key===null)&&acctOff())acctLeave()});
+const meMark=()=>{try{return JSON.parse(localStorage.getItem("halcyon.signedin")||"null")}catch(e){return null}};
+function meMarkSet(u){if(SIGNING_OUT)return;try{localStorage.setItem("halcyon.signedin",JSON.stringify({email:u.email,name:u.name,admin:!!u.admin,tester:!!u.tester,cur:u.cur||0}))}catch(e){}}
+/* back in touch: read the server first, join what's waiting, send what's newer. A first read after an offline open also takes what other devices wrote. */
+async function netBack(){if(SIGNING_OUT||!ONLINE||TESTP||!SYNC||!offNet()||OB.busy)return;const q0=obGet();if(!OFFMODE&&!Object.keys(q0).length)return listenPull();OB.busy=true;let told=false;
+  try{const me=await api("/api/auth?action=me");if(me.user===null||me.status===401){offSay("Your session ran out. Sign in again and we'll send up what's waiting.");told=true;return}if(!me.user)return;if(TAB_USER!==null&&String(me.user.email)!==TAB_USER){acctLeave();return}meMarkSet(me.user); // another account signed in elsewhere: boot sorts it out, nothing of this one goes to that one
+    const P=me.progress||{},open=(TRACK==="full"||TRACK==="ref")&&CH&&S?String(keyOf(TRACK,CH.num)):null,q=obGet();
+    if(OFFMODE){OFFMODE=false;USERNAME=me.user.name||USERNAME;Object.entries(P).forEach(([n,st])=>{if(q[n]||n===open)return;const loc=store.get("c"+n,null);const M=loc?obMerge(n,loc,st):st;if(!recSame(M,loc)){store.set("c"+n,recEmpty(M)?null:M);obAdopt(n,M||{})}});try{applyPrefs(lget().prefs);settingsPull()}catch(e){}}
+    for(const n of Object.keys(q)){const e=q[n],srv=P[n],M=obMerge(n,e.st,srv,e.base);if(obGet()[n]&&obGet()[n].h!==e.h)continue;
+      if(srv&&recSame(M,srv)){if(n!==open)store.set("c"+n,recEmpty(M)?null:M);obAdopt(n,M);obDone(n,e.h);continue}
+      if(n!==open&&M!==e.st)store.set("c"+n,recEmpty(M)?null:M);obAdopt(n,M);const h=recHash(M);const r=await obSend(n,{...obStrip(M),_t:recTime(M)},false,h);if(r.ok&&h!==e.h)obDone(n,e.h);if(!r.ok&&r.status!==400&&r.status!==413)break}
+  }catch(e){}finally{OB.busy=false}
+  if(!told){await listenPull();if(TRACK==="book"&&NAR.audio.paused&&!OFF.active)renderBook()}}
+function netWatch(){if(netWatch.on)return;netWatch.on=true;addEventListener("online",()=>{MARKS=null;Object.values(OFF.jobs).forEach(j=>{if(j.state==="failed"&&j.err==="net"){j.state="queued";OFF.queue.push(j)}});offPaint(true);offPump();netBack()});addEventListener("offline",()=>{MARKS=null;offPaint()});setInterval(()=>{if(OFFMODE||Object.keys(obGet()).length)netBack()},60000)}if(PROF.onLeave)PROF.onLeave.push(syncPending);
 function freshRef(){return{step:-1,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:Object.fromEntries(DOMS.map(d=>[d,[0,0]]))}}
 function freshFull(){return{pos:0,max:0,picks:{},m:{trust:50,conf:50,health:50},score:0,flags:{},dom:Object.fromEntries(DOMS.map(d=>[d,[0,0]])),drills:{},ex:null,quiz:null}}
 function keyOf(tr,n){return COURSE.base+TRACKS[tr].key(n)}
@@ -935,7 +996,7 @@ const bmClip=(s,n)=>{s=String(s||"").replace(/\s+/g," ").trim();return s.length>
 function BMKEY(c){return (c||COURSE).base+907}
 function bmGet(c){const B=store.get("c"+BMKEY(c),null);return B&&Array.isArray(B.list)?B:{v:1,list:[]}}
 const BMT={};
-function bmPut(B,c,now){c=c||COURSE;B.v=1;B.at=Date.now();const k=BMKEY(c);store.set("c"+k,B);
+function bmPut(B,c,now){c=c||COURSE;B.v=1;B.at=Date.now();if(B.gone){const old=B.at-15552000000;Object.keys(B.gone).forEach(i=>{if(B.gone[i]<old)delete B.gone[i]})}const k=BMKEY(c);store.set("c"+k,B);
   if(SYNC){const copy=JSON.parse(JSON.stringify(B));clearTimeout(BMT[k]);BMT[k]=setTimeout(()=>{delete SPEND[k];SYNC(k,copy)},now?0:800);SPEND[k]=[k,copy]}bmRail()}
 function bmCourses(){return COURSES.filter(c=>c.status==="live")}
 function bmTotal(){return bmCourses().reduce((a,c)=>a+bmGet(c).list.length,0)}
@@ -956,8 +1017,8 @@ function bmBtnHTML(id,on,label){return `<button type="button" class="bmbtn" id="
 const BM_BYTES=50000; // the server refuses a record over 60000 characters, and a refused write would be lost at the next sign in
 const bmFits=B=>JSON.stringify(B).length<=BM_BYTES;
 function bmAdd(b){const B=bmGet();if(B.list.some(x=>x.id===b.id))return true;if(B.list.length>=BM_MAX)return false;B.list.push({...b,c:Date.now()});if(!bmFits(B))return false;bmPut(B);return true}
-function bmRemove(id,co){const c=bmCourseOf(co),B=bmGet(c),i=B.list.findIndex(x=>x.id===id);if(i<0)return null;const [b]=B.list.splice(i,1);bmPut(B,c);return {b,i,co:c.id}}
-function bmRestore(u){if(!u)return;const c=bmCourseOf(u.co),B=bmGet(c);if(!B.list.some(x=>x.id===u.b.id))B.list.splice(Math.min(u.i,B.list.length),0,u.b);bmPut(B,c)}
+function bmRemove(id,co){const c=bmCourseOf(co),B=bmGet(c),i=B.list.findIndex(x=>x.id===id);if(i<0)return null;const [b]=B.list.splice(i,1);B.gone=B.gone||{};B.gone[b.id]=Date.now();bmPut(B,c);return {b,i,co:c.id}}
+function bmRestore(u){if(!u)return;const c=bmCourseOf(u.co),B=bmGet(c);if(!B.list.some(x=>x.id===u.b.id))B.list.splice(Math.min(u.i,B.list.length),0,u.b);if(B.gone)delete B.gone[u.b.id];bmPut(B,c)}
 function bmEdit(id,co,patch,now){const c=bmCourseOf(co),B=bmGet(c),b=B.list.find(x=>x.id===id);if(!b)return;
   if("note" in patch){const v=String(patch.note||"").replace(/\s+/g," ").trim().slice(0,BM_NOTE);if(v)b.note=v;else delete b.note}
   if("r" in patch){if(patch.r)b.r=1;else delete b.r}if(!bmFits(B))return false;bmPut(B,c,now);return true}
@@ -1076,7 +1137,7 @@ function dayKey(t){const d=new Date(t);return `${d.getFullYear()}-${String(d.get
 function logGet(c){const L=store.get("c"+ALOGKEY(c),null);return L&&L.days?L:{v:1,days:{}}}
 function logSave(L,now){L.at=Date.now();const k=ALOGKEY();let j=JSON.stringify(L);
   if(j.length>50000){Object.keys(L.days).sort().some(d=>{L.days[d].a=[];j=JSON.stringify(L);return j.length<=50000})} // the server takes 60000; drop the oldest activity notes first, never the time
-  store.set("c"+k,L);if(!SYNC)return;LOG.pend[k]=JSON.parse(j); // at most one write every 20 seconds while studying, and right away when the tab hides
+  store.set("c"+k,L);if(!SYNC)return;LOG.pend[k]=JSON.parse(j);obHold(k,LOG.pend[k]); // at most one write every 20 seconds while studying, and right away when the tab hides
   if(now){clearTimeout(LOG.timers[k]);LOG.timers[k]=0;SYNC(k,LOG.pend[k],true)}else if(!LOG.timers[k])LOG.timers[k]=setTimeout(()=>{LOG.timers[k]=0;SYNC(k,LOG.pend[k])},20000)}
 function logMerge(a,b){const out={v:1,days:{}},A=(a&&a.days)||{},B=(b&&b.days)||{};
   new Set([...Object.keys(A),...Object.keys(B)]).forEach(k=>{const x=A[k]||{},y=B[k]||{},t={};
@@ -1254,7 +1315,7 @@ function meCleanName(v){const n=String(v||"").replace(/[\p{Cc}\p{Zl}\p{Zp}]/gu,"
   if(!n)return {error:"Type a name."};if([...n].length>60)return {error:"Keep it to 60 characters or fewer."};return {name:n}}
 function meStarted(c){if(libStarted(c))return true;const r=bdgGet(c);if(r&&Object.keys(r.got).length)return true;return logRows(c).length>0}
 function meLoad(c){const jobs=[bdgLoad(c).catch(()=>null)];
-  if(c.id!=="pmp"&&(c.scripts||c.labs)&&!c._loaded)jobs.push(c._bpload||(c._bpload=loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x)).then(()=>{c._loaded=true})));
+  if(c.id!=="pmp"&&(c.scripts||c.labs)&&!c._loaded)jobs.push(c._bpload||(c._bpload=loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x)).then(r=>{c._loaded=r.every(Boolean)})));
   return Promise.all(jobs)}
 /* one started book: chapters finished, readiness, badges earned, time spent */
 function meBook(c,cur){const HB=window.HalcyonBadges,rec=bdgGet(c),got=(rec&&rec.got)||{},def=bdgDefs(c);
@@ -1395,6 +1456,7 @@ function narSavePos(now){const a=NAR.audio,ct=NAR.soft?NAR.soft.t:a.currentTime;
   if(NAR.page==="book"&&NAR.book)lput({book:{ed:NAR.book.ed,n:NAR.book.n,t,dur,at:Date.now()}},now);
   else if(NAR.page&&NAR.key&&NAR.page!=="car")lput({page:{key:NAR.key,pid:NAR.page,t,at:Date.now()}},now);}
 function narTick(){if(Date.now()-lsaveAt>5000){lsaveAt=Date.now();narSavePos(false)}}
+NAR.audio.addEventListener("timeupdate",()=>{if(!NAR.audio.seeking)narTick()}); // animation frames stop on a locked phone; timeupdate keeps going, so the five second save does too
 /* player diagnostics (Help page toggle): logs what the audio element does, for debugging on phones */
 const PDBG={on:store.get("pdbg",false),lines:[]};
 function plog(m){if(!PDBG.on)return;const a=NAR.audio;const s=`${new Date().toISOString().slice(14,23)} ${m} | t=${(a.currentTime||0).toFixed(1)} rs=${a.readyState} ns=${a.networkState} p=${a.paused?1:0} sk=${a.seekable&&a.seekable.length?a.seekable.end(0).toFixed(0):"-"}`;PDBG.lines.push(s);PDBG.lines=PDBG.lines.slice(-40);let el=$("pdbg");if(!el){el=document.createElement("pre");el.id="pdbg";el.style.cssText="position:fixed;top:0;left:0;right:0;max-height:25vh;overflow:auto;z-index:99;margin:0;padding:calc(6px + env(safe-area-inset-top)) 6px 6px;font:10px/1.3 monospace;background:rgba(0,0,0,.85);color:#9f9;white-space:pre-wrap;cursor:pointer";el.title="Tap to turn player diagnostics off";el.onclick=()=>{PDBG.on=false;store.set("pdbg",false);el.remove();const t=$("pdbgt");if(t)t.checked=false};document.body.appendChild(el)}el.textContent="Player diagnostics. Tap here to turn them off.\n"+PDBG.lines.join("\n");el.scrollTop=1e9}
@@ -1433,7 +1495,7 @@ function narDur(){const a=NAR.audio;if(a.duration&&isFinite(a.duration))return a
 function fmtT(s){s=Math.max(0,Math.round(s||0));return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`}
 function bookResumePos(ed,n,dur){const L=lget(),B=L.book;if(B&&B.n===n){if(B.ed===ed)return B.t;if(B.dur&&dur)return Math.max(0,B.t/B.dur*dur-15)}const old=store.get(`bookpos.${BID()}.${ed}.${n}`,0);return old||0}
 function narKey(){if(!CH||(TRACK!=="full"&&TRACK!=="ref"))return null;return (TRACK==="ref"?"r":"f")+CH.num}
-async function narTimings(key){if(NAR.timings[key])return NAR.timings[key];if(NOAUD())return null;await audFresh();try{const r=await fetch(R(V2(`audio/pages/${key}/timings.json`)),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
+async function narTimings(key){if(NAR.timings[key]&&offNet())return NAR.timings[key];if(NOAUD()||!offNet())return null;/* page narration isn't saved for offline: no player bar that can't play */await audFresh();try{const r=await fetch(R(V2(`audio/pages/${key}/timings.json`)),{cache:"no-cache"});if(r.ok)NAR.timings[key]=await r.json()}catch(e){}return NAR.timings[key]||null}
 // the narration also reads props (vlog cards, emails, console logs): their headers and bodies are highlight targets too
 const PROPSEL=pre=>[".vh",".vm",".ph",".pm",".pb",".bubble"].map(x=>`${pre}.story .prop ${x}`).join(", ");
 function narPageId(){
@@ -1510,7 +1572,7 @@ async function narAttach(){
   narUI();
   if(NAR.listening){NAR.audio.play().then(()=>{narUI();narHighlight()}).catch(()=>{NAR.listening=false;narUI()})}
 }
-NAR.audio.addEventListener("ended",()=>{if(NAR.soft){softEnd("ended");return}if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${BID()}.${ed}.${n}`,true);store.set(`bookpos.${BID()}.${ed}.${n}`,0);{const L=lget();if(L.book&&L.book.n===n)lput({book:null},true)}const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];const slept=sleepChapterEnd();if(nx&&!slept)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){sleepChapterEnd();NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
+NAR.audio.addEventListener("ended",()=>{if(NAR.soft){softEnd("ended");return}if(NAR.page==="book"){const {ed,n}=NAR.book;store.set(`bookdone.${BID()}.${ed}.${n}`,true);store.set(`bookpos.${BID()}.${ed}.${n}`,0);{const L=lget();if(L.book&&L.book.n===n)lput({book:null,bookAt:Date.now()},true)}const nx=Object.keys(BOOK.full).map(Number).filter(k=>k>n&&BOOK.full[k][ed]).sort((a,b)=>a-b)[0];const slept=sleepChapterEnd();if(nx&&!slept)bookPlay(ed,nx);else{NAR.listening=false;narUI()}if(TRACK==="book")renderBook();return}if(NAR.page==="car"){sleepChapterEnd();NAR.listening=false;narUI();return}cancelAnimationFrame(NAR.raf);if(NAR.cur!=null&&NAR.words[NAR.cur])NAR.words[NAR.cur].classList.remove("hl");narUI();
   if((NAR.page||"").replace(/_(alt|fixed|v\d+)$/,"")==="end"&&sleepChapterEnd()){NAR.listening=false;narUI();return} // the sleep timer's "End of chapter": the chapter's last page finished
   if(!NAR.auto)return;const pid=NAR.page||"";
   if(pid==="open"||pid==="lesson"){const b=$("fnext")||$("go");if(b)setTimeout(()=>{SCR.auto=true;b.click();SCR.auto=false},700)}
@@ -1588,7 +1650,7 @@ function narInit(){
   $("narauto").onchange=e=>{NAR.auto=e.target.checked;store.set("auto2",NAR.auto)};
   $("gohf").onclick=async()=>{if(TRACK==="full"||TRACK==="ref")save();const LB=lget().book;const n=LB&&!(TRACK==="full"&&CH)?LB.n:(TRACK==="full"&&CH?CH.num:1);const B=await bookManifest();await bookMarks();const ed=store.get("bookEd."+COURSE.id,"story");const have=Object.keys(B.full).map(Number).filter(k=>B.full[k][ed]).sort((a,b)=>a-b);let at=null;if(TRACK==="full"&&CH&&have.includes(CH.num)&&!(LB&&LB.n===CH.num&&LB.ed===ed&&(LB.at||0)>readAt(CH.num)))at=markTime(CH.num,ed,readPid());renderBook();top();if(have.length)bookPlay(ed,have.includes(n)?n:(have.find(k=>k>=n)||have[have.length-1]),at)};
   NAR.audio.addEventListener("pause",()=>{narUI();narSavePos(true)});
-  document.addEventListener("visibilitychange",()=>{if(document.hidden)narSavePos(true);else listenPull()});
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)narSavePos(true);else netBack()});
   addEventListener("pagehide",()=>narSavePos(true));
 }
 narInit();sleepInit();logInit();window.__nar=NAR;
@@ -1645,7 +1707,7 @@ NAR.audio.addEventListener("play",narMedia);
 NAR.hidPause=null; // where and when the audio was paused while the app was hidden (lock screen, headphones, car)
 NAR.audio.addEventListener("pause",()=>{NAR.hidPause=document.hidden?{t:NAR.audio.currentTime||0,at:Date.now()}:null});
 NAR.audio.addEventListener("playing",()=>{NAR.hidPause=null});document.addEventListener("visibilitychange",()=>{if(!document.hidden)NAR.hidPause=null});
-if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("/sw.js").catch(()=>{});
+if(SW_OK)navigator.serviceWorker.register("/sw.js").catch(()=>{});
 
 
 
@@ -1830,7 +1892,8 @@ function renderGuide(){setTimeout(ambSync,0);TRACK="guide";setTimeout(navSync,0)
    <dt>Resume</dt><dd>The Audiobook page shows a Resume button with where you stopped. Switch editions and it picks up near the same point in the chapter.</dd>
    <dt>Switching between reading and listening</dt><dd>Tap 🎧 Audiobook on a chapter and it starts at the part you're reading. Open a chapter after listening and it offers to jump to the scene you were hearing. The Audiobook page has a 📖 Read from here button too. Works across devices.</dd>
    <dt>Sections</dt><dd>Tap Sections under a chapter on the Audiobook page to start from any scene. The player shows which scene you're hearing.</dd>
-   <dt>⬇ Download</dt><dd>Each chapter has a download button if you want the file for a drive with no signal.</dd>
+   <dt>Save for offline</dt><dd>Want a chapter for a flight or a dead zone? Hit Save next to it, or Save whole book on the Audiobook page. Story only and Story + lessons save separately. Leave the app open till it's done. No signal later? It still plays, and your spot catches up with your other devices when you reconnect. If two devices disagree, the latest spot wins.</dd>
+   <dt>⬇ Plain file</dt><dd>Tap ⬇ if you want the mp3 for some other player. We can't see what happens in there, so your spot won't move. Use Save if you care about that.</dd>
   </dl>
   <h2>Settings at the top</h2><dl>
    <dt>Focus mode</dt><dd>Hides scores and meters and moves the lesson to the end of the chapter, so it reads like a novel. You still make every decision. Turn it off to see your scores as you go. Only changes reading; the Audiobook is the same either way.</dd>
@@ -1873,9 +1936,101 @@ function navSync(){noteRoute();setTimeout(bdgToastNext,0);try{bookBarSync()}catc
 
 
 /* ===== audiobook ===== */
+/* ===== save for offline (2026-10-30) =====
+   A saved chapter's mp3 lives in the Cache Storage cache "halcyon-offline-audio" under the same URL the player uses, with its episode JSON and the book's
+   audiobook.json and bookmarks.json. sw.js keeps that cache across CACHE version bumps and answers saved mp3s with 200 or 206. Nothing else changes:
+   an mp3 that isn't saved never touches the service worker, so streaming stays as it was. What's saved is listed in /__offline/meta.json in that same cache,
+   read at boot so a tap can still call play() right away. A new take (the manifest names a new hash) streams when online and offers Update;
+   offline the saved take plays, with its own saved text. */
+const OFF={name:"halcyon-offline-audio",metaUrl:"/__offline/meta.json",meta:{v:1,items:{}},jobs:{},queue:[],active:0,max:2,can:SW_OK&&("caches" in window),free:null,asked:false,paintAt:0};
+const offK=(cid,ed,n)=>`${cid}|${ed}|${n}`;
+const offAbs=u=>new URL(u,document.baseURI).href;
+function offItem(ed,n,cid){return OFF.meta.items[offK(cid||COURSE.id,ed,n)]||null}
+const offMB=b=>b>=1e9?(b/1e9).toFixed(1)+" GB":Math.max(1,Math.round(b/1e6))+" MB";
+const offEdName=ed=>ed==="study"?"Story + lessons":"Story only";
+function bookSrc(ed,n,M){const cur=AU(R(M.src)),it=offItem(ed,n);if(!it)return cur;const a=offAbs(cur);if(a===it.url||a===it.alias)return cur;return offNet()?cur:it.url}
+function offTell(){try{const c=navigator.serviceWorker&&navigator.serviceWorker.controller;if(c)c.postMessage({type:"offline-changed"})}catch(e){}}
+async function offInit(){if(!OFF.can||offInit.done)return;offInit.done=true;try{const c=await caches.open(OFF.name),r=await c.match(OFF.metaUrl);if(r){const j=await r.json();if(j&&j.items)OFF.meta=j;
+    const have=new Set((await c.keys()).map(q=>q.url));let lost=false;Object.keys(OFF.meta.items).forEach(k=>{if(!have.has(OFF.meta.items[k].url)){delete OFF.meta.items[k];lost=true}});if(lost)await offMetaPut()}offTell()}catch(e){}}
+async function offMetaPut(){const c=await caches.open(OFF.name);await c.put(OFF.metaUrl,new Response(JSON.stringify(OFF.meta),{headers:{"Content-Type":"application/json"}}));offTell()}
+function offWant(){if(SIGNING_OUT)return;try{const L=[...Object.values(OFF.jobs)].filter(j=>!j.cancel).map(({k,cid,ed,n,urls,alias,text,marks,src,min})=>({k,cid,ed,n,urls,alias,text,marks,src,min}));if(L.length)localStorage.setItem("halcyon.offwant",JSON.stringify(L));else localStorage.removeItem("halcyon.offwant")}catch(e){}}
+/* a chapter asked for and not finished comes back when the app does; iOS stops downloads when the app closes */
+function offResume(){if(!OFF.can||!offNet())return;let L=[];try{L=JSON.parse(localStorage.getItem("halcyon.offwant")||"[]")}catch(e){}L.forEach(j=>{if(!OFF.jobs[j.k]&&!OFF.meta.items[j.k]){OFF.jobs[j.k]={...j,state:"queued",got:0,total:0};OFF.queue.push(OFF.jobs[j.k])}});offPump();offPaint()}
+function offEnqueue(ed,n,M){if(!OFF.can)return;const k=offK(COURSE.id,ed,n),old=OFF.jobs[k];if(old&&(old.state==="saving"||old.state==="queued"))return;
+  const j=old||{k,cid:COURSE.id,ed,n,urls:[...new Set([offAbs(AU(R(M.src))),...(AUDIO_REMOTE_ONLY?[]:[offAbs(R(M.src))])])],alias:offAbs(R(M.src)),text:offAbs(btextUrl(n,ed)),marks:offAbs(R(V2("audio/bookmarks.json"))),src:M.src,min:M.min,got:0,total:0};
+  j.state="queued";j.err=null;j.cancel=false;OFF.jobs[k]=j;OFF.queue.push(j);offWant();
+  if(!OFF.asked){OFF.asked=true;try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}}
+  offPump();offPaint()}
+function offPump(){while(OFF.active<OFF.max&&OFF.queue.length&&offNet()){const j=OFF.queue.shift();if(j.cancel)continue;OFF.active++;offRun(j).catch(()=>{}).then(()=>{OFF.active--;offPump();offWant();offPaint(true)})}}
+/* one file: read it in pieces, pick up with a Range request after a dropped connection, check the length before it counts */
+async function offPull(j,url){const h=j.got?{Range:`bytes=${j.got}-`}:{};const r=await fetch(url,{headers:h,cache:"no-store",signal:j.ctl.signal});
+  if(r.status===404||r.status===403){const e=new Error("gone");e.gone=true;throw e}if(!r.ok&&r.status!==206)throw new Error("status "+r.status);
+  if(j.got&&r.status!==206){j.chunks=[];j.got=0}
+  if(r.status===206){const m=/bytes (\d+)-(\d*)\/(\d+|\*)/.exec(r.headers.get("Content-Range")||"");if(!m||+m[1]!==j.got){j.chunks=[];j.got=0;throw new Error("bad range")}if(m[3]!=="*")j.total=+m[3]}else j.total=+r.headers.get("Content-Length")||0;
+  const rd=r.body.getReader();for(;;){const {done,value}=await rd.read();if(done)break;j.chunks.push(value);j.got+=value.length;offPaint()}
+  if(j.total?j.got!==j.total:j.got<1024){if(j.got>j.total){j.chunks=[];j.got=0}throw new Error("short")}}
+async function offRun(j){j.state="saving";j.err=null;j.ctl=new AbortController();j.chunks=j.chunks||[];j.got=j.got||0;offPaint(true);let ui=j.ui||0,tries=0;
+  while(!j.pulled){if(j.cancel)return;try{await offPull(j,j.urls[ui]);j.pulled=true}catch(e){if(j.cancel)return;
+      if(e.gone){if(++ui<j.urls.length){j.ui=ui;j.chunks=[];j.got=0;continue}j.state="failed";j.err="missing";j.chunks=null;j.got=0;return}
+      if(!offNet()||++tries>4){j.state="failed";j.err="net";return} // what's read stays in memory; Retry, or coming back online, continues from there
+      await new Promise(ok=>setTimeout(ok,tries*tries*400))}}
+  /* the take and its text are one unit: both are fetched and stored under this take's own keys, and meta moves to them only when both are safe. Until then the old take stays whole. */
+  const url=j.urls[ui],textKey=`/__offline/text/${j.cid}-${j.ed}-${j.n}-${obHash(url).replace(":","-")}.json`;let c,text=null,marks;
+  try{const r=await fetch(j.text,{cache:"no-cache",signal:j.ctl.signal});if(r.ok){text=await r.text();const J=JSON.parse(text);if(!(J.v===1&&J.n===j.n&&J.ed===j.ed&&Array.isArray(J.p)))throw new Error("bad text")}else if(r.status!==404)throw new Error("text "+r.status);
+    const m=await fetch(j.marks,{cache:"no-cache",signal:j.ctl.signal});if(m.ok){const A=await m.json();marks=(A.full&&A.full[j.n]&&A.full[j.n][j.ed])||[]}else if(m.status===404)marks=[];else throw new Error("marks "+m.status);
+    if(/\.[0-9a-f]{12}\.mp3$/.test(url)){const fm=await fetch("audio-manifest.json",{cache:"no-cache",signal:j.ctl.signal});if(fm.ok){const F=await fm.json(),rel=audRel(new URL(j.alias).pathname),h=F.files&&F.files[rel];if(h&&!url.endsWith(`.${h}.mp3`)){AUD.map=F.files;delete OFF.jobs[j.k];offSay("We've got a new recording of this one. Tap Update to grab it.");return}}} // a deploy landed mid save: this text belongs to a newer take
+  }catch(e){if(j.cancel)return;j.state="failed";j.err="net";return}
+  const old=OFF.meta.items[j.k];
+  try{c=await caches.open(OFF.name);await c.put(url,new Response(new Blob(j.chunks,{type:"audio/mpeg"}),{headers:{"Content-Type":"audio/mpeg","Content-Length":String(j.got),"Accept-Ranges":"bytes"}}));if(text!=null)await c.put(textKey,new Response(text,{headers:{"Content-Type":"application/json"}}));
+    if(!(await c.match(url))||(text!=null&&!(await c.match(textKey))))throw new Error("not stored");
+    OFF.meta.items[j.k]={url,alias:j.alias,textKey:text!=null?textKey:null,marks,src:j.src,min:j.min,size:j.got,at:Date.now(),cid:j.cid,ed:j.ed,n:j.n};await offMetaPut();
+    if(old&&old.url!==url)await c.delete(old.url);if(old&&old.textKey&&old.textKey!==textKey)await c.delete(old.textKey);
+    j.chunks=null;delete OFF.jobs[j.k];offRoom()
+  }catch(e){if(old)OFF.meta.items[j.k]=old;else delete OFF.meta.items[j.k];try{if(c&&(!old||old.url!==url))await c.delete(url);if(c&&(!old||old.textKey!==textKey))await c.delete(textKey)}catch(x){}j.chunks=null;j.got=0;j.pulled=false;j.state="failed";j.err=e&&e.name==="QuotaExceededError"?"space":"store"}}
+async function offRemove(ed,n,cid){const k=offK(cid||COURSE.id,ed,n),it=OFF.meta.items[k];if(!it)return;delete OFF.meta.items[k];try{const c=await caches.open(OFF.name);await c.delete(it.url);if(it.textKey)await c.delete(it.textKey);await offMetaPut()}catch(e){}offRoom();offPaint(true);if(TRACK==="book"&&NAR.page!=="book")setTimeout(()=>{if(TRACK==="book")renderBook()},0)}
+/* offline, a saved chapter uses what was saved with its take, whatever the shared files say by now */
+function offBook(M){Object.values(OFF.meta.items).forEach(x=>{if(x.cid!==COURSE.id)return;M.full=M.full||{};const r=M.full[x.n]=M.full[x.n]||{};r[x.ed]={...(r[x.ed]||{}),src:x.src||(r[x.ed]||{}).src,min:x.min!=null?x.min:(r[x.ed]||{}).min}})}
+function offMarks(M){Object.values(OFF.meta.items).forEach(x=>{if(x.cid!==COURSE.id||!x.marks)return;M.full=M.full||{};(M.full[x.n]=M.full[x.n]||{})[x.ed]=x.marks})}
+function offStop(k){const j=OFF.jobs[k];if(!j)return;j.cancel=true;try{if(j.ctl)j.ctl.abort()}catch(e){}j.chunks=null;delete OFF.jobs[k];OFF.queue=OFF.queue.filter(x=>x!==j);offWant();offPaint(true)}
+function offRoom(){try{if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(e=>{OFF.free=e&&e.quota!=null?Math.max(0,e.quota-(e.usage||0)):null;offPaint(true)}).catch(()=>{})}catch(e){}}
+let offMsgT=0;
+function offSay(msg){let el=$("offmsg");if(!el){el=document.createElement("div");el.id="offmsg";el.className="offmsg";el.setAttribute("role","status");document.body.appendChild(el)}el.textContent=msg;el.hidden=false;clearTimeout(offMsgT);offMsgT=setTimeout(()=>{el.hidden=true},9000)}
+NAR.audio.addEventListener("error",()=>{if(NAR.page!=="book"||!NAR.book||offItem(NAR.book.ed,NAR.book.n))return;NAR.listening=false;narUI();offSay(`Chapter ${NAR.book.n} won't load. Got no signal? Only saved ones play without it.`)});
+function offBtnState(n,ed){const it=offItem(ed,n),j=OFF.jobs[offK(COURSE.id,ed,n)],M=BOOK&&BOOK.full[n]&&BOOK.full[n][ed];
+  if(j&&j.state==="saving")return {s:"saving",t:j.total?Math.min(99,Math.floor(j.got/j.total*100))+"%":"Saving",sub:j.total?offMB(j.total):"",a:`Saving chapter ${n}. Tap to stop.`};
+  if(j&&j.state==="queued")return {s:"queued",t:"Waiting",a:`Chapter ${n} is waiting to save. Tap to stop.`};
+  if(j&&j.state==="failed")return {s:"failed",t:"Retry",sub:j.err==="space"?"No room":j.err==="missing"?"Not found":"Stopped",a:`Saving chapter ${n} stopped. Tap to try again.`,off:!offNet()};
+  if(it&&M&&offNet()){const a=offAbs(AU(R(M.src)));if(a!==it.url&&a!==it.alias)return {s:"stale",t:"Update",sub:offMB(it.size),a:`A newer recording of chapter ${n} is out. Tap to save it.`}}
+  if(it)return {s:"saved",t:"✓ Saved",sub:offMB(it.size),a:`Chapter ${n} is saved, ${offMB(it.size)}. Tap to remove it.`};
+  if(!offNet())return {s:"none",t:"Not saved",a:`Chapter ${n} isn't saved. Connect to save it.`,off:true};
+  return {s:"new",t:"Save",a:`Save chapter ${n} for offline`}}
+function offBtnHTML(n,ed){if(!OFF.can)return "";const b=offBtnState(n,ed);return `<button type="button" class="osave ${b.s}" data-osave="${n}" data-off="${b.s}" aria-label="${esc(b.a)}" ${b.off?"disabled":""}><span class="ot">${esc(b.t)}</span>${b.sub?`<span class="os">${esc(b.sub)}</span>`:""}</button>`}
+function offPanelHTML(){return OFF.can?`<div class="offcard" id="offpanel"></div>`:`<p class="prog">Tap ⬇ if you want the mp3 for some other player. We can't see what happens in there, so your spot won't move. Use Save if you care about that.</p>`}
+function offPanelInner(){const ed=store.get("bookEd."+COURSE.id,"story"),B=BOOK||{full:{}},L=TRACKS.full.list().filter(c=>B.full[c.num]&&B.full[c.num][ed]),items=Object.values(OFF.meta.items),used=items.reduce((a,x)=>a+(x.size||0),0);
+  const saved=L.filter(c=>offItem(ed,c.num)).length,left=L.filter(c=>!offItem(ed,c.num)),busy=L.filter(c=>{const j=OFF.jobs[offK(COURSE.id,ed,c.num)];return j&&(j.state==="saving"||j.state==="queued")});
+  const leftMin=left.reduce((a,c)=>a+(+B.full[c.num][ed].min||0),0),net=offNet();
+  const room=OFF.free!=null?` About ${offMB(OFF.free)} of room left.`:"";
+  return `<h3>Save for offline</h3>${net?"":`<p class="offline-note"><b>Offline right now.</b> Saved chapters will play, and your spot catches up later.</p>`}
+   <p class="prog" id="offused">${saved} of ${L.length} chapters saved in ${offEdName(ed)}. All saved audio on this device: ${used?offMB(used):"nothing yet"}.${room}</p>
+   <div class="offbtns">${busy.length?`<button class="btn small ghost" type="button" id="offstop">Stop saving (${busy.length} left)</button>`:left.length&&net?`<button class="btn small" type="button" id="offall">Save whole book, about ${offMB(leftMin*6e5)}</button>`:""}${saved?`<button class="btn small ghost" type="button" id="offrm">Remove saved chapters</button>`:""}</div>
+   <p class="prog">Save keeps your spot, signal or not. Tap ⬇ if you want the mp3 for some other player, but we can't see what happens in there, so your spot won't move.</p>${busy.length?`<p class="prog">Stay on this screen till it's done. Close Halcyon and saving stops. It'll start back up next time.</p>`:""}`}
+function offPaint(now){if(!OFF.can||TRACK!=="book"||!$("offpanel"))return;const t=Date.now();if(!now&&t-OFF.paintAt<250)return;OFF.paintAt=t;const ed=store.get("bookEd."+COURSE.id,"story");
+  const p=$("offpanel"),html=offPanelInner();if(p.__h!==html){p.innerHTML=html;p.__h=html;
+    const a=$("offall");if(a)a.onclick=()=>{TRACKS.full.list().forEach(c=>{const M=BOOK.full[c.num]&&BOOK.full[c.num][ed];if(M&&!offItem(ed,c.num))offEnqueue(ed,c.num,M)})};
+    const st=$("offstop");if(st)st.onclick=()=>Object.keys(OFF.jobs).forEach(k=>{if(k.startsWith(COURSE.id+"|"+ed+"|")&&OFF.jobs[k].state!=="failed")offStop(k)});
+    const r=$("offrm");if(r)r.onclick=async()=>{if(!confirm(`Remove every saved ${offEdName(ed)} chapter of this book from this device?`))return;for(const c of TRACKS.full.list())await offRemove(ed,c.num)}}
+  $("page").querySelectorAll("[data-osave]").forEach(el=>{const n=+el.dataset.osave,w=document.createElement("div");w.innerHTML=offBtnHTML(n,ed);const f=w.firstChild;if(f&&(f.innerHTML!==el.innerHTML||f.dataset.off!==el.dataset.off||f.disabled!==el.disabled)){el.innerHTML=f.innerHTML;el.className=f.className;el.dataset.off=f.dataset.off;el.disabled=f.disabled;el.setAttribute("aria-label",f.getAttribute("aria-label"))}})}
+function offWire(){if(!OFF.can)return;const ed=store.get("bookEd."+COURSE.id,"story");$("page").querySelectorAll("[data-osave]").forEach(el=>el.onclick=()=>{const n=+el.dataset.osave,k=offK(COURSE.id,ed,n),s=el.dataset.off,M=BOOK.full[n]&&BOOK.full[n][ed];
+    if(s==="saving"||s==="queued")return offStop(k);if(s==="saved"){const it=offItem(ed,n);if(confirm(`Remove chapter ${n} from this device? That frees ${offMB(it.size)}.`))offRemove(ed,n);return}if(M)offEnqueue(ed,n,M)});offRoom();offPaint(true)}
+/* every book's scripts, not only PMP's shell, so any book opens offline. sw.js fetches what its cache doesn't have yet. */
+if(SW_OK)navigator.serviceWorker.addEventListener("controllerchange",()=>{offWarm.done=false;offWarm();offTell()}); // a new worker took over: its cache starts with the shell only
+function offWarm(){if(!SW_OK||!offNet()||offWarm.done||(navigator.connection&&navigator.connection.saveData))return;offWarm.done=true;const urls=["qa.js","qa.css","final.css","audio-manifest.json"];
+  COURSES.filter(c=>c.status==="live").forEach(c=>{(c.scripts||[]).forEach(x=>urls.push(c.root+x));["labs","recaps"].forEach(f=>{if(c[f])urls.push(c.root+c[f])});if(c.final)urls.push(c.root+c.final);if(c.badges)urls.push(c.badges);
+    const a=c.id==="pmp"?"audio/v2/":c.root+"audio/";urls.push(a+"audiobook.json",a+"bookmarks.json")});
+  navigator.serviceWorker.ready.then(reg=>{if(reg.active)reg.active.postMessage({type:"warm",urls:urls.map(offAbs)})}).catch(()=>{})}
 let BOOK=null;
 let MARKS=null;
-async function bookMarks(){if(MARKS)return MARKS;if(NOAUD())return MARKS={full:{}};const cid=COURSE.id;let M;try{const r=await fetch(R(V2("audio/bookmarks.json")),{cache:"no-store"});M=r.ok?await r.json():{full:{}}}catch(e){M={full:{}}}if(COURSE.id!==cid)return {full:{}};return MARKS=M} // a reply that lands after a course switch belongs to the old course
+async function bookMarks(){if(MARKS&&!(MARKS.miss&&offNet()))return MARKS;if(NOAUD())return MARKS={full:{}};const cid=COURSE.id;let M;try{const r=await fetch(R(V2("audio/bookmarks.json")),{cache:"no-store"});M=r.ok?await r.json():{full:{},miss:true}}catch(e){M={full:{},miss:true}}if(COURSE.id!==cid)return {full:{}};if(!offNet())offMarks(M);return MARKS=M} // a reply that lands after a course switch belongs to the old course
 const PIDS=c=>["open",...(c.lesson?["lesson"]:[]),...c.scenes.map((_,i)=>"s"+i),"end"];
 function pidAt(n,ed,t){const L=MARKS&&MARKS.full[n]&&MARKS.full[n][ed];if(!L||!L.length)return null;let p=L[0][0];for(const [id,s] of L)if(s<=t+1)p=id;return p}
 function pidLabel(pid,n){const c=TRACKS.full.list().find(x=>x.num===n);return secName(c,pid)}
@@ -1888,25 +2043,26 @@ async function handoffOffer(){if(TRACK!=="full"||!CH||!S)return;const LB=lget().
   const pid=pidAt(LB.n,LB.ed,LB.t);if(!pid)return;const k=stepOfPid(CH,pid);if(k===S.pos||$("handoff"))return;
   const d=document.createElement("div");d.id="handoff";d.className="handoff";d.innerHTML=`<span>🎧 You were listening at <b>${esc(pidLabel(pid,LB.n))}</b> in the Audiobook (${fmtT(LB.t)}).</span><button class="btn small" type="button" id="hojump">Pick up there</button><button class="btn small ghost" type="button" id="hox" aria-label="Dismiss">✕</button>`;
   $("page").prepend(d);$("hojump").onclick=()=>{store.set("handoff.seen",LB.at);if(NAR.page==="book")NAR.audio.pause();fullGo(k)};$("hox").onclick=()=>{store.set("handoff.seen",LB.at);d.remove()}}
-async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length)return BOOK;if(NOAUD())return BOOK={full:{}};const cid=COURSE.id;await audFresh();let M;try{const r=await fetch(R(V2("audio/audiobook.json")),{cache:"no-store"});M=r.ok?await r.json():{full:{}}}catch(e){M={full:{}}}if(COURSE.id!==cid)return BOOK||{full:{}};return BOOK=M}
-function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;libTouch({t:"book",n});labQueue(n);NAR.bsec=null;NAR.free=false;bookMarks().then(()=>narTicks());NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=AU(R(M.src));NAR.audio.playbackRate=NAR.rate;
+async function bookManifest(){bookMarks();if(BOOK&&Object.keys(BOOK.full||{}).length){if(!offNet())offBook(BOOK);return BOOK}if(NOAUD())return BOOK={full:{}};const cid=COURSE.id;await audFresh();let M;try{const r=await fetch(R(V2("audio/audiobook.json")),{cache:"no-store"});M=r.ok?await r.json():{full:{}}}catch(e){M={full:{}}}if(COURSE.id!==cid)return BOOK||{full:{}};if(!offNet())offBook(M);return BOOK=M}
+function bookPlay(ed,n,at){const M=BOOK.full[n]&&BOOK.full[n][ed];if(!M)return;if(!offNet()&&!offItem(ed,n)){NAR.listening=false;narUI();offSay(`Chapter ${n} isn't saved here and you've got no signal. Tap Save next time you're connected.`);return}libTouch({t:"book",n});labQueue(n);NAR.bsec=null;NAR.free=false;bookMarks().then(()=>narTicks());NAR.page="book";NAR.book={ed,n};NAR.key="book";NAR.audio.pause();NAR.audio.src=bookSrc(ed,n,M);NAR.audio.playbackRate=NAR.rate;
   if(at!=null){if(at>1)seekTo(at)}else{const LB=lget().book;const sameEd=LB&&LB.n===n&&LB.ed===ed;const pos0=sameEd?LB.t:0;
    if(pos0>5)seekTo(pos0);else NAR.audio.addEventListener("loadedmetadata",()=>{const pos=bookResumePos(ed,n,NAR.audio.duration);if(pos>5&&pos<(NAR.audio.duration-5))seekTo(pos)},{once:true})}
   NAR.listening=true;NAR.audio.play().then(()=>{narUI();narHighlight();narMedia()}).catch(()=>{});narUI();if(TRACK==="book")renderBook()}
 async function renderBook(){setTimeout(ambSync,0);
   TRACK="book";setTimeout(navSync,0);$("railgame").hidden=true;$("mockcard").hidden=true;const B=await bookManifest();await bookMarks();if(TRACK!=="book")return;
+  if(!offNet()&&!Object.keys(B.full||{}).length&&!TRACKS.full.list().length){$("page").innerHTML=`<div class="kicker">Audiobook</div><h1>Audiobook</h1><p class="lead">No copy of this book here yet. Open it once with a signal and it'll be waiting next time.</p>`;return}
   const ed=store.get("bookEd."+COURSE.id,"story");const full=TRACKS.full.list();
   const row=c=>{const M=B.full[c.num]&&B.full[c.num][ed];const done=store.get(`bookdone.${BID()}.${ed}.${c.num}`,false);const now=NAR.page==="book"&&NAR.book&&NAR.book.n===c.num&&NAR.book.ed===ed;
-    const dl=M?`<a class="dl prog" href="${esc(AU(R(M.src)))}" download title="Download chapter ${c.num} for the car or gym">⬇</a>`:"";
+    const dl=M?`<a class="dl prog" href="${esc(AU(R(M.src)))}" download title="Plain file of chapter ${c.num}. It won't track your place." aria-label="Plain file of chapter ${c.num}. It won't track your place.">⬇</a>`:"";
     const mk=(MARKS&&MARKS.full[c.num]&&MARKS.full[c.num][ed])||[];
     const secs=M&&mk.length?`<details class="bsecs"><summary class="prog">Sections</summary><div class="bsecl">${mk.map(([pid,t])=>`<button type="button" class="bsec" data-bn="${c.num}" data-bt="${t}"><span>${esc(secName(c,pid))}</span><span class="prog">${fmtT(t)}</span></button>`).join("")}</div></details>`:"";
-    return `<div class="browwrap"><button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>${dl}</div>${labMention(c)}${secs}`};
+    return `<div class="browwrap"><button class="brow ${now?"now":""}" type="button" data-b="${c.num}" ${M?"":"disabled"}><span class="cn">${c.num}</span><span class="ct">${esc(c.title)}</span><span class="cs">${M?`${Math.round(M.min)} min`:"not recorded yet"}${done?" · ✓":""}${now?(NAR.audio.paused?" · paused":" · playing"):""}</span></button>${M?offBtnHTML(c.num,ed):""}${dl}</div>${labMention(c)}${secs}`};
   $("page").innerHTML=`<div class="kicker">Audiobook</div><h1>Audiobook</h1>${bfChapter()?`<div id="bfslot"></div>`:""}<p class="lead">No tapping needed. It plays the story on the right-answer path, chapter after chapter, and keeps going with your phone locked. Pause or skip with your car or lock-screen controls.</p>
    <div class="edtoggle" role="radiogroup" aria-label="Edition"><button type="button" class="${ed==="story"?"on":""}" data-ed="story"><b>Story only</b><span class="prog">Just the novel. ${esc(COURSE.hero||"The lead")} makes the right calls and you hear what happens.</span></button><button type="button" class="${ed==="study"?"on":""}" data-ed="study"><b>Story + lessons</b><span class="prog">The story plus ${MENTOR()}'s lesson, and each decision read aloud with a pause, then the answer and why. About twice as long.</span></button></div>
    ${(()=>{const LB=lget().book;if(!LB||!(B.full[LB.n]))return "";const same=LB.ed===ed;const c=full.find(x=>x.num===LB.n);return `<button class="handsfree" type="button" id="bresume"><span>▶</span><span><b>Resume chapter ${LB.n}${c?": "+esc(c.title):""}</b><span class="prog">${same?`at ${fmtT(LB.t)}`:`near where you stopped in ${LB.ed==="story"?"Story only":"Story + lessons"}`} · picks up on any device</span></span></button><button class="btn small ghost" type="button" id="bread">📖 Read from here${pidAt(LB.n,LB.ed,LB.t)?": "+esc(pidLabel(pidAt(LB.n,LB.ed,LB.t),LB.n)):""}</button>`})()}
-   <p class="prog">Plays chapter to chapter on its own and remembers where you stopped, on any device. Use ⟲ 10 for a quick refresher. The ⬇ next to a chapter downloads it for the car or the gym. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
-   ${labWaitHTML()}<h2>Full Course</h2>${(()=>{const L=COURSE.bookRecordedOnly?full.filter(c=>B.full[c.num]&&B.full[c.num][ed]):full;return L.length?`<div class="brows">${L.map(row).join("")}</div>`:`<p class="prog">The narration for this edition is being recorded. Chapters show up here as they're ready.</p>`})()}`;wireLabWait();
-  bfMount();
+   <p class="prog">Plays chapter to chapter on its own and remembers where you stopped, on any device. Use ⟲ 10 for a quick refresher. Works with the lock screen and car controls. Chapters are recorded as you reach them.</p>
+   ${offPanelHTML()}${labWaitHTML()}<h2>Full Course</h2>${(()=>{const L=COURSE.bookRecordedOnly?full.filter(c=>B.full[c.num]&&B.full[c.num][ed]):full;return L.length?`<div class="brows">${L.map(row).join("")}</div>`:`<p class="prog">The narration for this edition is being recorded. Chapters show up here as they're ready.</p>`})()}`;wireLabWait();
+  bfMount();offWire();
   $("page").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{store.set("bookEd."+COURSE.id,b.dataset.ed);renderBook()});
   {const r=$("bresume");if(r)r.onclick=()=>{const LB=lget().book;if(LB)bookPlay(ed,LB.n)}}
   {const r=$("bread");if(r)r.onclick=()=>{readFromBook();top()}}
@@ -1924,7 +2080,7 @@ async function renderBook(){setTimeout(ambSync,0);
    writes anywhere but the listening position the player already saves. */
 const BTX={}; // index url -> index, or null when there is none
 function btextUrl(n,ed){const M=BOOK&&BOOK.full[n]&&BOOK.full[n][ed];return M?R(M.src.replace(/(?:story\/)?full-ch(\d+)\.mp3$/,`episodes/ch$1-${ed}.json`)):null}
-function bookText(n,ed){const u=btextUrl(n,ed);if(!u||NOAUD())return Promise.resolve(null);if(u in BTX)return BTX[u]; // null: no index for this chapter; undefined: couldn't load it (offline), asked again next time
+function bookText(n,ed){const it=!offNet()&&offItem(ed,n),u=it&&it.textKey?it.textKey:btextUrl(n,ed);if(!u||NOAUD())return Promise.resolve(null);if(u in BTX)return BTX[u]; // null: no index for this chapter; undefined: couldn't load it (offline), asked again next time
   return BTX[u]=(async()=>{let J,keep=false;try{const r=await fetch(u);if(r.ok){J=await r.json();keep=true}else if(r.status===404){J=null;keep=true}}catch(e){}
     if(J&&!(J.v===1&&J.n===n&&J.ed===ed&&Array.isArray(J.p)))J=null;if(!keep)delete BTX[u];return J})()}
 const BF={id:null,el:null,box:null,words:[],times:null,cur:-1,scroll:0}; // the panel built for one chapter and edition, kept across renderBook
@@ -2120,21 +2276,22 @@ function _render(){if(TRACK==="me")return renderMe();if(TRACK==="library")return
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
-async function api(path,opts={}){if(TESTP&&/^\/api\/progress\b/.test(path))return {ok:false,status:0,error:"test profile"}; // belt and braces: SYNC is never set in the test profile
+async function api(path,opts={}){if(/^\/api\/(progress|me)\b/.test(path)&&String(opts.method||"GET").toUpperCase()!=="GET"&&(acctOff()||acctBusy())){if(acctOff())acctLeave();return {ok:false,status:0,error:"another account"}} // the one door every progress write goes through
+  if(TESTP&&/^\/api\/progress\b/.test(path))return {ok:false,status:0,error:"test profile"}; // belt and braces: SYNC is never set in the test profile
   if(TESTP&&/^\/api\/me\b/.test(path)&&String(opts.method||"GET").toUpperCase()!=="GET")return {ok:false,status:0,error:"test profile"}; // the test profile keeps its name and picture on this device (renderMe)
   const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
-async function listenPull(){if(TESTP||!ONLINE||!SYNC||!COURSE)return;try{const me=await api("/api/auth?action=me");
+async function listenPull(){if(SIGNING_OUT||TESTP||!ONLINE||!SYNC||!COURSE||!offNet())return;try{const me=await api("/api/auth?action=me");if(me.user&&TAB_USER!==null&&String(me.user.email)!==TAB_USER){acctLeave();return}
   // bookmarks: a newer record from another device replaces this one unless a write from here is still waiting (newest record wins)
-  bdgPull(me.progress||{});bmCourses().forEach(c=>{const k=BMKEY(c),r=me.progress&&me.progress[k];if(r&&Array.isArray(r.list)&&(r.at||0)>(bmGet(c).at||0)&&!SPEND[k]){store.set("c"+k,r);bmRail();if(TRACK==="notes"&&$("bmbody")&&!$("bmbody").contains(document.activeElement)){$("bmbody").innerHTML=bmListHTML();bmNotesWire()}}});{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused){store.set("c"+LKEY(),r);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
-const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.qa.ok","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers"];
-function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.recap")||k.startsWith("halcyon.bookEd.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
+  bdgPull(me.progress||{});bmCourses().forEach(c=>{const k=BMKEY(c),r=me.progress&&me.progress[k];if(r&&Array.isArray(r.list)&&(r.at||0)>(bmGet(c).at||0)&&!SPEND[k]&&!obGet()[k]){store.set("c"+k,r);bmRail();if(TRACK==="notes"&&$("bmbody")&&!$("bmbody").contains(document.activeElement)){$("bmbody").innerHTML=bmListHTML();bmNotesWire()}}});{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused&&!obGet()[LKEY()]){const LM=listenMerge(lget(),r);store.set("c"+LKEY(),LM);obAdopt(LKEY(),LM);if(!recSame(LM,r))SYNC(LKEY(),LM);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
+const DEVICE_KEYS=["halcyon.qa","halcyon.showwho","halcyon.qa.tester","halcyon.testprofile","halcyon.qa.ok","halcyon.devid","halcyon.route","halcyon.rate","halcyon.auto2","halcyon.pdbg","halcyon.handoff.seen","halcyon.spoilers","halcyon.outbox","halcyon.signedin","halcyon.offwant","halcyon.signingin"];
+function clearLocal(keep){try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.")&&!(keep&&(DEVICE_KEYS.includes(k)||k.startsWith("halcyon.readat.")||k.startsWith("halcyon.recap")||k.startsWith("halcyon.bookEd.")||k.startsWith("halcyon.bookdone.")))).forEach(k=>localStorage.removeItem(k))}catch(e){}}
 function renderAuth(mode,invite){pageview(mode==="signup"?"signup":"signin");
   document.querySelector(".rail").hidden=true;const signup=mode==="signup";
   $("page").innerHTML=`<div class="kicker">The Halcyon Launch</div><h1>${signup?"Create your account":"Sign in"}</h1><div class="story"><p>${signup?"You've been invited to The Halcyon Launch, a library of choose-your-path certification courses. Your progress saves to your account so you can pick up anywhere.":"Invite only. Sign in to pick up where you left off."}</p></div>
    <form class="auth" id="authform" novalidate><div id="autherr"></div>${signup?'<label for="a-name">Name<input id="a-name" autocomplete="name" required></label>':""}<label for="a-email">Email<input id="a-email" type="email" autocomplete="email" required></label><label for="a-pw">Password${signup?" (10 characters or more)":""}<input id="a-pw" type="password" autocomplete="${signup?"new-password":"current-password"}" required></label><button class="btn" type="submit">${signup?"Create account":"Sign in"}</button></form>
    ${signup?'<p class="prog">Already have an account? <a href="/">Sign in</a></p>':'<p class="prog">No account? You need an invite link from Anthony.</p>'}`;
   $("authform").onsubmit=async e=>{e.preventDefault();$("autherr").innerHTML="";const b={email:$("a-email").value,password:$("a-pw").value};if(signup){b.name=$("a-name").value;b.token=invite}
-    const r=await api("/api/auth?action="+(signup?"signup":"login"),{method:"POST",body:JSON.stringify(b)});if(!r.ok){$("autherr").innerHTML=`<div class="err">${esc(r.error||"That didn't work. Try again.")}</div>`;return}if(signup)history.replaceState(null,"","/");boot()};
+    try{localStorage.setItem("halcyon.signingin",String(Date.now()))}catch(e){}let r;try{r=await api("/api/auth?action="+(signup?"signup":"login"),{method:"POST",body:JSON.stringify(b)})}catch(e){r={ok:false}}if(!r.ok){try{localStorage.removeItem("halcyon.signingin")}catch(e){}$("autherr").innerHTML=`<div class="err">${esc(r.error||"That didn't work. Try again.")}</div>`;return}if(signup)history.replaceState(null,"","/");boot()};
 }
 const LIBKEY=99990;
 function libget(){const L=store.get("c"+LIBKEY,null)||{};return {pins:L.pins||[],last:L.last||{}}}
@@ -2199,7 +2356,7 @@ function libBpHTML(bp){return `<span class="libbp">${bpBarHTML(bp,"thin",true)}<
 function withCourse(c,f){const was=COURSE;COURSE=c;try{return f()}finally{COURSE=was}}
 function libStarted(c){return withCourse(c,()=>{for(let n=1;n<=Math.max(c.planned||0,30);n++)if(store.get("c"+keyOf("full",n),null))return true;return false})}
 function libProgress(c){if(c.status!=="live")return null;const ready=c.id==="pmp"||!(c.scripts||c.labs)||c._loaded;
-  if(!ready){if(libStarted(c)){if(!c._bpload){c._bpload=loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x)).then(()=>{c._loaded=true;const t=TRACK==="library"&&document.querySelector(`.libcard[data-course="${c.id}"] .libtxt`),bp=t&&libProgress(c);if(bp&&!t.querySelector(".libbp"))t.insertAdjacentHTML("beforeend",libBpHTML(bp))})}return null}
+  if(!ready){if(libStarted(c)){if(!c._bpload){c._bpload=loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x)).then(r=>{c._loaded=r.every(Boolean);const t=TRACK==="library"&&document.querySelector(`.libcard[data-course="${c.id}"] .libtxt`),bp=t&&libProgress(c);if(bp&&!t.querySelector(".libbp"))t.insertAdjacentHTML("beforeend",libBpHTML(bp))})}return null}
     return {pct:0,done:0,total:0,pub:readyCount(c),planned:Math.max(c.planned||0,readyCount(c))}}
   return withCourse(c,()=>TRACKS.full.list().length?bookProgress(false):null)}
 function renderLibrary(){setTimeout(ambSync,0);TRACK="library";CH=null;$("railgame").hidden=true;$("mockcard").hidden=true;setTimeout(navSync,0);
@@ -2242,8 +2399,13 @@ async function boot(){
   $("homelink").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);renderHome();renderRail()};
   if($("username"))$("username").onclick=()=>{if(TRACK==="full"||TRACK==="ref")save();clearInterval(mockTimer);ME.edit=false;ME.pick=false;renderMe();top()}; // the player's own name opens their private profile (#me)
   if((COURSE.scripts||COURSE.labs)&&!COURSE._loaded)await useCourse(COURSE.id);
+  await offInit();netWatch();
   if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;meNav();recapSnap();bdgBoot();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
-  let me;try{me=await api("/api/auth?action=me")}catch(e){me={user:null}}
+  /* signed out only when the server says so ({user:null} or a 401). No answer, a server error, or a captive portal's web page means offline: a device that has signed in before opens on what it has */
+  const mark=meMark();let me,noNet=false;try{me=await(mark?Promise.race([api("/api/auth?action=me"),new Promise((_,no)=>setTimeout(()=>no(new Error("slow")),7000))]):api("/api/auth?action=me"))}catch(e){noNet=true;me={user:null}}
+  if(!noNet&&mark&&!me.user&&me.user!==null&&me.status!==401)noNet=true;
+  if(noNet&&mark){me={user:mark,offline:true};OFFMODE=true}
+  else if(noNet&&!offNet()){document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>No signal</h1><div class="story"><p>First sign in needs a signal. After that, Halcyon opens without one.</p></div>`;addEventListener("online",()=>location.reload(),{once:true});return}
   if(!me.user){if(PROF.signedOut)PROF.signedOut();if(/^#verify\b/.test(location.hash)){document.querySelector(".rail").hidden=true;return renderVerify()}const inv=new URLSearchParams(location.search).get("invite");
     if(inv){const v=await api("/api/auth?action=invite&token="+encodeURIComponent(inv));if(v.valid)return renderAuth("signup",inv);
       document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>This invite has expired</h1><div class="story"><p>Invite links work once. Ask Anthony for a new one, or <a href="/">sign in</a> if you already have an account.</p></div>`;return}
@@ -2253,14 +2415,22 @@ async function boot(){
   if(PROF.authorize&&PROF.authorize(!!(me.user.admin||me.user.tester)))return;
   /* test profile (QA): signed in so Flag still works, but the server's progress never lands in local storage and SYNC stays off, so
      nothing reaches /api/progress; the real namespace is left exactly as it was. */
-  if(!TESTP){const keepL=listenLocal();clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,st&&Object.keys(st).length?st:null));
-    SYNC=(n,st,ka)=>api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:n,state:st}),keepalive:!!ka}).catch(()=>{});
-    Object.entries(keepL).forEach(([n,L])=>{const srv=(me.progress||{})[n];if((L.at||0)>((srv&&srv.at)||0)){store.set("c"+n,L);SYNC(+n,L)}}); // the last spot this device heard wins when the server never got it (an iPhone app closed mid-save)
+  if(!TESTP&&me.offline){TAB_USER=String(mark.email);SYNC=obSync;obSeed();applyPrefs(lget().prefs)} // offline: this device's copy stands, nothing is cleared, and writes wait in the outbox
+  else if(!TESTP){const sameUser=!!mark&&mark.email===me.user.email,keepL=sameUser?listenLocal():{},q=sameUser?obGet():{},localCur=store.get("cur",0);if(!sameUser){obSet({});if(mark)try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.bookdone.")||k==="halcyon.offwant").forEach(k=>localStorage.removeItem(k))}catch(e){}}/* no mark, or another account's: nothing on this device is known to be this user's, so nothing of it is sent (a first open after the update keeps its chapter checks) */meMarkSet(me.user);TAB_USER=String(me.user.email);try{localStorage.removeItem("halcyon.signingin")}catch(e){}clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,recEmpty(st)?null:st));
+    SYNC=obSync;obSeed();
+    Object.entries(keepL).forEach(([n,L])=>{if(!q[n])q[n]={st:L}}); // the last spot this device heard counts even if the outbox never got it (an iPhone app closed mid-save)
+    obSet(q);
+    let held=false;Object.entries(q).forEach(([n,e])=>{const srv=(me.progress||{})[n],M=obMerge(n,e.st,srv,e.base);store.set("c"+n,recEmpty(M)?null:M);obAdopt(n,M);if(srv&&recSame(M,srv)){obDone(n);return}if(+n%10000<901&&M===e.st)held=true;SYNC(+n,M)}); // what this device did while out of touch goes up; an older copy doesn't
+    if(held&&localCur){me.user.cur=localCur}
     applyPrefs(lget().prefs);settingsPull()}
   USERNAME=me.user.name||"";
   document.querySelector(".rail").hidden=false;$("usercard").hidden=false;meNav();$("adminlink").hidden=!me.user.admin;
-  $("signout").onclick=async()=>{await api("/api/auth?action=logout",{method:"POST"});clearLocal();if(PROF.testKeys)PROF.testKeys().forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});location.href="/"}; // test profile data goes with the account that made it
-  recapSnap();bdgBoot();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(TESTP?store.get("cur",0):(me.user.cur||0));
+  $("signout").onclick=async()=>{if(!offNet()||OFFMODE){alert("No signal right now. Sign out once you're back, or you could lose what's waiting to sync.");return}NAR.listening=false;softEnd("signout");NAR.audio.pause();narSavePos(true);if(TRACK==="full"||TRACK==="ref")save();syncPending();logFlush();for(let i=0;i<25&&OB.busy;i++)await new Promise(ok=>setTimeout(ok,200));await netBack();syncPending(); // the last spot and everything waiting go up while still signed in
+    if(Object.keys(obGet()).length&&!confirm("Some progress hasn't reached your account yet. Sign out anyway and lose it?"))return;
+    const keepSync=SYNC;SIGNING_OUT=true;SYNC=()=>Promise.resolve();clearTimeout(lsyncT);clearTimeout(syncTimer);clearInterval(mockTimer);Object.keys(SPEND).forEach(k=>delete SPEND[k]);Object.keys(OFF.jobs).forEach(offStop);
+    try{await api("/api/auth?action=logout",{method:"POST"})}catch(e){SIGNING_OUT=false;SYNC=keepSync;alert("That didn't go through. Try again once you've got a signal.");return}clearLocal();if(PROF.testKeys)PROF.testKeys().forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});location.href="/"}; // test profile data goes with the account that made it
+  recapSnap();bdgBoot();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(TESTP||me.offline?store.get("cur",me.user.cur||0):(me.user.cur||0));
+  offWarm();if(!me.offline)offResume();if(OFFMODE&&offNet())setTimeout(netBack,1500);
 }
 /* ===== QA mode hook: qa.js (speaker chips, the QA bar, Flag a problem) reads where the reader and the player are. Read only. ===== */
 window.HalcyonState=function(){const a=NAR.audio,bk=NAR.page==="book"&&NAR.book,ch=(TRACK==="full"||TRACK==="ref")&&CH?CH:null;
