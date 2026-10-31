@@ -20,6 +20,15 @@
           "value": "DENY"
         }
       ]
+    },
+    {
+      "source": "/audio-mirror/:path*",
+      "headers": [
+        {
+          "key": "x-vercel-enable-rewrite-caching",
+          "value": "0"
+        }
+      ]
     }
   ],
   "cleanUrls": true,
