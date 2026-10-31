@@ -58,7 +58,7 @@ function site(req, res) {
 }
 function audioHost(req, res) {
   const S = W.state;
-  if (S.down || (S.cutAll && req.method !== "OPTIONS")) return req.socket.destroy();
+  if (S.hostBlocked || S.down || (S.cutAll && req.method !== "OPTIONS")) return req.socket.destroy();
   if (req.method === "OPTIONS") { res.writeHead(204, { ...cors, "Access-Control-Allow-Methods": "GET, HEAD" }); return res.end() }
   if (!/\.[0-9a-f]{12}\.mp3$/.test(req.url.split("?")[0])) { res.writeHead(404, cors); return res.end() }
   mp3(req, res, S, cors);
@@ -472,8 +472,27 @@ test("until the first bytes come it counts the seconds, then shows a bar, percen
   await expect(saveBtn(page)).toHaveAttribute("data-off", "saved", { timeout: 30_000 });
   await expect(page.locator("#offnow")).toBeHidden();
 });
+test("a network that blocks the audio host: saving uses this site's route and the chapter is stored under the host's address", async ({ page, browserName }) => {
+  await openApp(page);
+  W.state.hostBlocked = true;
+  await saveBtn(page).click();
+  await expect(saveBtn(page)).toHaveAttribute("data-off", "saved", { timeout: 30_000 });
+  expect(W.state.mp3s.some(m => m.url.startsWith("/audio-mirror/"))).toBe(true);
+  const key = await page.evaluate(async () => (await (await caches.open("halcyon-offline-audio")).keys()).map(r => r.url).find(u => /\.mp3$/.test(u)));
+  expect(key).toContain(new URL(W.audioUrl).host);
+  await expect(saveBtn(page).locator(".ot")).toHaveText(/Saved/);
+  W.state.hostBlocked = false;
+});
+test("a network that blocks the audio host: an unsaved chapter still plays, through this site's route", async ({ page }) => {
+  await openApp(page);
+  W.state.hostBlocked = true;
+  await page.locator('.brow[data-b="1"]').click();
+  await playing(page);
+  expect(await page.evaluate(() => window.__nar.audio.currentSrc)).toContain("/audio-mirror/");
+  W.state.hostBlocked = false;
+});
 test("online but the audio can't be reached: it says so, never no signal", async ({ page }) => {
-  await page.addInitScript(() => { const f = window.fetch, st = window.setTimeout; window.fetch = (u, o = {}) => /\.mp3/.test(String(u)) ? Promise.reject(new TypeError("Load failed")) : f(u, o); window.setTimeout = (fn, ms, ...a) => st(fn, ms >= 400 ? ms / 50 : ms, ...a) });
+  await page.addInitScript(() => { const f = window.fetch, st = window.setTimeout; /* the backup route fails too: every mp3 */ window.fetch = (u, o = {}) => /\.mp3/.test(String(u)) ? Promise.reject(new TypeError("Load failed")) : f(u, o); window.setTimeout = (fn, ms, ...a) => st(fn, ms >= 400 ? ms / 50 : ms, ...a) });
   await openApp(page);
   await saveBtn(page).click();
   await expect(saveBtn(page).locator(".os")).toHaveText("Can't reach", { timeout: 30_000 });

@@ -61,20 +61,24 @@ function R(p){return /^(https?:|\/)/.test(p)?p:COURSE.root+p}
    JSON (timings, audiobook.json, bookmarks.json, episodes) never goes through AU: it stays on this site with the code. */
 const AUDIO_BASE=(()=>{const b=String(window.HALCYON_AUDIO_BASE||"").trim();if(!b)return "";try{const u=new URL(b);return /^https?:$/.test(u.protocol)?u.href.replace(/\/+$/,""):""}catch(e){return ""}})(); // normalized the way the browser writes el.src
 const AUDIO_REMOTE_ONLY=!!AUDIO_BASE&&window.HALCYON_AUDIO_REMOTE_ONLY===true;
-const AUD={map:null,bad:new Set(),log:null,at:0};
+const AUD={map:null,bad:new Set(),log:null,at:0,mirror:false};
+/* some networks block the audio host by name. /audio-mirror on this site (vercel.json) passes through to the same files, used only after the host fails with a connection up, until the app next opens. A saved chapter keeps the host's address as its key whichever way it came. */
+const AUDIO_MIRROR=AUDIO_BASE?new URL("audio-mirror",document.baseURI).href:"";
+const audCanon=u=>AUDIO_MIRROR&&String(u||"").startsWith(AUDIO_MIRROR+"/")?AUDIO_BASE+String(u).slice(AUDIO_MIRROR.length):u;
+const audVia=u=>AUD.mirror&&AUDIO_BASE&&String(u||"").startsWith(AUDIO_BASE+"/")?AUDIO_MIRROR+String(u).slice(AUDIO_BASE.length):u;
 const SW_OK=("serviceWorker" in navigator)&&(location.protocol==="https:"||/\.localhost$/.test(location.hostname)); // *.localhost is how tests/offline.spec.mjs reaches a real service worker; plain localhost keeps none, so dev and the other tests see no cache
 const offNet=()=>navigator.onLine!==false;
 const audRel=p=>String(p||"").replace(/[?#].*$/,"").replace(/^\/+/,"");
 const audKey=(rel,h)=>rel.replace(/\.mp3$/i,`.${h}.mp3`); // R2 key of one take: tools/r2_sync.py key_of() builds the same
 function AU(p){if(!AUDIO_BASE||!AUD.map||typeof p!=="string"||/^[a-z][a-z0-9+.-]*:/i.test(p))return p;const rel=audRel(p),h=AUD.map[rel];
-  if(typeof h!=="string"||!/^[0-9a-f]{12}$/.test(h)||!/\.mp3$/i.test(rel)||AUD.bad.has(rel))return p;return `${AUDIO_BASE}/${encodeURI(audKey(rel,h))}`}
-const audRemote=u=>!!AUDIO_BASE&&String(u||"").startsWith(AUDIO_BASE+"/");
-const audLocalRel=u=>{let r=audRel(String(u).slice(AUDIO_BASE.length+1));try{r=decodeURI(r)}catch(e){}return r.replace(/\.[0-9a-f]{12}\.mp3$/i,".mp3")}; // the take's key back to its repo path
+  if(typeof h!=="string"||!/^[0-9a-f]{12}$/.test(h)||!/\.mp3$/i.test(rel)||AUD.bad.has(rel))return p;return audVia(`${AUDIO_BASE}/${encodeURI(audKey(rel,h))}`)}
+const audRemote=u=>!!AUDIO_BASE&&(String(u||"").startsWith(AUDIO_BASE+"/")||String(u||"").startsWith(AUDIO_MIRROR+"/"));
+const audLocalRel=u=>{let r=audRel(String(audCanon(u)).slice(AUDIO_BASE.length+1));try{r=decodeURI(r)}catch(e){}return r.replace(/\.[0-9a-f]{12}\.mp3$/i,".mp3")}; // the take's key back to its repo path
 function audioLocal(u){return audRemote(u)?new URL(audLocalRel(u),document.baseURI).href:u} // the same file's address on this site (QA reports, comparisons)
 function audioGuard(el){if(!el||el.__aud)return el;el.__aud=true;const P=HTMLMediaElement.prototype;
   el.addEventListener("error",e=>{const s=el.currentSrc||el.src;if(!audRemote(s))return;e.stopImmediatePropagation(); // the page never sees a remote failure it can recover from
-    const rel=audLocalRel(s),t=el.currentTime,rate=el.playbackRate,was=!el.paused;AUD.bad.add(rel);
-    el.__fb=new URL(rel,document.baseURI).href;el.src=el.__fb;el.playbackRate=rate; // a new src resets the rate; keep the reader's
+    const rel=audLocalRel(s),t=el.currentTime,rate=el.playbackRate,was=!el.paused,host=s===audCanon(s),viaM=host&&offNet();if(viaM)AUD.mirror=true;else AUD.bad.add(rel);
+    el.__fb=viaM?audVia(s):new URL(rel,document.baseURI).href;el.src=el.__fb;el.playbackRate=rate; // a new src resets the rate; keep the reader's
     if(t>1)el.addEventListener("loadedmetadata",()=>{try{el.currentTime=t}catch(x){}},{once:true}); // failed mid-file: pick up where it stopped
     if(AUD.log)AUD.log("audio fallback "+rel);if(was)P.play.call(el).catch(()=>{})});
   // a play() that the failed remote load rejected is retried once on this site's copy, so callers see one promise that plays
@@ -1948,7 +1952,7 @@ const offAbs=u=>new URL(u,document.baseURI).href;
 function offItem(ed,n,cid){return OFF.meta.items[offK(cid||COURSE.id,ed,n)]||null}
 const offMB=b=>b>=1e9?(b/1e9).toFixed(1)+" GB":Math.max(1,Math.round(b/1e6))+" MB";
 const offEdName=ed=>ed==="study"?"Story + lessons":"Story only";
-function bookSrc(ed,n,M){const cur=AU(R(M.src)),it=offItem(ed,n);if(!it)return cur;const a=offAbs(cur);if(a===it.url||a===it.alias)return cur;return offNet()?cur:it.url}
+function bookSrc(ed,n,M){const cur=AU(R(M.src)),it=offItem(ed,n);if(!it)return cur;const a=audCanon(offAbs(cur));if(a===it.url)return it.url;if(a===it.alias)return cur;return offNet()?cur:it.url}
 function offTell(){try{const c=navigator.serviceWorker&&navigator.serviceWorker.controller;if(c)c.postMessage({type:"offline-changed"})}catch(e){}}
 async function offInit(){if(!OFF.can||offInit.done)return;offInit.done=true;try{const c=await caches.open(OFF.name),r=await c.match(OFF.metaUrl);if(r){const j=await r.json();if(j&&j.items)OFF.meta=j;
     const have=new Set((await c.keys()).map(q=>q.url));let lost=false;Object.keys(OFF.meta.items).forEach(k=>{if(!have.has(OFF.meta.items[k].url)){delete OFF.meta.items[k];lost=true}});if(lost)await offMetaPut()}offTell()}catch(e){}}
@@ -1957,14 +1961,14 @@ function offWant(){if(SIGNING_OUT)return;try{const L=[...Object.values(OFF.jobs)
 /* a chapter asked for and not finished comes back when the app does; iOS stops downloads when the app closes */
 function offResume(){if(!OFF.can||!offNet())return;let L=[];try{L=JSON.parse(localStorage.getItem("halcyon.offwant")||"[]")}catch(e){}L.forEach(j=>{if(!OFF.jobs[j.k]&&!OFF.meta.items[j.k]){OFF.jobs[j.k]={...j,state:"queued",got:0,total:0};OFF.queue.push(OFF.jobs[j.k])}});offPump();offPaint()}
 function offEnqueue(ed,n,M){if(!OFF.can)return;const k=offK(COURSE.id,ed,n),old=OFF.jobs[k];if(old&&(old.state==="saving"||old.state==="queued"))return;
-  const j=old||{k,cid:COURSE.id,ed,n,urls:[...new Set([offAbs(AU(R(M.src))),...(AUDIO_REMOTE_ONLY?[]:[offAbs(R(M.src))])])],alias:offAbs(R(M.src)),text:offAbs(btextUrl(n,ed)),marks:offAbs(R(V2("audio/bookmarks.json"))),src:M.src,min:M.min,got:0,total:0};
+  const j=old||{k,cid:COURSE.id,ed,n,urls:[...new Set([audCanon(offAbs(AU(R(M.src)))),...(AUDIO_REMOTE_ONLY?[]:[offAbs(R(M.src))])])],alias:offAbs(R(M.src)),text:offAbs(btextUrl(n,ed)),marks:offAbs(R(V2("audio/bookmarks.json"))),src:M.src,min:M.min,got:0,total:0};
   j.state="queued";j.err=null;j.cancel=false;OFF.jobs[k]=j;OFF.queue.push(j);offWant();
   if(!OFF.asked){OFF.asked=true;try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}}
   offPump();offPaint()}
 function offPump(){while(OFF.active<OFF.max&&OFF.queue.length&&offNet()){const j=OFF.queue.shift();if(j.cancel)continue;OFF.active++;offRun(j).catch(e=>{j.state="failed";j.err="store";offReport(j,"store",e)}).then(()=>{OFF.active--;offPump();offWant();offPaint(true);offWake()})}}
 /* one file: read it in pieces, pick up with a Range request after a dropped connection, check the length before it counts */
 async function offPull(j,url){j.ctl=new AbortController();if(!j.chunks||!j.chunks.length){j.chunks=[];j.got=0}const from=j.got,h=from?{Range:`bytes=${from}-`}:{};j.lastByte=j.pullAt=Date.now();j.pullFrom=from;
-  const r=await fetch(url,{headers:h,cache:"no-store",signal:j.ctl.signal}); // no-store is also how sw.js knows this is a save and stays out of it
+  const r=await fetch(audVia(url),{headers:h,cache:"no-store",signal:j.ctl.signal}); // no-store is also how sw.js knows this is a save and stays out of it
   if(r.status===404||r.status===403){const e=new Error("gone");e.gone=true;throw e}if(!r.ok&&r.status!==206){if(from){j.chunks=[];j.got=0}throw new Error("status "+r.status)}
   if(from&&r.status!==206){j.chunks=[];j.got=0}
   if(r.status===206){const m=/bytes (\d+)-(\d*)\/(\d+|\*)/.exec(r.headers.get("Content-Range")||"");if(!m||+m[1]!==j.got){j.chunks=[];j.got=0;throw new Error("bad range")}if(m[3]!=="*")j.total=+m[3]}else j.total=+r.headers.get("Content-Length")||0;j.hdrMs=Date.now()-j.pullAt;
@@ -1989,6 +1993,7 @@ async function offRun(j){j.state="saving";j.err=null;j.startAt=Date.now();j.tryN
   while(!j.pulled){if(j.cancel)return;const before=j.got||0;try{await offPull(j,j.urls[ui]);j.pulled=true}catch(e){if(j.cancel)return;
       if(e.gone){if(++ui<j.urls.length){j.ui=ui;j.chunks=[];j.got=0;continue}j.state="failed";j.err="missing";offReport(j,"missing",e);j.chunks=null;j.got=0;return}
       if(!offNet()){j.state="failed";j.err="net";offReport(j,"net",e);return}
+      if(!AUD.mirror&&AUDIO_BASE&&String(j.urls[ui]).startsWith(AUDIO_BASE+"/")&&(!j.got||tries>=2)){AUD.mirror=true;tries=0;continue} // the host looks blocked here: same file, this site's route
       if(j.got>before){tries=0;stuck=0}else if(before&&++stuck>=2){j.chunks=[];j.got=0;stuck=0} // Range isn't getting anywhere: start this file clean
       if(document.hidden){await offVisible();continue} // doesn't count against the tries
       if(++tries>8){j.state="failed";j.err=offNet()?"blocked":"net";offReport(j,j.err,e);return}j.tryNo=tries;offPaint(true); // what's read stays in memory; offAuto or Retry continues from there
@@ -2027,7 +2032,7 @@ function offBtnState(n,ed){const it=offItem(ed,n),j=OFF.jobs[offK(COURSE.id,ed,n
   if(j&&j.state==="saving"){const P=offProg(j);return {s:"saving",t:P.t,sub:P.sub,bar:P.pct,a:`Saving chapter ${n}. ${P.say} Tap to stop.`}}
   if(j&&j.state==="queued")return {s:"queued",t:"Waiting",a:`Chapter ${n} is waiting to save. Tap to stop.`};
   if(j&&j.state==="failed")return {s:"failed",t:"Retry",sub:{space:"No room",missing:"Not found",net:"No signal",blocked:"Can't reach",text:"No text",store:"Can't store"}[j.err]||"Stopped",a:`${offWhy(j)} Tap to try again.`,off:!offNet()};
-  if(it&&M&&offNet()){const a=offAbs(AU(R(M.src)));if(a!==it.url&&a!==it.alias)return {s:"stale",t:"Update",sub:offMB(it.size),a:`A newer recording of chapter ${n} is out. Tap to save it.`}}
+  if(it&&M&&offNet()){const a=audCanon(offAbs(AU(R(M.src))));if(a!==it.url&&a!==it.alias)return {s:"stale",t:"Update",sub:offMB(it.size),a:`A newer recording of chapter ${n} is out. Tap to save it.`}}
   if(it)return {s:"saved",t:"✓ Saved",sub:offMB(it.size),a:`Chapter ${n} is saved, ${offMB(it.size)}. Tap to remove it.`};
   if(!offNet())return {s:"none",t:"Not saved",a:`Chapter ${n} isn't saved. Connect to save it.`,off:true};
   return {s:"new",t:"Save",a:`Save chapter ${n} for offline`}}

@@ -22,5 +22,11 @@
       ]
     }
   ],
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/audio-mirror/:path*",
+      "destination": "https://audio.strakesystems.com/:path*"
+    }
+  ]
 }
