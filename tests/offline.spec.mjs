@@ -22,6 +22,7 @@ const A_USER = { ...USER };
 function fresh() { USER = { ...A_USER }; return { down: false, base: W.audioUrl, progress: {}, puts: [], signedIn: true, meStatus: 200, cutNext: 0, mp3s: [], audioLen: FIXTURE.length } }
 function mp3(req, res, S, extra = {}) {
   S.mp3s.push({ url: req.url, range: req.headers.range || "" });
+  if (S.holdMs) { const hold = S.holdMs; S.holdMs = 0; return setTimeout(() => mp3(req, res, S), hold) }
   const size = FIXTURE.length, m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || "");
   const a = m && m[1] ? +m[1] : 0, b = m && m[2] ? Math.min(+m[2], size - 1) : size - 1;
   const H = { ...extra, "Content-Type": "audio/mpeg", "Accept-Ranges": "bytes", "Content-Length": b - a + 1, ...(m ? { "Content-Range": `bytes ${a}-${b}/${size}` } : {}) };
@@ -456,6 +457,27 @@ test("saving shows percent and MB from the first bytes, and says to keep the pho
   await expect(page.locator("#offpanel")).toContainText("phone awake");
   W.state.slowMs = 0;
   await expect(saveBtn(page)).toHaveAttribute("data-off", "saved", { timeout: 30_000 });
+});
+test("until the first bytes come it counts the seconds, then shows a bar, percent and time left", async ({ page }) => {
+  await openApp(page);
+  W.state.holdMs = 4000; W.state.slowMs = 400;
+  await saveBtn(page).click();
+  await expect(saveBtn(page).locator(".os")).toHaveText("Connecting", { timeout: 3_000 });
+  await expect(saveBtn(page).locator(".ot")).toHaveText(/^[1-9]s$/, { timeout: 3_000 });
+  await expect(page.locator("#offnow")).toContainText("connecting");
+  await expect(saveBtn(page).locator(".ot")).toHaveText(/^[1-9]\d?%$/, { timeout: 10_000 });
+  await expect.poll(() => saveBtn(page).locator(".ob i").evaluate(e => parseFloat(e.style.width))).toBeGreaterThan(0);
+  await expect(page.locator("#offnow")).toContainText(/Chapter 1: \d+%, \d+ of 1 MB/);
+  W.state.slowMs = 0;
+  await expect(saveBtn(page)).toHaveAttribute("data-off", "saved", { timeout: 30_000 });
+  await expect(page.locator("#offnow")).toBeHidden();
+});
+test("online but the audio can't be reached: it says so, never no signal", async ({ page }) => {
+  await page.addInitScript(() => { const f = window.fetch, st = window.setTimeout; window.fetch = (u, o = {}) => /\.mp3/.test(String(u)) ? Promise.reject(new TypeError("Load failed")) : f(u, o); window.setTimeout = (fn, ms, ...a) => st(fn, ms >= 400 ? ms / 50 : ms, ...a) });
+  await openApp(page);
+  await saveBtn(page).click();
+  await expect(saveBtn(page).locator(".os")).toHaveText("Can't reach", { timeout: 30_000 });
+  await expect(page.locator("#offwhy")).toContainText("try cell");
 });
 test("each failure says why: no connection and text are told apart, and a failure is reported without the switch", async ({ page, browserName }) => {
   await openApp(page);
