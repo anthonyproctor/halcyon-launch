@@ -36,6 +36,7 @@ function mp3(req, res, S, extra = {}) {
 function site(req, res) {
   const S = W.state, u = new URL(req.url, "http://x");
   if (S.down) return req.socket.destroy();
+  if (S.hang) return; // Wi-Fi with no internet behind it: the connection opens and nothing ever comes back
   if (u.pathname === "/config.js") { const body = fs.readFileSync(path.join(ROOT, "config.js"), "utf8").replace(/^window\.HALCYON_AUDIO_BASE = ".*";$/m, `window.HALCYON_AUDIO_BASE = ${JSON.stringify(S.base)};`).replace(/^window\.HALCYON_AUDIO_REMOTE_ONLY = true;$/m, `window.HALCYON_AUDIO_REMOTE_ONLY = ${S.base ? "true" : "false"};`); res.writeHead(200, { "Content-Type": TYPES[".js"] }); return res.end(body) }
   if (u.pathname === "/sw.js" && S.swVersion) { res.writeHead(200, { "Content-Type": TYPES[".js"] }); return res.end(fs.readFileSync(path.join(ROOT, "sw.js"), "utf8").replace(/const CACHE="[^"]+"/, `const CACHE="${S.swVersion}"`)) }
   if (u.pathname === "/api/auth") {
@@ -58,6 +59,7 @@ function site(req, res) {
 }
 function audioHost(req, res) {
   const S = W.state;
+  if (S.hang) return;
   if (S.hostBlocked || S.down || (S.cutAll && req.method !== "OPTIONS")) return req.socket.destroy();
   if (req.method === "OPTIONS") { res.writeHead(204, { ...cors, "Access-Control-Allow-Methods": "GET, HEAD" }); return res.end() }
   if (!/\.[0-9a-f]{12}\.mp3$/.test(req.url.split("?")[0])) { res.writeHead(404, cors); return res.end() }
@@ -497,6 +499,23 @@ test("online but the audio can't be reached: it says so, never no signal", async
   await saveBtn(page).click();
   await expect(saveBtn(page).locator(".os")).toHaveText("Can't reach", { timeout: 30_000 });
   await expect(page.locator("#offwhy")).toContainText("try cell");
+});
+test("Wi-Fi with no internet: the app opens from the phone and a saved chapter plays, without waiting long", async ({ page }) => {
+  await openApp(page);
+  await save(page);
+  W.state.hang = true;
+  for (const route of ["", "#pmp/listen"]) {
+    const t0 = Date.now();
+    await page.goto("about:blank"); page.goto(P(route)).catch(() => {});
+    await expect(page.locator("#page h1")).toBeVisible({ timeout: 60_000 });
+    expect(Date.now() - t0, `${route || "home"} opened in time`).toBeLessThan(15_000);
+  }
+  const t1 = Date.now();
+  await expect(page.locator('.brow[data-b="1"]')).toBeVisible({ timeout: 60_000 });
+  await page.locator('.brow[data-b="1"]').click();
+  await playing(page);
+  expect(Date.now() - t1, "saved chapter started in time").toBeLessThan(10_000);
+  W.state.hang = false;
 });
 test("each failure says why: no connection and text are told apart, and a failure is reported without the switch", async ({ page, browserName }) => {
   await openApp(page);

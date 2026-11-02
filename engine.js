@@ -2435,7 +2435,7 @@ async function boot(){
   await offInit();netWatch();
   if(!ONLINE){$("usercard").hidden=false;$("signout").hidden=true;meNav();recapSnap();bdgBoot();if(!(await routeTo(location.hash||store.get("route",""))))resumeFrom(store.get("cur",0));return}
   /* signed out only when the server says so ({user:null} or a 401). No answer, a server error, or a captive portal's web page means offline: a device that has signed in before opens on what it has */
-  const mark=meMark();let me,noNet=false;try{me=await(mark?Promise.race([api("/api/auth?action=me"),new Promise((_,no)=>setTimeout(()=>no(new Error("slow")),7000))]):api("/api/auth?action=me"))}catch(e){noNet=true;me={user:null}}
+  const mark=meMark();let me,noNet=false;try{me=await(mark?Promise.race([api("/api/auth?action=me"),new Promise((_,no)=>setTimeout(()=>no(new Error("slow")),4000))]):api("/api/auth?action=me"))}catch(e){noNet=true;me={user:null}}
   if(!noNet&&mark&&!me.user&&me.user!==null&&me.status!==401)noNet=true;
   if(noNet&&mark){me={user:mark,offline:true};OFFMODE=true}
   else if(noNet&&!offNet()){document.querySelector(".rail").hidden=true;$("page").innerHTML=`<h1>No signal</h1><div class="story"><p>First sign in needs a signal. After that, Halcyon opens without one.</p></div>`;addEventListener("online",()=>location.reload(),{once:true});return}
