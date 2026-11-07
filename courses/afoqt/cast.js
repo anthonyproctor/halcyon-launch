@@ -1,4 +1,4 @@
-// Cast wiki for "Commission" (AFOQT). Each section unlocks after the reader reaches the given chapter. Written 2026-11-07, chapter 1 people only.
+// Cast wiki for "Commission" (AFOQT). Each section unlocks after the reader reaches the given chapter. Written 2026-11-07; chapter 2 people and sections added the same day.
 // No portraits yet: a card with no cast/<id> picture shows the person's initials.
 (function(){
 const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
@@ -18,9 +18,10 @@ C.cast.push(
    sections:[
     {unlock:1, title:`Who he is`, body:[`Vern is a retired navigator, seventy something, who sits up straighter on a diner stool than most people half his age. Corduroy jacket, a pencil behind his ear, a class ring worn thin on one side. He calls everyone by rank.`,`He navigated two two eight for twenty one years, on and off. Now he keeps the wing's heritage room on Saturdays.`]},
     {unlock:1, title:`The counter`, body:[`He was on the next stool at the Riverside Diner, on the county road a mile outside the main gate, when Kit came in still wearing her flight line coat. He clocked the streamer on her zipper with 228 inked on it before she'd sat down.`,`He took the test himself in 1973, an older version on paper, in a gym that smelled like floor wax.`]},
-    {unlock:1, title:`The napkin`, body:[`He doesn't offer. He asks questions, and he waits. On a napkin, in square block capitals, he wrote SEXTANT IS TO NAVIGATOR AS BLANK IS TO CREW CHIEF and slid it over. When Kit asked him to teach her, he gave her a day, a time, and the brick ranch with the dead hedge on Cedar Street.`]}],
+    {unlock:1, title:`The napkin`, body:[`He doesn't offer. He asks questions, and he waits. On a napkin, in square block capitals, he wrote SEXTANT IS TO NAVIGATOR AS BLANK IS TO CREW CHIEF and slid it over. When Kit asked him to teach her, he gave her a day, a time, and the brick ranch with the dead hedge on Cedar Street.`]},
+    {unlock:2, title:`The kitchen table`, body:[`Tuesday nights at seven, at a yellow kitchen table, with an egg timer and a coffee can of pencils he sharpens with a knife. In the den there's a navigator's plotting table and a banker's box with 2001 on the end.`,`The box holds his navigator logs from the last year the seat existed. He hands Kit one a week as homework. She doesn't get the box.`]}],
    quote:{unlock:1, text:`Bring a pencil, Sergeant. I'm not lending you mine.`},
-   ties:[{unlock:1,id:`kit`,text:`The crew chief on his old jet. He'll teach her on Tuesdays.`}] },
+   ties:[{unlock:1,id:`kit`,text:`The crew chief on his old jet. He'll teach her on Tuesdays.`},{unlock:2,id:`merritt`,text:`Flew with him as a lieutenant in 2001. He still calls her that.`}] },
 
  { id:`graham`, intro:`I'm Graham. I teach physics and chemistry at Tolliver High, and I keep our week on the whiteboard on the fridge, because between her plant shifts, my lab nights and drill, somebody has to. On drill weekends I draw a little tanker on Saturday.`, name:`Graham Darrow`, role:`Kit's husband, 36. Physics and chemistry teacher at Tolliver High.`, firstChapter:1, speaker:`Graham`,
    sections:[
@@ -32,7 +33,8 @@ C.cast.push(
  { id:`boyd`, intro:`Master Sergeant Boyd. I've been on the KC-135 since 1996, and I trained the crew chief on two two eight myself. When the wing goes to the new jets, I go too. The shop goes to her. That's the plan, anyway.`, name:`Arlen Boyd`, role:`Master sergeant, 51. Flight chief, and Kit's trainer since she was twenty one.`, firstChapter:1, speaker:`Boyd`,
    sections:[
     {unlock:1, title:`Who he is`, body:[`Boyd is the flight chief. He's been on the KC-135 since 1996 and on Kit since she was twenty one. He taught her to safety wire, to read a forms binder, and to tell a pilot no. His name was on two two eight before hers, and he painted hers over it himself.`,`When the wing converts to the KC-46, around 2030, he'll retire, and he's told Kit more than once that the shop will be hers after him.`]},
-    {unlock:1, title:`The look`, body:[`Whenever a board posting goes up he gets a look Kit knows, a man paying on a debt he thinks is his. When he found her reading the pilot posting, he asked her straight if she was thinking about it.`,`Page two of that posting says the application starts with the applicant's immediate supervisor. For Kit, that's him.`]}],
+    {unlock:1, title:`The look`, body:[`Whenever a board posting goes up he gets a look Kit knows, a man paying on a debt he thinks is his. When he found her reading the pilot posting, he asked her straight if she was thinking about it.`,`Page two of that posting says the application starts with the applicant's immediate supervisor. For Kit, that's him.`]},
+    {unlock:2, title:`The slip`, body:[`Kit handed him her routing slip on January 11. He put it in his inbox under his coffee cup and left it there almost four weeks. When she asked him straight, he said it wasn't her. It was a lot of names after his.`,`On the February drill Sunday he signed it without a word, then put her name on every launch for the next three drill weekends.`]}],
    quote:{unlock:1, text:`Seven years ago I asked you to stay.`},
    ties:[{unlock:1,id:`kit`,text:`His crew chief. He built her to run the shop after him.`},{unlock:1,id:`fisk`,text:`An airman in his flight.`}] },
 
@@ -41,6 +43,20 @@ C.cast.push(
     {unlock:1, title:`Who he is`, body:[`Fisk is twenty and has been Kit's assistant crew chief since August. He comes to drill straight off the overnight at a distribution center on Route 9, sometimes with the scanner lanyard still around his neck.`]},
     {unlock:1, title:`The flashlight`, body:[`On the four o'clock leak check he borrowed Kit's big flashlight out of her toolbox without signing for it, and forgot it was in his vest. She asked him for it quietly, and after the launch she walked him around the side of the truck and let him tell her the whole thing.`,`He asks good questions. What contingent means, and which way the elevator goes when the pilot pulls back.`]}],
    quote:{unlock:1, text:`Three's dry, Sergeant. No leaks. I looked twice.`},
-   ties:[{unlock:1,id:`kit`,text:`His crew chief.`},{unlock:1,id:`boyd`,text:`His flight chief.`}] }
+   ties:[{unlock:1,id:`kit`,text:`His crew chief.`},{unlock:1,id:`boyd`,text:`His flight chief.`}] },
+
+ { id:`corbin`, intro:`Technical Sergeant Corbin Haas, avionics. I'm the one they sent to pilot training two years ago. You've probably heard the rest from Kemp. If you want to know what an airspeed indicator eats for breakfast, I'm at the far bench.`, name:`Corbin Haas`, role:`Technical sergeant, 34. Avionics. The last airman the wing sent to pilot training.`, firstChapter:2, speaker:`Corbin`,
+   sections:[
+    {unlock:2, title:`Who he is`, body:[`Corbin works full time in the avionics back shop, at the far bench, testing instruments. Two years ago Colonel Merritt sent him to pilot training, and he washed out. The whole wing knows that part, mostly from Kemp.`]},
+    {unlock:2, title:`The bars`, body:[`He told Kit what it was like: good on paper, then an instructor behind you writing down everything your hands do, until you're watching yourself instead of the airplane. He said the rest in one line and didn't explain it.`,`He asked her what happens if she washes out, because somebody ought to before the board does. She said she'd come home and crew a jet, same as him. When she asked what he'd do different, he said he'd have told somebody the truth sooner.`]}],
+   quote:{unlock:2, text:`I gave the bars back. Shop took me home.`},
+   ties:[{unlock:2,id:`kit`,text:`A crew chief going where he went.`},{unlock:2,id:`merritt`,text:`The colonel who sent him.`}] },
+
+ { id:`merritt`, intro:`Colonel Merritt. I command the wing, and I still fly the KC-135 a few times a month so I remember what I'm asking people to do. I walk the line on drill Saturdays, one jet at a time, and I read the name on every stencil.`, name:`Joanna Merritt`, role:`Colonel, 49. Wing commander and KC-135 pilot.`, firstChapter:2, speaker:`Merritt`,
+   sections:[
+    {unlock:2, title:`Who she is`, body:[`Merritt commands the wing and still flies the KC-135 herself. In January 2001 she flew her first refueling track out of Tolliver as a copilot, with Vern at the nav table. It's in his log.`,`Two years ago she sent Corbin Haas to pilot training, and he washed out. The wing's pick for the pilot slot goes through her.`]},
+    {unlock:2, title:`The line walk`, body:[`On the February drill she stopped under two two eight's stencil and asked Kit where her package was. Then she asked why, and not why she deserved it. Kit gave her the wing's reasons. Merritt said that was a good reason for the wing to want her, and it wasn't what she'd asked.`]}],
+   quote:{unlock:2, text:`Tell me why. Not why you deserve it.`},
+   ties:[{unlock:2,id:`kit`,text:`A crew chief who wants her pilot slot.`},{unlock:2,id:`corbin`,text:`The one she sent before.`},{unlock:2,id:`vern`,text:`Her navigator, once.`}] }
 );
 })();
