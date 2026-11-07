@@ -183,12 +183,12 @@ C.mock.push({ part:`T2: Technical`, form:2, formName:`Practice exam 2`, question
         `Continuous integration`],
   a:3, why:`Continuous integration joins small changes often and checks them automatically, so problems show up soon after the change that caused them. Big bang integration joins everything once at the end. Regression testing is part of each run, but it isn't the practice's name, and a configuration audit checks items against their documents.`,
   task:`T8`, domain:`Technical`, scored:false },
-{ q:`Which of these is an output of the integration process?`,
-  opts:[`A verified system, ready to hand over`,
-        `A set of approved system requirements, signed off`,
-        `An assembled system, ready for verification`,
-        `An architecture with all its views`],
-  a:2, why:`Integration delivers an assembled system or element, with records of how it was put together, ready to be verified against its requirements. Verification and transition come after. Approved requirements and the architecture are inputs that integration uses, not things it makes.`,
+{ q:`Which of these is a main input to the integration process?`,
+  opts:[`Validated needs from the system's operators`,
+        `The customer's signed acceptance of the system`,
+        `Realized elements and their interfaces`,
+        `Disposal records from the system it replaces`],
+  a:2, why:`Integration takes the realized elements from implementation, with the interface definitions and the integration strategy, and puts them together. Validated needs, acceptance and disposal records belong to other processes.`,
   task:`T8`, domain:`Technical`, scored:true },
 
 // LO17 Verification

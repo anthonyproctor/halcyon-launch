@@ -14,12 +14,12 @@ C.mock=C.mock||[];
 C.mock.push({ part:`X2: Cross-cutting`, form:2, formName:`Practice exam 2`, questions:[
 
 // LO1 SE definitions, principles and concepts
-{ q:`How do systems engineering and project management relate on a project?`,
-  opts:[`They overlap: SE leads the technical effort, PM the overall project`,
-        `They're the same job under two titles, and one person does both`,
-        `SE runs only during design, then hands everything off to project management`,
-        `Project management sets the design, and SE checks its cost and schedule`],
-  a:0, why:`The two share planning, risk, decisions and assessment, but systems engineering leads the technical side and project management leads the business side: budget, staffing and the project as a whole. They aren't the same job, neither one owns the other's work, and SE runs through the whole life cycle, not just design.`,
+{ q:`How does systems engineering relate to software and hardware engineering on a product?`,
+  opts:[`SE works the whole and interfaces; they build the elements`,
+        `SE replaces both of them once a full system model exists`,
+        `They set the architecture, and SE checks it at the end`,
+        `SE covers only the hardware, and software runs apart`],
+  a:0, why:`Systems engineering sets the context the disciplines work in: allocated requirements, interfaces, and how the parts will be integrated and verified. Software and hardware engineering design and build their elements inside that, and what they learn feeds back into the architecture. Neither replaces the other.`,
   task:`X1`, domain:`Cross-cutting`, scored:true },
 { q:`A water plant has a filtration system made of pumps, filters and controls. When the plant is the system of interest, what is the filtration system?`,
   opts:[`A collection of parts that isn't a system on its own`,

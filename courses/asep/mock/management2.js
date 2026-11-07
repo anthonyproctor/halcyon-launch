@@ -60,12 +60,12 @@ C.mock.push({ part:`M2: Management`, form:2, formName:`Practice exam 2`, questio
   task:`M1`, domain:`Technical management`, scored:false },
 
 // LO7 Monitoring and control
-{ q:`At a monthly review, a project's planned value is $6 million and its earned value is $4.5 million. What does this show?`,
-  opts:[`The project is ahead of schedule`,
-        `The project is over budget`,
-        `The project is behind schedule`,
-        `The project is on plan so far`],
-  a:2, why:`Schedule variance is earned value minus planned value: $4.5 million minus $6 million is minus $1.5 million, so less work is done than planned by now. That's behind schedule, with a schedule index of 0.75. Being over budget compares earned value with actual cost, which isn't given here.`,
+{ q:`A project holds four weeks of schedule reserve. A late part uses two of them, three months before delivery. What should assessment and control check next?`,
+  opts:[`Whether the late part's supplier can be replaced now`,
+        `Whether each remaining task can start two weeks early`,
+        `Whether the reserve left still covers the risks ahead`,
+        `Whether the delivery date should move two weeks today`],
+  a:2, why:`Reserve is there to absorb risks as they happen. When some of it is used, control compares what's left with the risks still ahead, and acts early if it won't cover them. Changing suppliers or moving the date might follow, but only after that check.`,
   task:`M2`, domain:`Technical management`, scored:true },
 { q:`What sets a technical performance measure apart from an ordinary progress measure?`,
   opts:[`It counts how many tasks were closed in the past month`,
