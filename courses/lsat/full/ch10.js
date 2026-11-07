@@ -1,5 +1,7 @@
 // The Appeal, ch10: Non-contributory. Monday, June 14 to Wednesday, August 18, 2027 (the score on Wednesday, June 30; Teo's kitchen table on Saturday, July 10; the kitchen table at home that night; Sunday morning; Federal on Tuesday, July 20; the Wednesday call on July 21; Ana's call and the Wednesday call on August 18).
 // Coverage per the bible: scenes LR18x4 LR17x2 LR11 LR05 RC11 RC06 RC12 RC03; quiz LR18x4 LR17 LR11 LR05 LR19 LR06x2 LR08 LR10 RC11 RC06 RC12 RC03 RC05 RC04.
+// Depth pass 2026-11-06: Joel's beat at nine on score day (f10s1); the score is still said once, at 7:01.
+// Coverage pass 2026-10-25 (quiz now 20): Q19 RC06 and Q20 RC08 on p2; Q7 rewritten as a long LR05.
 // Full-length passage (p2): the 1973 Berkeley graduate admissions figures and Simpson's paradox (statistics and social science), written fresh. Facts read 2026-10-17 from Bickel, Hammel and O'Connell, "Sex Bias in Graduate Admissions: Data From Berkeley," Science 187 (1975), 398 to 404 (the PDF via its Wayback copy) and the Wikipedia article "Simpson's paradox": fall 1973, 12,763 applications to 101 departments, 8,442 men and 4,321 women, about 44 and 35 percent admitted; 85 departments analyzed after setting aside 16 (the paper says some had no women applicants or denied no one); four with a deficit of women and six with a deficit of men; the passage softens the English and mechanical engineering shares to "most" and "only a handful" and drops Hammel's dean title (not re-verified at review, 2026-10-17); departments with many women applicants were the harder ones to enter; pooled with the departments taken into account, a small but statistically significant bias in favor of women; the authors trace the pattern to earlier schooling that steered women toward fields that were more crowded, less well funded and with poorer job prospects. Hammel was a professor of anthropology and associate dean of the Graduate Division. Short case passage (p1): Dr. Ingrid Solberg's review letter to Ana Brennan, Monday, July 19, 2027 (new, fiction).
 // Test facts read 2026-10-17 on lsac.org: LSATdates lists the June 2027 score release as 6/30/2027, all dates Eastern; the LSAC dates pages say scores are released at 9 a.m. ET through JD Services, which is 7 a.m. in Denver; the LSAT Scoring page says scores need an approved writing sample, come with a score band and a percentile, and arrive with an email. No LSAC wording on the page; the score is said once, a mid 160s number (Anthony's call in the bible).
 // Law and practice, story level only: the May 20 order says the parties confer on testing methods (ch8), so Ana confers with Meredith and the district attorney's investigator collects Teo's voluntary reference sample with a chain of custody form. Consensual elimination samples from third parties are ordinary casework; the Colorado procedure for adding one under a postconviction testing order was not verified, so the page claims nothing about it. Teo's legal exposure is never stated: Ana tells him she's his father's lawyer, not his, and gives him a name. His stake is family and conscience.
@@ -9,7 +11,7 @@
 // All questions, passages and answer choices are original. Not affiliated with or endorsed by LSAC.
 (((window.HALCYON_DATA=window.HALCYON_DATA||{}).lsat=window.HALCYON_DATA.lsat||{}).full=window.HALCYON_DATA.lsat.full||[]).push({
   num: 10, part: `Part Three: The Truth`, title: `Non-contributory`, weeks: `June to August 2027`,
-  tasks: [`LR05`,`LR06`,`LR08`,`LR10`,`LR11`,`LR17`,`LR18`,`LR19`,`RC03`,`RC04`,`RC05`,`RC06`,`RC11`,`RC12`],
+  tasks: [`LR05`,`LR06`,`LR08`,`LR10`,`LR11`,`LR17`,`LR18`,`LR19`,`RC03`,`RC04`,`RC05`,`RC06`,`RC08`,`RC11`,`RC12`],
   cast: [
     [`Teo Ruiz`,`Dani's brother, 30. Diesel mechanic at a bus garage. Told her in a parking lot that he hit the man, and then couldn't tell her the rest.`],
     [`Ana Brennan`,`Appellate lawyer on Federal Boulevard. Sent the 2007 autopsy to a pathologist in June and is waiting on the letter.`],
@@ -62,7 +64,7 @@
     video: [`yZDldMokOWc`,`Intro to Paradox Questions | LSAT Logical Reasoning`,`LSAT Demon`,`4:44`]
   },
   scenes: [
-    { id:`f10s1`, domain:`Logical Reasoning`, task:`LR18`, title:`Not for gas`, q:`What best explains their father tossing out the proof of that stop, then denying the stop for years?`,
+    { id:`f10s1`, storyQuiet:true, domain:`Logical Reasoning`, task:`LR18`, title:`Not for gas`, q:`What best explains their father tossing out the proof of that stop, then denying the stop for years?`,
       text:(s,all,G)=>[`Wednesday, June 30. At 5:58 the phone lit up on the nightstand.`,
         `<prop type="text" from="Teo" time="5:58 AM">you up</prop>`,
         `She was. She'd been up since four, listening to the sprinklers come on across the street. She wrote back yeah, and he wrote back that Bianca had looked it up and the scores came out at seven, and then nothing, and she pictured him sitting in the truck in his driveway with the phone on his knee.`,
@@ -74,6 +76,8 @@
         `<prop type="text" from="Teo" time="7:06 AM">lupe wants to know did you win</prop>`,
         `She told him to tell Lupe yes. Three minutes later he wrote again.`,
         `<prop type="text" from="Teo" time="7:09 AM">saturday the 10th. after shes asleep. ill tell you</prop>`,
+        `At nine, at the office, Joel came down the hall with his coffee and stopped at the end of her desk, and didn't say anything, and waited. She held her phone out. He read it off the screen and handed it back. <span class="said" data-who="Joel">"The letter's still in my drawer,"</span> he said. <span class="said" data-who="Joel">"It's still true."</span> <span class="said" data-who="Dani">"After September."</span> <span class="said" data-who="Joel">"I didn't ask when."</span> He knocked twice on the desk and went on down the hall.`,
+        `She'd said after once before, at twenty, about Ma. After had taken fourteen years.`,
         `That night at seven she gave her father the number on the step. He made her say it again, slower, and she did. He didn't ask what it meant, and she didn't tell him about the other text.`,
         `Saturday, July 10, at a quarter to nine, Bianca let her in under the carport. The string lights from March were still up, unplugged. <span class="said" data-who="Bianca">"He's been out in the truck every night since June,"</span> she said, low, at the door. <span class="said" data-who="Bianca">"I'll be in the back with my book. She's asleep. She sleeps like him. Nothing wakes her."</span> Somebody had wiped down the stove and put the dish rack under the sink. Two glasses of water on the table. Down the hall Lupe's door was open about an inch. Her nightlight was a turtle.`,
         `Teo sat down across from her and put his hands flat on the table, like he was about to get up again. <span class="said" data-who="Teo">"I'm going to go straight through,"</span> he said. <span class="said" data-who="Teo">"Don't stop me, or I won't get back to it."</span>`,
@@ -82,7 +86,7 @@
         `He told it to the table. Every few sentences he looked down the hall at the crack in Lupe's door.`,
         `<span class="said" data-who="Teo">"Out back he puts me in the truck and says stay, and the guy comes out after him and gets him on the tailgate. The flashlight from the plant was behind the seat. I hit him with it, one time."</span> He touched his face. <span class="said" data-who="Teo">"He let go and walked off holding his face, bleeding. I wiped my hands on Pa's sleeve. Then I'm crying for him. Papi, Papi."</span>`,
         `Ten to eleven, by a stove clock across the street. Dani held her glass and didn't drink from it.`,
-        `<span class="said" data-who="Teo">"He gets me back in the truck and we go. Not home. He goes out 2 and around the long way toward the highway and pulls into a gas station by the on ramp. It's a tire place now. He pumps gas with his sleeve pushed up so I won't look at it, and he comes back with a blue Gatorade for me. I didn't even want it. I held it the whole rest of the night in both hands."</span> <span class="said" data-who="Teo">"The clock over the register said 11:05. I'd never been up that late in my life. I looked right at it so I'd remember. And Pa gets his receipt and balls it up and puts it in the can by the pump."</span>`,
+        `<span class="said" data-who="Teo">"He gets me back in the truck and we go. Not home. He goes out Highway 2 and around the long way toward the highway and pulls into a gas station by the on ramp. It's a tire place now. He pumps gas with his sleeve pushed up so I won't look at it, and he comes back with a blue Gatorade for me. I didn't even want it. I held it the whole rest of the night in both hands."</span> <span class="said" data-who="Teo">"The clock over the register said 11:05. I'd never been up that late in my life. I looked right at it so I'd remember. And Pa gets his receipt and balls it up and puts it in the can by the pump."</span>`,
         ((((all||{})[2]||{}).picks||{})[11]===2
           ?`Under ENOUGH on the envelope, in her own hand since December, it said somewhere else at 11:15. Her brother had read every line on that envelope in a parking lot in June, and he had no idea he'd just answered one of them.`
           :`She'd drawn a column on that envelope in December and written ENOUGH over it, and asked what would go in it. Somewhere else at a quarter past eleven was the answer, and nobody had ever said where. Her brother had just said where, and he had no idea he'd done it.`),
@@ -102,7 +106,7 @@
           after:`Teo says no, flat. Nothing about the way their father has talked all these years sounds like a man who thinks he belongs where he is, and it wouldn't explain throwing the receipt away that same night anyway.`,
           why:`Resolve the paradox. Unsupported. Nothing Luis has said or done points to a man who wanted the sentence, and a wish to be punished doesn't explain why the stop had to disappear.`}
       ]},
-    { id:`f10s2`, domain:`Logical Reasoning`, task:`LR18`, title:`Since supper`,
+    { id:`f10s2`, storyQuiet:true, domain:`Logical Reasoning`, task:`LR18`, title:`Since supper`,
       text:(s,all,G)=>[`She told him about the curb then, because nobody ever had. A quarter past eleven. A woman across the street at her kitchen window. A man in a red jacket and a ball cap who hit Travis Hensley with something and ran off on foot, and Travis going over backward against the curb. Teo listened with his jaw set.`,
         `<span class="said" data-who="Teo">"He was bleeding all over,"</span> he said. <span class="said" data-who="Teo">"You didn't see him. He was already going. Whoever that was, he was already going."</span>`,
         `She didn't argue with him. He went on, because he'd said he would.`,
@@ -124,7 +128,7 @@
           after:`<span class="said" data-who="Teo">"Since supper,"</span> Teo says. <span class="said" data-who="Teo">"She said since supper, Dani. I was in that bar at supper."</span> A lie with an hour in it is still a lie, and it doesn't answer what he asked her.`,
           why:`Resolve the paradox. It explains the facts away instead of reconciling them. She said since supper. That wasn't true, whatever it felt like to her.`}
       ]},
-    { id:`f10s3`, domain:`Logical Reasoning`, task:`LR17`, title:`Where`, q:`Which question to Teo would do the most to test what she suspects?`,
+    { id:`f10s3`, storyQuiet:true, domain:`Logical Reasoning`, task:`LR17`, title:`Where`, q:`Which question to Teo would do the most to test what she suspects?`,
       text:(s,all,G)=>[`Sunday Abuela drove him home after lunch. Dani was already there. She'd come home from the sleepover in Thornton at eight that morning, and she'd been down to the basement once already and seen the jacket in the washer, and come back up and said nothing to anybody, because Ma was asleep from her shift, and the only other person up was Pa, at the kitchen table, and it was his jacket.`,
         `<span class="said" data-who="Teo">"A guy in a tan coat comes at three,"</span> Teo said. <span class="said" data-who="Teo">"You take him down the basement. I'm on the top step in my socks. You've got your back to the stairs the whole time. I hear you tell him Ma does the wash on Mondays. Then he comes back up past me with Pa's jacket in a paper bag, and he says excuse me, son. Like I'm in his way."</span>`,
         `She'd stayed down by the washer after, she remembered that, a long while, with her hand on the lid. She'd never known he was on the stairs. Fifteen, and right there, and she'd never once seen him.`,
@@ -149,17 +153,17 @@
           after:`<span class="said" data-who="Teo">"Over the eye,"</span> he says. <span class="said" data-who="Teo">"The left one."</span> He doesn't have to think about it. If he'd said the back of the head, she'd have had nothing to tell him. He hadn't.`,
           why:`Evaluate the argument. Your premises: the report calls the wound above the left eye non-contributory and puts the fatal one at the back of the skull, and Teo swung once. Your conclusion: his swing made the cut, not the fracture. The step between them is where the one swing landed. Over the left eye, and the conclusion gets the link it needs. The back of the head, and it falls apart. Either answer moves it.`}
       ]},
-    { id:`f10s4`, domain:`Reading Comprehension`, task:`RC11`, title:`Separate`,
+    { id:`f10s4`, storyQuiet:true, domain:`Reading Comprehension`, task:`RC11`, title:`Separate`,
       text:(s,all,G)=>[`Somewhere in the telling his hand had gone up to his own face, to the left side above the eyebrow, two fingers, like you'd touch a bruise to see if it was still there. She didn't think he knew he did it. He'd probably been doing it since he was ten.`,
         `She could see the page. She'd read it like Ana told her to, like a passage, and it was all still there.`,
-        `<prop type="doc" title="What she remembered of the report, word for word">Laceration, 2.5 cm, above the left eyebrow. Superficial. Does not reach the bone.<br>Depressed fracture of the back of the skull.<br>The fatal injury is the depressed fracture at the back of the skull. The laceration above the left eyebrow is a separate, superficial injury and is non-contributory.</prop>`,
+        `<prop say="What she remembered of the report, word for word. Laceration, two and a half centimeters, above the left eyebrow. Superficial. Does not reach the bone. Depressed fracture of the back of the skull. The fatal injury is the depressed fracture at the back of the skull. The laceration above the left eyebrow is a separate, superficial injury and is non-contributory." type="doc" title="What she remembered of the report, word for word">Laceration, 2.5 cm, above the left eyebrow. Superficial. Does not reach the bone.<br>Depressed fracture of the back of the skull.<br>The fatal injury is the depressed fracture at the back of the skull. The laceration above the left eyebrow is a separate, superficial injury and is non-contributory.</prop>`,
         `Ana's rule for this kind was always the same. Use the page's words, not yours, and put them on what he did.`],
       opts:[
         {t:`It was the first of the two blows that night, and the same man landed both of them.`, s:0, d:{trust:-1,conf:0,health:-2},
           after:`The report never says how many men, or which came first. Separate is all it says. She'd be putting a man in it that the page doesn't have.`,
           why:`Application. Not in the passage. The report says the injuries were separate. It doesn't count blows, order them, or say who struck either one.`},
         {t:`It cut him above the left eye, and that cut had no part at all in why he died.`, s:3, best:true, d:{trust:2,conf:1,health:4},
-          after:`That's the word, set on his swing. It was a real cut. It bled, and cuts there do. It had nothing to do with how the night ended. She has it right, in the page's own words.`,
+          after:`She puts the page's words on his swing. A cut above the left eye, superficial, separate from what killed him. It was a real cut. It bled, and cuts there do. It had nothing to do with how the night ended.`,
           why:`Application. Take the report's own terms and put them on Teo's swing. A superficial laceration above the left eyebrow, separate from the fatal fracture and non-contributory, means a real injury that played no part in the death. That's the swing, described by the page.`},
         {t:`It hurt him a good deal less than it looked to a boy of ten in the dark.`, s:1, d:{trust:0,conf:0,health:1},
           after:`Superficial, yes. But less than it looked isn't what the page is about. The page is about what killed him, and it's careful to say the cut didn't.`,
@@ -168,7 +172,7 @@
           after:`The report doesn't say what put him on the curb. It says the fracture at the back killed him and the cut in front is a separate injury. Putting the fall on his swing is the one thing the page never does.`,
           why:`Application. Unsupported. The report says the cut played no part in the death. It never says what put him on the curb, so its words can't be carried over to say the swing caused the fall.`}
       ]},
-    { id:`f10s5`, domain:`Logical Reasoning`, task:`LR11`, title:`The once`,
+    { id:`f10s5`, storyQuiet:true, domain:`Logical Reasoning`, task:`LR11`, title:`The once`,
       text:(s,all,G)=>[`She kept her voice down, for Lupe. <span class="said" data-who="Dani">"You cut his eyebrow."</span>`,
         `He looked at her. <span class="said" data-who="Dani">"It's in the autopsy. Ana gave it to me in June. There's two injuries on page one, Teo. The back of his head is what killed him. Over his eye, it didn't even get to the bone. The doctor's got a word for that."</span> She said it like it was typed. <span class="said" data-who="Dani">"Non-contributory."</span>`,
         `<span class="said" data-who="Teo">"That's a piece of paper,"</span> he said, after a while. <span class="said" data-who="Teo">"I was there. He was bleeding all down his shirt."</span> <span class="said" data-who="Dani">"A cut there bleeds like that. And at four minutes after eleven he was on the phone to his sister. Talking. Twenty minutes after you."</span> <span class="said" data-who="Teo">"People talk when they're dying. You see it on TV."</span>`,
@@ -189,7 +193,7 @@
           why:`Must be false. Neither account says anything about what Luis knew or believed. A claim the facts don't touch can't be one they make impossible.`}
       ]},
     { id:`f10s6`, domain:`Logical Reasoning`, task:`LR18`, title:`Anybody else`,
-      text:(s,all,G)=>[`She drove home at midnight down 104th with the windows open and the radio off. The envelope was in the prep book on the passenger seat, and she didn't take it out till she was home.`,
+      text:(s,all,G)=>[`She drove home at midnight down 104th with the windows open and nothing on. The envelope was in the prep book on the passenger seat, and she didn't take it out till she was home.`,
         `At the kitchen table she took the envelope out after all. Under ENOUGH, small, in pencil, she wrote 11:05, A PUMP BY THE ON RAMP. She left the top line where it was, in her own capitals from December. A pencil hadn't put it there, and a pencil wasn't going to take it off.`,
         `She didn't need Gene's notebook for the rest. She had his voice. Monday night, six hours in a room, and her father had asked him one thing. Was anybody else hurt?`,
         ((s.flags.calledgenealiar||G.calledgenealiar)
@@ -266,7 +270,7 @@
         {t:`Unsure of itself. It hedges on which injury was the one that killed him.`, s:0, d:{trust:-1,conf:0,health:-2},
           after:`<span class="said" data-who="Ana">"Where's the hedge?"</span> Ana says. There isn't one. The fatal injury is the fracture, it says, flat, and the cut is non-contributory. Nothing in it says maybe.`,
           why:`Author's attitude. Contradicted. It says plainly which injury was fatal.`},
-        {t:`Plain and certain. It names each injury, then which one killed him.`, s:3, best:true, d:{trust:2,conf:0,health:4},
+        {t:`Plain and certain. It names each injury, then which one killed him.`, s:3, best:true, say:true, d:{trust:2,conf:0,health:4},
           after:`<span class="said" data-who="Ana">"Sure about what it looked at,"</span> Ana says. <span class="said" data-who="Ana">"And not one word past it. No who, no when, no how sorry anybody is."</span> She taps the words fatal injury. <span class="said" data-who="Ana">"That's somebody who's done a lot of these and doesn't need anybody to like the report."</span>`,
           why:`Author's attitude. The report states its findings without qualification and ranks the injuries, one fatal and one non-contributory. That's confident and neutral, and it never goes past the body.`},
         {t:`Wary of the police. It makes a point of who took the scrapings away.`, s:0, d:{trust:-1,conf:0,health:-2},
@@ -280,7 +284,7 @@
         `<span class="said" data-who="Ana">"Five paragraphs, and in the last one she tells you how she wrote the other four,"</span> Ana said. <span class="said" data-who="Ana">"What's the rule she's working by?"</span>`],
       opts:[
         {t:`Say only what the findings show and where the findings stop.`, s:3, best:true, d:{trust:2,conf:0,health:4},
-          after:`<span class="said" data-who="Ana">"That's the whole letter,"</span> Ana says. <span class="said" data-who="Ana">"She agrees where she can, she won't guess at the order, and she tells me so in writing. A judge will believe every word of it for exactly that reason."</span> She puts the letter in the folder, on top.`,
+          after:`Say what the findings show and where they stop, Dani says. <span class="said" data-who="Ana">"That's the whole letter,"</span> Ana says. <span class="said" data-who="Ana">"She agrees where she can, she won't guess at the order, and she tells me so in writing. A judge will believe every word of it for exactly that reason."</span> She puts the letter in the folder, on top.`,
           why:`Principle. Solberg states it herself: she has kept her opinion to what the record shows. She agrees where the findings support it, declines to say which injury came first, and says where the evidence stops.`},
         {t:`When the evidence is unclear, lean toward the man who was convicted.`, s:0, d:{trust:-1,conf:0,health:-2},
           after:`<span class="said" data-who="Ana">"Find where she leans,"</span> Ana says. Dani can't. Solberg agrees with 2007 on the cause of death and refuses to guess at the order, which helps nobody's side in particular.`,
@@ -309,10 +313,10 @@
           after:`<span class="said" data-who="Ana">"Maybe,"</span> Ana says. <span class="said" data-who="Ana">"Consuelo says so. But a second man doesn't make the last line follow. Your brother could still have done the damage, and the second man could have come along after."</span>`,
           why:`Sufficient assumption. It makes the conclusion more likely, but doesn't make it follow. Another man in the lot is consistent with Teo's swing having done the fatal damage.`},
         {t:`That the cut over his eye is the only harm Teo ever did to him.`, s:3, best:true, d:{trust:2,conf:1,health:4},
-          after:`<span class="said" data-who="Ana">"That's the piece,"</span> Ana says. She writes it in small between lines three and four. <span class="said" data-who="Ana">"And it isn't a medical question. Solberg can't give it to you. A cut doesn't say whether the man fell down afterward."</span> She taps the card. <span class="said" data-who="Ana">"Your brother can say he walked off. And a phone call at 11:04 says he was still talking twenty minutes later."</span>`,
+          after:`The cut over his eye was the only harm Teo ever did him, she says. <span class="said" data-who="Ana">"That's the piece,"</span> Ana says. She writes it in small between lines three and four. <span class="said" data-who="Ana">"And it isn't a medical question. Solberg can't give it to you. A cut doesn't say whether the man fell down afterward."</span> She taps the card. <span class="said" data-who="Ana">"Your brother can say he walked off. And a phone call at 11:04 says he was still talking twenty minutes later."</span>`,
           why:`Sufficient assumption. The premises say the cut wasn't fatal and Teo made it. To guarantee he didn't kill Travis, you need the cut to be everything his swing did: no fall it caused, no second injury. Add that, and the conclusion has to follow.`}
       ]},
-    { id:`f10s12`, domain:`Logical Reasoning`, task:`LR18`, title:`Ten years`,
+    { id:`f10s12`, storyQuiet:true, domain:`Logical Reasoning`, task:`LR18`, title:`Ten years`,
       text:(s,all,G)=>[`Ana had called her father on Friday afternoon, after the swab, a legal call, the little room with the phone on the wall. She'd told him all of it, she said, because he was her client and it was his case, and because otherwise he'd hear it from somebody worse.`,
         `Wednesday, July 21, seven. Her step. The recording, and then him, and no hello. <span class="said" data-who="Luis">"Brennan called."</span>`,
         `She waited. Behind him somebody was yelling about a card game. In June he'd asked her what she and her brother talked about, all that way in a truck, and she'd told him nothing, same as always. She heard the question now for what it had been.`,
@@ -429,8 +433,8 @@
     `Dani sat down on the step. Two floors down somebody let the street door bang shut.`,
     `<span class="said" data-who="Ana">"I told him his father said no. He said his father doesn't get a vote on what he says to a judge."</span> A pause. <span class="said" data-who="Ana">"Then he asked me to call you. He said if he told you himself, you'd start helping him with it, and after that he'd never know which part was his."</span>`,
     `<span class="said" data-who="Dani">"What did you tell him?"</span> <span class="said" data-who="Ana">"That I'd call you."</span> Ana's chair creaked. <span class="said" data-who="Ana">"Your father's my client. Your brother isn't. I'll work out what that means, and I'm not going to work it out on the phone with you sitting in a stairwell. Go back to your desk."</span>`,
-    `She went back to her desk. She did the rest of the afternoon's work and some of tomorrow's, and took the 5:40 bus home with the prep book shut on her lap. There wasn't any test in it anymore. She kept carrying it for the envelope.`,
-    `At ten to seven she stood at the kitchen table over the board. It had been her move since May. She'd looked at it every night for three months and never once picked anything up.`,
+    `She went back to her desk. She did the rest of the afternoon's work and some of tomorrow's, and took the 5:40 bus home with the prep book shut on her lap. There wasn't any test in it anymore. She kept carrying it anyway.`,
+    `At ten to seven she stood at the kitchen table over the board. It had been her move since May. She'd looked at it every night for three months and never picked anything up.`,
     `She moved her knight up to the middle of the board. He'd have to answer it or leave it there, and either way it was his turn.`,
     `At seven she was on the step with the phone, and it rang. Recording, then him, and she gave him the move before he could ask for it, knight to the middle, the square by number like he'd taught her at eight on the back of a cereal box.`,
     `Then she waited while he found it on his own board, and listened to the tier behind him, a TV, somebody at the next phone arguing about money, a door. <span class="said" data-who="Luis">"There she is,"</span> he said.`

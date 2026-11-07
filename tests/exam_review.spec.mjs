@@ -193,11 +193,13 @@ for (const { id, body } of BOOKS) {
       await page.locator("#rvback").click();
       await expect(page).toHaveURL(new RegExp(`#${id}/review$`));
     }
-    // an item taught only in the practice exam opens the practice exam
-    const mock = page.locator("#page .rvgo[data-rvmock]").first();
-    await expect(mock).toBeVisible();
-    await mock.click();
-    await expect(page).toHaveURL(new RegExp(`#${id}/mock`));
+    // an item taught only in the practice exam opens the practice exam (a book that teaches everything in its lessons has none)
+    const mocks = await page.locator("#page .rvgo[data-rvmock]").count();
+    if (mocks) {
+      const mock = page.locator("#page .rvgo[data-rvmock]").first();
+      await mock.click();
+      await expect(page).toHaveURL(new RegExp(`#${id}/mock`));
+    }
   });
 
   for (const scheme of ["light", "dark"]) {

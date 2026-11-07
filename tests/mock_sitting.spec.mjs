@@ -23,8 +23,8 @@ async function start(page) {
 
 test("LSAT picker offers a full sitting beside the three sections; starting it opens section 1 on a 35 minute clock", async ({ page }) => {
   await page.goto("/#lsat/mock"); await page.reload();
-  await expect(page.locator("#page .mockform")).toHaveCount(4);
-  await expect(page.locator("#page .sitcard")).toContainText("All 3 back to back, 35 minutes a pop. You can take 10 minutes off after section 2.");
+  await expect(page.locator("#page .mockform")).toHaveCount(12); // nine sections and three sittings since 2026-11-06
+  await expect(page.locator('#page .sitcard[data-formcard="sitting"]')).toContainText("All 3 back to back, 35 minutes a pop. You can take 10 minutes off after section 2.");
   for (const f of [1, 2, 3]) await expect(page.locator(`#page [data-form="${f}"]`)).toBeVisible();
   await page.locator("#sitopen").click();
   await expect(page).toHaveURL(/#lsat\/mock\/sitting$/);
@@ -164,7 +164,7 @@ test("results: one combined raw score, a score for each section, and each sectio
   await page.reload();
   await expect(page.locator("#page h1")).toHaveText("25 of 77 (32 percent)");
   await page.locator("#allforms2").click();
-  await expect(page.locator("#page .sitcard")).toContainText("Last sitting: 25 of 77 (32%)");
+  await expect(page.locator('#page .sitcard[data-formcard="sitting"]')).toContainText("Last sitting: 25 of 77 (32%)");
   await page.locator("#sitopen").click();
   await page.locator("#sitagain").click();
   await expect(page.locator("#sitstart")).toBeVisible();
@@ -276,4 +276,41 @@ test("the sitting clock runs on time stamps: hidden or away, a section still end
   const t0 = await page.locator("#mocktime").textContent();
   await page.waitForTimeout(2500);
   await expect(page.locator("#mocktime")).toHaveText(t0);
+});
+
+// Sittings 2 and 3 (2026-11-06): mockSitting is a list. Each later sitting has its own card, route, label and saved state
+// (sitting 2 at c60992 and c60993, sitting 3 at c60994 and c60995), and starting one leaves the others alone.
+test("LSAT sittings 2 and 3 open on their own routes, run forms 4 to 6 and 7 to 9, and save apart from sitting 1", async ({ page }) => {
+  await page.goto("/#lsat/mock"); await page.reload();
+  await expect(page.locator("#page .sitcard")).toHaveCount(3);
+  await expect(page.locator('#page .sitcard[data-formcard="sitting2"] h3')).toHaveText("Full sitting 2");
+  await expect(page.locator('#page .sitcard[data-formcard="sitting3"] h3')).toHaveText("Full sitting 3");
+  await page.locator("#sitopen2").click();
+  await expect(page).toHaveURL(/#lsat\/mock\/sitting2$/);
+  await expect(page.locator("#page h1")).toHaveText("Full sitting 2");
+  const plan = page.locator("#page .sitplan li");
+  await expect(plan).toHaveCount(3);
+  await expect(plan.nth(0)).toHaveText("Logical Reasoning 3: 25 questions, 35 minutes.");
+  await expect(plan.nth(1)).toHaveText("Reading Comprehension 2: 27 questions, 35 minutes. Then 10 minutes off, if you want it.");
+  await expect(plan.nth(2)).toHaveText("Logical Reasoning 4: 25 questions, 35 minutes.");
+  await page.locator("#sitstart").click();
+  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting 2 · Section 1 of 3 · Question 1 of 25");
+  const st = await page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c60992")));
+  expect(st.secs.map(s => [s.f, s.order.length])).toEqual([[4, 25], [5, 27], [6, 25]]);
+  expect(await page.evaluate(k => localStorage.getItem(k), KEY)).toBeNull(); // sitting 1 untouched
+  // reload keeps the place on the sitting 2 route; the Progress page's continue link names it
+  await page.reload();
+  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting 2 · Section 1 of 3 · Question 1 of 25");
+  await page.goto("/#lsat/progress"); await page.reload();
+  await expect(page.locator("#contlink")).toHaveText("Continue: Practice exam · Full sitting 2");
+  // sitting 3 is its own: forms 7 to 9, its own key
+  await page.goto("/#lsat/mock/sitting3"); await page.reload();
+  await expect(page.locator("#page h1")).toHaveText("Full sitting 3");
+  await page.locator("#sitstart").click();
+  const st3 = await page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c60994")));
+  expect(st3.secs.map(s => [s.f, s.order.length])).toEqual([[7, 25], [8, 27], [9, 25]]);
+  await page.goto("/#lsat/mock"); await page.reload();
+  await expect(page.locator('#page .sitcard[data-formcard="sitting2"]')).toContainText("In progress, section 1 of 3.");
+  await expect(page.locator('#page .sitcard[data-formcard="sitting3"]')).toContainText("In progress, section 1 of 3.");
+  await expect(page.locator('#page .sitcard[data-formcard="sitting"]')).not.toContainText("In progress");
 });

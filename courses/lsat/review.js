@@ -9,6 +9,14 @@
 // LSAC's current test format pages (two scored LR sections, one scored RC, one unscored section, 35 minutes each, a 10 minute break
 // after section 2, no Analytical Reasoning since August 2024, LSAT Argumentative Writing unscored and required); and the coverage audit
 // of 2026-10-25 (halcyon-private). Stem cues are paraphrased in our own words. No LSAC or PrepTest text is quoted or adapted here.
+// Study plan (2026-11-06): sections lawhub, plan and blind. LawHub facts from lsac.org, read 2026-11-06: Official LSAT Practice Tests
+// (https://www.lsac.org/lsat/prepare/official-lsat-practice-tests: four full four section PrepTests free through LawHub; LawHub Advantage
+// gives one year of access to a larger library), https://www.lsac.org/lawhub (a LawHub account is free; Advantage is a paid yearly
+// upgrade), and The LSAT Will Look a Little Different Starting August 2027 (https://www.lsac.org/lsat-will-look-little-different-starting-august-2027:
+// RC first, 40 questions in 52 minutes; two LR sections of 32 in 45 minutes; unscored questions inside each section; a 10 minute break
+// after each of the first two sections; new format practice tests from February 2027). No price is quoted, by the bible's rule. The plan and the
+// blind review method are general study practice in our own words. The two new flaw items are taught in ch3 "Two more" and the chain
+// and unless rules in ch5 "Chains and counting words"; the blind review section points to ch8 "The review" (2026-11-06 fix pass).
 // Copy rules: plain words, contractions, no dashes.
 window.HALCYON_REVIEW=window.HALCYON_REVIEW||{};
 window.HALCYON_REVIEW.lsat={
@@ -17,13 +25,13 @@ window.HALCYON_REVIEW.lsat={
     "This is the current LSAT: four multiple choice sections of 35 minutes each. Two scored Logical Reasoning sections, one scored Reading Comprehension section, and one unscored section of either kind that you can't pick out. There's a 10 minute break after section two. Logic games ended in August 2024, so there are none here. LSAT Argumentative Writing is separate and unscored, and it has to be on file before your score is released.",
     "This is our own summary, and every example is ours. LSAC's own pages are the official word on the test. The Appeal isn't affiliated with or endorsed by LSAC."
   ],
-  sections:[["lr","Logical Reasoning, type by type","list"],["flaws","Flaw patterns","list"],["conditional","Conditional logic and counting words","rules"],["rc","Reading Comprehension","list"],["timing","Timing plan","rules"],["contrasts","Easy to mix up","contrasts"]],
+  sections:[["lr","Logical Reasoning, type by type","list"],["flaws","Flaw patterns","list"],["conditional","Conditional logic and counting words","rules"],["rc","Reading Comprehension","list"],["timing","Timing plan","rules"],["contrasts","Easy to mix up","contrasts"],["lawhub","Real tests on LawHub","rules"],["plan","Study plan, week by week","rules"],["blind","Blind review","rules"]],
   lr:[
     {group:"Find the structure", note:"Every argument is a claim and some reasons. Find the conclusion before you judge anything.", items:[
       {name:"Main conclusion", where:"Asks for the main point or conclusion", d:"Ask each sentence why you should believe it. The claim nothing else is there to support is the conclusion. Traps: a premise, the intermediate conclusion, or a choice stronger than the author.", ch:1, sec:0},
       {name:"Role of a statement", where:"Asks what job a quoted claim does", d:"Name the job before you read the choices. Arrows in and out make it intermediate, only out is a premise, only in is the main conclusion.", ch:1, sec:1},
       {name:"Complete the argument", where:"Ends in a blank", d:"After so or therefore, the blank is the conclusion. After because, it's the premise that closes the gap. Write your own ending first, at the strength the premises earn.", ch:1, sec:2},
-      {name:"Method of reasoning", where:"Asks how the argument proceeds", d:"Describe the moves without the subject, then test every word of each choice against what the arguer actually did.", ch:3, sec:2}
+      {name:"Method of reasoning", where:"Asks how the argument proceeds", d:"Describe the moves without the subject, then test every word of each choice against what the arguer actually did.", ch:3, sec:3}
     ]},
     {group:"Assumptions and principles", items:[
       {name:"Necessary assumption", where:"The argument depends on or requires it", d:"Deny each choice plainly. Keep the one whose denial sinks the argument. Modest is good here, and too strong is the trap.", ch:2, sec:0},
@@ -70,6 +78,10 @@ window.HALCYON_REVIEW.lsat={
       {name:"A sample that picked itself", d:"Comment cards, web polls, the cases somebody reported. How they got in matters more than how many.", ch:8, sec:1},
       {name:"Ignoring the base rate", d:"Most fires start while someone's home, but most cooking happens then too. Set the number beside how common the thing is overall.", ch:8, sec:2},
       {name:"Counting only who's left", d:"A study that drops the members it lost track of can overstate its result, because the missing ones may differ.", mock:true}
+    ]},
+    {group:"Two more to know", items:[
+      {name:"A word that changes meaning", d:"A key word means one thing in a premise and something else in the conclusion. Say what the word means each time it shows up.", ch:3, sec:2},
+      {name:"Arguing in a circle", d:"The reason only holds if the conclusion is already true. Ask whether any reason stands on its own.", ch:3, sec:2}
     ]}
   ],
   conditional:[
@@ -78,25 +90,27 @@ window.HALCYON_REVIEW.lsat={
     {r:"Never flip without denying.", why:"Every A is a B doesn't give you every B is an A. On an inference question that reversed rule shows up as a choice that sounds just like a fact you were given.", ch:5, sec:1},
     {r:"A requirement is a floor, a guarantee is a ceiling.", why:"Most outcomes need several floors, and no one of them is enough. Once in a while one statement is both.", ch:2, sec:2},
     {r:"Deny the plain way.", why:"The opposite of all is not all, not none. The opposite of some is none.", ch:2, sec:0},
-    {r:"Most plus most makes some.", why:"Two groups that each take more than half of the same whole have to overlap. Some plus some gives you nothing.", ch:5, sec:1},
+    {r:"Most plus most makes some.", why:"Two groups that each take more than half of the same whole have to overlap. Some plus some gives you nothing.", ch:5, sec:3},
     {r:"Watch the size of the words.", why:"If the facts say most, the answer can't say all. Some can't become most, can can't become will, and after can't become because.", ch:9, sec:2},
     {r:"Check the when and the then.", why:"A principle needs both halves to land: its condition met by the facts, its result matching the conclusion.", ch:6, sec:0},
-    {r:"A rule only decides what it reaches.", why:"It says what happens when its condition is met. It's silent about every other case.", ch:6, sec:1}
+    {r:"A rule only decides what it reaches.", why:"It says what happens when its condition is met. It's silent about every other case.", ch:6, sec:1},
+    {r:"Chain the ifs.", why:"If A then B, and if B then C, gives you if A then C. So no C means no A. Line up the arrows before you read the choices.", ch:5, sec:3},
+    {r:"Unless means if not.", why:"A unless B says that if B doesn't happen, A does. Turn it into an if before you chain it.", ch:5, sec:3}
   ],
   rc:[
     {group:"Reading the passage", note:"Four sets of five to eight questions, one of them usually a pair of shorter passages.", items:[
       {name:"Read it as an argument", d:"Who's talking, what do they claim, and what is each paragraph for? Stay inside the page.", ch:1, sec:4},
-      {name:"Keep the voices apart", d:"What a witness said, what someone wrote down, and what someone else concluded are three different things.", ch:5, sec:3},
+      {name:"Keep the voices apart", d:"What a witness said, what someone wrote down, and what someone else concluded are three different things.", ch:5, sec:4},
       {name:"Court opinions", d:"The main point is the decision. One reason along the way isn't the point, and the order of issues may be the lawyer's.", ch:9, sec:3},
       {name:"Comparative passages", d:"Before the questions, say in one sentence how the two passages relate.", ch:7, sec:3}
     ]},
     {group:"Question types", items:[
       {name:"Main idea and primary purpose", d:"The whole passage at its own scope. Purpose is the main idea as a verb: argue, describe, challenge.", ch:1, sec:4},
       {name:"Specific detail", where:"According to the passage", d:"The answer is in a line you can point to. Go back and find it every time.", ch:2, sec:3},
-      {name:"Inference", where:"Suggests, implies, can be inferred", d:"A line from the passage plus one small step. If you have to argue for it, it's too far.", ch:5, sec:3},
+      {name:"Inference", where:"Suggests, implies, can be inferred", d:"A line from the passage plus one small step. If you have to argue for it, it's too far.", ch:5, sec:4},
       {name:"Meaning in context", d:"What the word means in that sentence, not in the dictionary.", ch:9, sec:3},
-      {name:"Function and organization", d:"Why a piece is there, and the order of the jobs the paragraphs do. Shuffled order is the trap.", ch:3, sec:3},
-      {name:"Author's attitude", d:"Read word choice, hedging and emphasis. Extreme attitudes are the usual trap.", ch:3, sec:3},
+      {name:"Function and organization", d:"Why a piece is there, and the order of the jobs the paragraphs do. Shuffled order is the trap.", ch:3, sec:4},
+      {name:"Author's attitude", d:"Read word choice, hedging and emphasis. Extreme attitudes are the usual trap.", ch:3, sec:4},
       {name:"Would agree with", d:"Stated, or very nearly stated, by the author or the person named.", ch:4, sec:3},
       {name:"Strengthen or weaken a passage claim", d:"Underline the claim the stem names before you read the choices.", ch:4, sec:3},
       {name:"Application and principle", d:"Run the new case through the passage's own conditions, one at a time. Don't add a condition or drop one.", ch:6, sec:4},
@@ -123,8 +137,34 @@ window.HALCYON_REVIEW.lsat={
     {topic:"Parallel reasoning vs. parallel flaw", l:["Parallel reasoning","Parallel flaw"], a:"Same structure, good or bad. Match the bones.", b:"Same mistake. Name the flaw first, then find its twin.", ch:7, sec:1},
     {topic:"Principle that justifies vs. principle the facts support", l:["Justify","Supported by the facts"], a:"Broad is fine, if it covers the case and reaches the conclusion.", b:"A rule that reaches far past the case says more than the facts show.", ch:6, sec:0},
     {topic:"Share vs. count", l:["Share","Count"], a:"A part of a whole. Says nothing about how many until you know the whole.", b:"How many. Says nothing about how big a part until you know the whole.", ch:8, sec:0},
-    {topic:"Detail vs. inference", l:["Detail","Inference"], a:"What the passage says. Point to the line.", b:"What it supports without saying. The line plus one step.", ch:5, sec:3},
+    {topic:"Detail vs. inference", l:["Detail","Inference"], a:"What the passage says. Point to the line.", b:"What it supports without saying. The line plus one step.", ch:5, sec:4},
     {topic:"Main idea vs. primary purpose", l:["Main idea","Primary purpose"], a:"What the passage says, as a whole.", b:"What the author is trying to do with it, as a verb.", ch:1, sec:4},
     {topic:"A reason to lie vs. a lie", l:["Has a reason to lie","Is lying"], a:"Weakens an argument that leans on the witness.", b:"Doesn't follow. Getting from one to the other is a flaw.", ch:11, sec:0}
+  ],
+  lawhub:[
+    {r:"Get a free LawHub account.", why:"LawHub is LSAC's own prep site. It runs past tests, which LSAC calls PrepTests, in the same screen you'll use on test day, with flags, highlighting and the question bar. A free account comes with four full PrepTests. Source: the Official LSAT Practice Tests page on lsac.org, checked November 6, 2026.", ch:1, sec:4},
+    {r:"LawHub Advantage is the paid library.", why:"It's a yearly subscription that opens a much bigger library of full PrepTests, plus some law school tools. The price changes, so check lsac.org before you buy. Buy it once you've used the free tests, not before.", ch:1, sec:4},
+    {r:"Take them like the real thing.", why:"Time every section at 35 minutes and take the 10 minute break after section two. Treat every section as scored, since on test day you won't know which one isn't. Untimed work is for review, not for tests.", ch:9, sec:0},
+    {r:"LawHub tests are already in this format.", why:"Logic games left the test in August 2024, and LawHub says every PrepTest in its LSAT Prep library now follows the current format. Games only turn up in old printed PrepTest books. If you use one of those, leave the games section out and take the others.", ch:9, sec:0},
+    {r:"Check which format your test date uses.", why:"LSAC says the test changes with the August 2027 test. Reading Comprehension comes first, 40 questions in 52 minutes, then two Logical Reasoning sections of 32 questions in 45 minutes each. The unscored questions sit inside each section, and there's a break after each of the first two. Tests through June 2027 keep the four section format this book uses. LSAC says practice tests in the new format come to LawHub in February 2027. Source: The LSAT Will Look a Little Different Starting August 2027, on lsac.org, checked November 6, 2026.", ch:9, sec:0}
+  ],
+  plan:[
+    {r:"Week 1: chapters 1 and 2, then a starting score.", why:"Read and decide your way through the first two chapters and their quizzes. At the end of the week, take one free PrepTest on LawHub, timed, without studying for it. It's a starting line, not a verdict. Start a log of your misses the same day.", ch:1, sec:0},
+    {r:"Weeks 2 and 3: chapters 3 and 4.", why:"Flaws, then strengthen and weaken, the two biggest families on the test. Do every quiz item, and log each miss by type and by the trap that caught you.", ch:3, sec:0},
+    {r:"Weeks 4 and 5: chapters 5 and 6, and your first timed sections.", why:"Inference and principles. Take the practice test one section at a time in exam mode: a Logical Reasoning section in week 4 and the Reading Comprehension section in week 5. Blind review each one before you look at the score.", ch:5, sec:0},
+    {r:"Weeks 6 and 7: chapters 7 and 8, then full sitting 1.", why:"Parallel reasoning, paired passages and numbers. At the end of week 7, take full sitting 1 straight through, break and all. Blind review it the next day.", ch:7, sec:0},
+    {r:"Week 8: chapter 9 and a second PrepTest.", why:"Chapter 9 is test day: pacing, the break, guessing and the writing. Then take a second free PrepTest under real timing. Compare it with your first one by question type, not only by score.", ch:9, sec:0},
+    {r:"Weeks 9 and 10: chapters 10 to 12, sittings 2 and 3.", why:"Finish the book. Take full sitting 2 at the end of week 9 and full sitting 3 at the end of week 10, and blind review each. By now your log should name your two or three weakest types. Reread those lessons.", ch:10, sec:0},
+    {r:"Weeks 11 to 13: PrepTests, one or two a week.", why:"Use the last two free PrepTests, then LawHub Advantage if you want more. One full test a week at first, two a week near the end, each followed by a full blind review. Reviewing a test should take about as long as taking it. Between tests, work your weakest types with the chapter quizzes.", ch:9, sec:0},
+    {r:"Test week: keep it light.", why:"One timed section a day at most, and nothing the day before. Get LSAT Argumentative Writing done once it opens, about eight days before your test, so it isn't hanging over you. Check LSAC's test day rules and your ID one more time.", ch:9, sec:4},
+    {r:"Less time each week? Keep the order.", why:"Stretch the chapters over more weeks if you have to. Keep the timed sittings and PrepTests in the same order, and don't skip the review. The review is where most of the points come from.", ch:1, sec:4}
+  ],
+  blind:[
+    {r:"Flag what you're unsure of as you go.", why:"During a timed section, flag every question you weren't sure of, even the ones you think you got. When time runs out, don't look at any answers yet.", ch:8, sec:5},
+    {r:"Redo the flagged ones with no clock.", why:"Before you score anything, go back to each flagged question and work it again, slowly. Write one line on why your answer is right and why the strongest wrong one is wrong. Change an answer only if you can say why.", ch:8, sec:5},
+    {r:"Score it twice.", why:"Score your timed answers and your blind review answers separately. The timed score is where you are. The blind review score is what you can do with time to think. A big gap points to speed or nerves. A low score on both points to a skill you still need.", ch:8, sec:5},
+    {r:"Study every miss, and every lucky guess.", why:"For each question you still missed, and each one you got right by guessing, work out why the right answer is right and why yours is wrong. Read the explanation only after you've tried.", ch:8, sec:5},
+    {r:"Log it by type and by trap.", why:"Write down the question type, the trap that caught you, such as too strong, reversed or off topic, and what you'll do next time. After a few tests, the log tells you which lessons to reread.", ch:8, sec:5},
+    {r:"Try old misses again later.", why:"A week or two later, work the questions you missed again, cold. If you miss one again, it goes back in the log.", ch:8, sec:5}
   ]
 };
