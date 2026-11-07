@@ -17,6 +17,10 @@ const NOPT=course.options||4;
 let bad=0;const err=m=>{console.log("  ERROR "+m);bad++};
 const dash=t=>/[–—]/.test(t);
 const TELLS=/\b(delve|tapestry|it's worth noting|in today's fast.paced)\b/i;
+// a figure or picture option (engine.js figChart, figs.js): one <prop>; the picture kinds (dials, plane, blocks, xytable) checked by figs.js
+new Function('window',fs.readFileSync('figs.js','utf8'))(window);
+function figErr(label,f,option){const m=/^<prop\s+((?:[^>"]|"[^"]*")*)>([\s\S]*)<\/prop>$/.exec(f||"");if(!m)return err(`${label} is not one <prop>`);const a={};m[1].replace(/(\w+)="([^"]*)"/g,(_,k,v)=>a[k]=v);
+  if(a.type==="chart"&&window.HalcyonFigs.KINDS.includes(a.kind))window.HalcyonFigs.check(a,{option}).forEach(e=>err(`${label}: ${e}`));else if(option)err(`${label}: a picture option is a chart of kind ${window.HalcyonFigs.KINDS.join(", ")}`)}
 function lenCheck(label,texts,right){const L=texts.map(t=>t.length);const others=L.filter((_,k)=>k!==right);
   if(L[right]>1.12*Math.max(...others))err(`${label}: right answer much longer (${L.join("/")})`);
   return {longest:L[right]>Math.max(...others),shortest:L[right]<Math.min(...others)}}
@@ -42,9 +46,10 @@ for(const c of data.full){
   if(lb>4)err(`best answer longest in ${lb}/${(c.scenes||[]).length}`); if(lb<1)err(`best answer never longest`); if(sb<2)err(`best answer shortest in only ${sb}/${(c.scenes||[]).length}`);if(sb>4)err(`best answer shortest in ${sb}/12 (reverse tell)`);
   const q=c.quiz||[];const NQ=q.length;if(NQ<15||NQ>20)err(`quiz=${NQ} (want 15 to 20)`);
   const pos=new Array(NOPT).fill(0);let ql=0,qs=0;const lv={RE:0,AP:0,AN:0};const qd={};
-  q.forEach((x,i)=>{if(x.opts.length!==NOPT||x.a<0||x.a>=NOPT)err(`quiz ${i}`);pos[x.a]++;if(!TASKS.has(x.task))err(`quiz ${i} task ${x.task}`);else if(domOf(x.task)!==x.domain)err(`quiz ${i} domain`);
+  q.forEach((x,i)=>{const pic=x.opts.every(o=>/^<prop\s/.test(o)); // picture options (figs.js): Instrument Comprehension has four, and lengths mean nothing
+    if((x.opts.length!==NOPT&&!(pic&&x.opts.length===4))||x.a<0||x.a>=x.opts.length)err(`quiz ${i}`);if(x.fig!==undefined)figErr(`quiz ${i} fig`,x.fig,false);if(pic)x.opts.forEach((o,k)=>figErr(`quiz ${i} option ${k}`,o,true));pos[x.a]++;if(!TASKS.has(x.task))err(`quiz ${i} task ${x.task}`);else if(domOf(x.task)!==x.domain)err(`quiz ${i} domain`);
     if(course.levels){if(!lv.hasOwnProperty(x.level))err(`quiz ${i} level`);else lv[x.level]++}qd[x.domain]=(qd[x.domain]||0)+1;
-    const r=lenCheck(`quiz ${i}`,x.opts,x.a);if(r.longest)ql++;if(r.shortest)qs++;prose.push(x.q,...x.opts,x.why)});
+    const r=pic?{}:lenCheck(`quiz ${i}`,x.opts,x.a);if(r.longest)ql++;if(r.shortest)qs++;prose.push(x.q,...x.opts,x.why)});
   if(Math.max(...pos)>Math.ceil(NQ/NOPT)+2||Math.min(...pos)<Math.floor(NQ/NOPT)-2)err(`quiz answer positions ${pos}`); if(ql>Math.ceil(NQ/3))err(`quiz right answer longest in ${ql}/${NQ}`);if(qs>Math.floor(NQ*0.4))err(`quiz right answer shortest in ${qs}/${NQ}`);
   // shared passages: every passage id a quiz item names exists, each passage's items are consecutive, and every passage is used
   {const P=c.passages||{};const runs={};let last=null;q.forEach((x,i)=>{if(x.passage!==undefined){if(!P[x.passage])err(`quiz ${i} passage ${x.passage} not defined`);

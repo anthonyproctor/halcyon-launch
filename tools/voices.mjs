@@ -1,6 +1,10 @@
 // Split a story paragraph into narrator and character segments using <span class="said" data-who="X">.
 // v2 props: a doc prop with kind="vlog" is read as a short header in the paragraph's voice, then the transcript in the voice of its `from`
 // (Ada); kind="consolelog" is a short header, then the log in Ruth's voice. Every other prop reads exactly as before.
+import {readFileSync} from 'fs';
+// picture figures (figs.js, AFOQT 2026-11-07: dials, plane, blocks, xytable) speak their readings, the same words as the svg's aria-label, never the markup.
+// figs.js loads only when such a figure shows up, so other books read exactly as before
+let FIGS=null;const figSay=a=>{if(!/^(dials|plane|blocks|xytable)$/.test(a.kind||''))return null;if(!FIGS){const w={};new Function('window',readFileSync(new URL('../figs.js',import.meta.url),'utf8'))(w);FIGS=w.HalcyonFigs}return FIGS.say(a)};
 const MON={JAN:'January',FEB:'February',MAR:'March',APR:'April',MAY:'May',JUN:'June',JUL:'July',AUG:'August',SEP:'September',SEPT:'September',OCT:'October',NOV:'November',DEC:'December'};
 const KEEP=new Set(['FD','AR','ARA','LOS','UNR','VLV','PM','PMI','PMO','ECO','EVM','CPI','SPI','TCPI','EAC','ETC','AI','CEO','ISS','NASA','SOW','WBS','RACI']); // acronyms Kokoro should spell
 const tc=x=>String(x||'').toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
@@ -39,6 +43,7 @@ function propSpeech(html){return qa(html).replace(/<prop\s+([^>]*)>([\s\S]*?)<\/
   if(a.type==='chat')return `A message from ${a.from||'someone'}. ${b}`;
   if(a.type==='text')return `A text from ${a.from||'someone'}. ${b}`;
   if(a.type==='doc')return `${a.title?a.title+'. ':''}${b}`;
+  if(a.type==='chart'){const fs=figSay(a);if(fs!==null)return `${a.title?a.title+'. ':''}${fs}${b.trim()?' '+b:''}`}
   if(a.type==='chart')return `${a.title?a.title+'. ':''}${b}`;
   return b})}
 const SIGN_STOP=new Set('The Then That This There They Their She Her His Over After And But When Where What Sent Subject Monday Tuesday Wednesday Thursday Friday Saturday Sunday January February March April May June July August September October November December Mrs Miss'.split(' '));

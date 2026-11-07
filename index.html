@@ -432,6 +432,23 @@ h2 .prog{font-family:var(--ui);font-size:13px;font-weight:400;margin-left:6px}
 .cf0{fill:var(--good)}.cf1{fill:var(--accent)}.cf2{fill:var(--mid)}.cf3{fill:var(--muted);opacity:.55}.legend .cf0::before{background:var(--good)}.legend .cf1::before{background:var(--accent)}.legend .cf2::before{background:var(--mid)}.legend .cf3::before{background:var(--muted);opacity:.55}.legend [class^=cf]::before{height:10px;width:12px}
 .flim{stroke:var(--bad);stroke-width:2.5;stroke-dasharray:9 6}.fmean{stroke:var(--muted);stroke-width:2}.fline{fill:none;stroke:var(--accent);stroke-width:2;opacity:.6}.fdot{fill:var(--accent)}
 .fnode{fill:var(--soft);stroke:var(--accent);stroke-width:2.5}.farrow{stroke:currentColor;stroke-width:2.5;opacity:.75}.fhead{fill:currentColor;opacity:.75}
+/* picture figures (figs.js, AFOQT 2026-11-07): dials, aircraft, block piles, X and Y tables. --plhi/--pllo shade the aircraft, --fb1..3 the block faces */
+:root{--plhi:#dfe9ef;--pllo:#24485c;--fb1:#fbfaf7;--fb2:#d8d2c5;--fb3:#b3ab9b}
+:root[data-theme="dark"]{--plhi:#d3e5ef;--pllo:#2f5266;--fb1:#596069;--fb2:#3f454d;--fb3:#2d3238}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--plhi:#d3e5ef;--pllo:#2f5266;--fb1:#596069;--fb2:#3f454d;--fb3:#2d3238}}
+.fpic{color:var(--ink)}.fk-dials{max-width:520px;margin:0 auto}.fk-blocks{max-width:420px;max-height:340px;margin:0 auto}.pchart svg.fk-blocks{width:100%}
+.fsky{fill:var(--accent-soft)}.fgnd{fill:var(--mid-soft)}.fhz{stroke:var(--ink);stroke-width:2.5}.fhz.fthin{stroke-width:1.5;opacity:.7}.fhzl{stroke-width:3}
+.fcase{fill:none;stroke:var(--ink);stroke-width:3}.fcard{fill:var(--page)}.fidx{fill:var(--ink)}.fptr{fill:var(--bad)}.facs{fill:none;stroke:var(--bad);stroke-width:6;stroke-linejoin:round;stroke-linecap:round}.facd{fill:var(--bad)}
+.fndl{fill:var(--accent);stroke:var(--ink);stroke-width:1.5}.fchart text.fdl{font-weight:700;font-size:22px}
+.fpl{stroke:var(--ink);stroke-width:1.1;stroke-linejoin:round;stroke-opacity:.75}.fcan{fill:var(--ink)}.ffin{stroke-width:2.4;stroke-opacity:1}.fnoz{fill:var(--page);stroke-width:2;stroke-opacity:1}
+.fbt{fill:var(--fb1)}.fbr{fill:var(--fb2)}.fbl{fill:var(--fb3)}.fk-blocks polygon{stroke:var(--ink);stroke-width:2;stroke-linejoin:round}.fbn{fill:var(--page);stroke:var(--accent);stroke-width:2.5}.fchart text.fbnt{font-weight:700;font-size:19px}
+.xyt{max-height:70vh;overflow:auto;margin:6px 0 0;border:1px solid var(--line)}.xyt table{font:12px/1 var(--mono);min-width:0;border-collapse:separate;border-spacing:0}.xyt th,.xyt td{padding:4px 3px;text-align:center;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:24px}
+.xyt thead th{position:sticky;top:0;z-index:1;background:var(--soft)}.xyt tbody th{position:sticky;left:0;background:var(--soft)}.xyt thead th.xyc{left:0;z-index:2;white-space:nowrap}.xyt td{background:var(--page)}
+.qpic{display:inline-block;vertical-align:middle;width:150px;max-width:100%}.qpic svg{display:block;width:100%;height:auto}
+.qopt:has(.qpic){display:inline-flex;flex-wrap:wrap;align-items:center;width:calc(50% - 8px);margin:4px;border:1px solid var(--line);vertical-align:top}.qopt .qpic{flex:1 0 100%;width:auto;max-width:200px}
+.qopt:has(.qpic):has(input:checked){border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+@media (min-width:760px){.qopt:has(.qpic){width:calc(25% - 8px)}}
+.choice .qpic{width:160px}
 .qfig .pdoc table{border-collapse:collapse;width:100%;font-family:var(--ui);font-size:14.5px}.qfig .pdoc th,.qfig .pdoc td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
 .ruthtake{margin:10px 0}.ruthtake summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:14px}
 .storyt{margin-right:6px}.ambvol{width:70px;height:24px;margin-right:8px}
@@ -669,6 +686,7 @@ if(location.protocol==="https:"&&location.hostname!=="localhost"){var vs=documen
 <script src="mock/form2_process.js"></script>
 <script src="mock/form2_business.js"></script>
 <script src="order.js"></script>
+<script src="figs.js"></script>
 <script src="courses.js"></script>
 <script src="upcoming.js"></script>
 <script src="lab.js"></script>
