@@ -57,7 +57,7 @@
     {"ch": 2, "sec": 1, "h": "Verbal Analogies: name the relationship", "auto": true}
    ],
    "status": "practiced",
-   "depth": 34
+   "depth": 240
   },
   {
    "id": "AFOQT.AR.rate-time-distance",
@@ -207,10 +207,11 @@
     "rectangular (box|container|tank)"
    ],
    "refs": [
+    {"ch": 2, "sec": 5, "h": "Word problems with shapes", "auto": true},
     {"ch": 6, "sec": 9, "h": "Area, perimeter and volume", "auto": true}
    ],
-   "status": "explained",
-   "depth": 43
+   "status": "independently assessed",
+   "depth": 264
   },
   {
    "id": "AFOQT.AR.format",
@@ -232,12 +233,13 @@
     "eliminate answer choices"
    ],
    "refs": [
+    {"ch": 2, "sec": 5, "h": "Word problems with shapes", "auto": true},
     {"ch": 4, "sec": 4, "h": "Warmups in test order", "auto": true},
     {"ch": 5, "sec": 0, "h": "One sentence under every rate problem", "auto": true},
     {"ch": 6, "sec": 0, "h": "Twenty five in twenty two", "auto": true}
    ],
    "status": "practiced",
-   "depth": 225
+   "depth": 260
   },
   {
    "id": "AFOQT.WK.synonyms",
@@ -258,10 +260,11 @@
     "meaning of the word"
    ],
    "refs": [
-    {"ch": 1, "sec": 3, "h": "Words: analogies and synonyms", "auto": true}
+    {"ch": 1, "sec": 3, "h": "Words: analogies and synonyms", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Word Knowledge: take it apart", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 17
+   "depth": 167
   },
   {
    "id": "AFOQT.WK.word-parts",
@@ -281,9 +284,11 @@
     "word parts?",
     "etymolog(y|ies)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Word Knowledge: take it apart", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 293
   },
   {
    "id": "AFOQT.WK.format",
@@ -302,9 +307,11 @@
     "first instinct",
     "don'?t (dwell|linger)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Word Knowledge: take it apart", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 129
   },
   {
    "id": "AFOQT.MK.arithmetic",
@@ -378,10 +385,11 @@
     "two equations"
    ],
    "refs": [
+    {"ch": 3, "sec": 5, "h": "Two equations, two unknowns", "auto": true},
     {"ch": 6, "sec": 4, "h": "Equations and inequalities", "auto": true}
    ],
    "status": "practiced",
-   "depth": 50
+   "depth": 190
   },
   {
    "id": "AFOQT.MK.inequalities",
@@ -522,9 +530,11 @@
     "topic sentence",
     "title for the passage"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 3, "sec": 1, "h": "The kinds of questions", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 176
   },
   {
    "id": "AFOQT.RC.inference",
@@ -544,9 +554,11 @@
     "based (only )?on the passage",
     "most likely agree"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 3, "sec": 1, "h": "The kinds of questions", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 173
   },
   {
    "id": "AFOQT.RC.detail-and-context",
@@ -565,9 +577,11 @@
     "stated in the passage",
     "specific details?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 3, "sec": 1, "h": "The kinds of questions", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 168
   },
   {
    "id": "AFOQT.RC.format",
@@ -615,7 +629,7 @@
     {"ch": 4, "sec": 1, "h": "Integrity items", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 31
+   "depth": 245
   },
   {
    "id": "AFOQT.SJ.leadership",
@@ -662,9 +676,11 @@
     "workload",
     "delegat(e|ing|ion)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "Resource management items", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 287
   },
   {
    "id": "AFOQT.SJ.communication",
@@ -705,9 +721,11 @@
     "propose (a|an) (change|improvement)",
     "creative solution"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 4, "sec": 6, "h": "Innovation items", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 281
   },
   {
    "id": "AFOQT.SJ.mentoring",
@@ -726,9 +744,11 @@
     "professional development",
     "teach(ing)? them"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 4, "sec": 7, "h": "Mentoring items", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 216
   },
   {
    "id": "AFOQT.SJ.format",
@@ -777,10 +797,11 @@
     "work style"
    ],
    "refs": [
+    {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true},
     {"ch": 5, "sec": 5, "h": "The Self-Description Inventory", "auto": true}
    ],
    "status": "explained",
-   "depth": 75
+   "depth": 109
   },
   {
    "id": "AFOQT.SDI.format",
@@ -803,7 +824,7 @@
     {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true}
    ],
    "status": "practiced",
-   "depth": 7
+   "depth": 122
   },
   {
    "id": "AFOQT.PS.mechanics",
@@ -1065,9 +1086,11 @@
     "accuracy first",
     "finger on"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 1, "sec": 5, "h": "Tables and rates", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 224
   },
   {
    "id": "AFOQT.IC.bank-and-pitch",
@@ -1225,7 +1248,7 @@
     "system(atic)? count"
    ],
    "refs": [],
-   "status": "absent",
+   "status": "mentioned",
    "depth": 0
   },
   {
