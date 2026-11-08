@@ -94,7 +94,8 @@ test("tap to zoom: full size, Zoom in to drag around, Escape closes and focus go
 test("a practice test item shows its figure, zooms, and the review after checking shows it again", async ({ page }) => {
   page.on("dialog", d => d.accept());
   await toMock(page);
-  const f = page.locator("#page .qfig figure.pimg");
+  // Form 1 has real figures of its own since 11/08, so pick out the one injected here
+  const f = page.locator("#page .qfig figure.pimg").filter({ has: page.locator(`img[alt="${WC.alt}"]`) });
   await expect(f).toHaveCount(1);
   await expect(f.locator("img")).toHaveAttribute("alt", WC.alt);
   expect(await loaded(f.locator("img"))).toBe(WC.width);
@@ -107,8 +108,9 @@ test("a practice test item shows its figure, zooms, and the review after checkin
   await page.locator("#submitnow").click();
   await expect(page.locator("#page h1")).toContainText("percent");
   await page.locator("#page details summary").first().click();
-  const rv = page.locator("#page details .qitem figure.pimg");
-  await expect(rv).toHaveCount(1);
+  // Air6 uses figure 36 too since 11/08, so the review holds two; the injected item 1 comes first
+  const rv = page.locator("#page details .qitem figure.pimg").filter({ has: page.locator(`img[alt="${WC.alt}"]`) }).first();
+  await expect(rv).toBeVisible();
   await expect(rv.locator("img")).toHaveAttribute("alt", WC.alt);
   await rv.locator(".pzoom").click();
   await expect(page.getByRole("dialog", { name: "Figure 36. Crosswind Component Graph" })).toBeVisible();

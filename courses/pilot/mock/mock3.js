@@ -392,9 +392,9 @@ C.mock.push({ part:`M3: Practice exam 3`, questions:[
   task:`VII`, domain:`Airport and flight` },
 
 { q:`A VFR pilot who has blundered into cloud wants to turn back the way they came. According to the AFH, what is the most bank they should use?`,
-  opts:[`About 30°`,
+  opts:[`About 30° of bank`,
         `No more than 10°`,
-        `About 45°`],
+        `About 45° of bank`],
   a:1, why:`AFH ch 18: turns are the most dangerous maneuver for a pilot without instrument training, because the urge to overcontrol leads to steep banks and a graveyard spiral. Use the smallest practical bank, never more than 10°, and keep the wings level on the attitude indicator between small turns if the heading change is large.`,
   task:`VIII`, domain:`Airport and flight` },
 
@@ -415,7 +415,7 @@ C.mock.push({ part:`M3: Practice exam 3`, questions:[
   task:`VI`, domain:`Navigation and emergencies` },
 
 { q:`You've passed over a VOR and are now flying outbound, heading 270, but you left the OBS set to 090. What will the CDI do?`,
-  opts:[`Work normally, pointing toward the course`,
+  opts:[`Work normally, with the needle pointing toward the course`,
         `Center and show OFF until you reset it`,
         `Show reverse sensing, pointing away from the course`],
   a:2, why:`With 090 set while you fly 270, the flag reads TO even though you're flying away from the station, and the needle works backward: steering toward it takes you farther off course. Set the OBS to 270, close to your heading, and you get a FROM flag and normal sensing (PHAK ch 16).`,

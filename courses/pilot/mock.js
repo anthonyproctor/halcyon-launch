@@ -1,6 +1,8 @@
 // Private Pilot course "Danny's Logbook": practice exam (60 questions, three options, spread the way the PAR knowledge test usually runs; the FAA publishes no area weights).
 // Settings are neutral and fictional (fictional airports and airplanes), not the Jordan story. Figures are typed: into the stem, or (2026-10-25) as a
-// fig prop the engine draws above the stem (figHTML). There's no image figure type yet, so real 8080-2H pictures would need engine work.
+// fig prop the engine draws above the stem (figHTML). 2026-11-08 figure pass: the items that typed out a chart reading now show the real
+// FAA-CT-8080-2H figure (image figures, courses/pilot/figs): the ONX data block (fig 20), the area 2 MEF (fig 22), density altitude (fig 8)
+// and wind components (fig 36); the airspeed indicator item uses fig 4, added the same day. Data block moved to ONX after the exam check.
 // 2026-10-25 swaps for coverage and quiz twins (and two Area VIII items, IFH ch 7, for a light gun and a precession item): 43.3(g), 43.7(f), 43.9, Part 43 App. A; 61.31(f) and (i); 91.119(b); AIM 2-1-6 (RWSL), 4-3-11 (LAHSO), 8-1-6.
 // Every rule and number below was checked on 2026-10-10 against these sources (all read directly):
 //   14 CFR part 61: https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?part=61  (61.23, 61.56, 61.57, 61.113)
@@ -91,7 +93,7 @@ C.mock.push({ part:`Preflight`, questions:[
 { q:`A TAF contains <code>TEMPO 1421/1424 3SM TSRA BKN020CB</code>. What does the TEMPO group mean?`,
   opts:[`A 30 percent chance of thunderstorms between 2100Z and 2400Z on the 14th`,
         `A lasting change to these conditions starting at 2100Z on the 14th`,
-        `Temporary changes, each lasting 1 hour or less, covering under half of 2100Z to 2400Z`],
+        `Brief changes, under an hour each, for less than half of 2100Z to 2400Z`],
   a:2, why:`AWH 28B ch 27: TEMPO marks temporary fluctuations that are likely (over 50 percent), last 1 hour or less each time, and in total cover less than half of the stated period. A 30 percent chance would be coded PROB30, and a lasting change would start with FM. Thunderstorms in a TEMPO group are still a reason to plan around that window.`,
   task:`I.C`, domain:`Preflight` },
 
@@ -151,20 +153,24 @@ C.mock.push({ part:`Preflight`, questions:[
   a:1, why:`91.159 uses magnetic course. 185 minus 12 (east is least) = 173° magnetic, which falls in 0 to 179°, so fly an odd thousand plus 500, such as 7,500. 6,500 comes from using the true course of 185°, and 7,000 drops the extra 500 feet that VFR altitudes require.`,
   task:`I.D`, domain:`Preflight` },
 
-{ fig:`<prop type="doc" title="Figure: airport data block on a sectional chart, described">EASTFIELD (EFD)<br>3125 L 48 122.7, with a C in a circle after 122.7<br>The airport symbol is magenta, and no tower frequency is listed.</prop>`,
-  q:`Using the figure, on what frequency should a pilot self-announce at Eastfield, and what is its field elevation?`,
-  opts:[`122.7, and 4,800 feet MSL`,
-        `122.7, and 3,125 feet MSL`,
-        `121.5, and 3,125 feet MSL`],
-  a:1, why:`In a sectional's airport data block, the first number on that line is the field elevation in feet MSL (3,125), L means lighting from sunset to sunrise, the next number is the longest runway in hundreds of feet (4,800 feet), and a frequency followed by a C in a circle is the CTAF. 121.5 is the emergency frequency.`,
+// 2026-11-08 figure pass: was a typed data block ("described"); now FAA figure 20. Reads: CURRITUCK CO RGNL (ONX), north of area 3:
+// AWOS-3 119.775, 18 *L 55 122.9 C. (Moved off Suffolk, near area 2, after the exam check: C9.13 asks CPK's CTAF beside it.)
+{ fig:`<prop type="img" src="courses/pilot/figs/fig-sectional-20.webp" title="Figure 20. Sectional Chart Excerpt" alt="FAA figure 20, sectional chart excerpt of a coastal area with airports, airspace boundaries and numbered red markers at the points the questions ask about" w="1600" h="2128"></prop>`,
+  q:`Using the figure, what is the field elevation of Currituck County Regional (ONX), north of area 3, and on what frequency do you self-announce there?`,
+  opts:[`5,500 feet MSL, on 122.9`,
+        `18 feet MSL, on 122.9`,
+        `18 feet MSL, on 119.775`],
+  a:1, why:`ONX's data block reads 18 *L 55 122.9 with a C in a circle. The first number is the field elevation, 18 feet MSL. *L means lighting with limits, 55 is the longest runway in hundreds of feet (5,500 feet), and the frequency with the C is the CTAF, 122.9. 119.775, on the line above, is the AWOS-3 you listen to for weather.`,
   task:`I.E`, domain:`Preflight` },
 
-{ fig:`<prop type="doc" title="Figure: sectional chart grid square, described">In the middle of a grid square, a large 6 followed by a smaller 2.</prop>`,
-  q:`What does the number in the figure tell a pilot?`,
-  opts:[`The highest obstacle in the square is 6,200 feet AGL`,
-        `The maximum elevation figure is 6,200 feet MSL`,
-        `The Class B floor in the square is 6,200 feet MSL`],
-  a:1, why:`A large number followed by a smaller one is the maximum elevation figure, in thousands and hundreds of feet MSL: 6,200 feet MSL. It's the highest known terrain or obstacle in the quadrant plus a margin. It isn't AGL, and Class B floors are blue fractions inside solid blue lines.`,
+// 2026-11-08 figure pass: was a typed grid square ("a large 6 followed by a smaller 2"); now FAA figure 22. Reads: quadrangle with area 2
+// (bounded by the ticked lines at about x 666 and y 844 on the 1600 px image) holds the blue MEF 60 and a 5661 spot elevation by area 2.
+{ fig:`<prop type="img" src="courses/pilot/figs/fig-sectional-22.webp" title="Figure 22. Sectional Chart Excerpt" alt="FAA figure 22, sectional chart excerpt of hilly terrain around a large lake with small airports, a contour interval legend and numbered red markers at the points the questions ask about" w="1600" h="2128"></prop>`,
+  q:`Using the figure, a hilltop beside area 2 is marked 5661. Why is the maximum elevation figure for that quadrangle higher than the hilltop?`,
+  opts:[`It's in feet AGL, and the hilltop is in feet MSL`,
+        `It adds a margin above the highest terrain or obstacle`,
+        `It's the floor of the Class E airspace over the hills`],
+  a:1, why:`The big blue 60 in that quadrangle is the maximum elevation figure, 6,000 feet MSL. It's the highest known terrain or obstacle in the quadrangle, rounded up with a margin for obstacles that might not be charted, so it sits above the 5,661 foot spot elevation. Both numbers are MSL, and the MEF says nothing about airspace.`,
   task:`I.E`, domain:`Preflight` },
 
 { q:`A coastal airport reports a temperature of 12°C and a dewpoint of 11°C, with a 12 knot onshore wind blowing in from cold water. Which type of fog is most likely?`,
@@ -182,18 +188,20 @@ C.mock.push({ part:`Preflight`, questions:[
   task:`I.D`, domain:`Preflight` },
 
 { q:`Approaching Class C airspace, you call the approach controller. The reply is "Aircraft calling Millbrook Approach, stand by." What should you do?`,
-  opts:[`Remain outside the Class C until the controller answers using your call sign`,
+  opts:[`Stay outside the Class C until the controller uses your call sign`,
         `Enter the Class C, since the controller has answered your call`,
         `Enter the Class C, but stay below 2,500 feet AGL until called back`],
   a:0, why:`AIM 3-2-4: if the controller responds without using your aircraft identification, two way communication has not been established and you may not enter (14 CFR 91.130(c)). An answer without your call sign could have been meant for anyone. There's no altitude exception that lets you in early.`,
   task:`I.E`, domain:`Preflight` },
 
-{ fig:`<prop type="doc" title="Figure: density altitude chart, read off as a table">Pressure altitude 4,000 ft: 10°C 4,400 ft · 20°C 5,600 ft · 30°C 6,800 ft<br>Pressure altitude 5,000 ft: 10°C 5,600 ft · 20°C 6,800 ft · 30°C 8,000 ft<br>Pressure altitude 6,000 ft: 10°C 6,800 ft · 20°C 8,000 ft · 30°C 9,200 ft</prop>`,
-  q:`Field elevation 5,500 feet, altimeter setting 30.42, temperature 30°C. Using the figure, what is the density altitude?`,
-  opts:[`About 9,200 feet`,
-        `About 8,000 feet`,
-        `About 5,000 feet`],
-  a:1, why:`Pressure altitude = 5,500 + (29.92 minus 30.42) × 1,000 = 5,500 minus 500 = 5,000 feet. On the chart, 5,000 feet at 30°C reads 8,000 feet. 9,200 adds the 500 foot correction instead of subtracting it and reads the 6,000 foot line, and 5,000 is only the pressure altitude.`,
+// 2026-11-08 figure pass: was a density altitude chart typed out as a table; now FAA figure 8. Reads: 30.4 -> minus 440, so PA 5,060;
+// 30°C (86°F) at that line reads about 7,700 ft; PA 5,940 (sign error) reads about 8,800 (pixel check, lines fit y = b minus 0.655x).
+{ fig:`<prop type="img" src="courses/pilot/figs/fig-density-altitude.webp" title="Figure 8. Density Altitude Chart" alt="FAA figure 8, density altitude chart: slanted pressure altitude lines from minus 1,000 to 14,000 feet over outside air temperature, read against approximate density altitude, with a table of altimeter settings and pressure altitude conversion factors" w="1400" h="1374"></prop>`,
+  q:`Field elevation 5,500 feet, altimeter setting 30.40, temperature 30°C. Using the figure, about what is the density altitude?`,
+  opts:[`About 8,800 feet`,
+        `About 7,700 feet`,
+        `About 5,100 feet`],
+  a:1, why:`Find 30.4 in the table beside the chart: minus 440. So the pressure altitude is 5,500 minus 440, which is 5,060 feet. Now go up from 30°C, which is 86°F, until you're just above the 5,000 foot line, and read across: about 7,700 feet. Got 8,800? You added the 440. Got 5,100? That's only the pressure altitude.`,
   task:`I.F`, domain:`Preflight` },
 
 { q:`An airport sits at 1,380 feet MSL, and its current altimeter setting is 29.68. With 29.92 set in the altimeter on the ramp there, what will it read?`,
@@ -225,18 +233,21 @@ C.mock.push({ part:`Preflight`, questions:[
   task:`I.F`, domain:`Preflight` },
 
 { q:`What is the effect of loading an airplane with the CG aft of its aft limit?`,
-  opts:[`It becomes less stable and may be hard or impossible to recover from a stall or spin`,
+  opts:[`It's less stable, and stall or spin recovery gets hard or impossible`,
         `It becomes more stable but has a higher stall speed and slower cruise`,
         `It needs more back pressure to flare, so the nose wheel may touch first`],
   a:0, why:`PHAK ch 5: with the CG far aft the airplane is less stable, and in a spin the tail can be pulled out away from the spin axis so the nose can't be lowered to recover. A higher stall speed, slower cruise, and heavy back pressure in the flare are forward CG effects. An aft CG out of limits isn't a performance issue; it can kill.`,
   task:`I.F`, domain:`Preflight` },
 
-{ fig:`<prop type="doc" title="Figure: airspeed indicator markings">White arc: 42 to 90 knots<br>Green arc: 50 to 135 knots<br>Yellow arc: 135 to 170 knots<br>Red line: 170 knots</prop>`,
+// 2026-11-08 figure pass: was typed markings; now FAA figure 4 (added to courses/pilot/figs the same day). Reads, by tick angle from the
+// dial center (5 kt ticks, labels at 40, 60, 80, 100, 200): white arc 55 to 100, green from about 60 to 165, yellow 165 to about 208,
+// red line about 208.
+{ fig:`<prop type="img" src="courses/pilot/figs/fig-airspeed-indicator.webp" title="Figure 4. Airspeed Indicator" alt="FAA figure 4, airspeed indicator in knots from 40 to 240, with a white arc, a green arc, a yellow arc and a red line" w="1000" h="1031"></prop>`,
   q:`Using the figure, what are the power off stall speed in the landing configuration and the maximum structural cruising speed?`,
-  opts:[`50 knots and 170 knots`,
-        `42 knots and 90 knots`,
-        `42 knots and 135 knots`],
-  a:2, why:`PHAK ch 8: the bottom of the white arc is VSO, the stall speed in the landing configuration, 42 knots. The top of the green arc is VNO, the maximum structural cruising speed, 135 knots. 90 knots is the top of the white arc, VFE, and 170 is the red line, VNE.`,
+  opts:[`About 60 knots and 208 knots`,
+        `About 55 knots and 100 knots`,
+        `About 55 knots and 165 knots`],
+  a:2, why:`PHAK ch 8: VSO, the power off stall speed with flaps and gear down, is the bottom of the white arc, about 55 knots on this dial. VNO is the top of the green, where the yellow begins, at 165. If you picked 100, that's the top of the white arc, VFE. 208 is the red line, VNE, and about 60 is VS1, where the green starts.`,
   task:`I.G`, domain:`Preflight` },
 
 { q:`The static port becomes blocked, but the pitot tube stays clear. How will the airspeed indicator read as you climb?`,
@@ -255,7 +266,7 @@ C.mock.push({ part:`Preflight`, questions:[
 
 { q:`A pilot drank heavily the night before and flies the next morning. Alcohol still in the body keeps the cells from using the oxygen the blood delivers. Which type of hypoxia is this?`,
   opts:[`Hypemic hypoxia`,
-        `Stagnant hypoxia`,
+        `Stagnant (circulatory) hypoxia`,
         `Histotoxic hypoxia`],
   a:2, why:`PHAK ch 17: histotoxic hypoxia is the cells being unable to use oxygen, and alcohol and some drugs cause it. Hypemic hypoxia is blood that can't carry enough oxygen, as with carbon monoxide. Stagnant hypoxia is blood that isn't moving well. The 8 hours and 0.04 in 91.17 are minimums, and alcohol's effects can last longer.`,
   task:`I.H`, domain:`Preflight` },
@@ -314,7 +325,7 @@ C.mock.push({ part:`Airport and flight`, questions:[
   task:`III.A`, domain:`Airport and flight` },
 
 { q:`A glider is closing on a powered airplane at about its own altitude, with the airplane off the glider's right wing. Which one has the right of way?`,
-  opts:[`The glider, because a glider has the right of way over powered aircraft`,
+  opts:[`The glider, which has the right of way over powered aircraft`,
         `The airplane, because it is to the other aircraft's right`,
         `Whichever is lower, as long as neither is on final approach`],
   a:0, why:`14 CFR 91.113(d): the aircraft on the right has the right of way only when both are the same category. With different categories, a glider has the right of way over powered aircraft. The lower aircraft rule in 91.113(g) applies to aircraft approaching an airport to land. Right of way never replaces see and avoid.`,
@@ -334,12 +345,14 @@ C.mock.push({ part:`Airport and flight`, questions:[
   a:1, why:`14 CFR 91.126(b)(1): a fixed wing airplane approaching to land must make all turns to the left unless approved light signals or visual markings indicate right turns. Wind decides the runway, not the pattern direction. Self announce on the CTAF starting about 10 miles out (AIM 4-1-9).`,
   task:`III.B`, domain:`Airport and flight` },
 
-{ fig:`<prop type="doc" title="Figure: wind components for a 25 knot wind, read off a crosswind chart">Angle 20°: crosswind 9, headwind 23<br>Angle 30°: crosswind 13, headwind 22<br>Angle 40°: crosswind 16, headwind 19<br>Angle 50°: crosswind 19, headwind 16<br>Angle 60°: crosswind 22, headwind 13</prop>`,
+// 2026-11-08 figure pass: was a table of values read off a crosswind chart; now FAA figure 36. Reads: 40° line at the 25 kt arc,
+// crosswind about 16, headwind about 19; 30° line gives about 13 and 22.
+{ fig:`<prop type="img" src="courses/pilot/figs/fig-wind-component.webp" title="Figure 36. Crosswind Component Graph" alt="FAA figure 36, crosswind component graph: quarter circle wind speed arcs and angle lines between wind and runway, read down to crosswind component and across to headwind component, with a worked example" w="1400" h="1167"></prop>`,
   q:`Runway 13 is in use, and the wind is from 170° at 25 knots. Using the figure, what are the headwind and crosswind components?`,
   opts:[`16 knots headwind, 19 knots crosswind`,
         `19 knots headwind, 16 knots crosswind`,
         `22 knots headwind, 13 knots crosswind`],
-  a:1, why:`Runway 13 points about 130°. The wind is from 170°, so the angle is 170 minus 130 = 40°. On the figure, 40° gives a 16 knot crosswind and a 19 knot headwind (25 × sin 40° and 25 × cos 40°). Swapping the two is the classic mistake, and 22 and 13 is the 30° line.`,
+  a:1, why:`Runway 13 points about 130°. The wind is from 170°, so the angle is 170 minus 130 = 40°. On the figure, follow the 40° line out to the 25 knot arc: straight down is about 16 knots of crosswind, straight across about 19 knots of headwind (25 × sin 40° and 25 × cos 40°). Swapping the two is the classic mistake, and 22 and 13 is the 30° line.`,
   task:`IV`, domain:`Airport and flight` },
 
 { q:`Runway 28 is in use. The wind is from 310° at 18 knots, gusting to 26. Using the gust value, what crosswind should you plan for?`,
@@ -403,7 +416,7 @@ C.mock.push({ part:`Navigation and emergencies`, questions:[
   task:`VI`, domain:`Navigation and emergencies` },
 
 { q:`Over flat country on a solo cross country, a pilot can't match anything below to the chart, and no town is in sight. Fuel is fine. According to the PHAK, what should the pilot do first?`,
-  opts:[`Climb, if traffic and weather allow, for better radio and radar coverage`,
+  opts:[`Climb, traffic and weather permitting, for radio and radar coverage`,
         `Descend so you can read the town names painted on water towers`,
         `Hold your heading and wait for a recognizable landmark to appear`],
   a:0, why:`PHAK ch 16, lost procedures: if no town is in sight, first climb, staying mindful of traffic and weather, because altitude increases radio and navigation reception and radar coverage. Then communicate, using frequencies on the sectional chart, and ATC can give vectors. Descending cuts reception and terrain margin, and waiting burns fuel.`,
@@ -439,7 +452,7 @@ C.mock.push({ part:`Navigation and emergencies`, questions:[
 
 { q:`When does the AIM say an operational test of an analog 121.5 MHz ELT should be done in the aircraft?`,
   opts:[`Any time, as long as the test lasts less than a minute`,
-        `During the first 5 minutes after any hour, for no more than three audible sweeps`,
+        `In the first 5 minutes after any hour, for three sweeps at most`,
         `Only in flight, so that search satellites can confirm the signal`],
   a:1, why:`AIM 6-2-4: analog 121.5/243 MHz ELTs should be tested only during the first 5 minutes after any hour, for no longer than three audible sweeps, or coordinated with the nearest control tower if done at another time. Airborne tests are not authorized. Testing at random times can set off a false alert.`,
   task:`IX`, domain:`Navigation and emergencies` },
@@ -459,10 +472,10 @@ C.mock.push({ part:`Navigation and emergencies`, questions:[
   task:`XI`, domain:`Navigation and emergencies` },
 
 { q:`At night you see another airplane ahead at your altitude. You can see only its steady green position light and its flashing beacon. Which way is it moving?`,
-  opts:[`It is coming toward you head on`,
-        `It is flying away from you`,
+  opts:[`It is coming toward you, head on, at your altitude`,
+        `It is flying away from you, straight ahead`,
         `It is crossing from your left to your right`],
-  a:2, why:`AFH ch 11: the red light is on the left wingtip, green on the right wingtip, and white on the tail. Seeing only green means you're looking at its right side, so it's crossing from your left to your right. Head on you'd see both red and green, and flying away you'd see the white tail light.`,
+  a:2, why:`AFH ch 11: red on the left wingtip, green on the right. See only green and you're looking at its right side, so it's crossing from your left to your right. Both colors means head on.`,
   task:`XI`, domain:`Navigation and emergencies` }
 
 ]});

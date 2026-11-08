@@ -2,8 +2,30 @@
  "source": "FAA-CT-8080-2H, Airman Knowledge Testing Supplement for Sport Pilot, Recreational Pilot, Remote Pilot, and Private Pilot (FAA Flight Standards Service, 2018, effective June 11, 2018)",
  "sourceUrl": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/sport_rec_private_akts.pdf",
  "license": "A work of the U.S. Government (FAA), not subject to copyright in the United States (17 U.S.C. 105). No third party credit, copyright or permission notice appears anywhere in the supplement (checked 2026-11-07). The excerpts are reproduced unchanged except for cropping, rotating the sideways tables upright, resizing and WebP compression. Sectional excerpts carry the FAA's own note: not to scale and not for navigation.",
- "made": "2026-11-07: pages rendered at 300 dpi with pdftoppm, cropped to the figure, sideways figures 37, 38 and 40 turned upright, resized to 1000 to 1600 px wide, cwebp (sectionals q50, line art q72).",
+ "made": "2026-11-07: pages rendered at 300 dpi with pdftoppm, cropped to the figure, sideways figures 37, 38 and 40 turned upright, resized to 1000 to 1600 px wide, cwebp (sectionals q50, line art q72). 2026-11-08: figures 4, 6, 18, 19, 28 and 58 added the same way (pdftoppm 300 dpi from the PDF pages 38, 40, 51, 52, 61 and 89, cropped, figure 18 turned upright, resized to 1000 to 1600 px wide, cwebp q72 for the instruments and the card, q60 for the two weather charts).",
  "figures": [
+  {
+   "file": "courses/pilot/figs/fig-airspeed-indicator.webp",
+   "faaFigure": 4,
+   "title": "Airspeed Indicator",
+   "page": "2-4",
+   "width": 1000,
+   "height": 1031,
+   "bytes": 48328,
+   "alt": "FAA figure 4, airspeed indicator in knots from 40 to 240, with a white arc, a green arc, a yellow arc and a red line",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-airspeed-indicator.webp\" title=\"Figure 4. Airspeed Indicator\" alt=\"FAA figure 4, airspeed indicator in knots from 40 to 240, with a white arc, a green arc, a yellow arc and a red line\" w=\"1000\" h=\"1031\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-heading-indicator.webp",
+   "faaFigure": 6,
+   "title": "Heading Indicator",
+   "page": "2-6",
+   "width": 1000,
+   "height": 992,
+   "bytes": 48508,
+   "alt": "FAA figure 6, heading indicator: a compass card behind a small airplane symbol whose nose points at the heading, with a push to cage knob",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-heading-indicator.webp\" title=\"Figure 6. Heading Indicator\" alt=\"FAA figure 6, heading indicator: a compass card behind a small airplane symbol whose nose points at the heading, with a push to cage knob\" w=\"1000\" h=\"992\"></prop>"
+  },
   {
    "file": "courses/pilot/figs/fig-density-altitude.webp",
    "faaFigure": 8,
@@ -60,6 +82,28 @@
    "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-winds-aloft.webp\" title=\"Figure 17. Winds and Temperatures Aloft Forecast\" alt=\"FAA figure 17, winds and temperatures aloft forecast table for ALS, AMA, DEN, HLC, MKC and STL at 3,000 to 39,000 feet\" w=\"1600\" h=\"412\"></prop>"
   },
   {
+   "file": "courses/pilot/figs/fig-weather-depiction.webp",
+   "faaFigure": 18,
+   "title": "Weather Depiction Chart",
+   "page": "2-17",
+   "width": 1600,
+   "height": 1075,
+   "bytes": 220472,
+   "alt": "FAA figure 18, weather depiction chart of the United States at 16Z: station circles, shaded and contoured areas, fronts, a legend and red letters A to H",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-weather-depiction.webp\" title=\"Figure 18. Weather Depiction Chart\" alt=\"FAA figure 18, weather depiction chart of the United States at 16Z: station circles, shaded and contoured areas, fronts, a legend and red letters A to H\" w=\"1600\" h=\"1075\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-sigwx-prog.webp",
+   "faaFigure": 19,
+   "title": "Low-Level Significant Weather (SIGWX) Prognostic Charts",
+   "page": "2-18",
+   "width": 1400,
+   "height": 1722,
+   "bytes": 171548,
+   "alt": "FAA figure 19, two low level significant weather prog charts, 12 hour above and 24 hour below, with IFR, marginal VFR, turbulence and freezing level lines and a legend",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-sigwx-prog.webp\" title=\"Figure 19. Low-Level Significant Weather (SIGWX) Prognostic Charts\" alt=\"FAA figure 19, two low level significant weather prog charts, 12 hour above and 24 hour below, with IFR, marginal VFR, turbulence and freezing level lines and a legend\" w=\"1400\" h=\"1722\"></prop>"
+  },
+  {
    "file": "courses/pilot/figs/fig-sectional-20.webp",
    "faaFigure": 20,
    "title": "Sectional Chart Excerpt",
@@ -91,6 +135,17 @@
    "bytes": 696042,
    "alt": "FAA figure 25, sectional chart excerpt of a busy Class B area over a large city, with several towered airports and numbered red markers at the points the questions ask about",
    "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-sectional-25.webp\" title=\"Figure 25. Sectional Chart Excerpt\" alt=\"FAA figure 25, sectional chart excerpt of a busy Class B area over a large city, with several towered airports and numbered red markers at the points the questions ask about\" w=\"1600\" h=\"2128\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-vor.webp",
+   "faaFigure": 28,
+   "title": "VOR",
+   "page": "2-27",
+   "width": 1600,
+   "height": 1446,
+   "bytes": 164334,
+   "alt": "FAA figure 28, nine VOR indicators numbered 1 to 9, each with a course selector, a needle and a TO or FROM flag",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-vor.webp\" title=\"Figure 28. VOR\" alt=\"FAA figure 28, nine VOR indicators numbered 1 to 9, each with a course selector, a needle and a TO or FROM flag\" w=\"1600\" h=\"1446\"></prop>"
   },
   {
    "file": "courses/pilot/figs/fig-loading-graph.webp",
@@ -201,6 +256,17 @@
    "bytes": 14180,
    "alt": "FAA figure 50, wind sock airport landing indicator: a segmented circle with a wind cone in the middle and four L shaped traffic pattern indicators, north arrow up",
    "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-segmented-circle.webp\" title=\"Figure 50. Wind Sock Airport Landing Indicator\" alt=\"FAA figure 50, wind sock airport landing indicator: a segmented circle with a wind cone in the middle and four L shaped traffic pattern indicators, north arrow up\" w=\"1000\" h=\"858\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-compass-card.webp",
+   "faaFigure": 58,
+   "title": "Compass Card",
+   "page": "2-55",
+   "width": 1400,
+   "height": 286,
+   "bytes": 18532,
+   "alt": "FAA figure 58, compass deviation card: the heading you want, For, above the compass heading to fly, Steer, every 30 degrees",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-compass-card.webp\" title=\"Figure 58. Compass Card\" alt=\"FAA figure 58, compass deviation card: the heading you want, For, above the compass heading to fly, Steer, every 30 degrees\" w=\"1400\" h=\"286\"></prop>"
   },
   {
    "file": "courses/pilot/figs/fig-airport-markings.webp",

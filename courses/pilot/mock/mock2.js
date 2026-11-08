@@ -2,6 +2,9 @@
 // Built 2026-10-25. Same spread as form 1, the way the PAR test usually runs (the FAA publishes no area weights): Area I 36
 // (I.A 5, I.B 3, I.C 7, I.D 4, I.E 5, I.F 5, I.G 4, I.H 3), II 1, III.A 3, III.B 2, IV 2, V 1, VII 1, VIII 2, XII 1, VI 5, IX 3, XI 3.
 // 16 calculation items, each with a typed fig prop (figHTML), plus 3 figure reading items: 19 figures. Keys: 20 at each index.
+// 2026-11-08 figure pass: the area 1 Class B shelf (M2:22) and the CG envelope check (M2:25) now show the real FAA figures 25 and 34.
+// The landing and climb tables (M2:24, M2:27) stay tables with honest titles, and the flight log, VOR and plotter items (M2:49 to M2:51)
+// state their facts in the stem, since the course has no figure for them. 16 fig props now: 14 typed documents and tables, 2 images.
 // check_tells (2026-10-25): rule 17%, key longest 25%, shortest 23%, fewest clauses 25%. Highest stem plus key Jaccard 0.34.
 // Settings and airports are fictional, not the Jordan story. Original items; none closely repeats form 1 or a chapter quiz item
 // (stem plus key word Jaccard, checked against the 60 form 1 items and the 238 quiz items in full/ch01 to ch12).
@@ -189,18 +192,20 @@ C.mock.push({ part:`M2: Practice exam 2`, questions:[
   task:`I.E`, domain:`Preflight` },
 
 { q:`By day you're VFR in Class G airspace at 8,500 feet MSL, about 3,000 feet above the terrain. Which conditions meet the 14 CFR 91.155 minimums there?`,
-  opts:[`Visibility 5 SM, a cloud layer 700 feet above you`,
+  opts:[`Visibility 5 SM, with a cloud layer 700 feet above you`,
         `Visibility 3/4 SM, and clear of all clouds`,
         `Visibility 2 SM, the only clouds a layer 1,200 feet above`],
   a:2, why:`91.155(a): in Class G more than 1,200 feet above the surface but below 10,000 feet MSL, the day minimums are 1 statute mile, and 500 feet below, 1,000 feet above, and 2,000 feet horizontal from clouds. 2 miles with the nearest cloud 1,200 feet up meets all of it. A layer 700 feet above breaks the 1,000 foot rule even with 5 miles, and 3/4 mile is under the 1 mile minimum. Clear of clouds is enough only at or below 1,200 feet above the surface.`,
   task:`I.E`, domain:`Preflight` },
 
-{ fig:`<prop type="doc" title="Figure: sectional chart, described">Inside a solid blue line, the numbers 70 over 40, written as a fraction.</prop>`,
-  q:`Using the figure, do you need a Class B clearance to fly through this area at 3,500 feet MSL?`,
+// 2026-11-08 figure pass: was a typed shelf label ("70 over 40"); now FAA figure 25. Reads: area 1 sits in the shelf labeled 100 over 40,
+// between the outer ring and the next blue line in; Denton's Class D below it is [25].
+{ fig:`<prop type="img" src="courses/pilot/figs/fig-sectional-25.webp" title="Figure 25. Sectional Chart Excerpt" alt="FAA figure 25, sectional chart excerpt of a busy Class B area over a large city, with several towered airports and numbered red markers at the points the questions ask about" w="1600" h="2128"></prop>`,
+  q:`Using the figure, do you need a Class B clearance to fly over area 1 at 3,500 feet MSL?`,
   opts:[`Yes, because 3,500 feet is inside the Class B there`,
         `No. The floor of the Class B there is 4,000 feet MSL`,
         `Yes, because the Class B floor there is 4,000 feet AGL`],
-  a:1, why:`On a sectional, a Class B shelf is drawn in solid blue, and the fraction gives its ceiling over its floor in hundreds of feet MSL. 70 over 40 means 7,000 down to 4,000 feet MSL, so at 3,500 you're under it and need no Class B clearance. You still need Mode C and ADS-B Out inside the 30 NM veil. The numbers are MSL, never AGL.`,
+  a:1, why:`A Class B shelf is drawn in solid blue, and the fraction gives its ceiling over its floor in hundreds of feet MSL. Area 1 sits in the shelf labeled 100 over 40: 10,000 down to 4,000 feet MSL, so at 3,500 you're under it and need no Class B clearance. You still need Mode C and ADS-B Out inside the 30 NM veil. The numbers are MSL, never AGL.`,
   task:`I.E`, domain:`Preflight` },
 
 { q:`On a sectional, an area off the coast is marked W followed by a number. What is it?`,
@@ -211,20 +216,22 @@ C.mock.push({ part:`M2: Practice exam 2`, questions:[
   task:`I.E`, domain:`Preflight` },
 
 // ===== I.F performance =====
-{ fig:`<prop type="doc" title="Figure: landing distance table, read off as text">Flaps 30, paved dry runway, zero wind<br>Pressure altitude 2,000 ft, 15°C: ground roll 560 ft, total over 50 ft obstacle 1,320 ft<br>Pressure altitude 2,000 ft, 25°C: ground roll 580 ft, total over 50 ft obstacle 1,350 ft<br>Notes: decrease distances 10 percent for each 9 knots of headwind. For tailwinds up to 10 knots, increase distances 10 percent for each 2 knots.</prop>`,
-  q:`Using the figure, at a pressure altitude of 2,000 feet and 25°C with a 4 knot tailwind, what total distance is needed to land over a 50 foot obstacle?`,
+{ fig:`<prop type="doc" title="Landing distance table from a POH, with its notes">Flaps 30, paved dry runway, zero wind<br>Pressure altitude 2,000 ft, 15°C: ground roll 560 ft, total over 50 ft obstacle 1,320 ft<br>Pressure altitude 2,000 ft, 25°C: ground roll 580 ft, total over 50 ft obstacle 1,350 ft<br>Notes: decrease distances 10 percent for each 9 knots of headwind. For tailwinds up to 10 knots, increase distances 10 percent for each 2 knots.</prop>`,
+  q:`Using the table, at a pressure altitude of 2,000 feet and 25°C with a 4 knot tailwind, what total distance is needed to land over a 50 foot obstacle?`,
   opts:[`1,485 feet`,
         `1,620 feet`,
         `1,290 feet`],
   a:1, why:`A 4 knot tailwind is two steps of 2 knots, so add 20 percent: 1,350 × 1.2 = 1,620 feet. 1,485 adds only one 10 percent step, and 1,290 treats the tailwind as a headwind. A tailwind costs far more than a headwind gives back, which is the point of the note (PHAK ch 11).`,
   task:`I.F`, domain:`Preflight` },
 
-{ fig:`<prop type="doc" title="Figure: loading graph and CG envelope, read off as text">Moment ÷ 1,000 (pound inches)<br>Empty airplane: 1,420 lb, 55.6<br>Pilot and front passenger: 340 lb, 12.6<br>Rear passenger: 150 lb, 11.0<br>Fuel, 38 gallons: 228 lb, 10.9<br>Baggage: 40 lb, 3.8<br>CG envelope from 2,150 to 2,200 lb: moment ÷ 1,000 must be between 84.0 and 101.5</prop>`,
-  q:`Using the figure, what are the total weight and moment ÷ 1,000, and is the airplane within limits?`,
+// 2026-11-08 figure pass: the envelope limits were typed in ("84.0 to 101.5"); now FAA figure 34, bottom half. Reads: at 2,178 lb the
+// forward limit is about 81 and the aft limit about 103 (pixel check); 2,000 lb is the top of the utility category.
+{ fig:`<prop type="img" src="courses/pilot/figs/fig-cg-envelope.webp" title="Figure 34. Airplane Weight and Balance Graphs" alt="FAA figure 34, bottom half, center of gravity moment envelope: loaded airplane weight against loaded moment divided by 1,000, with the normal and utility category areas" w="1400" h="786"></prop>`,
+  q:`A loading worksheet lists: empty airplane 1,420 lb, moment ÷ 1,000 55.6; pilot and front passenger 340 lb, 12.6; rear passenger 150 lb, 11.0; fuel, 38 gallons, 228 lb, 10.9; baggage 40 lb, 3.8. Using the figure, what are the total weight and moment ÷ 1,000, and is the airplane within limits?`,
   opts:[`2,138 lb and 90.1, inside the envelope`,
         `2,178 lb and 93.9, inside the envelope`,
         `2,178 lb and 93.9, aft of the aft limit`],
-  a:1, why:`Add the weights: 1,420 + 340 + 150 + 228 + 40 = 2,178 lb. Add the moments: 55.6 + 12.6 + 11.0 + 10.9 + 3.8 = 93.9. At that weight the envelope allows 84.0 to 101.5, so 93.9 is inside. 2,138 and 90.1 leave out the baggage. As a number, the CG is 93,900 ÷ 2,178 = 43.1 inches.`,
+  a:1, why:`Add the weights: 1,420 + 340 + 150 + 228 + 40 = 2,178 lb. Add the moments: 55.6 + 12.6 + 11.0 + 10.9 + 3.8 = 93.9. On the envelope, 2,178 pounds runs from a moment of about 81 at the forward edge to about 103 at the aft edge, so 93.9 is inside the normal category. It's over 2,000 pounds, so not utility. 2,138 and 90.1 leave out the baggage. As a number, the CG is 93,900 ÷ 2,178 = 43.1 inches.`,
   task:`I.F`, domain:`Preflight` },
 
 { fig:`<prop type="doc" title="Figure: loading summary">Maximum takeoff weight: 2,300 lb<br>Takeoff weight with full fuel, three people, and bags: 2,412 lb<br>Avgas weighs 6 lb per gallon</prop>`,
@@ -235,8 +242,8 @@ C.mock.push({ part:`M2: Practice exam 2`, questions:[
   a:1, why:`2,412 minus 2,300 = 112 pounds over. At 6 pounds a gallon that's 112 ÷ 6 = 18.7 gallons, and you round up, so at least 19 gallons, and then check that what's left still covers the trip and the reserve. 18 gallons leaves the airplane 4 pounds over, and 16 uses 7 pounds a gallon, which isn't avgas.`,
   task:`I.F`, domain:`Preflight` },
 
-{ fig:`<prop type="doc" title="Figure: time, fuel, and distance to climb, read off as text">Standard temperature, counted from sea level<br>4,000 ft: 6 min, 1.4 gal, 9 NM<br>6,000 ft: 10 min, 2.2 gal, 15 NM<br>8,000 ft: 15 min, 3.1 gal, 22 NM<br>Note: add 1.1 gallons for start, taxi, and takeoff</prop>`,
-  q:`Using the figure, you depart an airport at a pressure altitude of 4,000 feet and climb to 8,000 feet. How much fuel will it take, including start, taxi, and takeoff?`,
+{ fig:`<prop type="doc" title="Time, fuel, and distance to climb table from a POH">Standard temperature, counted from sea level<br>4,000 ft: 6 min, 1.4 gal, 9 NM<br>6,000 ft: 10 min, 2.2 gal, 15 NM<br>8,000 ft: 15 min, 3.1 gal, 22 NM<br>Note: add 1.1 gallons for start, taxi, and takeoff</prop>`,
+  q:`Using the table, you depart an airport at a pressure altitude of 4,000 feet and climb to 8,000 feet. How much fuel will it take, including start, taxi, and takeoff?`,
   opts:[`4.2 gallons`,
         `1.7 gallons`,
         `2.8 gallons`],
@@ -403,24 +410,21 @@ C.mock.push({ part:`M2: Practice exam 2`, questions:[
   task:`XII`, domain:`Airport and flight` },
 
 // ===== VI navigation =====
-{ fig:`<prop type="doc" title="Figure: flight log, described">Leg 60 NM. At the 20 NM checkpoint the airplane is 2 NM left of the course line. 40 NM to go.</prop>`,
-  q:`Using the figure, about how many degrees right should you turn to fly straight to the destination?`,
+{ q:`On a 60 NM leg, you reach the 20 NM checkpoint and find you're 2 NM left of the course line, with 40 NM to go. About how many degrees right should you turn to fly straight to the destination?`,
   opts:[`About 6 degrees`,
         `About 3 degrees`,
         `About 9 degrees`],
   a:2, why:`60 to 1: 2 NM off in 20 NM is 2 ÷ 20 × 60 = 6 degrees of error, which is what the wind has been doing to you. Turning 6 degrees only stops the drift. Closing the 2 NM in the 40 NM left takes another 2 ÷ 40 × 60 = 3 degrees, so turn about 9 degrees right. 3 degrees alone closes the gap but leaves the drift.`,
   task:`VI`, domain:`Navigation and emergencies` },
 
-{ fig:`<prop type="doc" title="Figure: VOR indicator, described">The needle sits two dots off center. Each dot on this indicator is 2 degrees. The station is 45 NM away.</prop>`,
-  q:`Using the figure, about how far are you from the radial you've selected?`,
+{ q:`Your VOR needle sits two dots off center, each dot on this indicator is 2 degrees, and the station is 45 NM away. About how far are you from the radial you've selected?`,
   opts:[`About 4 NM`,
         `About 3 NM`,
         `About 5 NM`],
   a:1, why:`Two dots at 2 degrees each is 4 degrees off. By the 60 to 1 rule, a degree is about 1 NM wide at 60 NM from the station, so at 45 NM it's 45 ÷ 60 = 0.75 NM a degree, and 4 degrees is about 3 NM. 4 NM is true only at 60 NM out, and 5 NM divides the wrong way. Radials spread apart as you move away from the station.`,
   task:`VI`, domain:`Navigation and emergencies` },
 
-{ fig:`<prop type="doc" title="Figure: plotter on a sectional chart, described">Sectional scale 1:500,000. The course line from departure to destination measures 9 inches.</prop>`,
-  q:`Using the figure, about how long is the leg?`,
+{ q:`On a sectional chart (scale 1:500,000), the course line from departure to destination measures 9 inches. About how long is the leg?`,
   opts:[`About 72 NM`,
         `About 62 NM`,
         `About 45 NM`],

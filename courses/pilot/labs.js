@@ -8,7 +8,8 @@
 // The offline sample is the chapter's own fictional fog METAR from courses/pilot/full/ch03.js.
 //
 // Ch 4 chart: FAA Denver VFR Sectional, GeoTIFF from https://aeronav.faa.gov/visual/09-03-2026/sectional-files/Denver.zip (metadata:
-// publication 2026-07-09, current through 2026-10-28; Lambert conformal conic, NAD83). Cropped to pixels x 14100 to 15850, y 380 to
+// publication 2026-07-09, current through 2026-10-28; Lambert conformal conic, NAD83). Expired: the credit line labels it a historical training
+// exhibit, not for navigation (Codex audit 2026-11-07); since 2026-11-08 the alt text and Abby's hook say so too. Cropped to pixels x 14100 to 15850, y 380 to
 // 1940 of the full chart and scaled to 1150 x 1025. Points were placed by projecting coordinates into the chart's own georeference, then
 // checked by eye against the image and against the Denver Class B legal description, Federal Register 2026-06762 (effective
 // 2026-07-09): https://www.federalregister.gov/documents/full_text/text/2026/04/08/2026-06762.txt . Point of Origin 39-48-45N
@@ -86,9 +87,9 @@ LABS.pilot={
   ]}],
 
 4:[{id:"p4chart",kind:"chart",title:"What's over each circle",img:"labs/denver-sectional-kapa.jpg",w:1150,h:1025,
-  alt:"A crop of the FAA Denver sectional chart around Centennial Airport, with six lettered points",
-  credit:`Chart: FAA Denver Sectional, edition effective July 9, 2026, cropped around Centennial. Public domain. Not for navigation.`,
-  hook:[`That's the real chart, cut down to our corner. Six circles. Tell me what's over each one.`,`Floors and ceilings in the blue fractions are MSL, in hundreds of feet. Tap a letter to jump to its question, and zoom in if you need to. If you can do this at the kitchen table, you can do it at 7,500 with the sun in your eyes.`],
+  alt:"A crop of the FAA Denver sectional chart around Centennial Airport, with six lettered points. A historical training exhibit from the edition current through October 28, 2026, not for navigation",
+  credit:`<strong>Historical training exhibit. Not for navigation.</strong> FAA Denver Sectional, edition effective July 9, 2026, current only through October 28, 2026, cropped around Centennial. Public domain.`,
+  hook:[`That's the real chart, the summer 2026 edition, cut down to our corner. It was current only through October 28, 2026, so treat it as a training exhibit, never something to plan a flight with. Six circles. Tell me what's over each one.`,`Floors and ceilings in the blue fractions are MSL, in hundreds of feet. Tap a letter to jump to its question, and zoom in if you need to. If you can do this at the kitchen table, you can do it at 7,500 with the sun in your eyes.`],
   points:[{id:"A",x:179,y:660},{id:"B",x:414,y:954,tag:"l"},{id:"C",x:1055,y:507,tag:"l"},{id:"D",x:565,y:644},{id:"E",x:759,y:128},{id:"F",x:338,y:102}],
   source:`Answers checked against the chart itself and the Denver Class B legal description in Federal Register 2026-06762, effective July 9, 2026.`,
   questions:[
