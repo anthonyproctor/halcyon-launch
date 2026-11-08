@@ -111,7 +111,7 @@ function xyVal(seed,x,y){const s=seed|0,hs=mix(s,977,-31),ax=1+(hs&1),ay=1+((hs>
 function xyNear(seed,x,y,n=10){const v=xyVal(seed,x,y),o=[];for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1]]){const X=x+dx,Y=y+dy;if(Math.abs(X)>n||Math.abs(Y)>n)continue;const w=xyVal(seed,X,Y);if(w!==v&&!o.includes(w))o.push(w)}return o}
 function xytable(a){const n=Math.max(1,Math.min(15,Math.round(N(a.n)||10))),sd=num(a.seed),xs=[],ys=[];for(let k=-n;k<=n;k++){xs.push(k);ys.unshift(k)}
   const say=`${a.title?a.title+". ":""}A table of two digit numbers, X across from ${-n} to ${n} and Y down from ${n} to ${-n}. Each answer is the number where a column and a row meet.`;
-  const t=`<div class="tablewrap xyt" role="region" tabindex="0" aria-label="${esc(say)}"><table><thead><tr><th scope="col" class="xyc">Y \\ X</th>${xs.map(x=>`<th scope="col">${x}</th>`).join("")}</tr></thead><tbody>${ys.map(y=>`<tr><th scope="row">${y}</th>${xs.map(x=>`<td>${xyVal(sd,x,y)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+  const t=`<div class="tablewrap xyt" role="region" tabindex="0" aria-label="${esc(say)}"><table><thead><tr><th scope="col" class="xyc">Y \\ X</th>${xs.map(x=>`<th scope="col">${x}</th>`).join("")}</tr></thead><tbody>${ys.map(y=>`<tr><th scope="row">${y}</th>${xs.map(x=>`<td>${xyVal(sd,x,y)}</td>`).join("")}</tr>`).join("")}</tbody></table></div><p class="xyhint">Swipe the grid sideways to see every column.</p>`;
   return {svg:t,say}}
 
 function draw(a){if(!a||a.type!=="chart"||!KINDS.has(a.kind))return null;return ({dials,plane,blocks,xytable})[a.kind](a)}

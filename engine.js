@@ -91,7 +91,7 @@ AUD.ready=!AUDIO_BASE?Promise.resolve():audWait(audLoad(),AUDIO_REMOTE_ONLY?1000
 // a tab left open across a deploy re-reads the manifest (at most once a minute) before it fetches a page's timings, so take and timings match
 function audFresh(){return offNet()&&AUDIO_BASE&&Date.now()-AUD.at>60000?audWait(audLoad(),AUDIO_REMOTE_ONLY?10000:1000):Promise.resolve()}
 function taskDomain(t){const TD=COURSE.taskDomain||{};return TD[t]||TD[t.split(".")[0]]||TD[t[0]]||DOMS[0]}
-function loadScripts(list){return Promise.all(list.map(src=>new Promise(ok=>{if(document.querySelector(`script[data-c="${src}"]`))return ok(true);const el=document.createElement("script");el.src=src;el.dataset.c=src;el.onload=()=>ok(true);el.onerror=()=>{el.remove();ok(false)};/* a script that failed (offline) can be tried again later */document.head.appendChild(el)})))}
+function loadScripts(list){return Promise.all(list.map(src=>new Promise(ok=>{if(document.querySelector(`script[data-c="${src}"]`))return ok(true);const el=document.createElement("script");el.async=false;/* run in list order: the mock option shuffle depends on the order the files push their forms (2026-11-07) */el.src=src;el.dataset.c=src;el.onload=()=>ok(true);el.onerror=()=>{el.remove();ok(false)};/* a script that failed (offline) can be tried again later */document.head.appendChild(el)})))}
 async function useCourse(id){const c=courseById(id);if(!c||c.status!=="live")return false;if((c.scripts||c.labs)&&!c._loaded){await loadScripts([...(c.scripts||[]),...(c.labs?[c.labs]:[])].map(x=>c.root+x)).then(r=>{c._loaded=r.every(Boolean)})}
   if(c.recaps&&c._recaps===undefined)await recapsLoad(c);
   const changed=COURSE.id!==c.id;COURSE=c;store.set("course",id);
@@ -246,7 +246,7 @@ function figChart(a,num){const hf=window.HalcyonFigs&&HalcyonFigs.draw(a);if(hf)
     N.forEach(x=>{const [cx,cy]=P[x.id];g+=`<rect x="${cx-W/2}" y="${cy-H/2}" width="${W}" height="${H}" rx="9" class="fnode"/>`+tx(cx,cy-5,x.id,mid+' class="fnid"')+tx(cx,cy+21,x.d,mid)});
     return {svg:svg(600,h,`${a.title||"Network diagram"}. Activities and durations: ${N.map(x=>`${x.id} ${x.d}`).join(", ")}. Each arrow means the first activity finishes before the next starts: ${E.map(e=>`${e[0]} to ${e[1]}`).join(", ")}.`,g),legend:""}}
   return null}
-function caseHTML(cs){return `<div class="qcase"><div class="kicker">${esc(COURSE.caseLabel||"Case study")}</div><h3>${esc(cs.title||"Case")}</h3>${paras([].concat(cs.text||[]))}</div>`}
+function caseHTML(cs){return `<div class="qcase"><div class="kicker">${esc(cs.label||COURSE.caseLabel||"Case study")}</div><h3>${esc(cs.title||"Case")}</h3>${paras([].concat(cs.text||[]))}</div>`}
 /* shared reading passages (LSAT Reading Comprehension, 2026-10-15): a chapter may define passages:{p1:{title,text:[paragraphs]}} and a
    quiz item may carry passage:"p1". The passage shows once above its run of consecutive items (again whenever the passage changes),
    as an open <details> so a phone reader can fold it away. Same in the review after checking, and in practice sets. */
@@ -551,7 +551,7 @@ function labMention(c){const n=labsOf(c).length;if(!n)return "";const L=`${n} ha
    mastery() leaves out the byTask of any row with no pre whose total is above its form's scored count. */
 let MS=null,mockTimer=null,MOCK_FORM=1;
 const MOCK_WEAK=70; // results: an area below this percent gets a reread pointer
-function MOCK_LIMIT(){return (COURSE.mockMinutes||240)*60}
+function MOCK_LIMIT(){const fm=COURSE.formMinutes;return ((fm&&fm[MOCK_FORM])||COURSE.mockMinutes||240)*60} // formMinutes:{form:minutes} gives each form its own clock (AFOQT subtests run 5 to 35 minutes, 2026-11-07)
 function partForm(p){if(p&&p.form!=null&&Number.isInteger(+p.form)&&+p.form>=1)return +p.form;const m=/^M(\d+):/.exec((p&&p.part)||"");return m&&+m[1]>=1?+m[1]:1}
 function mockQuestions(f){const all=[],cases=[];(DATA().mock||[]).forEach(p=>{if(!p||!p.questions)return;const pf=partForm(p);if(f!=null&&pf!==f)return;(p.cases||[]).forEach(c=>cases.push({...c,form:pf}));p.questions.forEach((q,i)=>all.push({...q,id:p.part.slice(0,3)+i,form:pf}))});all.forEach(q=>{if(q.case)q.cases=cases.filter(c=>c.form===q.form)});return all}
 function mockForms(){const m=new Map();(DATA().mock||[]).forEach(p=>{if(!p||!p.questions||!p.questions.length)return;const f=partForm(p);if(!m.has(f))m.set(f,{f,label:p.formName||(/^M\d+:\s*(.+)$/.exec(p.part||"")||[])[1]||`Practice exam ${f}`})});return [...m.values()].sort((a,b)=>a.f-b.f)}
@@ -575,9 +575,10 @@ function loadMock(f){const st=store.get("c"+mockKey(f),null);if(!st||!Array.isAr
    scenario shows above each of them (open or folded as the reader last left it), the review shows it once above the run, and a break
    that would fall inside a case waits for the case's last item. Attempts saved before cases existed load as saved. */
 let MCASE_OPEN=true;
+function mqOrd(q,byId){if(q.fixedOrder)return [...Array(q.opts.length).keys()];let o=q;if(COURSE.caseOneOrder&&q.case&&(q.cq||1)>1)o=Object.values(byId).find(x=>x.form===q.form&&x.case===q.case&&(x.cq||1)===1)||q;return order("mq"+o.id,q.opts.length)} // caseOneOrder (AFOQT Situational Judgment, 2026-11-07): a case's later items show its first item's option order, so MOST and LEAST read off one list
 function mockCaseOf(q){return q&&q.case?(q.cases||[]).find(c=>c.id===q.case)||null:null}
 function mockCase(q,qs){const cs=mockCaseOf(q);if(!cs)return "";const L=qs.filter(x=>x.case===q.case).sort((x,y)=>(x.cq||0)-(y.cq||0)),k=L.indexOf(q)+1;
-  return `<details class="qpass qmcase"${MCASE_OPEN?" open":""}><summary><span class="kicker">${esc(COURSE.caseLabel||"Case study")}${k&&L.length>1?`, question ${k} of ${L.length}`:""}</span> <b>${esc(cs.title||"Case")}</b></summary>${paras([].concat(cs.text||[]))}</details>`}
+  return `<details class="qpass qmcase"${MCASE_OPEN?" open":""}><summary><span class="kicker">${esc(cs.label||COURSE.caseLabel||"Case study")}${k&&L.length>1?`, question ${k} of ${L.length}`:""}</span> <b>${esc(cs.title||"Case")}</b></summary>${paras([].concat(cs.text||[]))}</details>`}
 function mockBreaks(byId){const o=MS.order,cs=k=>(byId[o[k]]||{}).case;return (COURSE.mockBreaks||[]).map(b=>{while(b>0&&b<o.length&&cs(b)&&cs(b)===cs(b-1))b++;return b})}
 function persistMock(){if(MOCK_FORM===SIT_F&&MS&&MS.sitting)return sitPersist();const f=MOCK_FORM||1,k=mockKey(f);if(MS&&MS.order&&!MS.submitted)store.set("lastplace."+COURSE.id,{t:"mock",f});store.set("c"+k,MS);store.set("cur",COURSE.base+900);if(SYNC){const copy=JSON.parse(JSON.stringify(MS));clearTimeout(syncTimer);syncTimer=setTimeout(()=>{delete SPEND[k];SYNC(k,copy)},600);SPEND[k]=[k,copy]}}
 // f: the form to open. Left out with two or more forms, it opens the picker; with one form, that form.
@@ -587,7 +588,7 @@ function fmtTime(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Mat
 function mockTick(){clearInterval(mockTimer);if(!MS||MS.submitted||MS.mode==="practice")return;mockTimer=setInterval(()=>{if(document.hidden||MS.onBreak!==null)return;MS.elapsed++;const t=$("mocktime");if(t)t.textContent=fmtTime(MOCK_LIMIT()-MS.elapsed);if(MS.elapsed%15===0)persistMock();if(MS.elapsed>=MOCK_LIMIT()){mockSubmit()}},1000)}
 function lastLine(last){return last?`Last attempt: <b>${last.right} of ${last.total}</b> (${last.total?Math.round(last.right/last.total*100):0}%) on ${new Date(last.at).toLocaleDateString("en-US",{month:"short",day:"numeric"})}.`:""}
 function mockPicker(forms){
-  $("page").innerHTML=`<div class="kicker">Practice Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"][forms.length]||forms.length} ${esc(COURSE.mockFormsLabel||"full practice exams")}. Each one has its own questions and keeps its own history. ${esc(COURSE.mockBlurb||"")}</p></div>
+  $("page").innerHTML=`<div class="kicker">Practice Exam</div><h1>${esc(COURSE.mockTitle||"Practice exam")}</h1><div class="story"><p>${["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve"][forms.length]||forms.length} ${esc(COURSE.mockFormsLabel||"full practice exams")}. Each one has its own questions and keeps its own history. ${esc(COURSE.mockBlurb||"")}</p></div>
    <div class="grid2">${forms.map(x=>{const st=loadMock(x.f),inprog=!!(st&&!st.submitted),last=mockHist(x.f).slice(-1)[0];
      return `<div class="card mockform" data-formcard="${x.f}"><h3>${esc(x.label)}</h3><p>${inprog?"In progress. ":""}${last?lastLine(last):"You haven't taken this one yet."}</p><button class="btn" type="button" data-form="${x.f}">${inprog?"Continue":"Open"} ${esc(x.label)}</button></div>`}).join("")}${sitCards()}</div>`;
   $("page").querySelectorAll("[data-form]").forEach(b=>b.onclick=()=>openMock(+b.dataset.form));$("page").querySelectorAll("[data-sit]").forEach(b=>b.onclick=()=>openMock(SIT_F,+b.dataset.sit))}
@@ -606,7 +607,7 @@ function mockRender(){
   if(MS.submitted)return mockResults(byId);
   if(MS.onBreak!==null){$("page").innerHTML=`<h1>Break</h1><div class="story"><p>You've finished question ${MS.onBreak}. Take up to 10 minutes. The exam timer is paused. On the real exam you can't go back to earlier questions after a break.</p></div><div class="bar"><button class="btn" id="resume" type="button">Resume the exam</button></div>`;$("resume").onclick=()=>{MS.breaksTaken.push(MS.onBreak);MS.onBreak=null;persistMock();render()};return}
   const i=Math.min(MS.cur||0,MS.order.length-1),q=byId[MS.order[i]],chosen=MS.ans[q.id],showAns=MS.mode==="practice"&&chosen!==undefined;
-  const ord=order("mq"+q.id,q.opts.length);
+  const ord=mqOrd(q,byId);
   $("page").innerHTML=`<div class="kicker">Practice exam · ${multi?esc(label)+" · ":""}${MODE_NAME[MS.mode]||"Exam mode"} · Question ${i+1} of ${MS.order.length}</div>
    ${mockCase(q,qs)}${figHTML(q.fig)}<fieldset class="qitem" data-qid="${esc(q.id)}"><legend>${q.q}</legend>${ord.map((oi,pos)=>`<label class="qopt ${showAns?(oi===q.a?"qright":oi===chosen?"qwrong":""):""}"><input type="radio" name="mq" value="${oi}" ${chosen===oi?"checked":""} ${showAns?"disabled":""}><span class="k">${"ABCDE"[pos]}</span> ${optHTML(q.opts[oi])}</label>`).join("")}
    ${showAns?`<p class="qwhy"><b>${chosen===q.a?"Correct.":"Not quite."}</b> ${q.why} <span class="tag">${q.task} ${TASKNAMES[q.task]||""}</span></p>`:""}</fieldset>
@@ -684,7 +685,7 @@ const SIT_F=0;let SIT_NOTE="",sitSyncT=null,SIT_N=0; // SIT_N: which sitting is 
 function SITS(){const c=COURSE&&COURSE.mockSitting;return !c?[]:Array.isArray(c)?c:[c]}
 function sitAt(n){const k=SIT_N;SIT_N=n|0;const C=SIT();SIT_N=k;return C}
 function SIT(){const c=SITS()[SIT_N];if(!c||!Array.isArray(c.sections))return null;const have=new Set(mockForms().map(x=>x.f)),secs=c.sections.map(Number).filter(f=>have.has(f));
-  return secs.length>1?{label:c.label||(SIT_N?`Full sitting ${SIT_N+1}`:"Full sitting"),secs,limit:(+c.minutes||COURSE.mockMinutes||35)*60,after:+c.breakAfter||0,brk:(+c.breakMinutes||10)*60}:null}
+  return secs.length>1?{label:c.label||(SIT_N?`Full sitting ${SIT_N+1}`:"Full sitting"),secs,limit:(+c.minutes||COURSE.mockMinutes||35)*60,lim:i=>(((COURSE.formMinutes||{})[secs[i]])||+c.minutes||COURSE.mockMinutes||35)*60,after:+c.breakAfter||0,brk:(+c.breakMinutes||10)*60}:null}
 function sitKey(){return COURSE.base+990+2*SIT_N} // 990 and 991 for the first sitting, then 992 and 993, 994 and 995
 function sitHistKey(){return sitKey()+1}
 function sitHist(){const H=store.get("c"+sitHistKey(),null);return H&&Array.isArray(H.list)?H.list:[]}
@@ -709,7 +710,7 @@ addEventListener("storage",e=>{try{if(!COURSE||!sitOn()||e.key!==PROF.key("c"+si
 function sitById(){const m={};(MS&&MS.secs||[]).forEach(s=>mockQuestions(s.f).forEach(q=>m[q.id]=q));return m}
 const SIT_WORDS=["","One","Two","Three","Four","Five","Six"];
 // seconds left on the clock that's running now (the open section's or the break's)
-function sitLeft(now){const C=SIT();if(MS.onBreak)return C.brk-Math.floor((now-MS.breakAt)/1000);const s=MS.secs[MS.sec];return C.limit-Math.floor((now-s.t0)/1000)}
+function sitLeft(now){const C=SIT();if(MS.onBreak)return C.brk-Math.floor((now-MS.breakAt)/1000);const s=MS.secs[MS.sec];return C.lim(MS.sec)-Math.floor((now-s.t0)/1000)}
 // the section after the one that just closed starts at moment at, or the break does
 function sitAfter(at){const C=SIT();MS.sec++;MS.cur=0;if(C.after&&MS.sec===C.after&&!MS.breakDone){MS.onBreak=true;MS.breakAt=at}else MS.secs[MS.sec].t0=at}
 function sitBreakEnd(at){MS.onBreak=false;MS.breakDone=true;MS.breakUsed=Math.max(0,Math.round((at-MS.breakAt)/1000));MS.secs[MS.sec].t0=at}
@@ -717,7 +718,7 @@ function sitBreakEnd(at){MS.onBreak=false;MS.breakDone=true;MS.breakUsed=Math.ma
 function sitAdvance(now){const C=SIT();if(!C||!MS||!MS.secs||MS.submitted)return false;let moved=false;
   for(let guard=0;guard<20;guard++){
     if(MS.onBreak){const end=MS.breakAt+C.brk*1000;if(now<end)break;sitBreakEnd(end);moved=true;continue}
-    const s=MS.secs[MS.sec],end=s.t0+C.limit*1000;if(now<end)break;s.elapsed=C.limit;s.ended=true;SIT_NOTE=`Time's up for section ${MS.sec+1}.`;moved=true;
+    const s=MS.secs[MS.sec],end=s.t0+C.lim(MS.sec)*1000;if(now<end)break;s.elapsed=C.lim(MS.sec);s.ended=true;SIT_NOTE=`Time's up for section ${MS.sec+1}.`;moved=true;
     if(MS.sec+1>=MS.secs.length){sitFinish();break}sitAfter(end)}
   return moved}
 function sitStep(){if(!sitOn()||!MS||!MS.sitting||MS.submitted){clearInterval(mockTimer);return}
@@ -727,7 +728,7 @@ function sitStep(){if(!sitOn()||!MS||!MS.sitting||MS.submitted){clearInterval(mo
 function sitTick(){clearInterval(mockTimer);if(!MS||!MS.sitting||MS.submitted)return;mockTimer=setInterval(sitStep,1000)}
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&MS&&MS.sitting&&!MS.submitted&&sitOn())sitStep()}); // back from away: catch up at once
 // the reader closes the open section early
-function sitEndSection(){clearInterval(mockTimer);const C=SIT(),now=Date.now(),s=MS.secs[MS.sec];s.elapsed=Math.min(C.limit,Math.max(0,Math.floor((now-s.t0)/1000)));s.ended=true;
+function sitEndSection(){clearInterval(mockTimer);const C=SIT(),now=Date.now(),s=MS.secs[MS.sec];s.elapsed=Math.min(C.lim(MS.sec),Math.max(0,Math.floor((now-s.t0)/1000)));s.ended=true;
   if(MS.sec+1>=MS.secs.length)sitFinish();else sitAfter(now);sitPersist();render();top()}
 function sitSkipBreak(){clearInterval(mockTimer);sitBreakEnd(Date.now());sitPersist();render();top()}
 function sitScore(byId){return MS.secs.map(s=>{const byTask={};let right=0,answered=0,total=0,pre=0;s.order.forEach(id=>{const q=byId[id];if(!q)return;if(!scoredQ(q)){pre++;return}total++;byTask[q.task]=byTask[q.task]||[0,0];byTask[q.task][1]++;if(MS.ans[id]===undefined)return;answered++;if(MS.ans[id]===q.a){right++;byTask[q.task][0]++}});return{f:s.f,right,answered,total,pre,byTask,secs:s.elapsed}})}
@@ -740,7 +741,7 @@ function sitFinish(){const saved=store.get("c"+sitKey(),null);if(saved&&saved.su
   badgeSoon()}
 // the picker's card for the sitting ("" when the course has none)
 function sitCard(){const C=SIT();if(!C)return "";const st=loadSit(),inprog=!!(st&&!st.submitted),last=sitHist().slice(-1)[0],m=Math.round(C.limit/60);
-  return `<div class="card mockform sitcard" data-formcard="sitting${SIT_N?SIT_N+1:""}"><h3>${esc(C.label)}</h3><p>${inprog?`In progress, section ${st.sec+1} of ${st.secs.length}. `:""}${last?lastLine(last).replace("Last attempt","Last sitting"):`All ${C.secs.length} back to back, ${m} minutes a pop.${C.after&&C.after<C.secs.length?` You can take ${Math.round(C.brk/60)} minutes off after section ${C.after}.`:""}`}</p><button class="btn" type="button" id="sitopen${SIT_N?SIT_N+1:""}" data-sit="${SIT_N}">${inprog?"Continue":"Open"} ${SIT_N?esc(C.label.toLowerCase()):"the full sitting"}</button></div>`}
+  return `<div class="card mockform sitcard" data-formcard="sitting${SIT_N?SIT_N+1:""}"><h3>${esc(C.label)}</h3><p>${inprog?`In progress, section ${st.sec+1} of ${st.secs.length}. `:""}${last?lastLine(last).replace("Last attempt","Last sitting"):`All ${C.secs.length} back to back, ${C.secs.some((_,k)=>C.lim(k)!==C.limit)?`${Math.round(C.secs.reduce((t,_,k)=>t+C.lim(k),0)/60)} minutes of testing in all`:`${m} minutes a pop`}.${C.after&&C.after<C.secs.length?` You can take ${Math.round(C.brk/60)} minutes off after section ${C.after}.`:""}`}</p><button class="btn" type="button" id="sitopen${SIT_N?SIT_N+1:""}" data-sit="${SIT_N}">${inprog?"Continue":"Open"} ${SIT_N?esc(C.label.toLowerCase()):"the full sitting"}</button></div>`}
 function sitCards(){const k=SIT_N;let h="";SITS().forEach((_,n)=>{SIT_N=n;h+=sitCard()});SIT_N=k;return h}
 function sitRail(){const C=SIT(),N=C.secs.length;if(!MS||!MS.secs||MS.submitted)return `<h3>${esc(C.label)}</h3><p class="prog">${MS&&MS.submitted?"Finished. Your scores are on the page.":"Start when you're ready."}</p>`;
   const left=fmtTime(sitLeft(Date.now()));if(MS.onBreak)return `<h3>Break</h3><p class="big" id="mocktime">${left}</p><p class="prog">Section ${MS.sec+1} of ${N} is next</p>`;
@@ -750,8 +751,8 @@ function sitRender(){const C=SIT(),N=C.secs.length,mins=Math.round(C.limit/60),b
   if(MS&&!MS.submitted&&sitAdvance(Date.now()))sitPersist(); // whatever ran out while the reader was away
   const brkOn=C.after&&C.after<N,note=SIT_NOTE;SIT_NOTE="";
   if(!MS){const last=sitHist().slice(-1)[0];
-    $("page").innerHTML=`<div class="kicker">${back}Practice Exam</div><h1>${esc(C.label)}</h1><div class="story"><p>This is the whole test in one go, in the order you'll get on test day. You get ${mins} minutes a section. Time's up? On you go, ready or not, and that section's closed. No pausing, even if you close the tab.${brkOn?` Want a breather? There's a ${bm} minute break after section ${C.after}.`:""} You'll see your total raw score at the end, plus how you did on each part.</p></div>
-     <ol class="story sitplan" style="padding-left:22px">${C.secs.map((f,k)=>`<li>${lab(f)}: ${mockQuestions(f).length} questions, ${mins} minutes.${brkOn&&C.after===k+1?` Then ${bm} minutes off, if you want it.`:""}</li>`).join("")}</ol>
+    $("page").innerHTML=`<div class="kicker">${back}Practice Exam</div><h1>${esc(C.label)}</h1><div class="story"><p>This is the whole test in one go, in the order you'll get on test day. ${C.secs.some((_,k)=>C.lim(k)!==C.limit)?"Each section has its own clock, the same as test day.":`You get ${mins} minutes a section.`} Time's up? On you go, ready or not, and that section's closed. No pausing, even if you close the tab.${brkOn?` Want a breather? There's a ${bm} minute break after section ${C.after}.`:""} You'll see your total raw score at the end, plus how you did on each part.</p></div>
+     <ol class="story sitplan" style="padding-left:22px">${C.secs.map((f,k)=>`<li>${lab(f)}: ${mockQuestions(f).length} questions, ${Math.round(C.lim(k)/60)} minutes.${brkOn&&C.after===k+1?` Then ${bm} minutes off, if you want it.`:""}</li>`).join("")}</ol>
      ${last?`<p class="prog">${lastLine(last).replace("Last attempt","Last sitting")}</p>`:""}<div class="bar"><button class="btn" id="sitstart" type="button">Start the full sitting</button></div>`;
     $("sitstart").onclick=()=>{MS=freshSit();sitPersist();render();top()};$("allforms").onclick=()=>openMock();return}
   if(MS.submitted)return sitResults();
@@ -759,7 +760,7 @@ function sitRender(){const C=SIT(),N=C.secs.length,mins=Math.round(C.limit/60),b
     $("page").innerHTML=`<div class="kicker">Practice exam · ${esc(C.label)} · Break</div><h1>Break</h1><div class="story"><p>${note?esc(note)+" ":`Section ${d} is done. `}Stretch, grab some water, you've got ${bm} minutes. Section ${d+1} kicks off by itself when this hits zero, or tap below if you're ready now. ${d<2?"Section 1 is":`Sections ${sitList(d)} are`} locked, same as test day.</p></div>
      <div class="card sitbreak"><p class="big" id="breaktime" role="timer">${fmtTime(sitLeft(Date.now()))}</p><p class="prog">left in the break</p></div><div class="bar"><button class="btn" id="sitskip" type="button">I'm ready, start section ${d+1}</button></div>`;
     $("sitskip").onclick=()=>sitSkipBreak();sitTick();return}
-  const byId=sitById(),s=MS.secs[MS.sec],n=MS.sec+1,i=Math.min(MS.cur||0,s.order.length-1),q=byId[s.order[i]],qs=s.order.map(id=>byId[id]).filter(Boolean),chosen=MS.ans[q.id],ord=order("mq"+q.id,q.opts.length);
+  const byId=sitById(),s=MS.secs[MS.sec],n=MS.sec+1,i=Math.min(MS.cur||0,s.order.length-1),q=byId[s.order[i]],qs=s.order.map(id=>byId[id]).filter(Boolean),chosen=MS.ans[q.id],ord=mqOrd(q,byId);
   const un=()=>s.order.filter(id=>MS.ans[id]===undefined).length,end=()=>{const u=un();if(confirm(u?`You still have ${u} blank. Leave section ${n} anyway? There's no coming back.`:`Leave section ${n}? There's no coming back.`))sitEndSection()};
   $("page").innerHTML=`<div class="kicker">Practice exam · ${esc(C.label)} · Section ${n} of ${N} · Question ${i+1} of ${s.order.length}</div>
    <div class="sithead" id="sithead" style="display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:10px 14px;margin:10px 0;background:var(--soft)"><div><div class="kicker" style="margin:0">Section ${n} of ${N}</div><b>${lab(s.f)}</b></div><div style="text-align:right;flex:none"><span class="big" id="sittime" role="timer">${fmtTime(sitLeft(Date.now()))}</span><div class="prog">left in this section</div></div></div>
