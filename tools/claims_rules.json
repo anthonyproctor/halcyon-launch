@@ -188,6 +188,19 @@
    "pattern": "\\bthe test only asks what the passage says\\b",
    "why": "Scope it to reading comprehension; logical reasoning asks more than what a passage says",
    "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "cphims",
+   "pattern": "\\b(two|2) (other|more) routes (exist|are)\\b|\\bonly (two|2) (other )?routes\\b|\\bthe (only )?other (two|2) routes\\b",
+   "unless": "common",
+   "why": "HIPAA research (45 CFR 164.512(i)(1)): besides authorization, an IRB or privacy board waiver, de-identified data and a limited data set, the rule also allows reviews preparatory to research and research on decedents' PHI, so the routes aren't a closed list of two",
+   "ruled": "2026-11-08 cphims coverage examcheck"
+  },
+  {
+   "course": "cphims",
+   "pattern": "(public health|immuniz|reportable|syndromic)[^.]{0,120}\\b(required by law|law requires (it|them)|because (state )?law requires)|\\bonly (when|if) (a )?(state )?law requires\\b[^.]{0,80}public health|\\bdisclos[^.]{0,80}\\bbecause (the |state )?law requires (it|them)\\b",
+   "why": "HIPAA public health (45 CFR 164.512(b)(1)(i)): disclosure is allowed to a public health authority authorized by law to collect it, whether or not the report is mandatory; required by law isn't the only basis",
+   "ruled": "2026-11-08 cphims coverage examcheck"
   }
  ]
 }

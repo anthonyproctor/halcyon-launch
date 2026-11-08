@@ -35,12 +35,12 @@ C.mock.push({ part:`M1: Practice exam 1`, questions:[
   a:3, why:`Intermittent skilled nursing and therapy for a homebound patient is exactly what home health covers. An inpatient rehab facility is a hospital level stay with intensive daily therapy, which this patient doesn't need, and hospice is for comfort care at the end of life. A long-term care hospital is for patients who need extended acute hospital care, such as prolonged ventilation, not visits at home.`,
   task:`E1`, domain:`Environments`, level:`AP`, scored:true },
 
-{ q:`Cascade Valley Health joins a Medicare accountable care organization that shares savings when its patients' total cost of care comes in under a benchmark and quality targets are met. Which IT capability matters MOST to the ACO's success?`,
-  opts:[`Faster charge capture for inpatient procedures`,
-        `Monthly reports on surgical case volume at each of the hospitals`,
-        `Data on attributed patients' care across every setting`,
-        `A new scheduling system for specialty clinics`],
-  a:2, why:`An ACO earns shared savings by managing cost and quality for a whole attributed population, so it needs to see that population's care across hospitals, clinics, and outside providers, including claims data. Faster inpatient charge capture helps fee-for-service revenue, but it does nothing to lower total cost of care.`,
+{ q:`Cascade Valley Health joins a Medicare accountable care organization that shares savings when its patients' total cost of care comes in under a benchmark and quality targets are met. Many attributed patients also get care from providers Cascade doesn't run. Which data source adds the MOST to managing that cost?`,
+  opts:[`Charge capture data from Cascade's own inpatient units`,
+        `Monthly surgical case volume at each Cascade hospital`,
+        `Medicare claims data on attributed patients' care elsewhere`,
+        `Appointment data from Cascade's specialty clinic schedules`],
+  a:2, why:`The ACO answers for its attributed patients' total cost wherever they get care. Medicare claims data shows the visits, admissions, and prescriptions that happen outside Cascade, which its own systems never see. Charge capture, surgical volume, and clinic schedules only show the care Cascade delivers itself, the part it can already see.`,
   task:`E1`, domain:`Environments`, level:`AN`, scored:true },
 
 { q:`A Cascade patient is discharged to an unaffiliated skilled nursing facility that uses a different EHR. What BEST supports safe continuity of care?`,

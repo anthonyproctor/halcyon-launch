@@ -30,10 +30,12 @@
    ],
    "refs": [
     {"ch": 1, "sec": 0, "h": "Know what kind of place you're standing in", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Is it working", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Every road, one yardstick", "auto": true},
     {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 267
+   "depth": 566
   },
   {
    "id": "CPHIMS.E2",
@@ -56,11 +58,12 @@
     "TEFCA"
    ],
    "refs": [
+    {"ch": 1, "sec": 0, "h": "Know what kind of place you're standing in", "auto": true},
     {"ch": 1, "sec": 1, "h": "Nobody is an island", "auto": true},
     {"ch": 2, "sec": 2, "h": "The rules that make data move", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 79
+   "depth": 316
   },
   {
    "id": "CPHIMS.E3",
@@ -87,7 +90,7 @@
     {"ch": 7, "sec": 2, "h": "Who sits at the table", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 34
+   "depth": 133
   },
   {
    "id": "CPHIMS.E4",
@@ -116,7 +119,7 @@
     {"ch": 2, "sec": 2, "h": "The rules that make data move", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 397
+   "depth": 503
   },
   {
    "id": "CPHIMS.E5",
@@ -139,10 +142,11 @@
     "virtual care"
    ],
    "refs": [
-    {"ch": 4, "sec": 4, "h": "Does it work, and do they like it", "auto": true}
+    {"ch": 4, "sec": 4, "h": "Does it work, and do they like it", "auto": true},
+    {"ch": 8, "sec": 3, "h": "New things, on purpose", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 20
+   "depth": 131
   },
   {
    "id": "CPHIMS.E6",
@@ -167,10 +171,14 @@
    ],
    "refs": [
     {"ch": 1, "sec": 3, "h": "What you actually own", "auto": true},
-    {"ch": 4, "sec": 0, "h": "The words on the order", "auto": true}
+    {"ch": 1, "sec": 4, "h": "Strategy comes first", "auto": true},
+    {"ch": 4, "sec": 0, "h": "The words on the order", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Every road, one yardstick", "auto": true},
+    {"ch": 9, "sec": 4, "h": "What you can't trade quietly", "auto": true},
+    {"ch": 10, "sec": 3, "h": "Finding the holes", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 206
+   "depth": 575
   },
   {
    "id": "CPHIMS.E7",
@@ -199,7 +207,7 @@
     {"ch": 7, "sec": 0, "h": "Ask before you bid", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 227
+   "depth": 448
   },
   {
    "id": "CPHIMS.C1",
@@ -228,7 +236,7 @@
     {"ch": 7, "sec": 5, "h": "Clean hands", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 293
+   "depth": 289
   },
   {
    "id": "CPHIMS.C2",
@@ -255,13 +263,15 @@
     {"ch": 1, "sec": 2, "h": "Who does what", "auto": true},
     {"ch": 1, "sec": 3, "h": "What you actually own", "auto": true},
     {"ch": 3, "sec": 0, "h": "The pipes in the walls", "auto": true},
+    {"ch": 3, "sec": 4, "h": "Watch the plumbing", "auto": true},
     {"ch": 4, "sec": 1, "h": "The loop, and where it breaks", "auto": true},
     {"ch": 7, "sec": 0, "h": "Ask before you bid", "auto": true},
+    {"ch": 8, "sec": 4, "h": "What comes across", "auto": true},
     {"ch": 9, "sec": 0, "h": "Ways to test", "auto": true},
     {"ch": 12, "sec": 5, "h": "Irene's card", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 341
+   "depth": 520
   },
   {
    "id": "CPHIMS.C3",
@@ -285,12 +295,14 @@
     "adherence rates?"
    ],
    "refs": [
+    {"ch": 1, "sec": 3, "h": "What you actually own", "auto": true},
+    {"ch": 1, "sec": 4, "h": "Strategy comes first", "auto": true},
     {"ch": 4, "sec": 1, "h": "The loop, and where it breaks", "auto": true},
     {"ch": 4, "sec": 2, "h": "Counting the floor", "auto": true},
     {"ch": 8, "sec": 0, "h": "Two questions", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 255
+   "depth": 444
   },
   {
    "id": "CPHIMS.C4",
@@ -313,10 +325,11 @@
     "optimi[sz]ation"
    ],
    "refs": [
+    {"ch": 1, "sec": 3, "h": "What you actually own", "auto": true},
     {"ch": 4, "sec": 4, "h": "Does it work, and do they like it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 52
+   "depth": 107
   },
   {
    "id": "CPHIMS.C5",
@@ -343,7 +356,7 @@
     {"ch": 5, "sec": 5, "h": "Models that drift", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 313
+   "depth": 311
   },
   {
    "id": "CPHIMS.C6",
@@ -421,10 +434,11 @@
    "refs": [
     {"ch": 4, "sec": 3, "h": "Draw it before you fix it", "auto": true},
     {"ch": 6, "sec": 1, "h": "What they need, and what's missing", "auto": true},
+    {"ch": 11, "sec": 0, "h": "Four ways to teach", "auto": true},
     {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 151
+   "depth": 188
   },
   {
    "id": "CPHIMS.SA3",
@@ -447,10 +461,11 @@
     "value stream"
    ],
    "refs": [
+    {"ch": 4, "sec": 3, "h": "Draw it before you fix it", "auto": true},
     {"ch": 6, "sec": 2, "h": "Fix it now, or fix it with the project", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 105
+   "depth": 294
   },
   {
    "id": "CPHIMS.SA4",
@@ -477,7 +492,7 @@
     {"ch": 6, "sec": 1, "h": "What they need, and what's missing", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 63
+   "depth": 157
   },
   {
    "id": "CPHIMS.SA5",
@@ -498,9 +513,11 @@
     "cross.?walk",
     "data integration"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Is it working", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 89
   },
   {
    "id": "CPHIMS.SA6",
@@ -521,9 +538,11 @@
     "candidate solutions?",
     "solution options?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 3, "h": "Every road, one yardstick", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 105
   },
   {
    "id": "CPHIMS.SA7",
@@ -547,7 +566,7 @@
     {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 67
+   "depth": 91
   },
   {
    "id": "CPHIMS.SA8",
@@ -574,7 +593,7 @@
     {"ch": 7, "sec": 4, "h": "What the contract says", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 143
+   "depth": 149
   },
   {
    "id": "CPHIMS.SA9",
@@ -600,7 +619,7 @@
     {"ch": 11, "sec": 4, "h": "Did it work", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 173
+   "depth": 240
   },
   {
    "id": "CPHIMS.SA10",
@@ -629,7 +648,7 @@
     {"ch": 11, "sec": 2, "h": "The command center", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 135
+   "depth": 186
   },
   {
    "id": "CPHIMS.SB1",
@@ -654,10 +673,13 @@
    "refs": [
     {"ch": 3, "sec": 0, "h": "The pipes in the walls", "auto": true},
     {"ch": 3, "sec": 1, "h": "The messages", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Devices are on the network too", "auto": true},
+    {"ch": 3, "sec": 4, "h": "Watch the plumbing", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Every road, one yardstick", "auto": true},
     {"ch": 8, "sec": 3, "h": "New things, on purpose", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 289
+   "depth": 570
   },
   {
    "id": "CPHIMS.SB2",
@@ -703,9 +725,11 @@
     "trend (review|monitoring)",
     "regulatory change"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "New things, on purpose", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 23
   },
   {
    "id": "CPHIMS.SB4",
@@ -729,12 +753,14 @@
     "high availability"
    ],
    "refs": [
+    {"ch": 3, "sec": 0, "h": "The pipes in the walls", "auto": true},
+    {"ch": 3, "sec": 4, "h": "Watch the plumbing", "auto": true},
     {"ch": 8, "sec": 0, "h": "Two questions", "auto": true},
     {"ch": 8, "sec": 1, "h": "Hot, warm, cold", "auto": true},
     {"ch": 8, "sec": 5, "h": "Irene's page", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 163
+   "depth": 287
   },
   {
    "id": "CPHIMS.SB5",
@@ -754,9 +780,11 @@
     "hype cycle",
     "technology assessment"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "New things, on purpose", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 151
   },
   {
    "id": "CPHIMS.SB6",
@@ -778,11 +806,12 @@
     "data lineage"
    ],
    "refs": [
+    {"ch": 5, "sec": 3, "h": "Is it working", "auto": true},
     {"ch": 8, "sec": 2, "h": "Who owns the meaning", "auto": true},
     {"ch": 10, "sec": 5, "h": "Proving it stays locked", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 61
+   "depth": 111
   },
   {
    "id": "CPHIMS.SC1",
@@ -804,9 +833,11 @@
     "scoring matrix",
     "weighted scor(e|ing)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 3, "h": "Make them show you", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 169
   },
   {
    "id": "CPHIMS.SC2",
@@ -861,7 +892,7 @@
     {"ch": 11, "sec": 2, "h": "The command center", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 100
+   "depth": 115
   },
   {
    "id": "CPHIMS.SC4",
@@ -886,12 +917,14 @@
    ],
    "refs": [
     {"ch": 6, "sec": 5, "h": "Baselines and owners", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Who touches the build", "auto": true},
     {"ch": 11, "sec": 0, "h": "Four ways to teach", "auto": true},
     {"ch": 11, "sec": 1, "h": "The people side", "auto": true},
-    {"ch": 11, "sec": 4, "h": "Did it work", "auto": true}
+    {"ch": 11, "sec": 4, "h": "Did it work", "auto": true},
+    {"ch": 12, "sec": 5, "h": "Irene's card", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 339
+   "depth": 437
   },
   {
    "id": "CPHIMS.SC5",
@@ -942,11 +975,12 @@
    ],
    "refs": [
     {"ch": 3, "sec": 4, "h": "Watch the plumbing", "auto": true},
+    {"ch": 4, "sec": 4, "h": "Does it work, and do they like it", "auto": true},
     {"ch": 9, "sec": 5, "h": "The tickets know first", "auto": true},
     {"ch": 11, "sec": 2, "h": "The command center", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 242
+   "depth": 382
   },
   {
    "id": "CPHIMS.SD1",
@@ -973,7 +1007,7 @@
     {"ch": 9, "sec": 1, "h": "Count what you find", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 185
+   "depth": 225
   },
   {
    "id": "CPHIMS.SD2",
@@ -995,9 +1029,11 @@
     "security audits?",
     "change control"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 2, "h": "Who touches the build", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 52
   },
   {
    "id": "CPHIMS.SD3",
@@ -1017,9 +1053,12 @@
     "requirements traceability",
     "validat(e|ing|ion) against"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 4, "h": "What the contract says", "auto": true},
+    {"ch": 9, "sec": 1, "h": "Count what you find", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 157
   },
   {
    "id": "CPHIMS.SD4",
@@ -1042,6 +1081,7 @@
     "KPIs?"
    ],
    "refs": [
+    {"ch": 4, "sec": 4, "h": "Does it work, and do they like it", "auto": true},
     {"ch": 6, "sec": 4, "h": "Glenn's arithmetic", "auto": true},
     {"ch": 6, "sec": 5, "h": "Baselines and owners", "auto": true},
     {"ch": 11, "sec": 2, "h": "The command center", "auto": true},
@@ -1049,7 +1089,7 @@
     {"ch": 12, "sec": 2, "h": "Numbers with a yardstick", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 185
+   "depth": 233
   },
   {
    "id": "CPHIMS.SE1",
@@ -1074,11 +1114,12 @@
    "refs": [
     {"ch": 1, "sec": 2, "h": "Who does what", "auto": true},
     {"ch": 2, "sec": 1, "h": "HIPAA is two rules and a bigger stick", "auto": true},
+    {"ch": 3, "sec": 0, "h": "The pipes in the walls", "auto": true},
     {"ch": 8, "sec": 1, "h": "Hot, warm, cold", "auto": true},
     {"ch": 10, "sec": 0, "h": "Three promises", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 257
+   "depth": 377
   },
   {
    "id": "CPHIMS.SE2",
@@ -1103,10 +1144,11 @@
    "refs": [
     {"ch": 10, "sec": 3, "h": "Finding the holes", "auto": true},
     {"ch": 10, "sec": 5, "h": "Proving it stays locked", "auto": true},
-    {"ch": 10, "sec": 6, "h": "When it's a breach", "auto": true}
+    {"ch": 10, "sec": 6, "h": "When it's a breach", "auto": true},
+    {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 218
+   "depth": 252
   },
   {
    "id": "CPHIMS.SE3",
@@ -1181,10 +1223,11 @@
     "accountab(le|ility) for security"
    ],
    "refs": [
-    {"ch": 1, "sec": 2, "h": "Who does what", "auto": true}
+    {"ch": 1, "sec": 2, "h": "Who does what", "auto": true},
+    {"ch": 12, "sec": 3, "h": "Write the jobs down", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 41
+   "depth": 158
   },
   {
    "id": "CPHIMS.SE6",
@@ -1210,7 +1253,7 @@
     {"ch": 10, "sec": 5, "h": "Proving it stays locked", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 130
+   "depth": 131
   },
   {
    "id": "CPHIMS.SE7",
@@ -1232,10 +1275,11 @@
     "control testing"
    ],
    "refs": [
+    {"ch": 9, "sec": 2, "h": "Who touches the build", "auto": true},
     {"ch": 10, "sec": 5, "h": "Proving it stays locked", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 18
+   "depth": 66
   },
   {
    "id": "CPHIMS.L1",
@@ -1260,7 +1304,7 @@
     {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 67
+   "depth": 116
   },
   {
    "id": "CPHIMS.L2",
@@ -1280,9 +1324,11 @@
     "political landscape",
     "cultural (fit|resistance)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Strategy comes first", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 68
   },
   {
    "id": "CPHIMS.L3",
@@ -1303,10 +1349,12 @@
     "technology needs"
    ],
    "refs": [
-    {"ch": 8, "sec": 3, "h": "New things, on purpose", "auto": true}
+    {"ch": 1, "sec": 3, "h": "What you actually own", "auto": true},
+    {"ch": 8, "sec": 3, "h": "New things, on purpose", "auto": true},
+    {"ch": 12, "sec": 1, "h": "More asks than hands", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 37
+   "depth": 246
   },
   {
    "id": "CPHIMS.L4",
@@ -1376,9 +1424,11 @@
     "usability surveys?",
     "customer satisfaction"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 4, "sec": 4, "h": "Does it work, and do they like it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 152
   },
   {
    "id": "CPHIMS.L7",
@@ -1397,9 +1447,11 @@
     "IT constraints",
     "managing expectations"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 1, "h": "More asks than hands", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 72
   },
   {
    "id": "CPHIMS.L8",
@@ -1418,9 +1470,11 @@
     "write (a|the) polic(y|ies)",
     "governance documents?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four kinds of rules", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 44
   },
   {
    "id": "CPHIMS.L9",
@@ -1442,10 +1496,11 @@
    ],
    "refs": [
     {"ch": 2, "sec": 1, "h": "HIPAA is two rules and a bigger stick", "auto": true},
+    {"ch": 2, "sec": 2, "h": "The rules that make data move", "auto": true},
     {"ch": 10, "sec": 6, "h": "When it's a breach", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 123
+   "depth": 200
   },
   {
    "id": "CPHIMS.L10",
@@ -1464,9 +1519,11 @@
     "gifts? from vendors?",
     "whistle.?blow(er|ing)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Safety, rights, and the building", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 73
   },
   {
    "id": "CPHIMS.L11",
@@ -1510,9 +1567,11 @@
     "project plans?",
     "slide deck"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Strategy comes first", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 40
   },
   {
    "id": "CPHIMS.L13",
@@ -1532,9 +1591,12 @@
     "parking lot",
     "meeting minutes"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 5, "sec": 4, "h": "Running the room", "auto": true},
+    {"ch": 12, "sec": 4, "h": "The room", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 390
   },
   {
    "id": "CPHIMS.L14",
@@ -1578,9 +1640,11 @@
     "learning management system",
     "LMS"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 0, "h": "Four ways to teach", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 37
   },
   {
    "id": "CPHIMS.L16",
@@ -1625,9 +1689,11 @@
     "risk matrix",
     "risk owners?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 3, "h": "Finding the holes", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 74
   },
   {
    "id": "CPHIMS.L18",
@@ -1646,9 +1712,11 @@
     "relationship management",
     "partnership"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 5, "h": "Clean hands", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 76
   },
   {
    "id": "CPHIMS.L19",
@@ -1666,9 +1734,12 @@
     "executive summary",
     "so what"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 5, "h": "Baselines and owners", "auto": true},
+    {"ch": 12, "sec": 4, "h": "The room", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 162
   },
   {
    "id": "CPHIMS.L20",
@@ -1713,9 +1784,12 @@
     "position descriptions?",
     "span of control"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Who does what", "auto": true},
+    {"ch": 12, "sec": 3, "h": "Write the jobs down", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 191
   },
   {
    "id": "CPHIMS.L22",
@@ -1736,10 +1810,12 @@
     "competency checklist"
    ],
    "refs": [
-    {"ch": 11, "sec": 0, "h": "Four ways to teach", "auto": true}
+    {"ch": 3, "sec": 4, "h": "Watch the plumbing", "auto": true},
+    {"ch": 11, "sec": 0, "h": "Four ways to teach", "auto": true},
+    {"ch": 12, "sec": 5, "h": "Irene's card", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 39
+   "depth": 106
   },
   {
    "id": "CPHIMS.L23",
@@ -1760,9 +1836,11 @@
     "programs? management",
     "resource contention"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 4, "h": "What you can't trade quietly", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 66
   },
   {
    "id": "CPHIMS.L24",
@@ -1812,10 +1890,11 @@
     "depreciation"
    ],
    "refs": [
-    {"ch": 6, "sec": 4, "h": "Glenn's arithmetic", "auto": true}
+    {"ch": 6, "sec": 4, "h": "Glenn's arithmetic", "auto": true},
+    {"ch": 12, "sec": 2, "h": "Numbers with a yardstick", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 60
+   "depth": 164
   }
  ],
  "seeded": "2026-11-08"

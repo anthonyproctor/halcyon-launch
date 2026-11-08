@@ -54,22 +54,22 @@ window.HALCYON_REVIEW.cphims={
       {t:"Ambulatory care", d:"The patient goes home the same day: clinics, surgery centers, urgent care.", ch:1, sec:0},
       {t:"Community health center", d:"Primary care for anyone, whether or not they can pay, often on a sliding fee, with its own board.", ch:12, sec:0},
       {t:"Payers, regulators, accreditors", d:"Payers decide what gets paid (insurers, Medicare, Medicaid). Regulators like CMS write rules. Accreditors like The Joint Commission survey against standards.", ch:1, sec:0},
-      {t:"Medicare Administrative Contractor", d:"Processes original Medicare fee for service claims for a region. A Medicare Advantage member's claim goes to the private plan instead.", mock:true},
-      {t:"MS-DRG", d:"Under Medicare's inpatient prospective payment system, the DRG on the discharge mostly sets what the hospital is paid for the stay.", mock:true},
-      {t:"Accountable care organization", d:"Shares savings when a whole population's cost of care comes in under a benchmark and quality holds, so it needs data from every setting.", mock:true}
+      {t:"Medicare Administrative Contractor", d:"Processes original Medicare fee for service claims for a region. A Medicare Advantage member's claim goes to the private plan instead.", ch:1, sec:0},
+      {t:"MS-DRG", d:"Under Medicare's inpatient prospective payment system, the DRG on the discharge mostly sets what the hospital is paid for the stay.", ch:1, sec:0},
+      {t:"Accountable care organization", d:"Shares savings when a whole population's cost of care comes in under a benchmark and quality holds, so it needs data from every setting.", ch:1, sec:0}
     ]},
     {group:"E2 How organizations connect", items:[
       {t:"Health information exchange", d:"Moves clinical data between organizations that don't share a system.", ch:1, sec:1},
       {t:"Continuity of care", d:"The next caregiver knows what the last one knew. Every transfer and referral is a place it can break.", ch:1, sec:1},
       {t:"TEFCA", d:"A national framework that links exchange networks so records can follow a patient across the country.", ch:2, sec:2},
-      {t:"Record locator service", d:"Tells a query which organizations hold a patient's records, so the records can stay where they are.", mock:true}
+      {t:"Record locator service", d:"Tells a query which organizations hold a patient's records, so the records can stay where they are.", ch:1, sec:1}
     ]},
     {group:"E3 Who does what", items:[
       {t:"CIO", d:"IT strategy and budget for the whole organization. Usually answers to the CEO.", ch:1, sec:2},
       {t:"CMIO and CNIO", d:"The physician and nursing leaders who connect clinical practice to the systems. Decision support and clinician adoption run through them.", ch:1, sec:2},
       {t:"Clinical informatics council", d:"Where clinical content decisions get made, like what goes in an order set. IT builds what it decides.", ch:1, sec:2},
-      {t:"Health information management director", d:"Owns the completeness of the legal health record and the release of information from it.", mock:true},
-      {t:"RACI chart", d:"Names exactly one person accountable for each decision, plus who's responsible, consulted and informed.", mock:true}
+      {t:"Health information management director", d:"Owns the completeness of the legal health record and the release of information from it.", ch:1, sec:2},
+      {t:"RACI chart", d:"Names exactly one person accountable for each decision, plus who's responsible, consulted and informed.", ch:1, sec:2}
     ]},
     {group:"E4 Laws, rules and accreditation", items:[
       {t:"Conditions of Participation", d:"What CMS requires before a hospital can take Medicare and Medicaid patients. With deemed status, an accreditor's survey counts as meeting them.", ch:2, sec:0},
@@ -81,12 +81,12 @@ window.HALCYON_REVIEW.cphims={
       {t:"42 CFR Part 2", d:"Tighter protection for substance use treatment records from federally assisted programs. One consent can now cover treatment, payment and operations. Using them against the patient in a court or agency case still takes a separate, specific consent or a court order.", ch:2, sec:2},
       {t:"EMTALA", d:"A medical screening exam and stabilizing care, or a proper transfer, for anyone who comes to the emergency department, whatever they can pay.", ch:2, sec:3},
       {t:"Controlled substance e-prescribing", d:"The DEA requires two factor authentication when the prescriber signs.", ch:2, sec:3},
-      {t:"Research waiver", d:"When getting each patient's authorization isn't practical, an IRB or privacy board can waive it if the study meets the criteria.", mock:true}
+      {t:"Research waiver", d:"When getting each patient's authorization isn't practical, an IRB or privacy board can waive it if the study meets the criteria.", ch:2, sec:1}
     ]},
     {group:"E5 Trends", items:[
       {t:"Telehealth, telepharmacy, portals, wearables", d:"Each earns its place by measured outcomes against a baseline, not by being new.", ch:4, sec:4},
       {t:"Trends worth the work", d:"The ones that reach patients: remote ICU monitoring, FHIR apps, care at home, population health.", ch:8, sec:3},
-      {t:"Store and forward", d:"A photo or study sent now and reviewed later. It's a good fit for weak broadband. Remote monitoring sends home readings instead.", mock:true}
+      {t:"Store and forward", d:"A photo or study sent now and reviewed later. It's a good fit for weak broadband. Remote monitoring sends home readings instead.", ch:8, sec:3}
     ]},
     {group:"E6 Application families", items:[
       {t:"Clinical", d:"The EHR, CPOE, eMAR, BCMA, the lab system, pharmacy and PACS.", ch:1, sec:3},
@@ -94,7 +94,7 @@ window.HALCYON_REVIEW.cphims={
       {t:"Financial", d:"The revenue cycle: charge capture, coding, billing, claims.", ch:1, sec:3},
       {t:"Consumer", d:"Anything the patient touches: the portal, telehealth, remote monitoring.", ch:1, sec:3},
       {t:"Business intelligence", d:"A warehouse that pulls from all the others for reports, dashboards and analytics.", ch:1, sec:3},
-      {t:"Enterprise resource planning", d:"Runs purchasing, payroll, HR and the general ledger.", mock:true}
+      {t:"Enterprise resource planning", d:"Runs purchasing, payroll, HR and the general ledger.", ch:1, sec:3}
     ]},
     {group:"E7 Infrastructure", items:[
       {t:"LAN, WAN, VPN, firewall", d:"Inside a building, between buildings, a secure tunnel across someone else's network, and the gate that decides what crosses.", ch:3, sec:0},
@@ -126,7 +126,7 @@ window.HALCYON_REVIEW.cphims={
       {t:"Turnaround time", d:"Needs a defined start and stop. Report the median and a slow percentile, because an average hides the longest waits.", ch:4, sec:2},
       {t:"Who counts as inpatient", d:"Observation and swing bed patients get counted differently in different reports, so census numbers can disagree.", ch:4, sec:2},
       {t:"Adherence", d:"The share of cases where the expected step happened, like an order set used.", ch:4, sec:2},
-      {t:"Proportion of days covered", d:"Uses pharmacy fill dates to show whether patients had the drug on hand, not just whether it was prescribed.", mock:true}
+      {t:"Proportion of days covered", d:"Uses pharmacy fill dates to show whether patients had the drug on hand, not just whether it was prescribed.", ch:4, sec:2}
     ]},
     {group:"C4 Functions that help care", items:[
       {t:"Closed loop medication management", d:"CPOE, pharmacist check, profiled cabinet, bedside scan against the eMAR, smart pump. Each step checks the one before.", ch:4, sec:1},
@@ -141,7 +141,7 @@ window.HALCYON_REVIEW.cphims={
       {t:"Outcome, process, balancing", d:"What happens to the patient, what the team does, and whether the fix caused harm somewhere else.", ch:5, sec:3},
       {t:"Silent mode and drift", d:"Run a model unseen on your own patients first. After go-live, watch it by site and group, because data, patients and practice change.", ch:5, sec:5},
       {t:"Area under the curve", d:"0.5 is a coin flip and 1.0 is perfect. A vendor's number belongs to the hospitals it came from.", ch:12, sec:2},
-      {t:"Picking a chart", d:"A line for change over time, bars to compare categories, a scatter plot for two numeric measures.", mock:true}
+      {t:"Picking a chart", d:"A line for change over time, bars to compare categories, a scatter plot for two numeric measures.", ch:5, sec:3}
     ]},
     {group:"C6 Keeping content current", items:[
       {t:"Interruptive and passive CDS", d:"One stops you and needs an answer. The other is there when you look.", ch:5, sec:0},
@@ -156,7 +156,7 @@ window.HALCYON_REVIEW.cphims={
       {t:"Needs and gap analysis", d:"Ask the people who do the work, map today and the future, and list what's missing between them.", ch:6, sec:1},
       {t:"Testable requirement", d:"Specific and measurable, like a click count checked in test. \"Easy\" isn't a requirement.", ch:6, sec:1},
       {t:"Process maps", d:"Ovals start and end, rectangles are steps, diamonds are decisions. Swimlanes give each role a row so the handoffs show.", ch:4, sec:3},
-      {t:"Value stream map", d:"The whole flow, with value added steps split from waits.", mock:true},
+      {t:"Value stream map", d:"The whole flow, with value added steps split from waits.", ch:4, sec:3},
       {t:"Mismatched data sources", d:"Before you compare two reports, check how each defines the measure, the period and the patients. Compare like with like.", ch:6, sec:5},
       {t:"Alternatives", d:"Doing nothing is always one. Price every option over the same period on the same criteria.", ch:6, sec:3},
       {t:"Total cost of ownership", d:"Every cost over the period: licenses, services, hardware, interfaces, training, backfill and internal staff time.", ch:6, sec:3},
@@ -189,7 +189,7 @@ window.HALCYON_REVIEW.cphims={
     ]},
     {group:"SD Testing and evaluation", items:[
       {t:"Test types", d:"Unit (one piece), system (one application), integrated (across systems), regression (rerun after a change), load (expected peak), stress (past the peak), user acceptance (users decide it's ready).", ch:9, sec:0},
-      {t:"Smoke test", d:"A quick check that a new build opens and the main screens load before deeper testing.", mock:true},
+      {t:"Smoke test", d:"A quick check that a new build opens and the main screens load before deeper testing.", ch:9, sec:0},
       {t:"Entry and exit criteria", d:"Set before testing starts, like a pass rate and no open severity one or two defects.", ch:9, sec:1},
       {t:"Traceability matrix", d:"Links every requirement and contract test to a script, so nothing promised goes untested.", ch:9, sec:1},
       {t:"Edge tests", d:"A limit of twenty gets tested at nineteen, twenty, twenty-one and well past it.", ch:9, sec:1},
@@ -215,7 +215,7 @@ window.HALCYON_REVIEW.cphims={
       {t:"SWOT", d:"Strengths and weaknesses inside, opportunities and threats outside.", ch:12, sec:0},
       {t:"IT strategic plan", d:"Current state, where the organization's going, initiatives on a roadmap, governance, cost, measures and risks. It follows the organization's plan.", ch:12, sec:0},
       {t:"Culture", d:"The values, habits and history of the people who'll live with the change. Learn it before you change it.", ch:1, sec:4},
-      {t:"Just culture", d:"Honest mistakes are system problems, risky choices get coaching, and only reckless acts get punished, so people report.", mock:true},
+      {t:"Just culture", d:"Honest mistakes are system problems, risky choices get coaching, and only reckless acts get punished, so people report.", ch:1, sec:4},
       {t:"Forecasting", d:"Build from drivers like volumes, new services and users, and redo it every year.", ch:12, sec:1}
     ]},
     {group:"L5, L6, L11, L19 Measuring and reporting", items:[
@@ -248,9 +248,9 @@ window.HALCYON_REVIEW.cphims={
     {group:"L17, L23 to L25 Risk, projects, contracts and money", items:[
       {t:"Risk responses", d:"Avoid, mitigate, transfer, accept. Insurance transfers part of the money, not the duty to patients.", ch:10, sec:3},
       {t:"Portfolio", d:"Every project together, ranked against strategy, risk, value and analyst hours. Mandatory work goes first.", ch:12, sec:1},
-      {t:"Program", d:"Related projects managed together for benefits they can't deliver alone.", mock:true},
+      {t:"Program", d:"Related projects managed together for benefits they can't deliver alone.", ch:9, sec:4},
       {t:"Contract reading", d:"Cost, schedule, support, performance with remedies, and the way out with your data returned.", ch:7, sec:4},
-      {t:"Indemnification", d:"The vendor covers you if a third party sues over its product.", mock:true},
+      {t:"Indemnification", d:"The vendor covers you if a third party sues over its product.", ch:7, sec:4},
       {t:"Operating and capital", d:"This year's salaries, subscriptions and support, versus things that last.", ch:12, sec:2},
       {t:"Contingency reserve", d:"Money held for risks you've named. Sensitivity analysis shows what happens when the case is wrong.", ch:6, sec:4}
     ]}
@@ -272,12 +272,12 @@ window.HALCYON_REVIEW.cphims={
       {name:"Payback period", f:"time until cumulative net cash equals the initial cost", means:"How fast you get the money back. It ignores what comes after.", ex:"Cost 250,000, saving 100,000 a year: 2.5 years.", ch:6, sec:4},
       {name:"ROI", f:"(total benefits minus total costs) / total costs", means:"Divide by costs, not by benefits.", ex:"(900,000 minus 600,000) / 600,000 = 0.5, or 50 percent.", ch:6, sec:4},
       {name:"Budget variance", f:"budget minus actual, then / budget", means:"For an expense line, negative is unfavorable. Split one time causes from recurring ones.", ex:"Budget 500,000, actual 540,000. Variance minus 40,000, or minus 8 percent. Unfavorable.", ch:12, sec:2},
-      {name:"Cost performance index", f:"earned value / actual cost", means:"Below 1 means over budget for the work done.", ex:"450,000 / 500,000 = 0.9.", mock:true},
-      {name:"Expected value of named risks", f:"sum of probability x impact", means:"One way to size a contingency for the risks you've listed.", ex:"0.4 x 100,000 + 0.25 x 200,000 = 40,000 + 50,000 = 90,000.", mock:true}
+      {name:"Cost performance index", f:"earned value / actual cost", means:"Below 1 means over budget for the work done.", ex:"450,000 / 500,000 = 0.9.", ch:9, sec:4},
+      {name:"Expected value of named risks", f:"sum of probability x impact", means:"One way to size a contingency for the risks you've listed.", ex:"0.4 x 100,000 + 0.25 x 200,000 = 40,000 + 50,000 = 90,000.", ch:6, sec:4}
     ]},
     {group:"Uptime, growth and risk (SB4, L3, L5, L17, SE2)", items:[
       {name:"Allowed downtime", f:"(1 minus availability) x minutes in the period", means:"Turns an SLA percent into minutes. A 30 day month has 43,200.", ex:"99.95 percent: 0.0005 x 43,200 = 21.6 minutes a month.", ch:8, sec:1},
-      {name:"Compound growth", f:"today x (1 + growth rate) to the number of years", means:"For storage and capacity forecasts. Adding the same amount each year undercounts.", ex:"50 TB growing 10 percent a year for 3 years: 50 x 1.331 = 66.55 TB.", mock:true},
+      {name:"Compound growth", f:"today x (1 + growth rate) to the number of years", means:"For storage and capacity forecasts. Adding the same amount each year undercounts.", ex:"50 TB growing 10 percent a year for 3 years: 50 x 1.331 = 66.55 TB.", ch:8, sec:3},
       {name:"Single and annual loss", f:"SLE = asset value x exposure factor. ALE = SLE x ARO", means:"A control is worth buying when it cuts ALE by more than it costs a year.", ex:"400,000 x 0.25 = 100,000 SLE. Once every 5 years, ARO 0.2: ALE 20,000 a year.", ch:10, sec:3},
       {name:"Risk score", f:"likelihood x impact, each 1 to 5", means:"25 is the worst. Rank by the score.", ex:"Likelihood 4, impact 3 = 12.", ch:10, sec:3}
     ]},
@@ -330,7 +330,7 @@ window.HALCYON_REVIEW.cphims={
     {topic:"Common vs. special cause", l:["Common","Special"], a:"Normal noise inside the control limits.", b:"Outside the limits or a nonrandom pattern. Investigate.", ch:5, sec:3},
     {topic:"Interruptive vs. passive CDS", l:["Interruptive","Passive"], a:"Stops the user for an answer.", b:"Shown where the user looks, without stopping them.", ch:5, sec:0},
     {topic:"Hard vs. soft stop", l:["Hard stop","Soft stop"], a:"Blocks the action. Only for what must never happen.", b:"Can be overridden with a reason.", ch:5, sec:0},
-    {topic:"DMAIC vs. PDCA", l:["DMAIC","PDCA"], a:"Usually fits a complex problem with an unclear cause and plenty of data.", b:"Usually fits a small, safe change you can test on one unit soon.", ch:6, sec:2},
+    {topic:"DMAIC vs. PDCA", l:["DMAIC","PDCA"], a:"Tends to fit a problem whose cause is unclear and has to be found in the data.", b:"Tends to fit a change idea that's ready to test small and safely.", ch:6, sec:2},
     {topic:"Hard vs. soft benefits", l:["Hard","Soft"], a:"Cash you can trace, like a license you stop paying.", b:"Real but hard to price. Report it as a measured outcome, not borrowed dollars.", ch:6, sec:4},
     {topic:"Data owner vs. data steward", l:["Owner","Steward"], a:"The business leader accountable for the data. Decides use and quality.", b:"Keeps definitions and quality right day to day for the owner.", ch:8, sec:2},
     {topic:"Duplicate vs. overlay", l:["Duplicate","Overlay"], a:"One person split across two records.", b:"Two people merged into one record. Worse.", ch:8, sec:2},
@@ -341,10 +341,10 @@ window.HALCYON_REVIEW.cphims={
     {topic:"Mission vs. vision", l:["Mission","Vision"], a:"Why the organization exists.", b:"Where it wants to be.", ch:12, sec:0},
     {topic:"Policy vs. procedure", l:["Policy","Procedure"], a:"What and why. Governance signs off on it.", b:"How, step by step.", ch:12, sec:3},
     {topic:"Mitigate vs. transfer", l:["Mitigate","Transfer"], a:"Lower the likelihood or the impact with a control.", b:"Shift part of the money, like insurance. The incident is still yours.", ch:10, sec:3},
-    {topic:"Query vs. directed exchange", l:["Query","Directed"], a:"Search the HIE for records you don't know exist, like an ED with an unconscious patient.", b:"Push a document to a known recipient, like a consult note to the patient's own doctor.", mock:true},
-    {topic:"Store and forward vs. remote monitoring", l:["Store and forward","Remote monitoring"], a:"An image or study sent now and read later.", b:"Home readings like weight or blood pressure sent to the care team.", mock:true},
-    {topic:"Program vs. portfolio", l:["Program","Portfolio"], a:"Related projects run together for shared benefits.", b:"Every project and program, related or not, ranked against strategy.", mock:true},
-    {topic:"Indemnification vs. limitation of liability", l:["Indemnification","Limitation of liability"], a:"The vendor covers you if someone sues over its product.", b:"Caps what each side can owe.", mock:true}
+    {topic:"Query vs. directed exchange", l:["Query","Directed"], a:"Search the HIE for records you don't know exist, like an ED with an unconscious patient.", b:"Push a document to a known recipient, like a consult note to the patient's own doctor.", ch:1, sec:1},
+    {topic:"Store and forward vs. remote monitoring", l:["Store and forward","Remote monitoring"], a:"An image or study sent now and read later.", b:"Home readings like weight or blood pressure sent to the care team.", ch:8, sec:3},
+    {topic:"Program vs. portfolio", l:["Program","Portfolio"], a:"Related projects run together for shared benefits.", b:"Every project and program, related or not, ranked against strategy.", ch:9, sec:4},
+    {topic:"Indemnification vs. limitation of liability", l:["Indemnification","Limitation of liability"], a:"The vendor covers you if someone sues over its product.", b:"Caps what each side can owe.", ch:7, sec:4}
   ],
   day:[
     {r:"The day before: check your confirmation and your IDs.", why:"Bring the Pearson VUE confirmation. You need two IDs: a current government photo ID with your signature, and a second with your name and signature. Both names have to match your registration. No temporary IDs.", mock:true},
