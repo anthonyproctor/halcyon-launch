@@ -126,7 +126,7 @@ const BOOKS = [
   { id: "asep", body: "INCOSE" },
   { id: "gh300", body: "GitHub or Microsoft" },
   { id: "cisa", body: "ISACA" },
-  // pilot joins when its new lesson sections ship with the recording (2026-10-25)
+  { id: "pilot", body: "the FAA" },
   { id: "lsat", body: "LSAC" }
 ];
 
