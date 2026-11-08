@@ -13,7 +13,7 @@ const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
 C.mock=C.mock||[];
 
-C.mock.push({ part:`M2: Arithmetic Reasoning`, questions:[
+C.mock.push({ part:`M2: Arithmetic Reasoning`, formName:`Test 1: Arithmetic Reasoning`, questions:[
 
 { q:`A flight crew of 6 orders lunch, and each person wants 4 sandwiches for a long day. The sandwiches come in boxes of 8. How many boxes does the crew need?`,
   opts:[`2`,

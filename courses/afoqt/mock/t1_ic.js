@@ -14,7 +14,7 @@ const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
 C.mock=C.mock||[];
 
-C.mock.push({ part:`M9: Instrument Comprehension`, questions:[
+C.mock.push({ part:`M9: Instrument Comprehension`, formName:`Test 1: Instrument Comprehension`, questions:[
 
 { q:`Which aircraft matches the instruments?`,
   fig:`<prop type="chart" kind="dials" title="Instruments" bank="-30" pitch="10" heading="90"></prop>`,

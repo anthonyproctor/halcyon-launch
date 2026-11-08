@@ -14,7 +14,7 @@ const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
 C.mock=C.mock||[];
 
-C.mock.push({ part:`M5: Reading Comprehension`,
+C.mock.push({ part:`M5: Reading Comprehension`, formName:`Test 1: Reading Comprehension`,
 cases:[
 { id:`t1p1`, label:`Passage`, title:`Intent over instructions`, text:[
   `A plan is a guess about the future, written down with confidence. The first hours of an operation tend to show which parts of the guess were wrong. A bridge turns out to be closed, a radio net goes quiet, a shipment lands at the wrong field. When that happens, the people on the spot have two choices. They can wait for new orders, or they can act on what they understand the plan was for.`,

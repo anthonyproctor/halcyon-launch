@@ -16,7 +16,7 @@ const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
 C.mock=C.mock||[];
 
-C.mock.push({ part:`M6: Situational Judgment`,
+C.mock.push({ part:`M6: Situational Judgment`, formName:`Test 1: Situational Judgment`,
 cases:[
 { id:`s1`, title:`The inventory signature`, text:[`You're three weeks into your first assignment, the officer in charge of a supply section. Your NCOIC, a master sergeant who has run the section's quarterly inventory for years, hands you the count sheet to sign. You didn't see any of the count, and the block above your signature says you verified it.`] },
 { id:`s2`, title:`The Friday tasking`, text:[`At your first squadron staff meeting, the commander tasks you with a plan to cut vehicle downtime, due Friday. You can't tell whether they want a one page summary or a full briefing, and the meeting moves on before you can ask.`] },

@@ -16,7 +16,7 @@ const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
 C.mock=C.mock||[];
 
-C.mock.push({ part:`M1: Verbal Analogies`, questions:[
+C.mock.push({ part:`M1: Verbal Analogies`, formName:`Test 1: Verbal Analogies`, questions:[
 
 { q:`FOAL is to HORSE as CYGNET is to`,
   opts:[`goose`,

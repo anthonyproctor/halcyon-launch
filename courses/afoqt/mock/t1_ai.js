@@ -11,7 +11,7 @@ const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
 C.mock=C.mock||[];
 
-C.mock.push({ part:`M11: Aviation Information`,
+C.mock.push({ part:`M11: Aviation Information`, formName:`Test 1: Aviation Information`,
 questions:[
 
 { q:`A wing's angle of incidence is the angle between`,

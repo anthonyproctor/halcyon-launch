@@ -14,7 +14,7 @@ const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
 C.mock=C.mock||[];
 
-C.mock.push({ part:`M10: Block Counting`, questions:[
+C.mock.push({ part:`M10: Block Counting`, formName:`Test 1: Block Counting`, questions:[
 
 { q:`In pile 1, how many other blocks does block 1 touch?`,
   fig:`<prop type="chart" kind="blocks" title="Pile 1" boxes="0,0,0,3,1,1;0,1,0,3,1,1;0,2,0,3,1,1;0,0,1,1,3,1;1,0,1,1,3,1;2,0,1,1,3,1;0,1,2,3,1,1" labels="1:6,2:4,3:2,4:3,5:0"></prop>`,

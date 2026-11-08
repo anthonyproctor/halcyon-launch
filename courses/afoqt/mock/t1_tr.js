@@ -12,7 +12,7 @@ const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
 C.mock=C.mock||[];
 
-C.mock.push({ part:`M8: Table Reading`, questions:[
+C.mock.push({ part:`M8: Table Reading`, formName:`Test 1: Table Reading`, questions:[
 
 { q:`X = -1, Y = -10`,
   fig:`<prop type="chart" kind="xytable" title="Table Reading" seed="4127" n="10"></prop>`,

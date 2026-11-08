@@ -44,7 +44,7 @@ async function fixtures(page, off = []) {
     await r.fulfill({ response: res, body });
   });
 }
-const config = page => page.evaluate(() => { const c = window.HALCYON_COURSES.find(x => x.id === "afoqt"); return { fm: c.formMinutes || null, mm: c.mockMinutes, sit: c.mockSitting } });
+const config = page => page.evaluate(() => { const c = window.HALCYON_COURSES.find(x => x.id === "afoqt"); return { fm: c.formMinutes || null, mm: c.mockMinutes, sit: [].concat(c.mockSitting)[0] } }); // sit: the first sitting (afoqt has two since 2026-11-07)
 // a single form attempt, seeded so its questions run in file order
 async function seedForm(page, f, extra = {}) {
   await page.goto(`/#afoqt/home`);
@@ -311,14 +311,15 @@ test("a fixedOrder item shows its options as written, and the normal item beside
 // and the option shuffle, which hangs on each item's place in the bank, changed from one page load to the next.
 test("mock files run in list order however the network delivers them, so option orders hold across loads", async ({ page }) => {
   const parts = new Set(), ords = new Set();
+  const nForms = (await import("node:fs")).readFileSync(new URL("../courses.js", import.meta.url), "utf8").match(/\{id:"afoqt"[\s\S]*?scripts:\[([^\]]*)\]/)[1].split(",").filter(x => x.includes("mock/")).length; // every afoqt mock script is one form
   for (let k = 0; k < 5; k++) {
-    await page.route("**/courses/afoqt/mock/t1_*.js*", async r => { await new Promise(x => setTimeout(x, Math.random() * 200)); await r.continue() });
+    await page.route("**/courses/afoqt/mock/t*_*.js*", async r => { await new Promise(x => setTimeout(x, Math.random() * 200)); await r.continue() });
     await page.goto("/#afoqt/home"); await page.reload();
-    await page.waitForFunction(() => window.HALCYON_DATA && HALCYON_DATA.afoqt && (HALCYON_DATA.afoqt.mock || []).length === 11);
+    await page.waitForFunction(n => window.HALCYON_DATA && HALCYON_DATA.afoqt && (HALCYON_DATA.afoqt.mock || []).length === n, nForms);
     parts.add(await page.evaluate(() => HALCYON_DATA.afoqt.mock.map(p => /^M(\d+):/.exec(p.part)[1]).join(",")));
     ords.add(await page.evaluate(() => JSON.stringify(["mqM1:0", "mqM6:1", "mqM101"].map(id => HalcyonOrder.get(id, 5)))));
-    await page.unroute("**/courses/afoqt/mock/t1_*.js*");
+    await page.unroute("**/courses/afoqt/mock/t*_*.js*");
   }
-  expect([...parts]).toEqual(["1,2,3,4,5,6,7,8,9,10,11"]);
+  expect([...parts]).toEqual([Array.from({ length: nForms }, (_, i) => i + 1).join(",")]);
   expect(ords.size).toBe(1);
 });

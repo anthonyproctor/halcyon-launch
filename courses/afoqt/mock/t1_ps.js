@@ -12,7 +12,7 @@ const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
 C.mock=C.mock||[];
 
-C.mock.push({ part:`M7: Physical Science`,
+C.mock.push({ part:`M7: Physical Science`, formName:`Test 1: Physical Science`,
 questions:[
 
 { q:`A 1200 kg car speeds up from rest to 20 m/s in 10 seconds. What net force acts on it?`,
