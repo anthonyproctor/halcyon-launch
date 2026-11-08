@@ -64,7 +64,18 @@ SAY_COURSE = {"pilot": {"35R": "three five right", "35L": "three five left", "17
     "DEN": "Denver", "APA": "A P A", "2 1/2": "two and a half", "1 SM": "one mile", "3 SM": "three miles", "25 NM": "twenty five miles",
     "61.89(a)(6)": "sixty one point eight nine, A six", "61.93(a)": "sixty one point nine three, A",
     "91.211(a)(1)": "ninety one point two one one, A one", "61.56(c)": "sixty one point five six, C", "61.43(e)": "sixty one point four three, E",
-    "6/28": "June 28", "50 hrs": "fifty hours", "36 hrs": "thirty six hours"}}
+    "6/28": "June 28", "50 hrs": "fifty hours", "36 hrs": "thirty six hours"},
+    # Commission (afoqt), voice director 2026-11-07. TBAS as units say it is provisional: Anthony's call, fallback "T B A S"
+    "afoqt": {"Pruett": "Pruitt",
+    "KC-135": "K C one thirty five", "KC-135s": "K C one thirty fives", "KC-46": "K C forty six",
+    "228": "two two eight",
+    "AFOQT": "A F O Q T", "PCSM": "P C S M", "TBAS": "TEE-bass",
+    "CSO": "C S O", "ABM": "A B M", "AFPC": "A F P C",
+    "mg/L": "milligrams per liter", "MGD": "million gallons a day",
+    "0100": "oh one hundred", "0130": "oh one thirty", "0200": "oh two hundred",
+    "FRI 1500": "Friday, fifteen hundred", "5 HRS": "five hours",
+    "SSGT": "staff sergeant", "MSGT": "master sergeant", "LT MERRITT": "Lieutenant Merritt",
+    "I WANT TO FLY": "I want to fly"}}
 if SAY_COURSE.get(course):
     SAY.update(SAY_COURSE[course])
     SAY_RE = re.compile(r"(?<![\w-])(" + "|".join(map(re.escape, sorted(SAY, key=len, reverse=True))) + r")(?![\w-])")

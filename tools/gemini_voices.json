@@ -195,6 +195,22 @@
    "Alma": {"voice": "Vindemiatrix", "style": "A young woman's voice. Cool, firm, careful.", "run": true, "gender": "f"},
    "Gene": {"voice": "en-us-tutor-8", "style": "An older man's voice. Flat, guarded, plainspoken.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
    "Ronnie": {"voice": "en-us-concierge-10", "style": "A man's voice. Warm, rueful, plainspoken.", "run": true, "gender": "m"}
+  },
+  "afoqt": {
+   "_provisional": "PROVISIONAL casting (2026-11-07): the voice director's A picks (halcyon-private/reviews/afoqt_voice_prep_2026-11-07.md). Anthony picks Kit, Vern, Graham, Boyd and the narrator by ear from samples; nothing in afoqt records until he does. Narrator is the director's lean (en-us-tutor-8), not a decision.",
+   "narrator": {"voice": "en-us-tutor-8", "style": "General American accent. Warm, steady audiobook narrator. Unhurried, clear."},
+   "Kit": {"voice": "en-us-assistant-13", "style": "A woman's voice. Steady, practical, a little dry.", "run": true, "gender": "f", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Vern": {"voice": "en-us-storyteller-12", "style": "A man's voice. Dry, exact, patient.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Graham": {"voice": "en-us-techagent-3", "style": "A man's voice. Warm, easy, a little wry.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Boyd": {"voice": "Algieba", "style": "A man's voice. Gruff, plain, few words.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Fisk": {"voice": "Sadaltager", "style": "A young man's voice. Eager, earnest, quick.", "run": true, "gender": "m", "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Corbin": {"voice": "en-us-cruz", "style": "A man's voice. Easy, dry, plainspoken.", "run": true, "gender": "m"},
+   "Merritt": {"voice": "en-us-csagent-10", "style": "A woman's voice. Even, clear, direct.", "run": true, "gender": "f", "f0_low": 115, "f0_char_low": 125, "sim_min": 0.92, "tone_sim_min": 0.88},
+   "Rhonda": {"voice": "en-us-advisor-1", "style": "A woman's voice. Warm, quick, plainspoken.", "run": true, "gender": "f", "f0_low": 120, "f0_char_low": 130},
+   "Patrice": {"voice": "Pulcherrima", "style": "A woman's voice. Brisk, sharp, warm.", "run": true, "gender": "f", "f0_low": 100, "f0_char_low": 115},
+   "Administrator": {"voice": "en-us-concierge-7", "style": "A woman's voice. Polite, even, procedural.", "run": true, "gender": "f"},
+   "man": {"voice": "Rasalgethi", "style": "A man's voice. Natural and conversational.", "run": true, "gender": "m"},
+   "woman": {"voice": "Callirrhoe", "style": "A woman's voice. Natural and conversational.", "run": true, "gender": "f"}
   }
  }
 }
