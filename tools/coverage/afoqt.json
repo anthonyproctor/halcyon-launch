@@ -170,10 +170,11 @@
     "whole numbers?"
    ],
    "refs": [
-    {"ch": 5, "sec": 2, "h": "Rates that change partway", "auto": true}
+    {"ch": 5, "sec": 2, "h": "Rates that change partway", "auto": true},
+    {"ch": 6, "sec": 1, "h": "The names of things", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 80
+   "depth": 207
   },
   {
    "id": "AFOQT.AR.geometry",
@@ -193,9 +194,11 @@
     "circumference",
     "rectangular (box|container|tank)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 9, "h": "Area, perimeter and volume", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 43
   },
   {
    "id": "AFOQT.AR.format",
@@ -218,10 +221,11 @@
    ],
    "refs": [
     {"ch": 4, "sec": 4, "h": "Warmups in test order", "auto": true},
-    {"ch": 5, "sec": 0, "h": "One sentence under every rate problem", "auto": true}
+    {"ch": 5, "sec": 0, "h": "One sentence under every rate problem", "auto": true},
+    {"ch": 6, "sec": 0, "h": "Twenty five in twenty two", "auto": true}
    ],
    "status": "practiced",
-   "depth": 153
+   "depth": 225
   },
   {
    "id": "AFOQT.WK.synonyms",
@@ -311,10 +315,13 @@
     "reciprocals?"
    ],
    "refs": [
-    {"ch": 5, "sec": 3, "h": "The water plant's version", "auto": true}
+    {"ch": 5, "sec": 3, "h": "The water plant's version", "auto": true},
+    {"ch": 6, "sec": 1, "h": "The names of things", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Fractions, and what goes first", "auto": true},
+    {"ch": 6, "sec": 5, "h": "Exponents, roots and big numbers", "auto": true}
    ],
-   "status": "explained",
-   "depth": 69
+   "status": "independently assessed",
+   "depth": 661
   },
   {
    "id": "AFOQT.MK.algebra",
@@ -335,9 +342,12 @@
     "isolate the variable",
     "slope"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "Factoring, the way I did it at the table", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Graphs and slope", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 343
   },
   {
    "id": "AFOQT.MK.systems",
@@ -355,9 +365,11 @@
     "elimination method",
     "two equations"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Equations and inequalities", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 50
   },
   {
    "id": "AFOQT.MK.inequalities",
@@ -375,9 +387,11 @@
     "greater than or equal",
     "number line"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Equations and inequalities", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 198
   },
   {
    "id": "AFOQT.MK.exponents",
@@ -396,9 +410,11 @@
     "scientific notation",
     "cube roots?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 5, "h": "Exponents, roots and big numbers", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 486
   },
   {
    "id": "AFOQT.MK.geometry",
@@ -421,9 +437,12 @@
     "radius",
     "coordinate plane"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 7, "h": "Angles and triangles", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Polygons and circles", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 701
   },
   {
    "id": "AFOQT.MK.terms",
@@ -443,9 +462,12 @@
     "associative",
     "rational numbers?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 1, "h": "The names of things", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Mean, median, mode and range", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 241
   },
   {
    "id": "AFOQT.MK.format",
@@ -464,10 +486,11 @@
     "back-solv"
    ],
    "refs": [
-    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true}
+    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true},
+    {"ch": 6, "sec": 0, "h": "Twenty five in twenty two", "auto": true}
    ],
-   "status": "explained",
-   "depth": 20
+   "status": "practiced",
+   "depth": 92
   },
   {
    "id": "AFOQT.RC.main-idea",

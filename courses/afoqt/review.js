@@ -34,7 +34,7 @@ window.HALCYON_REVIEW.afoqt={
       {name:"1. Verbal Analogies", where:"25 items, 8 minutes", d:"Finish a pair to match the first one, or pick the whole pair that matches.", ch:1, sec:0},
       {name:"2. Arithmetic Reasoning", where:"25 items, 29 minutes", d:"Word problems, with scratch paper.", ch:1, sec:0},
       {name:"3. Word Knowledge", where:"25 items, 5 minutes", d:"One word in capitals, and you pick the closest meaning.", ch:1, sec:0},
-      {name:"4. Math Knowledge", where:"25 items, 22 minutes", d:"Algebra, geometry and math vocabulary.", ch:1, sec:0},
+      {name:"4. Math Knowledge", where:"25 items, 22 minutes", d:"Algebra, geometry and math vocabulary.", ch:6, sec:0},
       {name:"5. Reading Comprehension", where:"25 items, 24 minutes [2015 pamphlet: 38]", d:"Several passages, each with its own set of questions. The time is the one most worth checking on your test notice.", ch:1, sec:0},
       {name:"6. Situational Judgment", where:"16 items, 35 minutes [2015 pamphlet: 50]", d:"A junior officer's problem and five actions. You pick the most and the least effective. The pamphlet counted each pick as an item, so its 50 is 25 problems. Check your own test notice.", ch:1, sec:0},
       {name:"Break", where:"15 minutes", d:"The one scheduled break, right after Situational Judgment.", ch:1, sec:0},
@@ -82,9 +82,9 @@ window.HALCYON_REVIEW.afoqt={
       {name:"Tricks", d:"Break it into pieces: pre, post, sub, trans, port, dict, cred, ver. Check whether it praises or knocks, and drop the choices with the wrong charge. Between two near meanings, take the one you could swap in anywhere.", ch:2, sec:0}
     ]},
     {group:"4. Math Knowledge", note:"Algebra, geometry, factoring and the names of things, with no story wrapped around them.", items:[
-      {name:"Traps", d:"Stopping one step early. Forgetting to flip the inequality when you divide by a negative. Area when they asked for circumference. Adding the legs of a right triangle instead of using the squares.", mock:true},
-      {name:"Pacing", where:"About 53 seconds each", d:"Quick recall items buy time for the geometry. Put your best guess on a long one and move on. Come back only if the screen lets you.", mock:true},
-      {name:"Tricks", d:"Triangle angles total 180. A polygon's inside angles add up to sides minus two, times 180. Same base, multiply: add the exponents. Factor a trinomial by finding the pair with the right product and the right sum. Plug your answer back in to check it.", mock:true}
+      {name:"Traps", d:"Stopping one step early. Forgetting to flip the inequality when you divide by a negative. Area when they asked for circumference. Adding the legs of a right triangle instead of using the squares.", ch:6, sec:4},
+      {name:"Pacing", where:"About 53 seconds each", d:"Quick recall items buy time for the geometry. Put your best guess on a long one and move on. Come back only if the screen lets you.", ch:6, sec:0},
+      {name:"Tricks", d:"Triangle angles total 180. A polygon's inside angles add up to sides minus two, times 180. Same base, multiply: add the exponents. Factor a trinomial by finding the pair with the right product and the right sum. Plug your answer back in to check it.", ch:6, sec:6}
     ]},
     {group:"5. Reading Comprehension", note:"Can you read formal prose fast and answer only from what it says?", items:[
       {name:"Traps", d:"A choice that's true but isn't on the page. A real detail lifted from the wrong line. Main idea choices that cover only one paragraph. Extreme words like always, never and only in prose that hedges.", ch:3, sec:1},
