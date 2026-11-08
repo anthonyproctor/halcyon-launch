@@ -7,14 +7,14 @@
 // order of courses/gh300/full/chNN.js lesson.sections). mock:true instead of ch means only the practice exam teaches it.
 // Sources: the lessons, quizzes and explanations in courses/gh300/full/ch01.js to ch07.js and courses/gh300/mock/mock1.js, the Microsoft
 // Learn GH-300 study guide "Skills measured as of August 7, 2026", and the coverage audit of 2026-10-25 (halcyon-private). Where GitHub
-// changed something around the outline date (Copilot approvals after it, Spark closed to new users three days before it), the line says what to answer on the exam.
+// changed something around the outline date (Copilot approvals after it, Spark closed to new users three days before it), the line teaches current behavior and the conditions it depends on (2026-11-07 Codex audit: an outline date doesn't freeze the answer key).
 // Every line is in our own words. GitHub Docs and Microsoft Learn text is theirs: never paste it here. Copy rules: plain words,
 // contractions, no dashes.
 window.HALCYON_REVIEW=window.HALCYON_REVIEW||{};
 window.HALCYON_REVIEW.gh300={
   intro:[
     "One screen for the last few days. Everything here is something the book already taught you, boiled down, with a link back to the lesson that teaches it.",
-    "The GH-300 outline we follow is Microsoft Learn's skills list as of August 7, 2026: Copilot features 25 to 30 percent, responsible use 15 to 20, and data and architecture, prompt engineering, productivity, and privacy and safeguards 10 to 15 each. You get 100 minutes, you need 700 to pass, and some items may be interactive. Copilot changes fast. When the docs moved after the outline date, answer the way the outline did.",
+    "The GH-300 outline we follow is Microsoft Learn's skills list as of August 7, 2026: Copilot features 25 to 30 percent, responsible use 15 to 20, and data and architecture, prompt engineering, productivity, and privacy and safeguards 10 to 15 each. You get 100 minutes, you need 700 to pass, and some items may be interactive. Copilot changes fast, and Microsoft says the exam may include preview features that are commonly used. Learn how things work now, and read the setup a question gives you: the surface, the plan, and the policies.",
     "This is our own summary. Microsoft Learn's current study guide is the official word on what's tested. The Copilot Rollout isn't affiliated with or endorsed by GitHub or Microsoft."
   ],
   sections:[["features","Features and where they live","list"],["policies","Policies and content exclusion","list"],["responsible","Responsible AI rules","rules"],["prompting","Prompt engineering rules","rules"],["terms","Key terms","terms"],["rules","What the exam wants","rules"]],
@@ -31,7 +31,7 @@ window.HALCYON_REVIEW.gh300={
       {name:"Agent mode", where:"Editor, in Copilot Chat", d:"Edits several files, proposes terminal commands and keeps going while you watch and approve. Synchronous.", ch:2, sec:0},
       {name:"Copilot Edits", where:"Editor", d:"You pick the files and Copilot proposes changes only there. VS Code deprecated its Edit mode in March 2026, removed it in June, and points to agent mode, but the outline still names Edits.", ch:2, sec:3},
       {name:"Coding agent (now cloud agent)", where:"GitHub.com", d:"Assign it an issue. It works in the background in an Actions environment, pushes to a copilot/ branch and opens a draft pull request. Asynchronous.", ch:2, sec:0},
-      {name:"Copilot code review", where:"Pull requests on GitHub.com", d:"Request it like a reviewer or set it to run automatically. By default it leaves a Comment review that doesn't count toward required approvals, and that's the exam answer.", ch:3, sec:2},
+      {name:"Copilot code review", where:"Pull requests on GitHub.com", d:"Request it like a reviewer or set it to run automatically. By default it leaves a Comment review that doesn't count toward required approvals. Copilot approvals, a preview setting an admin turns on, can let it count.", ch:3, sec:2},
       {name:"Pull request summaries", where:"Copilot icon in the description or comment box", d:"Start from a blank box. It describes the diff, so you add why you changed it and how you tested.", ch:7, sec:3},
       {name:"Spaces", where:"GitHub.com", d:"Gathers repos, code, issues, pull requests, notes and files so Chat answers from that set. An organization's space can be shared with its members.", ch:4, sec:3},
       {name:"Spark", where:"GitHub.com, closed to new users in August 2026", d:"Built full stack apps from a plain language description. The outline still lists it, so know what it was for.", ch:7, sec:3}
@@ -156,7 +156,7 @@ window.HALCYON_REVIEW.gh300={
     {r:"Policy control means an organization plan.", why:"Business or Enterprise. Mention of Enterprise Cloud and enterprise features leans Enterprise. An individual plan never gives the company control.", ch:1, sec:0},
     {r:"GitHub.com is the odd one out.", why:"In a list of IDEs, it's the trap. Copilot works there, but there's no extension to install.", ch:1, sec:1},
     {r:"In the IDE and watching: agent mode. Assigned an issue: cloud agent.", why:"Agent mode is synchronous in the editor. The coding agent works in the background and opens a pull request.", ch:2, sec:0},
-    {r:"On the exam, Copilot's review isn't an approval.", why:"By default it leaves a Comment review. Copilot approvals reached the docs on September 1, 2026, after the outline, so on the exam the answer is no.", ch:7, sec:4},
+    {r:"By default, Copilot's review isn't an approval.", why:"It leaves a Comment review. Copilot approvals, in preview and off by default, can count where the plan and policies allow it and an admin turns them on. Answer from the setup the question gives.", ch:7, sec:4},
     {r:"Rules for some files: a .instructions.md with applyTo.", why:"If the path matches, the path specific and the repository wide instructions both apply.", ch:4, sec:1},
     {r:"Instructions always ride along. Prompt files run on demand.", why:"Use instructions for standing rules and prompt files for a task you repeat.", ch:4, sec:3},
     {r:"Exclusion not working? Think timing first.", why:"Up to 30 minutes, or reload. Then the pattern, the surface and whose seat it is.", ch:5, sec:1},

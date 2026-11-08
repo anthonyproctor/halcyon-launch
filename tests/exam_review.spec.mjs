@@ -127,6 +127,7 @@ const BOOKS = [
   { id: "gh300", body: "GitHub or Microsoft" },
   { id: "cisa", body: "ISACA" },
   { id: "pilot", body: "the FAA" },
+  { id: "afoqt", body: "the Department of the Air Force, AFPC or Pearson" },
   { id: "lsat", body: "LSAC" }
 ];
 

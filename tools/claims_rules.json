@@ -1,0 +1,95 @@
+{
+ "about": "Claims about a real exam that an exam check has ruled false or unverified. tools/check_claims.mjs fails on any match in a course's lessons, explanations, review page or mock explanations. Add a rule every time an exam check fails a claim, so the same mistake can't ship twice. Fields: course (or *), pattern (JS regex, case insensitive), unless (optional regex; a match on the same sentence clears it), why, ruled (date and review file).",
+ "rules": [
+  {
+   "course": "afoqt",
+   "pattern": "(wrong (choices|answers|options)|choices) (are|sit|come from)[^.]{0,40}(cells? next door|neighbou?r)",
+   "unless": "\\b(many|some|often|most)\\b",
+   "why": "Real Table Reading items include choices that are neither neighbors nor the swapped cell (2015 pamphlet Part B.2)",
+   "ruled": "2026-11-07 afoqt_ch02/ch04/review examchecks"
+  },
+  {
+   "course": "afoqt",
+   "pattern": "(no|without (a|any)) calculator",
+   "unless": "\\b(practi[cs]e|confirmed|sure|certain)\\b",
+   "why": "No official source bans calculators on the AFOQT; say scratch paper, practice without one",
+   "ruled": "2026-11-07 afoqt_ch01 and review examchecks"
+  },
+  {
+   "course": "afoqt",
+   "pattern": "exactly one (thing|reading|cue)|misses on (exactly )?one thing",
+   "unless": "\\b(often|usually|our|practice test)\\b",
+   "why": "Real IC wrong pictures can miss on more than one reading (pamphlet sample X); that's only our practice-test build rule",
+   "ruled": "2026-11-07 afoqt_review examcheck"
+  },
+  {
+   "course": "afoqt",
+   "pattern": "nobody scores|no score to protect|isn'?t scored at all",
+   "why": "The SDI is not graded but is used for job fit; say 'not graded'",
+   "ruled": "2026-11-07 afoqt_ch05 examcheck"
+  },
+  {
+   "course": "afoqt",
+   "pattern": "number right is the score|scores? (is|are) (just |the )?number right",
+   "why": "Pearson: scores don't refer to the raw number right; say 'built from the number right'",
+   "ruled": "2026-11-07 afoqt_ch05 and review examchecks"
+  },
+  {
+   "course": "afoqt",
+   "pattern": "age waiver",
+   "unless": "\\b(crew chief|loosely|shop|rumou?r|Kit says|she said)\\b",
+   "why": "Official term is exception to policy; crew chiefs may say waiver loosely in dialogue",
+   "ruled": "2026-11-07 afoqt_bible_factcheck F2"
+  },
+  {
+   "course": "*",
+   "pattern": "\\b(approved|endorsed|sanctioned) by (the )?(PMI|Project Management Institute|ISACA|HIMSS|INCOSE|LSAC|FAA|GitHub|Microsoft|Department of the Air Force|Air Force|AFPC|Pearson)\\b",
+   "unless": "\\b(isn'?t|not|no|never)\\b|affiliated",
+   "why": "Never claim approval or endorsement by an exam body",
+   "ruled": "standing rule"
+  },
+  {
+   "course": "gh300",
+   "pattern": "answer (it )?(the way|as) the outline|(after|before|predates?) the outline[^.]{0,80}\\b(answer|on the exam)\\b|outline (is |was )?dated[^.]{0,120}\\banswer\\b|counts? toward required approvals, answer no|that'?s the exam answer",
+   "why": "An outline's publication date doesn't freeze the answer key; Microsoft says commonly used preview features may be tested. Teach current behavior with its surface, plan and policy conditions",
+   "ruled": "2026-11-07 Codex audit (gh300 ch07 Two signatures, review.js)"
+  },
+  {
+   "course": "pmp",
+   "pattern": "opens with (a )?case stud|case stud(y|ies) (section )?(comes? )?first",
+   "why": "The ECO describes case questions placed anywhere, not a case study section that opens the exam",
+   "ruled": "2026-11-07 Codex audit (full/v2/preview.js mockBlurb)"
+  },
+  {
+   "course": "pmp",
+   "pattern": "(all|every one of the) 180[^.]{0,60}(count|scored)[^.]{0,40}like the real",
+   "why": "The real PMP exam scores 170 of 180; 10 are unscored pretest items. Our mock scores all 180, so never say that matches the real test",
+   "ruled": "2026-11-07 Codex audit (courses.js, preview.js mockBlurb)"
+  },
+  {
+   "course": "cisa",
+   "pattern": "(after the (money'?s gone|loss|money has (gone|left)))[^.]{0,80}can'?t (stand in|compensate)|detective (control|check)[^.]{0,60}(can'?t|cannot|never) (stand in|compensate|replace)",
+   "unless": "\\b(only if|unless|in time|too late)\\b",
+   "why": "A detective control can compensate for a weak preventive control if it addresses the risk in time; adequacy depends on timeliness and residual risk",
+   "ruled": "2026-11-07 Codex audit (cisa ch12 Kinds of controls)"
+  },
+  {
+   "course": "cisa",
+   "pattern": "any network[^.]{0,100}\\bTLS\\b|without (TLS|it), anyone on the path",
+   "why": "Teach the requirement (protect data in transit with an appropriate protocol or architecture), not one protocol for every network",
+   "ruled": "2026-11-07 Codex audit (cisa ch08)"
+  },
+  {
+   "course": "lsat",
+   "pattern": "believe (her|him|them|the witness) about[^.]{0,60}(you'?d better|you must|you have to) believe",
+   "why": "A witness's credibility can differ from one observation to the next; no categorical inference",
+   "ruled": "2026-11-07 Codex audit (lsat ch04 Weight both ways)"
+  },
+  {
+   "course": "lsat",
+   "pattern": "what does (this|the second) author do to the first",
+   "why": "Comparative passages often address a topic independently; don't teach that the second author always acts on the first",
+   "ruled": "2026-11-07 Codex audit (lsat ch07 Two passages)"
+  }
+ ]
+}
