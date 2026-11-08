@@ -1,0 +1,6320 @@
+{
+ "course": "pilot",
+ "taxonomy": "official",
+ "outline": {
+  "name": "Private Pilot for Airplane Category Airman Certification Standards (ASEL knowledge elements)",
+  "version": "FAA-S-ACS-6C, November 2023 (effective 2024-05-31)",
+  "source": "https://www.faa.gov/training_testing/testing/acs/private_airplane_acs_6.pdf",
+  "read": "2026-11-07",
+  "notes": "Scope: knowledge (K) elements of every FAA-S-ACS-6C task that applies to an airplane single-engine land (ASEL) applicant, since the PAR knowledge test reports missed questions by ACS element code. Excluded: Task I.I (seaplane), I.G.K1k water rudders (ASES, AMES), II.E taxiing and sailing (ASES, AMES), IV.G through IV.L confined area, glassy water, and rough water (ASES, AMES), IX.E through IX.G and all of Area X (AMEL, AMES), XII.B seaplane post-landing (ASES, AMES), and elements the ACS marks [Archived] (VIII.E.K1a-d, IX.C.K1a-d). Where a K element prints lettered sub-items, each sub-item is its own objective and the lead-in stem is not listed separately; the exceptions are PA.I.D.K1, which carries content of its own beyond its single sub-item K1a (EFB) so both are listed, and VIII.E.K1 and IX.C.K1, whose sub-items are all archived so the parent stands alone. The ACS repeats some elements word for word across tasks (for example IV.A/C/E K1-K3, IV.B/D/F K1-K3, VII.B/C K1, K2, K4, and VIII.A-D K1a-d); each keeps its own ID because the knowledge test codes to each one, so expect identical match lists there. Risk management (R) and skill (S) elements are left out for now; R elements can be added later with IDs like PA.I.A.R1. Task mapping: Area I tasks map to I.A..I.H, Area III tasks to III.A and III.B, every other area to its area code. meta.js has no code for Area X (multiengine), which is out of scope, so nothing needed a closest-fit mapping. Text fields are plain-word paraphrases, not ACS wording. Currency: the ACS PDF read is the November 2023 edition (effective 2024-05-31); not re-checked against faa.gov for a newer change notice beyond the file served on the read date."
+ },
+ "objectives": [
+  {
+   "id": "PA.I.A.K1",
+   "text": "What it takes to earn the private certificate, the recent experience needed to carry passengers, and the logbook records to keep.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.A",
+   "group": "Area I. Preflight Preparation / Task A. Pilot Qualifications",
+   "kind": "definition",
+   "tasks": [
+    "I.A"
+   ],
+   "match": [
+    "61\\.(57|103|109|51)",
+    "recent flight experience",
+    "three takeoffs and landings",
+    "(full stop|full-stop) landings?",
+    "logbook entr(y|ies)",
+    "flight review",
+    "aeronautical experience",
+    "90 days"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "The road to a private pilot certificate", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Class B: the upside down wedding cake", "auto": true},
+    {"ch": 7, "sec": 0, "h": "What has to be true before I get out", "auto": true},
+    {"ch": 9, "sec": 0, "h": "Leaving the pattern", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Three kinds of night", "auto": true},
+    {"ch": 10, "sec": 1, "h": "What you need, and what you can't do", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Staying legal after the checkride: 61.56 and 61.57", "auto": true},
+    {"ch": 12, "sec": 7, "h": "After", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 894
+  },
+  {
+   "id": "PA.I.A.K2",
+   "text": "What a private pilot may and may not do, including sharing costs and flying for compensation.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.A",
+   "group": "Area I. Preflight Preparation / Task A. Pilot Qualifications",
+   "kind": "definition",
+   "tasks": [
+    "I.A"
+   ],
+   "match": [
+    "61\\.113",
+    "pro rata",
+    "share (the )?(operating )?(costs?|expenses)",
+    "private pilot privileges",
+    "charitable",
+    "privileges and limitations",
+    "compensation or hire",
+    "for hire"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 7, "sec": 1, "h": "What you still can't do", "auto": true},
+    {"ch": 11, "sec": 3, "h": "What a private pilot can do: 61.113", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 241
+  },
+  {
+   "id": "PA.I.A.K3",
+   "text": "Medical certificate classes, how long each lasts, what each allows, and conditions that ground a pilot temporarily.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.A",
+   "group": "Area I. Preflight Preparation / Task A. Pilot Qualifications",
+   "kind": "definition",
+   "tasks": [
+    "I.A"
+   ],
+   "match": [
+    "third[- ]class medical",
+    "(first|second)[- ]class",
+    "medical certificate",
+    "aviation medical examiner",
+    "AME\\b",
+    "61\\.(23|53)",
+    "medical deficiency",
+    "(24|60) calendar months"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "The road to a private pilot certificate", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 7, "sec": 0, "h": "What has to be true before I get out", "auto": true},
+    {"ch": 8, "sec": 1, "h": "IMSAFE", "auto": true},
+    {"ch": 11, "sec": 5, "h": "Medicals, what's in your pocket, and your address", "auto": true},
+    {"ch": 12, "sec": 1, "h": "What goes in the bag", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 406
+  },
+  {
+   "id": "PA.I.A.K4",
+   "text": "The documents a private pilot must carry to act as pilot in command.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.A",
+   "group": "Area I. Preflight Preparation / Task A. Pilot Qualifications",
+   "kind": "definition",
+   "tasks": [
+    "I.A"
+   ],
+   "match": [
+    "pilot certificate",
+    "photo (ID|identification)",
+    "government[- ]issued",
+    "61\\.3\\b",
+    "medical certificate",
+    "in (your|their|his|her) personal possession"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "The road to a private pilot certificate", "auto": true},
+    {"ch": 7, "sec": 0, "h": "What has to be true before I get out", "auto": true},
+    {"ch": 11, "sec": 5, "h": "Medicals, what's in your pocket, and your address", "auto": true},
+    {"ch": 12, "sec": 1, "h": "What goes in the bag", "auto": true},
+    {"ch": 12, "sec": 6, "h": "The piece of paper", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 273
+  },
+  {
+   "id": "PA.I.A.K5",
+   "text": "BasicMed: who qualifies and the limits on aircraft size, passengers, altitude, and speed under part 68.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.A",
+   "group": "Area I. Preflight Preparation / Task A. Pilot Qualifications",
+   "kind": "definition",
+   "tasks": [
+    "I.A"
+   ],
+   "match": [
+    "BasicMed",
+    "part 68",
+    "comprehensive medical examination",
+    "medical education course",
+    "CMEC",
+    "18,000 feet",
+    "250 knots",
+    "six (occupants|passengers)"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
+    {"ch": 11, "sec": 5, "h": "Medicals, what's in your pocket, and your address", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 69
+  },
+  {
+   "id": "PA.I.B.K1a",
+   "text": "Which aircraft certificates must be aboard, where they go, and when each expires.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "definition",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "airworthiness certificate",
+    "registration certificate",
+    "operating limitations",
+    "weight and balance (data|information)",
+    "91\\.203",
+    "(seven|7)[- ]year",
+    "ARROW\\b"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 2, "sec": 6, "h": "What an owner may fix, and what kind of airplane it is", "auto": true},
+    {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 67
+  },
+  {
+   "id": "PA.I.B.K1b",
+   "text": "Inspections an airplane needs, such as the annual and 100-hour, and how they are recorded in the logbooks.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "definition",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "annual inspection",
+    "100[- ]hour inspection",
+    "91\\.(409|411|413|207)",
+    "ELT (battery|inspection)",
+    "transponder (check|inspection)",
+    "maintenance (records|logbooks?)",
+    "AV1ATE",
+    "(airframe|engine) logbook"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true},
+    {"ch": 12, "sec": 1, "h": "What goes in the bag", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 124
+  },
+  {
+   "id": "PA.I.B.K1c",
+   "text": "What airworthiness directives and special airworthiness information bulletins are and how compliance works.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "definition",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "airworthiness directives?",
+    "\\bADs?\\b",
+    "part 39",
+    "SAIBs?",
+    "special airworthiness information",
+    "recurring AD",
+    "emergency AD"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Class B: the upside down wedding cake", "auto": true},
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
+    {"ch": 11, "sec": 8, "h": "Inspections, records, and ADs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 206
+  },
+  {
+   "id": "PA.I.B.K1d",
+   "text": "Why and how a pilot gets a special flight permit (ferry permit) for an airplane that is not airworthy.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "procedural",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "special flight permit",
+    "ferry permit",
+    "21\\.197",
+    "Flight Standards District Office",
+    "FSDO"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.B.K1e",
+   "text": "Who is responsible for keeping the airplane airworthy (owner or operator) and for confirming it before flight (pilot in command).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "definition",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "owner (or|and) operator",
+    "91\\.(3|7|403)\\b",
+    "primary responsib",
+    "pilot in command is responsible",
+    "responsible for determining",
+    "airworthy condition"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
+    {"ch": 11, "sec": 8, "h": "Inspections, records, and ADs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 90
+  },
+  {
+   "id": "PA.I.B.K2",
+   "text": "Preventive maintenance a certificated pilot may do on an airplane they own or operate, and how to log it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "definition",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "preventive maintenance",
+    "part 43",
+    "appendix A",
+    "43\\.3",
+    "oil change",
+    "servicing",
+    "maintenance record entry"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 6, "h": "What an owner may fix, and what kind of airplane it is", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 62
+  },
+  {
+   "id": "PA.I.B.K3a",
+   "text": "Rules for flying with inoperative instruments or equipment when no MEL exists.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "judgment",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "inoperative (instruments?|equipment)",
+    "91\\.213",
+    "deactivat",
+    "placard(ed)? .?inoperative",
+    "INOP",
+    "type certificate data sheet"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 25
+  },
+  {
+   "id": "PA.I.B.K3b",
+   "text": "How an approved minimum equipment list works and when it can be used.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "procedural",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "minimum equipment list",
+    "MEL\\b",
+    "letter of authorization",
+    "master minimum equipment",
+    "MMEL"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 25
+  },
+  {
+   "id": "PA.I.B.K3c",
+   "text": "The kinds of operations equipment list and what it shows about equipment required for each kind of operation.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "visual",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "kinds of operations? equipment list",
+    "KOEL",
+    "kinds of operations?",
+    "equipment list"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 12
+  },
+  {
+   "id": "PA.I.B.K3d",
+   "text": "Records and placards required when equipment is inoperative.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "procedural",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "placard",
+    "INOP",
+    "discrepanc(y|ies)",
+    "maintenance record",
+    "deactivat"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true},
+    {"ch": 11, "sec": 10, "h": "After you land: postflight", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 93
+  },
+  {
+   "id": "PA.I.B.K4",
+   "text": "Standard versus special airworthiness certificates, such as experimental or light sport, and the limits that come with each.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.B",
+   "group": "Area I. Preflight Preparation / Task B. Airworthiness Requirements",
+   "kind": "definition",
+   "tasks": [
+    "I.B"
+   ],
+   "match": [
+    "standard airworthiness",
+    "special airworthiness",
+    "experimental",
+    "light[- ]sport",
+    "restricted category",
+    "limited category",
+    "primary category",
+    "provisional"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 6, "h": "What an owner may fix, and what kind of airplane it is", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 28
+  },
+  {
+   "id": "PA.I.C.K1",
+   "text": "Where pilots get official weather for planning, such as the National Weather Service and Flight Service.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "National Weather Service",
+    "NWS\\b",
+    "Flight Service",
+    "1800wxbrief",
+    "aviationweather\\.gov",
+    "Aviation Weather Center",
+    "standard briefing",
+    "weather briefing"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.C.K2a",
+   "text": "Reading METAR and SPECI airport observations and pilot reports.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "visual",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "METARs?",
+    "SPECI",
+    "PIREPs?",
+    "pilot reports?",
+    "UUA",
+    "routine (weather )?observation",
+    "\\bUA\\b"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 6, "h": "What an owner may fix, and what kind of airplane it is", "auto": true},
+    {"ch": 3, "sec": 2, "h": "The METAR, one group at a time", "auto": true},
+    {"ch": 3, "sec": 3, "h": "The TAF, and what time it really is", "auto": true},
+    {"ch": 3, "sec": 5, "h": "AIRMETs, SIGMETs, and PIREPs", "auto": true},
+    {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true},
+    {"ch": 4, "sec": 4, "h": "How far from the clouds, and how far you can see", "auto": true},
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
+    {"ch": 7, "sec": 0, "h": "What has to be true before I get out", "auto": true},
+    {"ch": 7, "sec": 1, "h": "What you still can't do", "auto": true},
+    {"ch": 8, "sec": 12, "h": "Personal minimums", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 634
+  },
+  {
+   "id": "PA.I.C.K2b",
+   "text": "Reading the surface analysis chart and the ceiling and visibility chart.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "visual",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "surface analysis",
+    "ceiling and visibility",
+    "CVA\\b",
+    "isobars?",
+    "station models?",
+    "pressure systems?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 20
+  },
+  {
+   "id": "PA.I.C.K2c",
+   "text": "Reading a terminal aerodrome forecast.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "visual",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "TAFs?\\b",
+    "terminal aerodrome forecast",
+    "FM\\d{4}",
+    "TEMPO",
+    "PROB30",
+    "BECMG"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 3, "h": "The TAF, and what time it really is", "auto": true},
+    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true},
+    {"ch": 12, "sec": 6, "h": "The piece of paper", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 194
+  },
+  {
+   "id": "PA.I.C.K2d",
+   "text": "Using the graphical forecasts for aviation tool.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "visual",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "graphical forecasts? for aviation",
+    "GFA\\b",
+    "cloud coverage forecast",
+    "surface forecast"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.C.K2e",
+   "text": "Reading the winds and temperatures aloft forecast.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "visual",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "winds? (and temperatures? )?aloft",
+    "FB (forecast|winds)",
+    "\\bFB\\b",
+    "9900",
+    "light and variable"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 222
+  },
+  {
+   "id": "PA.I.C.K2f",
+   "text": "What the convective outlook shows about expected thunderstorm risk.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "visual",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "convective outlook",
+    "Storm Prediction Center",
+    "SPC\\b",
+    "(marginal|slight|enhanced|moderate|high) risk"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.C.K2g",
+   "text": "In-flight weather advisories: AIRMETs, SIGMETs, and convective SIGMETs, and what each warns about.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "AIRMETs?",
+    "SIGMETs?",
+    "convective SIGMET",
+    "G-AIRMET",
+    "inflight (weather )?advisor(y|ies)",
+    "center weather advisory",
+    "CWA\\b",
+    "AIRMET (Sierra|Tango|Zulu)"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 5, "h": "AIRMETs, SIGMETs, and PIREPs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 63
+  },
+  {
+   "id": "PA.I.C.K3a",
+   "text": "How the atmosphere is made up and what makes air stable or unstable.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "atmospheric stability",
+    "(stable|unstable) air",
+    "lapse rate",
+    "adiabatic",
+    "standard atmosphere",
+    "nitrogen and oxygen",
+    "troposphere",
+    "inversion"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Rising air cools: lapse rates, cloud bases, and stability", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 157
+  },
+  {
+   "id": "PA.I.C.K3b",
+   "text": "Wind and what drives it, including wind shear and mountain wave.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "wind ?shear",
+    "mountain waves?",
+    "pressure gradient",
+    "Coriolis",
+    "rotor clouds?",
+    "lenticular",
+    "sea breeze",
+    "low[- ]level wind ?shear"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 3, "h": "The TAF, and what time it really is", "auto": true},
+    {"ch": 3, "sec": 5, "h": "AIRMETs, SIGMETs, and PIREPs", "auto": true},
+    {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 114
+  },
+  {
+   "id": "PA.I.C.K3c",
+   "text": "Temperature, how heat moves through the atmosphere, and why it matters to pilots.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "temperature inversion",
+    "heat exchange",
+    "(sensible|latent) heat",
+    "diurnal",
+    "temperature lapse",
+    "radiational cooling",
+    "convective currents?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.C.K3d",
+   "text": "Moisture and precipitation: humidity, dew point, and the forms precipitation takes.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "dew ?point",
+    "relative humidity",
+    "temperature[- ]dew ?point spread",
+    "precipitation",
+    "freezing rain",
+    "saturat",
+    "condensation"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Rising air cools: lapse rates, cloud bases, and stability", "auto": true},
+    {"ch": 3, "sec": 2, "h": "The METAR, one group at a time", "auto": true},
+    {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 193
+  },
+  {
+   "id": "PA.I.C.K3e",
+   "text": "How weather systems form, including air masses and the types of fronts.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "air mass(es)?",
+    "cold fronts?",
+    "warm fronts?",
+    "occluded fronts?",
+    "stationary fronts?",
+    "frontal (passage|weather|systems?)",
+    "source region"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 1, "h": "Air masses and fronts", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 161
+  },
+  {
+   "id": "PA.I.C.K3f",
+   "text": "Cloud types and what they say about the weather.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "cumulonimbus",
+    "cumulus",
+    "stratus",
+    "cirrus",
+    "altostratus",
+    "towering cumulus",
+    "cloud (types?|families)",
+    "nimbostratus"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Rising air cools: lapse rates, cloud bases, and stability", "auto": true},
+    {"ch": 3, "sec": 2, "h": "The METAR, one group at a time", "auto": true},
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 204
+  },
+  {
+   "id": "PA.I.C.K3g",
+   "text": "Turbulence: its causes, types, and how to deal with it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "turbulence",
+    "clear air turbulence",
+    "mechanical turbulence",
+    "convective turbulence",
+    "wake turbulence",
+    "chop"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 5, "h": "AIRMETs, SIGMETs, and PIREPs", "auto": true},
+    {"ch": 9, "sec": 0, "h": "Leaving the pattern", "auto": true},
+    {"ch": 11, "sec": 1, "h": "Getting in the door", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 84
+  },
+  {
+   "id": "PA.I.C.K3h",
+   "text": "Thunderstorm life cycle and hazards, including microbursts.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "thunderstorms?",
+    "microbursts?",
+    "(cumulus|mature|dissipating) stage",
+    "squall line",
+    "downdrafts?",
+    "gust front",
+    "hail"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 5, "h": "AIRMETs, SIGMETs, and PIREPs", "auto": true},
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 137
+  },
+  {
+   "id": "PA.I.C.K3i",
+   "text": "Structural and induction icing, and how to find the freezing level.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "structural icing",
+    "(rime|clear|mixed) ice",
+    "freezing level",
+    "carburetor icing",
+    "icing conditions",
+    "supercooled",
+    "freezing rain"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 58
+  },
+  {
+   "id": "PA.I.C.K3j",
+   "text": "How fog and mist form and the fog types pilots meet.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "fog\\b",
+    "radiation fog",
+    "advection fog",
+    "upslope fog",
+    "steam fog",
+    "ice fog",
+    "mist\\b",
+    "BR\\b"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 1, "h": "Air masses and fronts", "auto": true},
+    {"ch": 3, "sec": 2, "h": "The METAR, one group at a time", "auto": true},
+    {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 140
+  },
+  {
+   "id": "PA.I.C.K3k",
+   "text": "How frost forms on an airplane and why it must be removed before flight.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "frost",
+    "dew ?point (is )?below freezing",
+    "contaminated (wings?|surfaces?)",
+    "deice",
+    "91\\.527"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 43
+  },
+  {
+   "id": "PA.I.C.K3l",
+   "text": "Things that cut visibility besides cloud, such as smoke, haze, and volcanic ash.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "definition",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "smoke",
+    "haze",
+    "volcanic ash",
+    "obstructions? to visibility",
+    "\\bFU\\b",
+    "\\bHZ\\b",
+    "restrict(ed|ions? to) visibility"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Rising air cools: lapse rates, cloud bases, and stability", "auto": true},
+    {"ch": 3, "sec": 2, "h": "The METAR, one group at a time", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 39
+  },
+  {
+   "id": "PA.I.C.K4",
+   "text": "Weather and aeronautical data shown on cockpit displays, such as datalink weather, and their limits.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.C",
+   "group": "Area I. Preflight Preparation / Task C. Weather Information",
+   "kind": "visual",
+   "tasks": [
+    "I.C"
+   ],
+   "match": [
+    "datalink weather",
+    "FIS-B",
+    "ADS-B (In|weather)",
+    "NEXRAD",
+    "XM weather",
+    "latency",
+    "(cockpit|flight deck) weather",
+    "SiriusXM"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 10, "h": "Weather and charts on a tablet", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 69
+  },
+  {
+   "id": "PA.I.D.K1",
+   "text": "Planning a route around airspace and special use airspace, and choosing navigation and communication facilities to use.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.D",
+   "group": "Area I. Preflight Preparation / Task D. Cross-Country Flight Planning",
+   "kind": "judgment",
+   "tasks": [
+    "I.D"
+   ],
+   "match": [
+    "route planning",
+    "plan(ning)? (the|a) route",
+    "special use airspace",
+    "navigation log",
+    "nav log",
+    "checkpoints?",
+    "cross[- ]country (flight )?planning"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
+    {"ch": 9, "sec": 1, "h": "Pilotage", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 73
+  },
+  {
+   "id": "PA.I.D.K1a",
+   "text": "Using an electronic flight bag for planning, when one is used.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.D",
+   "group": "Area I. Preflight Preparation / Task D. Cross-Country Flight Planning",
+   "kind": "procedural",
+   "tasks": [
+    "I.D"
+   ],
+   "match": [
+    "electronic flight bag",
+    "EFB\\b",
+    "ForeFlight",
+    "Garmin Pilot",
+    "AC 120-76"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 10, "h": "Weather and charts on a tablet", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 50
+  },
+  {
+   "id": "PA.I.D.K2",
+   "text": "Choosing a cruise altitude based on terrain, obstacles, glide range, VFR cruising altitude rules, and wind.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.D",
+   "group": "Area I. Preflight Preparation / Task D. Cross-Country Flight Planning",
+   "kind": "judgment",
+   "tasks": [
+    "I.D"
+   ],
+   "match": [
+    "VFR cruising altitudes?",
+    "91\\.159",
+    "(odd|even) thousand(s)? (plus|\\+) 500",
+    "hemispheric rule",
+    "maximum elevation figure",
+    "MEF\\b",
+    "glide distance",
+    "altitude selection"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 5, "h": "Altitude, and the shelves", "auto": true},
+    {"ch": 12, "sec": 7, "h": "After", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 153
+  },
+  {
+   "id": "PA.I.D.K3a",
+   "text": "Working out time, climb and descent, course, distance, heading, true airspeed, and groundspeed with an E6B or calculator.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.D",
+   "group": "Area I. Preflight Preparation / Task D. Cross-Country Flight Planning",
+   "kind": "calculation",
+   "tasks": [
+    "I.D"
+   ],
+   "match": [
+    "E6-?B",
+    "flight computer",
+    "wind triangle",
+    "wind correction angle",
+    "true airspeed",
+    "groundspeed",
+    "true course",
+    "magnetic (course|heading)",
+    "time[- ]speed[- ]distance"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 2, "h": "What thin air does to the engine, the prop, and the wing", "auto": true},
+    {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true},
+    {"ch": 9, "sec": 5, "h": "Altitude, and the shelves", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true},
+    {"ch": 11, "sec": 1, "h": "Getting in the door", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 308
+  },
+  {
+   "id": "PA.I.D.K3b",
+   "text": "Figuring an estimated time of arrival and converting it to UTC (Zulu).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.D",
+   "group": "Area I. Preflight Preparation / Task D. Cross-Country Flight Planning",
+   "kind": "calculation",
+   "tasks": [
+    "I.D"
+   ],
+   "match": [
+    "estimated time (of|en route|enroute)",
+    "ETA\\b",
+    "ETE\\b",
+    "UTC\\b",
+    "Zulu",
+    "coordinated universal time",
+    "time zones?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 2, "h": "The METAR, one group at a time", "auto": true},
+    {"ch": 3, "sec": 3, "h": "The TAF, and what time it really is", "auto": true},
+    {"ch": 3, "sec": 5, "h": "AIRMETs, SIGMETs, and PIREPs", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true},
+    {"ch": 9, "sec": 9, "h": "Flight plans", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 242
+  },
+  {
+   "id": "PA.I.D.K3c",
+   "text": "Calculating fuel needed for the trip plus the required reserve.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.D",
+   "group": "Area I. Preflight Preparation / Task D. Cross-Country Flight Planning",
+   "kind": "calculation",
+   "tasks": [
+    "I.D"
+   ],
+   "match": [
+    "fuel (burn|consumption|required|requirements?|planning)",
+    "gallons per hour",
+    "91\\.151",
+    "fuel reserves?",
+    "\\bGPH\\b",
+    "(30|45)[- ]minute reserve"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 116
+  },
+  {
+   "id": "PA.I.D.K4",
+   "text": "What goes into a VFR flight plan.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.D",
+   "group": "Area I. Preflight Preparation / Task D. Cross-Country Flight Planning",
+   "kind": "definition",
+   "tasks": [
+    "I.D"
+   ],
+   "match": [
+    "VFR flight plan",
+    "flight plan form",
+    "FAA Form 7233",
+    "ICAO flight plan",
+    "souls on board",
+    "fuel on board"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 9, "h": "Flight plans", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 30
+  },
+  {
+   "id": "PA.I.D.K5",
+   "text": "How to file, open, and close a VFR flight plan.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.D",
+   "group": "Area I. Preflight Preparation / Task D. Cross-Country Flight Planning",
+   "kind": "procedural",
+   "tasks": [
+    "I.D"
+   ],
+   "match": [
+    "fil(e|ing) a (VFR )?flight plan",
+    "(open|activat)(e|ing) (the|a|your) flight plan",
+    "clos(e|ing) (the|a|your) flight plan",
+    "search and rescue",
+    "30 minutes after",
+    "Flight Service"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 9, "h": "Flight plans", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 70
+  },
+  {
+   "id": "PA.I.D.K6",
+   "text": "What to do if intercepted by military or law enforcement aircraft.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.D",
+   "group": "Area I. Preflight Preparation / Task D. Cross-Country Flight Planning",
+   "kind": "procedural",
+   "tasks": [
+    "I.D"
+   ],
+   "match": [
+    "intercept(ion|ed|or)?",
+    "121\\.5",
+    "7700",
+    "rocking (the )?wings",
+    "intercept signals",
+    "AIM 5-6-2"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 22
+  },
+  {
+   "id": "PA.I.E.K1",
+   "text": "The airspace classes and what each needs for entry, equipment, pilot certificate, and VFR weather minimums.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.E",
+   "group": "Area I. Preflight Preparation / Task E. National Airspace System",
+   "kind": "definition",
+   "tasks": [
+    "I.E"
+   ],
+   "match": [
+    "Class [ABCDEG] airspace",
+    "Class (Bravo|Charlie|Delta|Echo|Golf)",
+    "VFR weather minimums",
+    "basic VFR",
+    "cloud clearance",
+    "91\\.155",
+    "Mode C veil",
+    "two[- ]way radio communication"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 3, "h": "Class C and Class D: say my name", "auto": true},
+    {"ch": 4, "sec": 4, "h": "How far from the clouds, and how far you can see", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 192
+  },
+  {
+   "id": "PA.I.E.K2",
+   "text": "Reading symbols on the sectional chart.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.E",
+   "group": "Area I. Preflight Preparation / Task E. National Airspace System",
+   "kind": "visual",
+   "tasks": [
+    "I.E"
+   ],
+   "match": [
+    "sectional (chart|aeronautical)",
+    "chart (legend|symbols?)",
+    "magenta",
+    "maximum elevation figure",
+    "obstruction symbol",
+    "VFR (sectional|terminal area) chart",
+    "isogonic"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "The alphabet, and who's in charge of it", "auto": true},
+    {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 191
+  },
+  {
+   "id": "PA.I.E.K3",
+   "text": "Special use airspace, special flight rules areas, temporary flight restrictions, and other airspace areas.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.E",
+   "group": "Area I. Preflight Preparation / Task E. National Airspace System",
+   "kind": "definition",
+   "tasks": [
+    "I.E"
+   ],
+   "match": [
+    "special use airspace",
+    "(prohibited|restricted|warning|alert) areas?",
+    "military operations areas?",
+    "MOAs?",
+    "temporary flight restrictions?",
+    "TFRs?",
+    "special flight rules areas?",
+    "ADIZ"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
+    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 173
+  },
+  {
+   "id": "PA.I.E.K4",
+   "text": "When and how a pilot may get a special VFR clearance.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.E",
+   "group": "Area I. Preflight Preparation / Task E. National Airspace System",
+   "kind": "procedural",
+   "tasks": [
+    "I.E"
+   ],
+   "match": [
+    "special VFR",
+    "91\\.157",
+    "SVFR",
+    "one statute mile",
+    "clear of clouds"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 1, "h": "Class B: the upside down wedding cake", "auto": true},
+    {"ch": 4, "sec": 4, "h": "How far from the clouds, and how far you can see", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 287
+  },
+  {
+   "id": "PA.I.F.K1",
+   "text": "Using the POH performance charts and tables to find takeoff, climb, cruise, and landing performance.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.F",
+   "group": "Area I. Preflight Preparation / Task F. Performance and Limitations",
+   "kind": "visual",
+   "tasks": [
+    "I.F"
+   ],
+   "match": [
+    "performance charts?",
+    "takeoff distance",
+    "landing distance",
+    "ground roll",
+    "over a 50[- ]f(oo|ee)t obstacle",
+    "pilot'?s operating handbook",
+    "POH",
+    "cruise performance"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 5, "h": "Balance: arms, moments, and the box you have to stay in", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true},
+    {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 238
+  },
+  {
+   "id": "PA.I.F.K2a",
+   "text": "How air density, pressure, temperature, and humidity change airplane performance (density altitude).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.F",
+   "group": "Area I. Preflight Preparation / Task F. Performance and Limitations",
+   "kind": "calculation",
+   "tasks": [
+    "I.F"
+   ],
+   "match": [
+    "density altitude",
+    "pressure altitude",
+    "high,? hot,? (and|&) humid",
+    "Koch chart",
+    "air density",
+    "29\\.92",
+    "standard temperature"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 5, "sec": 0, "h": "Pressure altitude: start with the number the airplane feels", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 160
+  },
+  {
+   "id": "PA.I.F.K2b",
+   "text": "How pilot technique changes takeoff and landing performance.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.F",
+   "group": "Area I. Preflight Preparation / Task F. Performance and Limitations",
+   "kind": "judgment",
+   "tasks": [
+    "I.F"
+   ],
+   "match": [
+    "pilot technique",
+    "POH (speeds?|numbers?) (assume|are)",
+    "test pilot",
+    "rotation speed",
+    "touchdown speed",
+    "excess (air)?speed"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.F.K2c",
+   "text": "How flaps, gear, and other configuration choices change performance.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.F",
+   "group": "Area I. Preflight Preparation / Task F. Performance and Limitations",
+   "kind": "definition",
+   "tasks": [
+    "I.F"
+   ],
+   "match": [
+    "flap settings?",
+    "induced drag",
+    "parasite drag",
+    "cowl flaps",
+    "(gear|flaps) (extended|retracted)",
+    "(flap|takeoff|landing|clean) configuration"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 11
+  },
+  {
+   "id": "PA.I.F.K2d",
+   "text": "How runway slope, surface, length, and obstacles change takeoff and landing performance.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.F",
+   "group": "Area I. Preflight Preparation / Task F. Performance and Limitations",
+   "kind": "judgment",
+   "tasks": [
+    "I.F"
+   ],
+   "match": [
+    "runway (slope|gradient|surface|length)",
+    "upslope",
+    "downslope",
+    "grass (runway|strip)",
+    "(wet|contaminated) runway",
+    "runway condition",
+    "obstacle clearance",
+    "50[- ]f(oo|ee)t obstacle"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 8, "sec": 9, "h": "Runways that lie", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 106
+  },
+  {
+   "id": "PA.I.F.K2e",
+   "text": "How loading and center of gravity location affect stability, control, and stall speed.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.F",
+   "group": "Area I. Preflight Preparation / Task F. Performance and Limitations",
+   "kind": "judgment",
+   "tasks": [
+    "I.F"
+   ],
+   "match": [
+    "center of gravity",
+    "CG\\b",
+    "forward CG",
+    "aft CG",
+    "CG (limits|envelope|range)"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 5, "h": "Balance: arms, moments, and the box you have to stay in", "auto": true},
+    {"ch": 5, "sec": 6, "h": "Forward CG, aft CG, and how each one bites", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 233
+  },
+  {
+   "id": "PA.I.F.K2f",
+   "text": "Computing weight and balance: total weight, moments, and center of gravity, and shifting weight to stay in limits.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.F",
+   "group": "Area I. Preflight Preparation / Task F. Performance and Limitations",
+   "kind": "calculation",
+   "tasks": [
+    "I.F"
+   ],
+   "match": [
+    "weight and balance",
+    "datum",
+    "(empty|gross|ramp|maximum takeoff) weight",
+    "useful load",
+    "weight shift",
+    "loading graph",
+    "total moment",
+    "moment (arm|envelope|index)",
+    "CG (envelope|limits)"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 5, "h": "Balance: arms, moments, and the box you have to stay in", "auto": true},
+    {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 194
+  },
+  {
+   "id": "PA.I.F.K3",
+   "text": "Basic aerodynamics: the four forces, angle of attack, stability, and turning flight.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.F",
+   "group": "Area I. Preflight Preparation / Task F. Performance and Limitations",
+   "kind": "definition",
+   "tasks": [
+    "I.F"
+   ],
+   "match": [
+    "four forces",
+    "angle of attack",
+    "Bernoulli",
+    "relative wind",
+    "lift equation",
+    "induced drag",
+    "(longitudinal|lateral|directional) stability",
+    "load factor"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Four forces", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Why she pulls left", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
+    {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 229
+  },
+  {
+   "id": "PA.I.G.K1a",
+   "text": "The primary flight controls (ailerons, elevator, rudder) and what each does.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "ailerons?",
+    "elevator",
+    "rudder",
+    "stabilator",
+    "primary flight controls?",
+    "adverse yaw",
+    "control yoke"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Parts of the airplane", "auto": true},
+    {"ch": 1, "sec": 3, "h": "Three axes and the controls that move them", "auto": true},
+    {"ch": 6, "sec": 7, "h": "When the radio quits", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Why she pulls left", "auto": true},
+    {"ch": 7, "sec": 7, "h": "Spins", "auto": true},
+    {"ch": 7, "sec": 8, "h": "Steep turns", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 402
+  },
+  {
+   "id": "PA.I.G.K1b",
+   "text": "Secondary flight controls such as flaps and trim.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "flaps?",
+    "trim tabs?",
+    "(elevator|rudder|aileron) trim",
+    "anti-servo",
+    "secondary flight controls?",
+    "spoilers?",
+    "stall strips?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Parts of the airplane", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 135
+  },
+  {
+   "id": "PA.I.G.K1c",
+   "text": "The engine and propeller: how a piston engine works, mixture, carburetor or fuel injection, and fixed versus constant speed props.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "four[- ]stroke",
+    "reciprocating engine",
+    "mixture",
+    "carburetor",
+    "fuel injection",
+    "magnetos?",
+    "constant[- ]speed propeller",
+    "fixed[- ]pitch propeller",
+    "detonation"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
+    {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
+    {"ch": 5, "sec": 2, "h": "What thin air does to the engine, the prop, and the wing", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 438
+  },
+  {
+   "id": "PA.I.G.K1d",
+   "text": "Landing gear types, including fixed, retractable, tricycle, and conventional.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "landing gear",
+    "tricycle gear",
+    "conventional gear",
+    "tailwheel",
+    "retractable gear",
+    "nosewheel",
+    "oleo strut",
+    "shimmy damper"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Parts of the airplane", "auto": true},
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Staying legal after the checkride: 61.56 and 61.57", "auto": true},
+    {"ch": 11, "sec": 6, "h": "What else Parts 61 and 91 ask", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 159
+  },
+  {
+   "id": "PA.I.G.K1e",
+   "text": "Fuel, oil, and hydraulic systems: grades, fuel selector, sumping, and oil functions.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "fuel (system|selector|grades?|pump|strainer|sump)",
+    "100LL",
+    "avgas",
+    "(sump|sumping)",
+    "oil (pressure|temperature|system)",
+    "hydraulic",
+    "gravity[- ]feed",
+    "fuel contamination"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 102
+  },
+  {
+   "id": "PA.I.G.K1f",
+   "text": "The electrical system: alternator, battery, master switch, ammeter, and bus.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "alternator",
+    "battery",
+    "master switch",
+    "ammeter",
+    "loadmeter",
+    "electrical (system|bus)",
+    "circuit breakers?",
+    "voltage regulator"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 185
+  },
+  {
+   "id": "PA.I.G.K1g",
+   "text": "Avionics: communication and navigation radios, the autopilot, and glass displays.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "avionics",
+    "audio panel",
+    "autopilot",
+    "(com|nav) radios?",
+    "primary flight display",
+    "multifunction display",
+    "PFD\\b",
+    "MFD\\b",
+    "transponder"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Class B: the upside down wedding cake", "auto": true},
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 120
+  },
+  {
+   "id": "PA.I.G.K1h",
+   "text": "The pitot-static and vacuum or pressure systems and the instruments they run, plus their errors.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "pitot[- ]static",
+    "pitot tube",
+    "static port",
+    "vacuum (pump|system)",
+    "attitude indicator",
+    "heading indicator",
+    "vertical speed indicator",
+    "altimeter",
+    "airspeed indicator",
+    "alternate static"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 5, "sec": 0, "h": "Pressure altitude: start with the number the airplane feels", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Illusions after dark", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 177
+  },
+  {
+   "id": "PA.I.G.K1i",
+   "text": "Environmental systems: cabin heat, ventilation, and the carbon monoxide risk from heater shrouds.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "cabin heat",
+    "heater shroud",
+    "ventilation",
+    "environmental system",
+    "defrost",
+    "exhaust (manifold|leak)",
+    "carbon monoxide detector"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.G.K1j",
+   "text": "Deicing and anti-icing equipment, such as pitot heat and carburetor heat.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "pitot heat",
+    "carburetor heat",
+    "anti[- ]?icing",
+    "de[- ]?icing",
+    "deice boots",
+    "TKS",
+    "alternate air"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.G.K1l",
+   "text": "Supplemental oxygen systems and when oxygen is required.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "definition",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "supplemental oxygen",
+    "oxygen system",
+    "91\\.211",
+    "12,500",
+    "14,000",
+    "15,000",
+    "cannula",
+    "pulse oximeter"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 4, "h": "Thin air", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 155
+  },
+  {
+   "id": "PA.I.G.K2",
+   "text": "Recognizing system abnormalities and failures and handling them.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.G",
+   "group": "Area I. Preflight Preparation / Task G. Operation of Systems",
+   "kind": "judgment",
+   "tasks": [
+    "I.G"
+   ],
+   "match": [
+    "abnormal (indication|procedure)s?",
+    "system (failure|malfunction)s?",
+    "emergency checklist",
+    "annunciator",
+    "low (oil pressure|voltage)",
+    "alternator failure",
+    "caution (light|message)"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 45
+  },
+  {
+   "id": "PA.I.H.K1a",
+   "text": "Hypoxia: types, symptoms, and what to do.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "hypoxia",
+    "hypoxic",
+    "histotoxic",
+    "stagnant hypoxia",
+    "hypemic",
+    "time of useful consciousness",
+    "euphoria"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 2, "h": "Bottle to throttle", "auto": true},
+    {"ch": 8, "sec": 4, "h": "Thin air", "auto": true},
+    {"ch": 8, "sec": 5, "h": "Breathing, ears, and stomachs", "auto": true},
+    {"ch": 8, "sec": 6, "h": "Carbon monoxide", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 245
+  },
+  {
+   "id": "PA.I.H.K1b",
+   "text": "Hyperventilation: cause, symptoms, and how to fix it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "hyperventilat",
+    "breathing rate",
+    "carbon dioxide",
+    "tingling"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 5, "h": "Breathing, ears, and stomachs", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 63
+  },
+  {
+   "id": "PA.I.H.K1c",
+   "text": "Middle ear and sinus blocks from pressure change.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "middle ear",
+    "sinus (block|problems?)",
+    "eustachian",
+    "Valsalva",
+    "ear block",
+    "barotrauma"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 5, "h": "Breathing, ears, and stomachs", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 84
+  },
+  {
+   "id": "PA.I.H.K1d",
+   "text": "Spatial disorientation and the vestibular illusions behind it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "spatial disorientation",
+    "vestibular",
+    "semicircular canals?",
+    "the leans",
+    "graveyard spiral",
+    "Coriolis illusion",
+    "somatogravic",
+    "inner ear"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 109
+  },
+  {
+   "id": "PA.I.H.K1e",
+   "text": "Motion sickness: causes and remedies.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "motion sickness",
+    "airsick",
+    "nausea",
+    "Dramamine",
+    "scopolamine",
+    "sick sacks?"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 5, "h": "Breathing, ears, and stomachs", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 37
+  },
+  {
+   "id": "PA.I.H.K1f",
+   "text": "Carbon monoxide poisoning: sources, symptoms, and response.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "carbon monoxide",
+    "\\bCO\\b (poisoning|detector)",
+    "heater shroud",
+    "exhaust leak",
+    "headache"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 4, "h": "Thin air", "auto": true},
+    {"ch": 8, "sec": 6, "h": "Carbon monoxide", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 105
+  },
+  {
+   "id": "PA.I.H.K1g",
+   "text": "Stress and how it affects pilot performance.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "acute stress",
+    "chronic stress",
+    "stressors?",
+    "IMSAFE",
+    "stress management"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 1, "h": "IMSAFE", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 21
+  },
+  {
+   "id": "PA.I.H.K1h",
+   "text": "Fatigue and how it degrades judgment.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "fatigue",
+    "IMSAFE",
+    "acute fatigue",
+    "chronic fatigue",
+    "lack of sleep"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 1, "h": "IMSAFE", "auto": true},
+    {"ch": 8, "sec": 3, "h": "Tired, thirsty, hungry, cold", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 11, "h": "PAVE, 3P, and DECIDE", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Your eyes at night", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 389
+  },
+  {
+   "id": "PA.I.H.K1i",
+   "text": "Dehydration and nutrition and their effect on a pilot.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "dehydrat",
+    "hydration",
+    "nutrition",
+    "heatstroke",
+    "water intake"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.H.K1j",
+   "text": "Hypothermia: causes, signs, and prevention.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "hypothermia",
+    "body (core )?temperature",
+    "shivering",
+    "cold exposure"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.I.H.K1k",
+   "text": "Optical illusions on approach and landing, such as runway width, slope, and featureless terrain.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "optical illusions?",
+    "runway width illusion",
+    "(upsloping|downsloping) runway",
+    "featureless terrain",
+    "black hole",
+    "water refraction",
+    "autokinesis",
+    "false horizon"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 9, "h": "Runways that lie", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Illusions after dark", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 75
+  },
+  {
+   "id": "PA.I.H.K1l",
+   "text": "Why to wait before flying after scuba diving.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "scuba",
+    "diving",
+    "decompression sickness",
+    "the bends",
+    "dissolved nitrogen",
+    "(12|24) hours"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 2, "h": "Bottle to throttle", "auto": true},
+    {"ch": 8, "sec": 5, "h": "Breathing, ears, and stomachs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 133
+  },
+  {
+   "id": "PA.I.H.K2",
+   "text": "Rules on alcohol and drugs, including the 8 hour rule and the 0.04 limit.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "91\\.17",
+    "(eight|8) hours",
+    "bottle to throttle",
+    "0\\.04",
+    "blood alcohol",
+    "under the influence",
+    "drug testing"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 2, "h": "Bottle to throttle", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 121
+  },
+  {
+   "id": "PA.I.H.K3",
+   "text": "How alcohol, drugs, and over the counter medicine affect a pilot.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "definition",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "over[- ]the[- ]counter",
+    "antihistamines?",
+    "sedating",
+    "medications?",
+    "Benadryl",
+    "diphenhydramine",
+    "(effects?|affect) of alcohol"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 1, "h": "IMSAFE", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 106
+  },
+  {
+   "id": "PA.I.H.K4",
+   "text": "Aeronautical decision making and single pilot resource management.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.I.H",
+   "group": "Area I. Preflight Preparation / Task H. Human Factors",
+   "kind": "judgment",
+   "tasks": [
+    "I.H"
+   ],
+   "match": [
+    "aeronautical decision[- ]making",
+    "ADM\\b",
+    "single[- ]pilot resource management",
+    "SRM\\b",
+    "crew resource management",
+    "hazardous attitudes?",
+    "DECIDE model",
+    "personal minimums",
+    "PAVE\\b",
+    "3P model"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 0, "h": "The part that fails most", "auto": true},
+    {"ch": 8, "sec": 11, "h": "PAVE, 3P, and DECIDE", "auto": true},
+    {"ch": 8, "sec": 12, "h": "Personal minimums", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 294
+  },
+  {
+   "id": "PA.II.A.K1",
+   "text": "Checking yourself before flight: health, fitness, and readiness.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.A",
+   "group": "Area II. Preflight Procedures / Task A. Preflight Assessment",
+   "kind": "judgment",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "IMSAFE",
+    "self[- ]assessment",
+    "fit (to|for) fly",
+    "personal minimums",
+    "fitness for flight"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 1, "h": "IMSAFE", "auto": true},
+    {"ch": 8, "sec": 12, "h": "Personal minimums", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 95
+  },
+  {
+   "id": "PA.II.A.K2",
+   "text": "Deciding the airplane chosen is right for the trip and is airworthy.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.A",
+   "group": "Area II. Preflight Procedures / Task A. Preflight Assessment",
+   "kind": "judgment",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "airworthiness",
+    "suitab(le|ility) for the (flight|trip|mission)",
+    "AV1ATE",
+    "required inspections",
+    "airworthiness (requirements|check)",
+    "right airplane for"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 2, "sec": 6, "h": "What an owner may fix, and what kind of airplane it is", "auto": true},
+    {"ch": 11, "sec": 8, "h": "Inspections, records, and ADs", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 136
+  },
+  {
+   "id": "PA.II.A.K3a",
+   "text": "Which items to check on the preflight walkaround.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.A",
+   "group": "Area II. Preflight Procedures / Task A. Preflight Assessment",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "preflight inspection",
+    "walk[- ]?around",
+    "preflight checklist",
+    "fuel (quantity|sumps?)",
+    "oil (level|quantity)",
+    "control surfaces"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.A.K3b",
+   "text": "Why each preflight item is checked.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.A",
+   "group": "Area II. Preflight Procedures / Task A. Preflight Assessment",
+   "kind": "definition",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "preflight inspection",
+    "walk[- ]?around",
+    "(reason|why) (to|we) check",
+    "water in the fuel",
+    "control (hinges|cables)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.A.K3c",
+   "text": "How to spot defects during preflight, such as cracks, leaks, and loose hardware.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.A",
+   "group": "Area II. Preflight Procedures / Task A. Preflight Assessment",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "cracks?",
+    "leaks?",
+    "loose (rivets?|hardware|fasteners?)",
+    "smoking rivets?",
+    "corrosion",
+    "fuel stains?",
+    "nicks?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.A.K3d",
+   "text": "Regulations that tie to the preflight inspection.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.A",
+   "group": "Area II. Preflight Procedures / Task A. Preflight Assessment",
+   "kind": "definition",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "91\\.(7|103|403)",
+    "preflight action",
+    "airworthy condition",
+    "responsible for determining"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
+    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 33
+  },
+  {
+   "id": "PA.II.A.K4",
+   "text": "Environmental factors in the go decision: weather, terrain, route, and obstructions.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.A",
+   "group": "Area II. Preflight Procedures / Task A. Preflight Assessment",
+   "kind": "judgment",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "91\\.103",
+    "preflight action",
+    "all available information",
+    "obstructions?",
+    "route selection",
+    "go/no[- ]go",
+    "terrain (and|or) obstacles?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
+    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 33
+  },
+  {
+   "id": "PA.II.B.K1",
+   "text": "Briefing passengers, including seat belts and shoulder harnesses.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.B",
+   "group": "Area II. Preflight Procedures / Task B. Flight Deck Management",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "passenger briefing",
+    "SAFETY briefing",
+    "seat ?belts?",
+    "shoulder harness",
+    "91\\.107",
+    "safety belts?",
+    "sterile cockpit"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 12, "sec": 7, "h": "After", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 141
+  },
+  {
+   "id": "PA.II.B.K2",
+   "text": "Using checklists the right way.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.B",
+   "group": "Area II. Preflight Procedures / Task B. Flight Deck Management",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "checklists?",
+    "read[- ]and[- ]do",
+    "do[- ]list",
+    "flow (and|then) (verify|check)",
+    "challenge and response"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 1, "h": "IMSAFE", "auto": true},
+    {"ch": 11, "sec": 10, "h": "After you land: postflight", "auto": true},
+    {"ch": 12, "sec": 5, "h": "Postflight, with an examiner watching", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 103
+  },
+  {
+   "id": "PA.II.B.K3",
+   "text": "Making sure navigation data and charts are current.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.B",
+   "group": "Area II. Preflight Procedures / Task B. Flight Deck Management",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "current (charts?|database|navigation data)",
+    "database (currency|update)",
+    "(28|56)[- ]day (cycle|update)",
+    "expired chart",
+    "chart currency"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.B.K4",
+   "text": "Securing items and cargo in the cabin.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.B",
+   "group": "Area II. Preflight Procedures / Task B. Flight Deck Management",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "secur(e|ing) (items|cargo|baggage|loose)",
+    "loose items",
+    "tie[- ]?down straps?",
+    "cargo",
+    "baggage compartment"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.C.K1",
+   "text": "Starting the engine in normal, cold, hot, and flooded conditions.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.C",
+   "group": "Area II. Preflight Procedures / Task C. Engine Starting",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "engine start",
+    "prim(e|ing|er)",
+    "hot start",
+    "cold start",
+    "flooded (start|engine)",
+    "cold weather start",
+    "preheat",
+    "clear prop"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 36
+  },
+  {
+   "id": "PA.II.C.K2",
+   "text": "Starting with external power.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.C",
+   "group": "Area II. Preflight Procedures / Task C. Engine Starting",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "external power",
+    "ground power",
+    "jump[- ]start",
+    "GPU\\b",
+    "auxiliary power"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.C.K3",
+   "text": "Starter and engine limits during starting.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.C",
+   "group": "Area II. Preflight Procedures / Task C. Engine Starting",
+   "kind": "definition",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "starter (limits?|duty)",
+    "starter (engaged|cool)",
+    "cranking",
+    "oil pressure (within|in) 30 seconds",
+    "starter warning"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.C.K4",
+   "text": "When and how to abort a start, such as no oil pressure or an engine fire.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.C",
+   "group": "Area II. Preflight Procedures / Task C. Engine Starting",
+   "kind": "judgment",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "abort(ed)? (the )?start",
+    "engine fire during start",
+    "induction fire",
+    "no oil pressure",
+    "starter (stays|remains) engaged"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.D.K1",
+   "text": "Airport references such as the Chart Supplement, airport diagram, and NOTAMs.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "Chart Supplement",
+    "airport diagram",
+    "NOTAMs?",
+    "notices? to air missions",
+    "Airport/Facility Directory",
+    "A/FD"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 106
+  },
+  {
+   "id": "PA.II.D.K2",
+   "text": "Taxi instructions and clearances, including readbacks and hold short.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "taxi (instructions|clearance)",
+    "hold short",
+    "read ?back",
+    "progressive taxi",
+    "taxi via",
+    "ground control"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Reading the pavement", "auto": true},
+    {"ch": 6, "sec": 6, "h": "Hold short, and red lights in the pavement", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 125
+  },
+  {
+   "id": "PA.II.D.K3",
+   "text": "Airport markings, signs, and lights.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "visual",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "(runway|taxiway) markings?",
+    "holding position (marking|sign)",
+    "mandatory instruction signs?",
+    "location signs?",
+    "direction signs?",
+    "taxiway (edge )?lights",
+    "displaced threshold",
+    "ILS critical area"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Reading the pavement", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 87
+  },
+  {
+   "id": "PA.II.D.K4",
+   "text": "Wind socks, tetrahedrons, and other wind indicators.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "visual",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "wind ?socks?",
+    "wind (cone|tee|indicators?)",
+    "tetrahedron",
+    "segmented circle",
+    "landing direction indicator"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 126
+  },
+  {
+   "id": "PA.II.D.K5",
+   "text": "Using aircraft lights properly on the ground.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "(beacon|strobe|landing|taxi|navigation|position) lights?",
+    "anti[- ]?collision lights?",
+    "exterior lights",
+    "91\\.209",
+    "wingtip strobes?"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 10, "sec": 2, "h": "Lights on the airplane", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 92
+  },
+  {
+   "id": "PA.II.D.K6a",
+   "text": "Cockpit tasks before taxi, including taxi route planning and finding hot spots.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "hot ?spots?",
+    "taxi route",
+    "before taxi",
+    "airport diagram",
+    "heads[- ]down",
+    "sterile cockpit"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.D.K6b",
+   "text": "Radio calls for taxi at towered and nontowered airports.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "ground control",
+    "CTAF",
+    "UNICOM",
+    "(nontowered|non-towered|uncontrolled) airports?",
+    "taxi call",
+    "towered airports?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.D.K6c",
+   "text": "Procedures for entering or crossing runways safely.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "runway incursions?",
+    "cross(ing)? (the )?runway",
+    "enter(ing)? (the )?runway",
+    "hold short",
+    "line up and wait",
+    "explicit (crossing|clearance)"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Reading the pavement", "auto": true},
+    {"ch": 6, "sec": 6, "h": "Hold short, and red lights in the pavement", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 141
+  },
+  {
+   "id": "PA.II.D.K6d",
+   "text": "Taxiing at night.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "night taxi",
+    "taxiway (edge )?lights",
+    "blue (taxiway )?lights",
+    "taxiway centerline lights",
+    "taxi(ing)? at night"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.D.K6e",
+   "text": "Taxiing in low visibility.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.D",
+   "group": "Area II. Preflight Procedures / Task D. Taxiing",
+   "kind": "procedural",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "low[- ]visibility taxi",
+    "SMGCS",
+    "surface movement guidance",
+    "RVR",
+    "progressive taxi",
+    "reduced visibility"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.F.K1a",
+   "text": "Why each item on the before takeoff checklist is checked.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.F",
+   "group": "Area II. Preflight Procedures / Task F. Before Takeoff Check",
+   "kind": "definition",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "before[- ]takeoff (check|checklist)",
+    "run[- ]?up",
+    "magneto check",
+    "carburetor heat check",
+    "flight controls? (free and correct|check)",
+    "mag drop"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.II.F.K1b",
+   "text": "Spotting malfunctions during the runup.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.F",
+   "group": "Area II. Preflight Procedures / Task F. Before Takeoff Check",
+   "kind": "judgment",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "mag(neto)? drop",
+    "rough (running|engine)",
+    "RPM drop",
+    "run[- ]?up",
+    "fouled plugs?",
+    "abnormal (indication|reading)"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
+    {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 93
+  },
+  {
+   "id": "PA.II.F.K1c",
+   "text": "Confirming the airplane is safe to fly per the manufacturer before takeoff.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.II.F",
+   "group": "Area II. Preflight Procedures / Task F. Before Takeoff Check",
+   "kind": "judgment",
+   "tasks": [
+    "II"
+   ],
+   "match": [
+    "before[- ]takeoff (check|checklist)",
+    "manufacturer'?s? recommend",
+    "(within|in the) green arc",
+    "safe operating condition",
+    "POH"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 5, "h": "Balance: arms, moments, and the box you have to stay in", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true},
+    {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 177
+  },
+  {
+   "id": "PA.III.A.K1",
+   "text": "Finding the right radio frequencies.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.A",
+   "group": "Area III. Airport and Seaplane Base Operations / Task A. Communications, Light Signals, and Runway Lighting Systems",
+   "kind": "procedural",
+   "tasks": [
+    "III.A"
+   ],
+   "match": [
+    "frequenc(y|ies)",
+    "Chart Supplement",
+    "sectional",
+    "CTAF",
+    "ATIS",
+    "approach control frequency",
+    "UNICOM"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
+    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true},
+    {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true},
+    {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true},
+    {"ch": 9, "sec": 1, "h": "Pilotage", "auto": true},
+    {"ch": 9, "sec": 8, "h": "Flight following", "auto": true},
+    {"ch": 10, "sec": 3, "h": "Lights on the ground", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 450
+  },
+  {
+   "id": "PA.III.A.K2",
+   "text": "Correct radio procedure and ATC phraseology.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.A",
+   "group": "Area III. Airport and Seaplane Base Operations / Task A. Communications, Light Signals, and Runway Lighting Systems",
+   "kind": "procedural",
+   "tasks": [
+    "III.A"
+   ],
+   "match": [
+    "phraseology",
+    "Pilot/Controller Glossary",
+    "phonetic alphabet",
+    "read ?back",
+    "initial call",
+    "(who you are|who you'?re calling)",
+    "WILCO",
+    "roger"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 70
+  },
+  {
+   "id": "PA.III.A.K3",
+   "text": "Reading ATC light gun signals.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.A",
+   "group": "Area III. Airport and Seaplane Base Operations / Task A. Communications, Light Signals, and Runway Lighting Systems",
+   "kind": "visual",
+   "tasks": [
+    "III.A"
+   ],
+   "match": [
+    "light (gun )?signals?",
+    "steady green",
+    "flashing green",
+    "steady red",
+    "flashing red",
+    "alternating red and green",
+    "flashing white"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 8, "h": "When the radio quits: light gun signals", "auto": true},
+    {"ch": 6, "sec": 7, "h": "When the radio quits", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 259
+  },
+  {
+   "id": "PA.III.A.K4",
+   "text": "Using the transponder: codes, modes, and when it is required.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.A",
+   "group": "Area III. Airport and Seaplane Base Operations / Task A. Communications, Light Signals, and Runway Lighting Systems",
+   "kind": "procedural",
+   "tasks": [
+    "III.A"
+   ],
+   "match": [
+    "transponder",
+    "squawk",
+    "1200",
+    "7500",
+    "7600",
+    "7700",
+    "Mode C",
+    "ident"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Class B: the upside down wedding cake", "auto": true},
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Class C and Class D: say my name", "auto": true},
+    {"ch": 4, "sec": 8, "h": "When the radio quits: light gun signals", "auto": true},
+    {"ch": 6, "sec": 7, "h": "When the radio quits", "auto": true},
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true},
+    {"ch": 11, "sec": 1, "h": "Getting in the door", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 340
+  },
+  {
+   "id": "PA.III.A.K5",
+   "text": "What to do after losing radio communication.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.A",
+   "group": "Area III. Airport and Seaplane Base Operations / Task A. Communications, Light Signals, and Runway Lighting Systems",
+   "kind": "procedural",
+   "tasks": [
+    "III.A"
+   ],
+   "match": [
+    "lost comm(unications?)?",
+    "7600",
+    "NORDO",
+    "no radio",
+    "light (gun )?signals?",
+    "91\\.185"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
+    {"ch": 4, "sec": 8, "h": "When the radio quits: light gun signals", "auto": true},
+    {"ch": 6, "sec": 7, "h": "When the radio quits", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 99
+  },
+  {
+   "id": "PA.III.A.K6",
+   "text": "Equipment problems that can cause lost communication.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.A",
+   "group": "Area III. Airport and Seaplane Base Operations / Task A. Communications, Light Signals, and Runway Lighting Systems",
+   "kind": "judgment",
+   "tasks": [
+    "III.A"
+   ],
+   "match": [
+    "stuck mic",
+    "(headset|jack|audio panel) (fault|failure|problem)",
+    "squelch",
+    "radio failure",
+    "electrical failure",
+    "(lost|loss of) (comm|radio)"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 8, "h": "When the radio quits: light gun signals", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 22
+  },
+  {
+   "id": "PA.III.A.K7",
+   "text": "Radar help available to VFR pilots.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.A",
+   "group": "Area III. Airport and Seaplane Base Operations / Task A. Communications, Light Signals, and Runway Lighting Systems",
+   "kind": "definition",
+   "tasks": [
+    "III.A"
+   ],
+   "match": [
+    "radar (services?|assistance)",
+    "flight following",
+    "traffic advisor(y|ies)",
+    "vectors?",
+    "radar contact",
+    "basic radar service"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 1, "h": "Class B: the upside down wedding cake", "auto": true},
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
+    {"ch": 9, "sec": 8, "h": "Flight following", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 102
+  },
+  {
+   "id": "PA.III.A.K8",
+   "text": "When an accident or incident must be reported to the NTSB.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.A",
+   "group": "Area III. Airport and Seaplane Base Operations / Task A. Communications, Light Signals, and Runway Lighting Systems",
+   "kind": "definition",
+   "tasks": [
+    "III.A"
+   ],
+   "match": [
+    "NTSB",
+    "(part|49 CFR) 830",
+    "830\\.5",
+    "serious injury",
+    "substantial damage",
+    "immediately notify",
+    "(10|ten) days"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 9, "h": "When something happens: NTSB 830", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 318
+  },
+  {
+   "id": "PA.III.A.K9",
+   "text": "Runway status lights and what they tell a pilot.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.A",
+   "group": "Area III. Airport and Seaplane Base Operations / Task A. Communications, Light Signals, and Runway Lighting Systems",
+   "kind": "visual",
+   "tasks": [
+    "III.A"
+   ],
+   "match": [
+    "runway status lights?",
+    "RWSL",
+    "runway entrance lights?",
+    "takeoff hold lights?",
+    "REL\\b",
+    "THL\\b"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "Hold short, and red lights in the pavement", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 49
+  },
+  {
+   "id": "PA.III.B.K1",
+   "text": "Operating at towered versus nontowered airports.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.B",
+   "group": "Area III. Airport and Seaplane Base Operations / Task B. Traffic Patterns",
+   "kind": "procedural",
+   "tasks": [
+    "III.B"
+   ],
+   "match": [
+    "towered airports?",
+    "(nontowered|non-towered|uncontrolled) airports?",
+    "CTAF",
+    "self[- ]announce",
+    "traffic advisory practices",
+    "91\\.(126|127|129)"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 3, "h": "Class C and Class D: say my name", "auto": true},
+    {"ch": 6, "sec": 0, "h": "The rectangle", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 150
+  },
+  {
+   "id": "PA.III.B.K2",
+   "text": "Picking the right traffic pattern and runway for the conditions.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.B",
+   "group": "Area III. Airport and Seaplane Base Operations / Task B. Traffic Patterns",
+   "kind": "judgment",
+   "tasks": [
+    "III.B"
+   ],
+   "match": [
+    "traffic pattern",
+    "(downwind|base|upwind|crosswind) leg",
+    "left traffic",
+    "right traffic",
+    "pattern altitude",
+    "segmented circle",
+    "45[- ]degree entry"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "The rectangle", "auto": true},
+    {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 189
+  },
+  {
+   "id": "PA.III.B.K3",
+   "text": "Right of way rules.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.B",
+   "group": "Area III. Airport and Seaplane Base Operations / Task B. Traffic Patterns",
+   "kind": "definition",
+   "tasks": [
+    "III.B"
+   ],
+   "match": [
+    "right[- ]of[- ]way",
+    "91\\.113",
+    "converging",
+    "head[- ]on",
+    "overtaking",
+    "aircraft in distress",
+    "(balloons?|gliders?) (have|has) (the )?right"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 2, "h": "Who gives way", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 198
+  },
+  {
+   "id": "PA.III.B.K4",
+   "text": "Using ATIS, ASOS, AWOS, and similar automated weather and airport information.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.III.B",
+   "group": "Area III. Airport and Seaplane Base Operations / Task B. Traffic Patterns",
+   "kind": "procedural",
+   "tasks": [
+    "III.B"
+   ],
+   "match": [
+    "ATIS",
+    "ASOS",
+    "AWOS",
+    "information (alpha|bravo|charlie)",
+    "automated (weather|surface observing)",
+    "have numbers"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IV.A.K1",
+   "text": "How air density and wind change takeoff and climb performance (normal takeoff).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.A",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task A. Normal Takeoff and Climb",
+   "kind": "calculation",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "density altitude",
+    "headwind",
+    "tailwind",
+    "takeoff (distance|performance)",
+    "climb performance",
+    "crosswind component"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 152
+  },
+  {
+   "id": "PA.IV.A.K2",
+   "text": "Best angle (VX) and best rate (VY) of climb speeds and when to use each (normal takeoff).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.A",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task A. Normal Takeoff and Climb",
+   "kind": "definition",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "VX\\b",
+    "VY\\b",
+    "best angle of climb",
+    "best rate of climb",
+    "V ?sub ?[XY]"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 20
+  },
+  {
+   "id": "PA.IV.A.K3",
+   "text": "Setting up the airplane correctly for this takeoff, such as flap setting (normal takeoff).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.A",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task A. Normal Takeoff and Climb",
+   "kind": "procedural",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "flap setting",
+    "takeoff configuration",
+    "(flaps?|trim) (set|for takeoff)",
+    "takeoff flaps",
+    "cowl flaps",
+    "trim (set )?for takeoff"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.IV.B.K1",
+   "text": "Flying a stabilized approach and managing energy (normal approach and landing).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.B",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task B. Normal Approach and Landing",
+   "kind": "judgment",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "stabilized approach",
+    "energy management",
+    "(pitch|power) for (airspeed|altitude)",
+    "glide ?path",
+    "VASI",
+    "PAPI",
+    "aim(ing)? point"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 5, "h": "Lights", "auto": true},
+    {"ch": 10, "sec": 3, "h": "Lights on the ground", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 48
+  },
+  {
+   "id": "PA.IV.B.K2",
+   "text": "How air density and wind change approach and landing performance (normal approach and landing).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.B",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task B. Normal Approach and Landing",
+   "kind": "calculation",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "density altitude",
+    "landing (distance|performance)",
+    "headwind",
+    "tailwind",
+    "gust (factor|additive)",
+    "ground roll"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 196
+  },
+  {
+   "id": "PA.IV.B.K3",
+   "text": "Correcting for wind on approach and landing, such as crab and sideslip (normal approach and landing).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.B",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task B. Normal Approach and Landing",
+   "kind": "procedural",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "crosswind",
+    "crab",
+    "(wing[- ]low|side ?slip)",
+    "wind correction",
+    "upwind (wing|aileron)"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "The rectangle", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 159
+  },
+  {
+   "id": "PA.IV.C.K1",
+   "text": "How air density and wind change takeoff and climb performance (soft field takeoff).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.C",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task C. Soft-Field Takeoff and Climb",
+   "kind": "calculation",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "density altitude",
+    "headwind",
+    "tailwind",
+    "takeoff (distance|performance)",
+    "climb performance",
+    "crosswind component"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 152
+  },
+  {
+   "id": "PA.IV.C.K2",
+   "text": "Best angle (VX) and best rate (VY) of climb speeds and when to use each (soft field takeoff).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.C",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task C. Soft-Field Takeoff and Climb",
+   "kind": "definition",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "VX\\b",
+    "VY\\b",
+    "best angle of climb",
+    "best rate of climb",
+    "V ?sub ?[XY]"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 20
+  },
+  {
+   "id": "PA.IV.C.K3",
+   "text": "Setting up the airplane correctly for this takeoff, such as flap setting (soft field takeoff).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.C",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task C. Soft-Field Takeoff and Climb",
+   "kind": "procedural",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "flap setting",
+    "takeoff configuration",
+    "(flaps?|trim) (set|for takeoff)",
+    "(soft[- ]field|takeoff) flaps",
+    "flaps? (10|ten|extended) for takeoff",
+    "trim (set )?for takeoff"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.IV.C.K4",
+   "text": "Ground effect and how it helps and fools a pilot on takeoff.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.C",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task C. Soft-Field Takeoff and Climb",
+   "kind": "definition",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "ground effect",
+    "(one|1) wingspan",
+    "induced drag",
+    "wingtip vortices",
+    "float(ing)?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 11
+  },
+  {
+   "id": "PA.IV.C.K5",
+   "text": "Why a soft field takeoff moves weight from the wheels to the wings as early as possible.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.C",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task C. Soft-Field Takeoff and Climb",
+   "kind": "definition",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "soft[- ]field",
+    "weight (off|from) the (wheels|nosewheel)",
+    "back pressure",
+    "nosewheel (off|up)",
+    "(mud|grass|snow) (runway|strip)"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 8, "h": "Steep turns", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 70
+  },
+  {
+   "id": "PA.IV.C.K6",
+   "text": "Left turning tendencies: torque, P factor, slipstream, and gyroscopic precession.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.C",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task C. Soft-Field Takeoff and Climb",
+   "kind": "definition",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "left[- ]turning tendenc(y|ies)",
+    "P[- ]factor",
+    "torque",
+    "(spiraling )?slipstream",
+    "gyroscopic precession",
+    "asymmetric(al)? thrust",
+    "right rudder"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 3, "h": "Why she pulls left", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 46
+  },
+  {
+   "id": "PA.IV.D.K1",
+   "text": "Flying a stabilized approach and managing energy (soft field landing).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.D",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task D. Soft-Field Approach and Landing",
+   "kind": "judgment",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "stabilized approach",
+    "energy management",
+    "(pitch|power) for (airspeed|altitude)",
+    "glide ?path",
+    "VASI",
+    "PAPI",
+    "aim(ing)? point"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 5, "h": "Lights", "auto": true},
+    {"ch": 10, "sec": 3, "h": "Lights on the ground", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 48
+  },
+  {
+   "id": "PA.IV.D.K2",
+   "text": "How air density and wind change approach and landing performance (soft field landing).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.D",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task D. Soft-Field Approach and Landing",
+   "kind": "calculation",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "density altitude",
+    "landing (distance|performance)",
+    "headwind",
+    "tailwind",
+    "gust (factor|additive)",
+    "ground roll"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 196
+  },
+  {
+   "id": "PA.IV.D.K3",
+   "text": "Correcting for wind on approach and landing, such as crab and sideslip (soft field landing).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.D",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task D. Soft-Field Approach and Landing",
+   "kind": "procedural",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "crosswind",
+    "crab",
+    "(wing[- ]low|side ?slip)",
+    "wind correction",
+    "upwind (wing|aileron)"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "The rectangle", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 159
+  },
+  {
+   "id": "PA.IV.E.K1",
+   "text": "How air density and wind change takeoff and climb performance (short field takeoff).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.E",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task E. Short-Field Takeoff and Maximum Performance Climb",
+   "kind": "calculation",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "density altitude",
+    "headwind",
+    "tailwind",
+    "takeoff (distance|performance)",
+    "climb performance",
+    "crosswind component"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 152
+  },
+  {
+   "id": "PA.IV.E.K2",
+   "text": "Best angle (VX) and best rate (VY) of climb speeds and when to use each (short field takeoff).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.E",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task E. Short-Field Takeoff and Maximum Performance Climb",
+   "kind": "definition",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "VX\\b",
+    "VY\\b",
+    "best angle of climb",
+    "best rate of climb",
+    "V ?sub ?[XY]"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 20
+  },
+  {
+   "id": "PA.IV.E.K3",
+   "text": "Setting up the airplane correctly for this takeoff, such as flap setting (short field takeoff).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.E",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task E. Short-Field Takeoff and Maximum Performance Climb",
+   "kind": "procedural",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "flap setting",
+    "takeoff configuration",
+    "(flaps?|trim) (set|for takeoff)",
+    "(short[- ]field|takeoff) flaps",
+    "flaps? (for|on) (the )?short[- ]field",
+    "trim (set )?for takeoff"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.IV.F.K1",
+   "text": "Flying a stabilized approach and managing energy (short field landing).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.F",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task F. Short-Field Approach and Landing",
+   "kind": "judgment",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "stabilized approach",
+    "energy management",
+    "(pitch|power) for (airspeed|altitude)",
+    "glide ?path",
+    "VASI",
+    "PAPI",
+    "aim(ing)? point"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 5, "h": "Lights", "auto": true},
+    {"ch": 10, "sec": 3, "h": "Lights on the ground", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 48
+  },
+  {
+   "id": "PA.IV.F.K2",
+   "text": "How air density and wind change approach and landing performance (short field landing).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.F",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task F. Short-Field Approach and Landing",
+   "kind": "calculation",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "density altitude",
+    "landing (distance|performance)",
+    "headwind",
+    "tailwind",
+    "gust (factor|additive)",
+    "ground roll"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 196
+  },
+  {
+   "id": "PA.IV.F.K3",
+   "text": "Correcting for wind on approach and landing, such as crab and sideslip (short field landing).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.F",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task F. Short-Field Approach and Landing",
+   "kind": "procedural",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "crosswind",
+    "crab",
+    "(wing[- ]low|side ?slip)",
+    "wind correction",
+    "upwind (wing|aileron)"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "The rectangle", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 159
+  },
+  {
+   "id": "PA.IV.M.K1",
+   "text": "Managing energy during a forward slip to land.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.M",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task M. Forward Slip to a Landing",
+   "kind": "judgment",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "forward slip",
+    "slip to (a )?land",
+    "lose altitude without (gaining|increasing) (air)?speed",
+    "energy management",
+    "(too high|high on final)"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 19
+  },
+  {
+   "id": "PA.IV.M.K2",
+   "text": "How air density and wind change approach and landing performance during a slip.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.M",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task M. Forward Slip to a Landing",
+   "kind": "calculation",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "density altitude",
+    "landing (distance|performance)",
+    "headwind",
+    "tailwind",
+    "forward slip"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 178
+  },
+  {
+   "id": "PA.IV.M.K3",
+   "text": "Correcting for wind while in a forward slip.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.M",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task M. Forward Slip to a Landing",
+   "kind": "procedural",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "forward slip",
+    "(slip|bank) into the wind",
+    "crosswind",
+    "wind correction",
+    "side ?slip"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "The rectangle", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 114
+  },
+  {
+   "id": "PA.IV.M.K4",
+   "text": "When and why to use a forward slip on approach.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.M",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task M. Forward Slip to a Landing",
+   "kind": "judgment",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "forward slip",
+    "(too high|high on final)",
+    "(no|without) flaps",
+    "steepen the (descent|approach)",
+    "slips? with flaps"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 32
+  },
+  {
+   "id": "PA.IV.N.K1",
+   "text": "Flying a stabilized approach and managing energy, and knowing when to go around.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.N",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task N. Go-Around/Rejected Landing",
+   "kind": "judgment",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "stabilized approach",
+    "energy management",
+    "go[- ]around",
+    "rejected landing",
+    "unstabilized"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 73
+  },
+  {
+   "id": "PA.IV.N.K2",
+   "text": "How wind and density altitude affect a go around or rejected landing.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.N",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task N. Go-Around/Rejected Landing",
+   "kind": "calculation",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "density altitude",
+    "go[- ]around",
+    "climb performance",
+    "rejected landing",
+    "balked landing"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 118
+  },
+  {
+   "id": "PA.IV.N.K3",
+   "text": "Correcting for wind while departing and approaching during a go around.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IV.N",
+   "group": "Area IV. Takeoffs, Landings, and Go-Arounds / Task N. Go-Around/Rejected Landing",
+   "kind": "procedural",
+   "tasks": [
+    "IV"
+   ],
+   "match": [
+    "go[- ]around",
+    "crosswind",
+    "(side ?step|offset)",
+    "wind correction"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "The rectangle", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 7, "sec": 0, "h": "What has to be true before I get out", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 164
+  },
+  {
+   "id": "PA.V.A.K1",
+   "text": "How to fly a steep turn.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.A",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task A. Steep Turns",
+   "kind": "procedural",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "steep turns?",
+    "45[- ]degree bank",
+    "(roll|rolling) out",
+    "back pressure",
+    "visual reference"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 1, "h": "What you still can't do", "auto": true},
+    {"ch": 7, "sec": 8, "h": "Steep turns", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 186
+  },
+  {
+   "id": "PA.V.A.K2a",
+   "text": "Staying coordinated in a steep turn.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.A",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task A. Steep Turns",
+   "kind": "definition",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "coordinat(ed|ion)",
+    "slip",
+    "skid",
+    "step on the ball",
+    "the ball",
+    "inclinometer"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "Three axes and the controls that move them", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Why she pulls left", "auto": true},
+    {"ch": 7, "sec": 7, "h": "Spins", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 122
+  },
+  {
+   "id": "PA.V.A.K2b",
+   "text": "Overbanking tendency in steep turns.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.A",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task A. Steep Turns",
+   "kind": "definition",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "overbanking",
+    "outside wing",
+    "opposite aileron",
+    "steep turns?"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
+    {"ch": 7, "sec": 8, "h": "Steep turns", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 102
+  },
+  {
+   "id": "PA.V.A.K2c",
+   "text": "Maneuvering speed and how it drops as weight drops.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.A",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task A. Steep Turns",
+   "kind": "calculation",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "maneuvering speed",
+    "VA\\b",
+    "design maneuvering",
+    "lighter weight",
+    "square root"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 72
+  },
+  {
+   "id": "PA.V.A.K2d",
+   "text": "Load factor in turns and accelerated stalls.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.A",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task A. Steep Turns",
+   "kind": "calculation",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "load factor",
+    "accelerated stalls?",
+    "G[- ]?(load|force)",
+    "60[- ]degree bank",
+    "limit load",
+    "stall speed increases"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
+    {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 52
+  },
+  {
+   "id": "PA.V.A.K2e",
+   "text": "How bank and airspeed set rate and radius of turn.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.A",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task A. Steep Turns",
+   "kind": "calculation",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "rate of turn",
+    "radius of turn",
+    "turn radius",
+    "standard[- ]rate turn",
+    "bank angle"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 22
+  },
+  {
+   "id": "PA.V.B.K1",
+   "text": "Why pilots practice ground reference maneuvers.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.B",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task B. Ground Reference Maneuvers",
+   "kind": "definition",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "ground reference maneuvers?",
+    "rectangular course",
+    "turns? around a point",
+    "S[- ]turns?",
+    "division of attention"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 54
+  },
+  {
+   "id": "PA.V.B.K2",
+   "text": "How wind changes the ground track and what to do about it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.B",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task B. Ground Reference Maneuvers",
+   "kind": "procedural",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "wind drift",
+    "ground track",
+    "crab",
+    "wind correction",
+    "drift correction",
+    "ground reference"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
+    {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 57
+  },
+  {
+   "id": "PA.V.B.K3",
+   "text": "How bank angle and groundspeed affect turn rate and radius over the ground.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.B",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task B. Ground Reference Maneuvers",
+   "kind": "calculation",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "(steepest|shallowest) bank",
+    "groundspeed",
+    "radius of turn",
+    "rate of turn",
+    "turns? around a point",
+    "S[- ]turns?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 2, "h": "What thin air does to the engine, the prop, and the wing", "auto": true},
+    {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 190
+  },
+  {
+   "id": "PA.V.B.K4",
+   "text": "How the rectangular course relates to the traffic pattern.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.V.B",
+   "group": "Area V. Performance Maneuvers and Ground Reference Maneuvers / Task B. Ground Reference Maneuvers",
+   "kind": "definition",
+   "tasks": [
+    "V"
+   ],
+   "match": [
+    "rectangular course",
+    "traffic pattern",
+    "(downwind|base|crosswind) leg",
+    "pattern legs?"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true},
+    {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 91
+  },
+  {
+   "id": "PA.VI.A.K1",
+   "text": "Navigating by pilotage and dead reckoning.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "procedural",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "pilotage",
+    "dead reckoning",
+    "checkpoints?",
+    "landmarks?",
+    "navigation log",
+    "nav log"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 0, "h": "Leaving the pattern", "auto": true},
+    {"ch": 9, "sec": 1, "h": "Pilotage", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 138
+  },
+  {
+   "id": "PA.VI.A.K2",
+   "text": "Magnetic compass errors: variation, deviation, turning and acceleration errors.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "definition",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "magnetic (compass|dip)",
+    "compass correction card",
+    "UNOS",
+    "acceleration error",
+    "turning error",
+    "ANDS\\b",
+    "magnetic variation",
+    "compass deviation",
+    "deviation card"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 16
+  },
+  {
+   "id": "PA.VI.A.K3",
+   "text": "Reading terrain and topography from the chart.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "visual",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "topograph",
+    "contour lines?",
+    "elevation tints?",
+    "maximum elevation figure",
+    "spot elevation",
+    "terrain (features|elevation)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.VI.A.K4a",
+   "text": "Picking a route.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "judgment",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "route selection",
+    "select(ing)? (a|the) route",
+    "direct route",
+    "airways?",
+    "avoid(ing)? (terrain|airspace)"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.VI.A.K4b",
+   "text": "Picking cruise altitudes.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "judgment",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "cruising altitudes?",
+    "91\\.159",
+    "altitude selection",
+    "(odd|even) thousand",
+    "favorable winds?"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 5, "h": "Altitude, and the shelves", "auto": true},
+    {"ch": 12, "sec": 7, "h": "After", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 48
+  },
+  {
+   "id": "PA.VI.A.K4c",
+   "text": "Picking good checkpoints.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "judgment",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "checkpoints?",
+    "landmarks?",
+    "prominent (features?|landmarks?)",
+    "visual checkpoints?",
+    "VFR (checkpoints?|reporting points?)",
+    "(highway|railroad|river) (intersection|crossing|bend)"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 1, "h": "Pilotage", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 42
+  },
+  {
+   "id": "PA.VI.A.K5a",
+   "text": "Plotting a course and figuring heading, speed, and course.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "calculation",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "plotter",
+    "true course",
+    "magnetic (course|heading)",
+    "compass heading",
+    "plot(ting)? (a|the) course",
+    "true heading"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true},
+    {"ch": 9, "sec": 5, "h": "Altitude, and the shelves", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 143
+  },
+  {
+   "id": "PA.VI.A.K5b",
+   "text": "Working out wind correction angle.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "calculation",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "wind correction angle",
+    "WCA\\b",
+    "wind triangle",
+    "E6-?B",
+    "crab angle"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 30
+  },
+  {
+   "id": "PA.VI.A.K5c",
+   "text": "Estimating time, speed, and distance between checkpoints.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "calculation",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "time[- ]speed[- ]distance",
+    "groundspeed",
+    "estimated time (en route|enroute)",
+    "ETE\\b",
+    "leg time",
+    "nautical miles"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "The road to a private pilot certificate", "auto": true},
+    {"ch": 5, "sec": 2, "h": "What thin air does to the engine, the prop, and the wing", "auto": true},
+    {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true},
+    {"ch": 9, "sec": 0, "h": "Leaving the pattern", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true},
+    {"ch": 10, "sec": 1, "h": "What you need, and what you can't do", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 477
+  },
+  {
+   "id": "PA.VI.A.K5d",
+   "text": "Finding true airspeed and density altitude for navigation.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "calculation",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "true airspeed",
+    "TAS\\b",
+    "density altitude",
+    "calibrated airspeed",
+    "pressure altitude",
+    "E6-?B"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 5, "sec": 0, "h": "Pressure altitude: start with the number the airplane feels", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 2, "h": "What thin air does to the engine, the prop, and the wing", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 11, "sec": 1, "h": "Getting in the door", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 222
+  },
+  {
+   "id": "PA.VI.A.K6",
+   "text": "Choosing power settings for cruise.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "procedural",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "power setting",
+    "cruise power",
+    "(65|75) ?(%|percent) power",
+    "RPM",
+    "cruise performance (chart|table)",
+    "leaning"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 99
+  },
+  {
+   "id": "PA.VI.A.K7",
+   "text": "Comparing planned and actual results in flight and making corrections.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.A",
+   "group": "Area VI. Navigation / Task A. Pilotage and Dead Reckoning",
+   "kind": "calculation",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "(actual|revised) groundspeed",
+    "(revised|new) ETA",
+    "off course",
+    "(planned|actual) (time|fuel)",
+    "(60|sixty)[- ](to|in)[- ](1|one)",
+    "course correction"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 12, "h": "Diverting, and November", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 37
+  },
+  {
+   "id": "PA.VI.B.K1",
+   "text": "Ground based navigation such as VOR: identifying, orienting, testing, and limits.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.B",
+   "group": "Area VI. Navigation / Task B. Navigation Systems and Radar Services",
+   "kind": "procedural",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "VORs?\\b",
+    "radials?",
+    "CDI",
+    "(TO|FROM) (flag|indication)",
+    "VOR (check|test)",
+    "VOT\\b",
+    "Morse code",
+    "reverse sensing",
+    "91\\.171"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 6, "h": "The VOR", "auto": true},
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 201
+  },
+  {
+   "id": "PA.VI.B.K2",
+   "text": "GPS navigation: equipment, approved databases, and RAIM.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.B",
+   "group": "Area VI. Navigation / Task B. Navigation Systems and Radar Services",
+   "kind": "definition",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "GPS",
+    "RAIM",
+    "WAAS",
+    "GNSS",
+    "satellite[- ]based",
+    "database",
+    "direct[- ]to"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 7, "h": "GPS", "auto": true},
+    {"ch": 9, "sec": 10, "h": "Weather and charts on a tablet", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 135
+  },
+  {
+   "id": "PA.VI.B.K3",
+   "text": "Radar services for VFR aircraft, including traffic advisories.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.B",
+   "group": "Area VI. Navigation / Task B. Navigation Systems and Radar Services",
+   "kind": "definition",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "flight following",
+    "radar (services?|assistance)",
+    "traffic advisor(y|ies)",
+    "VFR radar",
+    "radar contact",
+    "safety alert"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 1, "h": "Class B: the upside down wedding cake", "auto": true},
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
+    {"ch": 9, "sec": 8, "h": "Flight following", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 102
+  },
+  {
+   "id": "PA.VI.B.K4",
+   "text": "Transponder modes and ADS-B.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.B",
+   "group": "Area VI. Navigation / Task B. Navigation Systems and Radar Services",
+   "kind": "definition",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "transponder",
+    "Mode (A|C|S)",
+    "ADS-B",
+    "91\\.(215|225|227)",
+    "ADS-B (Out|In)",
+    "rule airspace"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Class B: the upside down wedding cake", "auto": true},
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Class C and Class D: say my name", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 135
+  },
+  {
+   "id": "PA.VI.C.K1",
+   "text": "Choosing an alternate airport when diverting.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.C",
+   "group": "Area VI. Navigation / Task C. Diversion",
+   "kind": "judgment",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "divert(ing|sion)?",
+    "alternate (airport|destination)",
+    "nearest airport",
+    "nearest (function|button)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.VI.C.K2",
+   "text": "Situations that call for deviating from the flight plan or ATC instructions.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.C",
+   "group": "Area VI. Navigation / Task C. Diversion",
+   "kind": "judgment",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "91\\.(3|123)",
+    "emergency authority",
+    "weather (deteriorat|ahead)",
+    "divert",
+    "deviat(e|ion) from (the|a|an|your) (clearance|flight plan|ATC)",
+    "pilot in command (may|can) deviate"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 67
+  },
+  {
+   "id": "PA.VI.D.K1",
+   "text": "Ways to figure out where you are when lost.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.D",
+   "group": "Area VI. Navigation / Task D. Lost Procedures",
+   "kind": "procedural",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "lost procedures?",
+    "(5|five) Cs",
+    "climb,? communicate,? confess",
+    "triangulat",
+    "cross[- ]radials?",
+    "GPS position",
+    "determine (your )?position"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 20
+  },
+  {
+   "id": "PA.VI.D.K2",
+   "text": "Help available when lost, such as radar services and the right radio calls.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VI.D",
+   "group": "Area VI. Navigation / Task D. Lost Procedures",
+   "kind": "procedural",
+   "tasks": [
+    "VI"
+   ],
+   "match": [
+    "121\\.5",
+    "radar (services?|vectors?)",
+    "Flight Service",
+    "7700",
+    "ask for help",
+    "DF steer",
+    "lost (pilot|aircraft)",
+    "if (you are|you'?re) lost"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 64
+  },
+  {
+   "id": "PA.VII.A.K1",
+   "text": "Aerodynamics of slow flight: how angle of attack, airspeed, load factor, power, weight, CG, attitude, and yaw interact.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.A",
+   "group": "Area VII. Slow Flight and Stalls / Task A. Maneuvering During Slow Flight",
+   "kind": "definition",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "slow flight",
+    "critical angle of attack",
+    "back side of the power curve",
+    "region of reversed command",
+    "angle of attack",
+    "minimum controllable airspeed",
+    "stall warning"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 2, "h": "Six hundred fifteen feet", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Why she pulls left", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 195
+  },
+  {
+   "id": "PA.VII.B.K1",
+   "text": "Aerodynamics of stalls in different configurations: angle of attack, airspeed, load factor, power, weight, CG, attitude, and yaw (power off stalls).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.B",
+   "group": "Area VII. Slow Flight and Stalls / Task B. Power-Off Stalls",
+   "kind": "definition",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "critical angle of attack",
+    "stall(s|ing)?\\b",
+    "angle of attack",
+    "load factor",
+    "stall speed",
+    "VS[O1]?\\b",
+    "exceed(s|ing)? the critical"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 6, "h": "Forward CG, aft CG, and how each one bites", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 7, "sec": 2, "h": "Six hundred fifteen feet", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Why she pulls left", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
+    {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true},
+    {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 442
+  },
+  {
+   "id": "PA.VII.B.K2",
+   "text": "How stalls feel and look by design, and recognizing an impending stall versus a full stall (power off).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.B",
+   "group": "Area VII. Slow Flight and Stalls / Task B. Power-Off Stalls",
+   "kind": "judgment",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "stall (horn|warning)",
+    "buffet(ing)?",
+    "impending stall",
+    "full stall",
+    "mushy controls",
+    "stall characteristics",
+    "wing root"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 68
+  },
+  {
+   "id": "PA.VII.B.K3",
+   "text": "What leads to a power off stall, such as a base to final turn, and how to prevent it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.B",
+   "group": "Area VII. Slow Flight and Stalls / Task B. Power-Off Stalls",
+   "kind": "judgment",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "power[- ]off stalls?",
+    "approach(-to-landing)? stall",
+    "base[- ]to[- ]final",
+    "skidd(ed|ing) turn",
+    "cross[- ]control(led)? stall",
+    "overshoot(ing)? final"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
+    {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 53
+  },
+  {
+   "id": "PA.VII.B.K4",
+   "text": "The basics of stall recovery: reduce angle of attack first, then level wings and add power.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.B",
+   "group": "Area VII. Slow Flight and Stalls / Task B. Power-Off Stalls",
+   "kind": "procedural",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "stall recovery",
+    "reduce (the )?angle of attack",
+    "(lower|pitch) the nose",
+    "(level|roll) the wings",
+    "add(ing)? (full )?power",
+    "pitch, power, roll"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 98
+  },
+  {
+   "id": "PA.VII.C.K1",
+   "text": "Aerodynamics of stalls in different configurations: angle of attack, airspeed, load factor, power, weight, CG, attitude, and yaw (power on stalls).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.C",
+   "group": "Area VII. Slow Flight and Stalls / Task C. Power-On Stalls",
+   "kind": "definition",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "critical angle of attack",
+    "stall(s|ing)?\\b",
+    "angle of attack",
+    "load factor",
+    "stall speed",
+    "VS[O1]?\\b",
+    "exceed(s|ing)? the critical"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
+    {"ch": 5, "sec": 6, "h": "Forward CG, aft CG, and how each one bites", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 7, "sec": 2, "h": "Six hundred fifteen feet", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Why she pulls left", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
+    {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true},
+    {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 442
+  },
+  {
+   "id": "PA.VII.C.K2",
+   "text": "How stalls feel and look by design, and recognizing an impending stall versus a full stall (power on).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.C",
+   "group": "Area VII. Slow Flight and Stalls / Task C. Power-On Stalls",
+   "kind": "judgment",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "stall (horn|warning)",
+    "buffet(ing)?",
+    "impending stall",
+    "full stall",
+    "mushy controls",
+    "stall characteristics",
+    "wing root"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 68
+  },
+  {
+   "id": "PA.VII.C.K3",
+   "text": "What leads to a power on stall, such as a steep departure climb, and how to prevent it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.C",
+   "group": "Area VII. Slow Flight and Stalls / Task C. Power-On Stalls",
+   "kind": "judgment",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "power[- ]on stalls?",
+    "departure stall",
+    "takeoff stall",
+    "excessive pitch",
+    "steep climb"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.VII.C.K4",
+   "text": "The basics of stall recovery: reduce angle of attack first, then level wings and add power.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.C",
+   "group": "Area VII. Slow Flight and Stalls / Task C. Power-On Stalls",
+   "kind": "procedural",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "stall recovery",
+    "reduce (the )?angle of attack",
+    "(lower|pitch) the nose",
+    "(level|roll) the wings",
+    "add(ing)? (full )?power",
+    "pitch, power, roll"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 98
+  },
+  {
+   "id": "PA.VII.D.K1",
+   "text": "Aerodynamics of spins: angle of attack, airspeed, load factor, power, weight, CG, attitude, and yaw.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.D",
+   "group": "Area VII. Slow Flight and Stalls / Task D. Spin Awareness",
+   "kind": "definition",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "spins?\\b",
+    "autorotation",
+    "(yaw|yawing) at (the )?stall",
+    "one wing (more )?stalled",
+    "aft CG",
+    "uncoordinated stall"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 6, "h": "Forward CG, aft CG, and how each one bites", "auto": true},
+    {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 88
+  },
+  {
+   "id": "PA.VII.D.K2",
+   "text": "What causes a spin and how to recognize the entry, incipient, and developed phases.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.D",
+   "group": "Area VII. Slow Flight and Stalls / Task D. Spin Awareness",
+   "kind": "definition",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "spin (entry|phases?)",
+    "incipient (spin|phase)",
+    "developed (spin|phase)",
+    "cross[- ]control(led)?",
+    "uncoordinated stall"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.VII.D.K3",
+   "text": "How to recover from a spin.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VII.D",
+   "group": "Area VII. Slow Flight and Stalls / Task D. Spin Awareness",
+   "kind": "procedural",
+   "tasks": [
+    "VII"
+   ],
+   "match": [
+    "spin recovery",
+    "opposite rudder",
+    "power (to )?idle",
+    "ailerons? neutral",
+    "spin recovery procedure",
+    "PARE\\b"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 6, "h": "Forward CG, aft CG, and how each one bites", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 38
+  },
+  {
+   "id": "PA.VIII.A.K1a",
+   "text": "Flight instrument limits and errors when flying by instruments (straight and level flight).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.A",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task A. Straight-and-Level Flight",
+   "kind": "definition",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "instrument errors?",
+    "(precession|lag|turning errors?)",
+    "blocked (pitot|static)",
+    "(altimeter|airspeed|compass) error",
+    "attitude indicator (error|failure)"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 16
+  },
+  {
+   "id": "PA.VIII.A.K1b",
+   "text": "How the instruments show the airplane's attitude (straight and level flight).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.A",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task A. Straight-and-Level Flight",
+   "kind": "visual",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "attitude indicator",
+    "artificial horizon",
+    "pitch (attitude|bars?)",
+    "bank (index|pointer)",
+    "control instruments?",
+    "primary and supporting"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 29
+  },
+  {
+   "id": "PA.VIII.A.K1c",
+   "text": "How each flight instrument works (straight and level flight).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.A",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task A. Straight-and-Level Flight",
+   "kind": "definition",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "attitude indicator",
+    "heading indicator",
+    "turn coordinator",
+    "vertical speed indicator",
+    "altimeter",
+    "airspeed indicator",
+    "gyroscop",
+    "AHRS"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 5, "sec": 0, "h": "Pressure altitude: start with the number the airplane feels", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Illusions after dark", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 170
+  },
+  {
+   "id": "PA.VIII.A.K1d",
+   "text": "Scanning the instruments correctly, avoiding fixation and omission (straight and level flight).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.A",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task A. Straight-and-Level Flight",
+   "kind": "procedural",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "cross[- ]?check",
+    "(radial|selected radial) scan",
+    "instrument scan",
+    "fixation",
+    "omission",
+    "hub[- ]and[- ]spoke"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true},
+    {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 36
+  },
+  {
+   "id": "PA.VIII.B.K1a",
+   "text": "Flight instrument limits and errors when flying by instruments (constant airspeed climbs).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.B",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task B. Constant Airspeed Climbs",
+   "kind": "definition",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "instrument errors?",
+    "(precession|lag|turning errors?)",
+    "blocked (pitot|static)",
+    "(altimeter|airspeed|compass) error",
+    "attitude indicator (error|failure)"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 16
+  },
+  {
+   "id": "PA.VIII.B.K1b",
+   "text": "How the instruments show the airplane's attitude (constant airspeed climbs).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.B",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task B. Constant Airspeed Climbs",
+   "kind": "visual",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "attitude indicator",
+    "artificial horizon",
+    "pitch (attitude|bars?)",
+    "bank (index|pointer)",
+    "control instruments?",
+    "primary and supporting"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 29
+  },
+  {
+   "id": "PA.VIII.B.K1c",
+   "text": "How each flight instrument works (constant airspeed climbs).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.B",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task B. Constant Airspeed Climbs",
+   "kind": "definition",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "attitude indicator",
+    "heading indicator",
+    "turn coordinator",
+    "vertical speed indicator",
+    "altimeter",
+    "airspeed indicator",
+    "gyroscop",
+    "AHRS"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 5, "sec": 0, "h": "Pressure altitude: start with the number the airplane feels", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Illusions after dark", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 170
+  },
+  {
+   "id": "PA.VIII.B.K1d",
+   "text": "Scanning the instruments correctly, avoiding fixation and omission (constant airspeed climbs).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.B",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task B. Constant Airspeed Climbs",
+   "kind": "procedural",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "cross[- ]?check",
+    "(radial|selected radial) scan",
+    "instrument scan",
+    "fixation",
+    "omission",
+    "hub[- ]and[- ]spoke"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true},
+    {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 36
+  },
+  {
+   "id": "PA.VIII.C.K1a",
+   "text": "Flight instrument limits and errors when flying by instruments (constant airspeed descents).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.C",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task C. Constant Airspeed Descents",
+   "kind": "definition",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "instrument errors?",
+    "(precession|lag|turning errors?)",
+    "blocked (pitot|static)",
+    "(altimeter|airspeed|compass) error",
+    "attitude indicator (error|failure)"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 16
+  },
+  {
+   "id": "PA.VIII.C.K1b",
+   "text": "How the instruments show the airplane's attitude (constant airspeed descents).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.C",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task C. Constant Airspeed Descents",
+   "kind": "visual",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "attitude indicator",
+    "artificial horizon",
+    "pitch (attitude|bars?)",
+    "bank (index|pointer)",
+    "control instruments?",
+    "primary and supporting"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 29
+  },
+  {
+   "id": "PA.VIII.C.K1c",
+   "text": "How each flight instrument works (constant airspeed descents).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.C",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task C. Constant Airspeed Descents",
+   "kind": "definition",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "attitude indicator",
+    "heading indicator",
+    "turn coordinator",
+    "vertical speed indicator",
+    "altimeter",
+    "airspeed indicator",
+    "gyroscop",
+    "AHRS"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 5, "sec": 0, "h": "Pressure altitude: start with the number the airplane feels", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Illusions after dark", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 170
+  },
+  {
+   "id": "PA.VIII.C.K1d",
+   "text": "Scanning the instruments correctly, avoiding fixation and omission (constant airspeed descents).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.C",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task C. Constant Airspeed Descents",
+   "kind": "procedural",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "cross[- ]?check",
+    "(radial|selected radial) scan",
+    "instrument scan",
+    "fixation",
+    "omission",
+    "hub[- ]and[- ]spoke"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true},
+    {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 36
+  },
+  {
+   "id": "PA.VIII.D.K1a",
+   "text": "Flight instrument limits and errors when flying by instruments (turns to headings).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.D",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task D. Turns to Headings",
+   "kind": "definition",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "instrument errors?",
+    "(precession|lag|turning errors?)",
+    "blocked (pitot|static)",
+    "(altimeter|airspeed|compass) error",
+    "attitude indicator (error|failure)"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 16
+  },
+  {
+   "id": "PA.VIII.D.K1b",
+   "text": "How the instruments show the airplane's attitude (turns to headings).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.D",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task D. Turns to Headings",
+   "kind": "visual",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "attitude indicator",
+    "artificial horizon",
+    "pitch (attitude|bars?)",
+    "bank (index|pointer)",
+    "control instruments?",
+    "primary and supporting"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 29
+  },
+  {
+   "id": "PA.VIII.D.K1c",
+   "text": "How each flight instrument works (turns to headings).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.D",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task D. Turns to Headings",
+   "kind": "definition",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "attitude indicator",
+    "heading indicator",
+    "turn coordinator",
+    "vertical speed indicator",
+    "altimeter",
+    "airspeed indicator",
+    "gyroscop",
+    "AHRS"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 5, "sec": 0, "h": "Pressure altitude: start with the number the airplane feels", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Illusions after dark", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 170
+  },
+  {
+   "id": "PA.VIII.D.K1d",
+   "text": "Scanning the instruments correctly, avoiding fixation and omission (turns to headings).",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.D",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task D. Turns to Headings",
+   "kind": "procedural",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "cross[- ]?check",
+    "(radial|selected radial) scan",
+    "instrument scan",
+    "fixation",
+    "omission",
+    "hub[- ]and[- ]spoke"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true},
+    {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 36
+  },
+  {
+   "id": "PA.VIII.E.K1",
+   "text": "Preventing unusual attitudes, including flight, body, and environmental causes and equipment failures.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.E",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task E. Recovery from Unusual Flight Attitudes",
+   "kind": "judgment",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "unusual attitudes?",
+    "upset prevention",
+    "spatial disorientation",
+    "inadvertent IMC",
+    "vacuum (pump )?failure",
+    "loss of control"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.VIII.E.K2",
+   "text": "How to recover from nose high and nose low unusual attitudes.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.E",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task E. Recovery from Unusual Flight Attitudes",
+   "kind": "procedural",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "unusual attitude recovery",
+    "nose[- ](high|low)",
+    "recover(y|ing) from",
+    "(level|roll) the wings",
+    "reduce power",
+    "upset recovery"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 33
+  },
+  {
+   "id": "PA.VIII.E.K3",
+   "text": "Getting back to visual conditions after flying into clouds by accident.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.E",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task E. Recovery from Unusual Flight Attitudes",
+   "kind": "judgment",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "inadvertent (IMC|instrument meteorological)",
+    "unintended (IMC|instrument meteorological)",
+    "IIMC",
+    "UIMC",
+    "180[- ]degree turn",
+    "VFR into IMC",
+    "regain VMC"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.VIII.E.K4",
+   "text": "Using the autopilot or other automation appropriately.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.E",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task E. Recovery from Unusual Flight Attitudes",
+   "kind": "judgment",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "autopilot",
+    "automation",
+    "(level|LVL) button",
+    "envelope protection",
+    "automation (management|surprise)"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 0, "h": "The part that fails most", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 35
+  },
+  {
+   "id": "PA.VIII.F.K1",
+   "text": "Using the radios to pick frequencies and request and follow ATC instructions.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.F",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task F. Radio Communications, Navigation Systems/Facilities, and Radar Services",
+   "kind": "procedural",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "(com|comm) radio",
+    "frequenc(y|ies)",
+    "(request|follow)(ing)? ATC",
+    "read ?back",
+    "(standby|active) frequency",
+    "flip[- ]flop"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true},
+    {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true},
+    {"ch": 9, "sec": 8, "h": "Flight following", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 231
+  },
+  {
+   "id": "PA.VIII.F.K2",
+   "text": "Using navigation equipment and displays to follow bearings, radials, or courses.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.F",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task F. Radio Communications, Navigation Systems/Facilities, and Radar Services",
+   "kind": "procedural",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "VOR",
+    "CDI",
+    "radials?",
+    "bearings?",
+    "(HSI|horizontal situation indicator)",
+    "course (deviation|needle)",
+    "GPS"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
+    {"ch": 9, "sec": 6, "h": "The VOR", "auto": true},
+    {"ch": 9, "sec": 7, "h": "GPS", "auto": true},
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 389
+  },
+  {
+   "id": "PA.VIII.F.K3",
+   "text": "ATC facilities and the services they offer.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.VIII.F",
+   "group": "Area VIII. Basic Instrument Maneuvers / Task F. Radio Communications, Navigation Systems/Facilities, and Radar Services",
+   "kind": "definition",
+   "tasks": [
+    "VIII"
+   ],
+   "match": [
+    "(approach|departure|center) control",
+    "ARTCC",
+    "TRACON",
+    "Flight Service",
+    "ATC services",
+    "flight following"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.A.K1",
+   "text": "Situations that call for an emergency descent, such as smoke or fire.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.A",
+   "group": "Area IX. Emergency Operations / Task A. Emergency Descent",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "emergency descent",
+    "(engine|cabin|electrical) fire",
+    "smoke",
+    "depressuriz",
+    "descend (immediately|rapidly)"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 53
+  },
+  {
+   "id": "PA.IX.A.K2",
+   "text": "Immediate action items and emergency procedures for an emergency descent.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.A",
+   "group": "Area IX. Emergency Operations / Task A. Emergency Descent",
+   "kind": "procedural",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "emergency (checklist|procedures?)",
+    "memory items",
+    "immediate action",
+    "emergency descent",
+    "(power|throttle) (to )?idle"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 7, "h": "Spins", "auto": true},
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 26
+  },
+  {
+   "id": "PA.IX.A.K3",
+   "text": "Airspeeds and limits that apply in an emergency descent, such as VNE and VFE.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.A",
+   "group": "Area IX. Emergency Operations / Task A. Emergency Descent",
+   "kind": "definition",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "VNE\\b",
+    "never[- ]exceed",
+    "VFE\\b",
+    "VNO\\b",
+    "yellow arc",
+    "red line",
+    "airspeed limitations?"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 28
+  },
+  {
+   "id": "PA.IX.A.K4",
+   "text": "Airplane performance and limits during an emergency descent.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.A",
+   "group": "Area IX. Emergency Operations / Task A. Emergency Descent",
+   "kind": "definition",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "emergency descent",
+    "limitations section",
+    "structural (limits|damage)",
+    "load limits?",
+    "descent rate"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.B.K1",
+   "text": "Immediate actions and emergency procedures after an engine failure.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.B",
+   "group": "Area IX. Emergency Operations / Task B. Emergency Approach and Landing (Simulated)",
+   "kind": "procedural",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "engine failure",
+    "ABCDE",
+    "best glide",
+    "(fuel|mixture|carb heat|mags?) check",
+    "restart",
+    "emergency checklist"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true},
+    {"ch": 11, "sec": 9, "h": "When something happens: NTSB 830", "auto": true},
+    {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 101
+  },
+  {
+   "id": "PA.IX.B.K2a",
+   "text": "Why best glide speed matters and how it gives the most distance.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.B",
+   "group": "Area IX. Emergency Operations / Task B. Emergency Approach and Landing (Simulated)",
+   "kind": "definition",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "best glide",
+    "glide (ratio|range|distance)",
+    "VG\\b",
+    "L/D ?max",
+    "maximum glide"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 22
+  },
+  {
+   "id": "PA.IX.B.K2b",
+   "text": "The difference between best glide speed and minimum sink speed.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.B",
+   "group": "Area IX. Emergency Operations / Task B. Emergency Approach and Landing (Simulated)",
+   "kind": "definition",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "minimum sink",
+    "best glide",
+    "max(imum)? (time )?aloft",
+    "(longest|maximum) time"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 22
+  },
+  {
+   "id": "PA.IX.B.K2c",
+   "text": "How wind changes glide distance.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.B",
+   "group": "Area IX. Emergency Operations / Task B. Emergency Approach and Landing (Simulated)",
+   "kind": "calculation",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "glide (distance|range)",
+    "headwind",
+    "tailwind",
+    "(turn|turning) downwind",
+    "wind (effect|changes) on glide"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Wind on the runway", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 81
+  },
+  {
+   "id": "PA.IX.B.K3",
+   "text": "How weather and density altitude affect an emergency approach and landing.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.B",
+   "group": "Area IX. Emergency Operations / Task B. Emergency Approach and Landing (Simulated)",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "density altitude",
+    "forced landing",
+    "emergency landing",
+    "(surface )?wind direction",
+    "landing into the wind"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 45
+  },
+  {
+   "id": "PA.IX.B.K4",
+   "text": "Flying a stabilized emergency approach and managing energy.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.B",
+   "group": "Area IX. Emergency Operations / Task B. Emergency Approach and Landing (Simulated)",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "energy management",
+    "stabilized approach",
+    "key position",
+    "high key",
+    "low key",
+    "forced landing",
+    "spiral down"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.B.K5",
+   "text": "ELTs and other locating devices like personal locator beacons.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.B",
+   "group": "Area IX. Emergency Operations / Task B. Emergency Approach and Landing (Simulated)",
+   "kind": "definition",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "emergency locator transmitters?",
+    "ELTs?\\b",
+    "406 MHz",
+    "121\\.5",
+    "personal locator beacons?",
+    "PLBs?\\b",
+    "Cospas"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 45
+  },
+  {
+   "id": "PA.IX.B.K6",
+   "text": "How ATC helps an aircraft in distress.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.B",
+   "group": "Area IX. Emergency Operations / Task B. Emergency Approach and Landing (Simulated)",
+   "kind": "definition",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "mayday",
+    "pan[- ]pan",
+    "7700",
+    "121\\.5",
+    "declare an emergency",
+    "distress"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 100
+  },
+  {
+   "id": "PA.IX.C.K1",
+   "text": "What causes partial or full power loss in the airplane's engine type.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "(partial )?power loss",
+    "engine (failure|roughness)",
+    "carburetor ice",
+    "fuel (exhaustion|starvation)",
+    "induction icing",
+    "fouled plugs?"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 9, "h": "When something happens: NTSB 830", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 38
+  },
+  {
+   "id": "PA.IX.C.K2a",
+   "text": "Recognizing and handling an electrical failure.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "electrical (failure|malfunction)",
+    "alternator failure",
+    "(ammeter|loadmeter) (discharge|shows)",
+    "low[- ]voltage",
+    "load shed",
+    "overvoltage"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 45
+  },
+  {
+   "id": "PA.IX.C.K2b",
+   "text": "Vacuum or pressure failure and the instruments it affects.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "vacuum (failure|pump)",
+    "suction gauge",
+    "partial panel",
+    "attitude indicator (fail|tumbl)",
+    "heading indicator (fail|drift)"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 12
+  },
+  {
+   "id": "PA.IX.C.K2c",
+   "text": "Pitot static failures and how the instruments read wrong.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "blocked (pitot|static)",
+    "pitot (blockage|ice)",
+    "static (blockage|port)",
+    "alternate static",
+    "(acts|behaves) like an altimeter",
+    "pitot heat"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 36
+  },
+  {
+   "id": "PA.IX.C.K2d",
+   "text": "Failure of an electronic display.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "(PFD|MFD) failure",
+    "display (failure|malfunction)",
+    "reversionary (mode)?",
+    "standby instruments?",
+    "backup (instruments?|display)",
+    "red X"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.C.K2e",
+   "text": "Landing gear or flap malfunctions.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "flap (failure|malfunction|asymmetr)",
+    "split flap",
+    "(gear|landing gear) (malfunction|failure)",
+    "manual (gear )?extension",
+    "no[- ]flap landing"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.C.K2f",
+   "text": "Dealing with trim that will not work or runs away.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "(inoperative|runaway) trim",
+    "trim (failure|malfunction)",
+    "electric trim",
+    "trim disconnect",
+    "control forces?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.C.K3",
+   "text": "Causes of smoke or fire aboard and what to do about it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "procedural",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "(engine|cabin|electrical) fire",
+    "smoke",
+    "fire extinguisher",
+    "(fuel|mixture) (shutoff|cutoff|off)",
+    "master (switch )?off",
+    "induction fire"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 53
+  },
+  {
+   "id": "PA.IX.C.K4",
+   "text": "Malfunctions in other systems the airplane has, such as oxygen or deicing.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "oxygen (system )?(failure|malfunction)",
+    "deice (failure|boots?)",
+    "pitot heat (failure|inop)",
+    "system malfunctions?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.C.K5",
+   "text": "What to do if a door or window opens in flight.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.C",
+   "group": "Area IX. Emergency Operations / Task C. Systems and Equipment Malfunctions",
+   "kind": "procedural",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "door (open|opens|opening|pops)",
+    "(window|door) open(s|ing)? in flight",
+    "unlatched door",
+    "fly the airplane"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.D.K1",
+   "text": "How the ELT works, its limits, and the testing rules.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.D",
+   "group": "Area IX. Emergency Operations / Task D. Emergency Equipment and Survival Gear",
+   "kind": "definition",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "emergency locator transmitters?",
+    "ELTs?\\b",
+    "91\\.207",
+    "first (5|five) minutes",
+    "121\\.5",
+    "406 MHz",
+    "ELT (battery|test)"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true},
+    {"ch": 11, "sec": 8, "h": "Inspections, records, and ADs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 68
+  },
+  {
+   "id": "PA.IX.D.K2",
+   "text": "Using a fire extinguisher and its limits.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.D",
+   "group": "Area IX. Emergency Operations / Task D. Emergency Equipment and Survival Gear",
+   "kind": "procedural",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "fire extinguishers?",
+    "Halon",
+    "(dry chemical|Halotron)",
+    "toxic (fumes|gas)",
+    "PASS method"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.D.K3a",
+   "text": "Survival gear for very hot or cold climates.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.D",
+   "group": "Area IX. Emergency Operations / Task D. Emergency Equipment and Survival Gear",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "survival (kit|gear)",
+    "(hot|cold) (weather|climate)",
+    "desert",
+    "winter survival",
+    "water (supply|bottles)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.D.K3b",
+   "text": "Survival gear for flying over mountains.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.D",
+   "group": "Area IX. Emergency Operations / Task D. Emergency Equipment and Survival Gear",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "mountain(ous)? (terrain|flying)",
+    "survival (kit|gear)",
+    "signal mirror",
+    "shelter"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.D.K3c",
+   "text": "Survival gear for flying over water.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.D",
+   "group": "Area IX. Emergency Operations / Task D. Emergency Equipment and Survival Gear",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "(over ?water|overwater)",
+    "life (vests?|jackets?|rafts?)",
+    "flotation",
+    "ditching"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.D.K4",
+   "text": "When to pull a ballistic parachute and how to brief passengers on it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.D",
+   "group": "Area IX. Emergency Operations / Task D. Emergency Equipment and Survival Gear",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "ballistic parachute",
+    "(airframe|whole[- ]airplane) parachute",
+    "BRS\\b",
+    "pull the (chute|handle)",
+    "Cirrus Airframe Parachute"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "PA.IX.D.K5",
+   "text": "When to activate an emergency autoland system and how to brief passengers on it.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.IX.D",
+   "group": "Area IX. Emergency Operations / Task D. Emergency Equipment and Survival Gear",
+   "kind": "judgment",
+   "tasks": [
+    "IX"
+   ],
+   "match": [
+    "auto[- ]?land",
+    "Garmin Autoland",
+    "emergency autoland",
+    "Safe Return",
+    "passenger (activat|briefing)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.XI.A.K1",
+   "text": "How the eye works at night: rods, cones, the blind spot, and dark adaptation.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XI.A",
+   "group": "Area XI. Night Operations / Task A. Night Operations",
+   "kind": "definition",
+   "tasks": [
+    "XI"
+   ],
+   "match": [
+    "night vision",
+    "dark adapt",
+    "night blind spot",
+    "off[- ]center viewing",
+    "red (light|cockpit lighting)",
+    "rods and cones"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "Hold short, and red lights in the pavement", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Your eyes at night", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 92
+  },
+  {
+   "id": "PA.XI.A.K2",
+   "text": "Airport, runway, taxiway, and obstruction lighting, and pilot controlled lighting.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XI.A",
+   "group": "Area XI. Night Operations / Task A. Night Operations",
+   "kind": "visual",
+   "tasks": [
+    "XI"
+   ],
+   "match": [
+    "(rotating )?beacon",
+    "pilot[- ]controlled lighting",
+    "runway edge lights",
+    "REIL",
+    "VASI",
+    "PAPI",
+    "obstruction lights?",
+    "(seven|five|three) clicks",
+    "(7|5|3) clicks",
+    "click(ing)? the mic"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 5, "h": "Lights", "auto": true},
+    {"ch": 10, "sec": 3, "h": "Lights on the ground", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 257
+  },
+  {
+   "id": "PA.XI.A.K3",
+   "text": "Equipment and lights an airplane must have for night flight.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XI.A",
+   "group": "Area XI. Night Operations / Task A. Night Operations",
+   "kind": "definition",
+   "tasks": [
+    "XI"
+   ],
+   "match": [
+    "91\\.205",
+    "(position|navigation) lights",
+    "anti[- ]collision lights?",
+    "night (VFR )?equipment",
+    "91\\.209",
+    "landing light",
+    "night (flight )?equipment"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 10, "sec": 2, "h": "Lights on the airplane", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 104
+  },
+  {
+   "id": "PA.XI.A.K4",
+   "text": "Personal gear needed for night flying, such as flashlights.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XI.A",
+   "group": "Area XI. Night Operations / Task A. Night Operations",
+   "kind": "procedural",
+   "tasks": [
+    "XI"
+   ],
+   "match": [
+    "flashlights?",
+    "red (lens|light)",
+    "spare batteries",
+    "headlamp",
+    "night flight (kit|gear)"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "Hold short, and red lights in the pavement", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Your eyes at night", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 53
+  },
+  {
+   "id": "PA.XI.A.K5",
+   "text": "Orientation, navigation, and chart reading at night, and keeping night vision sharp.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XI.A",
+   "group": "Area XI. Night Operations / Task A. Night Operations",
+   "kind": "procedural",
+   "tasks": [
+    "XI"
+   ],
+   "match": [
+    "night (navigation|orientation)",
+    "chart reading at night",
+    "night vision",
+    "dim (the )?(cockpit|panel) lights",
+    "lighted landmarks",
+    "red light"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "Hold short, and red lights in the pavement", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Your eyes at night", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 65
+  },
+  {
+   "id": "PA.XI.A.K6",
+   "text": "Taxiing at night.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XI.A",
+   "group": "Area XI. Night Operations / Task A. Night Operations",
+   "kind": "procedural",
+   "tasks": [
+    "XI"
+   ],
+   "match": [
+    "night taxi",
+    "taxiway (edge )?lights",
+    "blue (taxiway )?lights",
+    "taxi light",
+    "taxi(ing)? at night"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "PA.XI.A.K7",
+   "text": "Telling another airplane's position and direction from its position lights.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XI.A",
+   "group": "Area XI. Night Operations / Task A. Night Operations",
+   "kind": "visual",
+   "tasks": [
+    "XI"
+   ],
+   "match": [
+    "position lights",
+    "red (light|on the) left",
+    "green (light|on the) right",
+    "white (tail )?light",
+    "(navigation|nav) lights",
+    "converging"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 2, "h": "Who gives way", "auto": true},
+    {"ch": 10, "sec": 2, "h": "Lights on the airplane", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 152
+  },
+  {
+   "id": "PA.XI.A.K8",
+   "text": "Visual illusions at night, such as the black hole approach and autokinesis.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XI.A",
+   "group": "Area XI. Night Operations / Task A. Night Operations",
+   "kind": "definition",
+   "tasks": [
+    "XI"
+   ],
+   "match": [
+    "black hole",
+    "autokinesis",
+    "false horizon",
+    "night illusions?",
+    "featureless terrain",
+    "flicker vertigo"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 9, "h": "Runways that lie", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Illusions after dark", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 94
+  },
+  {
+   "id": "PA.XII.A.K1",
+   "text": "Shutting down, securing, and inspecting the airplane after flight.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XII.A",
+   "group": "Area XII. Postflight Procedures / Task A. After Landing, Parking, and Securing",
+   "kind": "procedural",
+   "tasks": [
+    "XII"
+   ],
+   "match": [
+    "shut ?down",
+    "mixture (idle )?cut[- ]?off",
+    "tie[- ]?downs?",
+    "control lock",
+    "chocks",
+    "postflight inspection",
+    "securing the (airplane|aircraft)",
+    "pitot cover"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 6, "h": "Flying it", "auto": true},
+    {"ch": 11, "sec": 10, "h": "After you land: postflight", "auto": true},
+    {"ch": 12, "sec": 5, "h": "Postflight, with an examiner watching", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 46
+  },
+  {
+   "id": "PA.XII.A.K2",
+   "text": "Writing up problems found in flight or after.",
+   "source": "FAA-S-ACS-6C (Nov 2023), PA.XII.A",
+   "group": "Area XII. Postflight Procedures / Task A. After Landing, Parking, and Securing",
+   "kind": "procedural",
+   "tasks": [
+    "XII"
+   ],
+   "match": [
+    "squawk(s| list| sheet)?",
+    "discrepanc(y|ies)",
+    "write[- ]up",
+    "maintenance log",
+    "report(ing)? (the )?problem"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 10, "h": "After you land: postflight", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 58
+  }
+ ],
+ "seeded": "2026-11-08"
+}

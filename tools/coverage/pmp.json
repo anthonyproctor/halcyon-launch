@@ -1,0 +1,3905 @@
+{
+ "course": "pmp",
+ "taxonomy": "official",
+ "outline": {
+  "name": "PMI Project Management Professional (PMP) Examination Content Outline 2026",
+  "version": "July 2026 PMP Certification Exam Update; document footer reads 'revised 11 August 2026'. Domains: People 33%, Process 41%, Business Environment 26%; about 40% predictive and 60% agile or hybrid items.",
+  "source": "https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/pmp/pmp-examination-content-outline.pdf (official PMI PDF, 24 pages, downloaded 2026-11-07)",
+  "read": "2026-11-07",
+  "notes": "26 tasks (ECO.P1 to ECO.B8) and 138 enablers (ECO.<task>.e<n>, numbered in the ECO's printed order: People 39, Process 64, Business Environment 35). PMI numbers tasks within each domain (Task 1..N); the P/R/B codes follow engine.js TASKNAMES, where R = Domain II Process and B = Domain III Business Environment. All text is paraphrased; no ECO or PMBOK text is copied. PMI says enablers are illustrative, not exhaustive. Every enabler maps only to its parent task. The ECO does not name Kanban, flow, WIP limits, or cumulative flow; per course rule they are placed in match lists where the ECO's wording points to them: R3 (prioritize by value, deliver incrementally: Kanban, pull system, flow), R8 (schedule by approach and executing it: Kanban, continuous flow, WIP limits, cadence, cycle time, lead time, throughput; variance via cumulative flow, burndown), R9 (metrics and artifacts: cumulative flow diagrams, Kanban board, velocity, cycle time), B4 (impediments: WIP limits, bottlenecks, blocked items, swarming). New 2026 themes the ECO names explicitly: sustainability (R1.e3, R7.e5, B2.e1, B5.e6) and AI only in the introduction (AI tools added to R1.e9 match as a data-for-decisions example). Some enabler match lists include short acronyms (EV, PV, AC, CV, SV, CPI, SPI, RBS) which can over-match; reviewers may want to tighten them. Reviewer adjustment 2026-11-07: the \"WIP limits?\" phrase widened to also accept \"limit WIP\" and \"limit on work in progress\" (same concept, word order only)."
+ },
+ "objectives": [
+  {
+   "id": "ECO.P1",
+   "text": "Build a shared vision of the project with key stakeholders and keep it alive as things change.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 1",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P1"
+   ],
+   "match": [
+    "shared vision",
+    "common vision",
+    "project vision",
+    "vision statement",
+    "product vision",
+    "north star",
+    "elevator pitch"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "A vision people can carry", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 20
+  },
+  {
+   "id": "ECO.P1.e1",
+   "text": "Make sure the key stakeholders hold the same picture of where the project is going.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 1 enabler 1",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P1"
+   ],
+   "match": [
+    "shared vision",
+    "common vision",
+    "shared understanding",
+    "same page",
+    "vision statement"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "A vision people can carry", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 20
+  },
+  {
+   "id": "ECO.P1.e2",
+   "text": "Champion and repeat the shared vision so the team keeps it in view.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 1 enabler 2",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P1"
+   ],
+   "match": [
+    "promot(e|es|ing) the vision",
+    "communicat(e|es|ing) the vision",
+    "reinforc(e|es|ing) the vision",
+    "vision statement",
+    "rally(ing)? the team"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P1.e3",
+   "text": "Revisit and refresh the vision as the project and its context change.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 1 enabler 3",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P1"
+   ],
+   "match": [
+    "revisit(s|ing)? the vision",
+    "update(s|d)? the vision",
+    "refresh(es|ing)? the vision",
+    "vision drift",
+    "keep(s|ing)? the vision current"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P1.e4",
+   "text": "Dig into why people misread the vision and find the root cause of the gap.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 1 enabler 4",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P1"
+   ],
+   "match": [
+    "root cause",
+    "five whys",
+    "5 whys",
+    "misunderstand(ing|ings)?",
+    "fishbone",
+    "Ishikawa"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 2, "h": "Asking why", "auto": true},
+    {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 228
+  },
+  {
+   "id": "ECO.P2",
+   "text": "Find, analyze, and resolve conflict, and hold the team to its agreed ground rules.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 2",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P2"
+   ],
+   "match": [
+    "conflict",
+    "collaborat(e|ing)/problem solv(e|ing)",
+    "ground rules",
+    "team charter",
+    "conflict resolution",
+    "Thomas-Kilmann"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 7, "h": "The people under the chart", "auto": true},
+    {"ch": 6, "sec": 0, "h": "Page six", "auto": true},
+    {"ch": 6, "sec": 2, "h": "What the team writes down", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Five ways to have an argument", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Fair", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true},
+    {"ch": 13, "sec": 6, "h": "A public room", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 507
+  },
+  {
+   "id": "ECO.P2.e1",
+   "text": "Spot where conflict is coming from, such as schedules, priorities, resources, or personalities.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 2 enabler 1",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P2"
+   ],
+   "match": [
+    "sources? of conflict",
+    "conflict sources?",
+    "competing priorities",
+    "scarce resources",
+    "personality clash(es)?"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P2.e2",
+   "text": "Look at the setting and stakes around a conflict before acting.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 2 enabler 2",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P2"
+   ],
+   "match": [
+    "conflict context",
+    "stages of conflict",
+    "conflict escalation",
+    "level of conflict",
+    "Speed Leas",
+    "context (of|for) the conflict"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P2.e3",
+   "text": "Carry out a resolution approach the parties agreed on.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 2 enabler 3",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P2"
+   ],
+   "match": [
+    "resolution strateg(y|ies)",
+    "collaborat(e|ing)",
+    "compromis(e|ing)",
+    "smooth(ing)?",
+    "forc(e|ing)",
+    "withdraw(al|ing)?",
+    "confront(ing|ation)?",
+    "problem solving"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "People aren't bars", "auto": true},
+    {"ch": 3, "sec": 7, "h": "The people under the chart", "auto": true},
+    {"ch": 5, "sec": 1, "h": "What the money is", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Five ways to have an argument", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 205
+  },
+  {
+   "id": "ECO.P2.e4",
+   "text": "Share how conflict will be handled with the team and outside stakeholders.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 2 enabler 4",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P2"
+   ],
+   "match": [
+    "conflict management (principles|approach)",
+    "how conflict (is|will be) handled",
+    "healthy conflict",
+    "constructive conflict"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P2.e5",
+   "text": "Set up a climate where people follow the team's shared ground rules.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 2 enabler 5",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P2"
+   ],
+   "match": [
+    "ground rules",
+    "team charter",
+    "working agreements?",
+    "team norms",
+    "social contract"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 2, "h": "What the team writes down", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 83
+  },
+  {
+   "id": "ECO.P2.e6",
+   "text": "Deal with and correct breaches of the ground rules.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 2 enabler 6",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P2"
+   ],
+   "match": [
+    "ground rule violations?",
+    "violat(e|es|ed|ion) (the |a )?(ground rules?|team charter|working agreements?)",
+    "breach(es)? of (the )?(ground rules|team charter)",
+    "private conversation"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 2, "h": "What the team writes down", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 26
+  },
+  {
+   "id": "ECO.P3",
+   "text": "Lead the team by setting expectations, empowering people, solving problems, and choosing a fitting leadership style.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 3",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P3"
+   ],
+   "match": [
+    "servant leader(ship)?",
+    "leadership style",
+    "self-organizing",
+    "empower(ed|ment|ing)?",
+    "team performance",
+    "Tuckman",
+    "situational leadership"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 7, "h": "The people under the chart", "auto": true},
+    {"ch": 6, "sec": 1, "h": "Teams have weather", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 211
+  },
+  {
+   "id": "ECO.P3.e1",
+   "text": "Agree on clear expectations for how the team will work and perform.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 3 enabler 1",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P3"
+   ],
+   "match": [
+    "team expectations",
+    "expectations at the team level",
+    "working agreements?",
+    "definition of done",
+    "team charter"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 2, "h": "What the team writes down", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Done", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 77
+  },
+  {
+   "id": "ECO.P3.e2",
+   "text": "Give the team authority and room to make decisions.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 3 enabler 2",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P3"
+   ],
+   "match": [
+    "empower(ed|ment|ing)?",
+    "self-organizing",
+    "self-managing",
+    "decision-making authority",
+    "autonomy",
+    "delegat(e|ion)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P3.e3",
+   "text": "Work through problems with the team.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 3 enabler 3",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P3"
+   ],
+   "match": [
+    "problem solving",
+    "solve (the )?problems?",
+    "root cause",
+    "brainstorm(ing)?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 7, "h": "The people under the chart", "auto": true},
+    {"ch": 4, "sec": 2, "h": "Asking why", "auto": true},
+    {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 178
+  },
+  {
+   "id": "ECO.P3.e4",
+   "text": "Speak for the team's interests to stakeholders and leadership.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 3 enabler 4",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P3"
+   ],
+   "match": [
+    "voice of the team",
+    "advocate for the team",
+    "shield(s|ing)? the team",
+    "servant leader(ship)?",
+    "protect(s|ing)? the team"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 7, "h": "The people under the chart", "auto": true},
+    {"ch": 6, "sec": 1, "h": "Teams have weather", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 50
+  },
+  {
+   "id": "ECO.P3.e5",
+   "text": "Respect and draw on the team's mix of backgrounds, skills, and viewpoints.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 3 enabler 5",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P3"
+   ],
+   "match": [
+    "diversity",
+    "diverse (team|skills|perspectives)",
+    "inclusion",
+    "inclusive",
+    "T-shaped",
+    "cross-functional",
+    "virtual teams?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P3.e6",
+   "text": "Pick a leadership style that fits the team and situation.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 3 enabler 6",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P3"
+   ],
+   "match": [
+    "leadership styles?",
+    "situational leadership",
+    "servant leader(ship)?",
+    "transformational",
+    "transactional",
+    "laissez-faire",
+    "directive",
+    "coaching style"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 7, "h": "The people under the chart", "auto": true},
+    {"ch": 6, "sec": 1, "h": "Teams have weather", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 50
+  },
+  {
+   "id": "ECO.P3.e7",
+   "text": "Make roles and responsibilities on the team clear.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 3 enabler 7",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P3"
+   ],
+   "match": [
+    "roles and responsibilities",
+    "RACI\\b",
+    "responsibility assignment matrix",
+    "RAM\\b",
+    "role clarity",
+    "product owner",
+    "scrum master"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 8, "h": "The people around the valve", "auto": true},
+    {"ch": 7, "sec": 2, "h": "One list, one person", "auto": true},
+    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Reading the burn", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 541
+  },
+  {
+   "id": "ECO.P4",
+   "text": "Identify and analyze stakeholders, tailor communication to them, and build the trust and influence needed to meet project objectives.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 4",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P4"
+   ],
+   "match": [
+    "stakeholder engagement",
+    "stakeholder register",
+    "stakeholder analysis",
+    "power/interest grid",
+    "salience model",
+    "engagement assessment matrix"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "Stakeholders, including the ones who can't come to the meeting", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 37
+  },
+  {
+   "id": "ECO.P4.e1",
+   "text": "Find everyone who affects or is affected by the project.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 4 enabler 1",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P4"
+   ],
+   "match": [
+    "identify stakeholders",
+    "stakeholder identification",
+    "stakeholder register",
+    "stakeholder list"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P4.e2",
+   "text": "Assess stakeholders' interest, influence, and attitude.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 4 enabler 2",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P4"
+   ],
+   "match": [
+    "stakeholder analysis",
+    "power/interest grid",
+    "power/influence",
+    "salience model",
+    "stakeholder cube",
+    "influence/impact"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P4.e3",
+   "text": "Shape communication to fit what each stakeholder needs.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 4 enabler 3",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P4"
+   ],
+   "match": [
+    "tailor(ed|ing)? (the )?communication",
+    "communication needs",
+    "communication preferences",
+    "communication requirements analysis",
+    "stakeholder needs"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P4.e4",
+   "text": "Carry out the stakeholder engagement plan.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 4 enabler 4",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P4"
+   ],
+   "match": [
+    "stakeholder engagement plan",
+    "engagement plan",
+    "engagement assessment matrix",
+    "current (and|vs\\.?) desired engagement",
+    "unaware, resistant"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P4.e5",
+   "text": "Bring stakeholder needs and expectations into line with project objectives.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 4 enabler 5",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P4"
+   ],
+   "match": [
+    "alignment",
+    "align(ing|ed)? stakeholder",
+    "project objectives",
+    "competing (interests|expectations)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P4.e6",
+   "text": "Earn trust and use influence to move stakeholders toward the objectives.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 4 enabler 6",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P4"
+   ],
+   "match": [
+    "build(ing)? trust",
+    "influenc(e|ing) stakeholders",
+    "emotional intelligence",
+    "persuasion",
+    "rapport",
+    "negotiat(e|ion|ing)"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "When the paper disagrees", "auto": true},
+    {"ch": 8, "sec": 4, "h": "Across the table", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 236
+  },
+  {
+   "id": "ECO.P5",
+   "text": "Group stakeholders, surface their expectations, and bring those expectations into agreement.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 5",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P5"
+   ],
+   "match": [
+    "stakeholder expectations",
+    "align(ing)? expectations",
+    "expectation setting",
+    "categoriz(e|ing) stakeholders",
+    "facilitat(e|ion|ing)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P5.e1",
+   "text": "Sort stakeholders into useful categories.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 5 enabler 1",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P5"
+   ],
+   "match": [
+    "categoriz(e|ing) stakeholders",
+    "classify(ing)? stakeholders",
+    "stakeholder (categories|classification|groups?)",
+    "internal (and|or) external stakeholders",
+    "power/interest grid"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P5.e2",
+   "text": "Draw out what stakeholders expect from the project.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 5 enabler 2",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P5"
+   ],
+   "match": [
+    "stakeholder expectations",
+    "elicit(ing|ation)?",
+    "interviews?",
+    "focus groups?",
+    "expectations? (gathering|elicitation)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P5.e3",
+   "text": "Run discussions that bring expectations into agreement.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 5 enabler 3",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P5"
+   ],
+   "match": [
+    "facilitat(e|ion|ing)",
+    "workshops?",
+    "consensus",
+    "alignment sessions?",
+    "joint application (design|development)",
+    "JAD\\b"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P5.e4",
+   "text": "Spot and use chances to mentor others on and around the team.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 5 enabler 4",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P5"
+   ],
+   "match": [
+    "mentor(ing|ship)?",
+    "coach(ing)?",
+    "mentee",
+    "knowledge sharing",
+    "pair(ing)? (up )?with"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true},
+    {"ch": 12, "sec": 6, "h": "Training the people who'll own it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 141
+  },
+  {
+   "id": "ECO.P6",
+   "text": "Understand what internal and external customers expect, deliver to it, and track their satisfaction.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 6",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P6"
+   ],
+   "match": [
+    "customer expectations",
+    "customer satisfaction",
+    "internal (and|or) external customers?",
+    "net promoter score",
+    "NPS\\b",
+    "voice of the customer"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P6.e1",
+   "text": "Find out what internal and external customers expect.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 6 enabler 1",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P6"
+   ],
+   "match": [
+    "customer expectations",
+    "internal customers?",
+    "external customers?",
+    "voice of the customer",
+    "customer needs"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 8, "h": "The people around the valve", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 18
+  },
+  {
+   "id": "ECO.P6.e2",
+   "text": "Keep project outcomes matched to customer expectations over time.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 6 enabler 2",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P6"
+   ],
+   "match": [
+    "align(ing|ed)? outcomes",
+    "meet(ing)? (customer )?expectations",
+    "customer acceptance",
+    "acceptance criteria",
+    "fitness for use"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 5, "h": "Done", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 19
+  },
+  {
+   "id": "ECO.P6.e3",
+   "text": "Watch customer satisfaction and act when expectations shift.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 6 enabler 3",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P6"
+   ],
+   "match": [
+    "customer satisfaction",
+    "satisfaction surveys?",
+    "net promoter score",
+    "NPS\\b",
+    "customer feedback",
+    "sprint reviews?",
+    "demos?\\b"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P7",
+   "text": "Find the knowledge the project depends on, capture it, and build a culture where it moves between people.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 7",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P7"
+   ],
+   "match": [
+    "knowledge transfer",
+    "knowledge management",
+    "lessons learned register",
+    "tacit knowledge",
+    "explicit knowledge",
+    "communities of practice"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
+    {"ch": 12, "sec": 1, "h": "Two kinds of knowing", "auto": true},
+    {"ch": 12, "sec": 2, "h": "How it moves", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 321
+  },
+  {
+   "id": "ECO.P7.e1",
+   "text": "Pinpoint the knowledge the project cannot do without.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 7 enabler 1",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P7"
+   ],
+   "match": [
+    "critical knowledge",
+    "key person (risk|dependency)",
+    "bus factor",
+    "single point of failure",
+    "knowledge gaps?"
+   ],
+   "refs": [
+    {"ch": 12, "sec": 3, "h": "Questions that open a head", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 38
+  },
+  {
+   "id": "ECO.P7.e2",
+   "text": "Capture and collect knowledge from people and records.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 7 enabler 2",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P7"
+   ],
+   "match": [
+    "gather(ing)? knowledge",
+    "capture (the )?knowledge",
+    "lessons learned register",
+    "knowledge base",
+    "wikis?",
+    "explicit knowledge",
+    "tacit knowledge"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
+    {"ch": 12, "sec": 1, "h": "Two kinds of knowing", "auto": true},
+    {"ch": 12, "sec": 2, "h": "How it moves", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 198
+  },
+  {
+   "id": "ECO.P7.e3",
+   "text": "Create conditions that make sharing knowledge normal.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 7 enabler 3",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P7"
+   ],
+   "match": [
+    "knowledge transfer",
+    "knowledge sharing",
+    "communities of practice",
+    "pair programming",
+    "job shadowing",
+    "storytelling",
+    "knowledge management"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
+    {"ch": 12, "sec": 1, "h": "Two kinds of knowing", "auto": true},
+    {"ch": 12, "sec": 2, "h": "How it moves", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 218
+  },
+  {
+   "id": "ECO.P8",
+   "text": "Set a communication strategy, keep work transparent, close the feedback loop, and produce reports that fit sponsors, stakeholders, and governance.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 8",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P8"
+   ],
+   "match": [
+    "communications? management plan",
+    "communication strategy",
+    "information radiators?",
+    "status reports?",
+    "feedback loops?",
+    "communication channels"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 6, "h": "When the answer takes twenty minutes", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 60
+  },
+  {
+   "id": "ECO.P8.e1",
+   "text": "Lay out how, when, and to whom project information will flow.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 8 enabler 1",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P8"
+   ],
+   "match": [
+    "communication strategy",
+    "communications? management plan",
+    "communication channels",
+    "n\\(n-1\\)\\/2",
+    "communication methods?",
+    "push communication",
+    "pull communication",
+    "interactive communication"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P8.e2",
+   "text": "Encourage openness and working together.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 8 enabler 2",
+   "group": "Domain I People (33%)",
+   "kind": "judgment",
+   "tasks": [
+    "P8"
+   ],
+   "match": [
+    "transparen(t|cy)",
+    "information radiators?",
+    "big visible charts?",
+    "collaborat(e|ion|ive)",
+    "osmotic communication",
+    "co-located"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 3, "h": "Five ways to have an argument", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 113
+  },
+  {
+   "id": "ECO.P8.e3",
+   "text": "Build in a way to get and act on feedback.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 8 enabler 3",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P8"
+   ],
+   "match": [
+    "feedback loops?",
+    "retrospectives?",
+    "sprint reviews?",
+    "demos?\\b",
+    "pulse (checks?|surveys?)"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 6, "h": "When the answer takes twenty minutes", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 60
+  },
+  {
+   "id": "ECO.P8.e4",
+   "text": "Learn what reporting is required and by whom.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 8 enabler 4",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P8"
+   ],
+   "match": [
+    "reporting requirements",
+    "report(ing)? cadence",
+    "who needs (what|which) reports?",
+    "regulatory reporting"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P8.e5",
+   "text": "Build reports that match what sponsors and stakeholders expect to see.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 8 enabler 5",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P8"
+   ],
+   "match": [
+    "status reports?",
+    "dashboards?",
+    "executive summar(y|ies)",
+    "sponsor reports?",
+    "RAG status",
+    "red,? amber,? green"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.P8.e6",
+   "text": "Feed reporting into the governance process and support it.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain I People (33%) Task 8 enabler 6",
+   "group": "Domain I People (33%)",
+   "kind": "procedural",
+   "tasks": [
+    "P8"
+   ],
+   "match": [
+    "governance (reporting|process|board)",
+    "steering committee",
+    "phase gates?",
+    "stage gates?",
+    "PMO\\b"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R1",
+   "text": "Choose a delivery approach and build, check, and maintain an integrated project management plan.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "project management plan",
+    "integrated (project management )?plan",
+    "development approach",
+    "predictive (approach|life ?cycle)",
+    "hybrid (approach|life ?cycle)",
+    "tailoring",
+    "project charter"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "The charter, and the things that aren't one", "auto": true},
+    {"ch": 1, "sec": 5, "h": "Picking the approach", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Page two", "auto": true},
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 236
+  },
+  {
+   "id": "ECO.R1.e1",
+   "text": "Gauge the project's needs, complexity, and size.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "complexity",
+    "project size",
+    "magnitude",
+    "Stacey (matrix|complexity)",
+    "Cynefin",
+    "suitability filter"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R1.e2",
+   "text": "Recommend a predictive, agile, or hybrid development approach.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "development approach",
+    "predictive",
+    "adaptive",
+    "agile",
+    "hybrid",
+    "waterfall",
+    "suitability (filter|assessment)",
+    "life ?cycle selection"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 5, "h": "Picking the approach", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Page two", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Boxes and a list", "auto": true},
+    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true},
+    {"ch": 3, "sec": 0, "h": "Page three", "auto": true},
+    {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true},
+    {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 241
+  },
+  {
+   "id": "ECO.R1.e3",
+   "text": "Decide which information is critical to the project, such as sustainability data.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1 enabler 3",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "critical information",
+    "information requirements",
+    "sustainability",
+    "ESG\\b",
+    "carbon footprint"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 151
+  },
+  {
+   "id": "ECO.R1.e4",
+   "text": "Recommend how the project should be executed.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1 enabler 4",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "execution strateg(y|ies)",
+    "delivery strateg(y|ies)",
+    "release strateg(y|ies)",
+    "phased delivery",
+    "incremental delivery",
+    "rolling wave"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R1.e5",
+   "text": "Assemble an integrated project management plan.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1 enabler 5",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "project management plan",
+    "integrated (project management )?plan",
+    "subsidiary plans?",
+    "baselines?",
+    "management plans?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 5, "h": "Picking the approach", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Page two", "auto": true},
+    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true},
+    {"ch": 3, "sec": 0, "h": "Page three", "auto": true},
+    {"ch": 3, "sec": 6, "h": "When it slips, and when it breaks", "auto": true},
+    {"ch": 4, "sec": 6, "h": "Reserves", "auto": true},
+    {"ch": 5, "sec": 1, "h": "What the money is", "auto": true},
+    {"ch": 5, "sec": 6, "h": "The baseline isn't an eraser", "auto": true},
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true},
+    {"ch": 14, "sec": 5, "h": "What it's worth", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 492
+  },
+  {
+   "id": "ECO.R1.e6",
+   "text": "Estimate the work effort and resources needed.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1 enabler 6",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "estimat(e|es|ing|ion) (the )?(effort|work)",
+    "effort estimat(e|es|ion)",
+    "three-point",
+    "PERT\\b",
+    "analogous estimat(e|ing)",
+    "parametric estimat(e|ing)",
+    "bottom-up estimat(e|ing)",
+    "story points?",
+    "planning poker"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Page three", "auto": true},
+    {"ch": 3, "sec": 1, "h": "Three numbers", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 305
+  },
+  {
+   "id": "ECO.R1.e7",
+   "text": "Review combined plans for dependencies, gaps, and ongoing business value.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1 enabler 7",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "dependencies",
+    "integrat(ed|ion) review",
+    "gap analysis",
+    "business value",
+    "plan review",
+    "cross-team dependencies"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Page two", "auto": true},
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 41
+  },
+  {
+   "id": "ECO.R1.e8",
+   "text": "Keep the integrated plan current.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1 enabler 8",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "update(s|d)? the (project management )?plan",
+    "maintain(s|ing)? the plan",
+    "progressive elaboration",
+    "rolling wave",
+    "living document"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R1.e9",
+   "text": "Collect and analyze data to support project decisions.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 1 enabler 9",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "data-driven",
+    "data analysis",
+    "decision-making",
+    "decision trees?",
+    "multicriteria decision analysis",
+    "AI tools?",
+    "artificial intelligence"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 5, "h": "The machine's schedule", "auto": true},
+    {"ch": 4, "sec": 4, "h": "The tree", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 127
+  },
+  {
+   "id": "ECO.R2",
+   "text": "Define scope, get agreement on it, and decompose it into manageable work.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 2",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R2"
+   ],
+   "match": [
+    "scope statement",
+    "work breakdown structure",
+    "WBS\\b",
+    "product backlog",
+    "scope baseline",
+    "scope creep",
+    "requirements"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 1, "h": "What won't fly", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Boxes and a list", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Page four", "auto": true},
+    {"ch": 7, "sec": 2, "h": "One list, one person", "auto": true},
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 293
+  },
+  {
+   "id": "ECO.R2.e1",
+   "text": "Define what is in and out of the project's scope.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 2 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R2"
+   ],
+   "match": [
+    "define scope",
+    "scope statement",
+    "project scope",
+    "product scope",
+    "in scope",
+    "out of scope",
+    "exclusions"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 1, "h": "What won't fly", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 148
+  },
+  {
+   "id": "ECO.R2.e2",
+   "text": "Get stakeholders to agree on the scope.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 2 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R2"
+   ],
+   "match": [
+    "scope agreement",
+    "sign-off",
+    "validate scope",
+    "approved scope",
+    "scope baseline",
+    "acceptance criteria"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 2, "h": "Boxes and a list", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Done", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 34
+  },
+  {
+   "id": "ECO.R2.e3",
+   "text": "Break scope into smaller pieces of work.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 2 enabler 3",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R2"
+   ],
+   "match": [
+    "work breakdown structure",
+    "WBS\\b",
+    "decompos(e|ition)",
+    "work packages?",
+    "WBS dictionary",
+    "epics?",
+    "user stor(y|ies)",
+    "backlog refinement"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 2, "h": "Boxes and a list", "auto": true},
+    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true},
+    {"ch": 5, "sec": 1, "h": "What the money is", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 106
+  },
+  {
+   "id": "ECO.R3",
+   "text": "Deliver value early and often by finding what stakeholders value, prioritizing on it, and tracking benefits.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 3",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R3"
+   ],
+   "match": [
+    "value-based delivery",
+    "business value",
+    "minimum viable product",
+    "MVP\\b",
+    "incremental",
+    "Kanban",
+    "continuous flow",
+    "flow (of value|efficiency|metrics)",
+    "WIP limits?|limits? (on )?(WIP|work in progress)|limit WIP",
+    "backlog prioritization"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 7, "h": "Pull, not push", "auto": true},
+    {"ch": 7, "sec": 1, "h": "What it's for", "auto": true},
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 104
+  },
+  {
+   "id": "ECO.R3.e1",
+   "text": "Work out with key stakeholders what value means for the project.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 3 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R3"
+   ],
+   "match": [
+    "value components?",
+    "business value",
+    "value proposition",
+    "benefits",
+    "outcomes?"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 4, "h": "The tree", "auto": true},
+    {"ch": 7, "sec": 1, "h": "What it's for", "auto": true},
+    {"ch": 9, "sec": 1, "h": "When someone tells you", "auto": true},
+    {"ch": 11, "sec": 5, "h": "Spent is spent", "auto": true},
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true},
+    {"ch": 12, "sec": 5, "h": "Handing it over", "auto": true},
+    {"ch": 14, "sec": 1, "h": "Before the data", "auto": true},
+    {"ch": 14, "sec": 5, "h": "What it's worth", "auto": true},
+    {"ch": 14, "sec": 7, "h": "Before the decision", "auto": true},
+    {"ch": 15, "sec": 0, "h": "Page fifteen", "auto": true},
+    {"ch": 15, "sec": 5, "h": "After the ship", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 731
+  },
+  {
+   "id": "ECO.R3.e2",
+   "text": "Order work by value and stakeholder feedback.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 3 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R3"
+   ],
+   "match": [
+    "prioriti[sz](e|ation|ing)",
+    "MoSCoW",
+    "Kano model",
+    "weighted shortest job first",
+    "WSJF\\b",
+    "backlog (ordering|prioritization)",
+    "Kanban",
+    "pull system"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 2, "h": "One list, one person", "auto": true},
+    {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 100
+  },
+  {
+   "id": "ECO.R3.e3",
+   "text": "Look for ways to deliver value in increments.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 3 enabler 3",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R3"
+   ],
+   "match": [
+    "incremental(ly)?",
+    "minimum viable product",
+    "MVP\\b",
+    "minimum business increment",
+    "MBI\\b",
+    "release planning",
+    "continuous delivery",
+    "continuous flow",
+    "value flow"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 1, "h": "What it's for", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 49
+  },
+  {
+   "id": "ECO.R3.e4",
+   "text": "Check business value repeatedly across the project.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 3 enabler 4",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R3"
+   ],
+   "match": [
+    "business value",
+    "business case",
+    "benefits realization",
+    "value stream",
+    "cost of delay"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 2, "h": "One list, one person", "auto": true},
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 81
+  },
+  {
+   "id": "ECO.R3.e5",
+   "text": "Confirm there is a way to measure and track benefits.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 3 enabler 5",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R3"
+   ],
+   "match": [
+    "benefits management plan",
+    "benefits realization",
+    "KPIs?\\b",
+    "key performance indicators?",
+    "OKRs?\\b",
+    "measurement system"
+   ],
+   "refs": [
+    {"ch": 14, "sec": 5, "h": "What it's worth", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 47
+  },
+  {
+   "id": "ECO.R3.e6",
+   "text": "Weigh delivery options for how to show value.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 3 enabler 6",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R3"
+   ],
+   "match": [
+    "delivery options?",
+    "demos?\\b",
+    "prototypes?",
+    "pilot (project|release)",
+    "proof of concept",
+    "feature toggles?",
+    "release options?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R4",
+   "text": "Plan the people and physical resources the work needs and manage their availability.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 4",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R4"
+   ],
+   "match": [
+    "resource management plan",
+    "resource calendars?",
+    "resource leveling",
+    "resource smoothing",
+    "resource histogram",
+    "team capacity"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "People aren't bars", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 56
+  },
+  {
+   "id": "ECO.R4.e1",
+   "text": "Define and plan resources from the requirements.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 4 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R4"
+   ],
+   "match": [
+    "resource requirements",
+    "resource management plan",
+    "resource breakdown structure",
+    "RBS\\b",
+    "staffing plan",
+    "team capacity"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R4.e2",
+   "text": "Manage and balance resource needs against availability.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 4 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R4"
+   ],
+   "match": [
+    "resource leveling",
+    "resource smoothing",
+    "resource calendars?",
+    "over-?allocat(ed|ion)",
+    "resource histogram",
+    "capacity planning"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "People aren't bars", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 56
+  },
+  {
+   "id": "ECO.R5",
+   "text": "Plan procurement, pick contract types, negotiate, and manage suppliers through to meeting the agreement.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "procurement",
+    "contract types?",
+    "fixed price",
+    "cost reimbursable",
+    "time and materials?",
+    "request for proposal",
+    "RFP\\b",
+    "make-or-buy",
+    "statement of work"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 8, "h": "The people around the valve", "auto": true},
+    {"ch": 8, "sec": 0, "h": "Page eight", "auto": true},
+    {"ch": 8, "sec": 1, "h": "Who carries it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 466
+  },
+  {
+   "id": "ECO.R5.e1",
+   "text": "Plan what to buy and how.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "procurement management plan",
+    "make-or-buy",
+    "procurement strategy",
+    "source selection criteria",
+    "procurement statement of work",
+    "plan procurement"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R5.e2",
+   "text": "Carry out the procurement management plan.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "conduct procurements?",
+    "bidder conferences?",
+    "request for proposal",
+    "RFP\\b",
+    "request for quote",
+    "RFQ\\b",
+    "proposal evaluation"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R5.e3",
+   "text": "Choose the right contract type for the situation.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 3",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "contract types?",
+    "firm fixed price",
+    "FFP\\b",
+    "fixed price incentive fee",
+    "cost plus",
+    "cost reimbursable",
+    "time and materials?",
+    "T&M\\b",
+    "point of total assumption"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 0, "h": "Page eight", "auto": true},
+    {"ch": 8, "sec": 1, "h": "Who carries it", "auto": true},
+    {"ch": 8, "sec": 2, "h": "The arithmetic", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 537
+  },
+  {
+   "id": "ECO.R5.e4",
+   "text": "Assess how well the vendor is performing.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 4",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "vendor performance",
+    "seller performance",
+    "performance reviews?",
+    "inspections? and audits?",
+    "supplier scorecards?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R5.e5",
+   "text": "Confirm the procurement agreement's objectives were met.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 5",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "contract closure",
+    "close procurements?",
+    "procurement audit",
+    "deliverables accepted",
+    "agreement objectives"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R5.e6",
+   "text": "Take part in negotiating agreements.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 6",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "negotiat(e|ion|ions|ing)",
+    "contract negotiation",
+    "terms and conditions",
+    "agreement terms",
+    "concessions?"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "When the paper disagrees", "auto": true},
+    {"ch": 8, "sec": 4, "h": "Across the table", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 236
+  },
+  {
+   "id": "ECO.R5.e7",
+   "text": "Decide on a negotiation strategy.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 7",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "negotiation strateg(y|ies)",
+    "BATNA\\b",
+    "win-win",
+    "position(al)? bargaining",
+    "interest-based"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 4, "h": "Across the table", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 41
+  },
+  {
+   "id": "ECO.R5.e8",
+   "text": "Manage suppliers and the contracts with them.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 8",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "control procurements?",
+    "contract administration",
+    "claims administration",
+    "change requests? to the contract",
+    "supplier management"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R5.e9",
+   "text": "Plan and steer the overall procurement strategy.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 9",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "procurement strategy",
+    "delivery method",
+    "contract payment types?",
+    "procurement phases"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R5.e10",
+   "text": "Shape a delivery solution with suppliers.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 5 enabler 10",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R5"
+   ],
+   "match": [
+    "delivery solution",
+    "solution design",
+    "teaming agreements?",
+    "agile contracts?",
+    "incremental contracts?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R6",
+   "text": "Plan the project's finances, track spending, manage reserves, and work variances through governance.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 6",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R6"
+   ],
+   "match": [
+    "budget",
+    "cost baseline",
+    "contingency reserves?",
+    "management reserves?",
+    "earned value",
+    "cost variance",
+    "CPI\\b",
+    "funding limit"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "Page one", "auto": true},
+    {"ch": 4, "sec": 6, "h": "Reserves", "auto": true},
+    {"ch": 5, "sec": 1, "h": "What the money is", "auto": true},
+    {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Variances and indexes", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Four ways to forecast", "auto": true},
+    {"ch": 5, "sec": 5, "h": "What it would take", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Money that leaves", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 453
+  },
+  {
+   "id": "ECO.R6.e1",
+   "text": "Work out the project's financial needs.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 6 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R6"
+   ],
+   "match": [
+    "cost estimat(e|es|ing)",
+    "budget",
+    "funding requirements",
+    "cost aggregation",
+    "financial needs"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "Page one", "auto": true},
+    {"ch": 4, "sec": 6, "h": "Reserves", "auto": true},
+    {"ch": 5, "sec": 1, "h": "What the money is", "auto": true},
+    {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true},
+    {"ch": 5, "sec": 5, "h": "What it would take", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 241
+  },
+  {
+   "id": "ECO.R6.e2",
+   "text": "Put numbers on risk and size contingency funds.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 6 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R6"
+   ],
+   "match": [
+    "contingency reserves?",
+    "expected monetary value",
+    "EMV\\b",
+    "Monte Carlo",
+    "quantitative risk analysis"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 3, "h": "Two kinds of analysis", "auto": true},
+    {"ch": 4, "sec": 6, "h": "Reserves", "auto": true},
+    {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 168
+  },
+  {
+   "id": "ECO.R6.e3",
+   "text": "Plan how spending will be tracked across the life cycle.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 6 enabler 3",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R6"
+   ],
+   "match": [
+    "spend tracking",
+    "cost baseline",
+    "S-curve",
+    "burn rate",
+    "cost management plan"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 6, "h": "Reserves", "auto": true},
+    {"ch": 5, "sec": 1, "h": "What the money is", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 67
+  },
+  {
+   "id": "ECO.R6.e4",
+   "text": "Plan how financial status will be reported.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 6 enabler 4",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R6"
+   ],
+   "match": [
+    "financial report(s|ing)",
+    "cost reports?",
+    "earned value report(s|ing)",
+    "variance reports?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R6.e5",
+   "text": "Look ahead for financial problems before they hit.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 6 enabler 5",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R6"
+   ],
+   "match": [
+    "estimate at completion",
+    "EAC\\b",
+    "forecast(s|ing)?",
+    "to-complete performance index",
+    "TCPI\\b",
+    "funding risk"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 4, "h": "Four ways to forecast", "auto": true},
+    {"ch": 5, "sec": 5, "h": "What it would take", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Saying it in the room", "auto": true},
+    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true},
+    {"ch": 10, "sec": 2, "h": "Weather with a date on it", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 516
+  },
+  {
+   "id": "ECO.R6.e6",
+   "text": "Monitor financial variances and escalate through governance as needed.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 6 enabler 6",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R6"
+   ],
+   "match": [
+    "cost variance",
+    "CV\\b",
+    "CPI\\b",
+    "cost performance index",
+    "variance analysis",
+    "earned value",
+    "EV\\b",
+    "PV\\b",
+    "AC\\b"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Variances and indexes", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Four ways to forecast", "auto": true},
+    {"ch": 5, "sec": 5, "h": "What it would take", "auto": true},
+    {"ch": 5, "sec": 6, "h": "The baseline isn't an eraser", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 283
+  },
+  {
+   "id": "ECO.R6.e7",
+   "text": "Manage the project's financial reserves.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 6 enabler 7",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R6"
+   ],
+   "match": [
+    "management reserves?",
+    "contingency reserves?",
+    "reserve analysis",
+    "release (the )?reserves?",
+    "budget at completion"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 6, "h": "Reserves", "auto": true},
+    {"ch": 5, "sec": 1, "h": "What the money is", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Money that leaves", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 98
+  },
+  {
+   "id": "ECO.R7",
+   "text": "Plan and manage the quality of deliverables, including compliance, cost of quality, and continuous improvement.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 7",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R7"
+   ],
+   "match": [
+    "quality management plan",
+    "quality assurance",
+    "quality control",
+    "cost of quality",
+    "definition of done",
+    "acceptance criteria",
+    "control charts?"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "Page four", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Done", "auto": true},
+    {"ch": 14, "sec": 2, "h": "What a result means", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 69
+  },
+  {
+   "id": "ECO.R7.e1",
+   "text": "Collect the quality requirements for deliverables.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 7 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R7"
+   ],
+   "match": [
+    "quality requirements",
+    "quality metrics",
+    "acceptance criteria",
+    "definition of done",
+    "quality standards"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 5, "h": "Done", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 19
+  },
+  {
+   "id": "ECO.R7.e2",
+   "text": "Plan the quality processes and tools to use.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 7 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R7"
+   ],
+   "match": [
+    "quality management plan",
+    "quality tools",
+    "checklists?",
+    "control charts?",
+    "Pareto",
+    "fishbone",
+    "histograms?",
+    "scatter diagrams?"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 2, "h": "Asking why", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 102
+  },
+  {
+   "id": "ECO.R7.e3",
+   "text": "Carry out the quality management plan.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 7 enabler 3",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R7"
+   ],
+   "match": [
+    "manage quality",
+    "quality assurance",
+    "quality audits?",
+    "process analysis",
+    "design for X"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R7.e4",
+   "text": "Make sure deliverables meet regulatory requirements.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 7 enabler 4",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R7"
+   ],
+   "match": [
+    "regulatory compliance",
+    "regulations?",
+    "standards compliance",
+    "compliance requirements"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Rules, and the ways around them", "auto": true},
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true},
+    {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 86
+  },
+  {
+   "id": "ECO.R7.e5",
+   "text": "Manage the cost of quality and the sustainability of deliverables.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 7 enabler 5",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R7"
+   ],
+   "match": [
+    "cost of quality",
+    "CoQ\\b",
+    "prevention costs?",
+    "appraisal costs?",
+    "failure costs?",
+    "cost of conformance",
+    "cost of nonconformance",
+    "sustainability"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "Page four", "auto": true},
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true},
+    {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 212
+  },
+  {
+   "id": "ECO.R7.e6",
+   "text": "Review quality on an ongoing basis.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 7 enabler 6",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R7"
+   ],
+   "match": [
+    "quality reviews?",
+    "control quality",
+    "inspections?",
+    "peer reviews?",
+    "sprint reviews?",
+    "statistical sampling",
+    "control limits"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R7.e7",
+   "text": "Put continuous improvement into practice.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 7 enabler 7",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R7"
+   ],
+   "match": [
+    "continuous improvement",
+    "Kaizen",
+    "plan-do-check-act",
+    "PDCA\\b",
+    "Six Sigma",
+    "retrospectives?",
+    "lean (thinking|principles|management)"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 15
+  },
+  {
+   "id": "ECO.R8",
+   "text": "Build, baseline, and run a schedule suited to the chosen approach, and analyze variation.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 8",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R8"
+   ],
+   "match": [
+    "schedule baseline",
+    "critical path",
+    "network diagram",
+    "schedule variance",
+    "sprint planning",
+    "Kanban",
+    "cadence",
+    "cycle time",
+    "throughput",
+    "WIP limits?|limits? (on )?(WIP|work in progress)|limit WIP"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 2, "h": "The network, both ways", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Buying time", "auto": true},
+    {"ch": 3, "sec": 6, "h": "When it slips, and when it breaks", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Variances and indexes", "auto": true},
+    {"ch": 6, "sec": 7, "h": "Pull, not push", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true},
+    {"ch": 14, "sec": 4, "h": "Compress what's safe", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 415
+  },
+  {
+   "id": "ECO.R8.e1",
+   "text": "Build a schedule that fits the chosen development approach.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 8 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R8"
+   ],
+   "match": [
+    "schedule (model|approach)",
+    "iteration (planning|length)",
+    "sprint planning",
+    "release planning",
+    "timebox(ed|es|ing)?",
+    "Kanban",
+    "continuous flow",
+    "on-demand scheduling"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 58
+  },
+  {
+   "id": "ECO.R8.e2",
+   "text": "Coordinate the schedule with other projects and operations.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 8 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R8"
+   ],
+   "match": [
+    "external dependencies",
+    "inter-?project dependencies",
+    "program schedule",
+    "integrated master schedule",
+    "scrum of scrums",
+    "coordinat(e|ion) with operations"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R8.e3",
+   "text": "Estimate tasks using milestones, dependencies, and story points.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 8 enabler 3",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R8"
+   ],
+   "match": [
+    "milestones?",
+    "task dependencies",
+    "story points?",
+    "planning poker",
+    "finish-to-start",
+    "leads? and lags?",
+    "velocity"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Page three", "auto": true},
+    {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true},
+    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 97
+  },
+  {
+   "id": "ECO.R8.e4",
+   "text": "Use benchmarks and historical data to inform estimates.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 8 enabler 4",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R8"
+   ],
+   "match": [
+    "benchmark(s|ing)?",
+    "historical data",
+    "analogous estimat(e|ing)",
+    "parametric",
+    "reference class",
+    "velocity"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Page three", "auto": true},
+    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 71
+  },
+  {
+   "id": "ECO.R8.e5",
+   "text": "Build the project schedule.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 8 enabler 5",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R8"
+   ],
+   "match": [
+    "network diagram",
+    "critical path",
+    "total float",
+    "free float",
+    "slack",
+    "precedence diagramming",
+    "Gantt chart",
+    "schedule compression",
+    "crashing",
+    "fast tracking"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 2, "h": "The network, both ways", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Buying time", "auto": true},
+    {"ch": 3, "sec": 6, "h": "When it slips, and when it breaks", "auto": true},
+    {"ch": 14, "sec": 4, "h": "Compress what's safe", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 480
+  },
+  {
+   "id": "ECO.R8.e6",
+   "text": "Set the schedule baseline.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 8 enabler 6",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R8"
+   ],
+   "match": [
+    "schedule baseline",
+    "baselin(e|ed|ing) the schedule",
+    "approved schedule",
+    "re-?baselin(e|ing)",
+    "performance measurement baseline"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 6, "h": "The baseline isn't an eraser", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 22
+  },
+  {
+   "id": "ECO.R8.e7",
+   "text": "Run the schedule management plan.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 8 enabler 7",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R8"
+   ],
+   "match": [
+    "schedule management plan",
+    "control schedule",
+    "WIP limits?|limits? (on )?(WIP|work in progress)|limit WIP",
+    "work in progress",
+    "daily standup",
+    "cadence",
+    "throughput",
+    "cycle time",
+    "lead time"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 7, "h": "Pull, not push", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 124
+  },
+  {
+   "id": "ECO.R8.e8",
+   "text": "Analyze schedule variance and its causes.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 8 enabler 8",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R8"
+   ],
+   "match": [
+    "schedule variance",
+    "SV\\b",
+    "SPI\\b",
+    "schedule performance index",
+    "burndown",
+    "burnup",
+    "cumulative flow",
+    "earned schedule"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Variances and indexes", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Four ways to forecast", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Reading the burn", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true},
+    {"ch": 14, "sec": 4, "h": "Compress what's safe", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 178
+  },
+  {
+   "id": "ECO.R9",
+   "text": "Define and track project metrics, manage project artifacts, and report status.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 9",
+   "group": "Domain II Process (41%)",
+   "kind": "visual",
+   "tasks": [
+    "R9"
+   ],
+   "match": [
+    "project metrics",
+    "earned value",
+    "burndown",
+    "burnup",
+    "cumulative flow",
+    "velocity",
+    "artifacts?",
+    "status reports?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true},
+    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Reading the burn", "auto": true},
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true},
+    {"ch": 13, "sec": 4, "h": "Nominal", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 276
+  },
+  {
+   "id": "ECO.R9.e1",
+   "text": "Set project metrics, analyze them, and reconcile results.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 9 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "calculation",
+   "tasks": [
+    "R9"
+   ],
+   "match": [
+    "project metrics",
+    "KPIs?\\b",
+    "earned value",
+    "reconcil(e|iation)",
+    "variance analysis",
+    "baseline comparison"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 1, "h": "What the money is", "auto": true},
+    {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Money that leaves", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 123
+  },
+  {
+   "id": "ECO.R9.e2",
+   "text": "Choose and tailor the artifacts the project needs.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 9 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R9"
+   ],
+   "match": [
+    "artifacts?",
+    "tailor(ing|ed)? (the )?artifacts?",
+    "project documents",
+    "information radiators?",
+    "Kanban board",
+    "task board"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 7, "h": "Assess before you act, and the culture you walked into", "auto": true},
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 108
+  },
+  {
+   "id": "ECO.R9.e3",
+   "text": "Make sure artifacts are created, reviewed, kept current, and documented.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 9 enabler 3",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R9"
+   ],
+   "match": [
+    "configuration management",
+    "version control",
+    "document control",
+    "artifacts? (review|update)",
+    "project records"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R9.e4",
+   "text": "Make sure artifacts are easy for the right people to reach.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 9 enabler 4",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R9"
+   ],
+   "match": [
+    "accessib(le|ility)",
+    "shared repositor(y|ies)",
+    "project management information system",
+    "PMIS\\b",
+    "single source of truth"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R9.e5",
+   "text": "Judge where the project stands right now.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 9 enabler 5",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R9"
+   ],
+   "match": [
+    "current (progress|status)",
+    "percent complete",
+    "work performance (data|information)",
+    "project status",
+    "health check"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "When it slips, and when it breaks", "auto": true},
+    {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 83
+  },
+  {
+   "id": "ECO.R9.e6",
+   "text": "Measure, analyze, and update the project's metrics.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 9 enabler 6",
+   "group": "Domain II Process (41%)",
+   "kind": "visual",
+   "tasks": [
+    "R9"
+   ],
+   "match": [
+    "burndown charts?",
+    "burnup charts?",
+    "cumulative flow",
+    "velocity",
+    "cycle time",
+    "lead time",
+    "throughput",
+    "CPI\\b",
+    "SPI\\b"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Variances and indexes", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Four ways to forecast", "auto": true},
+    {"ch": 5, "sec": 5, "h": "What it would take", "auto": true},
+    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Reading the burn", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 298
+  },
+  {
+   "id": "ECO.R9.e7",
+   "text": "Report project status to those who need it.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 9 enabler 7",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R9"
+   ],
+   "match": [
+    "status reports?",
+    "status meetings?",
+    "dashboards?",
+    "RAG status",
+    "information radiators?",
+    "progress reports?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R9.e8",
+   "text": "Keep checking whether artifact management is working well.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 9 enabler 8",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R9"
+   ],
+   "match": [
+    "artifact management",
+    "document management",
+    "retrospectives?",
+    "process audit",
+    "artifact (review|cleanup)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.R10",
+   "text": "Close the project or phase: get approval, confirm criteria, hand over, and wrap up the remaining activities.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 10",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R10"
+   ],
+   "match": [
+    "close project or phase",
+    "project closure",
+    "closing",
+    "transition to operations",
+    "final report",
+    "lessons learned",
+    "handover"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
+    {"ch": 12, "sec": 5, "h": "Handing it over", "auto": true},
+    {"ch": 15, "sec": 0, "h": "Page fifteen", "auto": true},
+    {"ch": 15, "sec": 2, "h": "Handing it over", "auto": true},
+    {"ch": 15, "sec": 4, "h": "Lessons that change something", "auto": true},
+    {"ch": 15, "sec": 5, "h": "After the ship", "auto": true},
+    {"ch": 15, "sec": 6, "h": "Letting people go", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 477
+  },
+  {
+   "id": "ECO.R10.e1",
+   "text": "Get stakeholder sign-off that the project is complete.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 10 enabler 1",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R10"
+   ],
+   "match": [
+    "formal acceptance",
+    "sign-off",
+    "final acceptance",
+    "approval of (project )?completion",
+    "accepted deliverables"
+   ],
+   "refs": [
+    {"ch": 15, "sec": 3, "h": "Closing the contracts", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 32
+  },
+  {
+   "id": "ECO.R10.e2",
+   "text": "Set the criteria for closing the project or phase successfully.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 10 enabler 2",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R10"
+   ],
+   "match": [
+    "closure criteria",
+    "exit criteria",
+    "completion criteria",
+    "definition of done",
+    "phase gates?",
+    "success criteria"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "A vision people can carry", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Done", "auto": true},
+    {"ch": 14, "sec": 1, "h": "Before the data", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 63
+  },
+  {
+   "id": "ECO.R10.e3",
+   "text": "Confirm readiness to hand over to operations or the next phase.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 10 enabler 3",
+   "group": "Domain II Process (41%)",
+   "kind": "judgment",
+   "tasks": [
+    "R10"
+   ],
+   "match": [
+    "transition (to operations|plan|readiness)",
+    "handover",
+    "hand-?off",
+    "operational readiness",
+    "next phase",
+    "release readiness"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
+    {"ch": 12, "sec": 5, "h": "Handing it over", "auto": true},
+    {"ch": 15, "sec": 2, "h": "Handing it over", "auto": true},
+    {"ch": 15, "sec": 6, "h": "Letting people go", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 269
+  },
+  {
+   "id": "ECO.R10.e4",
+   "text": "Wrap up closing activities, such as final lessons learned, retrospectives, procurements, finances, and releasing resources.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain II Process (41%) Task 10 enabler 4",
+   "group": "Domain II Process (41%)",
+   "kind": "procedural",
+   "tasks": [
+    "R10"
+   ],
+   "match": [
+    "lessons learned",
+    "final report",
+    "retrospectives?",
+    "close procurements?",
+    "releas(e|ing) (the )?resources",
+    "archiv(e|ing) (project )?records",
+    "financial closure"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
+    {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
+    {"ch": 15, "sec": 4, "h": "Lessons that change something", "auto": true},
+    {"ch": 15, "sec": 5, "h": "After the ship", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 103
+  },
+  {
+   "id": "ECO.B1",
+   "text": "Set up project governance: structure, rules, reporting, ethics, success metrics, and escalation paths.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 1",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B1"
+   ],
+   "match": [
+    "governance",
+    "organizational process assets",
+    "OPAs?\\b",
+    "escalation paths?",
+    "steering committee",
+    "success metrics",
+    "phase gates?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Governance: who decides, and who can stop it", "auto": true},
+    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Rules, and the ways around them", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Saying it in the room", "auto": true},
+    {"ch": 6, "sec": 8, "h": "Whose story it is", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Who says go", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Money that leaves", "auto": true},
+    {"ch": 13, "sec": 1, "h": "Who can say yes", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 551
+  },
+  {
+   "id": "ECO.B1.e1",
+   "text": "Lay out the governance structure, rules, procedures, reporting, ethics, and policies, using organizational process assets.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 1 enabler 1",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B1"
+   ],
+   "match": [
+    "governance (structure|framework|model)",
+    "organizational process assets",
+    "OPAs?\\b",
+    "policies and procedures",
+    "code of ethics",
+    "steering committee"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B1.e2",
+   "text": "Define the measures that will show the project succeeded.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 1 enabler 2",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B1"
+   ],
+   "match": [
+    "success metrics",
+    "success criteria",
+    "KPIs?\\b",
+    "OKRs?\\b",
+    "measures of success",
+    "project success"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "A vision people can carry", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 31
+  },
+  {
+   "id": "ECO.B1.e3",
+   "text": "Set escalation paths and the thresholds that trigger them.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 1 enabler 3",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B1"
+   ],
+   "match": [
+    "escalation paths?",
+    "escalation (thresholds?|procedures?|matrix)",
+    "tolerances?",
+    "thresholds?",
+    "decision rights",
+    "authority levels"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Governance: who decides, and who can stop it", "auto": true},
+    {"ch": 5, "sec": 7, "h": "Saying it in the room", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Planning for silence", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Who says go", "auto": true},
+    {"ch": 13, "sec": 1, "h": "Who can say yes", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 265
+  },
+  {
+   "id": "ECO.B2",
+   "text": "Plan for and manage compliance with security, safety, sustainability, and regulatory requirements.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 2",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B2"
+   ],
+   "match": [
+    "compliance",
+    "regulatory requirements",
+    "noncompliance",
+    "audits?",
+    "GDPR\\b",
+    "HIPAA\\b",
+    "health and safety"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Rules, and the ways around them", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Page four", "auto": true},
+    {"ch": 4, "sec": 7, "h": "Stop", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Page ten", "auto": true},
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true},
+    {"ch": 10, "sec": 8, "h": "Page ten, again", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 565
+  },
+  {
+   "id": "ECO.B2.e1",
+   "text": "Confirm which compliance requirements apply, such as security, health and safety, sustainability, and regulation.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 2 enabler 1",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B2"
+   ],
+   "match": [
+    "compliance requirements",
+    "regulatory requirements",
+    "health and safety",
+    "security requirements",
+    "sustainability requirements",
+    "legal requirements"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 7, "h": "Stop", "auto": true},
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 146
+  },
+  {
+   "id": "ECO.B2.e2",
+   "text": "Sort compliance requirements into categories.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 2 enabler 2",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B2"
+   ],
+   "match": [
+    "compliance categor(y|ies)",
+    "classify(ing)? compliance",
+    "compliance (register|matrix)",
+    "compliance classification"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B2.e3",
+   "text": "Find what could threaten compliance.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 2 enabler 3",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B2"
+   ],
+   "match": [
+    "compliance (threats?|risks?)",
+    "threats? to compliance",
+    "compliance gaps?",
+    "control (failures?|weaknesses?)",
+    "regulatory exposure"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Rules, and the ways around them", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 26
+  },
+  {
+   "id": "ECO.B2.e4",
+   "text": "Use methods that support staying compliant.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 2 enabler 4",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B2"
+   ],
+   "match": [
+    "compliance (checks?|controls?|audits?)",
+    "audits?",
+    "checklists?",
+    "traceability",
+    "controls testing"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "Page four", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 41
+  },
+  {
+   "id": "ECO.B2.e5",
+   "text": "Analyze what happens if the project falls out of compliance.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 2 enabler 5",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B2"
+   ],
+   "match": [
+    "noncompliance",
+    "non-compliance",
+    "consequences of noncompliance",
+    "penalt(y|ies)",
+    "fines?\\b",
+    "legal exposure"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 5, "h": "Rules, and the ways around them", "auto": true},
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true},
+    {"ch": 14, "sec": 2, "h": "What a result means", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 121
+  },
+  {
+   "id": "ECO.B2.e6",
+   "text": "Decide the approach and actions needed to meet compliance needs.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 2 enabler 6",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B2"
+   ],
+   "match": [
+    "compliance (plan|approach|actions?)",
+    "corrective actions?",
+    "remediat(e|ion)",
+    "compliance owner",
+    "preventive actions?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B2.e7",
+   "text": "Measure how far the project complies.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 2 enabler 7",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "calculation",
+   "tasks": [
+    "B2"
+   ],
+   "match": [
+    "compliance (status|level|measurement|metrics)",
+    "degree of compliance",
+    "audit findings",
+    "conformance"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B3",
+   "text": "Run change control: process changes, communicate their status, implement approved ones, and update documents.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 3",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B3"
+   ],
+   "match": [
+    "change control",
+    "integrated change control",
+    "change control board",
+    "CCB\\b",
+    "change requests?",
+    "change log",
+    "impact analysis"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true},
+    {"ch": 4, "sec": 6, "h": "Reserves", "auto": true},
+    {"ch": 5, "sec": 6, "h": "The baseline isn't an eraser", "auto": true},
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true},
+    {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true},
+    {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true},
+    {"ch": 11, "sec": 6, "h": "One door for every change", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 230
+  },
+  {
+   "id": "ECO.B3.e1",
+   "text": "Follow the change control process.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 3 enabler 1",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B3"
+   ],
+   "match": [
+    "change control",
+    "integrated change control",
+    "change control board",
+    "CCB\\b",
+    "change requests?",
+    "impact analysis",
+    "perform integrated change control"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true},
+    {"ch": 4, "sec": 6, "h": "Reserves", "auto": true},
+    {"ch": 5, "sec": 6, "h": "The baseline isn't an eraser", "auto": true},
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true},
+    {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true},
+    {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true},
+    {"ch": 11, "sec": 6, "h": "One door for every change", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 230
+  },
+  {
+   "id": "ECO.B3.e2",
+   "text": "Tell stakeholders where proposed changes stand.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 3 enabler 2",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B3"
+   ],
+   "match": [
+    "change log",
+    "change status",
+    "status of (proposed )?changes?",
+    "approved or rejected"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B3.e3",
+   "text": "Put approved changes into effect.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 3 enabler 3",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B3"
+   ],
+   "match": [
+    "approved changes?",
+    "implement(ing)? (the )?(approved )?changes?",
+    "direct and manage project work",
+    "change implementation",
+    "verif(y|ied) (the )?changes?"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true},
+    {"ch": 5, "sec": 6, "h": "The baseline isn't an eraser", "auto": true},
+    {"ch": 11, "sec": 6, "h": "One door for every change", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 80
+  },
+  {
+   "id": "ECO.B3.e4",
+   "text": "Update project documents to reflect changes.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 3 enabler 4",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B3"
+   ],
+   "match": [
+    "update(s|d)? (the )?(project )?(documents|documentation|baselines?|plan)",
+    "configuration management",
+    "version control",
+    "traceability"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B4",
+   "text": "Find, prioritize, and remove impediments, and resolve issues with the right stakeholders.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 4",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B4"
+   ],
+   "match": [
+    "impediments?",
+    "blockers?",
+    "issue log",
+    "bottlenecks?",
+    "daily standup",
+    "WIP limits?|limits? (on )?(WIP|work in progress)|limit WIP",
+    "escalat(e|ion)"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "What you do about it", "auto": true},
+    {"ch": 6, "sec": 7, "h": "Pull, not push", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Who says go", "auto": true},
+    {"ch": 13, "sec": 1, "h": "Who can say yes", "auto": true},
+    {"ch": 14, "sec": 6, "h": "The thing nobody counted", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 252
+  },
+  {
+   "id": "ECO.B4.e1",
+   "text": "Gauge how much an impediment is hurting the work.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 4 enabler 1",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B4"
+   ],
+   "match": [
+    "impact of (the )?impediments?",
+    "impediments?",
+    "blockers?",
+    "bottlenecks?",
+    "blocked (work|items?)"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 23
+  },
+  {
+   "id": "ECO.B4.e2",
+   "text": "Rank impediments and make them visible.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 4 enabler 2",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B4"
+   ],
+   "match": [
+    "impediment (backlog|board|list)",
+    "make (them |it )?visible",
+    "information radiators?",
+    "daily standup",
+    "Kanban board",
+    "blocked (column|items?)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B4.e3",
+   "text": "Choose and apply a way to remove or reduce impediments.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 4 enabler 3",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B4"
+   ],
+   "match": [
+    "remov(e|ing) (the )?impediments?",
+    "intervention strateg(y|ies)",
+    "servant leader(ship)?",
+    "unblock(ing)?",
+    "WIP limits?|limits? (on )?(WIP|work in progress)|limit WIP",
+    "swarm(ing)?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 6, "h": "When it slips, and when it breaks", "auto": true},
+    {"ch": 3, "sec": 7, "h": "The people under the chart", "auto": true},
+    {"ch": 6, "sec": 7, "h": "Pull, not push", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 131
+  },
+  {
+   "id": "ECO.B4.e4",
+   "text": "Keep checking that the team's blockers are being dealt with.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 4 enabler 4",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B4"
+   ],
+   "match": [
+    "blockers?",
+    "obstacles?",
+    "daily standup",
+    "daily scrum",
+    "follow(ing)? up on (impediments?|blockers?)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B4.e5",
+   "text": "Recognize when a risk has turned into an issue.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 4 enabler 5",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B4"
+   ],
+   "match": [
+    "risk becomes an issue",
+    "issue log",
+    "issues? vs\\.? risks?",
+    "realized risk",
+    "risk triggers?",
+    "workarounds?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B4.e6",
+   "text": "Work with the right stakeholders on how to resolve issues.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 4 enabler 6",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B4"
+   ],
+   "match": [
+    "issue resolution",
+    "resolve (the )?issues?",
+    "issue log",
+    "escalat(e|ion)",
+    "issue owners?"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "What you do about it", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Who says go", "auto": true},
+    {"ch": 13, "sec": 1, "h": "Who can say yes", "auto": true},
+    {"ch": 14, "sec": 6, "h": "The thing nobody counted", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 187
+  },
+  {
+   "id": "ECO.B5",
+   "text": "Plan for risk and manage it: identify, analyze, respond, monitor, and keep the risk register current.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 5",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B5"
+   ],
+   "match": [
+    "risk register",
+    "risk management plan",
+    "risk responses?",
+    "probability and impact",
+    "risk appetite",
+    "risk threshold",
+    "risk owners?"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 4, "h": "A list of how people die", "auto": true},
+    {"ch": 12, "sec": 3, "h": "Questions that open a head", "auto": true},
+    {"ch": 13, "sec": 1, "h": "Who can say yes", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 155
+  },
+  {
+   "id": "ECO.B5.e1",
+   "text": "Identify risks to the project.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 5 enabler 1",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B5"
+   ],
+   "match": [
+    "identify risks",
+    "risk identification",
+    "risk breakdown structure",
+    "RBS\\b",
+    "SWOT\\b",
+    "risk workshops?",
+    "prompt lists?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B5.e2",
+   "text": "Analyze risks qualitatively and quantitatively.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 5 enabler 2",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "calculation",
+   "tasks": [
+    "B5"
+   ],
+   "match": [
+    "qualitative risk analysis",
+    "quantitative risk analysis",
+    "probability and impact",
+    "probability-impact matrix",
+    "expected monetary value",
+    "EMV\\b",
+    "Monte Carlo",
+    "sensitivity analysis",
+    "tornado diagram"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 4, "h": "A list of how people die", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Two kinds of analysis", "auto": true},
+    {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 243
+  },
+  {
+   "id": "ECO.B5.e3",
+   "text": "Track and control risks over time.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 5 enabler 3",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B5"
+   ],
+   "match": [
+    "monitor risks",
+    "risk audits?",
+    "risk reassessment",
+    "residual risks?",
+    "secondary risks?",
+    "risk burndown"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "What you do about it", "auto": true},
+    {"ch": 10, "sec": 2, "h": "Weather with a date on it", "auto": true},
+    {"ch": 12, "sec": 5, "h": "Handing it over", "auto": true},
+    {"ch": 15, "sec": 1, "h": "The last poll", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 343
+  },
+  {
+   "id": "ECO.B5.e4",
+   "text": "Write a risk management plan.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 5 enabler 4",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B5"
+   ],
+   "match": [
+    "risk management plan",
+    "risk appetite",
+    "risk threshold",
+    "risk categories",
+    "risk tolerance"
+   ],
+   "refs": [
+    {"ch": 13, "sec": 1, "h": "Who can say yes", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 26
+  },
+  {
+   "id": "ECO.B5.e5",
+   "text": "Keep a risk register current, for example noting poor IT security as a risk.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 5 enabler 5",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B5"
+   ],
+   "match": [
+    "risk register",
+    "risk owners?",
+    "risk triggers?",
+    "IT security",
+    "cybersecurity"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true},
+    {"ch": 10, "sec": 2, "h": "Weather with a date on it", "auto": true},
+    {"ch": 12, "sec": 3, "h": "Questions that open a head", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 165
+  },
+  {
+   "id": "ECO.B5.e6",
+   "text": "Carry out the risk management plan, including responses for security and sustainability risks.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 5 enabler 6",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B5"
+   ],
+   "match": [
+    "risk responses?",
+    "risk avoidance",
+    "avoid (the )?risk",
+    "risk mitigation",
+    "mitigat(e|ing) (the )?risk",
+    "risk transfer",
+    "risk acceptance",
+    "exploit (the |an )?opportunit(y|ies)",
+    "sustainability risks?",
+    "security risks?"
+   ],
+   "refs": [
+    {"ch": 13, "sec": 2, "h": "Waivers and deviations", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 69
+  },
+  {
+   "id": "ECO.B5.e7",
+   "text": "Communicate how a risk is affecting the project.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 5 enabler 7",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B5"
+   ],
+   "match": [
+    "risk report(s|ing)?",
+    "risk status",
+    "risk communication",
+    "risk-adjusted backlog"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B6",
+   "text": "Use lessons learned and keep improvement processes and organizational process assets up to date.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 6",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B6"
+   ],
+   "match": [
+    "continuous improvement",
+    "lessons learned",
+    "retrospectives?",
+    "organizational process assets",
+    "OPAs?\\b",
+    "Kaizen"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
+    {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
+    {"ch": 15, "sec": 4, "h": "Lessons that change something", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 68
+  },
+  {
+   "id": "ECO.B6.e1",
+   "text": "Apply lessons learned to current and future work.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 6 enabler 1",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B6"
+   ],
+   "match": [
+    "lessons learned",
+    "lessons learned register",
+    "post-mortems?",
+    "retrospectives?"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
+    {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
+    {"ch": 15, "sec": 4, "h": "Lessons that change something", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 68
+  },
+  {
+   "id": "ECO.B6.e2",
+   "text": "Make sure continuous improvement processes are kept current.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 6 enabler 2",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B6"
+   ],
+   "match": [
+    "continuous improvement",
+    "Kaizen",
+    "PDCA\\b",
+    "plan-do-check-act",
+    "process improvement",
+    "retrospectives?"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 15
+  },
+  {
+   "id": "ECO.B6.e3",
+   "text": "Update the organization's process assets with what the project learned.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 6 enabler 3",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B6"
+   ],
+   "match": [
+    "organizational process assets",
+    "OPAs?\\b",
+    "templates?",
+    "knowledge repositor(y|ies)",
+    "update(s|d)? (the )?OPAs?",
+    "process assets"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true},
+    {"ch": 15, "sec": 4, "h": "Lessons that change something", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 19
+  },
+  {
+   "id": "ECO.B7",
+   "text": "Assess organizational culture and support people through organizational change that affects the project.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 7",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B7"
+   ],
+   "match": [
+    "organizational change",
+    "change management",
+    "organizational culture",
+    "ADKAR\\b",
+    "Kotter",
+    "resistance to change",
+    "Satir"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 7, "h": "Assess before you act, and the culture you walked into", "auto": true},
+    {"ch": 6, "sec": 5, "h": "Safe to say it", "auto": true},
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 174
+  },
+  {
+   "id": "ECO.B7.e1",
+   "text": "Read the organization's culture.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 7 enabler 1",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B7"
+   ],
+   "match": [
+    "organizational culture",
+    "culture assessment",
+    "enterprise environmental factors",
+    "EEFs?\\b",
+    "cultural norms"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "ECO.B7.e2",
+   "text": "Judge how organizational change affects the project and decide what to do.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 7 enabler 2",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B7"
+   ],
+   "match": [
+    "organizational change",
+    "change management",
+    "ADKAR\\b",
+    "Kotter",
+    "Bridges transition",
+    "resistance to change",
+    "change impact"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 130
+  },
+  {
+   "id": "ECO.B8",
+   "text": "Watch the external business environment and adjust scope or backlog when regulations, technology, geopolitics, or markets shift.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 8",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B8"
+   ],
+   "match": [
+    "external business environment",
+    "PESTLE\\b",
+    "PESTEL\\b",
+    "market (conditions|changes)",
+    "regulatory changes?",
+    "geopolitic(al|s)",
+    "emerging technolog(y|ies)"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 64
+  },
+  {
+   "id": "ECO.B8.e1",
+   "text": "Scan for changes outside the organization, such as regulation, technology, geopolitics, and markets.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 8 enabler 1",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B8"
+   ],
+   "match": [
+    "environmental scan(ning)?",
+    "PESTLE\\b",
+    "PESTEL\\b",
+    "external business environment",
+    "market (conditions|changes|trends)",
+    "geopolitic(al|s)",
+    "regulatory changes?"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 64
+  },
+  {
+   "id": "ECO.B8.e2",
+   "text": "Assess and rank how outside changes affect scope or the backlog.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 8 enabler 2",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "judgment",
+   "tasks": [
+    "B8"
+   ],
+   "match": [
+    "impact (on|to) (the )?(scope|backlog)",
+    "re-?prioriti[sz](e|ation)",
+    "backlog (refinement|grooming)",
+    "scope (change|impact)",
+    "impact assessment"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 23
+  },
+  {
+   "id": "ECO.B8.e3",
+   "text": "Keep reviewing the outside environment for effects on scope or backlog.",
+   "source": "PMI PMP Examination Content Outline 2026 (July 2026 exam update, revised 11 Aug 2026), Domain III Business Environment (26%) Task 8 enabler 3",
+   "group": "Domain III Business Environment (26%)",
+   "kind": "procedural",
+   "tasks": [
+    "B8"
+   ],
+   "match": [
+    "ongoing (review|monitoring)",
+    "horizon scanning",
+    "trend analysis",
+    "external (changes|factors)",
+    "monitor(ing)? the (market|environment)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  }
+ ],
+ "seeded": "2026-11-08"
+}

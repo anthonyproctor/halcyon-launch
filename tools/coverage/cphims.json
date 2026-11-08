@@ -1,0 +1,1822 @@
+{
+ "course": "cphims",
+ "taxonomy": "official",
+ "outline": {
+  "name": "HIMSS CPHIMS Outline of Exam Topics",
+  "version": "CPHIMS Candidate Handbook, effective May 1, 2024 (four content areas: Environments 25%, Clinical Informatics 20%, Systems Management 30%, Management and Leadership 25%)",
+  "source": "https://dakotas.himss.org/sites/hde/files/media/file/2025/01/14/cphims-handbook.pdf (HIMSS-hosted copy of the handbook, cover reads Effective May 1, 2024; outline on pages 6 to 9)",
+  "read": "2026-11-07",
+  "notes": "71 tasks, all paraphrased from the handbook text, none copied. The handbook numbers tasks within each area (Environments A.1 to A.5 and B.1 to B.2; Clinical Informatics A.1 to A.6; Systems Management A.1 to A.10, B.1 to B.6, C.1 to C.6, D.1 to D.4, E.1 to E.7; Management and Leadership A.1 to A.25). IDs reuse the course's existing meta.js codes, which map one to one: E1 to E5 = Environments A.1 to A.5, E6 and E7 = Environments B.1 and B.2, C1 to C6 = Clinical Informatics A.1 to A.6, SA/SB/SC/SD/SE = Systems Management A to E, L1 to L25 = Management and Leadership A.1 to A.25. Every task has its own code, so no closest-code substitutions. In the PDF layout A.9 (legal and regulatory compliance) and A.10 (ethical business principles) print on one line in swapped order; L9 and L10 follow the A.9 and A.10 numbering, which matches meta.js. Item C.1 and C.2 text in the PDF is visibly garbled (a fragment of C.1 landed on C.2); paraphrases follow the evident meaning. Cognitive levels in the handbook are Recall, Application, Analysis; the kind field here is our own call, not HIMSS's."
+ },
+ "objectives": [
+  {
+   "id": "CPHIMS.E1",
+   "text": "Explain what the different kinds of healthcare organizations are and do, such as hospitals, clinics, ambulatory and community health providers, payers, regulators, and academic or research bodies.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Environments A.1",
+   "group": "Healthcare and Technology Environments (25%): A. Healthcare Environment",
+   "kind": "definition",
+   "tasks": [
+    "E1"
+   ],
+   "match": [
+    "ambulatory (care|center|surgery)",
+    "acute care",
+    "critical access hospital",
+    "academic medical center",
+    "community health (center|organization)",
+    "payers?",
+    "integrated delivery network",
+    "post.acute"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "Know what kind of place you're standing in", "auto": true},
+    {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 267
+  },
+  {
+   "id": "CPHIMS.E2",
+   "text": "Explain how healthcare organizations connect with each other and share care, including health information exchange, public and private relationships, and continuity of care.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Environments A.2",
+   "group": "Healthcare and Technology Environments (25%): A. Healthcare Environment",
+   "kind": "definition",
+   "tasks": [
+    "E2"
+   ],
+   "match": [
+    "health information exchanges?",
+    "HIE",
+    "continuity of care",
+    "care transitions?",
+    "transitions? of care",
+    "referral network",
+    "accountable care organizations?",
+    "ACO",
+    "TEFCA"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Nobody is an island", "auto": true},
+    {"ch": 2, "sec": 2, "h": "The rules that make data move", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 79
+  },
+  {
+   "id": "CPHIMS.E3",
+   "text": "Describe the roles and responsibilities of healthcare information and management systems professionals within the organizations they serve.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Environments A.3",
+   "group": "Healthcare and Technology Environments (25%): A. Healthcare Environment",
+   "kind": "definition",
+   "tasks": [
+    "E3"
+   ],
+   "match": [
+    "CIO",
+    "CMIO",
+    "CNIO",
+    "chief information officer",
+    "chief medical information officer",
+    "clinical analysts?",
+    "informaticists?",
+    "informatics nurse",
+    "reporting structure"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Who does what", "auto": true},
+    {"ch": 7, "sec": 2, "h": "Who sits at the table", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 34
+  },
+  {
+   "id": "CPHIMS.E4",
+   "text": "Recognize how laws, regulations, accreditation, and state and local rules on privacy, safety, security, and patient rights shape healthcare information and systems work.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Environments A.4",
+   "group": "Healthcare and Technology Environments (25%): A. Healthcare Environment",
+   "kind": "definition",
+   "tasks": [
+    "E4"
+   ],
+   "match": [
+    "HIPAA",
+    "HITECH",
+    "Joint Commission",
+    "accreditation",
+    "21st Century Cures",
+    "information blocking",
+    "Stark law",
+    "anti.kickback",
+    "CMS conditions of participation",
+    "patient rights"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four kinds of rules", "auto": true},
+    {"ch": 2, "sec": 1, "h": "HIPAA is two rules and a bigger stick", "auto": true},
+    {"ch": 2, "sec": 2, "h": "The rules that make data move", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 397
+  },
+  {
+   "id": "CPHIMS.E5",
+   "text": "Weigh healthcare technology trends such as telemedicine, patient portals, wearables, and population health, and use them to improve patient outcomes.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Environments A.5",
+   "group": "Healthcare and Technology Environments (25%): A. Healthcare Environment",
+   "kind": "judgment",
+   "tasks": [
+    "E5"
+   ],
+   "match": [
+    "telemedicine",
+    "telehealth",
+    "patient portals?",
+    "wearables?",
+    "wearable devices?",
+    "population health",
+    "remote patient monitoring",
+    "RPM",
+    "virtual care"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 4, "h": "Does it work, and do they like it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 20
+  },
+  {
+   "id": "CPHIMS.E6",
+   "text": "Describe the kinds of applications used in healthcare: clinical, administrative, financial, consumer, and business intelligence systems.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Environments B.1",
+   "group": "Healthcare and Technology Environments (25%): B. Technology Environment",
+   "kind": "definition",
+   "tasks": [
+    "E6"
+   ],
+   "match": [
+    "electronic health records?",
+    "EHR",
+    "EMR",
+    "revenue cycle",
+    "practice management system",
+    "laboratory information system",
+    "LIS",
+    "PACS",
+    "pharmacy information system",
+    "business intelligence"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "What you actually own", "auto": true},
+    {"ch": 4, "sec": 0, "h": "The words on the order", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 206
+  },
+  {
+   "id": "CPHIMS.E7",
+   "text": "Describe the technology infrastructure that supports healthcare, including networks, communications, data integration, and privacy and security layers.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Environments B.2",
+   "group": "Healthcare and Technology Environments (25%): B. Technology Environment",
+   "kind": "definition",
+   "tasks": [
+    "E7"
+   ],
+   "match": [
+    "technology infrastructure",
+    "interface engines?",
+    "integration engines?",
+    "data centers?",
+    "wide area network",
+    "WAN",
+    "LAN",
+    "network segment(s|ation)?",
+    "hosting",
+    "cloud hosting"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "The pipes in the walls", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Draw it before you fix it", "auto": true},
+    {"ch": 7, "sec": 0, "h": "Ask before you bid", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 227
+  },
+  {
+   "id": "CPHIMS.C1",
+   "text": "Recognize the basic clinical terms that show up in informatics work, such as dosage frequency and route, and the body systems.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Clinical Informatics A.1",
+   "group": "Clinical Informatics (20%): A. Clinical Informatics",
+   "kind": "definition",
+   "tasks": [
+    "C1"
+   ],
+   "match": [
+    "dosage frequency",
+    "dosing frequency",
+    "routes? of administration",
+    "dosage routes?",
+    "PRN",
+    "BID",
+    "TID",
+    "q\\d+h",
+    "body systems?",
+    "IV push"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "The words on the order", "auto": true},
+    {"ch": 7, "sec": 0, "h": "Ask before you bid", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Clean hands", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 293
+  },
+  {
+   "id": "CPHIMS.C2",
+   "text": "Recognize the basic healthcare IT terms used in informatics work.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Clinical Informatics A.2",
+   "group": "Clinical Informatics (20%): A. Clinical Informatics",
+   "kind": "definition",
+   "tasks": [
+    "C2"
+   ],
+   "match": [
+    "CPOE",
+    "computerized provider order entry",
+    "ADT",
+    "admission, discharge,? and transfer",
+    "order sets?",
+    "MAR",
+    "eMAR",
+    "master patient index",
+    "MPI",
+    "flowsheets?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Who does what", "auto": true},
+    {"ch": 1, "sec": 3, "h": "What you actually own", "auto": true},
+    {"ch": 3, "sec": 0, "h": "The pipes in the walls", "auto": true},
+    {"ch": 4, "sec": 1, "h": "The loop, and where it breaks", "auto": true},
+    {"ch": 7, "sec": 0, "h": "Ask before you bid", "auto": true},
+    {"ch": 9, "sec": 0, "h": "Ways to test", "auto": true},
+    {"ch": 12, "sec": 5, "h": "Irene's card", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 341
+  },
+  {
+   "id": "CPHIMS.C3",
+   "text": "Recognize the common clinical metrics used in informatics, such as average daily census, turnaround time, adherence, and barcode medication administration rates.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Clinical Informatics A.3",
+   "group": "Clinical Informatics (20%): A. Clinical Informatics",
+   "kind": "calculation",
+   "tasks": [
+    "C3"
+   ],
+   "match": [
+    "average daily census",
+    "ADC",
+    "turnaround times?",
+    "length of stay",
+    "LOS",
+    "readmission rates?",
+    "BCMA",
+    "barcode medication administration",
+    "scanning compliance",
+    "adherence rates?"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 1, "h": "The loop, and where it breaks", "auto": true},
+    {"ch": 4, "sec": 2, "h": "Counting the floor", "auto": true},
+    {"ch": 8, "sec": 0, "h": "Two questions", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 255
+  },
+  {
+   "id": "CPHIMS.C4",
+   "text": "Build and roll out system functions that make clinical care more effective and efficient.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Clinical Informatics A.4",
+   "group": "Clinical Informatics (20%): A. Clinical Informatics",
+   "kind": "procedural",
+   "tasks": [
+    "C4"
+   ],
+   "match": [
+    "workflow redesign",
+    "clinical workflows?",
+    "documentation burden",
+    "click(s| count)",
+    "order set (build|redesign)",
+    "physician builder",
+    "usability",
+    "clinical efficiency",
+    "optimi[sz]ation"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 4, "h": "Does it work, and do they like it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 52
+  },
+  {
+   "id": "CPHIMS.C5",
+   "text": "Read clinical and operational outcomes using analytics tools such as reports, tables, graphs, charts, and predictive models.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Clinical Informatics A.5",
+   "group": "Clinical Informatics (20%): A. Clinical Informatics",
+   "kind": "visual",
+   "tasks": [
+    "C5"
+   ],
+   "match": [
+    "predictive models?",
+    "run charts?",
+    "control charts?",
+    "dashboards?",
+    "outcome measures?",
+    "risk scores?",
+    "trend lines?",
+    "scorecards?",
+    "statistical process control"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Is it working", "auto": true},
+    {"ch": 5, "sec": 5, "h": "Models that drift", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 313
+  },
+  {
+   "id": "CPHIMS.C6",
+   "text": "Set up ways to keep clinical content and decision support tools current and useful over time.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Clinical Informatics A.6",
+   "group": "Clinical Informatics (20%): A. Clinical Informatics",
+   "kind": "procedural",
+   "tasks": [
+    "C6"
+   ],
+   "match": [
+    "clinical decision support",
+    "CDS",
+    "alert fatigue",
+    "best practice alerts?",
+    "drug.drug interaction",
+    "override rates?",
+    "five rights of CDS",
+    "CDS committee",
+    "content governance",
+    "interruptive alerts?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 0, "h": "What decision support is", "auto": true},
+    {"ch": 5, "sec": 1, "h": "When people stop reading", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 278
+  },
+  {
+   "id": "CPHIMS.SA1",
+   "text": "Apply systems development concepts, including the systems development life cycle.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.1",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "procedural",
+   "tasks": [
+    "SA1"
+   ],
+   "match": [
+    "systems development life ?cycle",
+    "SDLC",
+    "waterfall",
+    "agile",
+    "iterative development",
+    "design phase",
+    "requirements phase",
+    "maintenance phase"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "Where you are in the life cycle", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 53
+  },
+  {
+   "id": "CPHIMS.SA2",
+   "text": "Use project management tools such as needs analysis, gap analysis, and defining and ranking requirements.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.2",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "procedural",
+   "tasks": [
+    "SA2"
+   ],
+   "match": [
+    "needs (analysis|assessment)",
+    "gap analysis",
+    "requirements? (gathering|definition|elicitation)",
+    "prioritiz(e|ing|ed) requirements",
+    "MoSCoW",
+    "functional requirements?",
+    "nonfunctional requirements?",
+    "current state",
+    "future state"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 3, "h": "Draw it before you fix it", "auto": true},
+    {"ch": 6, "sec": 1, "h": "What they need, and what's missing", "auto": true},
+    {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 151
+  },
+  {
+   "id": "CPHIMS.SA3",
+   "text": "Apply process improvement methods such as DMAIC and PDCA.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.3",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "procedural",
+   "tasks": [
+    "SA3"
+   ],
+   "match": [
+    "DMAIC",
+    "PDCA",
+    "PDSA",
+    "plan.do.(check|study).act",
+    "Lean",
+    "Six Sigma",
+    "root cause analysis",
+    "kaizen",
+    "value stream"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 2, "h": "Fix it now, or fix it with the project", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 105
+  },
+  {
+   "id": "CPHIMS.SA4",
+   "text": "Use visual tools such as process maps, flow diagrams, and gap analysis to study and improve business and clinical processes.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.4",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "visual",
+   "tasks": [
+    "SA4"
+   ],
+   "match": [
+    "process maps?",
+    "process mapping",
+    "flow ?charts?",
+    "flow diagram(s|ming)?",
+    "swim ?lanes?",
+    "swimlane",
+    "value stream map",
+    "fishbone",
+    "Ishikawa"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 3, "h": "Draw it before you fix it", "auto": true},
+    {"ch": 6, "sec": 1, "h": "What they need, and what's missing", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 63
+  },
+  {
+   "id": "CPHIMS.SA5",
+   "text": "Interpret and analyze data sets that come from different, mismatched sources.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.5",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "judgment",
+   "tasks": [
+    "SA5"
+   ],
+   "match": [
+    "disparate data",
+    "data sets? from",
+    "reconcil(e|ing|iation)",
+    "data normali[sz]ation",
+    "mismatched (data|records)",
+    "data mapping",
+    "cross.?walk",
+    "data integration"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.SA6",
+   "text": "Come up with alternative processes and candidate solutions for new or improved applications and systems.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.6",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "judgment",
+   "tasks": [
+    "SA6"
+   ],
+   "match": [
+    "alternatives? analysis",
+    "alternative solutions?",
+    "options? analysis",
+    "workarounds?",
+    "build versus buy",
+    "build vs\\.? buy",
+    "candidate solutions?",
+    "solution options?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.SA7",
+   "text": "Judge whether a proposed solution fits the organization's strategic and operational plans.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.7",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "judgment",
+   "tasks": [
+    "SA7"
+   ],
+   "match": [
+    "strategic alignment",
+    "align(s|ed|ment)? with (the )?(strategy|strategic)",
+    "strategic plan",
+    "operational plan",
+    "strategic fit",
+    "organizational goals"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Strategy comes first", "auto": true},
+    {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 67
+  },
+  {
+   "id": "CPHIMS.SA8",
+   "text": "Run a cost-benefit analysis of a healthcare systems issue, counting effects on satisfaction, care quality, cost, access, and process.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.8",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "calculation",
+   "tasks": [
+    "SA8"
+   ],
+   "match": [
+    "cost.benefit",
+    "return on investment",
+    "ROI",
+    "net present value",
+    "NPV",
+    "payback period",
+    "total cost of ownership",
+    "TCO",
+    "break.even"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Glenn's arithmetic", "auto": true},
+    {"ch": 7, "sec": 4, "h": "What the contract says", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 143
+  },
+  {
+   "id": "CPHIMS.SA9",
+   "text": "Write proposals that recommend an approach and solution and lay out how the benefits will be realized.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.9",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "procedural",
+   "tasks": [
+    "SA9"
+   ],
+   "match": [
+    "project proposals?",
+    "business cases?",
+    "benefits realization",
+    "benefit realization",
+    "realiz(e|ing) (the )?benefits",
+    "recommendation memo",
+    "executive summary"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "Where you are in the life cycle", "auto": true},
+    {"ch": 6, "sec": 5, "h": "Baselines and owners", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Did it work", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 173
+  },
+  {
+   "id": "CPHIMS.SA10",
+   "text": "Read and use business documents such as RFPs, RFIs, SLAs, SOWs, and NDAs to drive system changes and implementations.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt A.10",
+   "group": "Healthcare Information and Systems Management (30%): A. Analysis",
+   "kind": "definition",
+   "tasks": [
+    "SA10"
+   ],
+   "match": [
+    "RFPs?",
+    "RFIs?",
+    "request for (proposal|information)",
+    "SOWs?",
+    "statements? of work",
+    "NDAs?",
+    "non.disclosure",
+    "SLAs?",
+    "service level agreements?"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 0, "h": "Ask before you bid", "auto": true},
+    {"ch": 7, "sec": 1, "h": "The paper", "auto": true},
+    {"ch": 7, "sec": 4, "h": "What the contract says", "auto": true},
+    {"ch": 11, "sec": 2, "h": "The command center", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 135
+  },
+  {
+   "id": "CPHIMS.SB1",
+   "text": "Make sure software, hardware, network components, and medical devices work together.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt B.1",
+   "group": "Healthcare Information and Systems Management (30%): B. Design",
+   "kind": "procedural",
+   "tasks": [
+    "SB1"
+   ],
+   "match": [
+    "interoperab(le|ility)",
+    "HL7",
+    "FHIR",
+    "DICOM",
+    "APIs?",
+    "device integration",
+    "medical device integration",
+    "interfaces?",
+    "semantic interoperability"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "The pipes in the walls", "auto": true},
+    {"ch": 3, "sec": 1, "h": "The messages", "auto": true},
+    {"ch": 8, "sec": 3, "h": "New things, on purpose", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 289
+  },
+  {
+   "id": "CPHIMS.SB2",
+   "text": "Make sure systems meet the industry, regulatory, and internal standards that apply.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt B.2",
+   "group": "Healthcare Information and Systems Management (30%): B. Design",
+   "kind": "procedural",
+   "tasks": [
+    "SB2"
+   ],
+   "match": [
+    "standards compliance",
+    "SNOMED",
+    "LOINC",
+    "ICD.10",
+    "RxNorm",
+    "CPT",
+    "USCDI",
+    "ONC certification",
+    "certified EHR"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 2, "h": "The words inside the messages", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 118
+  },
+  {
+   "id": "CPHIMS.SB3",
+   "text": "Keep a process in place for folding industry, technology, infrastructure, legal, and regulatory trends into the systems.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt B.3",
+   "group": "Healthcare Information and Systems Management (30%): B. Design",
+   "kind": "procedural",
+   "tasks": [
+    "SB3"
+   ],
+   "match": [
+    "environmental scan(ning)?",
+    "horizon scan(ning)?",
+    "regulatory updates?",
+    "industry trends",
+    "technology roadmap",
+    "trend (review|monitoring)",
+    "regulatory change"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.SB4",
+   "text": "Design information infrastructure for current and future business needs, including business continuity and disaster recovery.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt B.4",
+   "group": "Healthcare Information and Systems Management (30%): B. Design",
+   "kind": "procedural",
+   "tasks": [
+    "SB4"
+   ],
+   "match": [
+    "business continuity",
+    "disaster recovery",
+    "downtime procedures?",
+    "RTO",
+    "RPO",
+    "recovery time objective",
+    "recovery point objective",
+    "failover",
+    "redundan(t|cy)",
+    "high availability"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 0, "h": "Two questions", "auto": true},
+    {"ch": 8, "sec": 1, "h": "Hot, warm, cold", "auto": true},
+    {"ch": 8, "sec": 5, "h": "Irene's page", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 163
+  },
+  {
+   "id": "CPHIMS.SB5",
+   "text": "Evaluate current and emerging technologies that could support the organization's growth and strategy.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt B.5",
+   "group": "Healthcare Information and Systems Management (30%): B. Design",
+   "kind": "judgment",
+   "tasks": [
+    "SB5"
+   ],
+   "match": [
+    "emerging technolog(y|ies)",
+    "artificial intelligence",
+    "machine learning",
+    "proof of concept",
+    "pilot(s|ing)? (a|the) (tool|technology)",
+    "hype cycle",
+    "technology assessment"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.SB6",
+   "text": "Manage data well under an established data governance protocol.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt B.6",
+   "group": "Healthcare Information and Systems Management (30%): B. Design",
+   "kind": "procedural",
+   "tasks": [
+    "SB6"
+   ],
+   "match": [
+    "data governance",
+    "data stewards?",
+    "data stewardship",
+    "data owners?",
+    "data dictionar(y|ies)",
+    "data quality",
+    "master data",
+    "data lineage"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 2, "h": "Who owns the meaning", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Proving it stays locked", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 61
+  },
+  {
+   "id": "CPHIMS.SC1",
+   "text": "Run solution selection: identify stakeholders, hold demonstrations, make site visits, and check references.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt C.1",
+   "group": "Healthcare Information and Systems Management (30%): C. Selection, Implementation, Support and Maintenance",
+   "kind": "procedural",
+   "tasks": [
+    "SC1"
+   ],
+   "match": [
+    "vendor selection",
+    "solution selection",
+    "scripted demos?",
+    "demonstrations?",
+    "site visits?",
+    "reference checks?",
+    "selection committee",
+    "scoring matrix",
+    "weighted scor(e|ing)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.SC2",
+   "text": "Use sound technical change management practices.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt C.2",
+   "group": "Healthcare Information and Systems Management (30%): C. Selection, Implementation, Support and Maintenance",
+   "kind": "procedural",
+   "tasks": [
+    "SC2"
+   ],
+   "match": [
+    "change control",
+    "change advisory board",
+    "CAB",
+    "change requests?",
+    "release management",
+    "rollback",
+    "back.?out plan",
+    "version control",
+    "configuration management"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 1, "h": "The loop, and where it breaks", "auto": true},
+    {"ch": 9, "sec": 3, "h": "The Thursday board", "auto": true},
+    {"ch": 11, "sec": 3, "h": "Keeping it running", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 131
+  },
+  {
+   "id": "CPHIMS.SC3",
+   "text": "Choose and deliver the right training and support methods, such as computer-based learning, classroom sessions, train the trainer, and at-the-elbow superuser help.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt C.3",
+   "group": "Healthcare Information and Systems Management (30%): C. Selection, Implementation, Support and Maintenance",
+   "kind": "procedural",
+   "tasks": [
+    "SC3"
+   ],
+   "match": [
+    "train the trainer",
+    "superusers?",
+    "at.the.elbow",
+    "go.live support",
+    "computer.based (training|learning)",
+    "classroom training",
+    "tip sheets?",
+    "e.learning",
+    "command center"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 0, "h": "Four ways to teach", "auto": true},
+    {"ch": 11, "sec": 2, "h": "The command center", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 100
+  },
+  {
+   "id": "CPHIMS.SC4",
+   "text": "Carry out implementations while controlling scope, schedule, budget, and quality.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt C.4",
+   "group": "Healthcare Information and Systems Management (30%): C. Selection, Implementation, Support and Maintenance",
+   "kind": "procedural",
+   "tasks": [
+    "SC4"
+   ],
+   "match": [
+    "scope creep",
+    "triple constraint",
+    "critical path",
+    "project schedule",
+    "go.live",
+    "cutover",
+    "work breakdown structure",
+    "WBS",
+    "milestones?",
+    "project charter"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 5, "h": "Baselines and owners", "auto": true},
+    {"ch": 11, "sec": 0, "h": "Four ways to teach", "auto": true},
+    {"ch": 11, "sec": 1, "h": "The people side", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Did it work", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 339
+  },
+  {
+   "id": "CPHIMS.SC5",
+   "text": "Keep healthcare information systems running, including operation and upgrades.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt C.5",
+   "group": "Healthcare Information and Systems Management (30%): C. Selection, Implementation, Support and Maintenance",
+   "kind": "procedural",
+   "tasks": [
+    "SC5"
+   ],
+   "match": [
+    "upgrades?",
+    "patch(es|ing)",
+    "system maintenance",
+    "maintenance windows?",
+    "downtime",
+    "preventive maintenance",
+    "version upgrades?",
+    "sustainment"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 5, "h": "Irene's page", "auto": true},
+    {"ch": 11, "sec": 3, "h": "Keeping it running", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 111
+  },
+  {
+   "id": "CPHIMS.SC6",
+   "text": "Analyze error reports, help desk logs, surveys, performance metrics, and network monitoring to spot problems and trends.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt C.6",
+   "group": "Healthcare Information and Systems Management (30%): C. Selection, Implementation, Support and Maintenance",
+   "kind": "judgment",
+   "tasks": [
+    "SC6"
+   ],
+   "match": [
+    "help desk",
+    "service desk",
+    "tickets?",
+    "error reports?",
+    "incident trends?",
+    "trend analysis",
+    "network monitoring",
+    "root cause",
+    "problem management",
+    "Pareto"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Watch the plumbing", "auto": true},
+    {"ch": 9, "sec": 5, "h": "The tickets know first", "auto": true},
+    {"ch": 11, "sec": 2, "h": "The command center", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 242
+  },
+  {
+   "id": "CPHIMS.SD1",
+   "text": "Run a formal testing method, including unit, integrated, stress, and acceptance testing.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt D.1",
+   "group": "Healthcare Information and Systems Management (30%): D. Testing and Evaluation",
+   "kind": "procedural",
+   "tasks": [
+    "SD1"
+   ],
+   "match": [
+    "unit test(s|ing)?",
+    "integrat(ed|ion) test(s|ing)?",
+    "stress test(s|ing)?",
+    "load test(s|ing)?",
+    "user acceptance",
+    "UAT",
+    "regression test(s|ing)?",
+    "test scripts?",
+    "acceptance test(s|ing)?"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 0, "h": "Ways to test", "auto": true},
+    {"ch": 9, "sec": 1, "h": "Count what you find", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 185
+  },
+  {
+   "id": "CPHIMS.SD2",
+   "text": "Put internal controls in place and monitor them during testing to protect resources and keep data available, confidential, and intact.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt D.2",
+   "group": "Healthcare Information and Systems Management (30%): D. Testing and Evaluation",
+   "kind": "procedural",
+   "tasks": [
+    "SD2"
+   ],
+   "match": [
+    "internal controls?",
+    "test environment",
+    "de.identified test data",
+    "production data",
+    "segregation of duties",
+    "separation of duties",
+    "versioning",
+    "security audits?",
+    "change control"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.SD3",
+   "text": "Check an implementation against the contract terms and the design specifications.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt D.3",
+   "group": "Healthcare Information and Systems Management (30%): D. Testing and Evaluation",
+   "kind": "judgment",
+   "tasks": [
+    "SD3"
+   ],
+   "match": [
+    "design specifications?",
+    "contractual terms",
+    "acceptance criteria",
+    "contract (terms|compliance)",
+    "traceability matrix",
+    "requirements traceability",
+    "validat(e|ing|ion) against"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.SD4",
+   "text": "Confirm the expected benefits arrived and report the metrics, such as return on investment, benchmarks, and user satisfaction.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt D.4",
+   "group": "Healthcare Information and Systems Management (30%): D. Testing and Evaluation",
+   "kind": "calculation",
+   "tasks": [
+    "SD4"
+   ],
+   "match": [
+    "benefits realization",
+    "post.implementation (review|evaluation)",
+    "return on investment",
+    "ROI",
+    "benchmarks?",
+    "user satisfaction",
+    "baseline (metrics|measure)",
+    "key performance indicators?",
+    "KPIs?"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Glenn's arithmetic", "auto": true},
+    {"ch": 6, "sec": 5, "h": "Baselines and owners", "auto": true},
+    {"ch": 11, "sec": 2, "h": "The command center", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Did it work", "auto": true},
+    {"ch": 12, "sec": 2, "h": "Numbers with a yardstick", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 185
+  },
+  {
+   "id": "CPHIMS.SE1",
+   "text": "Set and carry out policies and procedures that protect the confidentiality, privacy, security, availability, and integrity of data.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt E.1",
+   "group": "Healthcare Information and Systems Management (30%): E. Privacy and Security",
+   "kind": "procedural",
+   "tasks": [
+    "SE1"
+   ],
+   "match": [
+    "confidentiality",
+    "integrity",
+    "availability",
+    "CIA triad",
+    "security polic(y|ies)",
+    "privacy polic(y|ies)",
+    "privacy officer",
+    "security officer",
+    "minimum necessary"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Who does what", "auto": true},
+    {"ch": 2, "sec": 1, "h": "HIPAA is two rules and a bigger stick", "auto": true},
+    {"ch": 8, "sec": 1, "h": "Hot, warm, cold", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Three promises", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 257
+  },
+  {
+   "id": "CPHIMS.SE2",
+   "text": "Assess privacy and security weaknesses and reduce them.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt E.2",
+   "group": "Healthcare Information and Systems Management (30%): E. Privacy and Security",
+   "kind": "judgment",
+   "tasks": [
+    "SE2"
+   ],
+   "match": [
+    "vulnerabilit(y|ies)",
+    "risk analysis",
+    "security risk assessment",
+    "threats?",
+    "penetration test(s|ing)?",
+    "vulnerability scan(s|ning)?",
+    "mitigat(e|ion)",
+    "ransomware",
+    "phishing"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 3, "h": "Finding the holes", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Proving it stays locked", "auto": true},
+    {"ch": 10, "sec": 6, "h": "When it's a breach", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 218
+  },
+  {
+   "id": "CPHIMS.SE3",
+   "text": "Set and enforce user access controls that follow established policies and procedures.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt E.3",
+   "group": "Healthcare Information and Systems Management (30%): E. Privacy and Security",
+   "kind": "procedural",
+   "tasks": [
+    "SE3"
+   ],
+   "match": [
+    "role.based access",
+    "RBAC",
+    "least privilege",
+    "access reviews?",
+    "break.the.glass",
+    "user provisioning",
+    "deprovisioning",
+    "termination of access",
+    "unique user (ID|identification)"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 1, "h": "Who gets in", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 55
+  },
+  {
+   "id": "CPHIMS.SE4",
+   "text": "Assess and put in place physical, technical, and administrative safeguards, such as locked servers, auto logoff, and two-factor authentication.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt E.4",
+   "group": "Healthcare Information and Systems Management (30%): E. Privacy and Security",
+   "kind": "judgment",
+   "tasks": [
+    "SE4"
+   ],
+   "match": [
+    "administrative safeguards?",
+    "physical safeguards?",
+    "technical safeguards?",
+    "two.factor",
+    "multi.factor",
+    "MFA",
+    "automatic logoff",
+    "auto.?logoff",
+    "encryption",
+    "audit controls?"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 2, "h": "Three kinds of controls", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 41
+  },
+  {
+   "id": "CPHIMS.SE5",
+   "text": "Define which roles own vulnerability management, such as information security, physical security, and compliance.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt E.5",
+   "group": "Healthcare Information and Systems Management (30%): E. Privacy and Security",
+   "kind": "definition",
+   "tasks": [
+    "SE5"
+   ],
+   "match": [
+    "CISO",
+    "chief information security officer",
+    "information security officer",
+    "compliance officer",
+    "physical security",
+    "security team",
+    "RACI",
+    "accountab(le|ility) for security"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Who does what", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 41
+  },
+  {
+   "id": "CPHIMS.SE6",
+   "text": "Build and run data management controls: data ownership, criticality, security levels, protection, retention and destruction, and access.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt E.6",
+   "group": "Healthcare Information and Systems Management (30%): E. Privacy and Security",
+   "kind": "procedural",
+   "tasks": [
+    "SE6"
+   ],
+   "match": [
+    "data classification",
+    "data ownership",
+    "data owners?",
+    "retention (schedule|polic(y|ies)|requirements?)",
+    "records retention",
+    "destruction",
+    "data criticality",
+    "legal hold"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 4, "h": "Whose data, and how long", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Proving it stays locked", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 130
+  },
+  {
+   "id": "CPHIMS.SE7",
+   "text": "Keep checking that the security features of existing systems still work.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Systems Mgmt E.7",
+   "group": "Healthcare Information and Systems Management (30%): E. Privacy and Security",
+   "kind": "procedural",
+   "tasks": [
+    "SE7"
+   ],
+   "match": [
+    "audit logs?",
+    "access log review",
+    "continuous monitoring",
+    "security audits?",
+    "periodic (review|assessment)",
+    "vulnerability scan(s|ning)?",
+    "penetration test(s|ing)?",
+    "control testing"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 5, "h": "Proving it stays locked", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 18
+  },
+  {
+   "id": "CPHIMS.L1",
+   "text": "Help shape the organization's strategic plan, including measuring performance against its goals.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.1",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L1"
+   ],
+   "match": [
+    "strategic planning",
+    "strategic plan",
+    "organizational goals",
+    "mission and vision",
+    "SWOT",
+    "balanced scorecard",
+    "strategic objectives?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Strategy comes first", "auto": true},
+    {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 67
+  },
+  {
+   "id": "CPHIMS.L2",
+   "text": "Assess the organization's environment, including its culture, values, and drivers.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.2",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L2"
+   ],
+   "match": [
+    "organizational culture",
+    "corporate culture",
+    "values and drivers",
+    "organizational readiness",
+    "stakeholder analysis",
+    "political landscape",
+    "cultural (fit|resistance)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L3",
+   "text": "Forecast the organization's technology and information needs by tying resources to business needs.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.3",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L3"
+   ],
+   "match": [
+    "forecast(s|ing)?",
+    "capacity planning",
+    "demand planning",
+    "resource planning",
+    "growth projections?",
+    "future needs",
+    "technology needs"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "New things, on purpose", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 37
+  },
+  {
+   "id": "CPHIMS.L4",
+   "text": "Write and carry out an IT strategic plan and department objectives that support the organization's strategy and goals.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.4",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L4"
+   ],
+   "match": [
+    "IT strategic plan",
+    "IT strategy",
+    "technology roadmap",
+    "departmental objectives",
+    "IT roadmap",
+    "strategic alignment",
+    "multi.year plan"
+   ],
+   "refs": [
+    {"ch": 12, "sec": 0, "h": "Start upstairs", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 24
+  },
+  {
+   "id": "CPHIMS.L5",
+   "text": "Evaluate performance using service levels, goals, performance indicators, and system effectiveness.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.5",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L5"
+   ],
+   "match": [
+    "SLAs?",
+    "service level",
+    "performance indicators?",
+    "KPIs?",
+    "key performance indicators?",
+    "uptime",
+    "system effectiveness",
+    "performance metrics"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 1, "h": "The paper", "auto": true},
+    {"ch": 11, "sec": 2, "h": "The command center", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 69
+  },
+  {
+   "id": "CPHIMS.L6",
+   "text": "Evaluate how effective the systems and services are and how satisfied users are with them.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.6",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L6"
+   ],
+   "match": [
+    "user satisfaction",
+    "satisfaction surveys?",
+    "end.user feedback",
+    "net promoter",
+    "clinician (satisfaction|burnout)",
+    "usability surveys?",
+    "customer satisfaction"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L7",
+   "text": "Help stakeholders understand what IT can and cannot do, including resource, budget, and prioritization limits.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.7",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L7"
+   ],
+   "match": [
+    "stakeholder (education|understanding|expectations)",
+    "project prioritization",
+    "IT governance (committee|council)",
+    "steering committee",
+    "IT constraints",
+    "managing expectations"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L8",
+   "text": "Write policies and procedures for information and systems management.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.8",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L8"
+   ],
+   "match": [
+    "polic(y|ies) and procedures?",
+    "standard operating procedures?",
+    "SOPs?",
+    "polic(y|ies) (approval|review)",
+    "write (a|the) polic(y|ies)",
+    "governance documents?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L9",
+   "text": "Follow the legal and regulatory standards that apply.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.9",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L9"
+   ],
+   "match": [
+    "regulatory compliance",
+    "legal (requirements?|obligations?)",
+    "compliance (program|audit|officer)",
+    "OCR",
+    "Office for Civil Rights",
+    "breach notification",
+    "HIPAA"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 1, "h": "HIPAA is two rules and a bigger stick", "auto": true},
+    {"ch": 10, "sec": 6, "h": "When it's a breach", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 123
+  },
+  {
+   "id": "CPHIMS.L10",
+   "text": "Understand and follow the organization's ethical business principles.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.10",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L10"
+   ],
+   "match": [
+    "code of (conduct|ethics)",
+    "ethical (principles|business)",
+    "business ethics",
+    "conflicts? of interest",
+    "gifts? from vendors?",
+    "whistle.?blow(er|ing)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L11",
+   "text": "Use comparative analytics such as indicators and benchmarks.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.11",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "calculation",
+   "tasks": [
+    "L11"
+   ],
+   "match": [
+    "benchmark(s|ing)?",
+    "comparative analytics",
+    "peer comparison",
+    "industry average",
+    "percentiles?",
+    "EMRAM",
+    "national averages?"
+   ],
+   "refs": [
+    {"ch": 12, "sec": 2, "h": "Numbers with a yardstick", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 36
+  },
+  {
+   "id": "CPHIMS.L12",
+   "text": "Prepare and deliver business communications such as presentations, reports, and project plans.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.12",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L12"
+   ],
+   "match": [
+    "status reports?",
+    "presentations?",
+    "executive briefing",
+    "board (presentation|report)",
+    "communication plan",
+    "project plans?",
+    "slide deck"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L13",
+   "text": "Run group discussions and meetings, including building consensus and resolving conflict.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.13",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L13"
+   ],
+   "match": [
+    "facilitat(e|ion|ing|or)",
+    "consensus",
+    "conflict resolution",
+    "meeting agenda",
+    "ground rules",
+    "parking lot",
+    "meeting minutes"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L14",
+   "text": "Provide consulting on technology to the rest of the organization.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.14",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L14"
+   ],
+   "match": [
+    "consultative",
+    "internal consult(ant|ing)",
+    "advisory",
+    "trusted advisor",
+    "business partner",
+    "engagement model",
+    "subject matter expert"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 1, "h": "The people side", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 69
+  },
+  {
+   "id": "CPHIMS.L15",
+   "text": "Build education strategies for the information and management systems function.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.15",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L15"
+   ],
+   "match": [
+    "education(al)? strateg(y|ies)",
+    "curriculum",
+    "learning plan",
+    "training needs assessment",
+    "competency.based (training|education)",
+    "learning management system",
+    "LMS"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L16",
+   "text": "Keep the organization's skills current with IT technologies and trends.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.16",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L16"
+   ],
+   "match": [
+    "professional development",
+    "continuing education",
+    "skills? gaps?",
+    "upskill(ing)?",
+    "conferences?",
+    "CEUs?"
+   ],
+   "refs": [
+    {"ch": 12, "sec": 5, "h": "Irene's card", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 37
+  },
+  {
+   "id": "CPHIMS.L17",
+   "text": "Apply risk management to internal and external processes, including assessing and mitigating risk.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.17",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L17"
+   ],
+   "match": [
+    "risk management",
+    "risk assessment",
+    "risk mitigation",
+    "risk registers?",
+    "risk appetite",
+    "risk tolerance",
+    "likelihood and impact",
+    "risk matrix",
+    "risk owners?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L18",
+   "text": "Keep effective, ethical working relationships with clinicians, vendors, partners, and other stakeholders.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.18",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L18"
+   ],
+   "match": [
+    "stakeholder relationships?",
+    "vendor relationships?",
+    "physician champions?",
+    "clinical champions?",
+    "relationship management",
+    "partnership"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L19",
+   "text": "Present interpretations of data analyses and recommendations to decision makers.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.19",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L19"
+   ],
+   "match": [
+    "decision makers?",
+    "present(ing)? (the )?(data|findings|analysis)",
+    "data storytelling",
+    "executive summary",
+    "so what"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L20",
+   "text": "Use organizational change management techniques to support a solution rollout.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.20",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L20"
+   ],
+   "match": [
+    "organizational change management",
+    "change management",
+    "ADKAR",
+    "Kotter",
+    "resistance to change",
+    "change champions?",
+    "burning platform",
+    "adoption"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 1, "h": "The people side", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 54
+  },
+  {
+   "id": "CPHIMS.L21",
+   "text": "Define roles, responsibilities, and job descriptions for healthcare IT functions.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.21",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L21"
+   ],
+   "match": [
+    "job descriptions?",
+    "roles and responsibilities",
+    "org(anizational)? chart",
+    "staffing model",
+    "RACI",
+    "position descriptions?",
+    "span of control"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L22",
+   "text": "Evaluate how skilled staff are in information and management systems work.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.22",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "judgment",
+   "tasks": [
+    "L22"
+   ],
+   "match": [
+    "staff competenc(y|ies)",
+    "competency assessments?",
+    "skills? assessments?",
+    "performance reviews?",
+    "skills matrix",
+    "proficiency",
+    "competency checklist"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 0, "h": "Four ways to teach", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 39
+  },
+  {
+   "id": "CPHIMS.L23",
+   "text": "Manage projects and portfolios of projects.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.23",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L23"
+   ],
+   "match": [
+    "project portfolio",
+    "portfolio management",
+    "PMO",
+    "project management office",
+    "project intake",
+    "prioritization",
+    "programs? management",
+    "resource contention"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CPHIMS.L24",
+   "text": "Manage contracts with vendors and partners, covering cost, schedule, support, maintenance, and performance.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.24",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "procedural",
+   "tasks": [
+    "L24"
+   ],
+   "match": [
+    "vendor contracts?",
+    "contract negotiation",
+    "master services agreement",
+    "MSA",
+    "maintenance agreements?",
+    "support agreements?",
+    "penalt(y|ies)",
+    "service credits?",
+    "business associate agreements?",
+    "BAA"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 1, "h": "The paper", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 35
+  },
+  {
+   "id": "CPHIMS.L25",
+   "text": "Manage the budget and financial risks.",
+   "source": "HIMSS CPHIMS Candidate Handbook (eff. 2024-05-01), Outline of Exam Topics, Mgmt and Leadership A.25",
+   "group": "Management and Leadership (25%): A. Management and Leadership",
+   "kind": "calculation",
+   "tasks": [
+    "L25"
+   ],
+   "match": [
+    "budgeting",
+    "capital budget",
+    "operating budget",
+    "capex",
+    "opex",
+    "budget variance",
+    "financial risks?",
+    "contingency (reserve|fund)",
+    "depreciation"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Glenn's arithmetic", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 60
+  }
+ ],
+ "seeded": "2026-11-08"
+}

@@ -1,0 +1,778 @@
+{
+ "course": "asep",
+ "taxonomy": "official",
+ "outline": {
+  "name": "INCOSE Systems Engineering Handbook Learning Objectives",
+  "version": "SEH 5th edition LO flyer (effective for the knowledge exam 2023-08-01; exam on SEH5E content only since 2025-03-15)",
+  "source": "INCOSE 'Systems Engineering Handbook Learning Objectives' flyer, published at incose.org/sehandbook (file 2025sehandbooklearningobjectivesflyer.pdf) (read with pdftotext)",
+  "read": "2026-11-07",
+  "notes": "The flyer lists 25 objectives under 8 headings mapped to SEH5E Parts 1 to 5, with no numbers. IDs LO01 to LO25 follow flyer order and are Halcyon's, not INCOSE's. Every objective is paraphrased. The flyer names no objective for measurement on its own; measurement (M7) is mapped under the monitoring and control objective (LO07). Quality assurance (M8) maps to LO05 because the flyer lists it under business and enterprise integration. Interfaces (LO22) has no dedicated task code; mapped to T4 and T8 as the closest. Systems of systems (LO24) has no dedicated code; mapped to X4. The flyer gives objective titles only, so the named sub concepts in each match list come from the SEH5E process and chapter structure, not from the flyer."
+ },
+ "objectives": [
+  {
+   "id": "ASEP.LO01",
+   "text": "Know what systems engineering is, its core principles and its basic concepts, such as a system, the system of interest, enabling systems and emergence.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 1",
+   "group": "Part 1: Systems Engineering and Life Cycle Overview",
+   "kind": "definition",
+   "tasks": [
+    "X1"
+   ],
+   "match": [
+    "systems engineering principles?",
+    "definitions? of systems engineering",
+    "system of interest",
+    "enabling systems?",
+    "emergen(t|ce)",
+    "system boundar(y|ies)",
+    "system elements?",
+    "value of systems engineering"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "What a systems engineer is for", "auto": true},
+    {"ch": 2, "sec": 4, "h": "Seeing the whole", "auto": true},
+    {"ch": 6, "sec": 1, "h": "What done means", "auto": true},
+    {"ch": 8, "sec": 0, "h": "The paper airplane", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Built on a board", "auto": true},
+    {"ch": 10, "sec": 1, "h": "One breaker at a time", "auto": true},
+    {"ch": 11, "sec": 1, "h": "The test card", "auto": true},
+    {"ch": 12, "sec": 0, "h": "Off the flatbed", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 711
+  },
+  {
+   "id": "ASEP.LO02",
+   "text": "Understand at an awareness level what systems thinking is: seeing the whole, the relationships among parts, feedback and behavior that only shows up at the system level.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 1",
+   "group": "Part 1: Systems Engineering and Life Cycle Overview",
+   "kind": "definition",
+   "tasks": [
+    "X1"
+   ],
+   "match": [
+    "systems thinking",
+    "holistic",
+    "feedback loops?",
+    "causal loops?",
+    "system dynamics",
+    "interconnect(ed|ions?)",
+    "unintended consequences?",
+    "whole system"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 4, "h": "Seeing the whole", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 258
+  },
+  {
+   "id": "ASEP.LO03",
+   "text": "Understand at an awareness level what a system life cycle is: its stages, decision gates, and the common life cycle model styles such as sequential, incremental and evolutionary.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Life Cycle Models and Concepts",
+   "kind": "definition",
+   "tasks": [
+    "O1",
+    "X1"
+   ],
+   "match": [
+    "life ?cycle models?",
+    "life ?cycle stages?",
+    "vee model",
+    "decision gates?",
+    "incremental",
+    "evolutionary",
+    "spiral model",
+    "waterfall",
+    "concept stage",
+    "utilization stage"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "The life cycle and its gates", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Small batches", "auto": true},
+    {"ch": 10, "sec": 1, "h": "One breaker at a time", "auto": true},
+    {"ch": 12, "sec": 2, "h": "Safe for the floor", "auto": true},
+    {"ch": 12, "sec": 4, "h": "Eleven versions", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 530
+  },
+  {
+   "id": "ASEP.LO04",
+   "text": "Understand at an awareness level how acquisition and supply work: the acquirer and supplier roles and the agreement that binds them.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Life Cycle Models and Concepts",
+   "kind": "definition",
+   "tasks": [
+    "A1",
+    "A2"
+   ],
+   "match": [
+    "acquisition process",
+    "supply process",
+    "acquirers?",
+    "suppliers?",
+    "agreement process(es)?",
+    "request for proposal",
+    "RFPs?",
+    "statement of work",
+    "contract award",
+    "source selection"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "The work order", "auto": true},
+    {"ch": 6, "sec": 1, "h": "What done means", "auto": true},
+    {"ch": 7, "sec": 0, "h": "Personal minimums", "auto": true},
+    {"ch": 7, "sec": 2, "h": "What you do about it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 1009
+  },
+  {
+   "id": "ASEP.LO05",
+   "text": "Understand at an awareness level how the organization supports projects: infrastructure, portfolio, human resource, knowledge and quality management, plus quality assurance.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Life Cycle Models and Concepts",
+   "kind": "definition",
+   "tasks": [
+    "O2",
+    "O3",
+    "O4",
+    "O5",
+    "O6",
+    "M8"
+   ],
+   "match": [
+    "infrastructure management",
+    "portfolio management",
+    "human resource management",
+    "knowledge management",
+    "quality management",
+    "quality assurance",
+    "lessons learned",
+    "organizational project-enabling",
+    "enterprise integration"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "After you pick", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Before it shows", "auto": true},
+    {"ch": 8, "sec": 3, "h": "Who signs for a change", "auto": true},
+    {"ch": 10, "sec": 2, "h": "The shop's bench", "auto": true},
+    {"ch": 10, "sec": 3, "h": "What the book says", "auto": true},
+    {"ch": 11, "sec": 3, "h": "Knock it off", "auto": true},
+    {"ch": 12, "sec": 4, "h": "Eleven versions", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 1170
+  },
+  {
+   "id": "ASEP.LO06",
+   "text": "Understand at an awareness level how technical work is planned: scope, the work breakdown, schedules, resources and the systems engineering management plan.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Management Processes",
+   "kind": "procedural",
+   "tasks": [
+    "M1"
+   ],
+   "match": [
+    "project planning",
+    "SEMP",
+    "systems engineering management plan",
+    "work breakdown structure",
+    "WBS",
+    "integrated master (schedule|plan)",
+    "cost estimat(e|es|ing)",
+    "planning process"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Mission analysis comes before the layout", "auto": true},
+    {"ch": 5, "sec": 3, "h": "After you pick", "auto": true},
+    {"ch": 6, "sec": 3, "h": "When it's late", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Before it shows", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 444
+  },
+  {
+   "id": "ASEP.LO07",
+   "text": "Understand at an awareness level how a project is monitored and controlled: measuring progress against plan, technical measures, reviews and corrective action.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Management Processes",
+   "kind": "procedural",
+   "tasks": [
+    "M2",
+    "M7"
+   ],
+   "match": [
+    "project assessment",
+    "assessment and control",
+    "technical performance measures?",
+    "TPMs?",
+    "measures? of (effectiveness|performance)",
+    "MOEs?",
+    "earned value",
+    "measurement process",
+    "corrective actions?",
+    "technical reviews?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Mission analysis comes before the layout", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Keeping score", "auto": true},
+    {"ch": 3, "sec": 0, "h": "From what they need to what it must do", "auto": true},
+    {"ch": 5, "sec": 3, "h": "After you pick", "auto": true},
+    {"ch": 6, "sec": 3, "h": "When it's late", "auto": true},
+    {"ch": 7, "sec": 2, "h": "What you do about it", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Before it shows", "auto": true},
+    {"ch": 8, "sec": 2, "h": "What's left over", "auto": true},
+    {"ch": 8, "sec": 3, "h": "Who signs for a change", "auto": true},
+    {"ch": 11, "sec": 3, "h": "Knock it off", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 1717
+  },
+  {
+   "id": "ASEP.LO08",
+   "text": "Understand at an awareness level how decisions are managed: framing the decision, criteria, alternatives, trade studies and recording the outcome.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Management Processes",
+   "kind": "judgment",
+   "tasks": [
+    "M3"
+   ],
+   "match": [
+    "decision management",
+    "trade stud(y|ies)",
+    "trade-?offs?",
+    "decision criteria",
+    "analysis of alternatives",
+    "alternatives analysis",
+    "decision matrix",
+    "weighted (sum|scoring|criteria)",
+    "sensitivity analysis"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 0, "h": "Three airplanes and a legal pad", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Musts, wants and weights", "auto": true},
+    {"ch": 5, "sec": 2, "h": "How sure is sure", "auto": true},
+    {"ch": 5, "sec": 3, "h": "After you pick", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 519
+  },
+  {
+   "id": "ASEP.LO09",
+   "text": "Understand at an awareness level how risks and opportunities are identified, analyzed, treated and tracked.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Management Processes",
+   "kind": "judgment",
+   "tasks": [
+    "M4"
+   ],
+   "match": [
+    "risk management",
+    "risks? and opportunit(y|ies)",
+    "opportunity management",
+    "risk register",
+    "likelihood",
+    "risk (mitigation|treatment|response)",
+    "risk profile",
+    "risk matrix",
+    "risk threshold",
+    "risk owner"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "After you pick", "auto": true},
+    {"ch": 7, "sec": 0, "h": "Personal minimums", "auto": true},
+    {"ch": 7, "sec": 2, "h": "What you do about it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 316
+  },
+  {
+   "id": "ASEP.LO10",
+   "text": "Understand at an awareness level how configuration management works: identifying configuration items, baselines, change control, status accounting and audits.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Management Processes",
+   "kind": "definition",
+   "tasks": [
+    "M5"
+   ],
+   "match": [
+    "configuration management",
+    "configuration items?",
+    "baselines?",
+    "change control",
+    "CCB",
+    "configuration status accounting",
+    "configuration audits?",
+    "engineering change (proposal|request)s?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Mission analysis comes before the layout", "auto": true},
+    {"ch": 3, "sec": 0, "h": "From what they need to what it must do", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Trace it, then freeze it", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Musts, wants and weights", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Small batches", "auto": true},
+    {"ch": 6, "sec": 3, "h": "When it's late", "auto": true},
+    {"ch": 8, "sec": 0, "h": "The paper airplane", "auto": true},
+    {"ch": 8, "sec": 1, "h": "Two gates", "auto": true},
+    {"ch": 8, "sec": 3, "h": "Who signs for a change", "auto": true},
+    {"ch": 10, "sec": 3, "h": "What the book says", "auto": true},
+    {"ch": 11, "sec": 1, "h": "The test card", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 1468
+  },
+  {
+   "id": "ASEP.LO11",
+   "text": "Understand at an awareness level how project information is managed: what is kept, who can get it, how it is stored, versioned, released and archived.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Management Processes",
+   "kind": "definition",
+   "tasks": [
+    "M6"
+   ],
+   "match": [
+    "information management",
+    "data management",
+    "information items?",
+    "technical data",
+    "archiv(e|ed|ing|al)",
+    "records? retention",
+    "information needs",
+    "distribution (list|rights|statement)"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 3, "h": "Trace it, then freeze it", "auto": true},
+    {"ch": 5, "sec": 3, "h": "After you pick", "auto": true},
+    {"ch": 10, "sec": 3, "h": "What the book says", "auto": true},
+    {"ch": 12, "sec": 2, "h": "Safe for the floor", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 389
+  },
+  {
+   "id": "ASEP.LO12",
+   "text": "Understand at an awareness level how requirements are defined, from mission and stakeholder needs down to system requirements, including well formed requirements and traceability.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Processes",
+   "kind": "definition",
+   "tasks": [
+    "T1",
+    "T2",
+    "T3"
+   ],
+   "match": [
+    "stakeholder needs",
+    "stakeholder requirements",
+    "system requirements",
+    "requirements? (definition|elicitation|analysis)",
+    "mission analysis",
+    "concept of operations",
+    "ConOps",
+    "OpsCon",
+    "well-formed requirements?",
+    "traceab(le|ility)"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "The V and the processes", "auto": true},
+    {"ch": 1, "sec": 4, "h": "Mission analysis comes before the layout", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Needs come from people", "auto": true},
+    {"ch": 2, "sec": 1, "h": "Concepts and scenarios", "auto": true},
+    {"ch": 2, "sec": 3, "h": "From need to requirement", "auto": true},
+    {"ch": 3, "sec": 0, "h": "From what they need to what it must do", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Trace it, then freeze it", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Functions first", "auto": true},
+    {"ch": 5, "sec": 3, "h": "After you pick", "auto": true},
+    {"ch": 8, "sec": 1, "h": "Two gates", "auto": true},
+    {"ch": 11, "sec": 0, "h": "Bench and sky", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 1188
+  },
+  {
+   "id": "ASEP.LO13",
+   "text": "Understand at an awareness level how architecture is defined: viewpoints and views, functional, logical and physical architectures, and choosing among candidate architectures.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Processes",
+   "kind": "definition",
+   "tasks": [
+    "T4"
+   ],
+   "match": [
+    "architecture definition",
+    "architecture views?",
+    "viewpoints?",
+    "logical architecture",
+    "physical architecture",
+    "functional architecture",
+    "architecture frameworks?",
+    "DoDAF",
+    "candidate architectures?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "From what they need to what it must do", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Functions first", "auto": true},
+    {"ch": 4, "sec": 2, "h": "One model, many views", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 344
+  },
+  {
+   "id": "ASEP.LO14",
+   "text": "Understand at an awareness level how design is defined and turned into real system elements: design characteristics, design enablers, implementation and make or buy choices.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Processes",
+   "kind": "definition",
+   "tasks": [
+    "T5",
+    "T7"
+   ],
+   "match": [
+    "design definition",
+    "design characteristics",
+    "implementation process",
+    "detailed design",
+    "make (or|vs\\.?|versus) buy",
+    "build-to",
+    "design enablers?",
+    "fabricat(e|ed|ion)"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "Functions first", "auto": true},
+    {"ch": 5, "sec": 3, "h": "After you pick", "auto": true},
+    {"ch": 8, "sec": 0, "h": "The paper airplane", "auto": true},
+    {"ch": 8, "sec": 1, "h": "Two gates", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 342
+  },
+  {
+   "id": "ASEP.LO15",
+   "text": "Understand at an awareness level how modeling and analysis support SE: system analysis, models and simulations, fidelity and checking that a model is credible.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Processes",
+   "kind": "definition",
+   "tasks": [
+    "T6",
+    "X3"
+   ],
+   "match": [
+    "system analysis",
+    "modeling and simulation",
+    "simulations?",
+    "model fidelity",
+    "analytical models?",
+    "model credibility",
+    "digital twins?",
+    "SysML"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 2, "h": "Four ways to prove it", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Functions first", "auto": true},
+    {"ch": 4, "sec": 2, "h": "One model, many views", "auto": true},
+    {"ch": 4, "sec": 3, "h": "One airplane in a big sky", "auto": true},
+    {"ch": 5, "sec": 2, "h": "How sure is sure", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 738
+  },
+  {
+   "id": "ASEP.LO16",
+   "text": "Understand at an awareness level how a system is integrated: integration strategy, sequencing element assembly and checking interfaces as parts come together.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Processes",
+   "kind": "procedural",
+   "tasks": [
+    "T8"
+   ],
+   "match": [
+    "integration strateg(y|ies)",
+    "integration process",
+    "system integration",
+    "integration (test|testing|sequence)",
+    "bottom-up integration",
+    "big bang integration",
+    "incremental integration",
+    "integration readiness"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 3, "h": "When it's late", "auto": true},
+    {"ch": 10, "sec": 1, "h": "One breaker at a time", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 177
+  },
+  {
+   "id": "ASEP.LO17",
+   "text": "Understand at an awareness level what verification is: proving the system meets its requirements, using inspection, analysis, demonstration and test.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Processes",
+   "kind": "definition",
+   "tasks": [
+    "T9"
+   ],
+   "match": [
+    "verification",
+    "verification methods?",
+    "inspection, analysis",
+    "demonstration",
+    "verification (matrix|plan|cross)",
+    "VCRM",
+    "qualification test",
+    "built (it|the system) right"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "The V and the processes", "auto": true},
+    {"ch": 3, "sec": 0, "h": "From what they need to what it must do", "auto": true},
+    {"ch": 3, "sec": 1, "h": "What makes one good", "auto": true},
+    {"ch": 3, "sec": 2, "h": "Four ways to prove it", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Trace it, then freeze it", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Functions first", "auto": true},
+    {"ch": 8, "sec": 0, "h": "The paper airplane", "auto": true},
+    {"ch": 10, "sec": 1, "h": "One breaker at a time", "auto": true},
+    {"ch": 11, "sec": 0, "h": "Bench and sky", "auto": true},
+    {"ch": 11, "sec": 1, "h": "The test card", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 897
+  },
+  {
+   "id": "ASEP.LO18",
+   "text": "Understand at an awareness level how a system is transitioned into use: installation, site readiness, training and handover to operations.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Processes",
+   "kind": "definition",
+   "tasks": [
+    "T10"
+   ],
+   "match": [
+    "transition process",
+    "installation",
+    "site (preparation|readiness|survey)",
+    "operator training",
+    "hand ?over",
+    "hand-off",
+    "formal acceptance",
+    "deployment",
+    "fielding"
+   ],
+   "refs": [
+    {"ch": 12, "sec": 0, "h": "Off the flatbed", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 132
+  },
+  {
+   "id": "ASEP.LO19",
+   "text": "Understand at an awareness level what validation is: showing the system meets stakeholder needs in its intended environment.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Processes",
+   "kind": "definition",
+   "tasks": [
+    "T11"
+   ],
+   "match": [
+    "validation",
+    "right system",
+    "operational test",
+    "validation plan",
+    "intended (use|environment)",
+    "user acceptance",
+    "OT&E",
+    "fit for purpose"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "The V and the processes", "auto": true},
+    {"ch": 2, "sec": 3, "h": "From need to requirement", "auto": true},
+    {"ch": 11, "sec": 0, "h": "Bench and sky", "auto": true},
+    {"ch": 11, "sec": 1, "h": "The test card", "auto": true},
+    {"ch": 12, "sec": 2, "h": "Safe for the floor", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 457
+  },
+  {
+   "id": "ASEP.LO20",
+   "text": "Understand at an awareness level how a system is operated, maintained, supported and finally disposed of.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 2",
+   "group": "Part 2: Technical Processes",
+   "kind": "definition",
+   "tasks": [
+    "T12",
+    "T13",
+    "T14"
+   ],
+   "match": [
+    "operation process",
+    "maintenance process",
+    "logistics",
+    "sustainment",
+    "disposal",
+    "retire(ment|d)",
+    "spares",
+    "obsolescence",
+    "end of life",
+    "decommission"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "The life cycle and its gates", "auto": true},
+    {"ch": 2, "sec": 1, "h": "Concepts and scenarios", "auto": true},
+    {"ch": 5, "sec": 2, "h": "How sure is sure", "auto": true},
+    {"ch": 9, "sec": 1, "h": "Ready when it's needed", "auto": true},
+    {"ch": 9, "sec": 2, "h": "The rest of the list", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Same work, other rules", "auto": true},
+    {"ch": 12, "sec": 1, "h": "The logbooks", "auto": true},
+    {"ch": 12, "sec": 2, "h": "Safe for the floor", "auto": true},
+    {"ch": 12, "sec": 3, "h": "Two at the table", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 945
+  },
+  {
+   "id": "ASEP.LO21",
+   "text": "Understand at an awareness level how quality characteristics are designed in, such as reliability, availability, maintainability, safety, security, resilience and human factors.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 3",
+   "group": "Part 3: Methods and Analysis",
+   "kind": "definition",
+   "tasks": [
+    "X2"
+   ],
+   "match": [
+    "specialty engineering",
+    "reliability",
+    "maintainability",
+    "availability",
+    "system safety",
+    "security",
+    "resilien(t|ce)",
+    "human factors",
+    "affordability",
+    "ilities"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "From what they need to what it must do", "auto": true},
+    {"ch": 5, "sec": 2, "h": "How sure is sure", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Before it shows", "auto": true},
+    {"ch": 9, "sec": 0, "h": "Two magnetos", "auto": true},
+    {"ch": 9, "sec": 1, "h": "Ready when it's needed", "auto": true},
+    {"ch": 9, "sec": 2, "h": "The rest of the list", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Same work, other rules", "auto": true},
+    {"ch": 12, "sec": 1, "h": "The logbooks", "auto": true},
+    {"ch": 12, "sec": 3, "h": "Two at the table", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 1592
+  },
+  {
+   "id": "ASEP.LO22",
+   "text": "Understand at an awareness level how interfaces are identified, defined and managed across system elements and with external systems.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 3",
+   "group": "Part 3: Methods and Analysis",
+   "kind": "definition",
+   "tasks": [
+    "T4",
+    "T8"
+   ],
+   "match": [
+    "interface management",
+    "interface control documents?",
+    "ICDs?",
+    "N2 (diagram|chart)",
+    "N-squared",
+    "interface requirements?",
+    "external interfaces?",
+    "internal interfaces?",
+    "interface definition"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 1, "h": "Every wire has two ends", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 332
+  },
+  {
+   "id": "ASEP.LO23",
+   "text": "Explain how SE is applied in different settings: MBSE, agile, lean, product line engineering, tailoring, and the different system types and domains it works in.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 4",
+   "group": "Part 4: Application Considerations",
+   "kind": "judgment",
+   "tasks": [
+    "X4",
+    "X3"
+   ],
+   "match": [
+    "model-based systems engineering",
+    "MBSE",
+    "agile",
+    "lean (systems engineering|principles|enablers|thinking)",
+    "product line engineering",
+    "PLE",
+    "tailor(ing|ed)",
+    "service systems?",
+    "enterprise systems?",
+    "domains? of application"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 2, "h": "Small batches", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Same work, other rules", "auto": true},
+    {"ch": 12, "sec": 4, "h": "Eleven versions", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 479
+  },
+  {
+   "id": "ASEP.LO24",
+   "text": "Explain why a system of systems is harder: independent constituent systems, the SoS types, and emergent behavior no single owner controls.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 4",
+   "group": "Part 4: Systems of Systems",
+   "kind": "definition",
+   "tasks": [
+    "X4"
+   ],
+   "match": [
+    "system of systems",
+    "systems of systems",
+    "SoS",
+    "constituent systems?",
+    "(directed|acknowledged|collaborative|virtual) (SoS|system)",
+    "operational independence",
+    "managerial independence",
+    "emergent behaviou?r"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 3, "h": "One airplane in a big sky", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 454
+  },
+  {
+   "id": "ASEP.LO25",
+   "text": "Recognize what SE looks like in practice: competencies, teams and leadership, communication, diversity and professional ethics.",
+   "source": "INCOSE SEH5E LO flyer 2025, Part 5",
+   "group": "Part 5: Systems Engineering in Practice",
+   "kind": "judgment",
+   "tasks": [
+    "X5"
+   ],
+   "match": [
+    "competenc(y|ies)",
+    "code of ethics",
+    "professional ethics",
+    "ethical",
+    "team dynamics",
+    "leadership",
+    "diversity",
+    "professional development",
+    "competency framework"
+   ],
+   "refs": [
+    {"ch": 12, "sec": 3, "h": "Two at the table", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 378
+  }
+ ],
+ "seeded": "2026-11-08"
+}

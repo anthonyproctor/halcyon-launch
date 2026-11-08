@@ -1,0 +1,1037 @@
+{
+ "course": "gh300",
+ "taxonomy": "official",
+ "outline": {
+  "name": "Microsoft Learn Study guide for Exam GH-300: GitHub Copilot",
+  "version": "Skills measured as of August 7, 2026 (page last updated 2026-07-09)",
+  "source": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/gh-300",
+  "read": "2026-11-07",
+  "notes": "IDs are GH300.<domain>.<skill>.<bullet> in the order the study guide body lists them (no official numbering exists). The page's Skills at a glance list shows a stray duplicate line 'GitHub Copilot features (25-30%)'; the body has six domains, which is what is numbered here. Domain weights: responsible 15-20, features 25-30, data and architecture 10-15, prompt engineering 10-15, productivity 10-15, privacy and safeguards 10-15. Product surfaces (agent mode, Copilot CLI, Spaces, Spark, sub-agents, MCP, policies) change fast; objectives tagged 'as of the study guide date' should be rechecked against GitHub docs when the guide changes. The guide notes most questions cover GA features but commonly used Preview features may appear. GH300.2.1.3 (content exclusions in the IDE) maps to F1 and S1 since the guide lists it under the IDE skill while the course teaches exclusions under S1. Every other bullet maps 1:1 to the skill's task code."
+ },
+ "objectives": [
+  {
+   "id": "GH300.1.1.1",
+   "text": "Explain the risks and limits of generative AI tools, such as hallucinated output, bias, and stale or insecure code.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot responsibly / Understand responsible AI principles",
+   "kind": "definition",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "hallucinat(e|es|ed|ion|ions)",
+    "generative AI",
+    "biase?s?",
+    "training data",
+    "limitations? of (generative AI|AI|LLMs?)",
+    "stale (code|suggestions?)",
+    "fabricated"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 3, "sec": 1, "h": "Right ninety nine times", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Say it twice", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 69
+  },
+  {
+   "id": "GH300.1.1.2",
+   "text": "Describe what ethical and responsible use of AI looks like for a developer and an organization.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot responsibly / Understand responsible AI principles",
+   "kind": "definition",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "responsible AI",
+    "ethical (AI|use)",
+    "fairness",
+    "transparency",
+    "accountability",
+    "inclusiveness",
+    "privacy and security",
+    "reliability and safety"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Know who heard it", "auto": true},
+    {"ch": 7, "sec": 3, "h": "A drawing isn't the wound", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Two signatures", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 79
+  },
+  {
+   "id": "GH300.1.1.3",
+   "text": "Recognize the harms AI use can cause and the ways to reduce them.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot responsibly / Understand responsible AI principles",
+   "kind": "judgment",
+   "tasks": [
+    "R1"
+   ],
+   "match": [
+    "harms?",
+    "mitigation",
+    "mitigate",
+    "misuse",
+    "overreliance",
+    "over-reliance",
+    "human oversight",
+    "guardrails?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Know what the monitor measures", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Say it twice", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 86
+  },
+  {
+   "id": "GH300.1.2.1",
+   "text": "Explain why every Copilot suggestion must be reviewed, tested, and validated before it is trusted.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot responsibly / Validate and operate AI tools",
+   "kind": "judgment",
+   "tasks": [
+    "R2"
+   ],
+   "match": [
+    "validat(e|es|ed|ing|ion) (the |AI |Copilot )?(output|suggestions?|code)",
+    "review (the |every |each )?suggestions?",
+    "human review",
+    "trust but verify",
+    "verify (the )?(output|code|suggestions?)",
+    "code review"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 3, "sec": 2, "h": "Read it back", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 2, "h": "A protocol can't sign the chart", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Two signatures", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 299
+  },
+  {
+   "id": "GH300.1.2.2",
+   "text": "Identify the habits and settings that make day to day use of Copilot responsible.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot responsibly / Validate and operate AI tools",
+   "kind": "judgment",
+   "tasks": [
+    "R2"
+   ],
+   "match": [
+    "operate (Copilot )?responsibly",
+    "responsible use",
+    "human in the loop",
+    "human-in-the-loop",
+    "accept(ed|ing)? (a |the )?suggestions?",
+    "reject(ed|ing)? (a |the )?suggestions?",
+    "stay(s)? accountable"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.2.1.1",
+   "text": "Enable and sign in to Copilot in a supported IDE, such as VS Code, Visual Studio, or JetBrains. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot in the IDE",
+   "kind": "procedural",
+   "tasks": [
+    "F1"
+   ],
+   "match": [
+    "VS Code",
+    "Visual Studio",
+    "JetBrains",
+    "Copilot extension",
+    "install(ing)? the extension",
+    "sign(ed)? in to GitHub",
+    "enable Copilot",
+    "status bar"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 2, "sec": 3, "h": "Edits, sessions, and helpers", "auto": true},
+    {"ch": 2, "sec": 4, "h": "New tools, new doors", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Standing orders for one unit", "auto": true},
+    {"ch": 4, "sec": 2, "h": "A protocol can't sign the chart", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Order sets", "auto": true},
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 347
+  },
+  {
+   "id": "GH300.2.1.2",
+   "text": "Invoke Copilot through inline suggestions, chat, the CLI, and agent mode. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot in the IDE",
+   "kind": "procedural",
+   "tasks": [
+    "F1"
+   ],
+   "match": [
+    "inline suggestions?",
+    "ghost text",
+    "Copilot Chat",
+    "inline chat",
+    "agent mode",
+    "slash commands?",
+    "Tab to accept",
+    "next edit suggestions?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Who's on your shift", "auto": true},
+    {"ch": 2, "sec": 4, "h": "New tools, new doors", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Order sets", "auto": true},
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 191
+  },
+  {
+   "id": "GH300.2.1.3",
+   "text": "Set content exclusions so chosen files or repositories are kept out of Copilot, and know how the exclusion shows up in the app. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot in the IDE",
+   "kind": "procedural",
+   "tasks": [
+    "F1",
+    "S1"
+   ],
+   "match": [
+    "content exclusions?",
+    "exclude(d|s)? (files?|paths?|repositor(y|ies))",
+    "excluded content",
+    "path patterns?",
+    "fnmatch",
+    "repository settings"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 114
+  },
+  {
+   "id": "GH300.2.2.1",
+   "text": "Say what GitHub Copilot CLI is and how it helps a developer work in the terminal. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot CLI",
+   "kind": "definition",
+   "tasks": [
+    "F2"
+   ],
+   "match": [
+    "Copilot CLI",
+    "command line",
+    "the terminal",
+    "terminal agent",
+    "in the shell",
+    "CLI agent"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 6, "sec": 0, "h": "Learn them on your first night", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 108
+  },
+  {
+   "id": "GH300.2.2.2",
+   "text": "Know the steps to install and authenticate GitHub Copilot CLI. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot CLI",
+   "kind": "procedural",
+   "tasks": [
+    "F2"
+   ],
+   "match": [
+    "install(ing|ation)? (the )?(Copilot )?CLI",
+    "npm install",
+    "Homebrew",
+    "brew install",
+    "winget",
+    "gh auth login",
+    "authenticat(e|ion)"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "Learn them on your first night", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 53
+  },
+  {
+   "id": "GH300.2.2.3",
+   "text": "Describe the main features and commands of GitHub Copilot CLI. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot CLI",
+   "kind": "definition",
+   "tasks": [
+    "F2"
+   ],
+   "match": [
+    "slash commands?",
+    "model (picker|selection)",
+    "copilot -p",
+    "allow-(all-)?tools?",
+    "deny-tool",
+    "help command",
+    "usage (command|stats)",
+    "MCP servers?"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 3, "h": "Order sets", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Nobody writes \"whatever seems right\"", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 101
+  },
+  {
+   "id": "GH300.2.2.4",
+   "text": "Run Copilot CLI interactively and across sessions, including resuming and managing a session. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot CLI",
+   "kind": "procedural",
+   "tasks": [
+    "F2"
+   ],
+   "match": [
+    "interactive (mode|session)",
+    "programmatic mode",
+    "resum(e|ed|ing) (a |the )?(previous )?sessions?",
+    "continue (a |the )?session",
+    "session history",
+    "trusted director(y|ies)",
+    "new session"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.2.2.5",
+   "text": "Use Copilot CLI to write scripts and create, edit, or organize files. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot CLI",
+   "kind": "procedural",
+   "tasks": [
+    "F2"
+   ],
+   "match": [
+    "shell scripts?",
+    "bash scripts?",
+    "generate (a |the )?scripts?",
+    "(rename|move|organi[sz]e) (the )?files",
+    "file operations?",
+    "approve (the )?(tool|command)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.2.3.1",
+   "text": "Use agent mode, Copilot Edits, and MCP servers in development workflows, manage agent sessions, and hand work to sub-agents to save context. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot features and capabilities",
+   "kind": "procedural",
+   "tasks": [
+    "F3"
+   ],
+   "match": [
+    "agent mode",
+    "Copilot Edits",
+    "MCP\\b",
+    "Model Context Protocol",
+    "MCP servers?",
+    "agent sessions?",
+    "sub-?agents?",
+    "coding agent",
+    "delegat(e|es|ed|ing) (a |the )?tasks?",
+    "context window"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Who's on your shift", "auto": true},
+    {"ch": 2, "sec": 1, "h": "Taking report", "auto": true},
+    {"ch": 2, "sec": 3, "h": "Edits, sessions, and helpers", "auto": true},
+    {"ch": 2, "sec": 4, "h": "New tools, new doors", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Nobody writes \"whatever seems right\"", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Give report, take report", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 626
+  },
+  {
+   "id": "GH300.2.3.2",
+   "text": "Use Copilot to review code and to assist with writing it. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot features and capabilities",
+   "kind": "procedural",
+   "tasks": [
+    "F3"
+   ],
+   "match": [
+    "Copilot code review",
+    "code review",
+    "review comments?",
+    "request(ed)? (a )?review",
+    "pull request review",
+    "suggested changes?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 3, "sec": 2, "h": "Read it back", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Standing orders for one unit", "auto": true},
+    {"ch": 4, "sec": 2, "h": "A protocol can't sign the chart", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Two signatures", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 299
+  },
+  {
+   "id": "GH300.2.3.3",
+   "text": "Use Copilot Spaces, Spark, pull request summaries, and review standards set in instructions files. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot features and capabilities",
+   "kind": "procedural",
+   "tasks": [
+    "F3"
+   ],
+   "match": [
+    "Copilot Spaces",
+    "Copilot Spark",
+    "GitHub Spark",
+    "pull request summar(y|ies)",
+    "PR summar(y|ies)",
+    "copilot-instructions\\.md",
+    "instructions files?",
+    "custom instructions"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 2, "h": "A protocol can't sign the chart", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Give report, take report", "auto": true},
+    {"ch": 7, "sec": 3, "h": "A drawing isn't the wound", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 193
+  },
+  {
+   "id": "GH300.2.3.4",
+   "text": "Know the limits, options, feedback controls, and commands of Copilot Chat, and reuse prompt files for consistent answers. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Use GitHub Copilot features and capabilities",
+   "kind": "definition",
+   "tasks": [
+    "F3"
+   ],
+   "match": [
+    "Copilot Chat",
+    "chat participants?",
+    "workspace (agent|participant)",
+    "file references?",
+    "slash commands?",
+    "prompt files?",
+    "prompt\\.md",
+    "thumbs (up|down)",
+    "chat variables?"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Order sets", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 114
+  },
+  {
+   "id": "GH300.2.4.1",
+   "text": "Set organization-wide Copilot policies, turn on Copilot code review policies, and control which features are available in IDEs and on github.com. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Manage organization-wide settings and policies",
+   "kind": "procedural",
+   "tasks": [
+    "F4"
+   ],
+   "match": [
+    "organization (settings|policies|policy)",
+    "enterprise polic(y|ies)",
+    "policy management",
+    "Copilot polic(y|ies)",
+    "feature availability",
+    "organization owners?",
+    "enterprise owners?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Turning it on for an organization", "auto": true},
+    {"ch": 1, "sec": 3, "h": "What your fences don't reach", "auto": true},
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 176
+  },
+  {
+   "id": "GH300.2.4.2",
+   "text": "Use audit log events to see Copilot related activity in the organization. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Manage organization-wide settings and policies",
+   "kind": "procedural",
+   "tasks": [
+    "F4"
+   ],
+   "match": [
+    "audit logs?",
+    "audit log events?",
+    "action:copilot",
+    "audit (trail|events?)",
+    "log streaming"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Turning it on for an organization", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 59
+  },
+  {
+   "id": "GH300.2.4.3",
+   "text": "Manage Copilot seats and subscriptions through the REST API. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Use GitHub Copilot features / Manage organization-wide settings and policies",
+   "kind": "procedural",
+   "tasks": [
+    "F4"
+   ],
+   "match": [
+    "REST API",
+    "seats?",
+    "seat assignments?",
+    "Copilot Business",
+    "Copilot Enterprise",
+    "billing",
+    "copilot\\/billing",
+    "subscriptions? (via|through|with) the (REST )?API"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "Know what you're buying", "auto": true},
+    {"ch": 1, "sec": 2, "h": "Turning it on for an organization", "auto": true},
+    {"ch": 1, "sec": 3, "h": "What your fences don't reach", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true},
+    {"ch": 6, "sec": 0, "h": "Learn them on your first night", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true},
+    {"ch": 7, "sec": 0, "h": "Say what happened", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 517
+  },
+  {
+   "id": "GH300.3.1.1",
+   "text": "Explain how Copilot uses, moves, and shares data, and what is retained. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Understand GitHub Copilot data and architecture / Describe data handling and flow",
+   "kind": "definition",
+   "tasks": [
+    "D1"
+   ],
+   "match": [
+    "data (usage|flow|sharing|retention)",
+    "retain(ed|s)? (prompts?|data)",
+    "telemetry",
+    "user engagement data",
+    "prompts? and suggestions?",
+    "not used (for|to) train"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Know who heard it", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 82
+  },
+  {
+   "id": "GH300.3.1.2",
+   "text": "Describe how Copilot gathers context from the editor and builds the prompt it sends to the model.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Understand GitHub Copilot data and architecture / Describe data handling and flow",
+   "kind": "definition",
+   "tasks": [
+    "D1"
+   ],
+   "match": [
+    "prompt building",
+    "build(s|ing)? the prompt",
+    "neighboring tabs?",
+    "open tabs?",
+    "surrounding code",
+    "context gathering",
+    "input processing",
+    "fill-in-the-middle"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Know what the monitor measures", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 65
+  },
+  {
+   "id": "GH300.3.1.3",
+   "text": "Explain the proxy that filters requests and responses and the post-processing applied before a suggestion is shown.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Understand GitHub Copilot data and architecture / Describe data handling and flow",
+   "kind": "definition",
+   "tasks": [
+    "D1"
+   ],
+   "match": [
+    "proxy",
+    "post-?processing",
+    "content filter(s|ing)?",
+    "toxic(ity)?",
+    "filter(s|ed|ing)? (out )?(harmful|offensive)",
+    "public code filter",
+    "vulnerability filter"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Know what the monitor measures", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 93
+  },
+  {
+   "id": "GH300.3.2.1",
+   "text": "Trace the life cycle of a code suggestion from keystroke to shown, accepted, or dismissed.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Understand GitHub Copilot data and architecture / Understand lifecycle and limitations",
+   "kind": "visual",
+   "tasks": [
+    "D2"
+   ],
+   "match": [
+    "suggestion lifecycle",
+    "life ?cycle of a (code )?suggestion",
+    "lifecycle",
+    "from (keystroke|prompt) to",
+    "accepted or (rejected|dismissed)",
+    "round trip"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.3.2.2",
+   "text": "Describe the limits of large language models and of Copilot, such as context size, training cutoff, and non-deterministic output.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Understand GitHub Copilot data and architecture / Understand lifecycle and limitations",
+   "kind": "definition",
+   "tasks": [
+    "D2"
+   ],
+   "match": [
+    "limitations? of (LLMs?|large language models?|Copilot)",
+    "large language models?",
+    "LLMs?\\b",
+    "context window",
+    "training cutoff",
+    "knowledge cutoff",
+    "non-?deterministic",
+    "probabilistic"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.4.1.1",
+   "text": "Describe how a prompt is structured and what context it carries.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Apply prompt engineering and context crafting / Craft effective prompts",
+   "kind": "definition",
+   "tasks": [
+    "P1"
+   ],
+   "match": [
+    "prompt structure",
+    "structure of a prompt",
+    "(the )?context (you|it) (give|provide)s?",
+    "goal,? context",
+    "role prompt",
+    "clear instructions"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.4.1.2",
+   "text": "Understand how Copilot decides which context to use, such as open files, selection, and chat references.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Apply prompt engineering and context crafting / Craft effective prompts",
+   "kind": "definition",
+   "tasks": [
+    "P1"
+   ],
+   "match": [
+    "how context is determined",
+    "open files",
+    "selected code",
+    "file references?",
+    "codebase",
+    "workspace (agent|participant)",
+    "context references?",
+    "relevant context"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.4.1.3",
+   "text": "Use zero-shot and few-shot prompting.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Apply prompt engineering and context crafting / Craft effective prompts",
+   "kind": "procedural",
+   "tasks": [
+    "P1"
+   ],
+   "match": [
+    "zero-shot",
+    "few-shot",
+    "one-shot",
+    "examples? in the prompt",
+    "in-context examples?"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "GH300.4.1.4",
+   "text": "Apply good habits for writing prompts: be specific, break work into steps, give examples, and iterate.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Apply prompt engineering and context crafting / Craft effective prompts",
+   "kind": "procedural",
+   "tasks": [
+    "P1"
+   ],
+   "match": [
+    "prompt crafting",
+    "be specific",
+    "break (it |the task |the problem )?(down|into)",
+    "iterat(e|ing|ion)",
+    "rephras(e|ing)",
+    "descriptive (names|comments)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.4.2.1",
+   "text": "Explain the principles of prompt engineering and why they improve results.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Apply prompt engineering and context crafting / Engineer prompts for performance",
+   "kind": "definition",
+   "tasks": [
+    "P2"
+   ],
+   "match": [
+    "prompt engineering",
+    "specificity",
+    "chain of thought",
+    "persona",
+    "output format",
+    "constraints? in the prompt",
+    "single task per prompt"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "What your fences don't reach", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Know who heard it", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 86
+  },
+  {
+   "id": "GH300.4.2.2",
+   "text": "Describe the flow a chat prompt follows and how chat history is used as context.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Apply prompt engineering and context crafting / Engineer prompts for performance",
+   "kind": "definition",
+   "tasks": [
+    "P2"
+   ],
+   "match": [
+    "chat history",
+    "conversation history",
+    "prompt (process )?flow",
+    "follow-up (questions?|prompts?)",
+    "new (chat|thread|conversation)",
+    "previous (turns?|messages?)"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 4, "h": "Show them three charts", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 21
+  },
+  {
+   "id": "GH300.5.1.1",
+   "text": "Use Copilot to write new code, refactor existing code, and produce documentation.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Improve developer productivity with GitHub Copilot / Enhance productivity and code quality",
+   "kind": "procedural",
+   "tasks": [
+    "V1"
+   ],
+   "match": [
+    "code generation",
+    "generate code",
+    "refactor(ing|ed)?",
+    "documentation",
+    "docstrings?",
+    "doc comments?",
+    "comments? (for|in) the code",
+    "explain command"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.5.1.2",
+   "text": "Use Copilot to learn faster and avoid switching away from the editor.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Improve developer productivity with GitHub Copilot / Enhance productivity and code quality",
+   "kind": "judgment",
+   "tasks": [
+    "V1"
+   ],
+   "match": [
+    "context switching",
+    "learn(ing)? (a )?new (language|framework|codebase)",
+    "onboard(ing)?",
+    "explain (the |this )?code",
+    "stay(s|ing)? in the (editor|IDE|flow)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "GH300.5.1.3",
+   "text": "Use Copilot to create sample or mock data and to modernize legacy code.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Improve developer productivity with GitHub Copilot / Enhance productivity and code quality",
+   "kind": "procedural",
+   "tasks": [
+    "V1"
+   ],
+   "match": [
+    "sample data",
+    "mock data",
+    "test data",
+    "synthetic data",
+    "legacy code",
+    "moderni[sz](e|ation|ing)",
+    "COBOL\\b",
+    "migrat(e|ion|ing)"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 1, "h": "Read the old chart first", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 37
+  },
+  {
+   "id": "GH300.5.2.1",
+   "text": "Use Copilot to generate unit and integration tests.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Improve developer productivity with GitHub Copilot / Support testing and security",
+   "kind": "procedural",
+   "tasks": [
+    "V2"
+   ],
+   "match": [
+    "unit tests?",
+    "integration tests?",
+    "tests command",
+    "test framework",
+    "test cases?",
+    "test coverage"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Test the patient who isn't in the textbook", "auto": true},
+    {"ch": 7, "sec": 2, "h": "Practice on the mannequin", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 86
+  },
+  {
+   "id": "GH300.5.2.2",
+   "text": "Find edge cases and write assertions with Copilot's help.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Improve developer productivity with GitHub Copilot / Support testing and security",
+   "kind": "procedural",
+   "tasks": [
+    "V2"
+   ],
+   "match": [
+    "edge cases?",
+    "assertions?",
+    "boundary (values?|conditions?)",
+    "null input",
+    "corner cases?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Test the patient who isn't in the textbook", "auto": true},
+    {"ch": 7, "sec": 1, "h": "Read the old chart first", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 67
+  },
+  {
+   "id": "GH300.5.2.3",
+   "text": "Ask Copilot to suggest security fixes and performance improvements.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Improve developer productivity with GitHub Copilot / Support testing and security",
+   "kind": "judgment",
+   "tasks": [
+    "V2"
+   ],
+   "match": [
+    "security (improvements?|fixes|vulnerabilit(y|ies))",
+    "vulnerabilit(y|ies)",
+    "SQL injection",
+    "performance optimi[sz]ations?",
+    "optimi[sz]e (the )?(code|performance)",
+    "Autofix",
+    "secret scanning"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Know what the monitor measures", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 28
+  },
+  {
+   "id": "GH300.6.1.1",
+   "text": "Configure content exclusions and editor settings that control what Copilot can see and suggest. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Configure privacy, content exclusions, and safeguards / Manage privacy settings and exclusions",
+   "kind": "procedural",
+   "tasks": [
+    "S1"
+   ],
+   "match": [
+    "content exclusions?",
+    "editor settings",
+    "settings\\.json",
+    "disable(d)? (Copilot )?for (a |this )?language",
+    "exclude(d|s)? (files?|paths?)",
+    "repository settings"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 114
+  },
+  {
+   "id": "GH300.6.1.2",
+   "text": "Describe who owns Copilot output and the limits of that output, including license and IP concerns.",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Configure privacy, content exclusions, and safeguards / Manage privacy settings and exclusions",
+   "kind": "definition",
+   "tasks": [
+    "S1"
+   ],
+   "match": [
+    "ownership",
+    "own(s)? the (output|code|suggestions?)",
+    "intellectual property",
+    "IP indemnit(y|ies)",
+    "licens(e|es|ing)",
+    "copyright"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 2, "h": "Write down who said it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 72
+  },
+  {
+   "id": "GH300.6.2.1",
+   "text": "Turn on the filter that blocks or flags suggestions matching public code, and read code referencing results. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Configure privacy, content exclusions, and safeguards / Apply safeguards and troubleshoot",
+   "kind": "procedural",
+   "tasks": [
+    "S2"
+   ],
+   "match": [
+    "public code",
+    "matching public code",
+    "duplication detection",
+    "code referencing",
+    "code references?",
+    "block(ed)? suggestions? matching"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 2, "h": "Write down who said it", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 72
+  },
+  {
+   "id": "GH300.6.2.2",
+   "text": "Troubleshoot missing or poor suggestions and content exclusions that do not take effect. (product surface as of the study guide date, Aug 7, 2026)",
+   "source": "Microsoft Learn GH-300 study guide, skills measured as of Aug 7, 2026",
+   "group": "Configure privacy, content exclusions, and safeguards / Apply safeguards and troubleshoot",
+   "kind": "judgment",
+   "tasks": [
+    "S2"
+   ],
+   "match": [
+    "troubleshoot(ing)?",
+    "no suggestions?",
+    "not (showing|appearing|working)",
+    "sign out and (back )?in",
+    "reload the window",
+    "exclusions? (not|don't|doesn't) (apply|take effect)",
+    "up to 30 minutes",
+    "(Copilot|extension|output) logs?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 31
+  }
+ ],
+ "seeded": "2026-11-08"
+}

@@ -1,0 +1,853 @@
+{
+ "course": "lsat",
+ "taxonomy": "halcyon",
+ "outline": {
+  "name": "Halcyon LSAT study taxonomy (Logical Reasoning and Reading Comprehension question families)",
+  "version": "Halcyon's own list, LR01 to LR20 and RC01 to RC14, from courses/lsat/meta.js",
+  "source": "Reference read: LSAC skill descriptions at https://www.lsac.org/lsat/taking-lsat/test-format/logical-reasoning and https://www.lsac.org/lsat/taking-lsat/test-format/reading-comprehension; format page https://www.lsac.org/lsat/taking-lsat/test-format",
+  "read": "2026-11-07",
+  "notes": "LSAC does not publish this list. LR01 to RC14 are Halcyon's own study taxonomy, built from the question families teachers commonly use, and are not an LSAC outline. Halcyon is not affiliated with or endorsed by LSAC. The reference for what the sections test is LSAC's public description: for Logical Reasoning, ten skills such as identifying argument parts, spotting unstated assumptions, finding reasoning errors, judging how evidence affects an argument, applying principles, recognizing explanations and points of disagreement; for Reading Comprehension, ten skills such as main idea and purpose, stated details, inferences, meaning in context, organization, application, principles, analogies, author's attitude, and how new information affects claims, plus at most one comparative passage set per section. Every RC code maps to a stated LSAC RC skill. LSAC's format page (read 2026-11-07) says four 35 minute sections, three scored and one unscored, and that the test will change starting with the August 2027 administration; it does not state which scored sections are LR versus RC, so the 'two scored LR sections, one scored RC since August 2026' framing in meta.js was not confirmed from that page. IDs follow meta.js codes since no official numbering exists."
+ },
+ "objectives": [
+  {
+   "id": "LSAT.LR01",
+   "text": "Find the argument's main conclusion and tell it apart from premises and intermediate conclusions.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR01"
+   ],
+   "match": [
+    "main (conclusion|point)",
+    "intermediate conclusions?",
+    "subsidiary conclusions?",
+    "conclusion indicators?",
+    "overall conclusion",
+    "premise indicators?",
+    "supporting premises?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "Where it's going", "auto": true},
+    {"ch": 1, "sec": 1, "h": "What a sentence is doing", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 164
+  },
+  {
+   "id": "LSAT.LR02",
+   "text": "Say what role a given statement plays in an argument, such as premise, sub-conclusion, counterpoint, or background.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR02"
+   ],
+   "match": [
+    "role (of|played by)",
+    "plays (a|the|which) role",
+    "sub.?conclusions?",
+    "intermediate conclusions?",
+    "counter.?(point|argument|premise)",
+    "opposing (view|position)",
+    "background information"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "Where it's going", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 57
+  },
+  {
+   "id": "LSAT.LR03",
+   "text": "Pick the statement that most logically completes an argument, usually its unstated conclusion.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR03"
+   ],
+   "match": [
+    "complete(s|d)? the (argument|passage)",
+    "most logically completes",
+    "fill(s|ing)? in the blank",
+    "blank",
+    "logically follows",
+    "completion"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Finish the sentence", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Old friends", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 215
+  },
+  {
+   "id": "LSAT.LR04",
+   "text": "Identify an assumption the argument needs, something that must be true for the conclusion to follow.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR04"
+   ],
+   "match": [
+    "necessary assumptions?",
+    "assumption (required|needed)",
+    "requires the assumption",
+    "depends on the assumption",
+    "negation test",
+    "negat(e|ing|ed) (the )?(answer|choice)",
+    "gaps?"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "Once you have it", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Under the line", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Where to push", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Old friends", "auto": true},
+    {"ch": 10, "sec": 2, "h": "The bridge, again", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 428
+  },
+  {
+   "id": "LSAT.LR05",
+   "text": "Identify an assumption that, if added, would guarantee the conclusion.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR05"
+   ],
+   "match": [
+    "sufficient assumptions?",
+    "if assumed",
+    "conclusion follows logically",
+    "justif(y|ies) the conclusion",
+    "properly drawn",
+    "bridge the gap",
+    "sufficient condition",
+    "guarantee(s|d)?"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 1, "h": "Enough", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Needed isn't enough", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Old friends", "auto": true},
+    {"ch": 10, "sec": 2, "h": "The bridge, again", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 344
+  },
+  {
+   "id": "LSAT.LR06",
+   "text": "Name the error in an argument's reasoning, such as confusing sufficient and necessary, mistaking correlation for cause, or attacking the person.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR06"
+   ],
+   "match": [
+    "flaws?",
+    "flawed",
+    "vulnerable to criticism",
+    "ad hominem",
+    "straw man",
+    "circular reasoning",
+    "begging the question",
+    "equivocation",
+    "confus(es|ing) (sufficient|necessary)",
+    "part.to.whole"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "Once you have it", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Needed isn't enough", "auto": true},
+    {"ch": 3, "sec": 0, "h": "Where the road breaks", "auto": true},
+    {"ch": 5, "sec": 1, "h": "The big ones", "auto": true},
+    {"ch": 7, "sec": 1, "h": "Same mistake", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Old friends", "auto": true},
+    {"ch": 11, "sec": 2, "h": "Same mistake, and what a line is for", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 595
+  },
+  {
+   "id": "LSAT.LR07",
+   "text": "Pick the fact that most supports the argument's conclusion.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR07"
+   ],
+   "match": [
+    "strengthen(s|ing)?",
+    "most (supports|helps to justify)",
+    "support(s|ing)? the (argument|conclusion)",
+    "rule(s|ing)? out (an )?alternative",
+    "bolster"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "The scale", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Where to push", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Passages push too", "auto": true},
+    {"ch": 11, "sec": 0, "h": "The only one who saw it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 208
+  },
+  {
+   "id": "LSAT.LR08",
+   "text": "Pick the fact that most undermines the argument's conclusion.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR08"
+   ],
+   "match": [
+    "weaken(s|ing)?",
+    "undermin(e|es|ing)",
+    "cast(s)? doubt",
+    "calls? into question",
+    "alternative (cause|explanation)",
+    "counterexamples?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 3, "h": "How, not what", "auto": true},
+    {"ch": 4, "sec": 0, "h": "The scale", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Where to push", "auto": true},
+    {"ch": 4, "sec": 2, "h": "Weight both ways", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Passages push too", "auto": true},
+    {"ch": 11, "sec": 0, "h": "The only one who saw it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 298
+  },
+  {
+   "id": "LSAT.LR09",
+   "text": "Choose the statement that must be true given the facts, often by chaining conditional statements.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR09"
+   ],
+   "match": [
+    "must (also )?be true",
+    "properly inferred",
+    "conditional (statements?|reasoning|logic)",
+    "contrapositive",
+    "if.then",
+    "only if",
+    "unless",
+    "chain(ing)? (the )?conditionals?"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 1, "h": "Enough", "auto": true},
+    {"ch": 5, "sec": 0, "h": "No argument", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Chains and counting words", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Old friends", "auto": true},
+    {"ch": 10, "sec": 1, "h": "Can't be", "auto": true},
+    {"ch": 12, "sec": 2, "h": "Has to be, and probably", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 475
+  },
+  {
+   "id": "LSAT.LR10",
+   "text": "Choose the statement the facts most strongly support, without needing certainty.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR10"
+   ],
+   "match": [
+    "most strongly supported",
+    "strongly support(s|ed)?",
+    "supported by the (statements|information)",
+    "most likely true",
+    "soft (language|claims?)"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "Once you have it", "auto": true},
+    {"ch": 5, "sec": 0, "h": "No argument", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Old friends", "auto": true},
+    {"ch": 12, "sec": 2, "h": "Has to be, and probably", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 186
+  },
+  {
+   "id": "LSAT.LR11",
+   "text": "Choose the statement that cannot be true given the facts.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR11"
+   ],
+   "match": [
+    "must be false",
+    "cannot be true",
+    "could be true EXCEPT",
+    "inconsistent with",
+    "contradict(s|ion)?",
+    "impossible"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 2, "h": "Can't be", "auto": true},
+    {"ch": 10, "sec": 1, "h": "Can't be", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 249
+  },
+  {
+   "id": "LSAT.LR12",
+   "text": "Identify the general principle an argument or situation relies on or illustrates.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR12"
+   ],
+   "match": [
+    "general principles?",
+    "general rule",
+    "conforms? (most closely )?to",
+    "illustrates the principle",
+    "underlying principle",
+    "valid(ly)? (applied|helps to justify)",
+    "general proposition"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "The rule behind it", "auto": true},
+    {"ch": 12, "sec": 1, "h": "The rule underneath", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 84
+  },
+  {
+   "id": "LSAT.LR13",
+   "text": "Apply a stated principle to a specific case and pick the case that fits it.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR13"
+   ],
+   "match": [
+    "appl(y|ies|ying) the principle",
+    "principle stated",
+    "conforms? to the principle",
+    "specific case",
+    "judgment conforms",
+    "most closely conforms"
+   ],
+   "refs": [
+    {"ch": 12, "sec": 1, "h": "The rule underneath", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 36
+  },
+  {
+   "id": "LSAT.LR14",
+   "text": "Pick the argument whose reasoning pattern is most like the one given.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR14"
+   ],
+   "match": [
+    "parallel (reasoning|argument)",
+    "most similar (in its )?(reasoning|pattern)",
+    "pattern of reasoning",
+    "similar (reasoning|structure)",
+    "abstract(ing)? the structure",
+    "logical structure"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 0, "h": "Bones", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 81
+  },
+  {
+   "id": "LSAT.LR15",
+   "text": "Pick the argument whose flawed reasoning most resembles the flaw in the one given.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR15"
+   ],
+   "match": [
+    "parallel flaw",
+    "flawed (pattern|reasoning) (most )?similar",
+    "similar flaw",
+    "same flaw",
+    "most similar (flawed|questionable) reasoning",
+    "matching (the )?flaw"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 2, "h": "Same mistake, and what a line is for", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 43
+  },
+  {
+   "id": "LSAT.LR16",
+   "text": "Describe how an argument proceeds, the technique or method it uses.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR16"
+   ],
+   "match": [
+    "method of (reasoning|argument)",
+    "argumentative (technique|strategy)",
+    "proceeds by",
+    "by analogy",
+    "analog(y|ies|ical)",
+    "counterexample",
+    "reductio",
+    "describes how the argument"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 3, "h": "How, not what", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 39
+  },
+  {
+   "id": "LSAT.LR17",
+   "text": "Identify the question or information that would best help judge whether the argument is good.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR17"
+   ],
+   "match": [
+    "evaluate the argument",
+    "most useful to (know|determine)",
+    "most helpful to know",
+    "would be most useful",
+    "answer to (which|the) question",
+    "variable",
+    "two.answer test"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "LSAT.LR18",
+   "text": "Pick the fact that explains an apparent conflict between two facts.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR18"
+   ],
+   "match": [
+    "resolve(s)? the (apparent )?(paradox|discrepancy|conflict)",
+    "paradox",
+    "discrepanc(y|ies)",
+    "apparent (conflict|inconsistency)",
+    "explain(s)? the (surprising|apparent)",
+    "reconcile"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 1, "h": "Both of them true", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Two true things", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 139
+  },
+  {
+   "id": "LSAT.LR19",
+   "text": "Find the point on which two speakers disagree.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR19"
+   ],
+   "match": [
+    "point at issue",
+    "disagree(ment)? (about|over|on)",
+    "two speakers?",
+    "speakers? disagree",
+    "committed to disagreeing",
+    "agree/disagree",
+    "point of disagreement"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 2, "h": "Where they split", "auto": true},
+    {"ch": 11, "sec": 1, "h": "Where they part", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 206
+  },
+  {
+   "id": "LSAT.LR20",
+   "text": "Find the point on which two speakers agree.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Logical Reasoning skills page",
+   "group": "Logical Reasoning",
+   "kind": "judgment",
+   "tasks": [
+    "LR20"
+   ],
+   "match": [
+    "point of agreement",
+    "both (speakers? )?agree",
+    "agree (on|about|that)",
+    "common ground",
+    "shared (view|assumption)",
+    "two speakers?"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 1, "h": "Where they part", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 120
+  },
+  {
+   "id": "LSAT.RC01",
+   "text": "Identify the main idea of a passage.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC01"
+   ],
+   "match": [
+    "main (idea|point)",
+    "central (idea|thesis|claim)",
+    "thesis",
+    "passage as a whole",
+    "overall (point|argument)",
+    "big picture"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 76
+  },
+  {
+   "id": "LSAT.RC02",
+   "text": "Identify why the author wrote the passage, its primary purpose.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC02"
+   ],
+   "match": [
+    "primary purpose",
+    "author's purpose",
+    "purpose of the passage",
+    "in order to",
+    "written (primarily )?to",
+    "author's (aim|goal)",
+    "purpose of the author"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "LSAT.RC03",
+   "text": "Read the author's attitude and tone from word choice.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC03"
+   ],
+   "match": [
+    "author's (attitude|tone|stance)",
+    "tone of",
+    "word choice",
+    "attitude toward",
+    "qualified (approval|support)",
+    "skeptic(al|ism)",
+    "ambivalen(t|ce)",
+    "critical (of|stance)"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Tone and shape", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 67
+  },
+  {
+   "id": "LSAT.RC04",
+   "text": "Identify what the author or a named party in the passage would most likely agree with.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC04"
+   ],
+   "match": [
+    "would (most likely )?agree",
+    "author would",
+    "most likely (agree|endorse|accept)",
+    "viewpoints?",
+    "whose view",
+    "attribut(e|ed) (to|the view)"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 53
+  },
+  {
+   "id": "LSAT.RC05",
+   "text": "Find information the passage states directly.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "procedural",
+   "tasks": [
+    "RC05"
+   ],
+   "match": [
+    "according to the passage",
+    "specific detail",
+    "detail questions?",
+    "stated (directly|explicitly)",
+    "line references?",
+    "go back to the (text|passage)",
+    "explicitly states"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "What the page lets you say", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Reading between", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 110
+  },
+  {
+   "id": "LSAT.RC06",
+   "text": "Draw an inference the passage supports but does not state outright.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC06"
+   ],
+   "match": [
+    "inferences?",
+    "can be inferred",
+    "suggests that",
+    "implie(s|d)",
+    "supported by the passage",
+    "most strongly suggests"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "What the page lets you say", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Reading between", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Where they split", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Reading an expert", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 435
+  },
+  {
+   "id": "LSAT.RC07",
+   "text": "Work out what a word or phrase means as it is used in the passage.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC07"
+   ],
+   "match": [
+    "meaning in context",
+    "in context",
+    "as used in",
+    "word or phrase",
+    "most nearly means",
+    "connotations?"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "What the page lets you say", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 124
+  },
+  {
+   "id": "LSAT.RC08",
+   "text": "Explain why the author included a detail, sentence, or paragraph and what job it does.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC08"
+   ],
+   "match": [
+    "function of",
+    "serves to",
+    "primarily (in order )?to",
+    "role of the (paragraph|sentence|detail)",
+    "why the author (mentions|includes)",
+    "purpose of the (paragraph|reference|mention)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "LSAT.RC09",
+   "text": "Describe how the passage is organized and how its parts relate.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC09"
+   ],
+   "match": [
+    "organi[sz](ation|ed)",
+    "structure of the passage",
+    "paragraph (structure|map|roles?)",
+    "roadmap",
+    "passage map",
+    "structural",
+    "shifts? in the passage"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Tone and shape", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 121
+  },
+  {
+   "id": "LSAT.RC10",
+   "text": "Pick the situation most analogous to one described in the passage.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC10"
+   ],
+   "match": [
+    "analog(y|ous|ies)",
+    "most (similar|analogous) to",
+    "parallel situation",
+    "comparable to",
+    "relationship (most )?similar"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "LSAT.RC11",
+   "text": "Apply the passage's ideas to a new situation.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC11"
+   ],
+   "match": [
+    "new (situation|context|case)",
+    "appl(y|ied|ies) to",
+    "application",
+    "extend(s|ing)? the (passage|idea)",
+    "outside the passage",
+    "hypothetical"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Rules in a passage", "auto": true},
+    {"ch": 12, "sec": 4, "h": "Reading a ruling", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 168
+  },
+  {
+   "id": "LSAT.RC12",
+   "text": "Identify a principle that operates in the passage or that the author relies on.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC12"
+   ],
+   "match": [
+    "principles? (in|underlying|operating in) the passage",
+    "underlying principle",
+    "general rule",
+    "principle (underlying|operating|guiding)",
+    "conforms? to the principle"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "LSAT.RC13",
+   "text": "Judge how new information would strengthen or weaken a claim made in the passage.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC13"
+   ],
+   "match": [
+    "strengthen(s|ing)?",
+    "weaken(s|ing)?",
+    "undermin(e|es|ing)",
+    "support(s)? the (claim|argument)",
+    "cast(s)? doubt",
+    "new information",
+    "new evidence"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "The scale", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Where to push", "auto": true},
+    {"ch": 4, "sec": 2, "h": "Weight both ways", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Passages push too", "auto": true},
+    {"ch": 11, "sec": 0, "h": "The only one who saw it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 296
+  },
+  {
+   "id": "LSAT.RC14",
+   "text": "Compare two related passages: how they relate, where they agree, and where they differ.",
+   "source": "Halcyon LSAT taxonomy; reference: LSAC Reading Comprehension skills page",
+   "group": "Reading Comprehension",
+   "kind": "judgment",
+   "tasks": [
+    "RC14"
+   ],
+   "match": [
+    "comparative (reading|passages?)",
+    "passage A",
+    "passage B",
+    "both passages",
+    "paired passages?",
+    "relationship between the (two )?passages",
+    "point and counterpoint",
+    "generali[sz]ation and instance"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 3, "h": "Two passages", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 80
+  }
+ ],
+ "seeded": "2026-11-08"
+}

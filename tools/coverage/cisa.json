@@ -1,0 +1,1599 @@
+{
+ "course": "cisa",
+ "taxonomy": "official",
+ "outline": {
+  "name": "ISACA CISA Exam Content Outline",
+  "version": "Job practice effective August 2024 (5 domains, 10 subareas, 60 subtopics)",
+  "source": "https://www.isaca.org/credentialing/cisa/cisa-exam-content-outline (read via WebFetch; page shows no effective date, the August 2024 date comes from the meta.js header and ISACA's candidate guide it cites)",
+  "read": "2026-11-07",
+  "notes": "60 objectives, one per subtopic (the outline has 60 subtopics: 10, 11, 8, 16, 15 by domain; the count of 63 in the assignment brief does not match ISACA or meta.js, which also has 60), IDs from ISACA's own numbering (domain, subarea letter, subtopic number). Texts are paraphrases, never ISACA's wording; the subtopic titles fetched on 2026-11-07 match meta.js TASKNAMES (ISACA's page says 'Enterprise Architecture and Considerations' for 2A4 and 'Security Monitoring Tools and Techniques' for 5B4; meta.js wording differs slightly, same subtopic). The outline page also lists 43 numbered job-practice task statements (the 'Secondary Classifications: Tasks' list). Those task statements are NOT mapped here yet; this file covers the subtopics only. Domain weights 18/18/12/26/26 per the fetched page."
+ },
+ "objectives": [
+  {
+   "id": "CISA.1A1",
+   "text": "Know the IS audit standards and guidelines, the audit function's place in the organization, and the professional codes of ethics auditors follow.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1A.1",
+   "group": "Domain 1 Information System Auditing Process (18%): A. Planning",
+   "kind": "definition",
+   "tasks": [
+    "1A1"
+   ],
+   "match": [
+    "ITAF",
+    "IS audit(ing)? standards?",
+    "code of professional ethics",
+    "audit charter",
+    "independence",
+    "objectivity",
+    "due professional care",
+    "IIA",
+    "audit committee"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "First, what you've signed up for", "auto": true},
+    {"ch": 1, "sec": 1, "h": "The charter is your permission slip", "auto": true},
+    {"ch": 1, "sec": 2, "h": "Independence: in fact and in appearance", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 312
+  },
+  {
+   "id": "CISA.1A2",
+   "text": "Tell apart the kinds of audits, assessments, and reviews, such as compliance, financial, operational, integrated, and IS audits.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1A.2",
+   "group": "Domain 1 Information System Auditing Process (18%): A. Planning",
+   "kind": "definition",
+   "tasks": [
+    "1A2"
+   ],
+   "match": [
+    "compliance audits?",
+    "operational audits?",
+    "financial audits?",
+    "integrated audits?",
+    "forensic audits?",
+    "administrative audits?",
+    "specialized audits?",
+    "self.assessments?",
+    "control self.assessment",
+    "CSA"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Know what kind of job you're on", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 150
+  },
+  {
+   "id": "CISA.1A3",
+   "text": "Plan audits around risk: rank the audit universe, scope engagements, and point effort where inherent and control risk are highest.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1A.3",
+   "group": "Domain 1 Information System Auditing Process (18%): A. Planning",
+   "kind": "judgment",
+   "tasks": [
+    "1A3"
+   ],
+   "match": [
+    "risk.based audit",
+    "audit universe",
+    "audit plan",
+    "audit risk",
+    "inherent risk",
+    "control risk",
+    "detection risk",
+    "materiality",
+    "audit scope"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "Risk first, then the plan", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 248
+  },
+  {
+   "id": "CISA.1A4",
+   "text": "Know the types of controls (preventive, detective, corrective, compensating) and what to consider when evaluating them.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1A.4",
+   "group": "Domain 1 Information System Auditing Process (18%): A. Planning",
+   "kind": "definition",
+   "tasks": [
+    "1A4"
+   ],
+   "match": [
+    "preventive controls?",
+    "detective controls?",
+    "corrective controls?",
+    "compensating controls?",
+    "deterrent controls?",
+    "general controls?",
+    "application controls?",
+    "IT general controls?",
+    "ITGCs?",
+    "control objectives?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Controls go in at the drawing board", "auto": true},
+    {"ch": 12, "sec": 6, "h": "Kinds of controls", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 349
+  },
+  {
+   "id": "CISA.1B1",
+   "text": "Manage an audit engagement as a project: staffing, timeline, budget, and fieldwork coordination.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1B.1",
+   "group": "Domain 1 Information System Auditing Process (18%): B. Execution",
+   "kind": "procedural",
+   "tasks": [
+    "1B1"
+   ],
+   "match": [
+    "audit engagement",
+    "engagement letter",
+    "audit program",
+    "fieldwork",
+    "audit project",
+    "audit milestones?",
+    "work papers?",
+    "workpapers?",
+    "entrance meeting",
+    "opening meeting"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "The charter is your permission slip", "auto": true},
+    {"ch": 2, "sec": 4, "h": "Somebody checks your work, or it isn't work", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 189
+  },
+  {
+   "id": "CISA.1B2",
+   "text": "Choose and apply audit tests and sampling methods, including compliance versus substantive testing and statistical versus judgmental sampling.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1B.2",
+   "group": "Domain 1 Information System Auditing Process (18%): B. Execution",
+   "kind": "calculation",
+   "tasks": [
+    "1B2"
+   ],
+   "match": [
+    "compliance test(s|ing)?",
+    "substantive test(s|ing)?",
+    "statistical sampling",
+    "judgmental sampling",
+    "attribute sampling",
+    "variable sampling",
+    "stop.or.go",
+    "discovery sampling",
+    "confidence (level|coefficient)",
+    "tolerable (error|deviation) rate"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 1, "h": "Sampling, and what you're allowed to say afterward", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 277
+  },
+  {
+   "id": "CISA.1B3",
+   "text": "Gather sufficient, reliable, relevant audit evidence through inquiry, observation, inspection, reperformance, and similar techniques.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1B.3",
+   "group": "Domain 1 Information System Auditing Process (18%): B. Execution",
+   "kind": "procedural",
+   "tasks": [
+    "1B3"
+   ],
+   "match": [
+    "audit evidence",
+    "sufficient and appropriate",
+    "reperformance",
+    "observation of",
+    "inquiry of",
+    "walkthroughs?",
+    "inspection of",
+    "corroborat(e|ing|ion)",
+    "chain of custody"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Evidence, or it didn't happen", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Getting the machines back", "auto": true},
+    {"ch": 12, "sec": 8, "h": "Evidence that lasts", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 154
+  },
+  {
+   "id": "CISA.1B4",
+   "text": "Use data analytics and computer-assisted audit techniques to test whole populations and find anomalies.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1B.4",
+   "group": "Domain 1 Information System Auditing Process (18%): B. Execution",
+   "kind": "procedural",
+   "tasks": [
+    "1B4"
+   ],
+   "match": [
+    "CAATs?",
+    "computer.assisted audit",
+    "data analytics",
+    "continuous auditing",
+    "continuous monitoring",
+    "generalized audit software",
+    "full population",
+    "embedded audit module",
+    "integrated test facility",
+    "ITF"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 2, "h": "Run the whole file, but check the file first", "auto": true},
+    {"ch": 8, "sec": 6, "h": "Tests that run inside the system", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 331
+  },
+  {
+   "id": "CISA.1B5",
+   "text": "Report audit results and communicate them well: findings, ratings, recommendations, and management responses.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1B.5",
+   "group": "Domain 1 Information System Auditing Process (18%): B. Execution",
+   "kind": "procedural",
+   "tasks": [
+    "1B5"
+   ],
+   "match": [
+    "audit report",
+    "findings?",
+    "audit opinion",
+    "exit (meeting|interview)",
+    "closing meeting",
+    "management response",
+    "condition, criteria, cause",
+    "root cause",
+    "follow.up"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Independence: in fact and in appearance", "auto": true},
+    {"ch": 3, "sec": 4, "h": "Writing it down for the people who need it", "auto": true},
+    {"ch": 4, "sec": 5, "h": "The map and the ground", "auto": true},
+    {"ch": 8, "sec": 4, "h": "When it breaks, and when it keeps breaking", "auto": true},
+    {"ch": 8, "sec": 7, "h": "When the machine decides", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Two hats", "auto": true},
+    {"ch": 12, "sec": 0, "h": "Opinion", "auto": true},
+    {"ch": 12, "sec": 1, "h": "Their side", "auto": true},
+    {"ch": 12, "sec": 3, "h": "Afterward", "auto": true},
+    {"ch": 12, "sec": 4, "h": "Worse than a weakness", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 1303
+  },
+  {
+   "id": "CISA.1B6",
+   "text": "Assure and improve the quality of the audit process itself.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 1B.6",
+   "group": "Domain 1 Information System Auditing Process (18%): B. Execution",
+   "kind": "procedural",
+   "tasks": [
+    "1B6"
+   ],
+   "match": [
+    "quality assurance",
+    "quality assurance and improvement program",
+    "QAIP",
+    "peer review",
+    "external quality assessment",
+    "supervisory review",
+    "post.audit review"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CISA.2A1",
+   "text": "Know the laws, regulations, and industry standards that bear on IT and how to check compliance with them.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2A.1",
+   "group": "Domain 2 Governance and Management of IT (18%): A. IT Governance",
+   "kind": "definition",
+   "tasks": [
+    "2A1"
+   ],
+   "match": [
+    "laws and regulations",
+    "regulatory requirements?",
+    "SOX",
+    "Sarbanes.Oxley",
+    "GDPR",
+    "HIPAA",
+    "PCI DSS",
+    "ISO/IEC 27001",
+    "ISO 27001",
+    "industry standards?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CISA.2A2",
+   "text": "Understand how organizational structure, IT governance, and IT strategy fit together and how the board and executives direct IT.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2A.2",
+   "group": "Domain 2 Governance and Management of IT (18%): A. IT Governance",
+   "kind": "definition",
+   "tasks": [
+    "2A2"
+   ],
+   "match": [
+    "IT governance",
+    "COBIT",
+    "IT strategy committee",
+    "IT steering committee",
+    "board of directors",
+    "strategic alignment",
+    "segregation of duties",
+    "organizational structure",
+    "governance framework"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Who's in charge, and of what", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 185
+  },
+  {
+   "id": "CISA.2A3",
+   "text": "Assess IT policies, standards, procedures, and practices and how they cascade from one to the next.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2A.3",
+   "group": "Domain 2 Governance and Management of IT (18%): A. IT Governance",
+   "kind": "judgment",
+   "tasks": [
+    "2A3"
+   ],
+   "match": [
+    "policy hierarchy",
+    "standards?, procedures?",
+    "procedures? and guidelines",
+    "top.down",
+    "bottom.up",
+    "policy exceptions?",
+    "acceptable use polic(y|ies)",
+    "policy review"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 1, "h": "Paper that's supposed to be true", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 110
+  },
+  {
+   "id": "CISA.2A4",
+   "text": "Understand enterprise architecture and what to consider when evaluating it.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2A.4",
+   "group": "Domain 2 Governance and Management of IT (18%): A. IT Governance",
+   "kind": "definition",
+   "tasks": [
+    "2A4"
+   ],
+   "match": [
+    "enterprise architecture",
+    "TOGAF",
+    "Zachman",
+    "architecture framework",
+    "target architecture",
+    "current.state architecture",
+    "architecture review board"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "The map and the ground", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 180
+  },
+  {
+   "id": "CISA.2A5",
+   "text": "Understand enterprise risk management: identify, analyze, respond to, and monitor risk across the business.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2A.5",
+   "group": "Domain 2 Governance and Management of IT (18%): A. IT Governance",
+   "kind": "judgment",
+   "tasks": [
+    "2A5"
+   ],
+   "match": [
+    "enterprise risk management",
+    "ERM",
+    "risk appetite",
+    "risk tolerance",
+    "risk registers?",
+    "risk responses?",
+    "risk (acceptance|avoidance|transfer|mitigation)",
+    "residual risk",
+    "risk owners?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 2, "h": "Risk has an owner", "auto": true},
+    {"ch": 11, "sec": 6, "h": "Somebody's risk", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 315
+  },
+  {
+   "id": "CISA.2A6",
+   "text": "Understand privacy programs and privacy principles and how to audit them.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2A.6",
+   "group": "Domain 2 Governance and Management of IT (18%): A. IT Governance",
+   "kind": "definition",
+   "tasks": [
+    "2A6"
+   ],
+   "match": [
+    "privacy program",
+    "privacy principles",
+    "personal data",
+    "PII",
+    "data subjects?",
+    "privacy impact assessment",
+    "PIA",
+    "data protection officer",
+    "consent"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 3, "h": "Other people's names", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 137
+  },
+  {
+   "id": "CISA.2A7",
+   "text": "Understand data governance and data classification.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2A.7",
+   "group": "Domain 2 Governance and Management of IT (18%): A. IT Governance",
+   "kind": "definition",
+   "tasks": [
+    "2A7"
+   ],
+   "match": [
+    "data governance",
+    "data classification",
+    "data owners?",
+    "data custodians?",
+    "data stewards?",
+    "classification (scheme|levels?)",
+    "data lifecycle",
+    "data retention"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 2, "h": "Whose data is it", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Moving house", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 146
+  },
+  {
+   "id": "CISA.2B1",
+   "text": "Manage IT resources, including people, sourcing, and budgets.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2B.1",
+   "group": "Domain 2 Governance and Management of IT (18%): B. IT Management",
+   "kind": "judgment",
+   "tasks": [
+    "2B1"
+   ],
+   "match": [
+    "IT resource management",
+    "sourcing",
+    "outsourc(e|ing)",
+    "insourc(e|ing)",
+    "human resources",
+    "IT budget",
+    "chargebacks?",
+    "staffing levels?",
+    "skills inventory"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "Somebody else is doing the work", "auto": true},
+    {"ch": 4, "sec": 1, "h": "People and money are resources too", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 247
+  },
+  {
+   "id": "CISA.2B2",
+   "text": "Manage IT vendors across the life of the relationship: selection, contracts, oversight, and exit.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2B.2",
+   "group": "Domain 2 Governance and Management of IT (18%): B. IT Management",
+   "kind": "procedural",
+   "tasks": [
+    "2B2"
+   ],
+   "match": [
+    "vendor management",
+    "third.party risk",
+    "vendor risk",
+    "right to audit",
+    "SOC (1|2) reports?",
+    "service organizations?",
+    "contract (terms|clauses?)",
+    "due diligence",
+    "exit strategy",
+    "fourth.party"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 0, "h": "Somebody else is doing the work", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 161
+  },
+  {
+   "id": "CISA.2B3",
+   "text": "Monitor and report IT performance with metrics, scorecards, and service measures.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2B.3",
+   "group": "Domain 2 Governance and Management of IT (18%): B. IT Management",
+   "kind": "judgment",
+   "tasks": [
+    "2B3"
+   ],
+   "match": [
+    "performance monitoring",
+    "balanced scorecard",
+    "IT balanced scorecard",
+    "KPIs?",
+    "key performance indicators?",
+    "KRIs?",
+    "key risk indicators?",
+    "performance reporting"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 3, "h": "What the board gets told", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 247
+  },
+  {
+   "id": "CISA.2B4",
+   "text": "Understand quality assurance and quality management for IT.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 2B.4",
+   "group": "Domain 2 Governance and Management of IT (18%): B. IT Management",
+   "kind": "definition",
+   "tasks": [
+    "2B4"
+   ],
+   "match": [
+    "quality management",
+    "quality management system",
+    "ISO 9001",
+    "quality assurance",
+    "quality control",
+    "CMMI",
+    "capability maturity",
+    "maturity models?"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 4, "h": "Quality isn't a plaque", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 175
+  },
+  {
+   "id": "CISA.3A1",
+   "text": "Understand how projects are governed and managed, including roles, oversight, and controls.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 3A.1",
+   "group": "Domain 3 Information Systems Acquisition, Development and Implementation (12%): A. Information Systems Acquisition and Development",
+   "kind": "definition",
+   "tasks": [
+    "3A1"
+   ],
+   "match": [
+    "project governance",
+    "project steering committee",
+    "project sponsor",
+    "project charter",
+    "earned value",
+    "critical path",
+    "project management office",
+    "PMO",
+    "PRINCE2",
+    "PMBOK"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 0, "h": "Somebody has to own it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 293
+  },
+  {
+   "id": "CISA.3A2",
+   "text": "Assess the business case and feasibility study behind an acquisition or development.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 3A.2",
+   "group": "Domain 3 Information Systems Acquisition, Development and Implementation (12%): A. Information Systems Acquisition and Development",
+   "kind": "judgment",
+   "tasks": [
+    "3A2"
+   ],
+   "match": [
+    "business case",
+    "feasibility (study|analysis)",
+    "cost.benefit",
+    "return on investment",
+    "ROI",
+    "net present value",
+    "NPV",
+    "payback"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 1, "h": "Why are we doing this", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Looking back", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 351
+  },
+  {
+   "id": "CISA.3A3",
+   "text": "Understand system development methods, such as SDLC, waterfall, agile, and prototyping.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 3A.3",
+   "group": "Domain 3 Information Systems Acquisition, Development and Implementation (12%): A. Information Systems Acquisition and Development",
+   "kind": "definition",
+   "tasks": [
+    "3A3"
+   ],
+   "match": [
+    "SDLC",
+    "system development life ?cycle",
+    "waterfall",
+    "agile",
+    "scrum",
+    "DevOps",
+    "prototyping",
+    "rapid application development",
+    "RAD",
+    "iterative"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 2, "h": "How it gets built", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 277
+  },
+  {
+   "id": "CISA.3A4",
+   "text": "Identify the controls a new system needs and design them in.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 3A.4",
+   "group": "Domain 3 Information Systems Acquisition, Development and Implementation (12%): A. Information Systems Acquisition and Development",
+   "kind": "procedural",
+   "tasks": [
+    "3A4"
+   ],
+   "match": [
+    "input controls?",
+    "processing controls?",
+    "output controls?",
+    "edit checks?",
+    "validation checks?",
+    "check digits?",
+    "batch totals?",
+    "hash totals?",
+    "application controls?",
+    "reasonableness checks?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Controls go in at the drawing board", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 23
+  },
+  {
+   "id": "CISA.3B1",
+   "text": "Test that a system is ready and test it during implementation, through unit, integration, system, and acceptance testing.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 3B.1",
+   "group": "Domain 3 Information Systems Acquisition, Development and Implementation (12%): B. Information Systems Implementation",
+   "kind": "procedural",
+   "tasks": [
+    "3B1"
+   ],
+   "match": [
+    "unit test(s|ing)?",
+    "integration test(s|ing)?",
+    "system test(s|ing)?",
+    "user acceptance",
+    "UAT",
+    "regression test(s|ing)?",
+    "parallel test(s|ing)?",
+    "pilot test(s|ing)?",
+    "go.live readiness"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 4, "h": "Before it goes live", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Getting the machines back", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 219
+  },
+  {
+   "id": "CISA.3B2",
+   "text": "Control implementation configuration and release management.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 3B.2",
+   "group": "Domain 3 Information Systems Acquisition, Development and Implementation (12%): B. Information Systems Implementation",
+   "kind": "procedural",
+   "tasks": [
+    "3B2"
+   ],
+   "match": [
+    "release management",
+    "configuration management",
+    "baselines?",
+    "version control",
+    "release (notes|schedule)",
+    "emergency (change|release)",
+    "migration to production",
+    "promotion to production"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "Nothing changes by itself", "auto": true},
+    {"ch": 6, "sec": 1, "h": "Releases", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 154
+  },
+  {
+   "id": "CISA.3B3",
+   "text": "Control system migration, infrastructure deployment, and data conversion.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 3B.3",
+   "group": "Domain 3 Information Systems Acquisition, Development and Implementation (12%): B. Information Systems Implementation",
+   "kind": "procedural",
+   "tasks": [
+    "3B3"
+   ],
+   "match": [
+    "data conversion",
+    "data migration",
+    "cutover",
+    "changeover",
+    "parallel (run|changeover)",
+    "phased (changeover|rollout)",
+    "abrupt changeover",
+    "big bang",
+    "reconciliation totals?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 4, "h": "Before it goes live", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Moving house", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 336
+  },
+  {
+   "id": "CISA.3B4",
+   "text": "Run a post-implementation review to check whether the system met its objectives and benefits.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 3B.4",
+   "group": "Domain 3 Information Systems Acquisition, Development and Implementation (12%): B. Information Systems Implementation",
+   "kind": "judgment",
+   "tasks": [
+    "3B4"
+   ],
+   "match": [
+    "post.implementation review",
+    "PIR",
+    "lessons learned",
+    "benefits realization",
+    "post.go.live",
+    "project closure"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 3, "h": "Looking back", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 68
+  },
+  {
+   "id": "CISA.4A1",
+   "text": "Know the IT components: hardware, operating systems, networks, and middleware.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.1",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "definition",
+   "tasks": [
+    "4A1"
+   ],
+   "match": [
+    "operating systems?",
+    "middleware",
+    "mainframes?",
+    "storage area network",
+    "SAN",
+    "hardware components?",
+    "firmware",
+    "utility programs?",
+    "IT components?"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 0, "h": "What it's made of", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 22
+  },
+  {
+   "id": "CISA.4A2",
+   "text": "Manage IT assets through their life cycle: inventory, ownership, and disposal.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.2",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "procedural",
+   "tasks": [
+    "4A2"
+   ],
+   "match": [
+    "asset inventory",
+    "asset management",
+    "asset register",
+    "CMDB",
+    "configuration management database",
+    "asset tagging",
+    "media sanitization",
+    "disposal",
+    "software licens(e|ing)"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 0, "h": "What it's made of", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 111
+  },
+  {
+   "id": "CISA.4A3",
+   "text": "Control job scheduling and automated production processes.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.3",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "procedural",
+   "tasks": [
+    "4A3"
+   ],
+   "match": [
+    "job scheduling",
+    "job scheduler",
+    "batch (jobs?|processing)",
+    "scheduled jobs?",
+    "production processing",
+    "run book",
+    "runbook",
+    "automation scripts?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CISA.4A4",
+   "text": "Understand system interfaces and the controls that keep data moving between systems complete and accurate.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.4",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "definition",
+   "tasks": [
+    "4A4"
+   ],
+   "match": [
+    "system interfaces?",
+    "interface (controls?|errors?)",
+    "APIs?",
+    "file transfers?",
+    "EDI",
+    "electronic data interchange",
+    "point.to.point",
+    "middleware",
+    "data exchange"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CISA.4A5",
+   "text": "Understand the risks of shadow IT and end-user computing, such as unmanaged spreadsheets and unsanctioned cloud apps.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.5",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "judgment",
+   "tasks": [
+    "4A5"
+   ],
+   "match": [
+    "shadow IT",
+    "end.user computing",
+    "EUC",
+    "spreadsheets?",
+    "unsanctioned",
+    "user.developed",
+    "citizen develop(er|ment)",
+    "CASB"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 2, "h": "The spreadsheet in the drawer", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 98
+  },
+  {
+   "id": "CISA.4A6",
+   "text": "Manage system availability and capacity.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.6",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "judgment",
+   "tasks": [
+    "4A6"
+   ],
+   "match": [
+    "availability management",
+    "capacity (planning|management)",
+    "uptime",
+    "utilization",
+    "performance monitoring",
+    "load balanc(er|ing)",
+    "scalab(le|ility)",
+    "bottlenecks?"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "Enough room, and promises about it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 130
+  },
+  {
+   "id": "CISA.4A7",
+   "text": "Manage problems and incidents, and know the difference between the two.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.7",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "procedural",
+   "tasks": [
+    "4A7"
+   ],
+   "match": [
+    "incident management",
+    "problem management",
+    "known errors?",
+    "workarounds?",
+    "root cause",
+    "service desk",
+    "help desk",
+    "escalation",
+    "ITIL"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 4, "h": "When it breaks, and when it keeps breaking", "auto": true},
+    {"ch": 11, "sec": 0, "h": "Backward", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 240
+  },
+  {
+   "id": "CISA.4A8",
+   "text": "Manage IT change, configuration, and patching.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.8",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "procedural",
+   "tasks": [
+    "4A8"
+   ],
+   "match": [
+    "change management",
+    "change advisory board",
+    "CAB",
+    "emergency changes?",
+    "patch management",
+    "patch(es|ing)",
+    "configuration baselines?",
+    "unauthorized changes?",
+    "change requests?"
+   ],
+   "refs": [
+    {"ch": 6, "sec": 0, "h": "Nothing changes by itself", "auto": true},
+    {"ch": 6, "sec": 4, "h": "The work that runs at night", "auto": true},
+    {"ch": 8, "sec": 0, "h": "What it's made of", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 371
+  },
+  {
+   "id": "CISA.4A9",
+   "text": "Manage operational logs: what to capture, how to protect it, and how long to keep it.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.9",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "procedural",
+   "tasks": [
+    "4A9"
+   ],
+   "match": [
+    "log management",
+    "audit logs?",
+    "audit trails?",
+    "log retention",
+    "log review",
+    "system logs?",
+    "event logs?",
+    "log integrity"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "CISA.4A10",
+   "text": "Manage IT service levels through agreements and monitoring.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.10",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "procedural",
+   "tasks": [
+    "4A10"
+   ],
+   "match": [
+    "service level agreements?",
+    "SLAs?",
+    "operational level agreements?",
+    "OLAs?",
+    "service level management",
+    "service catalog",
+    "service credits?",
+    "underpinning contracts?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 0, "h": "Somebody has to own it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 84
+  },
+  {
+   "id": "CISA.4A11",
+   "text": "Understand database management and the controls around databases.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4A.11",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): A. Information Systems Operations",
+   "kind": "definition",
+   "tasks": [
+    "4A11"
+   ],
+   "match": [
+    "database management",
+    "DBMS",
+    "relational databases?",
+    "referential integrity",
+    "normali[sz]ation",
+    "database administrators?",
+    "DBA",
+    "data dictionar(y|ies)",
+    "concurrency control"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "Who can change the data", "auto": true},
+    {"ch": 9, "sec": 5, "h": "Underneath", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 461
+  },
+  {
+   "id": "CISA.4B1",
+   "text": "Carry out a business impact analysis to rank critical processes and set recovery targets.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4B.1",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): B. Business Resilience",
+   "kind": "procedural",
+   "tasks": [
+    "4B1"
+   ],
+   "match": [
+    "business impact analysis",
+    "BIA",
+    "maximum tolerable downtime",
+    "MTD",
+    "recovery time objective",
+    "RTO",
+    "recovery point objective",
+    "RPO",
+    "critical (processes|functions)"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 0, "h": "How long can you go without it", "auto": true},
+    {"ch": 7, "sec": 2, "h": "Copies", "auto": true},
+    {"ch": 7, "sec": 3, "h": "The plan for the business", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Getting the machines back", "auto": true},
+    {"ch": 8, "sec": 7, "h": "When the machine decides", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 714
+  },
+  {
+   "id": "CISA.4B2",
+   "text": "Build resilience into systems and operations so they keep running through disruption.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4B.2",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): B. Business Resilience",
+   "kind": "judgment",
+   "tasks": [
+    "4B2"
+   ],
+   "match": [
+    "resilien(ce|t)",
+    "redundan(t|cy)",
+    "fault toleran(t|ce)",
+    "RAID",
+    "clustering",
+    "failover",
+    "high availability",
+    "single points? of failure"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 1, "h": "Built to stay up", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 195
+  },
+  {
+   "id": "CISA.4B3",
+   "text": "Back up, store, and restore data: methods, rotation, offsite storage, and restore testing.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4B.3",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): B. Business Resilience",
+   "kind": "procedural",
+   "tasks": [
+    "4B3"
+   ],
+   "match": [
+    "backups?",
+    "full backup",
+    "incremental backup",
+    "differential backup",
+    "offsite storage",
+    "restore test(s|ing)?",
+    "grandfather.father.son",
+    "immutable backups?",
+    "media rotation"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 1, "h": "Built to stay up", "auto": true},
+    {"ch": 7, "sec": 2, "h": "Copies", "auto": true},
+    {"ch": 8, "sec": 2, "h": "The spreadsheet in the drawer", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 442
+  },
+  {
+   "id": "CISA.4B4",
+   "text": "Build, test, and maintain the business continuity plan.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4B.4",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): B. Business Resilience",
+   "kind": "procedural",
+   "tasks": [
+    "4B4"
+   ],
+   "match": [
+    "business continuity plan",
+    "BCP",
+    "continuity plan",
+    "tabletop",
+    "walkthrough test",
+    "plan testing",
+    "crisis management",
+    "continuity strateg(y|ies)"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 3, "h": "The plan for the business", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Getting the machines back", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 134
+  },
+  {
+   "id": "CISA.4B5",
+   "text": "Build, test, and maintain disaster recovery plans, including recovery sites.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 4B.5",
+   "group": "Domain 4 Information Systems Operations and Business Resilience (26%): B. Business Resilience",
+   "kind": "procedural",
+   "tasks": [
+    "4B5"
+   ],
+   "match": [
+    "disaster recovery",
+    "DRP",
+    "hot sites?",
+    "warm sites?",
+    "cold sites?",
+    "mirrored sites?",
+    "reciprocal agreements?",
+    "full interruption test",
+    "recovery sites?"
+   ],
+   "refs": [
+    {"ch": 7, "sec": 4, "h": "Getting the machines back", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 128
+  },
+  {
+   "id": "CISA.5A1",
+   "text": "Know the frameworks, standards, and guidelines behind information asset security policy.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5A.1",
+   "group": "Domain 5 Protection of Information Assets (26%): A. Information Asset Security and Control",
+   "kind": "definition",
+   "tasks": [
+    "5A1"
+   ],
+   "match": [
+    "information security polic(y|ies)",
+    "ISO/IEC 27001",
+    "ISO 27001",
+    "ISO/IEC 27002",
+    "NIST Cybersecurity Framework",
+    "NIST CSF",
+    "NIST SP 800.53",
+    "security framework",
+    "ISMS"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 1, "h": "Paper that's supposed to be true", "auto": true},
+    {"ch": 9, "sec": 0, "h": "Rules on paper", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 127
+  },
+  {
+   "id": "CISA.5A2",
+   "text": "Assess physical and environmental controls, such as facility access, fire suppression, power, and climate.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5A.2",
+   "group": "Domain 5 Protection of Information Assets (26%): A. Information Asset Security and Control",
+   "kind": "judgment",
+   "tasks": [
+    "5A2"
+   ],
+   "match": [
+    "physical access",
+    "environmental controls?",
+    "fire suppression",
+    "FM.200",
+    "dry pipe",
+    "UPS",
+    "uninterruptible power",
+    "mantraps?",
+    "raised floor",
+    "humidity"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 1, "h": "Doors", "auto": true},
+    {"ch": 9, "sec": 2, "h": "The room's weather", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 360
+  },
+  {
+   "id": "CISA.5A3",
+   "text": "Assess identity and access management: provisioning, authentication, authorization, and access review.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5A.3",
+   "group": "Domain 5 Protection of Information Assets (26%): A. Information Asset Security and Control",
+   "kind": "judgment",
+   "tasks": [
+    "5A3"
+   ],
+   "match": [
+    "identity and access management",
+    "IAM",
+    "least privilege",
+    "role.based access",
+    "RBAC",
+    "multi.factor",
+    "MFA",
+    "single sign.on",
+    "privileged access",
+    "access reviews?"
+   ],
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "Who you are, and what you may do", "auto": true},
+    {"ch": 10, "sec": 3, "h": "Walls, and what's inside them", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 184
+  },
+  {
+   "id": "CISA.5A4",
+   "text": "Assess network and endpoint security controls, such as firewalls, segmentation, and endpoint protection.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5A.4",
+   "group": "Domain 5 Protection of Information Assets (26%): A. Information Asset Security and Control",
+   "kind": "judgment",
+   "tasks": [
+    "5A4"
+   ],
+   "match": [
+    "firewalls?",
+    "network segmentation",
+    "IDS",
+    "IPS",
+    "intrusion (detection|prevention)",
+    "DMZ",
+    "VPN",
+    "endpoint (protection|security|detection)",
+    "EDR",
+    "zero trust"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 0, "h": "What it's made of", "auto": true},
+    {"ch": 10, "sec": 3, "h": "Walls, and what's inside them", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 314
+  },
+  {
+   "id": "CISA.5A5",
+   "text": "Understand data loss prevention tools and controls.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5A.5",
+   "group": "Domain 5 Protection of Information Assets (26%): A. Information Asset Security and Control",
+   "kind": "definition",
+   "tasks": [
+    "5A5"
+   ],
+   "match": [
+    "data loss prevention",
+    "DLP",
+    "data leakage",
+    "exfiltration",
+    "data in motion",
+    "data at rest",
+    "data in use"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 4, "h": "Leaks", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 82
+  },
+  {
+   "id": "CISA.5A6",
+   "text": "Understand data encryption: symmetric and asymmetric methods, hashing, and key management.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5A.6",
+   "group": "Domain 5 Protection of Information Assets (26%): A. Information Asset Security and Control",
+   "kind": "definition",
+   "tasks": [
+    "5A6"
+   ],
+   "match": [
+    "encrypt(ion|ed)",
+    "symmetric",
+    "asymmetric",
+    "AES",
+    "RSA",
+    "hash(ing)?",
+    "key management",
+    "digital signatures?",
+    "TLS"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 0, "h": "What it's made of", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Locks", "auto": true},
+    {"ch": 10, "sec": 1, "h": "Keys", "auto": true},
+    {"ch": 10, "sec": 2, "h": "Who vouches for you", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Pockets", "auto": true},
+    {"ch": 12, "sec": 8, "h": "Evidence that lasts", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 693
+  },
+  {
+   "id": "CISA.5A7",
+   "text": "Understand public key infrastructure: certificates, certificate authorities, and revocation.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5A.7",
+   "group": "Domain 5 Protection of Information Assets (26%): A. Information Asset Security and Control",
+   "kind": "definition",
+   "tasks": [
+    "5A7"
+   ],
+   "match": [
+    "public key infrastructure",
+    "PKI",
+    "certificate authorit(y|ies)",
+    "registration authority",
+    "digital certificates?",
+    "certificate revocation",
+    "CRL",
+    "OCSP",
+    "X\\.509"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 2, "h": "Who vouches for you", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 109
+  },
+  {
+   "id": "CISA.5A8",
+   "text": "Assess security in cloud and virtualized environments, including shared responsibility.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5A.8",
+   "group": "Domain 5 Protection of Information Assets (26%): A. Information Asset Security and Control",
+   "kind": "judgment",
+   "tasks": [
+    "5A8"
+   ],
+   "match": [
+    "cloud (computing|services?|providers?)",
+    "shared responsibility",
+    "IaaS",
+    "PaaS",
+    "SaaS",
+    "hypervisors?",
+    "virtual machines?",
+    "virtualization",
+    "containers?",
+    "multi.tenan(t|cy)"
+   ],
+   "refs": [
+    {"ch": 8, "sec": 2, "h": "The spreadsheet in the drawer", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Somebody else's computer", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Pockets", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 228
+  },
+  {
+   "id": "CISA.5A9",
+   "text": "Assess security for mobile, wireless, and Internet of Things devices.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5A.9",
+   "group": "Domain 5 Protection of Information Assets (26%): A. Information Asset Security and Control",
+   "kind": "judgment",
+   "tasks": [
+    "5A9"
+   ],
+   "match": [
+    "mobile device management",
+    "MDM",
+    "BYOD",
+    "bring your own device",
+    "wireless",
+    "WPA(2|3)",
+    "Internet of Things",
+    "IoT",
+    "rogue access points?"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 6, "h": "Pockets", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 95
+  },
+  {
+   "id": "CISA.5B1",
+   "text": "Run security awareness training and programs.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5B.1",
+   "group": "Domain 5 Protection of Information Assets (26%): B. Security Event Management",
+   "kind": "procedural",
+   "tasks": [
+    "5B1"
+   ],
+   "match": [
+    "security awareness",
+    "awareness training",
+    "phishing simulations?",
+    "social engineering training",
+    "training program",
+    "acceptable use"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 3, "h": "What people do", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 100
+  },
+  {
+   "id": "CISA.5B2",
+   "text": "Recognize information system attack methods and techniques.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5B.2",
+   "group": "Domain 5 Protection of Information Assets (26%): B. Security Event Management",
+   "kind": "definition",
+   "tasks": [
+    "5B2"
+   ],
+   "match": [
+    "phishing",
+    "social engineering",
+    "malware",
+    "ransomware",
+    "denial of service",
+    "DDoS",
+    "SQL injection",
+    "man.in.the.middle",
+    "cross.site scripting",
+    "privilege escalation"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 2, "h": "How they get in", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 243
+  },
+  {
+   "id": "CISA.5B3",
+   "text": "Understand security testing tools and techniques, such as vulnerability scans and penetration tests.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5B.3",
+   "group": "Domain 5 Protection of Information Assets (26%): B. Security Event Management",
+   "kind": "definition",
+   "tasks": [
+    "5B3"
+   ],
+   "match": [
+    "penetration test(s|ing)?",
+    "vulnerability scan(s|ning)?",
+    "vulnerability assessments?",
+    "red team",
+    "white box",
+    "black box",
+    "ethical hack(ing|ers?)",
+    "war driving"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 2, "h": "How they get in", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Testing on purpose", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 318
+  },
+  {
+   "id": "CISA.5B4",
+   "text": "Understand security monitoring logs, tools, and techniques, such as SIEM and intrusion detection.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5B.4",
+   "group": "Domain 5 Protection of Information Assets (26%): B. Security Event Management",
+   "kind": "definition",
+   "tasks": [
+    "5B4"
+   ],
+   "match": [
+    "SIEM",
+    "security information and event management",
+    "security monitoring",
+    "log correlation",
+    "security operations center",
+    "SOC analysts?",
+    "alerts? triage",
+    "honeypots?"
+   ],
+   "refs": [
+    {"ch": 10, "sec": 3, "h": "Walls, and what's inside them", "auto": true},
+    {"ch": 11, "sec": 5, "h": "Who's watching", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 137
+  },
+  {
+   "id": "CISA.5B5",
+   "text": "Manage security incident response from preparation through recovery and lessons learned.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5B.5",
+   "group": "Domain 5 Protection of Information Assets (26%): B. Security Event Management",
+   "kind": "procedural",
+   "tasks": [
+    "5B5"
+   ],
+   "match": [
+    "incident response",
+    "incident response plan",
+    "CSIRT",
+    "containment",
+    "eradication",
+    "lessons learned",
+    "breach notification",
+    "incident handling"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 0, "h": "Backward", "auto": true},
+    {"ch": 11, "sec": 1, "h": "Keep it before you clean it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 147
+  },
+  {
+   "id": "CISA.5B6",
+   "text": "Collect evidence and conduct forensics in a way that holds up.",
+   "source": "ISACA CISA Exam Content Outline (eff. Aug 2024), 5B.6",
+   "group": "Domain 5 Protection of Information Assets (26%): B. Security Event Management",
+   "kind": "procedural",
+   "tasks": [
+    "5B6"
+   ],
+   "match": [
+    "forensics?",
+    "forensic (image|imaging|investigation)",
+    "chain of custody",
+    "evidence preservation",
+    "write blockers?",
+    "order of volatility",
+    "legal hold",
+    "digital evidence"
+   ],
+   "refs": [
+    {"ch": 11, "sec": 1, "h": "Keep it before you clean it", "auto": true},
+    {"ch": 12, "sec": 8, "h": "Evidence that lasts", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 83
+  }
+ ],
+ "seeded": "2026-11-08"
+}

@@ -1,0 +1,1314 @@
+{
+ "course": "afoqt",
+ "taxonomy": "official",
+ "outline": {
+  "name": "Air Force Officer Qualifying Test (AFOQT) Form T subtests",
+  "version": "Form T (effective 2014-08-01), computer delivered (eAFOQT) through Pearson VUE; item counts and times from the Pearson page updated 2026-08-06",
+  "source": "Pearson VUE AFOQT page https://www.pearsonvue.com/us/en/afoqt.html (read 2026-11-07); AFOQT Information Pamphlet Form T, AFPT 997 updated 1 Aug 2015, Rutgers AFROTC host afrotc.rutgers.edu/sites/default/files/pdf/afpt-997_afoqt-practice-pamphlet_cao01aug15.pdf (read 2026-11-07); Halcyon reviews afoqt_outline_2026-11-07.md and afoqt_bible_factcheck_2026-11-07.md",
+  "read": "2026-11-07",
+  "notes": "No official source publishes fine objectives for the AFOQT. Official material gives the 12 subtest names, item counts, times, and a one line description of each. Each subtest code from meta.js is one group. IDs are AFOQT.<code>.<slug> and are Halcyon's. Content areas named by Pearson's subtest descriptions: AR (geometry, ratios, proportions, mixtures, integers, percentages, distance rate time), MK (algebra, geometry, arithmetic, inequalities, systems of equations, absolute values, exponents), PS (forces, physical laws, simple machines), AI (flight mechanics, rotary and fixed wing aircraft, airport rules, flight physics), IC (attitude dial and magnetic compass). The SJ split into six competencies (integrity and professionalism, leadership, resource management, communication, innovation, mentoring) is from the 2015 pamphlet. These are Halcyon's own breakdowns of an official description, kept close to it: WK.word-parts, RC.main-idea, RC.detail-and-context, PS.energy-heat, PS.electricity-waves, PS.matter-chemistry, PS.earth-space, PS.units (the pamphlet's samples include SI units and surface tension; the outline review frames PS as high school physics, chemistry, earth and space), AI.instruments, BC.hidden-blocks, IC.aircraft-views (from the pamphlet's picture conventions), MK.terms (the pamphlet's 'terms and principles'). AR.mixture-work adds combined work problems, which Pearson does not name. The SDI is unscored and feeds no composite; both SDI objectives say so. Conflicts carried from the outline review and unresolved: Pearson lists SJ 16 items, RC 24 min, BC 5 min; the 2015 pamphlet lists SJ 50 items, RC 38 min, BC 4.5 min. Format objectives give both. Not verified: the calculator ban (prep sources only), the live TR grid size, and the composite makeup under DAFMAN 36-2664 (every .mil host returned 403). A DTIC report titled 'AFOQT Form U: Reviewing Cognitive Subtests from Previous Forms' (AD1223918) turned up in search; it was not read, and no source shows Form U in operational use, so Form T stands. Composite membership in AI.format comes from the 2015 pamphlet Table 1."
+ },
+ "objectives": [
+  {
+   "id": "AFOQT.VA.relationships",
+   "text": "Recognize how two words are related (purpose, part to whole, degree, sequence in time, cause, comparison, synonym or antonym) and find the pair or word that shows the same relationship.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 1: Verbal Analogies (VA)",
+   "kind": "judgment",
+   "tasks": [
+    "VA"
+   ],
+   "match": [
+    "analog(y|ies)",
+    "is to .{1,40} as",
+    "part to whole",
+    "part-to-whole",
+    "relationship types?",
+    "word pairs?",
+    "degree of intensity",
+    "cause and effect"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "Words: analogies and synonyms", "auto": true},
+    {"ch": 2, "sec": 1, "h": "Verbal Analogies: name the relationship", "auto": true},
+    {"ch": 4, "sec": 4, "h": "Warmups in test order", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 152
+  },
+  {
+   "id": "AFOQT.VA.format",
+   "text": "Know the VA format and pace: 25 items in 8 minutes, completing an analogy or choosing a full matching pair from 5 options.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 1: Verbal Analogies (VA)",
+   "kind": "procedural",
+   "tasks": [
+    "VA"
+   ],
+   "match": [
+    "verbal analogies",
+    "complete the analogy",
+    "25 (items|questions) in 8 minutes",
+    "8 minutes",
+    "bridge sentence",
+    "state the relationship"
+   ],
+   "refs": [
+    {"ch": 2, "sec": 1, "h": "Verbal Analogies: name the relationship", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 34
+  },
+  {
+   "id": "AFOQT.AR.rate-time-distance",
+   "text": "Solve distance, rate and time word problems, including combined and opposing speeds and unit conversion.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 2: Arithmetic Reasoning (AR)",
+   "kind": "calculation",
+   "tasks": [
+    "AR"
+   ],
+   "match": [
+    "distance (equals|=) rate",
+    "rate times time",
+    "d ?= ?rt",
+    "miles per hour",
+    "knots",
+    "closing speed",
+    "average speed",
+    "travel time"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AR.ratio-proportion",
+   "text": "Solve ratio, proportion and scale word problems, including map scales and recipes.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 2: Arithmetic Reasoning (AR)",
+   "kind": "calculation",
+   "tasks": [
+    "AR"
+   ],
+   "match": [
+    "ratios?",
+    "proportions?",
+    "proportional",
+    "cross[- ]multipl",
+    "scale factor",
+    "map scale",
+    "inversely proportional",
+    "parts? to"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AR.percent",
+   "text": "Solve percent word problems: percent of a number, percent change, discount, interest and tax.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 2: Arithmetic Reasoning (AR)",
+   "kind": "calculation",
+   "tasks": [
+    "AR"
+   ],
+   "match": [
+    "percent(age)?",
+    "percent (increase|decrease|change)",
+    "simple interest",
+    "compound interest",
+    "discount",
+    "markup",
+    "sales tax"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AR.mixture-work",
+   "text": "Solve mixture and combined work problems, such as blending solutions or two crews sharing a job.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 2: Arithmetic Reasoning (AR)",
+   "kind": "calculation",
+   "tasks": [
+    "AR"
+   ],
+   "match": [
+    "mixtures?",
+    "solution concentration",
+    "concentration",
+    "combined (work|rate)",
+    "work problems?",
+    "working together",
+    "per hour together",
+    "alloy"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AR.number",
+   "text": "Reason with integers and basic number facts in word problems: averages, remainders, ordering, counting and unit cost.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 2: Arithmetic Reasoning (AR)",
+   "kind": "calculation",
+   "tasks": [
+    "AR"
+   ],
+   "match": [
+    "integers?",
+    "averages?",
+    "arithmetic mean",
+    "remainders?",
+    "consecutive (integers|numbers)",
+    "unit (cost|price)",
+    "even and odd",
+    "whole numbers?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 2, "h": "Rates that change partway", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 80
+  },
+  {
+   "id": "AFOQT.AR.geometry",
+   "text": "Solve geometry word problems: perimeter, area and volume of everyday shapes and containers.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 2: Arithmetic Reasoning (AR)",
+   "kind": "calculation",
+   "tasks": [
+    "AR"
+   ],
+   "match": [
+    "perimeter",
+    "area of",
+    "volume of",
+    "cubic (feet|inches|yards|meters)",
+    "square (feet|yards|meters)",
+    "circumference",
+    "rectangular (box|container|tank)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AR.format",
+   "text": "Know the AR format and pace: 25 word problems in 29 minutes (about 70 seconds each), 5 choices, scratch paper and no calculator assumed.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01); Halcyon outline review 2026-11-07 (calculator rule unverified)",
+   "group": "Subtest 2: Arithmetic Reasoning (AR)",
+   "kind": "procedural",
+   "tasks": [
+    "AR"
+   ],
+   "match": [
+    "arithmetic reasoning",
+    "29 minutes",
+    "word problems?",
+    "set up the (equation|problem)",
+    "scratch paper",
+    "without a calculator",
+    "estimat(e|ing) the answer",
+    "eliminate answer choices"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 4, "h": "Warmups in test order", "auto": true},
+    {"ch": 5, "sec": 0, "h": "One sentence under every rate problem", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 153
+  },
+  {
+   "id": "AFOQT.WK.synonyms",
+   "text": "Know word meanings well enough to pick the closest synonym to a given word.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 3: Word Knowledge (WK)",
+   "kind": "definition",
+   "tasks": [
+    "WK"
+   ],
+   "match": [
+    "synonyms?",
+    "closest in meaning",
+    "vocabulary",
+    "definitions? of",
+    "antonyms?",
+    "connotation",
+    "meaning of the word"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 3, "h": "Words: analogies and synonyms", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 17
+  },
+  {
+   "id": "AFOQT.WK.word-parts",
+   "text": "Work out unfamiliar words from roots, prefixes and suffixes.",
+   "source": "Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 3: Word Knowledge (WK)",
+   "kind": "definition",
+   "tasks": [
+    "WK"
+   ],
+   "match": [
+    "word roots?",
+    "prefix(es)?",
+    "suffix(es)?",
+    "Latin roots?",
+    "Greek roots?",
+    "word parts?",
+    "etymolog(y|ies)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.WK.format",
+   "text": "Know the WK format and pace: 25 items in 5 minutes (about 12 seconds each), so answer fast and move on.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 3: Word Knowledge (WK)",
+   "kind": "procedural",
+   "tasks": [
+    "WK"
+   ],
+   "match": [
+    "word knowledge",
+    "5 minutes",
+    "five minutes",
+    "12 seconds",
+    "first instinct",
+    "don'?t (dwell|linger)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.MK.arithmetic",
+   "text": "Do arithmetic without a calculator: fractions, decimals, order of operations, factors, primes and multiples.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 4: Math Knowledge (MK)",
+   "kind": "calculation",
+   "tasks": [
+    "MK"
+   ],
+   "match": [
+    "fractions?",
+    "decimals?",
+    "order of operations",
+    "PEMDAS",
+    "common denominator",
+    "least common multiple",
+    "greatest common (factor|divisor)",
+    "prime (numbers?|factor)",
+    "reciprocals?"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "The water plant's version", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 69
+  },
+  {
+   "id": "AFOQT.MK.algebra",
+   "text": "Solve algebra: linear equations, factoring, polynomials and algebra word problems.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 4: Math Knowledge (MK)",
+   "kind": "calculation",
+   "tasks": [
+    "MK"
+   ],
+   "match": [
+    "linear equations?",
+    "solve for x",
+    "factor(ing)? (the )?(polynomial|expression|quadratic)",
+    "quadratic",
+    "polynomials?",
+    "FOIL",
+    "isolate the variable",
+    "slope"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.MK.systems",
+   "text": "Solve systems of two equations by substitution or elimination.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 4: Math Knowledge (MK)",
+   "kind": "calculation",
+   "tasks": [
+    "MK"
+   ],
+   "match": [
+    "systems? of equations",
+    "simultaneous equations",
+    "substitution",
+    "elimination method",
+    "two equations"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.MK.inequalities",
+   "text": "Solve inequalities and absolute value problems, including flipping the sign when multiplying by a negative.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 4: Math Knowledge (MK)",
+   "kind": "calculation",
+   "tasks": [
+    "MK"
+   ],
+   "match": [
+    "inequalit(y|ies)",
+    "absolute values?",
+    "flip the (sign|inequality)",
+    "greater than or equal",
+    "number line"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.MK.exponents",
+   "text": "Work with exponents, roots and scientific notation.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 4: Math Knowledge (MK)",
+   "kind": "calculation",
+   "tasks": [
+    "MK"
+   ],
+   "match": [
+    "exponents?",
+    "powers? of",
+    "square roots?",
+    "radicals?",
+    "scientific notation",
+    "cube roots?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.MK.geometry",
+   "text": "Apply geometry facts: angles, triangles including Pythagoras, circles, polygons, area, volume and coordinate geometry.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named content)",
+   "group": "Subtest 4: Math Knowledge (MK)",
+   "kind": "calculation",
+   "tasks": [
+    "MK"
+   ],
+   "match": [
+    "Pythagorean",
+    "hypotenuse",
+    "right triangles?",
+    "isosceles",
+    "supplementary",
+    "complementary angles?",
+    "circumference",
+    "diameter",
+    "radius",
+    "coordinate plane"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.MK.terms",
+   "text": "Know mathematical terms and principles, such as integer, prime, reciprocal, mean, median, and the properties of operations.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) ('terms and principles')",
+   "group": "Subtest 4: Math Knowledge (MK)",
+   "kind": "definition",
+   "tasks": [
+    "MK"
+   ],
+   "match": [
+    "mathematical terms?",
+    "median",
+    "reciprocal",
+    "distributive property",
+    "commutative",
+    "associative",
+    "rational numbers?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.MK.format",
+   "text": "Know the MK format and pace: 25 items in 22 minutes (about 53 seconds each), 5 choices, plugging in answers and estimating when algebra is slow.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 4: Math Knowledge (MK)",
+   "kind": "procedural",
+   "tasks": [
+    "MK"
+   ],
+   "match": [
+    "math knowledge",
+    "22 minutes",
+    "plug(ging)? in (the )?answers?",
+    "backsolv",
+    "back-solv"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 20
+  },
+  {
+   "id": "AFOQT.RC.main-idea",
+   "text": "Find the main idea, purpose and best summary of a professional military education style passage.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (PME style prose); Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 5: Reading Comprehension (RC)",
+   "kind": "judgment",
+   "tasks": [
+    "RC"
+   ],
+   "match": [
+    "main idea",
+    "central (idea|point)",
+    "author'?s (purpose|main point)",
+    "best summar(y|izes)",
+    "primary purpose",
+    "topic sentence",
+    "title for the passage"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.RC.inference",
+   "text": "Draw what the passage implies but does not say, and judge the author's attitude, using only the passage.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) ('implied meaning'); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 5: Reading Comprehension (RC)",
+   "kind": "judgment",
+   "tasks": [
+    "RC"
+   ],
+   "match": [
+    "infer(ence|red|s)?",
+    "impl(y|ies|ied)",
+    "implied",
+    "author'?s (tone|attitude)",
+    "suggests that",
+    "based (only )?on the passage",
+    "most likely agree"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.RC.detail-and-context",
+   "text": "Locate stated details and work out the meaning of a word as used in the passage.",
+   "source": "Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 5: Reading Comprehension (RC)",
+   "kind": "judgment",
+   "tasks": [
+    "RC"
+   ],
+   "match": [
+    "word in context",
+    "as used in (the )?(passage|line)",
+    "according to the passage",
+    "supporting details?",
+    "stated in the passage",
+    "specific details?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.RC.format",
+   "text": "Know the RC format and pace: 25 items in 24 minutes on the current Pearson listing (38 minutes in the 2015 pamphlet), several passages with questions each; read the questions first and manage time per passage.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 5: Reading Comprehension (RC)",
+   "kind": "procedural",
+   "tasks": [
+    "RC"
+   ],
+   "match": [
+    "reading comprehension",
+    "24 minutes",
+    "38 minutes",
+    "passages?",
+    "read the questions first",
+    "skim(ming)?"
+   ],
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Reading Comprehension: answer from the page", "auto": true},
+    {"ch": 3, "sec": 1, "h": "The kinds of questions", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 243
+  },
+  {
+   "id": "AFOQT.SJ.integrity",
+   "text": "Pick the most and least effective action when integrity or professionalism is at stake: honesty, owning mistakes and not covering up.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (six competencies)",
+   "group": "Subtest 6: Situational Judgment (SJ)",
+   "kind": "judgment",
+   "tasks": [
+    "SJ"
+   ],
+   "match": [
+    "integrity",
+    "professionalism",
+    "honest(y|ly)",
+    "own(ing|s)? the mistake",
+    "cover(ing)?[- ]up",
+    "falsif(y|ied|ication)",
+    "ethical"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 1, "h": "Integrity items", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 31
+  },
+  {
+   "id": "AFOQT.SJ.leadership",
+   "text": "Pick effective leadership actions as a junior officer: taking charge, setting expectations and handling people problems directly and privately first.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (six competencies)",
+   "group": "Subtest 6: Situational Judgment (SJ)",
+   "kind": "judgment",
+   "tasks": [
+    "SJ"
+   ],
+   "match": [
+    "leadership",
+    "take charge",
+    "chain of command",
+    "lowest level",
+    "in private",
+    "privately",
+    "set expectations",
+    "accountab(le|ility)"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 2, "h": "Situational Judgment, and why the story works the way it does", "auto": true},
+    {"ch": 2, "sec": 3, "h": "Situational Judgment: who you talk to first", "auto": true},
+    {"ch": 4, "sec": 2, "h": "Communication items", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 307
+  },
+  {
+   "id": "AFOQT.SJ.resource-management",
+   "text": "Pick effective actions for managing people, time, money and equipment under competing demands.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (six competencies)",
+   "group": "Subtest 6: Situational Judgment (SJ)",
+   "kind": "judgment",
+   "tasks": [
+    "SJ"
+   ],
+   "match": [
+    "resource management",
+    "prioriti(ze|zing|es)",
+    "competing (priorities|demands|tasks)",
+    "manpower",
+    "budget",
+    "workload",
+    "delegat(e|ing|ion)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.SJ.communication",
+   "text": "Pick effective communication actions: talking with the person directly, sharing full information and keeping the boss informed at the right time.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (six competencies)",
+   "group": "Subtest 6: Situational Judgment (SJ)",
+   "kind": "judgment",
+   "tasks": [
+    "SJ"
+   ],
+   "match": [
+    "communicat(e|ion|ing)",
+    "talk (with|to) (them|him|her) (directly|privately)",
+    "full,? unfiltered information",
+    "keep (the )?(boss|commander) informed",
+    "active listening"
+   ],
+   "refs": [
+    {"ch": 4, "sec": 2, "h": "Communication items", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 101
+  },
+  {
+   "id": "AFOQT.SJ.innovation",
+   "text": "Pick effective actions when a better way is possible: proposing improvements and trying new approaches responsibly.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (six competencies)",
+   "group": "Subtest 6: Situational Judgment (SJ)",
+   "kind": "judgment",
+   "tasks": [
+    "SJ"
+   ],
+   "match": [
+    "innovat(e|ion|ive)",
+    "better way",
+    "new approach",
+    "process improvement",
+    "propose (a|an) (change|improvement)",
+    "creative solution"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.SJ.mentoring",
+   "text": "Pick effective actions for developing others: coaching, counseling and building subordinates' skills.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (six competencies)",
+   "group": "Subtest 6: Situational Judgment (SJ)",
+   "kind": "judgment",
+   "tasks": [
+    "SJ"
+   ],
+   "match": [
+    "mentor(ing|s)?",
+    "coach(ing)?",
+    "counsel(ing)?",
+    "develop(ing)? (subordinates|airmen|people)",
+    "professional development",
+    "teach(ing)? them"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.SJ.format",
+   "text": "Know the SJ format: junior officer scenarios, choose the MOST and LEAST effective of 5 actions, keyed to the consensus of experienced officers. Pearson lists 16 items in 35 minutes; the 2015 pamphlet lists 50 items (25 scenarios with two picks each).",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 6: Situational Judgment (SJ)",
+   "kind": "procedural",
+   "tasks": [
+    "SJ"
+   ],
+   "match": [
+    "situational judgment",
+    "most effective",
+    "least effective",
+    "consensus (of|judgment)",
+    "experienced officers",
+    "35 minutes"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true},
+    {"ch": 1, "sec": 2, "h": "Situational Judgment, and why the story works the way it does", "auto": true},
+    {"ch": 2, "sec": 3, "h": "Situational Judgment: who you talk to first", "auto": true},
+    {"ch": 2, "sec": 4, "h": "Picking most and least", "auto": true},
+    {"ch": 4, "sec": 0, "h": "The exception, up close", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 388
+  },
+  {
+   "id": "AFOQT.SDI.inventory",
+   "text": "Know that the SDI is an unscored personality and work style inventory: there are no right answers, it feeds no composite, and it is answered honestly on first impression.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) ('not graded'); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 7: Self-Description Inventory (SDI)",
+   "kind": "definition",
+   "tasks": [
+    "SDI"
+   ],
+   "match": [
+    "self-description inventory",
+    "SDI",
+    "personality (inventory|assessment)",
+    "no right (or wrong )?answers?",
+    "unscored",
+    "not (scored|graded)",
+    "first impressions?",
+    "work style"
+   ],
+   "refs": [
+    {"ch": 5, "sec": 5, "h": "The Self-Description Inventory", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 75
+  },
+  {
+   "id": "AFOQT.SDI.format",
+   "text": "Know the SDI format and pace (unscored): 240 statements in 45 minutes on a 5 point agree scale; keep a steady pace and save energy for the scored Part B subtests that follow.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 7: Self-Description Inventory (SDI)",
+   "kind": "procedural",
+   "tasks": [
+    "SDI"
+   ],
+   "match": [
+    "240 (statements|items)",
+    "45 minutes",
+    "agree scale",
+    "strongly (agree|disagree)",
+    "five-point",
+    "5-point"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 7
+  },
+  {
+   "id": "AFOQT.PS.mechanics",
+   "text": "Apply forces and physical laws: Newton's laws, motion, gravity, momentum, friction, pressure and buoyancy.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named: forces, physical laws, simple machines)",
+   "group": "Subtest 8: Physical Science (PS)",
+   "kind": "calculation",
+   "tasks": [
+    "PS"
+   ],
+   "match": [
+    "Newton'?s (first|second|third)? ?laws?",
+    "f ?= ?ma",
+    "accelerat(e|ion)",
+    "momentum",
+    "friction",
+    "inertia",
+    "gravit(y|ational)",
+    "buoyan(t|cy)",
+    "Pascal'?s",
+    "velocity"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.PS.simple-machines",
+   "text": "Understand simple machines and mechanical advantage: levers, pulleys, inclined planes, gears and work.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named: forces, physical laws, simple machines)",
+   "group": "Subtest 8: Physical Science (PS)",
+   "kind": "calculation",
+   "tasks": [
+    "PS"
+   ],
+   "match": [
+    "simple machines?",
+    "mechanical advantage",
+    "levers?",
+    "fulcrum",
+    "pulleys?",
+    "inclined planes?",
+    "gears? ratio",
+    "wedge",
+    "screw"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.PS.energy-heat",
+   "text": "Understand work, energy, power and heat: kinetic and potential energy, conservation, temperature and heat transfer.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (sample items); Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 8: Physical Science (PS)",
+   "kind": "definition",
+   "tasks": [
+    "PS"
+   ],
+   "match": [
+    "kinetic energy",
+    "potential energy",
+    "conservation of energy",
+    "joules?",
+    "watts?",
+    "heat transfer",
+    "conduction",
+    "convection",
+    "thermal expansion"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.PS.electricity-waves",
+   "text": "Understand basic electricity, magnetism, sound, light and optics.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (sample items); Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 8: Physical Science (PS)",
+   "kind": "definition",
+   "tasks": [
+    "PS"
+   ],
+   "match": [
+    "Ohm'?s law",
+    "voltage",
+    "electric(al)? current",
+    "resistors?",
+    "electrical resistance",
+    "circuits?",
+    "magnet(ic|ism)",
+    "wavelength",
+    "refraction",
+    "law of reflection"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.PS.matter-chemistry",
+   "text": "Understand matter and basic chemistry: states of matter, density, atoms, elements, compounds and the periodic table.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (sample items); Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 8: Physical Science (PS)",
+   "kind": "definition",
+   "tasks": [
+    "PS"
+   ],
+   "match": [
+    "states? of matter",
+    "density",
+    "atoms?",
+    "molecules?",
+    "chemical elements?",
+    "compounds?",
+    "periodic table",
+    "surface tension",
+    "boiling point",
+    "chemical reaction"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.PS.earth-space",
+   "text": "Understand basic earth and space science: atmosphere, weather, the solar system and the Earth's structure.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (sample items); Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 8: Physical Science (PS)",
+   "kind": "definition",
+   "tasks": [
+    "PS"
+   ],
+   "match": [
+    "atmosphere",
+    "troposphere",
+    "stratosphere",
+    "solar system",
+    "planets?",
+    "orbit",
+    "weather fronts?",
+    "Earth'?s (axis|crust|core|rotation)",
+    "lunar|moon phases"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.PS.units",
+   "text": "Know SI units and measurement: base units for mass, length, time, force and energy, and metric prefixes.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (sample items); Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 8: Physical Science (PS)",
+   "kind": "definition",
+   "tasks": [
+    "PS"
+   ],
+   "match": [
+    "SI units?",
+    "International System of Units",
+    "kilograms?",
+    "newtons?",
+    "metric prefix(es)?",
+    "units of measure",
+    "base units?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.PS.format",
+   "text": "Know the PS format and pace: 20 items in 10 minutes (30 seconds each), 5 choices, high school level; the score feeds no composite in the 2015 pamphlet.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 8: Physical Science (PS)",
+   "kind": "procedural",
+   "tasks": [
+    "PS"
+   ],
+   "match": [
+    "physical science",
+    "10 minutes",
+    "30 seconds (each|per)",
+    "high school (physics|science)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.TR.lookup",
+   "text": "Find the value where a given X column and Y row meet in a grid with positive and negative axes, and match it to one of 5 close choices.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 9: Table Reading (TR)",
+   "kind": "visual",
+   "tasks": [
+    "TR"
+   ],
+   "match": [
+    "table reading",
+    "X values?",
+    "Y values?",
+    "the (X|Y) (row|column)",
+    "intersect(ion|s)?",
+    "grid",
+    "negative (values|numbers)"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true},
+    {"ch": 1, "sec": 5, "h": "Tables and rates", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 82
+  },
+  {
+   "id": "AFOQT.TR.format",
+   "text": "Know the TR format and pace: 40 items in 7 minutes (about 10 seconds each); a perceptual speed test where accuracy comes first, then pace.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 9: Table Reading (TR)",
+   "kind": "procedural",
+   "tasks": [
+    "TR"
+   ],
+   "match": [
+    "40 (items|questions) in 7 minutes",
+    "7 minutes",
+    "seven minutes",
+    "10 seconds",
+    "perceptual speed",
+    "speed tests?",
+    "accuracy first",
+    "finger on"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.IC.bank-and-pitch",
+   "text": "Read the artificial horizon: tell climb or dive from the horizon line against the aircraft symbol, and bank direction and amount from the pointer.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01); Pearson VUE AFOQT page (updated 2026-08-06)",
+   "group": "Subtest 10: Instrument Comprehension (IC)",
+   "kind": "visual",
+   "tasks": [
+    "IC"
+   ],
+   "match": [
+    "artificial horizon",
+    "attitude indicator",
+    "horizon line",
+    "bank(ed|ing)? (left|right|angle|pointer)",
+    "bank pointer",
+    "climb(s|ing)?\\b",
+    "dive\\b",
+    "diving",
+    "nose (up|down)",
+    "pitch (up|down|attitude)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.IC.heading",
+   "text": "Read the compass dial for the aircraft's heading.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01); Pearson VUE AFOQT page (updated 2026-08-06)",
+   "group": "Subtest 10: Instrument Comprehension (IC)",
+   "kind": "visual",
+   "tasks": [
+    "IC"
+   ],
+   "match": [
+    "compass",
+    "heading",
+    "magnetic (compass|heading)",
+    "due (north|south|east|west)",
+    "northeast|northwest|southeast|southwest",
+    "compass card"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.IC.aircraft-views",
+   "text": "Pick the aircraft picture that matches both dials, using the convention that the observer looks north at the aircraft's altitude, with east to the right.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) (picture conventions)",
+   "group": "Subtest 10: Instrument Comprehension (IC)",
+   "kind": "visual",
+   "tasks": [
+    "IC"
+   ],
+   "match": [
+    "looking north",
+    "east (is )?(on|to) the right",
+    "observer",
+    "side view",
+    "nose (toward|towards|pointing)",
+    "tail toward",
+    "from behind",
+    "four (pictures|aircraft)"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.IC.format",
+   "text": "Know the IC format and pace: 25 items in 5 minutes (about 12 seconds each), two dials and 4 aircraft pictures; check one cue at a time to eliminate.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 10: Instrument Comprehension (IC)",
+   "kind": "procedural",
+   "tasks": [
+    "IC"
+   ],
+   "match": [
+    "instrument comprehension",
+    "5 minutes",
+    "12 seconds",
+    "one cue at a time",
+    "eliminat(e|ion)",
+    "two dials"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true},
+    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 66
+  },
+  {
+   "id": "AFOQT.BC.face-contact",
+   "text": "Count how many blocks a numbered block touches face to face, counting partial faces and never corner or edge contact.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01); Pearson VUE AFOQT page (updated 2026-08-06)",
+   "group": "Subtest 11: Block Counting (BC)",
+   "kind": "visual",
+   "tasks": [
+    "BC"
+   ],
+   "match": [
+    "block counting",
+    "face to face",
+    "faces? touch",
+    "touch(es|ing)? (corners?|edges?)",
+    "corners? only",
+    "partial(ly)? (face|touch)",
+    "numbered blocks?"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.BC.hidden-blocks",
+   "text": "See into a 3D pile: infer hidden blocks from support and symmetry, and track blocks above, below and to each side.",
+   "source": "AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01) ('see into' a pile); Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 11: Block Counting (BC)",
+   "kind": "visual",
+   "tasks": [
+    "BC"
+   ],
+   "match": [
+    "hidden blocks?",
+    "three-dimensional",
+    "3-?D",
+    "isometric",
+    "spatial (reasoning|ability|awareness)",
+    "above and below"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.BC.format",
+   "text": "Know the BC format and pace: 30 items in 5 minutes on the Pearson listing (4.5 in the 2015 pamphlet), about 10 seconds each, several items per pile.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 11: Block Counting (BC)",
+   "kind": "procedural",
+   "tasks": [
+    "BC"
+   ],
+   "match": [
+    "4\\.5 minutes",
+    "5 minutes",
+    "30 (items|questions)",
+    "per pile",
+    "10 seconds",
+    "system(atic)? count"
+   ],
+   "refs": [],
+   "status": "absent",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AI.aerodynamics",
+   "text": "Understand flight physics: the four forces, how a wing makes lift, angle of attack, stalls and drag.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named: flight physics); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 12: Aviation Information (AI)",
+   "kind": "definition",
+   "tasks": [
+    "AI"
+   ],
+   "match": [
+    "four forces",
+    "(creates?|produces?|generat(e|es|ing)) lift",
+    "lift and drag",
+    "drag",
+    "thrust",
+    "angle of attack",
+    "stall(s|ed|ing)?",
+    "Bernoulli",
+    "airfoil",
+    "relative wind"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AI.controls",
+   "text": "Understand flight controls and maneuvering: ailerons, elevator, rudder, trim, flaps and the three axes.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named: flight mechanics); Halcyon outline review 2026-11-07",
+   "group": "Subtest 12: Aviation Information (AI)",
+   "kind": "definition",
+   "tasks": [
+    "AI"
+   ],
+   "match": [
+    "ailerons?",
+    "elevators?",
+    "rudder",
+    "trim tabs?",
+    "flaps",
+    "roll axis",
+    "yaw",
+    "pitch axis",
+    "longitudinal axis",
+    "lateral axis"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "The jet from outside: parts and axes", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 82
+  },
+  {
+   "id": "AFOQT.AI.aircraft",
+   "text": "Know airplane parts and basic systems, and how rotary wing aircraft differ: cowling, empennage, landing gear, rotor systems, collective and cyclic.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named: rotary and fixed wing aircraft); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 12: Aviation Information (AI)",
+   "kind": "definition",
+   "tasks": [
+    "AI"
+   ],
+   "match": [
+    "fuselage",
+    "empennage",
+    "cowling",
+    "landing gear",
+    "helicopters?",
+    "rotary[- ]wing",
+    "main rotor",
+    "tail rotor",
+    "collective",
+    "cyclic"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AI.instruments",
+   "text": "Know the basic flight instruments: airspeed indicator, altimeter, attitude indicator, heading and turn instruments.",
+   "source": "Halcyon outline review 2026-11-07 (Halcyon breakdown)",
+   "group": "Subtest 12: Aviation Information (AI)",
+   "kind": "definition",
+   "tasks": [
+    "AI"
+   ],
+   "match": [
+    "airspeed indicator",
+    "altimeter",
+    "attitude indicator",
+    "heading indicator",
+    "turn coordinator",
+    "vertical speed",
+    "pitot",
+    "static port"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AI.airfield",
+   "text": "Know airport operations and rules: runway numbering and markings, airfield lighting, traffic patterns, and airport and security rules.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06) (named: airport rules); Halcyon outline review 2026-11-07",
+   "group": "Subtest 12: Aviation Information (AI)",
+   "kind": "definition",
+   "tasks": [
+    "AI"
+   ],
+   "match": [
+    "runway (numbers?|markings?|heading)",
+    "taxiway",
+    "traffic pattern",
+    "airport (lighting|beacon|markings?|security)",
+    "VASI",
+    "PAPI",
+    "hold(ing)? short",
+    "wind sock",
+    "control tower"
+   ],
+   "refs": [],
+   "status": "mentioned",
+   "depth": 0
+  },
+  {
+   "id": "AFOQT.AI.format",
+   "text": "Know the AI format and pace: 20 items in 8 minutes (24 seconds each), 5 choices; it feeds the Pilot and ABM composites.",
+   "source": "Pearson VUE AFOQT page (updated 2026-08-06); AFOQT Information Pamphlet Form T (AFPT 997, updated 2015-08-01)",
+   "group": "Subtest 12: Aviation Information (AI)",
+   "kind": "procedural",
+   "tasks": [
+    "AI"
+   ],
+   "match": [
+    "aviation information",
+    "8 minutes",
+    "24 seconds",
+    "Pilot composite",
+    "ABM composite"
+   ],
+   "refs": [
+    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 68
+  }
+ ],
+ "seeded": "2026-11-08"
+}
