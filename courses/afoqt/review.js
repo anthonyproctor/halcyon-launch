@@ -7,7 +7,7 @@
 // courses/afoqt/full/chNN.js lesson.sections). mock:true instead of ch means only the practice tests teach it (Math Knowledge, Physical
 // Science, Instrument Comprehension and Block Counting, whose lessons come in later chapters).
 // Links reach ch01 to ch05. The AR and SDI items point at ch05 "Rate Problems"; rvLink shows no button for a chapter that isn't loaded, so
-// those links appear once full/ch05.js is in the afoqt scripts list. The CSO and ABM composite rows link to ch01's
+// those links appear once full/ch05.js is in the afoqt scripts list. The IC and AI rows and the climbing vs. diving contrast point at ch08's lesson (2026-11-08); their buttons appear once full/ch08.js is in the scripts list. The CSO and ABM composite rows link to ch01's
 // composites section, which teaches both lists (added 2026-11-07). Exam check applied 2026-11-07.
 // Sources: the lessons in courses/afoqt/full/ch01.js to ch04.js and the explanations in courses/afoqt/mock/t1_*.js and t2_*.js; the AFOQT
 // outline map, bible fact check and figure spec of 2026-11-07 (halcyon-private), which rest on Pearson's AFOQT page (updated 2026-08-06),
@@ -116,9 +116,9 @@ window.HALCYON_REVIEW.afoqt={
       {name:"Tricks", d:"X is the column across the top. Y is the row down the side. Find the column, then slide down to the row, and say the sign out loud in your head so a minus doesn't vanish.", ch:1, sec:5}
     ]},
     {group:"10. Instrument Comprehension", note:"Can you see the airplane's attitude and heading from two dials?", items:[
-      {name:"Traps", d:"Wrong pictures often miss on just one thing: bank, pitch or heading. Two may look right until you check that cue.", mock:true},
-      {name:"Pacing", where:"About 12 seconds each", d:"Check the cues in the same order every time, and throw out a picture the moment one cue misses.", mock:true},
-      {name:"Tricks", d:"You're looking north, east on your right. Horizon below the little airplane means climbing, above means diving. The bank goes the way the pointer leans, from the pilot's seat. East points the nose right, west left, south at you, north away.", mock:true}
+      {name:"Traps", d:"Wrong pictures often miss on just one thing: bank, pitch or heading. Two may look right until you check that cue.", ch:8, sec:4},
+      {name:"Pacing", where:"About 12 seconds each", d:"Check the cues in the same order every time, and throw out a picture the moment one cue misses.", ch:8, sec:4},
+      {name:"Tricks", d:"You're looking north, east on your right. Horizon below the little airplane means climbing, above means diving. Whichever end of the horizon line sits higher, that's your low wing side. The pointer at the top agrees. East points the nose right, west left, south at you, north away.", ch:8, sec:3}
     ]},
     {group:"11. Block Counting", note:"3D spatial reasoning. How many blocks does a numbered block touch?", items:[
       {name:"Traps", d:"Counting a block that meets yours only at an edge or a corner. Missing the hidden block holding yours up.", mock:true},
@@ -126,8 +126,8 @@ window.HALCYON_REVIEW.afoqt={
       {name:"Tricks", d:"Only face contact counts, and a partial face still counts. Go in the same order every time: above, below, then each side. Nothing floats, so anything resting on air has a block under it.", mock:true}
     ]},
     {group:"12. Aviation Information", note:"Aerodynamics, flight controls, instruments and the airfield.", items:[
-      {name:"Traps", d:"Angle of incidence and angle of attack swapped. A stall is about angle of attack, at any airspeed.", mock:true},
-      {name:"Pacing", where:"About 24 seconds each", d:"Last subtest of a long day. Know it or guess, and finish with an answer on every item.", mock:true},
+      {name:"Traps", d:"Angle of incidence and angle of attack swapped. A stall is about angle of attack, at any airspeed.", ch:8, sec:6},
+      {name:"Pacing", where:"About 24 seconds each", d:"Last subtest of a long day. Know it or guess, and finish with an answer on every item.", ch:8, sec:0},
       {name:"Tricks", d:"Each control with its axis and its motion. Ailerons, longitudinal, roll. Elevator, lateral, pitch. Rudder, vertical, yaw. Beacons: white and green is a land airport, and a military field flashes the white twice.", ch:1, sec:4}
     ]}
   ],
@@ -149,7 +149,7 @@ window.HALCYON_REVIEW.afoqt={
     {topic:"Most vs. least effective", l:["Most","Least"], a:"Who owns the problem, and does this deal with it at the right level, soon and in private?", b:"Which one does the most harm? A lie or a skipped level usually beats slow.", ch:2, sec:4},
     {topic:"X vs. Y on Table Reading", l:["X","Y"], a:"The column, across the top.", b:"The row, down the side. Swapping them is the costliest slip on the page.", ch:1, sec:5},
     {topic:"Detail vs. inference", l:["Detail","Inference"], a:"One line says it. The trap is a real detail from a different line.", b:"Nobody wrote it, but the lines force it. Take the smallest step, not the bold leap.", ch:3, sec:1},
-    {topic:"Climbing vs. diving on the attitude dial", l:["Climbing","Diving"], a:"The horizon line sits below the little airplane.", b:"The horizon line sits above it.", mock:true},
+    {topic:"Climbing vs. diving on the attitude dial", l:["Climbing","Diving"], a:"The horizon line sits below the little airplane.", b:"The horizon line sits above it.", ch:8, sec:1},
     {topic:"Face vs. edge on Block Counting", l:["Counts","Doesn't count"], a:"Any shared face, even part of one.", b:"Touching only along an edge or at a corner.", mock:true},
     {topic:"Verbal vs. Quantitative", l:["Verbal","Quantitative"], a:"Analogies, Word Knowledge and Reading Comprehension. You need 15.", b:"Arithmetic Reasoning and Math Knowledge. You need 10.", ch:1, sec:1}
   ],

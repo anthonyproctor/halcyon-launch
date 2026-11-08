@@ -933,10 +933,11 @@
    ],
    "refs": [
     {"ch": 7, "sec": 13, "h": "Electricity and magnets", "auto": true},
-    {"ch": 7, "sec": 14, "h": "Waves, sound and light", "auto": true}
+    {"ch": 7, "sec": 14, "h": "Waves, sound and light", "auto": true},
+    {"ch": 8, "sec": 13, "h": "Gyros and the compass", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 685
+   "depth": 749
   },
   {
    "id": "AFOQT.PS.matter-chemistry",
@@ -1114,10 +1115,13 @@
     "pitch (up|down|attitude)"
    ],
    "refs": [
-    {"ch": 7, "sec": 15, "h": "Earth and sky", "auto": true}
+    {"ch": 7, "sec": 15, "h": "Earth and sky", "auto": true},
+    {"ch": 8, "sec": 1, "h": "The attitude indicator", "auto": true},
+    {"ch": 8, "sec": 3, "h": "Looking north", "auto": true},
+    {"ch": 8, "sec": 4, "h": "Twelve seconds", "auto": true}
    ],
-   "status": "explained",
-   "depth": 153
+   "status": "independently assessed",
+   "depth": 705
   },
   {
    "id": "AFOQT.IC.heading",
@@ -1136,9 +1140,15 @@
     "northeast|northwest|southeast|southwest",
     "compass card"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 2, "h": "The compass", "auto": true},
+    {"ch": 8, "sec": 3, "h": "Looking north", "auto": true},
+    {"ch": 8, "sec": 4, "h": "Twelve seconds", "auto": true},
+    {"ch": 8, "sec": 13, "h": "Gyros and the compass", "auto": true},
+    {"ch": 8, "sec": 14, "h": "Runways", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 594
   },
   {
    "id": "AFOQT.IC.aircraft-views",
@@ -1159,9 +1169,12 @@
     "from behind",
     "four (pictures|aircraft)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "Looking north", "auto": true},
+    {"ch": 8, "sec": 4, "h": "Twelve seconds", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 149
   },
   {
    "id": "AFOQT.IC.format",
@@ -1182,10 +1195,11 @@
    ],
    "refs": [
     {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true},
-    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true}
+    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true},
+    {"ch": 8, "sec": 0, "h": "Two blocks, two clocks", "auto": true}
    ],
-   "status": "explained",
-   "depth": 66
+   "status": "practiced",
+   "depth": 86
   },
   {
    "id": "AFOQT.BC.face-contact",
@@ -1272,9 +1286,15 @@
     "airfoil",
     "relative wind"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 5, "h": "The four forces", "auto": true},
+    {"ch": 8, "sec": 6, "h": "How a wing makes lift", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Stalls", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Drag", "auto": true},
+    {"ch": 8, "sec": 9, "h": "Controls, trim and stability", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 860
   },
   {
    "id": "AFOQT.AI.controls",
@@ -1298,10 +1318,13 @@
     "lateral axis"
    ],
    "refs": [
-    {"ch": 1, "sec": 4, "h": "The jet from outside: parts and axes", "auto": true}
+    {"ch": 1, "sec": 4, "h": "The jet from outside: parts and axes", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Stalls", "auto": true},
+    {"ch": 8, "sec": 9, "h": "Controls, trim and stability", "auto": true},
+    {"ch": 8, "sec": 10, "h": "What it's made of", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 82
+   "depth": 346
   },
   {
    "id": "AFOQT.AI.aircraft",
@@ -1324,9 +1347,12 @@
     "collective",
     "cyclic"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 10, "h": "What it's made of", "auto": true},
+    {"ch": 8, "sec": 11, "h": "Helicopters", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 268
   },
   {
    "id": "AFOQT.AI.instruments",
@@ -1348,10 +1374,12 @@
     "static port"
    ],
    "refs": [
-    {"ch": 7, "sec": 5, "h": "Pressure, Pascal and floating", "auto": true}
+    {"ch": 7, "sec": 5, "h": "Pressure, Pascal and floating", "auto": true},
+    {"ch": 8, "sec": 12, "h": "Pitot and static", "auto": true},
+    {"ch": 8, "sec": 13, "h": "Gyros and the compass", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 65
+   "depth": 315
   },
   {
    "id": "AFOQT.AI.airfield",
@@ -1373,9 +1401,13 @@
     "wind sock",
     "control tower"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 14, "h": "Runways", "auto": true},
+    {"ch": 8, "sec": 15, "h": "Signs, lights and the tower", "auto": true},
+    {"ch": 8, "sec": 16, "h": "The pattern, right of way, and the gate", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 745
   },
   {
    "id": "AFOQT.AI.format",
@@ -1395,10 +1427,11 @@
    ],
    "refs": [
     {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true},
-    {"ch": 7, "sec": 0, "h": "Twenty in ten", "auto": true}
+    {"ch": 7, "sec": 0, "h": "Twenty in ten", "auto": true},
+    {"ch": 8, "sec": 0, "h": "Two blocks, two clocks", "auto": true}
    ],
    "status": "practiced",
-   "depth": 109
+   "depth": 231
   }
  ],
  "seeded": "2026-11-08"
