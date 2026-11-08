@@ -78,9 +78,11 @@
     "average speed",
     "travel time"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 5, "sec": 6, "h": "Distance equals rate times time", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 274
   },
   {
    "id": "AFOQT.AR.ratio-proportion",
@@ -101,9 +103,11 @@
     "inversely proportional",
     "parts? to"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 5, "sec": 7, "h": "Ratio and proportion", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 372
   },
   {
    "id": "AFOQT.AR.percent",
@@ -123,9 +127,13 @@
     "markup",
     "sales tax"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 5, "sec": 8, "h": "Percent", "auto": true},
+    {"ch": 5, "sec": 9, "h": "Mixtures and working together", "auto": true},
+    {"ch": 7, "sec": 15, "h": "Earth and sky", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 845
   },
   {
    "id": "AFOQT.AR.mixture-work",
@@ -146,9 +154,11 @@
     "per hour together",
     "alloy"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 5, "sec": 9, "h": "Mixtures and working together", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 138
   },
   {
    "id": "AFOQT.AR.number",
@@ -171,10 +181,12 @@
    ],
    "refs": [
     {"ch": 5, "sec": 2, "h": "Rates that change partway", "auto": true},
+    {"ch": 5, "sec": 6, "h": "Distance equals rate times time", "auto": true},
+    {"ch": 5, "sec": 10, "h": "Other setups", "auto": true},
     {"ch": 6, "sec": 1, "h": "The names of things", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 207
+   "depth": 421
   },
   {
    "id": "AFOQT.AR.geometry",
@@ -814,9 +826,14 @@
     "Pascal'?s",
     "velocity"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 2, "h": "Speed, velocity and falling", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Newton's three laws", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Momentum, friction and gravity", "auto": true},
+    {"ch": 7, "sec": 8, "h": "Simple machines", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 548
   },
   {
    "id": "AFOQT.PS.simple-machines",
@@ -838,9 +855,11 @@
     "wedge",
     "screw"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 8, "h": "Simple machines", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 211
   },
   {
    "id": "AFOQT.PS.energy-heat",
@@ -862,9 +881,13 @@
     "convection",
     "thermal expansion"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 1, "h": "Units first", "auto": true},
+    {"ch": 7, "sec": 7, "h": "Work, energy and power", "auto": true},
+    {"ch": 7, "sec": 9, "h": "Heat and temperature", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 283
   },
   {
    "id": "AFOQT.PS.electricity-waves",
@@ -887,9 +910,12 @@
     "refraction",
     "law of reflection"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 13, "h": "Electricity and magnets", "auto": true},
+    {"ch": 7, "sec": 14, "h": "Waves, sound and light", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 685
   },
   {
    "id": "AFOQT.PS.matter-chemistry",
@@ -912,9 +938,13 @@
     "boiling point",
     "chemical reaction"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 10, "h": "Matter and how it changes", "auto": true},
+    {"ch": 7, "sec": 11, "h": "Atoms, the table and bonds", "auto": true},
+    {"ch": 7, "sec": 12, "h": "Acids, bases and the nucleus", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 681
   },
   {
    "id": "AFOQT.PS.earth-space",
@@ -936,9 +966,11 @@
     "Earth'?s (axis|crust|core|rotation)",
     "lunar|moon phases"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 15, "h": "Earth and sky", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 264
   },
   {
    "id": "AFOQT.PS.units",
@@ -958,9 +990,15 @@
     "units of measure",
     "base units?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 1, "h": "Units first", "auto": true},
+    {"ch": 7, "sec": 3, "h": "Newton's three laws", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Momentum, friction and gravity", "auto": true},
+    {"ch": 7, "sec": 7, "h": "Work, energy and power", "auto": true},
+    {"ch": 7, "sec": 8, "h": "Simple machines", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 435
   },
   {
    "id": "AFOQT.PS.format",
@@ -977,9 +1015,11 @@
     "30 seconds (each|per)",
     "high school (physics|science)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 0, "h": "Twenty in ten", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 95
   },
   {
    "id": "AFOQT.TR.lookup",
@@ -1050,9 +1090,11 @@
     "nose (up|down)",
     "pitch (up|down|attitude)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 15, "h": "Earth and sky", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 153
   },
   {
    "id": "AFOQT.IC.heading",
@@ -1282,9 +1324,11 @@
     "pitot",
     "static port"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 5, "h": "Pressure, Pascal and floating", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 65
   },
   {
    "id": "AFOQT.AI.airfield",
@@ -1327,10 +1371,11 @@
     "ABM composite"
    ],
    "refs": [
-    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true}
+    {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true},
+    {"ch": 7, "sec": 0, "h": "Twenty in ten", "auto": true}
    ],
    "status": "practiced",
-   "depth": 68
+   "depth": 109
   }
  ],
  "seeded": "2026-11-08"

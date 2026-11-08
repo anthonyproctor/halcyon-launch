@@ -74,7 +74,12 @@ window.HALCYON_REVIEW.afoqt={
     {group:"2. Arithmetic Reasoning", note:"Can you turn a paragraph into a setup and work it on scratch paper?", items:[
       {name:"Traps", d:"Two hours twenty minutes written as 2.2 hours. Averaging two rates or two class averages when the times or group sizes differ. A real number from the problem that answers a different question.", ch:5, sec:1},
       {name:"Pacing", where:"About 70 seconds each", d:"Most of that minute goes to reading and setting up. It comes right after a fast subtest, so read the first problem twice.", ch:4, sec:4},
-      {name:"Tricks", d:"Amount equals rate times time. Have two, get the third. Write units next to every number, and if they don't come out as what was asked, the setup's wrong. Practice without a calculator.", ch:5, sec:0}
+      {name:"Tricks", d:"Amount equals rate times time. Have two, get the third. Write units next to every number, and if they don't come out as what was asked, the setup's wrong. Practice without a calculator.", ch:5, sec:0},
+      {name:"Speeds", d:"Head on or flying apart, add the speeds. Same way, subtract. Average speed? Total miles over total hours. Don't average the two speeds, that's the trap.", ch:5, sec:6},
+      {name:"Ratios", d:"Cross multiply. A map scale's a ratio too. More of one and less of the other means inverse, so multiply instead. Splitting 7 to 4? Add the parts first, then divide.", ch:5, sec:7},
+      {name:"Percents", d:"Change goes over the number you started with. Up 10, then down 10, and you're short. Simple interest is principal times rate times years. Undo a markup by dividing.", ch:5, sec:8},
+      {name:"Mixtures and work", d:"Follow the pure stuff, amount times strength. Two working together? Add rates, not times. With both helping, it beats the faster one alone. With a drain, it's slower.", ch:5, sec:9},
+      {name:"Other setups", d:"Weighted average: total over total, not the two averages split down the middle. Probability: what you want over everything. Overlaps: don't count the both group twice. Handshakes: n times n minus one, over two.", ch:5, sec:10}
     ]},
     {group:"3. Word Knowledge", note:"How big is your vocabulary, and can you take apart a word you half know?", items:[
       {name:"Traps", d:"A choice that shares the first syllable and nothing else. The exact opposite, for the person who knows the word but not which side it's on. Near meanings that are wrong in one way that matters.", ch:2, sec:0},
@@ -98,12 +103,12 @@ window.HALCYON_REVIEW.afoqt={
     ]},
     {group:"7. Self-Description Inventory", note:"How you work and deal with people. Not graded, and there are no right answers.", items:[
       {name:"Traps", d:"Answering as the officer you think they want. Spending the time guessing what each line is for.", ch:5, sec:5},
-      {name:"Pacing", where:"About 11 seconds each", d:"Take your first honest answer and keep moving. Answer every one, or Pearson holds your scores.", ch:5, sec:5}
+      {name:"Pacing", where:"About 11 seconds each", d:"Take your first honest answer and keep moving. Answer every one. Pearson's page says each question must be answered to receive results.", ch:5, sec:5}
     ]},
     {group:"8. Physical Science", note:"High school physics, chemistry and earth and space science, mostly one step recall.", items:[
-      {name:"Traps", d:"Mass and weight swapped: mass doesn't change on the moon. The final speed used as the acceleration. Thinking twice the speed means twice the energy. It's four times. Dividing a half life evenly when it halves.", mock:true},
-      {name:"Pacing", where:"About 30 seconds each", d:"Most are recall, so know it or guess. Save your seconds for the few with one step of math.", mock:true},
-      {name:"Tricks", d:"Force is mass times acceleration. Current is voltage over resistance. One pH step is ten times. Sound needs something to travel through, light doesn't. Seasons come from the tilt, not the distance.", mock:true}
+      {name:"Traps", d:"Mass and weight swapped: mass doesn't change on the moon. The final speed used as the acceleration. Thinking twice the speed means twice the energy. It's four times. Dividing a half life evenly when it halves.", ch:7, sec:1},
+      {name:"Pacing", where:"About 30 seconds each", d:"Most are recall, so know it or guess. Save your seconds for the few with one step of math.", ch:7, sec:0},
+      {name:"Tricks", d:"Force is mass times acceleration. Current is voltage over resistance. One pH step is ten times. Sound needs something to travel through, light doesn't. Seasons come from the tilt, not the distance.", ch:7, sec:3}
     ]},
     {group:"9. Table Reading", note:"Perceptual speed. Can you find one cell in a big grid without slipping a row?", items:[
       {name:"Traps", d:"Many wrong choices are the cells next door or the cell with X and Y swapped.", ch:1, sec:5},
