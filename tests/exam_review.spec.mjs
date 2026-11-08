@@ -96,19 +96,7 @@ for (const scheme of ["light", "dark"]) {
   });
 }
 
-test("other books show no review button, and their review address falls back to the book's home", async ({ page }) => {
-  for (const id of ["cphims"]) {
-    await page.goto(`/#${id}/home`);
-    await expect(page.locator("#page h1")).toBeVisible();
-    await expect(page.locator("#page .mockhome, #page #mocksoon").first()).toBeAttached();
-    await expect(page.locator("#rvbtn")).toHaveCount(0);
-    await page.goto("about:blank");
-    await page.goto(`/#${id}/review`);
-    await expect(page.locator("#page h1")).toBeVisible();
-    await expect(page.locator("#page h1")).not.toHaveText("Exam week review");
-    await expect(page.locator("#rv-formulas")).toHaveCount(0);
-  }
-});
+// (2026-11-07) every book now has a review page, so the "other books show no review button" test was retired.
 
 // ---- Hearth (asep), The Copilot Rollout (gh300), Exception Noted (cisa), Danny's Logbook (pilot) and The Appeal (lsat): sections come
 // from D.sections, so the expected layout is read from the data ----
@@ -128,7 +116,8 @@ const BOOKS = [
   { id: "cisa", body: "ISACA" },
   { id: "pilot", body: "the FAA" },
   { id: "afoqt", body: "the Department of the Air Force, AFPC or Pearson" },
-  { id: "lsat", body: "LSAC" }
+  { id: "lsat", body: "LSAC" },
+  { id: "cphims", body: "HIMSS" }
 ];
 
 for (const { id, body } of BOOKS) {

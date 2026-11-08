@@ -90,6 +90,19 @@
    "pattern": "what does (this|the second) author do to the first",
    "why": "Comparative passages often address a topic independently; don't teach that the second author always acts on the first",
    "ruled": "2026-11-07 Codex audit (lsat ch07 Two passages)"
+  },
+  {
+   "course": "cphims",
+   "pattern": "(payment|insurance|billing|financial) (questions?|information|info|details|talk)[^.]{0,30}\\bwaits?\\b",
+   "unless": "authoriz|delay",
+   "why": "EMTALA (42 CFR 489.24(d)(4)): registration may ask about insurance if it doesn't delay the screening exam; what waits is seeking insurer authorization",
+   "ruled": "2026-11-07 cphims review examcheck"
+  },
+  {
+   "course": "cphims",
+   "pattern": "500 or more[^.]{0,30}\\bHHS too\\b|(under|fewer than|less than|below) 500[^.]{0,40}\\b(no|not|don'?t|doesn'?t|needn'?t|skip)\\b[^.]{0,30}\\bHHS\\b|only (breaches (of|affecting) )?500 or more[^.]{0,40}\\bHHS\\b",
+   "why": "HIPAA breach notice (45 CFR 164.408): breaches under 500 still go to HHS, logged and reported within 60 days after the calendar year ends",
+   "ruled": "2026-11-07 cphims review examcheck"
   }
  ]
 }
