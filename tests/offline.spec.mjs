@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SHOTS = process.env.OFFLINE_SHOTS || "";
-const TYPES = { ".txt": "text/plain", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json", ".webmanifest": "application/manifest+json", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg" };
+const TYPES = { ".txt": "text/plain", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json", ".webmanifest": "application/manifest+json", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp" };
 // MPEG-1 Layer III, 32 kbps, 44.1 kHz: 104 byte frames of silence, 26 ms each. 300 seconds, about 1.2 MB.
 const FIXTURE = (() => { const n = 11540, b = Buffer.alloc(n * 104); for (let i = 0; i < n; i++) { b[i * 104] = 0xff; b[i * 104 + 1] = 0xfb; b[i * 104 + 2] = 0x10; b[i * 104 + 3] = 0xc4 } return b })();
 let USER = { email: "reader@example.test", name: "Test Reader", admin: false, tester: false, cur: 0 };
@@ -337,6 +337,20 @@ test("every book opens offline, with its Listen page", async ({ page, browserNam
     await page.goto("about:blank"); await page.goto(P(`#${id}/home`));
     await expect(page.locator("#page .ctile").first(), id + " chapters").toBeVisible({ timeout: 20_000 });
   }
+});
+
+// exam figure pictures (courses/<id>/figs, assets.js HALCYON_FIGS, 2026-11-07): the engine warms every one into the worker's cache with the
+// book scripts, so a quiz or practice test opened with no signal still shows its FAA figures
+test("exam figure pictures are in the offline cache and load with no network", async ({ page, browserName }) => {
+  await openApp(page);
+  const figs = await page.evaluate(() => window.HALCYON_FIGS || []);
+  expect(figs.length).toBeGreaterThan(15);
+  await expect.poll(() => page.evaluate(async fs => { let n = 0; for (const f of fs) if (await caches.match(new URL(f, location.href).href, { ignoreVary: true })) n++; return n }, figs), { timeout: 45_000 }).toBe(figs.length);
+  await goOffline(page, browserName);
+  const got = await page.evaluate(async f => { const r = await fetch(f); return { ok: r.ok, type: r.headers.get("content-type"), size: (await r.blob()).size } }, figs[0]);
+  expect(got.ok).toBe(true);
+  expect(got.type).toBe("image/webp");
+  expect(got.size).toBeGreaterThan(5000);
 });
 
 test("a server error or a captive portal's page isn't a sign out; only the server saying so is, and even that wipes nothing", async ({ page }) => {

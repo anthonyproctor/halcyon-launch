@@ -10,7 +10,7 @@ const ABS=/\b(every|always|never|exactly|only|all)\b[^.!?]{0,50}\b(choices?|answ
 const HEDGE=/\b(many|some|often|usually|most|can|may|might|tends?)\b/i;
 let fails=0,warns=0;
 // PMP lives in full/v2 and final/; courses.js blurbs are checked with every course
-const files=id=>{const d=path.join(root,"courses",id),out=[path.join(root,"courses.js")];if(id==="pmp"){const v=path.join(root,"full","v2");for(const f of fs.readdirSync(v))if(f.endsWith(".js"))out.push(path.join(v,f));if(fs.existsSync(path.join(root,"final","pmp.js")))out.push(path.join(root,"final","pmp.js"))}for(const sub of ["full","mock"]){const p=path.join(d,sub);if(fs.existsSync(p))for(const f of fs.readdirSync(p))if(f.endsWith(".js"))out.push(path.join(p,f))}for(const f of ["review.js","intros.js"])if(fs.existsSync(path.join(d,f)))out.push(path.join(d,f));return out};
+const files=id=>{const d=path.join(root,"courses",id),out=[path.join(root,"courses.js")];if(id==="pmp"){const v=path.join(root,"full","v2");for(const f of fs.readdirSync(v))if(f.endsWith(".js"))out.push(path.join(v,f));if(fs.existsSync(path.join(root,"final","pmp.js")))out.push(path.join(root,"final","pmp.js"))}for(const sub of ["full","mock"]){const p=path.join(d,sub);if(fs.existsSync(p))for(const f of fs.readdirSync(p))if(f.endsWith(".js"))out.push(path.join(p,f))}for(const f of ["review.js","intros.js","mock.js"])if(fs.existsSync(path.join(d,f)))out.push(path.join(d,f));return out};
 for(const id of ids){
   const rules=R.filter(r=>r.course==="*"||r.course===id).map(r=>({...r,re:new RegExp(r.pattern,"i"),un:r.unless?new RegExp(r.unless,"i"):null}));
   for(const f of files(id)){

@@ -262,9 +262,9 @@ C.mock.push({ part:`Preflight`, questions:[
 
 { q:`A pilot thinks, "Accidents happen to other pilots, not to me." Which antidote fits this hazardous attitude?`,
   opts:[`"Follow the rules. They are usually right."`,
-        `"It could happen to me. Taking chances is foolish."`,
+        `"It could happen to me."`,
         `"Not so fast. Think first."`],
-  a:1, why:`PHAK ch 2: this is invulnerability, and its antidote is "It could happen to me. Taking chances is foolish." "Follow the rules" answers anti authority, and "Not so fast" answers impulsivity.`,
+  a:1, why:`PHAK ch 2: this is invulnerability, and its antidote is "It could happen to me." "Follow the rules" answers anti authority, and "Not so fast" answers impulsivity. "Taking chances is foolish" is the macho antidote.`,
   task:`I.H`, domain:`Preflight` },
 
 { q:`A pilot finishes a beer at 2330. Assuming the pilot isn't under the influence and has an alcohol concentration below 0.04, what is the earliest time 14 CFR 91.17 allows the pilot to act as a crewmember?`,

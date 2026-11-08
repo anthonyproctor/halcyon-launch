@@ -103,6 +103,19 @@
    "pattern": "500 or more[^.]{0,30}\\bHHS too\\b|(under|fewer than|less than|below) 500[^.]{0,40}\\b(no|not|don'?t|doesn'?t|needn'?t|skip)\\b[^.]{0,30}\\bHHS\\b|only (breaches (of|affecting) )?500 or more[^.]{0,40}\\bHHS\\b",
    "why": "HIPAA breach notice (45 CFR 164.408): breaches under 500 still go to HHS, logged and reported within 60 days after the calendar year ends",
    "ruled": "2026-11-07 cphims review examcheck"
+  },
+  {
+   "course": "pilot",
+   "pattern": "could happen to me[.,;]? (and )?taking chances is foolish|^taking chances is foolish\\.[\"”]",
+   "unless": "macho",
+   "why": "PHAK figure 2-4: \"It could happen to me\" is the invulnerability antidote and \"Taking chances is foolish\" is the macho one; don't merge them into one antidote",
+   "ruled": "2026-11-07 pilot form3 examcheck"
+  },
+  {
+   "course": "pilot",
+   "pattern": "invulnerab[^.]{0,60}\\b(antidote|countered|answered)[^.]{0,30}taking chances is foolish|taking chances is foolish[^.]{0,40}\\b(answers|counters|is the antidote (for|to))\\b[^.]{0,10}invulnerab|macho[^.]{0,60}\\b(antidote|countered|answered)[^.]{0,30}could happen to me|could happen to me[^.]{0,40}\\b(answers|counters|is the antidote (for|to))\\b[^.]{0,10}macho",
+   "why": "PHAK figure 2-4 pairs invulnerability with \"It could happen to me\" and macho with \"Taking chances is foolish\"",
+   "ruled": "2026-11-07 pilot form3 examcheck"
   }
  ]
 }

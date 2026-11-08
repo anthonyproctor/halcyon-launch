@@ -1,0 +1,228 @@
+{
+ "source": "FAA-CT-8080-2H, Airman Knowledge Testing Supplement for Sport Pilot, Recreational Pilot, Remote Pilot, and Private Pilot (FAA Flight Standards Service, 2018, effective June 11, 2018)",
+ "sourceUrl": "https://www.faa.gov/sites/faa.gov/files/training_testing/testing/supplements/sport_rec_private_akts.pdf",
+ "license": "A work of the U.S. Government (FAA), not subject to copyright in the United States (17 U.S.C. 105). No third party credit, copyright or permission notice appears anywhere in the supplement (checked 2026-11-07). The excerpts are reproduced unchanged except for cropping, rotating the sideways tables upright, resizing and WebP compression. Sectional excerpts carry the FAA's own note: not to scale and not for navigation.",
+ "made": "2026-11-07: pages rendered at 300 dpi with pdftoppm, cropped to the figure, sideways figures 37, 38 and 40 turned upright, resized to 1000 to 1600 px wide, cwebp (sectionals q50, line art q72).",
+ "figures": [
+  {
+   "file": "courses/pilot/figs/fig-density-altitude.webp",
+   "faaFigure": 8,
+   "title": "Density Altitude Chart",
+   "page": "2-8",
+   "width": 1400,
+   "height": 1374,
+   "bytes": 138146,
+   "alt": "FAA figure 8, density altitude chart: slanted pressure altitude lines from minus 1,000 to 14,000 feet over outside air temperature, read against approximate density altitude, with a table of altimeter settings and pressure altitude conversion factors",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-density-altitude.webp\" title=\"Figure 8. Density Altitude Chart\" alt=\"FAA figure 8, density altitude chart: slanted pressure altitude lines from minus 1,000 to 14,000 feet over outside air temperature, read against approximate density altitude, with a table of altimeter settings and pressure altitude conversion factors\" w=\"1400\" h=\"1374\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-taxi-controls.webp",
+   "faaFigure": 9,
+   "title": "Control Position for Taxi",
+   "page": "2-9",
+   "width": 1000,
+   "height": 913,
+   "bytes": 24374,
+   "alt": "FAA figure 9, control position for taxi: a high wing airplane seen from above with four wind arrows, A left front quarter, B right front quarter, C left rear quarter, D right rear quarter",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-taxi-controls.webp\" title=\"Figure 9. Control Position for Taxi\" alt=\"FAA figure 9, control position for taxi: a high wing airplane seen from above with four wind arrows, A left front quarter, B right front quarter, C left rear quarter, D right rear quarter\" w=\"1000\" h=\"913\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-metar.webp",
+   "faaFigure": 12,
+   "title": "Aviation Routine Weather Reports (METAR)",
+   "page": "2-12",
+   "width": 1600,
+   "height": 358,
+   "bytes": 28866,
+   "alt": "FAA figure 12, five METAR and SPECI reports for KINK, KBOI, KLAX, KMDW and KJFK",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-metar.webp\" title=\"Figure 12. Aviation Routine Weather Reports\" alt=\"FAA figure 12, five METAR and SPECI reports for KINK, KBOI, KLAX, KMDW and KJFK\" w=\"1600\" h=\"358\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-taf.webp",
+   "faaFigure": 15,
+   "title": "Terminal Aerodrome Forecasts (TAF)",
+   "page": "2-15",
+   "width": 1600,
+   "height": 582,
+   "bytes": 69386,
+   "alt": "FAA figure 15, terminal aerodrome forecasts for KMEM and KOKC with FM, TEMPO, PROB40 and BECMG groups",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-taf.webp\" title=\"Figure 15. Terminal Aerodrome Forecasts\" alt=\"FAA figure 15, terminal aerodrome forecasts for KMEM and KOKC with FM, TEMPO, PROB40 and BECMG groups\" w=\"1600\" h=\"582\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-winds-aloft.webp",
+   "faaFigure": 17,
+   "title": "Winds and Temperatures Aloft Forecast",
+   "page": "2-16",
+   "width": 1600,
+   "height": 412,
+   "bytes": 50990,
+   "alt": "FAA figure 17, winds and temperatures aloft forecast table for ALS, AMA, DEN, HLC, MKC and STL at 3,000 to 39,000 feet",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-winds-aloft.webp\" title=\"Figure 17. Winds and Temperatures Aloft Forecast\" alt=\"FAA figure 17, winds and temperatures aloft forecast table for ALS, AMA, DEN, HLC, MKC and STL at 3,000 to 39,000 feet\" w=\"1600\" h=\"412\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-sectional-20.webp",
+   "faaFigure": 20,
+   "title": "Sectional Chart Excerpt",
+   "page": "2-19",
+   "width": 1600,
+   "height": 2128,
+   "bytes": 490538,
+   "alt": "FAA figure 20, sectional chart excerpt of a coastal area with airports, airspace boundaries and numbered red markers at the points the questions ask about",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-sectional-20.webp\" title=\"Figure 20. Sectional Chart Excerpt\" alt=\"FAA figure 20, sectional chart excerpt of a coastal area with airports, airspace boundaries and numbered red markers at the points the questions ask about\" w=\"1600\" h=\"2128\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-sectional-22.webp",
+   "faaFigure": 22,
+   "title": "Sectional Chart Excerpt",
+   "page": "2-21",
+   "width": 1600,
+   "height": 2128,
+   "bytes": 541596,
+   "alt": "FAA figure 22, sectional chart excerpt of hilly terrain around a large lake with small airports, a contour interval legend and numbered red markers at the points the questions ask about",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-sectional-22.webp\" title=\"Figure 22. Sectional Chart Excerpt\" alt=\"FAA figure 22, sectional chart excerpt of hilly terrain around a large lake with small airports, a contour interval legend and numbered red markers at the points the questions ask about\" w=\"1600\" h=\"2128\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-sectional-25.webp",
+   "faaFigure": 25,
+   "title": "Sectional Chart Excerpt",
+   "page": "2-24",
+   "width": 1600,
+   "height": 2128,
+   "bytes": 696042,
+   "alt": "FAA figure 25, sectional chart excerpt of a busy Class B area over a large city, with several towered airports and numbered red markers at the points the questions ask about",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-sectional-25.webp\" title=\"Figure 25. Sectional Chart Excerpt\" alt=\"FAA figure 25, sectional chart excerpt of a busy Class B area over a large city, with several towered airports and numbered red markers at the points the questions ask about\" w=\"1600\" h=\"2128\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-loading-graph.webp",
+   "faaFigure": 34,
+   "title": "Airplane Weight and Balance Graphs (loading graph)",
+   "page": "2-31",
+   "width": 1400,
+   "height": 1025,
+   "bytes": 73610,
+   "alt": "FAA figure 34, top half, loading graph: load weight in pounds against load moment divided by 1,000 for the pilot and front passenger, rear passengers, baggage and fuel",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-loading-graph.webp\" title=\"Figure 34. Airplane Weight and Balance Graphs\" alt=\"FAA figure 34, top half, loading graph: load weight in pounds against load moment divided by 1,000 for the pilot and front passenger, rear passengers, baggage and fuel\" w=\"1400\" h=\"1025\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-cg-envelope.webp",
+   "faaFigure": 34,
+   "title": "Airplane Weight and Balance Graphs (center of gravity moment envelope)",
+   "page": "2-31",
+   "width": 1400,
+   "height": 786,
+   "bytes": 45026,
+   "alt": "FAA figure 34, bottom half, center of gravity moment envelope: loaded airplane weight against loaded moment divided by 1,000, with the normal and utility category areas",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-cg-envelope.webp\" title=\"Figure 34. Airplane Weight and Balance Graphs\" alt=\"FAA figure 34, bottom half, center of gravity moment envelope: loaded airplane weight against loaded moment divided by 1,000, with the normal and utility category areas\" w=\"1400\" h=\"786\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-wind-component.webp",
+   "faaFigure": 36,
+   "title": "Crosswind Component Graph",
+   "page": "2-33",
+   "width": 1400,
+   "height": 1167,
+   "bytes": 113890,
+   "alt": "FAA figure 36, crosswind component graph: quarter circle wind speed arcs and angle lines between wind and runway, read down to crosswind component and across to headwind component, with a worked example",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-wind-component.webp\" title=\"Figure 36. Crosswind Component Graph\" alt=\"FAA figure 36, crosswind component graph: quarter circle wind speed arcs and angle lines between wind and runway, read down to crosswind component and across to headwind component, with a worked example\" w=\"1400\" h=\"1167\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-landing-graph.webp",
+   "faaFigure": 37,
+   "title": "Airplane Landing Distance Graph",
+   "page": "2-34",
+   "width": 1600,
+   "height": 1001,
+   "bytes": 125742,
+   "alt": "FAA figure 37, airplane landing distance graph: outside air temperature and pressure altitude, then weight, then wind component, then a 50 foot obstacle, read across reference lines, with a worked example",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-landing-graph.webp\" title=\"Figure 37. Airplane Landing Distance Graph\" alt=\"FAA figure 37, airplane landing distance graph: outside air temperature and pressure altitude, then weight, then wind component, then a 50 foot obstacle, read across reference lines, with a worked example\" w=\"1600\" h=\"1001\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-landing-table.webp",
+   "faaFigure": 38,
+   "title": "Airplane Landing Distance Table",
+   "page": "2-35",
+   "width": 1400,
+   "height": 305,
+   "bytes": 42686,
+   "alt": "FAA figure 38, airplane landing distance table at 1,600 pounds: ground roll and total to clear a 50 foot obstacle at sea level, 2,500, 5,000 and 7,500 feet, with notes on headwind, temperature and grass runways",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-landing-table.webp\" title=\"Figure 38. Airplane Landing Distance Table\" alt=\"FAA figure 38, airplane landing distance table at 1,600 pounds: ground roll and total to clear a 50 foot obstacle at sea level, 2,500, 5,000 and 7,500 feet, with notes on headwind, temperature and grass runways\" w=\"1400\" h=\"305\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-takeoff-graph.webp",
+   "faaFigure": 40,
+   "title": "Airplane Takeoff Distance Graph",
+   "page": "2-37",
+   "width": 1600,
+   "height": 955,
+   "bytes": 135694,
+   "alt": "FAA figure 40, airplane takeoff distance graph: outside air temperature and pressure altitude, then weight, then wind component, then obstacle height, read across reference lines, with a worked example",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-takeoff-graph.webp\" title=\"Figure 40. Airplane Takeoff Distance Graph\" alt=\"FAA figure 40, airplane takeoff distance graph: outside air temperature and pressure altitude, then weight, then wind component, then obstacle height, read across reference lines, with a worked example\" w=\"1600\" h=\"955\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-vasi.webp",
+   "faaFigure": 47,
+   "title": "VASI Illustrations",
+   "page": "2-44",
+   "width": 1000,
+   "height": 1077,
+   "bytes": 33154,
+   "alt": "FAA figure 47, four two bar VASI illustrations labeled A to D, each a runway seen on approach with near and far light bars in red and white combinations",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-vasi.webp\" title=\"Figure 47. VASI Illustrations\" alt=\"FAA figure 47, four two bar VASI illustrations labeled A to D, each a runway seen on approach with near and far light bars in red and white combinations\" w=\"1000\" h=\"1077\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-airport-diagram.webp",
+   "faaFigure": 48,
+   "title": "Airport Diagram",
+   "page": "2-45",
+   "width": 1200,
+   "height": 1339,
+   "bytes": 45584,
+   "alt": "FAA figure 48, airport diagram with parallel runways, taxiways, ramps, a tower and an air carrier terminal, with red letter markers at runway and taxiway markings",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-airport-diagram.webp\" title=\"Figure 48. Airport Diagram\" alt=\"FAA figure 48, airport diagram with parallel runways, taxiways, ramps, a tower and an air carrier terminal, with red letter markers at runway and taxiway markings\" w=\"1200\" h=\"1339\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-landing-indicators.webp",
+   "faaFigure": 49,
+   "title": "Airport Diagram",
+   "page": "2-46",
+   "width": 1000,
+   "height": 858,
+   "bytes": 12020,
+   "alt": "FAA figure 49, airport diagram of crossing runways 18 36 and 4 22 with closed runway X markings and a segmented circle with a tetrahedron landing direction indicator",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-landing-indicators.webp\" title=\"Figure 49. Airport Diagram\" alt=\"FAA figure 49, airport diagram of crossing runways 18 36 and 4 22 with closed runway X markings and a segmented circle with a tetrahedron landing direction indicator\" w=\"1000\" h=\"858\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-segmented-circle.webp",
+   "faaFigure": 50,
+   "title": "Wind Sock Airport Landing Indicator",
+   "page": "2-47",
+   "width": 1000,
+   "height": 858,
+   "bytes": 14180,
+   "alt": "FAA figure 50, wind sock airport landing indicator: a segmented circle with a wind cone in the middle and four L shaped traffic pattern indicators, north arrow up",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-segmented-circle.webp\" title=\"Figure 50. Wind Sock Airport Landing Indicator\" alt=\"FAA figure 50, wind sock airport landing indicator: a segmented circle with a wind cone in the middle and four L shaped traffic pattern indicators, north arrow up\" w=\"1000\" h=\"858\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-airport-markings.webp",
+   "faaFigure": 64,
+   "title": "Airport Markings",
+   "page": "2-61",
+   "width": 1200,
+   "height": 1244,
+   "bytes": 29396,
+   "alt": "FAA figure 64, airport markings: a runway and taxiways with hold short, ILS critical area and taxiway edge markings at red letter markers A to F",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-airport-markings.webp\" title=\"Figure 64. Airport Markings\" alt=\"FAA figure 64, airport markings: a runway and taxiways with hold short, ILS critical area and taxiway edge markings at red letter markers A to F\" w=\"1200\" h=\"1244\"></prop>"
+  },
+  {
+   "file": "courses/pilot/figs/fig-airport-signs.webp",
+   "faaFigure": 65,
+   "title": "U.S. Airport Signs",
+   "page": "2-62",
+   "width": 1000,
+   "height": 1372,
+   "bytes": 38504,
+   "alt": "FAA figure 65, U.S. airport signs lettered A to N: mandatory red signs, yellow direction and destination signs, a black location sign, and runway and taxiway pavement markings",
+   "prop": "<prop type=\"img\" src=\"courses/pilot/figs/fig-airport-signs.webp\" title=\"Figure 65. U.S. Airport Signs\" alt=\"FAA figure 65, U.S. airport signs lettered A to N: mandatory red signs, yellow direction and destination signs, a black location sign, and runway and taxiway pavement markings\" w=\"1000\" h=\"1372\"></prop>"
+  }
+ ]
+}

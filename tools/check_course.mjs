@@ -20,6 +20,9 @@ const TELLS=/\b(delve|tapestry|it's worth noting|in today's fast.paced)\b/i;
 // a figure or picture option (engine.js figChart, figs.js): one <prop>; the picture kinds (dials, plane, blocks, xytable) checked by figs.js
 new Function('window',fs.readFileSync('figs.js','utf8'))(window);
 function figErr(label,f,option){const m=/^<prop\s+((?:[^>"]|"[^"]*")*)>([\s\S]*)<\/prop>$/.exec(f||"");if(!m)return err(`${label} is not one <prop>`);const a={};m[1].replace(/(\w+)="([^"]*)"/g,(_,k,v)=>a[k]=v);
+  // an image figure (engine.js type="img", 2026-11-07): a file in this course's figs/ folder, a title, and alt text a screen reader and the narration can say
+  if(a.type==="img"){if(option)return err(`${label}: an image can't be an option`);if(!/^courses\/[\w-]+\/figs\/[\w.-]+\.(webp|png|jpg)$/.test(a.src||"")||!a.src.startsWith(`courses/${id}/figs/`))return err(`${label}: img src ${a.src} is not in courses/${id}/figs/`);
+    if(!fs.existsSync(a.src))err(`${label}: ${a.src} is missing`);if(!a.title)err(`${label}: img needs a title`);if(!a.alt||a.alt.length<20)err(`${label}: img needs alt text that says what the picture shows`);if(/[<>]/.test(a.alt||""))err(`${label}: no < or > in alt`);if(dash(a.alt||"")||dash(a.title||""))err(`${label}: dash in img text`);return}
   if(a.type==="chart"&&window.HalcyonFigs.KINDS.includes(a.kind))window.HalcyonFigs.check(a,{option}).forEach(e=>err(`${label}: ${e}`));else if(option)err(`${label}: a picture option is a chart of kind ${window.HalcyonFigs.KINDS.join(", ")}`)}
 function lenCheck(label,texts,right){const L=texts.map(t=>t.length);const others=L.filter((_,k)=>k!==right);
   if(L[right]>1.12*Math.max(...others))err(`${label}: right answer much longer (${L.join("/")})`);

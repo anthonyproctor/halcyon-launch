@@ -196,9 +196,10 @@ function propSay(a){const tc=x=>String(x||"").toLowerCase().replace(/\b\w/g,c=>c
   if(a.type==="text")return `A text from ${a.from||"someone"}.`;
   if(a.type==="chart"&&window.HalcyonFigs&&HalcyonFigs.KINDS.includes(a.kind))return `${a.title?a.title+". ":""}${HalcyonFigs.say(a)}`; // picture figures speak their readings (figs.js, tools/voices.mjs)
   if(a.type==="doc"||a.type==="chart")return a.title?a.title+".":"";
+  if(a.type==="img"){const t=String(a.alt||a.title||"").trim();return t?t.replace(/[.\s]*$/,"")+".":""} // an image figure speaks its alt text, else its title, never its markup (tools/voices.mjs)
   return ""}
 // the open tag match is quote aware, so an attribute value may hold ">" (a network figure's edges="A>B")
-function propHTML(p){const h=propHTML0(p),m=p.match(/^<prop\s+((?:[^>"]|"[^"]*")*)>/);if(!m)return h;const a={};m[1].replace(/(\w+)="([^"]*)"/g,(_,k,v)=>a[k]=v);const say=propSay(a);return say?h.replace(/^<div class="prop/,`<div data-say="${esc(say)}" class="prop`):h}
+function propHTML(p){const h=propHTML0(p),m=p.match(/^<prop\s+((?:[^>"]|"[^"]*")*)>/);if(!m)return h;const a={};m[1].replace(/(\w+)="([^"]*)"/g,(_,k,v)=>a[k]=v);const say=propSay(a);return say?h.replace(/^<(div|figure) class="prop/,(m,t)=>`<${t} data-say="${esc(say)}" class="prop`):h}
 function propHTML0(p){const m=p.match(/^<prop\s+((?:[^>"]|"[^"]*")*)>([\s\S]*)<\/prop>$/);if(!m)return `<p>${p}</p>`;const a={};m[1].replace(/(\w+)="([^"]*)"/g,(_,k,v)=>a[k]=v);const body=m[2];
   if(a.type==="email")return `<div class="prop pemail"><div class="ph"><b>${esc(a.subject||"(no subject)")}</b><span>${esc(a.time||"")}</span></div><div class="pm"><span>From: ${esc(a.from||"")}</span>${a.to?`<span>To: ${esc(a.to)}</span>`:""}</div><div class="pb">${body}</div></div>`;
   if(a.type==="chat")return `<div class="prop pchat"><div class="pav">${esc((a.from||"?")[0])}</div><div><div class="pm"><b>${esc(a.from||"")}</b> <span>${esc(a.time||"")}</span></div><div class="pb">${body}</div></div></div>`;
@@ -215,6 +216,10 @@ function propHTML0(p){const m=p.match(/^<prop\s+((?:[^>"]|"[^"]*")*)>([\s\S]*)<\
       return `<div class="prop pchart"><div class="ph"><b>${esc(a.title||"Earned value")}</b></div><svg viewBox="0 0 600 240" role="img" aria-label="${esc(`${a.title||"chart"}. Planned value: ${pv.join(", ")}. Earned value: ${ev.join(", ")}. Actual cost: ${ac.join(", ")}.`)}"><path d="M40 210H580M40 20V210" stroke="currentColor" opacity=".3"/><path d="${path(pv)}" class="lpv"/><path d="${path(ev)}" class="lev"/><path d="${path(ac)}" class="lac"/></svg><div class="legend"><span class="kpv">Planned value</span><span class="kev">Earned value</span><span class="kac">Actual cost</span></div>${body?`<div class="pb">${body}</div>`:""}</div>`}
     const labels=(a.labels||"").split(","),vals=num(a.values),mx=Math.max(...vals,1);
     return `<div class="prop pchart"><div class="ph"><b>${esc(a.title||"Chart")}</b></div><div class="bars">${vals.map((v,i)=>`<div class="barrow"><span>${esc(labels[i]||"")}</span><span class="bt"><span style="width:${v/mx*100}%"></span></span><span class="num">${v}</span></div>`).join("")}</div>${body?`<div class="pb">${body}</div>`:""}</div>`}
+  /* an image figure (pilot book, FAA-CT-8080-2H, 2026-11-07): <prop type="img" src="courses/pilot/figs/x.webp" title="..." alt="..." w="1400" h="1374"></prop>.
+     The picture sits in a frame that follows the theme; a tap opens it full size to zoom (figZoom). alt is the reading for a screen reader. */
+  if(a.type==="img"){const t=a.title||"Figure",alt=a.alt||t,wh=+a.w>0&&+a.h>0?` width="${+a.w}" height="${+a.h}"`:"";
+    return `<figure class="prop pimg"><div class="ph"><b>${esc(t)}</b><span class="pzhint" aria-hidden="true">Tap to zoom</span></div><button type="button" class="pzoom" data-zsrc="${esc(a.src||"")}" data-ztitle="${esc(t)}" data-zalt="${esc(alt)}" aria-label="${esc(t)}. Open full size"><img src="${esc(a.src||"")}" alt="${esc(alt)}" aria-label="${esc(alt)}" loading="lazy" decoding="async"${wh}></button>${body?`<figcaption class="pb">${body}</figcaption>`:""}</figure>`}
   return `<p>${body}</p>`}
 /* figure charts for exam items (PMP mock, 2026-10-25). kind="cfd": every attribute other than type, kind, title and labels is one state,
    its values the band widths, stacked bottom up in the order written (done, testing, doing, backlog), so the top line is the total.
@@ -258,6 +263,23 @@ function caseBefore(cases,x,seen,tag){if(!x.case||!cases)return "";const k=(tag|
 function optHTML(o){if(typeof o!=="string"||!/^<prop\s/.test(o))return o;const m=o.match(/^<prop\s+((?:[^>"]|"[^"]*")*)>/),a={};if(m)m[1].replace(/(\w+)="([^"]*)"/g,(_,k,v)=>a[k]=v);
   const fc=a.type==="chart"&&figChart(a,x=>(x||"").split(",").map(Number).filter(v=>!isNaN(v)));return `<span class="qpic">${fc?fc.svg:propHTML0(o)}</span>`}
 function figHTML(p){return p?`<div class="qfig">${propHTML0(p)}</div>`:""} // an exam item's figure, fig:"<prop ...>", above its stem (mock, review, practice sets, chapter quizzes)
+/* tap an image figure to see it full size (2026-11-07): a dialog over the page in the page's own colors, the picture fit to the width first;
+   Zoom in shows it at its own pixel size to drag around, and pinch works too. Close, Escape or a route change shuts it and focus goes back. */
+function figZoomClose(){const el=$("fzoom");if(!el)return;el.remove();document.documentElement.classList.remove("fzopen");const b=figZoom.back;figZoom.back=null;if(b&&b.isConnected)b.focus({preventScroll:true})}
+function figZoom(btn){figZoomClose();const t=btn.dataset.ztitle||"Figure",alt=btn.dataset.zalt||t,el=document.createElement("div");
+  el.className="fzoom";el.id="fzoom";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label",t);
+  el.innerHTML=`<div class="fzbar"><b>${esc(t)}</b><button type="button" class="btn small ghost" id="fzsize" aria-pressed="false">Zoom in</button><button type="button" class="btn small" id="fzclose">Close</button></div><div class="fzbody" id="fzbody"><img src="${esc(btn.dataset.zsrc||"")}" alt="${esc(alt)}" aria-label="${esc(alt)}"></div><p class="fzhelp">Pinch or tap Zoom in, then drag to look around.</p>`;
+  document.body.appendChild(el);document.documentElement.classList.add("fzopen");figZoom.back=btn;
+  const size=$("fzsize"),body=$("fzbody"),img=body.querySelector("img");
+  body.tabIndex=-1;el.addEventListener("pointerup",()=>{if(!el.contains(document.activeElement))body.focus({preventScroll:true})}); // a click or drag on the picture keeps focus inside, so Escape still closes (QA 2026-11-07)
+  const set=big=>{const fx=body.scrollLeft/Math.max(1,body.scrollWidth-body.clientWidth)||.5,fy=body.scrollTop/Math.max(1,body.scrollHeight-body.clientHeight)||0;
+    el.classList.toggle("fzbig",big);size.setAttribute("aria-pressed",String(big));size.textContent=big?"Fit to screen":"Zoom in";
+    if(big){body.scrollLeft=(body.scrollWidth-body.clientWidth)*fx;body.scrollTop=(body.scrollHeight-body.clientHeight)*fy}};
+  size.onclick=()=>set(!el.classList.contains("fzbig"));img.ondblclick=()=>set(!el.classList.contains("fzbig"));$("fzclose").onclick=figZoomClose;
+  el.addEventListener("keydown",e=>{if(e.key==="Escape"){e.preventDefault();figZoomClose()}else if(e.key==="Tab"){const f=[size,$("fzclose")],i=f.indexOf(document.activeElement);e.preventDefault();f[(i+(e.shiftKey?f.length-1:1))%f.length].focus()}});
+  $("fzclose").focus()}
+document.addEventListener("click",e=>{const b=e.target&&e.target.closest&&e.target.closest(".pzoom");if(b){e.preventDefault();figZoom(b)}});
+window.addEventListener("hashchange",figZoomClose);
 function paras(arr){return `<div class="story">${arr.map(p=>/^<prop\s/.test(p)?propHTML(p):`<p>${p}</p>`).join("")}</div>`}
 function videoCard(v,label){if(!v||!v[0])return "";return `<div class="video"><div class="vhead"><span class="tag dom">${label}</span><b>${esc(v[1])}</b><span class="prog">${esc(v[2])} · ${esc(v[3])}</span></div><div class="vframe"><button type="button" data-vid="${esc(v[0])}" aria-label="Play video: ${esc(v[1])}" style="background-image:url('https://i.ytimg.com/vi/${esc(v[0])}/hqdefault.jpg')"><span class="play">▶ Play here</span></button></div></div>`}
 function wireVideos(){$("page").querySelectorAll("[data-vid]").forEach(b=>b.onclick=()=>{const f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.vid+"?autoplay=1&rel=0";f.title=b.getAttribute("aria-label");f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;b.replaceWith(f)})}
@@ -2072,7 +2094,8 @@ function offWire(){if(!OFF.can)return;const ed=store.get("bookEd."+COURSE.id,"st
 if(SW_OK)navigator.serviceWorker.addEventListener("controllerchange",()=>{offWarm.done=false;offWarm();offTell()}); // a new worker took over: its cache starts with the shell only
 function offWarm(){if(!SW_OK||!offNet()||offWarm.done||(navigator.connection&&navigator.connection.saveData))return;offWarm.done=true;const urls=["qa.js","qa.css","final.css","audio-manifest.json"];
   COURSES.filter(c=>c.status==="live").forEach(c=>{(c.scripts||[]).forEach(x=>urls.push(c.root+x));["labs","recaps"].forEach(f=>{if(c[f])urls.push(c.root+c[f])});if(c.final)urls.push(c.root+c.final);if(c.badges)urls.push(c.badges);
-    const a=c.id==="pmp"?"audio/v2/":c.root+"audio/";urls.push(a+"audiobook.json",a+"bookmarks.json")});
+    const a=c.id==="pmp"?"audio/v2/":c.root+"audio/";urls.push(a+"audiobook.json",a+"bookmarks.json");
+    (window.HALCYON_FIGS||[]).forEach(f=>{if(f.startsWith(c.root+"figs/"))urls.push(f)})}); // exam figure pictures (assets.js), so a quiz or mock opens offline with them
   navigator.serviceWorker.ready.then(reg=>{if(reg.active)reg.active.postMessage({type:"warm",urls:urls.map(offAbs)})}).catch(()=>{})}
 let BOOK=null;
 let MARKS=null;

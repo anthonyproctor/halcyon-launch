@@ -25,6 +25,8 @@ function propSpeech(html){return qa(html).replace(/<prop\s+([^>]*)>([\s\S]*?)<\/
   // say="...": what a listener hears instead of the prop's text (a nav log, METAR, code, a table); the screen still shows the prop.
   // by="Who" voices it as that speaker. Write quotes inside it as &quot; (2026-10-22)
   if(a.say!==undefined){const t=unent(a.say).trim();return a.by?said(a.by,t):t}
+  // an image figure (engine.js propHTML0 type="img", 2026-11-07): the listener hears its alt text, else its title, never the markup or the file name
+  if(a.type==='img'){const t=unent(a.alt||a.title||'').trim();return t?t.replace(/[.\s]*$/,'')+'.':''}
   if(a.type==='doc'&&a.kind==='vlog'){const tp=(a.title||'').split(/\s*·\s*/),who=a.name||(tp[0]?tc(tp[0]):a.from||'someone'),where=a.station||(tp[1]?tc(tp[1]):'');
     const head=[`A log from ${who}${where?`, ${where}`:''}.`,a.sol?`Sol ${a.sol}.`:'',a.delay?`One way, ${units(a.delay)}.`:'',a.margin?`Margin, ${a.margin}.`:''].filter(Boolean).join(' ');
     return `${head} ${said(a.from||'narrator',lines(body))}`}
