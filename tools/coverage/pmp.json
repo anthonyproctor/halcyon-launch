@@ -28,10 +28,11 @@
     "elevator pitch"
    ],
    "refs": [
-    {"ch": 1, "sec": 4, "h": "A vision people can carry", "auto": true}
+    {"ch": 1, "sec": 4, "h": "A vision people can carry", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 20
+   "depth": 98
   },
   {
    "id": "ECO.P1.e1",
@@ -50,10 +51,11 @@
     "vision statement"
    ],
    "refs": [
-    {"ch": 1, "sec": 4, "h": "A vision people can carry", "auto": true}
+    {"ch": 1, "sec": 4, "h": "A vision people can carry", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 20
+   "depth": 98
   },
   {
    "id": "ECO.P1.e2",
@@ -71,9 +73,11 @@
     "vision statement",
     "rally(ing)? the team"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 37
   },
   {
    "id": "ECO.P1.e3",
@@ -91,9 +95,11 @@
     "vision drift",
     "keep(s|ing)? the vision current"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 37
   },
   {
    "id": "ECO.P1.e4",
@@ -146,7 +152,7 @@
     {"ch": 13, "sec": 6, "h": "A public room", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 507
+   "depth": 697
   },
   {
    "id": "ECO.P2.e1",
@@ -164,9 +170,11 @@
     "scarce resources",
     "personality clash(es)?"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 54
   },
   {
    "id": "ECO.P2.e2",
@@ -185,9 +193,11 @@
     "Speed Leas",
     "context (of|for) the conflict"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 74
   },
   {
    "id": "ECO.P2.e3",
@@ -232,9 +242,11 @@
     "healthy conflict",
     "constructive conflict"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 3, "h": "Two teams", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 63
   },
   {
    "id": "ECO.P2.e5",
@@ -346,9 +358,11 @@
     "autonomy",
     "delegat(e|ion)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 6, "h": "Training the people who'll own it", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 66
   },
   {
    "id": "ECO.P3.e3",
@@ -414,9 +428,11 @@
     "cross-functional",
     "virtual teams?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 4, "h": "The room it moves in", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 113
   },
   {
    "id": "ECO.P3.e6",
@@ -439,10 +455,11 @@
    ],
    "refs": [
     {"ch": 3, "sec": 7, "h": "The people under the chart", "auto": true},
-    {"ch": 6, "sec": 1, "h": "Teams have weather", "auto": true}
+    {"ch": 6, "sec": 1, "h": "Teams have weather", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 50
+   "depth": 89
   },
   {
    "id": "ECO.P3.e7",
@@ -490,10 +507,11 @@
     "engagement assessment matrix"
    ],
    "refs": [
-    {"ch": 1, "sec": 3, "h": "Stakeholders, including the ones who can't come to the meeting", "auto": true}
+    {"ch": 1, "sec": 3, "h": "Stakeholders, including the ones who can't come to the meeting", "auto": true},
+    {"ch": 11, "sec": 2, "h": "When the story is already out", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 37
+   "depth": 202
   },
   {
    "id": "ECO.P4.e1",
@@ -510,9 +528,11 @@
     "stakeholder register",
     "stakeholder list"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 2, "h": "When the story is already out", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 31
   },
   {
    "id": "ECO.P4.e2",
@@ -531,9 +551,11 @@
     "stakeholder cube",
     "influence/impact"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 2, "h": "When the story is already out", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 134
   },
   {
    "id": "ECO.P4.e3",
@@ -551,9 +573,11 @@
     "communication requirements analysis",
     "stakeholder needs"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 2, "h": "When the story is already out", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 29
   },
   {
    "id": "ECO.P4.e4",
@@ -571,9 +595,11 @@
     "current (and|vs\\.?) desired engagement",
     "unaware, resistant"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 2, "h": "When the story is already out", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 42
   },
   {
    "id": "ECO.P4.e5",
@@ -590,9 +616,11 @@
     "project objectives",
     "competing (interests|expectations)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 2, "h": "When the story is already out", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 29
   },
   {
    "id": "ECO.P4.e6",
@@ -634,9 +662,12 @@
     "categoriz(e|ing) stakeholders",
     "facilitat(e|ion|ing)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 5, "h": "The people at the gate", "auto": true},
+    {"ch": 12, "sec": 4, "h": "The room it moves in", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 56
   },
   {
    "id": "ECO.P5.e1",
@@ -654,9 +685,11 @@
     "internal (and|or) external stakeholders",
     "power/interest grid"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 2, "h": "When the story is already out", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 31
   },
   {
    "id": "ECO.P5.e2",
@@ -674,9 +707,11 @@
     "focus groups?",
     "expectations? (gathering|elicitation)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 3, "h": "Questions that open a head", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 70
   },
   {
    "id": "ECO.P5.e3",
@@ -695,9 +730,11 @@
     "joint application (design|development)",
     "JAD\\b"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 4, "h": "The room it moves in", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 33
   },
   {
    "id": "ECO.P5.e4",
@@ -740,9 +777,11 @@
     "NPS\\b",
     "voice of the customer"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 5, "h": "The people at the gate", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 20
   },
   {
    "id": "ECO.P6.e1",
@@ -761,10 +800,11 @@
     "customer needs"
    ],
    "refs": [
-    {"ch": 4, "sec": 8, "h": "The people around the valve", "auto": true}
+    {"ch": 4, "sec": 8, "h": "The people around the valve", "auto": true},
+    {"ch": 9, "sec": 5, "h": "The people at the gate", "auto": true}
    ],
    "status": "explained",
-   "depth": 18
+   "depth": 38
   },
   {
    "id": "ECO.P6.e2",
@@ -806,9 +846,11 @@
     "sprint reviews?",
     "demos?\\b"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 5, "h": "The people at the gate", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 20
   },
   {
    "id": "ECO.P7",
@@ -833,7 +875,7 @@
     {"ch": 12, "sec": 2, "h": "How it moves", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 321
+   "depth": 340
   },
   {
    "id": "ECO.P7.e1",
@@ -881,7 +923,7 @@
     {"ch": 12, "sec": 2, "h": "How it moves", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 198
+   "depth": 217
   },
   {
    "id": "ECO.P7.e3",
@@ -927,10 +969,12 @@
     "communication channels"
    ],
    "refs": [
-    {"ch": 1, "sec": 6, "h": "When the answer takes twenty minutes", "auto": true}
+    {"ch": 1, "sec": 6, "h": "When the answer takes twenty minutes", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 60
+   "depth": 182
   },
   {
    "id": "ECO.P8.e1",
@@ -951,9 +995,11 @@
     "pull communication",
     "interactive communication"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 36
   },
   {
    "id": "ECO.P8.e2",
@@ -1016,9 +1062,11 @@
     "who needs (what|which) reports?",
     "regulatory reporting"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 17
   },
   {
    "id": "ECO.P8.e5",
@@ -1037,9 +1085,11 @@
     "RAG status",
     "red,? amber,? green"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 17
   },
   {
    "id": "ECO.P8.e6",
@@ -1057,9 +1107,11 @@
     "stage gates?",
     "PMO\\b"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 6, "h": "Who says go", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 18
   },
   {
    "id": "ECO.R1",
@@ -1105,9 +1157,11 @@
     "Cynefin",
     "suitability filter"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 25
   },
   {
    "id": "ECO.R1.e2",
@@ -1135,10 +1189,12 @@
     {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true},
     {"ch": 3, "sec": 0, "h": "Page three", "auto": true},
     {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true},
-    {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true}
+    {"ch": 8, "sec": 1, "h": "Who carries it", "auto": true},
+    {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true},
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 241
+   "depth": 299
   },
   {
    "id": "ECO.R1.e3",
@@ -1160,7 +1216,7 @@
     {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 151
+   "depth": 178
   },
   {
    "id": "ECO.R1.e4",
@@ -1179,9 +1235,11 @@
     "incremental delivery",
     "rolling wave"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 36
   },
   {
    "id": "ECO.R1.e5",
@@ -1212,7 +1270,7 @@
     {"ch": 14, "sec": 5, "h": "What it's worth", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 492
+   "depth": 502
   },
   {
    "id": "ECO.R1.e6",
@@ -1236,10 +1294,11 @@
    ],
    "refs": [
     {"ch": 3, "sec": 0, "h": "Page three", "auto": true},
-    {"ch": 3, "sec": 1, "h": "Three numbers", "auto": true}
+    {"ch": 3, "sec": 1, "h": "Three numbers", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
    ],
    "status": "explained",
-   "depth": 305
+   "depth": 324
   },
   {
    "id": "ECO.R1.e7",
@@ -1263,7 +1322,7 @@
     {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 41
+   "depth": 51
   },
   {
    "id": "ECO.R1.e8",
@@ -1281,9 +1340,11 @@
     "rolling wave",
     "living document"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 11
   },
   {
    "id": "ECO.R1.e9",
@@ -1333,10 +1394,12 @@
     {"ch": 2, "sec": 2, "h": "Boxes and a list", "auto": true},
     {"ch": 4, "sec": 0, "h": "Page four", "auto": true},
     {"ch": 7, "sec": 2, "h": "One list, one person", "auto": true},
-    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true}
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
+    {"ch": 14, "sec": 3, "h": "Readiness reviews", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 293
+   "depth": 364
   },
   {
    "id": "ECO.R2.e1",
@@ -1440,7 +1503,7 @@
     {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 104
+   "depth": 129
   },
   {
    "id": "ECO.R3.e1",
@@ -1462,6 +1525,7 @@
     {"ch": 4, "sec": 4, "h": "The tree", "auto": true},
     {"ch": 7, "sec": 1, "h": "What it's for", "auto": true},
     {"ch": 9, "sec": 1, "h": "When someone tells you", "auto": true},
+    {"ch": 9, "sec": 5, "h": "The people at the gate", "auto": true},
     {"ch": 11, "sec": 5, "h": "Spent is spent", "auto": true},
     {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true},
     {"ch": 12, "sec": 5, "h": "Handing it over", "auto": true},
@@ -1472,7 +1536,7 @@
     {"ch": 15, "sec": 5, "h": "After the ship", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 731
+   "depth": 839
   },
   {
    "id": "ECO.R3.e2",
@@ -1521,10 +1585,11 @@
     "value flow"
    ],
    "refs": [
-    {"ch": 7, "sec": 1, "h": "What it's for", "auto": true}
+    {"ch": 7, "sec": 1, "h": "What it's for", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 49
+   "depth": 88
   },
   {
    "id": "ECO.R3.e4",
@@ -1590,9 +1655,11 @@
     "feature toggles?",
     "release options?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 5, "h": "Spent is spent", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 71
   },
   {
    "id": "ECO.R4",
@@ -1612,10 +1679,11 @@
     "team capacity"
    ],
    "refs": [
-    {"ch": 3, "sec": 4, "h": "People aren't bars", "auto": true}
+    {"ch": 3, "sec": 4, "h": "People aren't bars", "auto": true},
+    {"ch": 12, "sec": 7, "h": "People leave too", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 56
+   "depth": 85
   },
   {
    "id": "ECO.R4.e1",
@@ -1634,9 +1702,11 @@
     "staffing plan",
     "team capacity"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 7, "h": "People leave too", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 29
   },
   {
    "id": "ECO.R4.e2",
@@ -1684,10 +1754,11 @@
    "refs": [
     {"ch": 4, "sec": 8, "h": "The people around the valve", "auto": true},
     {"ch": 8, "sec": 0, "h": "Page eight", "auto": true},
-    {"ch": 8, "sec": 1, "h": "Who carries it", "auto": true}
+    {"ch": 8, "sec": 1, "h": "Who carries it", "auto": true},
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 466
+   "depth": 705
   },
   {
    "id": "ECO.R5.e1",
@@ -1706,9 +1777,11 @@
     "procurement statement of work",
     "plan procurement"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 35
   },
   {
    "id": "ECO.R5.e2",
@@ -1728,9 +1801,11 @@
     "RFQ\\b",
     "proposal evaluation"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 116
   },
   {
    "id": "ECO.R5.e3",
@@ -1758,7 +1833,7 @@
     {"ch": 8, "sec": 2, "h": "The arithmetic", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 537
+   "depth": 573
   },
   {
    "id": "ECO.R5.e4",
@@ -1776,9 +1851,11 @@
     "inspections? and audits?",
     "supplier scorecards?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 31
   },
   {
    "id": "ECO.R5.e5",
@@ -1796,9 +1873,11 @@
     "deliverables accepted",
     "agreement objectives"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 5, "h": "How contracts end", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 23
   },
   {
    "id": "ECO.R5.e6",
@@ -1861,9 +1940,11 @@
     "change requests? to the contract",
     "supplier management"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 26
   },
   {
    "id": "ECO.R5.e9",
@@ -1880,9 +1961,11 @@
     "contract payment types?",
     "procurement phases"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 1, "h": "Who carries it", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 36
   },
   {
    "id": "ECO.R5.e10",
@@ -1900,9 +1983,11 @@
     "agile contracts?",
     "incremental contracts?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 1, "h": "Who carries it", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 18
   },
   {
    "id": "ECO.R6",
@@ -1934,7 +2019,7 @@
     {"ch": 11, "sec": 4, "h": "Money that leaves", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 453
+   "depth": 479
   },
   {
    "id": "ECO.R6.e1",
@@ -2024,9 +2109,11 @@
     "earned value report(s|ing)",
     "variance reports?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 4, "h": "Money that leaves", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 26
   },
   {
    "id": "ECO.R6.e5",
@@ -2081,10 +2168,11 @@
     {"ch": 5, "sec": 3, "h": "Variances and indexes", "auto": true},
     {"ch": 5, "sec": 4, "h": "Four ways to forecast", "auto": true},
     {"ch": 5, "sec": 5, "h": "What it would take", "auto": true},
-    {"ch": 5, "sec": 6, "h": "The baseline isn't an eraser", "auto": true}
+    {"ch": 5, "sec": 6, "h": "The baseline isn't an eraser", "auto": true},
+    {"ch": 11, "sec": 4, "h": "Money that leaves", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 283
+   "depth": 309
   },
   {
    "id": "ECO.R6.e7",
@@ -2131,10 +2219,11 @@
    "refs": [
     {"ch": 4, "sec": 0, "h": "Page four", "auto": true},
     {"ch": 7, "sec": 5, "h": "Done", "auto": true},
+    {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true},
     {"ch": 14, "sec": 2, "h": "What a result means", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 69
+   "depth": 202
   },
   {
    "id": "ECO.R7.e1",
@@ -2178,10 +2267,11 @@
     "scatter diagrams?"
    ],
    "refs": [
-    {"ch": 4, "sec": 2, "h": "Asking why", "auto": true}
+    {"ch": 4, "sec": 2, "h": "Asking why", "auto": true},
+    {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 102
+   "depth": 215
   },
   {
    "id": "ECO.R7.e3",
@@ -2199,9 +2289,11 @@
     "process analysis",
     "design for X"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 32
   },
   {
    "id": "ECO.R7.e4",
@@ -2251,7 +2343,7 @@
     {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 212
+   "depth": 274
   },
   {
    "id": "ECO.R7.e6",
@@ -2271,9 +2363,13 @@
     "statistical sampling",
     "control limits"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true},
+    {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true},
+    {"ch": 14, "sec": 3, "h": "Readiness reviews", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 214
   },
   {
    "id": "ECO.R7.e7",
@@ -2327,10 +2423,11 @@
     {"ch": 5, "sec": 3, "h": "Variances and indexes", "auto": true},
     {"ch": 6, "sec": 7, "h": "Pull, not push", "auto": true},
     {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true},
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true},
     {"ch": 14, "sec": 4, "h": "Compress what's safe", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 415
+   "depth": 492
   },
   {
    "id": "ECO.R8.e1",
@@ -2352,10 +2449,11 @@
     "on-demand scheduling"
    ],
    "refs": [
-    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true}
+    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 58
+   "depth": 97
   },
   {
    "id": "ECO.R8.e2",
@@ -2374,9 +2472,11 @@
     "scrum of scrums",
     "coordinat(e|ion) with operations"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 4, "h": "Planning for silence", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 26
   },
   {
    "id": "ECO.R8.e3",
@@ -2399,10 +2499,11 @@
    "refs": [
     {"ch": 3, "sec": 0, "h": "Page three", "auto": true},
     {"ch": 5, "sec": 2, "h": "Three numbers", "auto": true},
-    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true}
+    {"ch": 7, "sec": 3, "h": "How much fits", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 97
+   "depth": 116
   },
   {
    "id": "ECO.R8.e4",
@@ -2456,7 +2557,7 @@
     {"ch": 14, "sec": 4, "h": "Compress what's safe", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 480
+   "depth": 523
   },
   {
    "id": "ECO.R8.e6",
@@ -2505,7 +2606,7 @@
     {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 124
+   "depth": 140
   },
   {
    "id": "ECO.R8.e8",
@@ -2560,11 +2661,12 @@
     {"ch": 7, "sec": 3, "h": "How much fits", "auto": true},
     {"ch": 7, "sec": 4, "h": "Reading the burn", "auto": true},
     {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
     {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true},
     {"ch": 13, "sec": 4, "h": "Nominal", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 276
+   "depth": 320
   },
   {
    "id": "ECO.R9.e1",
@@ -2589,7 +2691,7 @@
     {"ch": 11, "sec": 4, "h": "Money that leaves", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 123
+   "depth": 149
   },
   {
    "id": "ECO.R9.e2",
@@ -2610,10 +2712,11 @@
    ],
    "refs": [
     {"ch": 1, "sec": 7, "h": "Assess before you act, and the culture you walked into", "auto": true},
-    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true}
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 108
+   "depth": 132
   },
   {
    "id": "ECO.R9.e3",
@@ -2631,9 +2734,11 @@
     "artifacts? (review|update)",
     "project records"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 33
   },
   {
    "id": "ECO.R9.e4",
@@ -2651,9 +2756,11 @@
     "PMIS\\b",
     "single source of truth"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 15
   },
   {
    "id": "ECO.R9.e5",
@@ -2707,7 +2814,7 @@
     {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 298
+   "depth": 318
   },
   {
    "id": "ECO.R9.e7",
@@ -2726,9 +2833,12 @@
     "information radiators?",
     "progress reports?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 46
   },
   {
    "id": "ECO.R9.e8",
@@ -2746,9 +2856,11 @@
     "process audit",
     "artifact (review|cleanup)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 9
   },
   {
    "id": "ECO.R10",
@@ -2770,6 +2882,7 @@
    ],
    "refs": [
     {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
+    {"ch": 12, "sec": 2, "h": "How it moves", "auto": true},
     {"ch": 12, "sec": 5, "h": "Handing it over", "auto": true},
     {"ch": 15, "sec": 0, "h": "Page fifteen", "auto": true},
     {"ch": 15, "sec": 2, "h": "Handing it over", "auto": true},
@@ -2778,7 +2891,7 @@
     {"ch": 15, "sec": 6, "h": "Letting people go", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 477
+   "depth": 495
   },
   {
    "id": "ECO.R10.e1",
@@ -2822,10 +2935,11 @@
    "refs": [
     {"ch": 1, "sec": 4, "h": "A vision people can carry", "auto": true},
     {"ch": 7, "sec": 5, "h": "Done", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Who says go", "auto": true},
     {"ch": 14, "sec": 1, "h": "Before the data", "auto": true}
    ],
    "status": "practiced",
-   "depth": 63
+   "depth": 81
   },
   {
    "id": "ECO.R10.e3",
@@ -2851,7 +2965,7 @@
     {"ch": 15, "sec": 6, "h": "Letting people go", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 269
+   "depth": 270
   },
   {
    "id": "ECO.R10.e4",
@@ -2875,11 +2989,12 @@
     {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
     {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true},
     {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
+    {"ch": 12, "sec": 2, "h": "How it moves", "auto": true},
     {"ch": 15, "sec": 4, "h": "Lessons that change something", "auto": true},
     {"ch": 15, "sec": 5, "h": "After the ship", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 103
+   "depth": 130
   },
   {
    "id": "ECO.B1",
@@ -2905,13 +3020,14 @@
     {"ch": 2, "sec": 5, "h": "Rules, and the ways around them", "auto": true},
     {"ch": 5, "sec": 7, "h": "Saying it in the room", "auto": true},
     {"ch": 6, "sec": 8, "h": "Whose story it is", "auto": true},
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true},
     {"ch": 10, "sec": 6, "h": "Who says go", "auto": true},
     {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true},
     {"ch": 11, "sec": 4, "h": "Money that leaves", "auto": true},
     {"ch": 13, "sec": 1, "h": "Who can say yes", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 551
+   "depth": 585
   },
   {
    "id": "ECO.B1.e1",
@@ -2930,9 +3046,11 @@
     "code of ethics",
     "steering committee"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 16
   },
   {
    "id": "ECO.B1.e2",
@@ -2982,7 +3100,7 @@
     {"ch": 13, "sec": 1, "h": "Who can say yes", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 265
+   "depth": 283
   },
   {
    "id": "ECO.B2",
@@ -3006,12 +3124,13 @@
     {"ch": 2, "sec": 5, "h": "Rules, and the ways around them", "auto": true},
     {"ch": 4, "sec": 0, "h": "Page four", "auto": true},
     {"ch": 4, "sec": 7, "h": "Stop", "auto": true},
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true},
     {"ch": 10, "sec": 0, "h": "Page ten", "auto": true},
     {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true},
     {"ch": 10, "sec": 8, "h": "Page ten, again", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 565
+   "depth": 653
   },
   {
    "id": "ECO.B2.e1",
@@ -3035,7 +3154,7 @@
     {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true}
    ],
    "status": "practiced",
-   "depth": 146
+   "depth": 173
   },
   {
    "id": "ECO.B2.e2",
@@ -3052,9 +3171,11 @@
     "compliance (register|matrix)",
     "compliance classification"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 27
   },
   {
    "id": "ECO.B2.e3",
@@ -3095,10 +3216,12 @@
     "controls testing"
    ],
    "refs": [
-    {"ch": 4, "sec": 0, "h": "Page four", "auto": true}
+    {"ch": 4, "sec": 0, "h": "Page four", "auto": true},
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true},
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 41
+   "depth": 107
   },
   {
    "id": "ECO.B2.e5",
@@ -3123,7 +3246,7 @@
     {"ch": 14, "sec": 2, "h": "What a result means", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 121
+   "depth": 144
   },
   {
    "id": "ECO.B2.e6",
@@ -3141,9 +3264,11 @@
     "compliance owner",
     "preventive actions?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 23
   },
   {
    "id": "ECO.B2.e7",
@@ -3160,9 +3285,11 @@
     "audit findings",
     "conformance"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 1, "h": "What the rules are for", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 23
   },
   {
    "id": "ECO.B3",
@@ -3189,10 +3316,11 @@
     {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true},
     {"ch": 10, "sec": 3, "h": "The test somebody wants to delete", "auto": true},
     {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true},
-    {"ch": 11, "sec": 6, "h": "One door for every change", "auto": true}
+    {"ch": 11, "sec": 6, "h": "One door for every change", "auto": true},
+    {"ch": 11, "sec": 7, "h": "Keeping one plan", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 230
+   "depth": 360
   },
   {
    "id": "ECO.B3.e1",
@@ -3222,7 +3350,7 @@
     {"ch": 11, "sec": 6, "h": "One door for every change", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 230
+   "depth": 273
   },
   {
    "id": "ECO.B3.e2",
@@ -3239,9 +3367,11 @@
     "status of (proposed )?changes?",
     "approved or rejected"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 11, "sec": 6, "h": "One door for every change", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 80
   },
   {
    "id": "ECO.B3.e3",
@@ -3282,9 +3412,11 @@
     "version control",
     "traceability"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 42
   },
   {
    "id": "ECO.B4",
@@ -3313,7 +3445,7 @@
     {"ch": 14, "sec": 6, "h": "The thing nobody counted", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 252
+   "depth": 297
   },
   {
    "id": "ECO.B4.e1",
@@ -3335,7 +3467,7 @@
     {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 23
+   "depth": 50
   },
   {
    "id": "ECO.B4.e2",
@@ -3354,9 +3486,11 @@
     "Kanban board",
     "blocked (column|items?)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 27
   },
   {
    "id": "ECO.B4.e3",
@@ -3399,9 +3533,11 @@
     "daily scrum",
     "follow(ing)? up on (impediments?|blockers?)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 5, "h": "Reading the flow", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 27
   },
   {
    "id": "ECO.B4.e5",
@@ -3420,9 +3556,11 @@
     "risk triggers?",
     "workarounds?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 7, "h": "When the risk comes true", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 42
   },
   {
    "id": "ECO.B4.e6",
@@ -3447,7 +3585,7 @@
     {"ch": 14, "sec": 6, "h": "The thing nobody counted", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 187
+   "depth": 205
   },
   {
    "id": "ECO.B5",
@@ -3469,11 +3607,12 @@
    ],
    "refs": [
     {"ch": 2, "sec": 4, "h": "A list of how people die", "auto": true},
+    {"ch": 10, "sec": 2, "h": "Weather with a date on it", "auto": true},
     {"ch": 12, "sec": 3, "h": "Questions that open a head", "auto": true},
     {"ch": 13, "sec": 1, "h": "Who can say yes", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 155
+   "depth": 207
   },
   {
    "id": "ECO.B5.e1",
@@ -3493,9 +3632,11 @@
     "risk workshops?",
     "prompt lists?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 2, "h": "Weather with a date on it", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 28
   },
   {
    "id": "ECO.B5.e2",
@@ -3595,7 +3736,7 @@
     {"ch": 12, "sec": 3, "h": "Questions that open a head", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 165
+   "depth": 189
   },
   {
    "id": "ECO.B5.e6",
@@ -3619,10 +3760,11 @@
     "security risks?"
    ],
    "refs": [
+    {"ch": 10, "sec": 2, "h": "Weather with a date on it", "auto": true},
     {"ch": 13, "sec": 2, "h": "Waivers and deviations", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 69
+   "depth": 121
   },
   {
    "id": "ECO.B5.e7",
@@ -3639,9 +3781,11 @@
     "risk communication",
     "risk-adjusted backlog"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 2, "h": "Weather with a date on it", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 24
   },
   {
    "id": "ECO.B6",
@@ -3663,11 +3807,12 @@
    "refs": [
     {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
     {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true},
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true},
     {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
     {"ch": 15, "sec": 4, "h": "Lessons that change something", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 68
+   "depth": 93
   },
   {
    "id": "ECO.B6.e1",
@@ -3688,10 +3833,11 @@
     {"ch": 6, "sec": 6, "h": "What's in one head", "auto": true},
     {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true},
     {"ch": 10, "sec": 4, "h": "Closing a phase on purpose", "auto": true},
+    {"ch": 12, "sec": 2, "h": "How it moves", "auto": true},
     {"ch": 15, "sec": 4, "h": "Lessons that change something", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 68
+   "depth": 95
   },
   {
    "id": "ECO.B6.e2",
@@ -3735,10 +3881,11 @@
    ],
    "refs": [
     {"ch": 7, "sec": 7, "h": "When it breaks", "auto": true},
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true},
     {"ch": 15, "sec": 4, "h": "Lessons that change something", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 19
+   "depth": 35
   },
   {
    "id": "ECO.B7",
@@ -3764,7 +3911,7 @@
     {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 174
+   "depth": 231
   },
   {
    "id": "ECO.B7.e1",
@@ -3782,9 +3929,11 @@
     "EEFs?\\b",
     "cultural norms"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 2, "h": "The company changes under you", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 73
   },
   {
    "id": "ECO.B7.e2",
@@ -3829,10 +3978,11 @@
     "emerging technolog(y|ies)"
    ],
    "refs": [
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true},
     {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 64
+   "depth": 81
   },
   {
    "id": "ECO.B8.e1",
@@ -3853,10 +4003,11 @@
     "regulatory changes?"
    ],
    "refs": [
+    {"ch": 8, "sec": 6, "h": "Make, buy, and keep", "auto": true},
     {"ch": 11, "sec": 1, "h": "What's outside the fence", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 64
+   "depth": 81
   },
   {
    "id": "ECO.B8.e2",
@@ -3875,10 +4026,11 @@
     "impact assessment"
    ],
    "refs": [
-    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true}
+    {"ch": 2, "sec": 3, "h": "The baseline, and changing it", "auto": true},
+    {"ch": 9, "sec": 5, "h": "The people at the gate", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 23
+   "depth": 98
   },
   {
    "id": "ECO.B8.e3",
@@ -3896,9 +4048,11 @@
     "external (changes|factors)",
     "monitor(ing)? the (market|environment)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 5, "h": "The people at the gate", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 38
   }
  ],
  "seeded": "2026-11-08"

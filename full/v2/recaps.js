@@ -1,4 +1,4 @@
-// The Halcyon Launch, v2: "Story so far" recaps. Content only, written 2026-10-12 (Anthony approved the feature that day).
+// The Halcyon Launch, v2: "Story so far" recaps. Content only, written 2026-10-12 (approved the feature that day).
 // Not wired into the UI yet: a later task adds "recaps.js" to files in full/v2/preview.js and calls the helpers below from engine.js.
 // Spoiler safe by construction: every recap for a page uses only what the reader has seen before the START of that page,
 // in the engine's page order PIDS(c) = ["open","lesson","s0",...,"s11","end"] (engine.js, PIDS). Orientation notes are shown AFTER the page they name.
@@ -534,7 +534,7 @@ R.ch[3]={
    short:[`Ada fixed a scrubber fault at 3 AM and told Sam a secret: she's building a new grow room on her own hours. At Tallgrass, the stack line has been driving itself into the ground.`],
    full:[`Ada's latest log came after a 3 AM scrubber fault that she and Teodor from the machine shop fixed in nineteen minutes, and her hands were still shaking.`,
     `She told Sam a secret and asked him to promise not to tell Hollis: she's been building Bay D, an old storage module turned grow room, on her own hours, and her count of the colony's air is 874 days.`,
-    `At Tallgrass, a twenty three year old technician cross threaded a fitting at 4 AM after days of double shifts and sat in her car in the lot, engine running.`],
+    `At Tallgrass, Noemi, a twenty three year old technician, cross threaded a fitting at 4 AM after days of double shifts and sat in her car in the lot, engine running.`],
    who:[`yusra`,`rafa`,`quinn`]},
   end:{d:`2061-04-07`,here:`Ruth's page three`,
    short:[`Commander Haddad came out to Watkins angry that her crew's float had been treated as everybody else's spare time.`],
@@ -2557,7 +2557,8 @@ const PEOPLE={
    [11,`open`,`Runs the Countdown to Ares feed. Someone sent him AR 2207's 2059 closure record.`]]],
  yusra:[`Yusra Haddad`,[[1,`s5`,`Halcyon's commander. She joins Rafa's software demos from Houston and keeps finding things.`],
    [2,`s5`,`Halcyon's commander, with four kids in Aurora.`],
-   [7,`s1`,`Halcyon's commander, and now the product owner of the flight software backlog.`]]],
+   [7,`s1`,`Halcyon's commander, and now the product owner of the flight software backlog.`],
+   [13,`open`,`Halcyon's commander.`]]],
  paloma:[`Paloma Benavidez`,[[3,`s1`,`Test engineer at Rio Puerco Electrochemical in Albuquerque, the only person who has run the Breather's stacks at Mars pressure.`]]],
  nell:[`Nell Garrity`,[[4,`s6`,`Account lead at Aldergrove Fluid Systems in Pueblo, the company that makes the valve in AR 2207.`],
    [4,`s7`,`Aldergrove's account lead, the "valve lady." She brought her company's Petrel records, carried for twenty six years.`],

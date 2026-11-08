@@ -28,24 +28,9 @@
     "fabricated"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    },
-    {
-     "ch": 3,
-     "sec": 1,
-     "h": "Right ninety nine times",
-     "auto": true
-    },
-    {
-     "ch": 3,
-     "sec": 3,
-     "h": "Say it twice",
-     "auto": true
-    }
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 3, "sec": 1, "h": "Right ninety nine times", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Say it twice", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 69
@@ -70,24 +55,9 @@
     "reliability and safety"
    ],
    "refs": [
-    {
-     "ch": 5,
-     "sec": 3,
-     "h": "Know who heard it",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 3,
-     "h": "A drawing isn't the wound",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 4,
-     "h": "Two signatures",
-     "auto": true
-    }
+    {"ch": 5, "sec": 3, "h": "Know who heard it", "auto": true},
+    {"ch": 7, "sec": 3, "h": "A drawing isn't the wound", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Two signatures", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 79
@@ -112,24 +82,9 @@
     "guardrails?"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    },
-    {
-     "ch": 3,
-     "sec": 0,
-     "h": "Know what the monitor measures",
-     "auto": true
-    },
-    {
-     "ch": 3,
-     "sec": 3,
-     "h": "Say it twice",
-     "auto": true
-    }
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 3, "sec": 0, "h": "Know what the monitor measures", "auto": true},
+    {"ch": 3, "sec": 3, "h": "Say it twice", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 143
@@ -152,42 +107,12 @@
     "code review"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    },
-    {
-     "ch": 3,
-     "sec": 2,
-     "h": "Read it back",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 0,
-     "h": "Write it where the next nurse will find it",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 2,
-     "h": "A protocol can't sign the chart",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 4,
-     "h": "Chart it, or it didn't happen",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 4,
-     "h": "Two signatures",
-     "auto": true
-    }
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 3, "sec": 2, "h": "Read it back", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 2, "h": "A protocol can't sign the chart", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Two signatures", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 299
@@ -211,15 +136,10 @@
     "stay(s)? accountable"
    ],
    "refs": [
-    {
-     "ch": 3,
-     "sec": 2,
-     "h": "Read it back",
-     "auto": true
-    }
+    {"ch": 3, "sec": 2, "h": "Read it back", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 71
+   "depth": 72
   },
   {
    "id": "GH300.2.1.1",
@@ -241,60 +161,15 @@
     "status bar"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 1,
-     "h": "Where Copilot lives",
-     "auto": true
-    },
-    {
-     "ch": 2,
-     "sec": 3,
-     "h": "Edits, sessions, and helpers",
-     "auto": true
-    },
-    {
-     "ch": 2,
-     "sec": 4,
-     "h": "New tools, new doors",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 0,
-     "h": "Write it where the next nurse will find it",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 1,
-     "h": "Standing orders for one unit",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 2,
-     "h": "A protocol can't sign the chart",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 3,
-     "h": "Order sets",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 0,
-     "h": "A curtain isn't a wall",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 1,
-     "h": "Lock it, then try the handle",
-     "auto": true
-    }
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 2, "sec": 3, "h": "Edits, sessions, and helpers", "auto": true},
+    {"ch": 2, "sec": 4, "h": "New tools, new doors", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Standing orders for one unit", "auto": true},
+    {"ch": 4, "sec": 2, "h": "A protocol can't sign the chart", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Order sets", "auto": true},
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 347
@@ -319,48 +194,13 @@
     "next edit suggestions?"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 1,
-     "h": "Where Copilot lives",
-     "auto": true
-    },
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    },
-    {
-     "ch": 2,
-     "sec": 0,
-     "h": "Who's on your shift",
-     "auto": true
-    },
-    {
-     "ch": 2,
-     "sec": 4,
-     "h": "New tools, new doors",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 0,
-     "h": "Write it where the next nurse will find it",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 3,
-     "h": "Order sets",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 0,
-     "h": "A curtain isn't a wall",
-     "auto": true
-    }
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Who's on your shift", "auto": true},
+    {"ch": 2, "sec": 4, "h": "New tools, new doors", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Order sets", "auto": true},
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 210
@@ -384,30 +224,10 @@
     "repository settings"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 0,
-     "h": "A curtain isn't a wall",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 1,
-     "h": "Lock it, then try the handle",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 4,
-     "h": "Chart it, or it didn't happen",
-     "auto": true
-    }
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 133
@@ -430,18 +250,8 @@
     "CLI agent"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 1,
-     "h": "Where Copilot lives",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 0,
-     "h": "Learn them on your first night",
-     "auto": true
-    }
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 6, "sec": 0, "h": "Learn them on your first night", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 108
@@ -465,12 +275,7 @@
     "authenticat(e|ion)"
    ],
    "refs": [
-    {
-     "ch": 6,
-     "sec": 0,
-     "h": "Learn them on your first night",
-     "auto": true
-    }
+    {"ch": 6, "sec": 0, "h": "Learn them on your first night", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 53
@@ -495,18 +300,8 @@
     "MCP servers?"
    ],
    "refs": [
-    {
-     "ch": 4,
-     "sec": 3,
-     "h": "Order sets",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 2,
-     "h": "Nobody writes \"whatever seems right\"",
-     "auto": true
-    }
+    {"ch": 4, "sec": 3, "h": "Order sets", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Nobody writes \"whatever seems right\"", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 101
@@ -530,21 +325,11 @@
     "new session"
    ],
    "refs": [
-    {
-     "ch": 6,
-     "sec": 2,
-     "h": "Nobody writes \"whatever seems right\"",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 3,
-     "h": "Give report, take report",
-     "auto": true
-    }
+    {"ch": 6, "sec": 2, "h": "Nobody writes \"whatever seems right\"", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Give report, take report", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 409
+   "depth": 414
   },
   {
    "id": "GH300.2.2.5",
@@ -564,12 +349,7 @@
     "approve (the )?(tool|command)"
    ],
    "refs": [
-    {
-     "ch": 6,
-     "sec": 2,
-     "h": "Nobody writes \"whatever seems right\"",
-     "auto": true
-    }
+    {"ch": 6, "sec": 2, "h": "Nobody writes \"whatever seems right\"", "auto": true}
    ],
    "status": "explained",
    "depth": 94
@@ -596,60 +376,15 @@
     "context window"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 1,
-     "h": "Where Copilot lives",
-     "auto": true
-    },
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    },
-    {
-     "ch": 2,
-     "sec": 0,
-     "h": "Who's on your shift",
-     "auto": true
-    },
-    {
-     "ch": 2,
-     "sec": 1,
-     "h": "Taking report",
-     "auto": true
-    },
-    {
-     "ch": 2,
-     "sec": 3,
-     "h": "Edits, sessions, and helpers",
-     "auto": true
-    },
-    {
-     "ch": 2,
-     "sec": 4,
-     "h": "New tools, new doors",
-     "auto": true
-    },
-    {
-     "ch": 3,
-     "sec": 1,
-     "h": "Right ninety nine times",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 2,
-     "h": "Nobody writes \"whatever seems right\"",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 3,
-     "h": "Give report, take report",
-     "auto": true
-    }
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 2, "sec": 0, "h": "Who's on your shift", "auto": true},
+    {"ch": 2, "sec": 1, "h": "Taking report", "auto": true},
+    {"ch": 2, "sec": 3, "h": "Edits, sessions, and helpers", "auto": true},
+    {"ch": 2, "sec": 4, "h": "New tools, new doors", "auto": true},
+    {"ch": 3, "sec": 1, "h": "Right ninety nine times", "auto": true},
+    {"ch": 6, "sec": 2, "h": "Nobody writes \"whatever seems right\"", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Give report, take report", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 775
@@ -672,54 +407,14 @@
     "suggested changes?"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 1,
-     "h": "Where Copilot lives",
-     "auto": true
-    },
-    {
-     "ch": 3,
-     "sec": 2,
-     "h": "Read it back",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 0,
-     "h": "Write it where the next nurse will find it",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 1,
-     "h": "Standing orders for one unit",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 2,
-     "h": "A protocol can't sign the chart",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 4,
-     "h": "Chart it, or it didn't happen",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 4,
-     "h": "Count the beds",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 4,
-     "h": "Two signatures",
-     "auto": true
-    }
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 3, "sec": 2, "h": "Read it back", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 1, "h": "Standing orders for one unit", "auto": true},
+    {"ch": 4, "sec": 2, "h": "A protocol can't sign the chart", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true},
+    {"ch": 7, "sec": 4, "h": "Two signatures", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 299
@@ -744,39 +439,14 @@
     "custom instructions"
    ],
    "refs": [
-    {
-     "ch": 4,
-     "sec": 0,
-     "h": "Write it where the next nurse will find it",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 2,
-     "h": "A protocol can't sign the chart",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 4,
-     "h": "Show them three charts",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 3,
-     "h": "Give report, take report",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 3,
-     "h": "A drawing isn't the wound",
-     "auto": true
-    }
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 2, "h": "A protocol can't sign the chart", "auto": true},
+    {"ch": 4, "sec": 4, "h": "Show them three charts", "auto": true},
+    {"ch": 6, "sec": 3, "h": "Give report, take report", "auto": true},
+    {"ch": 7, "sec": 3, "h": "A drawing isn't the wound", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 255
+   "depth": 246
   },
   {
    "id": "GH300.2.3.4",
@@ -799,27 +469,12 @@
     "chat variables?"
    ],
    "refs": [
-    {
-     "ch": 3,
-     "sec": 2,
-     "h": "Read it back",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 0,
-     "h": "Write it where the next nurse will find it",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 3,
-     "h": "Order sets",
-     "auto": true
-    }
+    {"ch": 3, "sec": 2, "h": "Read it back", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 4, "sec": 3, "h": "Order sets", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 169
+   "depth": 170
   },
   {
    "id": "GH300.2.4.1",
@@ -840,36 +495,11 @@
     "enterprise owners?"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 2,
-     "h": "Turning it on for an organization",
-     "auto": true
-    },
-    {
-     "ch": 1,
-     "sec": 3,
-     "h": "What your fences don't reach",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 0,
-     "h": "A curtain isn't a wall",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 4,
-     "h": "Chart it, or it didn't happen",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 4,
-     "h": "Count the beds",
-     "auto": true
-    }
+    {"ch": 1, "sec": 2, "h": "Turning it on for an organization", "auto": true},
+    {"ch": 1, "sec": 3, "h": "What your fences don't reach", "auto": true},
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 176
@@ -891,18 +521,8 @@
     "log streaming"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 2,
-     "h": "Turning it on for an organization",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 4,
-     "h": "Chart it, or it didn't happen",
-     "auto": true
-    }
+    {"ch": 1, "sec": 2, "h": "Turning it on for an organization", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 59
@@ -927,54 +547,14 @@
     "subscriptions? (via|through|with) the (REST )?API"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 0,
-     "h": "Know what you're buying",
-     "auto": true
-    },
-    {
-     "ch": 1,
-     "sec": 2,
-     "h": "Turning it on for an organization",
-     "auto": true
-    },
-    {
-     "ch": 1,
-     "sec": 3,
-     "h": "What your fences don't reach",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 1,
-     "h": "Lock it, then try the handle",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 4,
-     "h": "Chart it, or it didn't happen",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 0,
-     "h": "Learn them on your first night",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 4,
-     "h": "Count the beds",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 0,
-     "h": "Say what happened",
-     "auto": true
-    }
+    {"ch": 1, "sec": 0, "h": "Know what you're buying", "auto": true},
+    {"ch": 1, "sec": 2, "h": "Turning it on for an organization", "auto": true},
+    {"ch": 1, "sec": 3, "h": "What your fences don't reach", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true},
+    {"ch": 6, "sec": 0, "h": "Learn them on your first night", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true},
+    {"ch": 7, "sec": 0, "h": "Say what happened", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 517
@@ -997,18 +577,8 @@
     "not used (for|to) train"
    ],
    "refs": [
-    {
-     "ch": 5,
-     "sec": 3,
-     "h": "Know who heard it",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 4,
-     "h": "Count the beds",
-     "auto": true
-    }
+    {"ch": 5, "sec": 3, "h": "Know who heard it", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 82
@@ -1033,15 +603,10 @@
     "fill-in-the-middle"
    ],
    "refs": [
-    {
-     "ch": 3,
-     "sec": 0,
-     "h": "Know what the monitor measures",
-     "auto": true
-    }
+    {"ch": 3, "sec": 0, "h": "Know what the monitor measures", "auto": true}
    ],
    "status": "explained",
-   "depth": 102
+   "depth": 97
   },
   {
    "id": "GH300.3.1.3",
@@ -1062,15 +627,10 @@
     "vulnerability filter"
    ],
    "refs": [
-    {
-     "ch": 3,
-     "sec": 0,
-     "h": "Know what the monitor measures",
-     "auto": true
-    }
+    {"ch": 3, "sec": 0, "h": "Know what the monitor measures", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 124
+   "depth": 120
   },
   {
    "id": "GH300.3.2.1",
@@ -1090,15 +650,10 @@
     "round trip"
    ],
    "refs": [
-    {
-     "ch": 3,
-     "sec": 0,
-     "h": "Know what the monitor measures",
-     "auto": true
-    }
+    {"ch": 3, "sec": 0, "h": "Know what the monitor measures", "auto": true}
    ],
    "status": "explained",
-   "depth": 59
+   "depth": 55
   },
   {
    "id": "GH300.3.2.2",
@@ -1120,18 +675,8 @@
     "probabilistic"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    },
-    {
-     "ch": 3,
-     "sec": 1,
-     "h": "Right ninety nine times",
-     "auto": true
-    }
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 3, "sec": 1, "h": "Right ninety nine times", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 130
@@ -1154,15 +699,10 @@
     "clear instructions"
    ],
    "refs": [
-    {
-     "ch": 4,
-     "sec": 4,
-     "h": "Show them three charts",
-     "auto": true
-    }
+    {"ch": 4, "sec": 4, "h": "Show them three charts", "auto": true}
    ],
    "status": "practiced",
-   "depth": 86
+   "depth": 77
   },
   {
    "id": "GH300.4.1.2",
@@ -1184,12 +724,7 @@
     "relevant context"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    }
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 83
@@ -1211,20 +746,10 @@
     "in-context examples?"
    ],
    "refs": [
-    {
-     "ch": 4,
-     "sec": 4,
-     "h": "Show them three charts",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 1,
-     "h": "Read the old chart first",
-     "auto": true
-    }
+    {"ch": 4, "sec": 4, "h": "Show them three charts", "auto": true},
+    {"ch": 7, "sec": 1, "h": "Read the old chart first", "auto": true}
    ],
-   "status": "explained",
+   "status": "independently assessed",
    "depth": 219
   },
   {
@@ -1245,12 +770,7 @@
     "descriptive (names|comments)"
    ],
    "refs": [
-    {
-     "ch": 4,
-     "sec": 4,
-     "h": "Show them three charts",
-     "auto": true
-    }
+    {"ch": 4, "sec": 4, "h": "Show them three charts", "auto": true}
    ],
    "status": "explained",
    "depth": 111
@@ -1274,24 +794,9 @@
     "single task per prompt"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 3,
-     "h": "What your fences don't reach",
-     "auto": true
-    },
-    {
-     "ch": 4,
-     "sec": 0,
-     "h": "Write it where the next nurse will find it",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 3,
-     "h": "Know who heard it",
-     "auto": true
-    }
+    {"ch": 1, "sec": 3, "h": "What your fences don't reach", "auto": true},
+    {"ch": 4, "sec": 0, "h": "Write it where the next nurse will find it", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Know who heard it", "auto": true}
    ],
    "status": "explained",
    "depth": 86
@@ -1314,15 +819,10 @@
     "previous (turns?|messages?)"
    ],
    "refs": [
-    {
-     "ch": 4,
-     "sec": 4,
-     "h": "Show them three charts",
-     "auto": true
-    }
+    {"ch": 4, "sec": 4, "h": "Show them three charts", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 62
+   "depth": 53
   },
   {
    "id": "GH300.5.1.1",
@@ -1344,18 +844,8 @@
     "explain command"
    ],
    "refs": [
-    {
-     "ch": 3,
-     "sec": 1,
-     "h": "Right ninety nine times",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 1,
-     "h": "Read the old chart first",
-     "auto": true
-    }
+    {"ch": 3, "sec": 1, "h": "Right ninety nine times", "auto": true},
+    {"ch": 7, "sec": 1, "h": "Read the old chart first", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 173
@@ -1377,18 +867,8 @@
     "stay(s|ing)? in the (editor|IDE|flow)"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 1,
-     "h": "Where Copilot lives",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 1,
-     "h": "Read the old chart first",
-     "auto": true
-    }
+    {"ch": 1, "sec": 1, "h": "Where Copilot lives", "auto": true},
+    {"ch": 7, "sec": 1, "h": "Read the old chart first", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 223
@@ -1413,12 +893,7 @@
     "migrat(e|ion|ing)"
    ],
    "refs": [
-    {
-     "ch": 7,
-     "sec": 1,
-     "h": "Read the old chart first",
-     "auto": true
-    }
+    {"ch": 7, "sec": 1, "h": "Read the old chart first", "auto": true}
    ],
    "status": "practiced",
    "depth": 31
@@ -1441,18 +916,8 @@
     "test coverage"
    ],
    "refs": [
-    {
-     "ch": 3,
-     "sec": 4,
-     "h": "Test the patient who isn't in the textbook",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 2,
-     "h": "Practice on the mannequin",
-     "auto": true
-    }
+    {"ch": 3, "sec": 4, "h": "Test the patient who isn't in the textbook", "auto": true},
+    {"ch": 7, "sec": 2, "h": "Practice on the mannequin", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 86
@@ -1474,21 +939,12 @@
     "corner cases?"
    ],
    "refs": [
-    {
-     "ch": 3,
-     "sec": 4,
-     "h": "Test the patient who isn't in the textbook",
-     "auto": true
-    },
-    {
-     "ch": 7,
-     "sec": 1,
-     "h": "Read the old chart first",
-     "auto": true
-    }
+    {"ch": 3, "sec": 4, "h": "Test the patient who isn't in the textbook", "auto": true},
+    {"ch": 4, "sec": 4, "h": "Show them three charts", "auto": true},
+    {"ch": 7, "sec": 1, "h": "Read the old chart first", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 61
+   "depth": 159
   },
   {
    "id": "GH300.5.2.3",
@@ -1509,12 +965,7 @@
     "secret scanning"
    ],
    "refs": [
-    {
-     "ch": 3,
-     "sec": 0,
-     "h": "Know what the monitor measures",
-     "auto": true
-    }
+    {"ch": 3, "sec": 0, "h": "Know what the monitor measures", "auto": true}
    ],
    "status": "practiced",
    "depth": 28
@@ -1537,30 +988,10 @@
     "repository settings"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 0,
-     "h": "A curtain isn't a wall",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 1,
-     "h": "Lock it, then try the handle",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 4,
-     "h": "Chart it, or it didn't happen",
-     "auto": true
-    }
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 5, "sec": 0, "h": "A curtain isn't a wall", "auto": true},
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Chart it, or it didn't happen", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 133
@@ -1583,12 +1014,7 @@
     "copyright"
    ],
    "refs": [
-    {
-     "ch": 5,
-     "sec": 2,
-     "h": "Write down who said it",
-     "auto": true
-    }
+    {"ch": 5, "sec": 2, "h": "Write down who said it", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 72
@@ -1611,24 +1037,9 @@
     "block(ed)? suggestions? matching"
    ],
    "refs": [
-    {
-     "ch": 1,
-     "sec": 4,
-     "h": "Check the patient",
-     "auto": true
-    },
-    {
-     "ch": 5,
-     "sec": 2,
-     "h": "Write down who said it",
-     "auto": true
-    },
-    {
-     "ch": 6,
-     "sec": 4,
-     "h": "Count the beds",
-     "auto": true
-    }
+    {"ch": 1, "sec": 4, "h": "Check the patient", "auto": true},
+    {"ch": 5, "sec": 2, "h": "Write down who said it", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Count the beds", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 129
@@ -1653,12 +1064,7 @@
     "(Copilot|extension|output) logs?"
    ],
    "refs": [
-    {
-     "ch": 5,
-     "sec": 1,
-     "h": "Lock it, then try the handle",
-     "auto": true
-    }
+    {"ch": 5, "sec": 1, "h": "Lock it, then try the handle", "auto": true}
    ],
    "status": "independently assessed",
    "depth": 31
