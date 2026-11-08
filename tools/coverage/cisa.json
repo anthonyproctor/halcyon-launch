@@ -32,10 +32,11 @@
    "refs": [
     {"ch": 1, "sec": 0, "h": "First, what you've signed up for", "auto": true},
     {"ch": 1, "sec": 1, "h": "The charter is your permission slip", "auto": true},
-    {"ch": 1, "sec": 2, "h": "Independence: in fact and in appearance", "auto": true}
+    {"ch": 1, "sec": 2, "h": "Independence: in fact and in appearance", "auto": true},
+    {"ch": 12, "sec": 7, "h": "Checking the checker", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 312
+   "depth": 415
   },
   {
    "id": "CISA.1A2",
@@ -113,10 +114,11 @@
    ],
    "refs": [
     {"ch": 5, "sec": 3, "h": "Controls go in at the drawing board", "auto": true},
+    {"ch": 12, "sec": 5, "h": "The law", "auto": true},
     {"ch": 12, "sec": 6, "h": "Kinds of controls", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 349
+   "depth": 387
   },
   {
    "id": "CISA.1B1",
@@ -282,9 +284,11 @@
     "supervisory review",
     "post.audit review"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 7, "h": "Checking the checker", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 147
   },
   {
    "id": "CISA.2A1",
@@ -307,9 +311,11 @@
     "ISO 27001",
     "industry standards?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 5, "h": "The law", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 159
   },
   {
    "id": "CISA.2A2",
@@ -564,10 +570,11 @@
     "maturity models?"
    ],
    "refs": [
-    {"ch": 4, "sec": 4, "h": "Quality isn't a plaque", "auto": true}
+    {"ch": 4, "sec": 4, "h": "Quality isn't a plaque", "auto": true},
+    {"ch": 12, "sec": 7, "h": "Checking the checker", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 175
+   "depth": 255
   },
   {
    "id": "CISA.3A1",
@@ -850,9 +857,11 @@
     "runbook",
     "automation scripts?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "The work that runs at night", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 268
   },
   {
    "id": "CISA.4A4",
@@ -874,9 +883,12 @@
     "middleware",
     "data exchange"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 1, "h": "Where two systems meet", "auto": true},
+    {"ch": 8, "sec": 5, "h": "The record of the night", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 449
   },
   {
    "id": "CISA.4A5",
@@ -981,7 +993,7 @@
     {"ch": 8, "sec": 0, "h": "What it's made of", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 371
+   "depth": 434
   },
   {
    "id": "CISA.4A9",
@@ -1002,9 +1014,11 @@
     "event logs?",
     "log integrity"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 5, "h": "The record of the night", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 290
   },
   {
    "id": "CISA.4A10",
@@ -1056,7 +1070,7 @@
     {"ch": 9, "sec": 5, "h": "Underneath", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 461
+   "depth": 591
   },
   {
    "id": "CISA.4B1",
@@ -1136,10 +1150,11 @@
    "refs": [
     {"ch": 7, "sec": 1, "h": "Built to stay up", "auto": true},
     {"ch": 7, "sec": 2, "h": "Copies", "auto": true},
-    {"ch": 8, "sec": 2, "h": "The spreadsheet in the drawer", "auto": true}
+    {"ch": 8, "sec": 2, "h": "The spreadsheet in the drawer", "auto": true},
+    {"ch": 9, "sec": 5, "h": "Underneath", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 442
+   "depth": 619
   },
   {
    "id": "CISA.4B4",
@@ -1215,10 +1230,11 @@
    ],
    "refs": [
     {"ch": 3, "sec": 1, "h": "Paper that's supposed to be true", "auto": true},
-    {"ch": 9, "sec": 0, "h": "Rules on paper", "auto": true}
+    {"ch": 9, "sec": 0, "h": "Rules on paper", "auto": true},
+    {"ch": 12, "sec": 5, "h": "The law", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 127
+   "depth": 235
   },
   {
    "id": "CISA.5A2",
@@ -1412,7 +1428,7 @@
     {"ch": 10, "sec": 6, "h": "Pockets", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 228
+   "depth": 433
   },
   {
    "id": "CISA.5A9",

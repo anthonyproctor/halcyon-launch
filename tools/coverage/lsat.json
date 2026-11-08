@@ -253,7 +253,7 @@
     {"ch": 12, "sec": 2, "h": "Has to be, and probably", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 475
+   "depth": 594
   },
   {
    "id": "LSAT.LR10",
@@ -324,10 +324,11 @@
    ],
    "refs": [
     {"ch": 6, "sec": 0, "h": "The rule behind it", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Rules in a passage", "auto": true},
     {"ch": 12, "sec": 1, "h": "The rule underneath", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 84
+   "depth": 176
   },
   {
    "id": "LSAT.LR13",
@@ -441,9 +442,11 @@
     "variable",
     "two.answer test"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "Questions that cut both ways", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 193
   },
   {
    "id": "LSAT.LR18",
@@ -558,9 +561,11 @@
     "author's (aim|goal)",
     "purpose of the author"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Tone and shape", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 137
   },
   {
    "id": "LSAT.RC03",
@@ -585,7 +590,7 @@
     {"ch": 3, "sec": 4, "h": "Tone and shape", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 67
+   "depth": 61
   },
   {
    "id": "LSAT.RC04",
@@ -702,9 +707,11 @@
     "why the author (mentions|includes)",
     "purpose of the (paragraph|reference|mention)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 3, "h": "What the page lets you say", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 184
   },
   {
    "id": "LSAT.RC09",
@@ -729,7 +736,7 @@
     {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 121
+   "depth": 115
   },
   {
    "id": "LSAT.RC10",
@@ -747,9 +754,11 @@
     "comparable to",
     "relationship (most )?similar"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 4, "h": "Most like", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 177
   },
   {
    "id": "LSAT.RC11",
@@ -791,9 +800,11 @@
     "principle (underlying|operating|guiding)",
     "conforms? to the principle"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Rules in a passage", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 92
   },
   {
    "id": "LSAT.RC13",
@@ -843,10 +854,11 @@
     "generali[sz]ation and instance"
    ],
    "refs": [
+    {"ch": 3, "sec": 4, "h": "Tone and shape", "auto": true},
     {"ch": 11, "sec": 3, "h": "Two passages", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 80
+   "depth": 340
   }
  ],
  "seeded": "2026-11-08"

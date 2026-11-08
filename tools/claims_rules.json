@@ -116,6 +116,78 @@
    "pattern": "invulnerab[^.]{0,60}\\b(antidote|countered|answered)[^.]{0,30}taking chances is foolish|taking chances is foolish[^.]{0,40}\\b(answers|counters|is the antidote (for|to))\\b[^.]{0,10}invulnerab|macho[^.]{0,60}\\b(antidote|countered|answered)[^.]{0,30}could happen to me|could happen to me[^.]{0,40}\\b(answers|counters|is the antidote (for|to))\\b[^.]{0,10}macho",
    "why": "PHAK figure 2-4 pairs invulnerability with \"It could happen to me\" and macho with \"Taking chances is foolish\"",
    "ruled": "2026-11-07 pilot form3 examcheck"
+  },
+  {
+   "course": "cisa",
+   "pattern": "\\b(every|each|all|any) cloud (account|provider|tenant)s?\\b[^.]{0,140}\\broot (account|user)\\b",
+   "unless": "\\b(AWS|Amazon|usually|often|some)\\b",
+   "why": "Root account is AWS's name; Azure and Google Cloud have top roles (Global Administrator, organization admin) but no root account",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "cisa",
+   "pattern": "\\b(don'?t|do not|never) (take|use|accept|rely on|collect) screenshots?\\b|\\bscreenshots? (are|is) (not|never) (acceptable|evidence|allowed)\\b",
+   "why": "Screenshots are acceptable supporting evidence, just weaker (point in time, easy to doctor); say don't settle for them",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "cisa",
+   "pattern": "\\balert\\b[^.]{0,80}\\bwithin (the|an|one) hour\\b",
+   "unless": "\\b(Meridian|standard|policy|bank'?s own)\\b",
+   "why": "A set alert time is a client standard, not an exam rule; the exam wants monitoring and timely alerting on failed jobs",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "cisa",
+   "pattern": "\\bnever been (assessed|reviewed)( externally| from outside)?\\b[^.]{0,80}\\bcan'?t (say|claim)\\b",
+   "unless": "\\bfive years\\b",
+   "why": "IIA Standard 8.4 starts the five year external assessment window at adoption; a new function may still be inside it",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "cisa",
+   "pattern": "\\bbinds? like (regulation|law|a law|a regulation)\\b",
+   "why": "Contractual standards such as PCI DSS bind by contract, not with legal force; say they bind by contract and belong in the compliance scope",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "cisa",
+   "pattern": "\\bHIPAA (covers|applies to)[^.]{0,80}\\bhealth plans\\b[^.]{0,40}\\bproviders\\b",
+   "unless": "\\bclearinghouses?\\b",
+   "why": "HIPAA covered entities are health plans, health care clearinghouses and providers, plus business associates",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "cisa",
+   "pattern": "\\bcan'?t see any layers? at all\\b",
+   "why": "In SaaS the customer can't see the provider's layers but still owns settings like accounts, sign in and sharing",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "lsat",
+   "pattern": "\\b(turns? up|appears?|shows? up) in every (set|section|test|LSAT)\\b",
+   "unless": "\\b(almost|nearly)\\b",
+   "why": "Question types vary by form; no single type is guaranteed in every set",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "lsat",
+   "pattern": "\\b(wrong answers?|traps?) you'?ll see every time\\b",
+   "why": "Overstates; wrong answer patterns recur but aren't on every question",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "lsat",
+   "pattern": "\\bstopped commissioning work about then\\b",
+   "unless": "\\btrade gone\\b",
+   "why": "Comparative passage example: B must state that trade fell before an answer can say both authors hold it; inference alone isn't agreement",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
+  },
+  {
+   "course": "lsat",
+   "pattern": "\\bthe test only asks what the passage says\\b",
+   "why": "Scope it to reading comprehension; logical reasoning asks more than what a passage says",
+   "ruled": "2026-11-07 cisa lsat coverage examcheck"
   }
  ]
 }
