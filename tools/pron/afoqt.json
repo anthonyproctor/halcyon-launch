@@ -1,0 +1,18 @@
+{"course": "afoqt", "note": "Seeded 2026-11-07 from the cast (cast.js) and the book's jargon. Not rendered yet: tune ok/wrong with --learn after the first render.",
+ "terms": [
+  {"term": "Pruett", "ok": ["pruett", "pruitt", "pruit", "pruet"], "wrong": ["prue", "pratt", "pruitts"]},
+  {"term": "Yates", "ok": ["yates", "yeats"], "wrong": ["gates", "yeets", "yards"]},
+  {"term": "Darrow", "ok": ["darrow", "daro", "darow"], "wrong": ["darrel", "darryl", "barrow", "arrow", "dara"]},
+  {"term": "Tolliver", "ok": ["tolliver", "toliver", "taliver", "tolever"], "wrong": ["oliver", "toll over", "tall over"]},
+  {"term": "Vern", "ok": ["vern", "verne"], "wrong": ["burn", "fern", "vernon"]},
+  {"term": "Boyd", "ok": ["boyd", "boid"], "wrong": ["void", "bird", "boy"]},
+  {"term": "Fisk", "ok": ["fisk", "fiske"], "wrong": ["fist", "disc", "fiscal"]},
+  {"term": "Kemp", "ok": ["kemp"], "wrong": ["camp", "kept"]},
+  {"term": "Sutter", "ok": ["sutter", "suter"], "wrong": ["shutter", "sooter"]},
+  {"term": "Corbin", "ok": ["corbin", "corban"], "wrong": ["carbon", "corbyn"]},
+  {"term": "KC-135", "ok": ["kc135", "kcone35", "kconethirtyfive", "kconethreefive", "kayseeonethirtyfive"], "wrong": ["kc35", "kc153"], "note": "the tanker: K C one thirty five"},
+  {"term": "two two eight", "ok": ["twotwoeight", "228", "two28", "22eight"], "wrong": ["twotwentyeight", "228th", "toot"], "note": "Kit's jet, said digit by digit"},
+  {"term": "AFOQT", "ok": ["afoqt", "afoqd", "afoq", "afoqts"], "wrong": ["afoot", "afghan"], "note": "said as letters"},
+  {"term": "PCSM", "ok": ["pcsm"], "wrong": ["pcs", "pcm", "psm"], "note": "said as letters"},
+  {"term": "TBAS", "ok": ["tbas", "teebass", "tbass", "teebas", "tbaz"], "wrong": ["tbs", "tibs", "tee bags"], "note": "say how the book wants it (T bass or letters) once rendered"}
+ ]}

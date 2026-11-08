@@ -1,0 +1,234 @@
+{
+ "course": "asep",
+ "note": "Seeded 2026-11-07 from the Hearth cast (tools/gemini_voices.json) and the book's jargon; ok forms grown from what whisper heard on the approved render (--learn).",
+ "terms": [
+  {
+   "term": "Nadia",
+   "ok": [
+    "nadia",
+    "nadya",
+    "nadiya"
+   ],
+   "wrong": [
+    "nadir",
+    "nadja"
+   ]
+  },
+  {
+   "term": "HEARTH",
+   "ok": [
+    "hearth",
+    "harth",
+    "hearths",
+    "harths"
+   ],
+   "wrong": [
+    "heart",
+    "earth",
+    "harth"
+   ],
+   "note": "the habitat module. Said like the word hearth (harth); whisper spells that Harth (learned 2026-11-07 on the approved render)",
+   "word": true
+  },
+  {
+   "term": "Halo",
+   "ok": [
+    "halo",
+    "haylo"
+   ],
+   "wrong": [
+    "hello",
+    "hollow",
+    "hallow"
+   ]
+  },
+  {
+   "term": "Amara",
+   "ok": [
+    "amara",
+    "amarra",
+    "omara",
+    "amaro"
+   ],
+   "wrong": [
+    "tamara",
+    "camera",
+    "mara"
+   ]
+  },
+  {
+   "term": "Tiago",
+   "ok": [
+    "tiago",
+    "chiago",
+    "thiago",
+    "tiyago",
+    "tyago"
+   ],
+   "wrong": [
+    "diego",
+    "chicago",
+    "santiago"
+   ]
+  },
+  {
+   "term": "Colleen",
+   "ok": [
+    "colleen",
+    "coleen",
+    "colline",
+    "collin",
+    "kolleen"
+   ],
+   "wrong": [
+    "kathleen",
+    "college"
+   ]
+  },
+  {
+   "term": "Odette",
+   "ok": [
+    "odette",
+    "odet",
+    "odett",
+    "audette"
+   ],
+   "wrong": [
+    "o debt",
+    "a debt",
+    "odessa"
+   ]
+  },
+  {
+   "term": "Pavel",
+   "ok": [
+    "pavel",
+    "pavol",
+    "pavle",
+    "pahvel"
+   ],
+   "wrong": [
+    "paul",
+    "pebble",
+    "navel",
+    "pavlov"
+   ]
+  },
+  {
+   "term": "Tamarack",
+   "ok": [
+    "tamarack",
+    "tamarac",
+    "tamerack",
+    "tamaraq",
+    "tamarax",
+    "tamerac"
+   ],
+   "wrong": [
+    "tamarind",
+    "tomorrow"
+   ]
+  },
+  {
+   "term": "Brannock",
+   "ok": [
+    "brannock",
+    "brannick",
+    "brannoch",
+    "branick",
+    "brannack"
+   ],
+   "wrong": [
+    "brandock",
+    "bran knock"
+   ]
+  },
+  {
+   "term": "Callie",
+   "ok": [
+    "callie",
+    "cally",
+    "kali",
+    "kallie",
+    "calli"
+   ],
+   "wrong": [
+    "carly",
+    "collie"
+   ]
+  },
+  {
+   "term": "Ines",
+   "ok": [
+    "ines",
+    "inez",
+    "eenes",
+    "enez",
+    "inis"
+   ],
+   "wrong": [
+    "ins",
+    "iness"
+   ]
+  },
+  {
+   "term": "FRO",
+   "ok": [
+    "fro",
+    "fr0",
+    "fro",
+    "frow",
+    "fo"
+   ],
+   "wrong": [
+    "for",
+    "from",
+    "afro"
+   ],
+   "note": "check how the book says it (letters or a word)"
+  },
+  {
+   "term": "ICD",
+   "ok": [
+    "icd"
+   ],
+   "wrong": [
+    "icc",
+    "ipd"
+   ]
+  },
+  {
+   "term": "SEMP",
+   "ok": [
+    "semp",
+    "semple",
+    "sem",
+    "semps"
+   ],
+   "wrong": [
+    "simp",
+    "temp"
+   ],
+   "note": "heard both as a word (semp) and as letters (S-E-M-P) on the approved render; pick one in the SAY list if it matters"
+  },
+  {
+   "term": "TPM",
+   "ok": [
+    "tpm"
+   ],
+   "wrong": [
+    "tbm",
+    "tpn"
+   ]
+  },
+  {
+   "term": "Centennial",
+   "ok": [
+    "centennial"
+   ],
+   "wrong": [
+    "sentinel"
+   ]
+  }
+ ]
+}

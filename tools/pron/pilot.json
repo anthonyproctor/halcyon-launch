@@ -1,0 +1,236 @@
+{
+ "course": "pilot",
+ "note": "Seeded 2026-11-07 from the pilot cast (tools/gemini_voices.json) and the book's jargon; ok forms grown from what whisper heard on the approved render (--learn).",
+ "terms": [
+  {
+   "term": "Abby",
+   "ok": [
+    "abby",
+    "abbie",
+    "abi",
+    "abbey"
+   ],
+   "wrong": [
+    "absee",
+    "gabby"
+   ]
+  },
+  {
+   "term": "Marisol",
+   "ok": [
+    "marisol",
+    "marisal",
+    "marisole"
+   ],
+   "wrong": [
+    "mary sol",
+    "marisa",
+    "mariso"
+   ]
+  },
+  {
+   "term": "Walt",
+   "ok": [
+    "walt",
+    "wald"
+   ],
+   "wrong": [
+    "wall",
+    "vault",
+    "watt"
+   ]
+  },
+  {
+   "term": "Lourdes",
+   "ok": [
+    "lourdes",
+    "lordes",
+    "lords",
+    "lordez"
+   ],
+   "wrong": [
+    "lords of"
+   ]
+  },
+  {
+   "term": "Ellie",
+   "ok": [
+    "ellie",
+    "elly",
+    "ely",
+    "ellee",
+    "elle"
+   ],
+   "wrong": [
+    "allie",
+    "alley"
+   ]
+  },
+  {
+   "term": "Kendra",
+   "ok": [
+    "kendra"
+   ],
+   "wrong": [
+    "candra",
+    "kenra"
+   ]
+  },
+  {
+   "term": "Biscuit",
+   "ok": [
+    "biscuit",
+    "biscuits"
+   ],
+   "wrong": [
+    "bisket"
+   ]
+  },
+  {
+   "term": "KAPA",
+   "ok": [
+    "kapa",
+    "kappa",
+    "kapaa",
+    "kapah",
+    "kaypa"
+   ],
+   "wrong": [
+    "capa",
+    "kpa"
+   ],
+   "note": "spoken K A P A in some lines, the renderer SAY list"
+  },
+  {
+   "term": "Centennial",
+   "ok": [
+    "centennial"
+   ],
+   "wrong": [
+    "sentinel",
+    "centenial"
+   ]
+  },
+  {
+   "term": "Greeley",
+   "ok": [
+    "greeley",
+    "greely",
+    "grealy"
+   ],
+   "wrong": [
+    "greasy",
+    "grilly"
+   ]
+  },
+  {
+   "term": "Pueblo",
+   "ok": [
+    "pueblo"
+   ],
+   "wrong": [
+    "pablo",
+    "puebla"
+   ]
+  },
+  {
+   "term": "Niner",
+   "ok": [
+    "niner",
+    "9er",
+    "9r",
+    "nina",
+    "4791",
+    "791echo",
+    "91echo"
+   ],
+   "wrong": [
+    "minor",
+    "nine"
+   ],
+   "note": "radio calls. whisper writes a said \"niner\" as the digit 9 (Cessna 4-7-9-1 Echo), so digits pass; that also lets a plain \"nine\" through. Only \"nine\" written as a word is a MISREAD"
+  },
+  {
+   "term": "PHAK",
+   "ok": [
+    "phak",
+    "fak",
+    "phac",
+    "pak",
+    "fack",
+    "phaq",
+    "phaak",
+    "phaaks"
+   ],
+   "wrong": [
+    "fuck",
+    "pack"
+   ],
+   "note": "said fack"
+  },
+  {
+   "term": "METAR",
+   "ok": [
+    "metar",
+    "meetar",
+    "metter",
+    "meter",
+    "mehtar"
+   ],
+   "wrong": [
+    "meteor",
+    "metal"
+   ]
+  },
+  {
+   "term": "TAF",
+   "ok": [
+    "taf",
+    "taff",
+    "tough",
+    "taft"
+   ],
+   "wrong": [
+    "tough luck"
+   ]
+  },
+  {
+   "term": "ATIS",
+   "ok": [
+    "atis",
+    "atiss",
+    "atus",
+    "eightis",
+    "atys",
+    "aitis",
+    "ates",
+    "adis"
+   ],
+   "wrong": [
+    "attics",
+    "addis"
+   ]
+  },
+  {
+   "term": "VFR",
+   "ok": [
+    "vfr"
+   ],
+   "wrong": [
+    "vr",
+    "vfw"
+   ]
+  },
+  {
+   "term": "Cessna",
+   "ok": [
+    "cessna",
+    "sessna"
+   ],
+   "wrong": [
+    "session",
+    "chesna"
+   ]
+  }
+ ]
+}
