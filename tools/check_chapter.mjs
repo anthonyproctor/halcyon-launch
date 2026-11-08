@@ -8,10 +8,10 @@ let bad=0;
 const chapters=[...(window.HALCYON||[]),...(window.HALCYON_FULL||[]),...Object.values(window.HALCYON_DATA||{}).flatMap(d=>d.full||[])]; // course books push to window.HALCYON_DATA[id].full
 if(!files.length||!chapters.length){console.log('usage: node tools/check_chapter.mjs <chapter file>... (no chapters found)');process.exit(2)}
 for(const c of chapters){
-  let longestBest=0,shortestBest=0;const lines=[];
+  let longestBest=0,shortestBest=0;const lines=[],slots=[];
   const scenes=c.scenes.filter(sc=>Array.isArray(sc.opts)&&sc.opts.length);
   scenes.forEach(sc=>{
-    const L=sc.opts.map(o=>o.t.length);const b=sc.opts.findIndex(o=>o.best);
+    const L=sc.opts.map(o=>o.t.length);const b=sc.opts.findIndex(o=>o.best);slots[b]=(slots[b]||0)+1;
     const max=Math.max(...L),min=Math.min(...L);
     const others=L.filter((_,k)=>k!==b);if(L[b]>Math.max(...others))longestBest++;if(L[b]>1.1*Math.max(...others)){console.log('GIVEAWAY best much longer',sc.id);bad++} if(L[b]===min)shortestBest++;
     const rank=[...L].sort((a,b)=>b-a).indexOf(L[b])+1;
@@ -25,5 +25,6 @@ for(const c of chapters){
   console.log(`ch${c.num} ${c.title}: best is longest in ${longestBest}/${scenes.length}, shortest in ${shortestBest}/${scenes.length}, dashes=${dashes}, videos=${Object.keys(c.videos||{}).length}`);
   lines.forEach(l=>console.log("  "+l));
   if(longestBest>0.4*scenes.length||dashes)bad++; // 4 of 10 was the original bar
+  const top=Math.max(0,...Array.from(slots,x=>x||0));if(scenes.length>=6&&top>0.5*scenes.length){console.log(`note: best is written in the same slot in ${top}/${scenes.length} decisions. The app and pages.mjs narration shuffle with order.js, so readers never see it; only the retired episode_full.mjs (Kokoro) reads written order. Spread it anyway when it's cheap.`)} // 2026-11-07, a warning only
 }
 process.exit(bad?1:0);
