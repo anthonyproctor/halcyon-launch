@@ -1,14 +1,17 @@
 // AFOQT course "Commission": Practice Test 1, part B, subtest 5 of 6: Block Counting (30 items, 5 minutes). Written 2026-11-07.
-// Form "M10:" (see courses/lsat/mock/lr1.js for how forms work). Six piles of identical blocks, five numbered blocks each; every block in
-// a pile shows at least one face, nothing overlaps or floats, and every number is visible (HalcyonFigs.check). The key is
+// Form "M10:" (see courses/lsat/mock/lr1.js for how forms work). Six piles of identical 3x1x1 blocks, five numbered blocks each;
+// nothing overlaps or floats, and every number is visible (HalcyonFigs.check). Piles 2 and 6 (replaced 2026-11-08) each hide one
+// block with no face in view, like the real test: a block you can see sits on it and nothing floats, so a careful reader counts it
+// (ch09 teaches this). In every other pile each block shows a face. Every block in piles 2 and 6 rests on full support, and a look
+// alike search (same drawing, nothing floating or tipping, one extra block allowed) finds only one way to fill the hidden space, so
+// each key has one answer. Every explanation in those piles says how to find the hidden block. The key is
 // HalcyonFigs.touches(boxes,i).length: face contact only, partial faces counted, edges and corners not.
 // Every item has fixedOrder:true: its five choices are consecutive counts in ascending order and show as written, unshuffled, like
-// the real test. So keys by slot follow the counts and aren't balanced; that's expected for BC, and BC is exempt from the slot
-// balance rule. Tasks: BC 30. Keys by slot: 8/7/7/5/3.
+// the real test. The window of counts is placed so keys by slot stay even. Tasks: BC 30. Keys by slot: 6/6/6/6/6.
 // Original items written for Halcyon, not taken from the AFOQT information pamphlet, any official sample or any prep book, and none repeats a
-// chapter quiz item (checked 2026-11-07 against ch01 and ch02). Halcyon isn't affiliated with or endorsed by the Department of the
+// chapter quiz item (checked 2026-11-07 against ch01 and ch02; ch09's piles use 2x1x1 blocks, so none of these twins them). Halcyon isn't affiliated with or endorsed by the Department of the
 // Air Force, AFPC or Pearson. Five choices; they show in the order written, and no explanation names a letter. Ids are the part prefix
-// plus the array index: never reorder items. Built by a private generator that computes and checks every key.
+// plus the array index: never reorder items. Built by a private generator that computes and checks every key; the hidden block piles were built by hand and keyed with HalcyonFigs.touches.
 (function(){
 const D=window.HALCYON_DATA=window.HALCYON_DATA||{};
 const C=D.afoqt=D.afoqt||{};
@@ -67,53 +70,53 @@ C.mock.push({ part:`M10: Block Counting`, formName:`Test 1: Block Counting`, que
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 2, how many other blocks does block 1 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,3,1,1;0,1,0,3,1,1;0,2,0,3,1,1;0,3,0,3,1,1;0.5,0,1,1,3,1;2,1,1,1,3,1;0,1,2,3,1,1" labels="1:6,2:4,3:0,4:2,5:5"></prop>`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;3,0,1,1,3,1;0,0,2,3,1,1" labels="1:3,2:5,3:6,4:7,5:1"></prop>`,
   opts:[`1`,
         `2`,
         `3`,
         `4`,
         `5`],
-  fixedOrder:true, a:1, why:`2. Blocks 2 and 5 under it. Partial faces count.`,
+  fixedOrder:true, a:1, why:`2. An unnumbered block at its upper left; block 3 on top of it. The hidden block (under 4; nothing floats) is a layer up and farther back, and meets 1 only along an edge.`,
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 2, how many other blocks does block 2 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,3,1,1;0,1,0,3,1,1;0,2,0,3,1,1;0,3,0,3,1,1;0.5,0,1,1,3,1;2,1,1,1,3,1;0,1,2,3,1,1" labels="1:6,2:4,3:0,4:2,5:5"></prop>`,
-  opts:[`3`,
-        `4`,
-        `5`,
-        `6`,
-        `7`],
-  fixedOrder:true, a:1, why:`4. Blocks 3, 4 and an unnumbered one under it; block 1 on top of it.`,
-  task:`BC`, domain:`Speed and Spatial` },
-
-{ q:`In pile 2, how many other blocks does block 3 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,3,1,1;0,1,0,3,1,1;0,2,0,3,1,1;0,3,0,3,1,1;0.5,0,1,1,3,1;2,1,1,1,3,1;0,1,2,3,1,1" labels="1:6,2:4,3:0,4:2,5:5"></prop>`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;3,0,1,1,3,1;0,0,2,3,1,1" labels="1:3,2:5,3:6,4:7,5:1"></prop>`,
   opts:[`1`,
         `2`,
         `3`,
         `4`,
         `5`],
-  fixedOrder:true, a:1, why:`2. An unnumbered block at its lower left; block 2 on top of it.`,
+  fixedOrder:true, a:4, why:`5. Block 5 and two unnumbered under it; block 3 at its lower right; a hidden block behind it, under 4, since 4 can't float and nothing you can see holds it up.`,
+  task:`BC`, domain:`Speed and Spatial` },
+
+{ q:`In pile 2, how many other blocks does block 3 touch?`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;3,0,1,1,3,1;0,0,2,3,1,1" labels="1:3,2:5,3:6,4:7,5:1"></prop>`,
+  opts:[`0`,
+        `1`,
+        `2`,
+        `3`,
+        `4`],
+  fixedOrder:true, a:3, why:`3. Block 1 under it; block 2 and the hidden block at its upper left. Block 4 needs something under it and nothing shows, so a block runs behind 2 and ends against 3.`,
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 2, how many other blocks does block 4 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,3,1,1;0,1,0,3,1,1;0,2,0,3,1,1;0,3,0,3,1,1;0.5,0,1,1,3,1;2,1,1,1,3,1;0,1,2,3,1,1" labels="1:6,2:4,3:0,4:2,5:5"></prop>`,
-  opts:[`2`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;3,0,1,1,3,1;0,0,2,3,1,1" labels="1:3,2:5,3:6,4:7,5:1"></prop>`,
+  opts:[`1`,
+        `2`,
         `3`,
         `4`,
-        `5`,
-        `6`],
-  fixedOrder:true, a:2, why:`4. An unnumbered block at its upper right; an unnumbered block at its lower left; blocks 2 and 5 on top of it.`,
+        `5`],
+  fixedOrder:true, a:0, why:`1. Only the hidden one under it (4 would float otherwise; it lies the same way as 2, right behind it).`,
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 2, how many other blocks does block 5 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,3,1,1;0,1,0,3,1,1;0,2,0,3,1,1;0,3,0,3,1,1;0.5,0,1,1,3,1;2,1,1,1,3,1;0,1,2,3,1,1" labels="1:6,2:4,3:0,4:2,5:5"></prop>`,
-  opts:[`2`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 2" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;3,0,1,1,3,1;0,0,2,3,1,1" labels="1:3,2:5,3:6,4:7,5:1"></prop>`,
+  opts:[`0`,
+        `1`,
+        `2`,
         `3`,
-        `4`,
-        `5`,
-        `6`],
-  fixedOrder:true, a:2, why:`4. Block 4 and two unnumbered under it; block 1 on top of it.`,
+        `4`],
+  fixedOrder:true, a:4, why:`4. Unnumbered blocks at its upper left and lower right; block 2 on top of it; the hidden block on top of it too, behind 2. That one's there because 4 has to sit on something, and its back end rests on 5.`,
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 3, how many other blocks does block 1 touch?`,
@@ -267,53 +270,53 @@ C.mock.push({ part:`M10: Block Counting`, formName:`Test 1: Block Counting`, que
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 6, how many other blocks does block 1 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;4,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;0,2,1,3,1,1;3,0,1,3,1,1;2,0,2,1,3,1" labels="1:9,2:5,3:4,4:8,5:0"></prop>`,
-  opts:[`2`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;0,3,0,3,1,1;0,0,1,1,3,1;0,3,1,3,1,1" labels="1:1,2:2,3:3,4:4,5:5"></prop>`,
+  opts:[`1`,
+        `2`,
         `3`,
         `4`,
-        `5`,
-        `6`],
-  fixedOrder:true, a:1, why:`3. Block 2 and two unnumbered under it. Partial faces count.`,
+        `5`],
+  fixedOrder:true, a:2, why:`3. Block 2 at its lower right; block 3 at its lower left end; a hidden block at its upper left, under 4. Block 4 is a layer up with nothing showing under it, and nothing floats, so a block runs front to back there, right beside 1.`,
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 6, how many other blocks does block 2 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;4,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;0,2,1,3,1,1;3,0,1,3,1,1;2,0,2,1,3,1" labels="1:9,2:5,3:4,4:8,5:0"></prop>`,
-  opts:[`4`,
-        `5`,
-        `6`,
-        `7`,
-        `8`],
-  fixedOrder:true, a:2, why:`6. Block 5 and two unnumbered under it; an unnumbered block at its lower left; block 4 at its lower right; block 1 on top of it.`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;0,3,0,3,1,1;0,0,1,1,3,1;0,3,1,3,1,1" labels="1:1,2:2,3:3,4:4,5:5"></prop>`,
+  opts:[`1`,
+        `2`,
+        `3`,
+        `4`,
+        `5`],
+  fixedOrder:true, a:1, why:`2. Block 1 at its upper left; block 3 at its lower left end. The hidden block under 4 (it's there because 4 can't float) sits beside 1, not 2, so it doesn't count here.`,
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 6, how many other blocks does block 3 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;4,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;0,2,1,3,1,1;3,0,1,3,1,1;2,0,2,1,3,1" labels="1:9,2:5,3:4,4:8,5:0"></prop>`,
-  opts:[`2`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;0,3,0,3,1,1;0,0,1,1,3,1;0,3,1,3,1,1" labels="1:1,2:2,3:3,4:4,5:5"></prop>`,
+  opts:[`0`,
+        `1`,
+        `2`,
         `3`,
-        `4`,
-        `5`,
-        `6`],
-  fixedOrder:true, a:0, why:`2. An unnumbered block at its upper left; block 4 on top of it.`,
+        `4`],
+  fixedOrder:true, a:4, why:`4. Block 5 on top of it; blocks 1, 2 and a hidden one butting into it end on at its upper right. The hidden one is under 4 (4 needs something to sit on; nothing floats).`,
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 6, how many other blocks does block 4 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;4,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;0,2,1,3,1,1;3,0,1,3,1,1;2,0,2,1,3,1" labels="1:9,2:5,3:4,4:8,5:0"></prop>`,
-  opts:[`3`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;0,3,0,3,1,1;0,0,1,1,3,1;0,3,1,3,1,1" labels="1:1,2:2,3:3,4:4,5:5"></prop>`,
+  opts:[`1`,
+        `2`,
+        `3`,
         `4`,
-        `5`,
-        `6`,
-        `7`],
-  fixedOrder:true, a:0, why:`3. Block 3 and an unnumbered one under it; block 2 at its upper left.`,
+        `5`],
+  fixedOrder:true, a:1, why:`2. The hidden block under it; block 5 at its lower left end. 4 can't float, and the seams on 1 and 2 show the bottom runs front to back, so one block, as long as 4, sits under it.`,
   task:`BC`, domain:`Speed and Spatial` },
 
 { q:`In pile 6, how many other blocks does block 5 touch?`,
-  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;3,0,0,1,3,1;4,0,0,1,3,1;0,0,1,3,1,1;0,1,1,3,1,1;0,2,1,3,1,1;3,0,1,3,1,1;2,0,2,1,3,1" labels="1:9,2:5,3:4,4:8,5:0"></prop>`,
-  opts:[`4`,
-        `5`,
-        `6`,
-        `7`,
-        `8`],
-  fixedOrder:true, a:0, why:`4. An unnumbered block at its lower right; block 2 and two unnumbered on top of it.`,
+  fig:`<prop type="chart" kind="blocks" title="Pile 6" boxes="0,0,0,1,3,1;1,0,0,1,3,1;2,0,0,1,3,1;0,3,0,3,1,1;0,0,1,1,3,1;0,3,1,3,1,1" labels="1:1,2:2,3:3,4:4,5:5"></prop>`,
+  opts:[`0`,
+        `1`,
+        `2`,
+        `3`,
+        `4`],
+  fixedOrder:true, a:2, why:`2. Block 3 under it; block 4 at its upper right. The hidden block holding up 4 (nothing floats) stops at 3 and only meets 5 along an edge.`,
   task:`BC`, domain:`Speed and Spatial` }
 
 ]});

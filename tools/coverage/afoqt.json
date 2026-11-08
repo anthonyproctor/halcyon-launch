@@ -308,10 +308,12 @@
     "don'?t (dwell|linger)"
    ],
    "refs": [
-    {"ch": 2, "sec": 0, "h": "Word Knowledge: take it apart", "auto": true}
+    {"ch": 2, "sec": 0, "h": "Word Knowledge: take it apart", "auto": true},
+    {"ch": 9, "sec": 0, "h": "Three clocks in a row", "auto": true},
+    {"ch": 9, "sec": 6, "h": "About fifty seconds a pile", "auto": true}
    ],
    "status": "practiced",
-   "depth": 129
+   "depth": 175
   },
   {
    "id": "AFOQT.MK.arithmetic",
@@ -1063,10 +1065,12 @@
    ],
    "refs": [
     {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true},
-    {"ch": 1, "sec": 5, "h": "Tables and rates", "auto": true}
+    {"ch": 1, "sec": 5, "h": "Tables and rates", "auto": true},
+    {"ch": 9, "sec": 7, "h": "Back to the table", "auto": true},
+    {"ch": 9, "sec": 8, "h": "Forty in seven", "auto": true}
    ],
    "status": "practiced",
-   "depth": 82
+   "depth": 255
   },
   {
    "id": "AFOQT.TR.format",
@@ -1088,10 +1092,12 @@
     "finger on"
    ],
    "refs": [
-    {"ch": 1, "sec": 5, "h": "Tables and rates", "auto": true}
+    {"ch": 1, "sec": 5, "h": "Tables and rates", "auto": true},
+    {"ch": 9, "sec": 7, "h": "Back to the table", "auto": true},
+    {"ch": 9, "sec": 8, "h": "Forty in seven", "auto": true}
    ],
    "status": "practiced",
-   "depth": 224
+   "depth": 410
   },
   {
    "id": "AFOQT.IC.bank-and-pitch",
@@ -1196,10 +1202,11 @@
    "refs": [
     {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true},
     {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true},
-    {"ch": 8, "sec": 0, "h": "Two blocks, two clocks", "auto": true}
+    {"ch": 8, "sec": 0, "h": "Two blocks, two clocks", "auto": true},
+    {"ch": 9, "sec": 0, "h": "Three clocks in a row", "auto": true}
    ],
    "status": "practiced",
-   "depth": 86
+   "depth": 101
   },
   {
    "id": "AFOQT.BC.face-contact",
@@ -1219,9 +1226,12 @@
     "partial(ly)? (face|touch)",
     "numbered blocks?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 0, "h": "Three clocks in a row", "auto": true},
+    {"ch": 9, "sec": 1, "h": "Face to face", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 252
   },
   {
    "id": "AFOQT.BC.hidden-blocks",
@@ -1240,9 +1250,11 @@
     "spatial (reasoning|ability|awareness)",
     "above and below"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 4, "h": "What you can't see", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 205
   },
   {
    "id": "AFOQT.BC.format",
@@ -1261,9 +1273,12 @@
     "10 seconds",
     "system(atic)? count"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 0, "h": "Three clocks in a row", "auto": true},
+    {"ch": 9, "sec": 6, "h": "About fifty seconds a pile", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 93
   },
   {
    "id": "AFOQT.AI.aerodynamics",

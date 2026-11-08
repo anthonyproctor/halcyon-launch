@@ -1,12 +1,15 @@
 // Full sitting (2026-10-25): a course with mockSitting in courses.js offers its section forms back to back, each on its own clock,
-// with an optional break, one combined raw score and a score for each section. The LSAT runs LR (form 1), RC (form 2), LR (form 3),
-// 35 minutes each, break after section 2. LSAT base is 60000: the sitting is saved at halcyon.c60990, finished sittings at c60991,
-// and each section's result also lands in its form's history (c60901, c60911, c60913). Every other book's mock is unchanged.
+// with an optional break, one combined raw score and a score for each section. The LSAT runs LR (form 1), LR (form 10, the unscored
+// section since 2026-11-08), RC (form 2), LR (form 3), 35 minutes each, break after section 2. LSAT base is 60000: the sitting is saved at
+// halcyon.c60990, finished sittings at c60991, and each section's result also lands in its form's history (c60901, c60927, c60911, c60913).
+// The unscored section's own tests are in lsat_unscored.spec.mjs. Every other book's mock is unchanged.
 // Set SHOTS=<dir> to save the 390 px screenshots, light and dark, of the start, a section header, the break and the results.
 import { test, expect } from "@playwright/test";
 
 const SHOTS = process.env.SHOTS;
 const KEY = "halcyon.c60990";
+// sitting 3: LR 5, RC 3, LR 9 (form 12, unscored), LR 6
+const SIT3 = [[7, 25], [8, 27], [12, 25], [9, 25]];
 const accept = page => page.on("dialog", d => d.accept());
 const getSit = page => page.evaluate(k => JSON.parse(localStorage.getItem(k)), KEY);
 // patch helpers run in the page, so they're passed as source
@@ -18,31 +21,34 @@ async function start(page) {
   await page.locator("#sitopen").click();
   await expect(page.locator("#page h1")).toHaveText("Full sitting");
   await page.locator("#sitstart").click();
-  await expect(page.locator("#sithead")).toContainText("Section 1 of 3");
+  await expect(page.locator("#sithead")).toContainText("Section 1 of 4");
 }
 
-test("LSAT picker offers a full sitting beside the three sections; starting it opens section 1 on a 35 minute clock", async ({ page }) => {
+test("LSAT picker offers a full sitting beside the sections; starting it opens section 1 on a 35 minute clock", async ({ page }) => {
   await page.goto("/#lsat/mock"); await page.reload();
-  await expect(page.locator("#page .mockform")).toHaveCount(12); // nine sections and three sittings since 2026-11-06
-  await expect(page.locator('#page .sitcard[data-formcard="sitting"]')).toContainText("All 3 back to back, 35 minutes a pop. You can take 10 minutes off after section 2.");
+  await expect(page.locator("#page .mockform")).toHaveCount(16); // twelve sections, three sittings and the writing card since 2026-11-08
+  await expect(page.locator('#page .sitcard[data-formcard="sitting"]')).toContainText("All 4 back to back, 35 minutes a pop. One of them doesn't count, and you won't know which. You can take 10 minutes off after section 2.");
   for (const f of [1, 2, 3]) await expect(page.locator(`#page [data-form="${f}"]`)).toBeVisible();
   await page.locator("#sitopen").click();
   await expect(page).toHaveURL(/#lsat\/mock\/sitting$/);
   const plan = page.locator("#page .sitplan li");
-  await expect(plan).toHaveCount(3);
-  await expect(plan.nth(0)).toHaveText("Logical Reasoning 1: 25 questions, 35 minutes.");
-  await expect(plan.nth(1)).toHaveText("Reading Comprehension: 27 questions, 35 minutes. Then 10 minutes off, if you want it.");
-  await expect(plan.nth(2)).toHaveText("Logical Reasoning 2: 25 questions, 35 minutes.");
+  await expect(plan).toHaveCount(4); // the plan names each section's type, never its form, so it can't give away the unscored one
+  await expect(plan.nth(0)).toHaveText("Logical Reasoning: 25 questions, 35 minutes.");
+  await expect(plan.nth(1)).toHaveText("Logical Reasoning: 25 questions, 35 minutes. Then 10 minutes off, if you want it.");
+  await expect(plan.nth(2)).toHaveText("Reading Comprehension: 27 questions, 35 minutes.");
+  await expect(plan.nth(3)).toHaveText("Logical Reasoning: 25 questions, 35 minutes.");
   await expect(page.locator("#page")).not.toContainText(/[–—]/);
   await page.locator("#sitstart").click();
-  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting · Section 1 of 3 · Question 1 of 25");
-  await expect(page.locator("#sithead")).toContainText("Logical Reasoning 1");
+  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting · Section 1 of 4 · Question 1 of 25");
+  await expect(page.locator("#sithead")).toContainText("Logical Reasoning");
+  await expect(page.locator("#sithead")).not.toContainText(/Logical Reasoning \d/);
   await expect(page.locator("#sittime")).toHaveText(/^0:3[45]:\d\d$/);
   await expect.poll(async () => secs(await page.locator("#sittime").textContent())).toBeLessThan(35 * 60);
   const st = await getSit(page);
   expect(st.sitting).toBe(true);
-  expect(st.secs.map(s => [s.f, s.order.length])).toEqual([[1, 25], [2, 27], [3, 25]]);
-  expect(st.secs[1].order.every(id => id.startsWith("M2:"))).toBe(true);
+  expect(st.secs.map(s => [s.f, s.order.length])).toEqual([[1, 25], [10, 25], [2, 27], [3, 25]]);
+  expect(st.uns).toEqual([10]);
+  expect(st.secs[2].order.every(id => id.startsWith("M2:"))).toBe(true);
   // the single sections still open on their own, in exam mode at 35 minutes
   await page.goto("/#lsat/mock/2"); await page.reload();
   await expect(page.locator("#page")).toContainText("35 minutes, the timer runs");
@@ -54,14 +60,14 @@ test("the section clock ends section 1 and moves on, and there's no way back to 
   await page.locator("input[name=mq]").first().check();
   await patch(page, st => { st.secs[0].t0 = Date.now() - (35 * 60 - 2) * 1000 });
   await page.reload();
-  await expect(page.locator("#sithead")).toContainText("Section 2 of 3", { timeout: 8000 });
-  await expect(page.locator("#sithead")).toContainText("Reading Comprehension");
+  await expect(page.locator("#sithead")).toContainText("Section 2 of 4", { timeout: 8000 });
+  await expect(page.locator("#sithead")).toContainText("Logical Reasoning");
   await expect(page.locator("#sitnote")).toHaveText("Time's up for section 1. You're in section 2 now.");
-  await expect(page.locator("#page > .kicker")).toContainText("Question 1 of 27");
+  await expect(page.locator("#page > .kicker")).toContainText("Question 1 of 25");
   await expect(page.locator("#prev")).toBeDisabled();
   await expect(page.locator("#sittime")).toHaveText(/^0:3[45]:\d\d$/);
   // the grid reaches only section 2
-  await expect(page.locator("#page .navgrid [data-q]")).toHaveCount(27);
+  await expect(page.locator("#page .navgrid [data-q]")).toHaveCount(25);
   const st = await getSit(page);
   expect(st.sec).toBe(1);
   expect(st.secs[0].ended).toBe(true);
@@ -71,7 +77,7 @@ test("the section clock ends section 1 and moves on, and there's no way back to 
   expect(grid.every(k => k >= 0 && k < sec2.size)).toBe(true);
   // a reload doesn't reopen section 1
   await page.reload();
-  await expect(page.locator("#sithead")).toContainText("Section 2 of 3");
+  await expect(page.locator("#sithead")).toContainText("Section 2 of 4");
   await expect(page.locator("#sitnote")).toHaveCount(0);
 });
 
@@ -79,7 +85,7 @@ test("the break comes after section 2, can be skipped, and ends itself when its 
   accept(page);
   await start(page);
   await page.locator("#sitend").click();
-  await expect(page.locator("#sithead")).toContainText("Section 2 of 3");
+  await expect(page.locator("#sithead")).toContainText("Section 2 of 4");
   await page.locator("#sitend").click();
   await expect(page.locator("#page h1")).toHaveText("Break");
   await expect(page.locator("#page .story")).toContainText("Section 2 is done. Stretch, grab some water, you've got 10 minutes.");
@@ -89,29 +95,29 @@ test("the break comes after section 2, can be skipped, and ends itself when its 
   await page.reload();
   await expect(page.locator("#page h1")).toHaveText("Break");
   await page.locator("#sitskip").click();
-  await expect(page.locator("#sithead")).toContainText("Section 3 of 3");
-  await expect(page.locator("#sithead")).toContainText("Logical Reasoning 2");
+  await expect(page.locator("#sithead")).toContainText("Section 3 of 4");
+  await expect(page.locator("#sithead")).toContainText("Reading Comprehension");
   expect((await getSit(page)).breakDone).toBe(true);
   // a break whose time runs out starts section 3 on its own
   await patch(page, st => { st.sec = 2; st.onBreak = true; st.breakDone = false; st.breakAt = Date.now() - (10 * 60 - 2) * 1000 });
   await page.reload();
   await expect(page.locator("#page h1")).toHaveText("Break");
-  await expect(page.locator("#sithead")).toContainText("Section 3 of 3", { timeout: 8000 });
+  await expect(page.locator("#sithead")).toContainText("Section 3 of 4", { timeout: 8000 });
 });
 
 test("a reload mid section keeps the section, the question and the time left", async ({ page }) => {
   accept(page);
   await start(page);
   await page.locator("#sitend").click();
-  await expect(page.locator("#sithead")).toContainText("Section 2 of 3");
+  await expect(page.locator("#sithead")).toContainText("Section 2 of 4");
   await page.locator("input[name=mq]").first().check();
   await page.locator("#nextq").click();
   await page.locator("#nextq").click();
-  await expect(page.locator("#page > .kicker")).toContainText("Section 2 of 3 · Question 3 of 27");
+  await expect(page.locator("#page > .kicker")).toContainText("Section 2 of 4 · Question 3 of 25");
   await patch(page, st => { st.secs[1].t0 = Date.now() - 600 * 1000 });
   await page.reload();
   await expect(page).toHaveURL(/#lsat\/mock\/sitting$/);
-  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting · Section 2 of 3 · Question 3 of 27");
+  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting · Section 2 of 4 · Question 3 of 25");
   const left = secs(await page.locator("#sittime").textContent());
   expect(left).toBeLessThanOrEqual(25 * 60);
   expect(left).toBeGreaterThan(25 * 60 - 10);
@@ -124,41 +130,46 @@ test("a reload mid section keeps the section, the question and the time left", a
   await page.goto("/#lsat/progress"); await page.reload();
   await expect(page.locator("#contlink")).toHaveText("Continue: Practice exam · Full sitting");
   await page.locator("#contlink").click();
-  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting · Section 2 of 3 · Question 3 of 27");
+  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting · Section 2 of 4 · Question 3 of 25");
 });
 
-test("results: one combined raw score, a score for each section, and each section in its form's history", async ({ page }) => {
+test("results: one combined raw score over the scored sections, a score for each, and each section in its form's history", async ({ page }) => {
   accept(page);
   await start(page);
-  // every section 1 item right, every section 3 item wrong, section 2 left blank
+  // every section 1 item right, every section 4 item wrong, section 3 left blank; section 2 (unscored) is in lsat_unscored.spec.mjs
   await page.evaluate(k => { const st = JSON.parse(localStorage.getItem(k)), d = window.HALCYON_DATA.lsat.mock, key = {};
     d.forEach(p => p.questions.forEach((q, i) => key[p.part.slice(0, 3) + i] = [q.a, q.opts.length]));
-    st.secs[0].order.forEach(id => st.ans[id] = key[id][0]); st.secs[2].order.forEach(id => st.ans[id] = (key[id][0] + 1) % key[id][1]);
+    st.secs[0].order.forEach(id => st.ans[id] = key[id][0]); st.secs[3].order.forEach(id => st.ans[id] = (key[id][0] + 1) % key[id][1]);
     localStorage.setItem(k, JSON.stringify(st)) }, KEY);
   await page.reload();
   await page.locator("#sitend").click();
   await page.locator("#sitend").click();
   await page.locator("#sitskip").click();
   await page.locator("#sitend").click();
+  await page.locator("#sitend").click();
   await expect(page.locator("#page h1")).toHaveText("25 of 77 (32 percent)");
-  await expect(page.locator("#page .story").first()).toContainText("That's your raw score across all 3 sections.");
+  await expect(page.locator("#page .story").first()).toContainText("That's your raw score across the 3 scored sections.");
   const cards = page.locator("#page .sitsecs .card");
   await expect(cards).toHaveCount(3);
   await expect(cards.nth(0)).toContainText("Section 1: Logical Reasoning 1");
   await expect(cards.nth(0)).toContainText("25 of 25");
-  await expect(cards.nth(1)).toContainText("Section 2: Reading Comprehension");
+  await expect(cards.nth(1)).toContainText("Section 3: Reading Comprehension");
   await expect(cards.nth(1)).toContainText("0 of 27");
+  await expect(cards.nth(2)).toContainText("Section 4: Logical Reasoning 2");
   await expect(cards.nth(2)).toContainText("0 of 25");
-  await expect(page.locator("#page details.sitreview")).toHaveCount(3);
+  await expect(page.locator("#page details.sitreview")).toHaveCount(4);
   await expect(page.locator("#page")).not.toContainText(/[–—]/);
-  const H = await page.evaluate(() => Object.fromEntries([60901, 60911, 60913, 60991].map(k => [k, JSON.parse(localStorage.getItem("halcyon.c" + k))])));
-  expect(H[60901].list.slice(-1)[0]).toMatchObject({ f: 1, right: 25, total: 25, sit: true });
-  expect(H[60911].list.slice(-1)[0]).toMatchObject({ f: 2, right: 0, answered: 0, total: 27, sit: true });
-  expect(H[60913].list.slice(-1)[0]).toMatchObject({ f: 3, right: 0, answered: 25, total: 25, sit: true });
+  const H = await page.evaluate(() => Object.fromEntries([60901, 60911, 60913, 60927, 60991].map(k => [k, JSON.parse(localStorage.getItem("halcyon.c" + k))])));
+  expect(H[60901].list.slice(-1)[0]).toMatchObject({ f: 1, right: 25, total: 25, sit: true, sec: 1 });
+  expect(H[60927].list.slice(-1)[0]).toMatchObject({ f: 10, sit: true, sec: 2, unscored: true });
+  expect(H[60911].list.slice(-1)[0]).toMatchObject({ f: 2, right: 0, answered: 0, total: 27, sit: true, sec: 3 });
+  expect(H[60913].list.slice(-1)[0]).toMatchObject({ f: 3, right: 0, answered: 25, total: 25, sit: true, sec: 4 });
+  expect(H[60901].list.slice(-1)[0].unscored).toBeUndefined();
   expect(H[60991].list.slice(-1)[0]).toMatchObject({ right: 25, total: 77 });
-  // the Progress table marks the three rows as one sitting, not three exams
+  // the Progress table marks the four rows as one sitting, not four exams, and marks the unscored one
   await page.goto("/#lsat/progress"); await page.reload();
-  for (const n of [1, 2, 3]) await expect(page.locator("table tr", { hasText: `Full sitting, section ${n}` })).toHaveCount(1);
+  for (const n of [1, 2, 3, 4]) await expect(page.locator("table tr", { hasText: `Full sitting, section ${n}` })).toHaveCount(1);
+  await expect(page.locator("table tr", { hasText: "Full sitting, section 2" })).toContainText("(unscored)");
   await page.goto("/#lsat/mock/sitting"); await page.reload();
   // the picker card shows the last sitting, and a reload keeps the results
   await page.reload();
@@ -204,8 +215,8 @@ test("screenshots of the sitting at 390 px, light and dark", async ({ page }) =>
     // a believable finished sitting for the results shot: most of section 1 right, some of the others, real time on each clock
     await page.evaluate(k => { const st = JSON.parse(localStorage.getItem(k)), key = {};
       window.HALCYON_DATA.lsat.mock.forEach(p => p.questions.forEach((q, i) => key[p.part.slice(0, 3) + i] = [q.a, q.opts.length]));
-      st.secs.forEach((s, j) => { s.elapsed = [1994, 2088, 1871][j]; s.ended = true; s.order.forEach((id, n) => st.ans[id] = n % [5, 3, 4][j] ? key[id][0] : (key[id][0] + 1) % key[id][1]) });
-      Object.assign(st, { sec: 2, onBreak: false, breakDone: true, submitted: true, upd: Date.now() });
+      st.secs.forEach((s, j) => { s.elapsed = [1994, 2031, 2088, 1871][j]; s.ended = true; s.order.forEach((id, n) => st.ans[id] = n % [5, 2, 3, 4][j] ? key[id][0] : (key[id][0] + 1) % key[id][1]) });
+      Object.assign(st, { sec: 3, onBreak: false, breakDone: true, submitted: true, upd: Date.now() });
       localStorage.setItem(k, JSON.stringify(st)) }, "halcyon.c60990");
     await page.reload();
     await expect(page.locator("#page .sitsecs")).toBeVisible();
@@ -217,7 +228,7 @@ test("two tabs: a stale tab never overwrites a newer saved sitting, and a storag
   const ctx = await browser.newContext(); const a = await ctx.newPage(), b = await ctx.newPage();
   await start(a);
   await b.goto("/#lsat/mock/sitting"); await b.reload();
-  await expect(b.locator("#sithead")).toContainText("Section 1 of 3");
+  await expect(b.locator("#sithead")).toContainText("Section 1 of 4");
   // tab A answers question 1: tab B hears it and shows it
   await a.locator("input[name=mq]").first().check();
   await expect(b.locator("input[name=mq]:checked")).toHaveCount(1);
@@ -247,8 +258,8 @@ test("the sitting clock runs on time stamps: hidden or away, a section still end
   // a hidden tab: the clock keeps going and ends section 1
   await patch(page, st => { st.secs[0].t0 = Date.now() - (35 * 60 - 2) * 1000 });
   await page.reload();
-  await expect(page.locator("#sithead")).toContainText("Section 1 of 3");
-  await expect(page.locator("#sithead")).toContainText("Section 2 of 3", { timeout: 8000 });
+  await expect(page.locator("#sithead")).toContainText("Section 1 of 4");
+  await expect(page.locator("#sithead")).toContainText("Section 2 of 4", { timeout: 8000 });
   // closed for a while: section 2 ran out 30 seconds ago, so the break is 30 seconds in
   await patch(page, st => { st.secs[1].t0 = Date.now() - (35 * 60 + 30) * 1000 });
   await page.reload();
@@ -258,13 +269,13 @@ test("the sitting clock runs on time stamps: hidden or away, a section still end
   // away for longer than the break: section 3 started when the break ran out
   await patch(page, st => { st.breakAt = Date.now() - (10 * 60 + 60) * 1000 });
   await page.reload();
-  await expect(page.locator("#sithead")).toContainText("Section 3 of 3");
+  await expect(page.locator("#sithead")).toContainText("Section 3 of 4");
   const left = secs(await page.locator("#sittime").textContent());
   expect(left).toBeLessThanOrEqual(34 * 60); expect(left).toBeGreaterThan(34 * 60 - 10);
   let st = await getSit(page);
   expect(st.breakUsed).toBe(600); expect(st.secs[1].elapsed).toBe(35 * 60);
-  // and past the end of section 3: the results
-  await patch(page, st => { st.secs[2].t0 = Date.now() - 40 * 60 * 1000 });
+  // and past the end of sections 3 and 4: the results
+  await patch(page, st => { st.secs[2].t0 = Date.now() - 80 * 60 * 1000 });
   await page.reload();
   await expect(page.locator("#page .sitsecs")).toBeVisible();
   st = await getSit(page);
@@ -280,7 +291,7 @@ test("the sitting clock runs on time stamps: hidden or away, a section still end
 
 // Sittings 2 and 3 (2026-11-06): mockSitting is a list. Each later sitting has its own card, route, label and saved state
 // (sitting 2 at c60992 and c60993, sitting 3 at c60994 and c60995), and starting one leaves the others alone.
-test("LSAT sittings 2 and 3 open on their own routes, run forms 4 to 6 and 7 to 9, and save apart from sitting 1", async ({ page }) => {
+test("LSAT sittings 2 and 3 open on their own routes, run their four forms, and save apart from sitting 1", async ({ page }) => {
   await page.goto("/#lsat/mock"); await page.reload();
   await expect(page.locator("#page .sitcard")).toHaveCount(3);
   await expect(page.locator('#page .sitcard[data-formcard="sitting2"] h3')).toHaveText("Full sitting 2");
@@ -289,28 +300,29 @@ test("LSAT sittings 2 and 3 open on their own routes, run forms 4 to 6 and 7 to 
   await expect(page).toHaveURL(/#lsat\/mock\/sitting2$/);
   await expect(page.locator("#page h1")).toHaveText("Full sitting 2");
   const plan = page.locator("#page .sitplan li");
-  await expect(plan).toHaveCount(3);
-  await expect(plan.nth(0)).toHaveText("Logical Reasoning 3: 25 questions, 35 minutes.");
-  await expect(plan.nth(1)).toHaveText("Reading Comprehension 2: 27 questions, 35 minutes. Then 10 minutes off, if you want it.");
-  await expect(plan.nth(2)).toHaveText("Logical Reasoning 4: 25 questions, 35 minutes.");
+  await expect(plan).toHaveCount(4);
+  await expect(plan.nth(0)).toHaveText("Logical Reasoning: 25 questions, 35 minutes.");
+  await expect(plan.nth(1)).toHaveText("Reading Comprehension: 27 questions, 35 minutes. Then 10 minutes off, if you want it.");
+  await expect(plan.nth(2)).toHaveText("Logical Reasoning: 25 questions, 35 minutes.");
+  await expect(plan.nth(3)).toHaveText("Logical Reasoning: 25 questions, 35 minutes.");
   await page.locator("#sitstart").click();
-  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting 2 · Section 1 of 3 · Question 1 of 25");
+  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting 2 · Section 1 of 4 · Question 1 of 25");
   const st = await page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c60992")));
-  expect(st.secs.map(s => [s.f, s.order.length])).toEqual([[4, 25], [5, 27], [6, 25]]);
+  expect(st.secs.map(s => [s.f, s.order.length])).toEqual([[4, 25], [5, 27], [6, 25], [11, 25]]);
   expect(await page.evaluate(k => localStorage.getItem(k), KEY)).toBeNull(); // sitting 1 untouched
   // reload keeps the place on the sitting 2 route; the Progress page's continue link names it
   await page.reload();
-  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting 2 · Section 1 of 3 · Question 1 of 25");
+  await expect(page.locator("#page > .kicker")).toHaveText("Practice exam · Full sitting 2 · Section 1 of 4 · Question 1 of 25");
   await page.goto("/#lsat/progress"); await page.reload();
   await expect(page.locator("#contlink")).toHaveText("Continue: Practice exam · Full sitting 2");
-  // sitting 3 is its own: forms 7 to 9, its own key
+  // sitting 3 is its own: its own forms (M12 unscored, third), its own key
   await page.goto("/#lsat/mock/sitting3"); await page.reload();
   await expect(page.locator("#page h1")).toHaveText("Full sitting 3");
   await page.locator("#sitstart").click();
   const st3 = await page.evaluate(() => JSON.parse(localStorage.getItem("halcyon.c60994")));
-  expect(st3.secs.map(s => [s.f, s.order.length])).toEqual([[7, 25], [8, 27], [9, 25]]);
+  expect(st3.secs.map(s => [s.f, s.order.length])).toEqual(SIT3);
   await page.goto("/#lsat/mock"); await page.reload();
-  await expect(page.locator('#page .sitcard[data-formcard="sitting2"]')).toContainText("In progress, section 1 of 3.");
-  await expect(page.locator('#page .sitcard[data-formcard="sitting3"]')).toContainText("In progress, section 1 of 3.");
+  await expect(page.locator('#page .sitcard[data-formcard="sitting2"]')).toContainText("In progress, section 1 of 4.");
+  await expect(page.locator('#page .sitcard[data-formcard="sitting3"]')).toContainText("In progress, section 1 of 4.");
   await expect(page.locator('#page .sitcard[data-formcard="sitting"]')).not.toContainText("In progress");
 });

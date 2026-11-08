@@ -30,10 +30,13 @@
    "refs": [
     {"ch": 1, "sec": 0, "h": "Where it's going", "auto": true},
     {"ch": 1, "sec": 1, "h": "What a sentence is doing", "auto": true},
-    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true}
+    {"ch": 8, "sec": 6, "h": "A passage you know nothing about", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true},
+    {"ch": 9, "sec": 5, "h": "What a sentence is doing, worked", "auto": true},
+    {"ch": 9, "sec": 6, "h": "Main point and attitude, in a passage", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 164
+   "depth": 427
   },
   {
    "id": "LSAT.LR02",
@@ -54,10 +57,11 @@
     "background information"
    ],
    "refs": [
-    {"ch": 1, "sec": 0, "h": "Where it's going", "auto": true}
+    {"ch": 1, "sec": 0, "h": "Where it's going", "auto": true},
+    {"ch": 9, "sec": 5, "h": "What a sentence is doing, worked", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 57
+   "depth": 272
   },
   {
    "id": "LSAT.LR03",
@@ -104,12 +108,15 @@
    "refs": [
     {"ch": 1, "sec": 3, "h": "Once you have it", "auto": true},
     {"ch": 2, "sec": 0, "h": "Under the line", "auto": true},
+    {"ch": 3, "sec": 6, "h": "A flaw, all the way through", "auto": true},
     {"ch": 4, "sec": 1, "h": "Where to push", "auto": true},
+    {"ch": 4, "sec": 4, "h": "One all the way through", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Getting fast", "auto": true},
     {"ch": 9, "sec": 2, "h": "Old friends", "auto": true},
     {"ch": 10, "sec": 2, "h": "The bridge, again", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 428
+   "depth": 753
   },
   {
    "id": "LSAT.LR05",
@@ -133,11 +140,14 @@
    "refs": [
     {"ch": 2, "sec": 1, "h": "Enough", "auto": true},
     {"ch": 2, "sec": 2, "h": "Needed isn't enough", "auto": true},
+    {"ch": 2, "sec": 4, "h": "Denying it right", "auto": true},
+    {"ch": 5, "sec": 5, "h": "The whole table", "auto": true},
     {"ch": 9, "sec": 2, "h": "Old friends", "auto": true},
-    {"ch": 10, "sec": 2, "h": "The bridge, again", "auto": true}
+    {"ch": 10, "sec": 2, "h": "The bridge, again", "auto": true},
+    {"ch": 10, "sec": 7, "h": "A bridge, worked", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 344
+   "depth": 740
   },
   {
    "id": "LSAT.LR06",
@@ -164,13 +174,17 @@
     {"ch": 1, "sec": 3, "h": "Once you have it", "auto": true},
     {"ch": 2, "sec": 2, "h": "Needed isn't enough", "auto": true},
     {"ch": 3, "sec": 0, "h": "Where the road breaks", "auto": true},
+    {"ch": 3, "sec": 5, "h": "Flaws in the small words", "auto": true},
+    {"ch": 3, "sec": 6, "h": "A flaw, all the way through", "auto": true},
     {"ch": 5, "sec": 1, "h": "The big ones", "auto": true},
     {"ch": 7, "sec": 1, "h": "Same mistake", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Strength ladders", "auto": true},
     {"ch": 9, "sec": 2, "h": "Old friends", "auto": true},
-    {"ch": 11, "sec": 2, "h": "Same mistake, and what a line is for", "auto": true}
+    {"ch": 11, "sec": 2, "h": "Same mistake, and what a line is for", "auto": true},
+    {"ch": 12, "sec": 6, "h": "The arrows, one last time", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 595
+   "depth": 1205
   },
   {
    "id": "LSAT.LR07",
@@ -192,10 +206,11 @@
     {"ch": 4, "sec": 0, "h": "The scale", "auto": true},
     {"ch": 4, "sec": 1, "h": "Where to push", "auto": true},
     {"ch": 4, "sec": 3, "h": "Passages push too", "auto": true},
+    {"ch": 4, "sec": 4, "h": "One all the way through", "auto": true},
     {"ch": 11, "sec": 0, "h": "The only one who saw it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 208
+   "depth": 292
   },
   {
    "id": "LSAT.LR08",
@@ -220,10 +235,13 @@
     {"ch": 4, "sec": 1, "h": "Where to push", "auto": true},
     {"ch": 4, "sec": 2, "h": "Weight both ways", "auto": true},
     {"ch": 4, "sec": 3, "h": "Passages push too", "auto": true},
-    {"ch": 11, "sec": 0, "h": "The only one who saw it", "auto": true}
+    {"ch": 4, "sec": 4, "h": "One all the way through", "auto": true},
+    {"ch": 11, "sec": 0, "h": "The only one who saw it", "auto": true},
+    {"ch": 11, "sec": 6, "h": "A witness, worked", "auto": true},
+    {"ch": 12, "sec": 5, "h": "How it works, worked", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 298
+   "depth": 682
   },
   {
    "id": "LSAT.LR09",
@@ -248,12 +266,17 @@
     {"ch": 2, "sec": 1, "h": "Enough", "auto": true},
     {"ch": 5, "sec": 0, "h": "No argument", "auto": true},
     {"ch": 5, "sec": 3, "h": "Chains and counting words", "auto": true},
+    {"ch": 5, "sec": 5, "h": "The whole table", "auto": true},
+    {"ch": 6, "sec": 5, "h": "Rules with moving parts", "auto": true},
+    {"ch": 8, "sec": 7, "h": "Getting fast", "auto": true},
     {"ch": 9, "sec": 2, "h": "Old friends", "auto": true},
     {"ch": 10, "sec": 1, "h": "Can't be", "auto": true},
-    {"ch": 12, "sec": 2, "h": "Has to be, and probably", "auto": true}
+    {"ch": 12, "sec": 2, "h": "Has to be, and probably", "auto": true},
+    {"ch": 12, "sec": 6, "h": "The arrows, one last time", "auto": true},
+    {"ch": 12, "sec": 7, "h": "Has to be, worked", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 594
+   "depth": 2115
   },
   {
    "id": "LSAT.LR10",
@@ -328,7 +351,7 @@
     {"ch": 12, "sec": 1, "h": "The rule underneath", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 176
+   "depth": 177
   },
   {
    "id": "LSAT.LR13",
@@ -348,10 +371,11 @@
     "most closely conforms"
    ],
    "refs": [
+    {"ch": 6, "sec": 5, "h": "Rules with moving parts", "auto": true},
     {"ch": 12, "sec": 1, "h": "The rule underneath", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 36
+   "depth": 84
   },
   {
    "id": "LSAT.LR14",
@@ -394,10 +418,11 @@
     "matching (the )?flaw"
    ],
    "refs": [
+    {"ch": 7, "sec": 5, "h": "Strength ladders", "auto": true},
     {"ch": 11, "sec": 2, "h": "Same mistake, and what a line is for", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 43
+   "depth": 88
   },
   {
    "id": "LSAT.LR16",
@@ -419,10 +444,11 @@
     "describes how the argument"
    ],
    "refs": [
-    {"ch": 3, "sec": 3, "h": "How, not what", "auto": true}
+    {"ch": 3, "sec": 3, "h": "How, not what", "auto": true},
+    {"ch": 12, "sec": 5, "h": "How it works, worked", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 39
+   "depth": 248
   },
   {
    "id": "LSAT.LR17",
@@ -446,7 +472,7 @@
     {"ch": 8, "sec": 3, "h": "Questions that cut both ways", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 193
+   "depth": 194
   },
   {
    "id": "LSAT.LR18",
@@ -467,10 +493,11 @@
    ],
    "refs": [
     {"ch": 9, "sec": 1, "h": "Both of them true", "auto": true},
-    {"ch": 10, "sec": 0, "h": "Two true things", "auto": true}
+    {"ch": 10, "sec": 0, "h": "Two true things", "auto": true},
+    {"ch": 10, "sec": 6, "h": "Paradoxes with numbers", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 139
+   "depth": 311
   },
   {
    "id": "LSAT.LR19",
@@ -492,10 +519,11 @@
    ],
    "refs": [
     {"ch": 6, "sec": 2, "h": "Where they split", "auto": true},
+    {"ch": 6, "sec": 6, "h": "Where they split, worked", "auto": true},
     {"ch": 11, "sec": 1, "h": "Where they part", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 206
+   "depth": 294
   },
   {
    "id": "LSAT.LR20",
@@ -538,10 +566,12 @@
     "big picture"
    ],
    "refs": [
-    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true}
+    {"ch": 8, "sec": 6, "h": "A passage you know nothing about", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true},
+    {"ch": 9, "sec": 6, "h": "Main point and attitude, in a passage", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 76
+   "depth": 203
   },
   {
    "id": "LSAT.RC02",
@@ -565,7 +595,7 @@
     {"ch": 3, "sec": 4, "h": "Tone and shape", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 137
+   "depth": 145
   },
   {
    "id": "LSAT.RC03",
@@ -587,10 +617,12 @@
     "critical (of|stance)"
    ],
    "refs": [
-    {"ch": 3, "sec": 4, "h": "Tone and shape", "auto": true}
+    {"ch": 3, "sec": 4, "h": "Tone and shape", "auto": true},
+    {"ch": 8, "sec": 6, "h": "A passage you know nothing about", "auto": true},
+    {"ch": 9, "sec": 6, "h": "Main point and attitude, in a passage", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 61
+   "depth": 355
   },
   {
    "id": "LSAT.RC04",
@@ -610,10 +642,13 @@
     "attribut(e|ed) (to|the view)"
    ],
    "refs": [
-    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true}
+    {"ch": 4, "sec": 5, "h": "Would agree, worked", "auto": true},
+    {"ch": 8, "sec": 6, "h": "A passage you know nothing about", "auto": true},
+    {"ch": 9, "sec": 3, "h": "Reading a court", "auto": true},
+    {"ch": 11, "sec": 5, "h": "Two authors who never met", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 53
+   "depth": 426
   },
   {
    "id": "LSAT.RC05",
@@ -660,11 +695,13 @@
    "refs": [
     {"ch": 2, "sec": 3, "h": "What the page lets you say", "auto": true},
     {"ch": 5, "sec": 4, "h": "Reading between", "auto": true},
+    {"ch": 5, "sec": 6, "h": "An inference, worked", "auto": true},
     {"ch": 6, "sec": 2, "h": "Where they split", "auto": true},
+    {"ch": 8, "sec": 6, "h": "A passage you know nothing about", "auto": true},
     {"ch": 10, "sec": 4, "h": "Reading an expert", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 435
+   "depth": 635
   },
   {
    "id": "LSAT.RC07",
@@ -804,7 +841,7 @@
     {"ch": 6, "sec": 4, "h": "Rules in a passage", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 92
+   "depth": 93
   },
   {
    "id": "LSAT.RC13",
@@ -829,10 +866,12 @@
     {"ch": 4, "sec": 1, "h": "Where to push", "auto": true},
     {"ch": 4, "sec": 2, "h": "Weight both ways", "auto": true},
     {"ch": 4, "sec": 3, "h": "Passages push too", "auto": true},
-    {"ch": 11, "sec": 0, "h": "The only one who saw it", "auto": true}
+    {"ch": 4, "sec": 4, "h": "One all the way through", "auto": true},
+    {"ch": 11, "sec": 0, "h": "The only one who saw it", "auto": true},
+    {"ch": 11, "sec": 6, "h": "A witness, worked", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 296
+   "depth": 604
   },
   {
    "id": "LSAT.RC14",
@@ -855,10 +894,12 @@
    ],
    "refs": [
     {"ch": 3, "sec": 4, "h": "Tone and shape", "auto": true},
+    {"ch": 5, "sec": 6, "h": "An inference, worked", "auto": true},
+    {"ch": 7, "sec": 6, "h": "Two passages, worked", "auto": true},
     {"ch": 11, "sec": 3, "h": "Two passages", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 340
+   "depth": 514
   }
  ],
  "seeded": "2026-11-08"

@@ -19,7 +19,7 @@ test("LSAT: the picker says timed sections and the reading set is headed Passage
   page.on("dialog", d => d.accept());
   await page.goto("/#lsat/mock"); await page.reload();
   const story = page.locator("#page .story").first();
-  await expect(story).toContainText("Nine timed sections. Each one has its own questions"); // three full sittings of three sections since 2026-11-06
+  await expect(story).toContainText("Twelve timed sections. Each one has its own questions"); // three full sittings of four sections since 2026-11-08
   await expect(story).toContainText("The real test adds a fourth, unscored section, which can come at any point.");
   await expect(page.locator("#page")).not.toContainText("full practice exams");
   if (SHOTS) await page.screenshot({ path: `${SHOTS}/lsat-form-picker-390.png`, fullPage: true });

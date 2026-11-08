@@ -5,9 +5,9 @@
 // (kind list); minimums, sj and day [{r, why, ch, sec}] (kind rules); contrasts [{topic, l:[left label, right label], a, b, ch, sec}].
 // ch and sec point at where the book teaches it: Full Course chapter ch, Vern's lesson, section index sec (0 based, in the order of
 // courses/afoqt/full/chNN.js lesson.sections). mock:true instead of ch means only the practice tests teach it (Math Knowledge, Physical
-// Science, Instrument Comprehension and Block Counting, whose lessons come in later chapters).
+// Science, Instrument Comprehension and Block Counting, whose lessons came in later chapters; Block Counting rows now point at ch09, 2026-11-08).
 // Links reach ch01 to ch05. The AR and SDI items point at ch05 "Rate Problems"; rvLink shows no button for a chapter that isn't loaded, so
-// those links appear once full/ch05.js is in the afoqt scripts list. The IC and AI rows and the climbing vs. diving contrast point at ch08's lesson (2026-11-08); their buttons appear once full/ch08.js is in the scripts list. The CSO and ABM composite rows link to ch01's
+// those links appear once full/ch05.js is in the afoqt scripts list. The IC and AI rows and the climbing vs. diving contrast point at ch08's lesson (2026-11-08); their buttons appear once full/ch08.js is in the scripts list. The Block Counting traps, pacing and tricks rows and the face vs. edge contrast point at ch09's lesson (secs 2, 6, 3, 1; 2026-11-08); their buttons appear once full/ch09.js is in the scripts list. The CSO and ABM composite rows link to ch01's
 // composites section, which teaches both lists (added 2026-11-07). Exam check applied 2026-11-07.
 // Sources: the lessons in courses/afoqt/full/ch01.js to ch04.js and the explanations in courses/afoqt/mock/t1_*.js and t2_*.js; the AFOQT
 // outline map, bible fact check and figure spec of 2026-11-07 (halcyon-private), which rest on Pearson's AFOQT page (updated 2026-08-06),
@@ -121,9 +121,9 @@ window.HALCYON_REVIEW.afoqt={
       {name:"Tricks", d:"You're looking north, east on your right. Horizon below the little airplane means climbing, above means diving. Whichever end of the horizon line sits higher, that's your low wing side. The pointer at the top agrees. East points the nose right, west left, south at you, north away.", ch:8, sec:3}
     ]},
     {group:"11. Block Counting", note:"3D spatial reasoning. How many blocks does a numbered block touch?", items:[
-      {name:"Traps", d:"Counting a block that meets yours only at an edge or a corner. Missing the hidden block holding yours up.", mock:true},
-      {name:"Pacing", where:"About 10 seconds each [2015 pamphlet: 9]", d:"Same pile for several items, so learn its shape on the first one and the rest go faster.", mock:true},
-      {name:"Tricks", d:"Only face contact counts, and a partial face still counts. Go in the same order every time: above, below, then each side. Nothing floats, so anything resting on air has a block under it.", mock:true}
+      {name:"Traps", d:"Counting a block that meets yours only at an edge or a corner. Missing the hidden block holding yours up.", ch:9, sec:2},
+      {name:"Pacing", where:"About 10 seconds each [2015 pamphlet: 9]", d:"Same pile for several items, so learn its shape on the first one and the rest go faster.", ch:9, sec:6},
+      {name:"Tricks", d:"Only face contact counts, and a partial face still counts. Go in the same order every time: above, below, then each side. Nothing floats, so anything resting on air has a block under it.", ch:9, sec:3}
     ]},
     {group:"12. Aviation Information", note:"Aerodynamics, flight controls, instruments and the airfield.", items:[
       {name:"Traps", d:"Angle of incidence and angle of attack swapped. A stall is about angle of attack, at any airspeed.", ch:8, sec:6},
@@ -150,7 +150,7 @@ window.HALCYON_REVIEW.afoqt={
     {topic:"X vs. Y on Table Reading", l:["X","Y"], a:"The column, across the top.", b:"The row, down the side. Swapping them is the costliest slip on the page.", ch:1, sec:5},
     {topic:"Detail vs. inference", l:["Detail","Inference"], a:"One line says it. The trap is a real detail from a different line.", b:"Nobody wrote it, but the lines force it. Take the smallest step, not the bold leap.", ch:3, sec:1},
     {topic:"Climbing vs. diving on the attitude dial", l:["Climbing","Diving"], a:"The horizon line sits below the little airplane.", b:"The horizon line sits above it.", ch:8, sec:1},
-    {topic:"Face vs. edge on Block Counting", l:["Counts","Doesn't count"], a:"Any shared face, even part of one.", b:"Touching only along an edge or at a corner.", mock:true},
+    {topic:"Face vs. edge on Block Counting", l:["Counts","Doesn't count"], a:"Any shared face, even part of one.", b:"Touching only along an edge or at a corner.", ch:9, sec:1},
     {topic:"Verbal vs. Quantitative", l:["Verbal","Quantitative"], a:"Analogies, Word Knowledge and Reading Comprehension. You need 15.", b:"Arithmetic Reasoning and Math Knowledge. You need 10.", ch:1, sec:1}
   ],
   day:[
