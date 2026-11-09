@@ -96,7 +96,7 @@
     {"ch": 12, "sec": 1, "h": "What goes in the bag", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 406
+   "depth": 389
   },
   {
    "id": "PA.I.A.K4",
@@ -123,7 +123,7 @@
     {"ch": 12, "sec": 6, "h": "The piece of paper", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 273
+   "depth": 256
   },
   {
    "id": "PA.I.A.K5",
@@ -247,9 +247,11 @@
     "Flight Standards District Office",
     "FSDO"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 61
   },
   {
    "id": "PA.I.B.K1e",
@@ -270,10 +272,11 @@
    ],
    "refs": [
     {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
     {"ch": 11, "sec": 8, "h": "Inspections, records, and ADs", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 90
+   "depth": 125
   },
   {
    "id": "PA.I.B.K2",
@@ -363,7 +366,7 @@
     {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 12
+   "depth": 13
   },
   {
    "id": "PA.I.B.K3d",
@@ -383,11 +386,12 @@
    ],
    "refs": [
     {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
     {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true},
     {"ch": 11, "sec": 10, "h": "After you land: postflight", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 93
+   "depth": 146
   },
   {
    "id": "PA.I.B.K4",
@@ -433,9 +437,11 @@
     "standard briefing",
     "weather briefing"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 37
   },
   {
    "id": "PA.I.C.K2a",
@@ -457,8 +463,10 @@
    ],
    "refs": [
     {"ch": 2, "sec": 6, "h": "What an owner may fix, and what kind of airplane it is", "auto": true},
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
     {"ch": 3, "sec": 2, "h": "The METAR, one group at a time", "auto": true},
     {"ch": 3, "sec": 3, "h": "The TAF, and what time it really is", "auto": true},
+    {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true},
     {"ch": 3, "sec": 5, "h": "AIRMETs, SIGMETs, and PIREPs", "auto": true},
     {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true},
     {"ch": 4, "sec": 4, "h": "How far from the clouds, and how far you can see", "auto": true},
@@ -468,7 +476,7 @@
     {"ch": 8, "sec": 12, "h": "Personal minimums", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 634
+   "depth": 752
   },
   {
    "id": "PA.I.C.K2b",
@@ -491,7 +499,7 @@
     {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true}
    ],
    "status": "practiced",
-   "depth": 20
+   "depth": 41
   },
   {
    "id": "PA.I.C.K2c",
@@ -533,9 +541,11 @@
     "cloud coverage forecast",
     "surface forecast"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 41
   },
   {
    "id": "PA.I.C.K2e",
@@ -575,9 +585,11 @@
     "SPC\\b",
     "(marginal|slight|enhanced|moderate|high) risk"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 78
   },
   {
    "id": "PA.I.C.K2g",
@@ -627,7 +639,7 @@
     {"ch": 3, "sec": 0, "h": "Rising air cools: lapse rates, cloud bases, and stability", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 157
+   "depth": 243
   },
   {
    "id": "PA.I.C.K3b",
@@ -674,9 +686,11 @@
     "radiational cooling",
     "convective currents?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 3, "sec": 0, "h": "Rising air cools: lapse rates, cloud bases, and stability", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 86
   },
   {
    "id": "PA.I.C.K3d",
@@ -702,7 +716,7 @@
     {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 193
+   "depth": 192
   },
   {
    "id": "PA.I.C.K3e",
@@ -753,7 +767,7 @@
     {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 204
+   "depth": 202
   },
   {
    "id": "PA.I.C.K3g",
@@ -773,12 +787,13 @@
     "chop"
    ],
    "refs": [
+    {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true},
     {"ch": 3, "sec": 5, "h": "AIRMETs, SIGMETs, and PIREPs", "auto": true},
     {"ch": 9, "sec": 0, "h": "Leaving the pattern", "auto": true},
     {"ch": 11, "sec": 1, "h": "Getting in the door", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 84
+   "depth": 125
   },
   {
    "id": "PA.I.C.K3h",
@@ -799,11 +814,12 @@
     "hail"
    ],
    "refs": [
+    {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true},
     {"ch": 3, "sec": 5, "h": "AIRMETs, SIGMETs, and PIREPs", "auto": true},
     {"ch": 3, "sec": 6, "h": "Thunderstorms", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 137
+   "depth": 234
   },
   {
    "id": "PA.I.C.K3i",
@@ -948,10 +964,12 @@
    ],
    "refs": [
     {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
-    {"ch": 9, "sec": 1, "h": "Pilotage", "auto": true}
+    {"ch": 9, "sec": 1, "h": "Pilotage", "auto": true},
+    {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true}
    ],
    "status": "practiced",
-   "depth": 73
+   "depth": 104
   },
   {
    "id": "PA.I.D.K1a",
@@ -995,11 +1013,12 @@
     "altitude selection"
    ],
    "refs": [
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
     {"ch": 9, "sec": 5, "h": "Altitude, and the shelves", "auto": true},
     {"ch": 12, "sec": 7, "h": "After", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 153
+   "depth": 204
   },
   {
    "id": "PA.I.D.K3a",
@@ -1032,7 +1051,7 @@
     {"ch": 11, "sec": 1, "h": "Getting in the door", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 308
+   "depth": 324
   },
   {
    "id": "PA.I.D.K3b",
@@ -1060,7 +1079,7 @@
     {"ch": 9, "sec": 9, "h": "Flight plans", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 242
+   "depth": 256
   },
   {
    "id": "PA.I.D.K3c",
@@ -1083,7 +1102,7 @@
     {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 116
+   "depth": 130
   },
   {
    "id": "PA.I.D.K4",
@@ -1150,10 +1169,11 @@
    ],
    "refs": [
     {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
-    {"ch": 9, "sec": 11, "h": "Lost", "auto": true}
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
    ],
    "status": "practiced",
-   "depth": 22
+   "depth": 43
   },
   {
    "id": "PA.I.E.K1",
@@ -1179,7 +1199,7 @@
     {"ch": 4, "sec": 4, "h": "How far from the clouds, and how far you can see", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 192
+   "depth": 277
   },
   {
    "id": "PA.I.E.K2",
@@ -1201,10 +1221,11 @@
    ],
    "refs": [
     {"ch": 4, "sec": 0, "h": "The alphabet, and who's in charge of it", "auto": true},
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
     {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 191
+   "depth": 240
   },
   {
    "id": "PA.I.E.K3",
@@ -1227,10 +1248,12 @@
    ],
    "refs": [
     {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
-    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true}
+    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true},
+    {"ch": 9, "sec": 0, "h": "Leaving the pattern", "auto": true},
+    {"ch": 9, "sec": 10, "h": "Weather and charts on a tablet", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 173
+   "depth": 218
   },
   {
    "id": "PA.I.E.K4",
@@ -1253,7 +1276,7 @@
     {"ch": 4, "sec": 4, "h": "How far from the clouds, and how far you can see", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 287
+   "depth": 231
   },
   {
    "id": "PA.I.F.K1",
@@ -1275,15 +1298,18 @@
     "cruise performance"
    ],
    "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
     {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
     {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true},
     {"ch": 5, "sec": 5, "h": "Balance: arms, moments, and the box you have to stay in", "auto": true},
     {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
     {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true},
     {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 238
+   "depth": 361
   },
   {
    "id": "PA.I.F.K2a",
@@ -1330,9 +1356,11 @@
     "touchdown speed",
     "excess (air)?speed"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 67
   },
   {
    "id": "PA.I.F.K2c",
@@ -1352,10 +1380,11 @@
     "(flap|takeoff|landing|clean) configuration"
    ],
    "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
     {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
    ],
    "status": "explained",
-   "depth": 11
+   "depth": 21
   },
   {
    "id": "PA.I.F.K2d",
@@ -1379,10 +1408,11 @@
    "refs": [
     {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true},
     {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
-    {"ch": 8, "sec": 9, "h": "Runways that lie", "auto": true}
+    {"ch": 8, "sec": 9, "h": "Runways that lie", "auto": true},
+    {"ch": 9, "sec": 12, "h": "Diverting, and November", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 106
+   "depth": 117
   },
   {
    "id": "PA.I.F.K2e",
@@ -1405,7 +1435,7 @@
     {"ch": 5, "sec": 6, "h": "Forward CG, aft CG, and how each one bites", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 233
+   "depth": 234
   },
   {
    "id": "PA.I.F.K2f",
@@ -1462,7 +1492,7 @@
     {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true}
    ],
    "status": "practiced",
-   "depth": 229
+   "depth": 246
   },
   {
    "id": "PA.I.G.K1a",
@@ -1492,10 +1522,11 @@
     {"ch": 7, "sec": 3, "h": "Why she pulls left", "auto": true},
     {"ch": 7, "sec": 7, "h": "Spins", "auto": true},
     {"ch": 7, "sec": 8, "h": "Steep turns", "auto": true},
-    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "practiced",
-   "depth": 402
+   "depth": 420
   },
   {
    "id": "PA.I.G.K1b",
@@ -1517,12 +1548,15 @@
    ],
    "refs": [
     {"ch": 1, "sec": 2, "h": "Parts of the airplane", "auto": true},
+    {"ch": 1, "sec": 3, "h": "Three axes and the controls that move them", "auto": true},
     {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
     {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
-    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true}
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 135
+   "status": "independently assessed",
+   "depth": 227
   },
   {
    "id": "PA.I.G.K1c",
@@ -1549,10 +1583,11 @@
     {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true},
     {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
     {"ch": 5, "sec": 2, "h": "What thin air does to the engine, the prop, and the wing", "auto": true},
-    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true},
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 438
+   "depth": 527
   },
   {
    "id": "PA.I.G.K1d",
@@ -1603,11 +1638,12 @@
     "fuel contamination"
    ],
    "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
     {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 102
+   "depth": 123
   },
   {
    "id": "PA.I.G.K1f",
@@ -1635,8 +1671,8 @@
     {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
     {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 185
+   "status": "independently assessed",
+   "depth": 235
   },
   {
    "id": "PA.I.G.K1g",
@@ -1661,10 +1697,11 @@
    "refs": [
     {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
     {"ch": 4, "sec": 1, "h": "Class B: the upside down wedding cake", "auto": true},
-    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true}
+    {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
    "status": "practiced",
-   "depth": 120
+   "depth": 150
   },
   {
    "id": "PA.I.G.K1h",
@@ -1688,6 +1725,8 @@
     "alternate static"
    ],
    "refs": [
+    {"ch": 1, "sec": 2, "h": "Parts of the airplane", "auto": true},
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
     {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
     {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
     {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
@@ -1700,7 +1739,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 177
+   "depth": 232
   },
   {
    "id": "PA.I.G.K1i",
@@ -1720,9 +1759,11 @@
     "exhaust (manifold|leak)",
     "carbon monoxide detector"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 18
   },
   {
    "id": "PA.I.G.K1j",
@@ -1742,9 +1783,11 @@
     "TKS",
     "alternate air"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 63
   },
   {
    "id": "PA.I.G.K1l",
@@ -1793,7 +1836,7 @@
     {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
    "status": "explained",
-   "depth": 45
+   "depth": 62
   },
   {
    "id": "PA.I.H.K1a",
@@ -1820,7 +1863,7 @@
     {"ch": 8, "sec": 6, "h": "Carbon monoxide", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 245
+   "depth": 246
   },
   {
    "id": "PA.I.H.K1b",
@@ -1841,7 +1884,7 @@
     {"ch": 8, "sec": 5, "h": "Breathing, ears, and stomachs", "auto": true}
    ],
    "status": "practiced",
-   "depth": 63
+   "depth": 64
   },
   {
    "id": "PA.I.H.K1c",
@@ -1886,10 +1929,11 @@
     "inner ear"
    ],
    "refs": [
-    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 109
+   "depth": 122
   },
   {
    "id": "PA.I.H.K1e",
@@ -1912,7 +1956,7 @@
     {"ch": 8, "sec": 5, "h": "Breathing, ears, and stomachs", "auto": true}
    ],
    "status": "practiced",
-   "depth": 37
+   "depth": 38
   },
   {
    "id": "PA.I.H.K1f",
@@ -1931,11 +1975,12 @@
     "headache"
    ],
    "refs": [
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
     {"ch": 8, "sec": 4, "h": "Thin air", "auto": true},
     {"ch": 8, "sec": 6, "h": "Carbon monoxide", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 105
+   "depth": 123
   },
   {
    "id": "PA.I.H.K1g",
@@ -1976,6 +2021,7 @@
     "lack of sleep"
    ],
    "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
     {"ch": 8, "sec": 1, "h": "IMSAFE", "auto": true},
     {"ch": 8, "sec": 3, "h": "Tired, thirsty, hungry, cold", "auto": true},
     {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
@@ -1983,7 +2029,7 @@
     {"ch": 10, "sec": 4, "h": "Your eyes at night", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 389
+   "depth": 410
   },
   {
    "id": "PA.I.H.K1i",
@@ -2001,9 +2047,11 @@
     "heatstroke",
     "water intake"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "Tired, thirsty, hungry, cold", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 78
   },
   {
    "id": "PA.I.H.K1j",
@@ -2020,9 +2068,11 @@
     "shivering",
     "cold exposure"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 3, "h": "Tired, thirsty, hungry, cold", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 128
   },
   {
    "id": "PA.I.H.K1k",
@@ -2093,10 +2143,11 @@
     "drug testing"
    ],
    "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
     {"ch": 8, "sec": 2, "h": "Bottle to throttle", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 121
+   "depth": 142
   },
   {
    "id": "PA.I.H.K3",
@@ -2149,7 +2200,7 @@
     {"ch": 8, "sec": 12, "h": "Personal minimums", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 294
+   "depth": 322
   },
   {
    "id": "PA.II.A.K1",
@@ -2194,10 +2245,11 @@
    "refs": [
     {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
     {"ch": 2, "sec": 6, "h": "What an owner may fix, and what kind of airplane it is", "auto": true},
+    {"ch": 2, "sec": 7, "h": "Required equipment, and flying with something broken", "auto": true},
     {"ch": 11, "sec": 8, "h": "Inspections, records, and ADs", "auto": true}
    ],
    "status": "explained",
-   "depth": 136
+   "depth": 197
   },
   {
    "id": "PA.II.A.K3a",
@@ -2216,9 +2268,11 @@
     "oil (level|quantity)",
     "control surfaces"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 21
   },
   {
    "id": "PA.II.A.K3b",
@@ -2236,9 +2290,11 @@
     "water in the fuel",
     "control (hinges|cables)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 63
   },
   {
    "id": "PA.II.A.K3c",
@@ -2258,9 +2314,12 @@
     "fuel stains?",
     "nicks?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 74
   },
   {
    "id": "PA.II.A.K3d",
@@ -2279,10 +2338,11 @@
    ],
    "refs": [
     {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
+    {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
     {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true}
    ],
    "status": "practiced",
-   "depth": 33
+   "depth": 68
   },
   {
    "id": "PA.II.A.K4",
@@ -2304,10 +2364,11 @@
    ],
    "refs": [
     {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
+    {"ch": 3, "sec": 4, "h": "Winds aloft and the prog charts", "auto": true},
     {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true}
    ],
    "status": "practiced",
-   "depth": 33
+   "depth": 49
   },
   {
    "id": "PA.II.B.K1",
@@ -2351,12 +2412,14 @@
     "challenge and response"
    ],
    "refs": [
+    {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
     {"ch": 8, "sec": 1, "h": "IMSAFE", "auto": true},
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true},
     {"ch": 11, "sec": 10, "h": "After you land: postflight", "auto": true},
     {"ch": 12, "sec": 5, "h": "Postflight, with an examiner watching", "auto": true}
    ],
    "status": "practiced",
-   "depth": 103
+   "depth": 208
   },
   {
    "id": "PA.II.B.K3",
@@ -2374,9 +2437,11 @@
     "expired chart",
     "chart currency"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 10, "h": "Weather and charts on a tablet", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 21
   },
   {
    "id": "PA.II.B.K4",
@@ -2394,9 +2459,11 @@
     "cargo",
     "baggage compartment"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 5, "sec": 4, "h": "Weight: the number you control", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 17
   },
   {
    "id": "PA.II.C.K1",
@@ -2439,9 +2506,11 @@
     "GPU\\b",
     "auxiliary power"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 19
   },
   {
    "id": "PA.II.C.K3",
@@ -2459,9 +2528,11 @@
     "oil pressure (within|in) 30 seconds",
     "starter warning"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 44
   },
   {
    "id": "PA.II.C.K4",
@@ -2479,9 +2550,11 @@
     "no oil pressure",
     "starter (stays|remains) engaged"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 21
   },
   {
    "id": "PA.II.D.K1",
@@ -2501,10 +2574,12 @@
     "A/FD"
    ],
    "refs": [
-    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true}
+    {"ch": 4, "sec": 6, "h": "TFRs and NOTAMs: the airspace that isn't on the chart", "auto": true},
+    {"ch": 6, "sec": 4, "h": "Reading the pavement", "auto": true},
+    {"ch": 9, "sec": 10, "h": "Weather and charts on a tablet", "auto": true}
    ],
    "status": "explained",
-   "depth": 106
+   "depth": 181
   },
   {
    "id": "PA.II.D.K2",
@@ -2525,11 +2600,12 @@
    ],
    "refs": [
     {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true},
+    {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true},
     {"ch": 6, "sec": 4, "h": "Reading the pavement", "auto": true},
     {"ch": 6, "sec": 6, "h": "Hold short, and red lights in the pavement", "auto": true}
    ],
    "status": "explained",
-   "depth": 125
+   "depth": 169
   },
   {
    "id": "PA.II.D.K3",
@@ -2553,7 +2629,7 @@
    "refs": [
     {"ch": 6, "sec": 4, "h": "Reading the pavement", "auto": true}
    ],
-   "status": "practiced",
+   "status": "independently assessed",
    "depth": 87
   },
   {
@@ -2619,9 +2695,11 @@
     "heads[- ]down",
     "sterile cockpit"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Reading the pavement", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 43
   },
   {
    "id": "PA.II.D.K6b",
@@ -2640,9 +2718,11 @@
     "taxi call",
     "towered airports?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 33
   },
   {
    "id": "PA.II.D.K6c",
@@ -2685,9 +2765,11 @@
     "taxiway centerline lights",
     "taxi(ing)? at night"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 3, "h": "Lights on the ground", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 23
   },
   {
    "id": "PA.II.D.K6e",
@@ -2706,9 +2788,11 @@
     "progressive taxi",
     "reduced visibility"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 4, "h": "Reading the pavement", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 26
   },
   {
    "id": "PA.II.F.K1a",
@@ -2727,9 +2811,11 @@
     "flight controls? (free and correct|check)",
     "mag drop"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 26
   },
   {
    "id": "PA.II.F.K1b",
@@ -2753,7 +2839,7 @@
     {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true}
    ],
    "status": "practiced",
-   "depth": 93
+   "depth": 99
   },
   {
    "id": "PA.II.F.K1c",
@@ -2772,13 +2858,16 @@
     "POH"
    ],
    "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
     {"ch": 5, "sec": 5, "h": "Balance: arms, moments, and the box you have to stay in", "auto": true},
     {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
     {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true},
     {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true}
    ],
    "status": "explained",
-   "depth": 177
+   "depth": 287
   },
   {
    "id": "PA.III.A.K1",
@@ -2805,11 +2894,12 @@
     {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true},
     {"ch": 9, "sec": 1, "h": "Pilotage", "auto": true},
     {"ch": 9, "sec": 8, "h": "Flight following", "auto": true},
+    {"ch": 9, "sec": 10, "h": "Weather and charts on a tablet", "auto": true},
     {"ch": 10, "sec": 3, "h": "Lights on the ground", "auto": true},
     {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 450
+   "depth": 545
   },
   {
    "id": "PA.III.A.K2",
@@ -2831,10 +2921,11 @@
     "roger"
    ],
    "refs": [
-    {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true}
+    {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true},
+    {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 70
+   "depth": 89
   },
   {
    "id": "PA.III.A.K3",
@@ -2858,8 +2949,8 @@
     {"ch": 4, "sec": 8, "h": "When the radio quits: light gun signals", "auto": true},
     {"ch": 6, "sec": 7, "h": "When the radio quits", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 259
+   "status": "independently assessed",
+   "depth": 283
   },
   {
    "id": "PA.III.A.K4",
@@ -2888,11 +2979,12 @@
     {"ch": 4, "sec": 8, "h": "When the radio quits: light gun signals", "auto": true},
     {"ch": 6, "sec": 7, "h": "When the radio quits", "auto": true},
     {"ch": 9, "sec": 11, "h": "Lost", "auto": true},
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true},
     {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true},
     {"ch": 11, "sec": 1, "h": "Getting in the door", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 340
+   "status": "independently assessed",
+   "depth": 391
   },
   {
    "id": "PA.III.A.K5",
@@ -2917,7 +3009,7 @@
     {"ch": 6, "sec": 7, "h": "When the radio quits", "auto": true}
    ],
    "status": "practiced",
-   "depth": 99
+   "depth": 78
   },
   {
    "id": "PA.III.A.K6",
@@ -2965,7 +3057,7 @@
     {"ch": 9, "sec": 8, "h": "Flight following", "auto": true}
    ],
    "status": "explained",
-   "depth": 102
+   "depth": 123
   },
   {
    "id": "PA.III.A.K8",
@@ -2986,10 +3078,11 @@
     "(10|ten) days"
    ],
    "refs": [
+    {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true},
     {"ch": 11, "sec": 9, "h": "When something happens: NTSB 830", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 318
+   "depth": 463
   },
   {
    "id": "PA.III.A.K9",
@@ -3033,10 +3126,11 @@
    ],
    "refs": [
     {"ch": 4, "sec": 3, "h": "Class C and Class D: say my name", "auto": true},
-    {"ch": 6, "sec": 0, "h": "The rectangle", "auto": true}
+    {"ch": 6, "sec": 0, "h": "The rectangle", "auto": true},
+    {"ch": 6, "sec": 1, "h": "No tower: the circle by the windsock, and the frequency", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 150
+   "depth": 183
   },
   {
    "id": "PA.III.B.K2",
@@ -3085,7 +3179,7 @@
     {"ch": 6, "sec": 2, "h": "Who gives way", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 198
+   "depth": 200
   },
   {
    "id": "PA.III.B.K4",
@@ -3104,9 +3198,11 @@
     "automated (weather|surface observing)",
     "have numbers"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 4, "sec": 7, "h": "Talking on the radio", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 47
   },
   {
    "id": "PA.IV.A.K1",
@@ -3137,7 +3233,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 152
+   "depth": 151
   },
   {
    "id": "PA.IV.A.K2",
@@ -3156,10 +3252,11 @@
     "V ?sub ?[XY]"
    ],
    "refs": [
-    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 20
+   "status": "independently assessed",
+   "depth": 31
   },
   {
    "id": "PA.IV.A.K3",
@@ -3178,9 +3275,12 @@
     "cowl flaps",
     "trim (set )?for takeoff"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 25
   },
   {
    "id": "PA.IV.B.K1",
@@ -3237,7 +3337,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 196
+   "depth": 209
   },
   {
    "id": "PA.IV.B.K3",
@@ -3263,7 +3363,7 @@
     {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 159
+   "depth": 171
   },
   {
    "id": "PA.IV.C.K1",
@@ -3294,7 +3394,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 152
+   "depth": 151
   },
   {
    "id": "PA.IV.C.K2",
@@ -3313,10 +3413,11 @@
     "V ?sub ?[XY]"
    ],
    "refs": [
-    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 20
+   "status": "independently assessed",
+   "depth": 31
   },
   {
    "id": "PA.IV.C.K3",
@@ -3335,9 +3436,12 @@
     "flaps? (10|ten|extended) for takeoff",
     "trim (set )?for takeoff"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 25
   },
   {
    "id": "PA.IV.C.K4",
@@ -3356,10 +3460,11 @@
     "float(ing)?"
    ],
    "refs": [
-    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 11
+   "status": "independently assessed",
+   "depth": 55
   },
   {
    "id": "PA.IV.C.K5",
@@ -3378,10 +3483,11 @@
     "(mud|grass|snow) (runway|strip)"
    ],
    "refs": [
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true},
     {"ch": 7, "sec": 8, "h": "Steep turns", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 70
+   "status": "independently assessed",
+   "depth": 101
   },
   {
    "id": "PA.IV.C.K6",
@@ -3462,7 +3568,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 196
+   "depth": 209
   },
   {
    "id": "PA.IV.D.K3",
@@ -3488,7 +3594,7 @@
     {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 159
+   "depth": 171
   },
   {
    "id": "PA.IV.E.K1",
@@ -3519,7 +3625,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 152
+   "depth": 151
   },
   {
    "id": "PA.IV.E.K2",
@@ -3538,10 +3644,11 @@
     "V ?sub ?[XY]"
    ],
    "refs": [
-    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
+    {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 20
+   "status": "independently assessed",
+   "depth": 31
   },
   {
    "id": "PA.IV.E.K3",
@@ -3560,9 +3667,12 @@
     "flaps? (for|on) (the )?short[- ]field",
     "trim (set )?for takeoff"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
+    {"ch": 5, "sec": 3, "h": "Reading the takeoff table", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 25
   },
   {
    "id": "PA.IV.F.K1",
@@ -3619,7 +3729,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 196
+   "depth": 209
   },
   {
    "id": "PA.IV.F.K3",
@@ -3645,7 +3755,7 @@
     {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 159
+   "depth": 171
   },
   {
    "id": "PA.IV.M.K1",
@@ -3700,7 +3810,7 @@
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 178
+   "depth": 177
   },
   {
    "id": "PA.IV.M.K3",
@@ -3726,7 +3836,7 @@
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 114
+   "depth": 126
   },
   {
    "id": "PA.IV.M.K4",
@@ -3771,7 +3881,7 @@
     {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
-   "status": "practiced",
+   "status": "independently assessed",
    "depth": 73
   },
   {
@@ -3796,7 +3906,7 @@
     {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
-   "status": "practiced",
+   "status": "independently assessed",
    "depth": 118
   },
   {
@@ -3823,7 +3933,7 @@
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 164
+   "depth": 176
   },
   {
    "id": "PA.V.A.K1",
@@ -3843,12 +3953,13 @@
    ],
    "refs": [
     {"ch": 7, "sec": 1, "h": "What you still can't do", "auto": true},
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
     {"ch": 7, "sec": 8, "h": "Steep turns", "auto": true},
     {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 186
+   "depth": 207
   },
   {
    "id": "PA.V.A.K2a",
@@ -3870,13 +3981,14 @@
    "refs": [
     {"ch": 1, "sec": 3, "h": "Three axes and the controls that move them", "auto": true},
     {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 7, "sec": 0, "h": "What has to be true before I get out", "auto": true},
     {"ch": 7, "sec": 3, "h": "Why she pulls left", "auto": true},
     {"ch": 7, "sec": 7, "h": "Spins", "auto": true},
     {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
    "status": "practiced",
-   "depth": 122
+   "depth": 166
   },
   {
    "id": "PA.V.A.K2b",
@@ -4013,7 +4125,7 @@
     {"ch": 6, "sec": 9, "h": "Crosswind takeoffs and landings", "auto": true},
     {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
    ],
-   "status": "practiced",
+   "status": "independently assessed",
    "depth": 57
   },
   {
@@ -4041,7 +4153,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 190
+   "depth": 204
   },
   {
    "id": "PA.V.B.K4",
@@ -4086,10 +4198,11 @@
     {"ch": 9, "sec": 0, "h": "Leaving the pattern", "auto": true},
     {"ch": 9, "sec": 1, "h": "Pilotage", "auto": true},
     {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true},
     {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 138
+   "depth": 174
   },
   {
    "id": "PA.VI.A.K2",
@@ -4134,9 +4247,11 @@
     "spot elevation",
     "terrain (features|elevation)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 49
   },
   {
    "id": "PA.VI.A.K4a",
@@ -4154,9 +4269,11 @@
     "airways?",
     "avoid(ing)? (terrain|airspace)"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 0, "h": "Leaving the pattern", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 18
   },
   {
    "id": "PA.VI.A.K4b",
@@ -4179,7 +4296,7 @@
     {"ch": 12, "sec": 7, "h": "After", "auto": true}
    ],
    "status": "explained",
-   "depth": 48
+   "depth": 50
   },
   {
    "id": "PA.VI.A.K4c",
@@ -4224,10 +4341,11 @@
    "refs": [
     {"ch": 9, "sec": 2, "h": "Dead reckoning and the wind", "auto": true},
     {"ch": 9, "sec": 3, "h": "True, magnetic, compass", "auto": true},
+    {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true},
     {"ch": 9, "sec": 5, "h": "Altitude, and the shelves", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 143
+   "depth": 158
   },
   {
    "id": "PA.VI.A.K5b",
@@ -4279,7 +4397,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 477
+   "depth": 491
   },
   {
    "id": "PA.VI.A.K5d",
@@ -4329,10 +4447,11 @@
     "leaning"
    ],
    "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
     {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true}
    ],
    "status": "explained",
-   "depth": 99
+   "depth": 143
   },
   {
    "id": "PA.VI.A.K7",
@@ -4352,10 +4471,11 @@
     "course correction"
    ],
    "refs": [
+    {"ch": 9, "sec": 4, "h": "Time, speed, distance, fuel", "auto": true},
     {"ch": 9, "sec": 12, "h": "Diverting, and November", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 37
+   "depth": 63
   },
   {
    "id": "PA.VI.B.K1",
@@ -4382,7 +4502,7 @@
     {"ch": 9, "sec": 11, "h": "Lost", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 201
+   "depth": 205
   },
   {
    "id": "PA.VI.B.K2",
@@ -4407,7 +4527,7 @@
     {"ch": 9, "sec": 10, "h": "Weather and charts on a tablet", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 135
+   "depth": 156
   },
   {
    "id": "PA.VI.B.K3",
@@ -4432,7 +4552,7 @@
     {"ch": 9, "sec": 8, "h": "Flight following", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 102
+   "depth": 123
   },
   {
    "id": "PA.VI.B.K4",
@@ -4475,9 +4595,11 @@
     "nearest airport",
     "nearest (function|button)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 12, "h": "Diverting, and November", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 12
   },
   {
    "id": "PA.VI.C.K2",
@@ -4498,10 +4620,11 @@
    ],
    "refs": [
     {"ch": 1, "sec": 4, "h": "Who's in charge, and what you check first", "auto": true},
+    {"ch": 9, "sec": 12, "h": "Diverting, and November", "auto": true},
     {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 67
+   "depth": 79
   },
   {
    "id": "PA.VI.D.K1",
@@ -4549,10 +4672,12 @@
    "refs": [
     {"ch": 4, "sec": 2, "h": "The veil, the transponder, and ADS-B Out", "auto": true},
     {"ch": 4, "sec": 5, "h": "Special use airspace, and the other stuff on the chart", "auto": true},
-    {"ch": 9, "sec": 11, "h": "Lost", "auto": true}
+    {"ch": 9, "sec": 8, "h": "Flight following", "auto": true},
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
    ],
    "status": "explained",
-   "depth": 64
+   "depth": 114
   },
   {
    "id": "PA.VII.A.K1",
@@ -4613,7 +4738,7 @@
     {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 442
+   "depth": 455
   },
   {
    "id": "PA.VII.B.K2",
@@ -4634,11 +4759,12 @@
     "wing root"
    ],
    "refs": [
+    {"ch": 7, "sec": 0, "h": "What has to be true before I get out", "auto": true},
     {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
     {"ch": 7, "sec": 5, "h": "Stalls", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 68
+   "status": "independently assessed",
+   "depth": 101
   },
   {
    "id": "PA.VII.B.K3",
@@ -4662,7 +4788,7 @@
     {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 53
+   "depth": 52
   },
   {
    "id": "PA.VII.B.K4",
@@ -4684,10 +4810,11 @@
    "refs": [
     {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
     {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
-    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 98
+   "depth": 104
   },
   {
    "id": "PA.VII.C.K1",
@@ -4720,7 +4847,7 @@
     {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 442
+   "depth": 455
   },
   {
    "id": "PA.VII.C.K2",
@@ -4741,11 +4868,12 @@
     "wing root"
    ],
    "refs": [
+    {"ch": 7, "sec": 0, "h": "What has to be true before I get out", "auto": true},
     {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
     {"ch": 7, "sec": 5, "h": "Stalls", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 68
+   "status": "independently assessed",
+   "depth": 101
   },
   {
    "id": "PA.VII.C.K3",
@@ -4763,9 +4891,11 @@
     "excessive pitch",
     "steep climb"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 5, "h": "Stalls", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 20
   },
   {
    "id": "PA.VII.C.K4",
@@ -4787,10 +4917,11 @@
    "refs": [
     {"ch": 7, "sec": 4, "h": "Slow flight", "auto": true},
     {"ch": 7, "sec": 5, "h": "Stalls", "auto": true},
-    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 98
+   "depth": 104
   },
   {
    "id": "PA.VII.D.K1",
@@ -4814,7 +4945,7 @@
     {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 88
+   "depth": 86
   },
   {
    "id": "PA.VII.D.K2",
@@ -4832,9 +4963,11 @@
     "cross[- ]control(led)?",
     "uncoordinated stall"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 39
   },
   {
    "id": "PA.VII.D.K3",
@@ -4905,7 +5038,7 @@
     {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 29
+   "depth": 51
   },
   {
    "id": "PA.VIII.A.K1c",
@@ -4927,6 +5060,7 @@
     "AHRS"
    ],
    "refs": [
+    {"ch": 1, "sec": 2, "h": "Parts of the airplane", "auto": true},
     {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
     {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
     {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
@@ -4938,7 +5072,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 170
+   "depth": 204
   },
   {
    "id": "PA.VIII.A.K1d",
@@ -4962,7 +5096,7 @@
     {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
    ],
    "status": "explained",
-   "depth": 36
+   "depth": 43
   },
   {
    "id": "PA.VIII.B.K1a",
@@ -5008,7 +5142,7 @@
     {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 29
+   "depth": 51
   },
   {
    "id": "PA.VIII.B.K1c",
@@ -5030,6 +5164,7 @@
     "AHRS"
    ],
    "refs": [
+    {"ch": 1, "sec": 2, "h": "Parts of the airplane", "auto": true},
     {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
     {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
     {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
@@ -5041,7 +5176,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 170
+   "depth": 204
   },
   {
    "id": "PA.VIII.B.K1d",
@@ -5065,7 +5200,7 @@
     {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
    ],
    "status": "explained",
-   "depth": 36
+   "depth": 43
   },
   {
    "id": "PA.VIII.C.K1a",
@@ -5111,7 +5246,7 @@
     {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 29
+   "depth": 51
   },
   {
    "id": "PA.VIII.C.K1c",
@@ -5133,6 +5268,7 @@
     "AHRS"
    ],
    "refs": [
+    {"ch": 1, "sec": 2, "h": "Parts of the airplane", "auto": true},
     {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
     {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
     {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
@@ -5144,7 +5280,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 170
+   "depth": 204
   },
   {
    "id": "PA.VIII.C.K1d",
@@ -5168,7 +5304,7 @@
     {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
    ],
    "status": "explained",
-   "depth": 36
+   "depth": 43
   },
   {
    "id": "PA.VIII.D.K1a",
@@ -5214,7 +5350,7 @@
     {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 29
+   "depth": 51
   },
   {
    "id": "PA.VIII.D.K1c",
@@ -5236,6 +5372,7 @@
     "AHRS"
    ],
    "refs": [
+    {"ch": 1, "sec": 2, "h": "Parts of the airplane", "auto": true},
     {"ch": 2, "sec": 3, "h": "Pitot static instruments and the gyros", "auto": true},
     {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
     {"ch": 2, "sec": 5, "h": "Airworthiness: the paperwork that makes the airplane legal", "auto": true},
@@ -5247,7 +5384,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 170
+   "depth": 204
   },
   {
    "id": "PA.VIII.D.K1d",
@@ -5271,7 +5408,7 @@
     {"ch": 9, "sec": 7, "h": "GPS", "auto": true}
    ],
    "status": "explained",
-   "depth": 36
+   "depth": 43
   },
   {
    "id": "PA.VIII.E.K1",
@@ -5290,9 +5427,11 @@
     "vacuum (pump )?failure",
     "loss of control"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 12
   },
   {
    "id": "PA.VIII.E.K2",
@@ -5312,10 +5451,11 @@
     "upset recovery"
    ],
    "refs": [
-    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true}
+    {"ch": 8, "sec": 7, "h": "Your inner ear lies", "auto": true},
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 33
+   "status": "independently assessed",
+   "depth": 39
   },
   {
    "id": "PA.VIII.E.K3",
@@ -5335,9 +5475,11 @@
     "VFR into IMC",
     "regain VMC"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 9
   },
   {
    "id": "PA.VIII.E.K4",
@@ -5385,7 +5527,7 @@
     {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
    ],
    "status": "explained",
-   "depth": 231
+   "depth": 273
   },
   {
    "id": "PA.VIII.F.K2",
@@ -5409,10 +5551,12 @@
     {"ch": 6, "sec": 3, "h": "The air a big airplane leaves behind", "auto": true},
     {"ch": 9, "sec": 6, "h": "The VOR", "auto": true},
     {"ch": 9, "sec": 7, "h": "GPS", "auto": true},
-    {"ch": 9, "sec": 11, "h": "Lost", "auto": true}
+    {"ch": 9, "sec": 10, "h": "Weather and charts on a tablet", "auto": true},
+    {"ch": 9, "sec": 11, "h": "Lost", "auto": true},
+    {"ch": 9, "sec": 12, "h": "Diverting, and November", "auto": true}
    ],
    "status": "explained",
-   "depth": 389
+   "depth": 475
   },
   {
    "id": "PA.VIII.F.K3",
@@ -5431,9 +5575,11 @@
     "ATC services",
     "flight following"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 9, "sec": 8, "h": "Flight following", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 27
   },
   {
    "id": "PA.IX.A.K1",
@@ -5455,7 +5601,7 @@
     {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 53
+   "depth": 68
   },
   {
    "id": "PA.IX.A.K2",
@@ -5478,7 +5624,7 @@
     {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
    "status": "practiced",
-   "depth": 26
+   "depth": 41
   },
   {
    "id": "PA.IX.A.K3",
@@ -5499,10 +5645,11 @@
     "airspeed limitations?"
    ],
    "refs": [
-    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true}
+    {"ch": 2, "sec": 4, "h": "The colors on the airspeed indicator", "auto": true},
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
    "status": "explained",
-   "depth": 28
+   "depth": 43
   },
   {
    "id": "PA.IX.A.K4",
@@ -5520,9 +5667,12 @@
     "load limits?",
     "descent rate"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true},
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 42
   },
   {
    "id": "PA.IX.B.K1",
@@ -5542,12 +5692,13 @@
     "emergency checklist"
    ],
    "refs": [
+    {"ch": 1, "sec": 1, "h": "Four forces", "auto": true},
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true},
     {"ch": 11, "sec": 9, "h": "When something happens: NTSB 830", "auto": true},
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 101
+   "depth": 165
   },
   {
    "id": "PA.IX.B.K2a",
@@ -5569,7 +5720,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "practiced",
-   "depth": 22
+   "depth": 38
   },
   {
    "id": "PA.IX.B.K2b",
@@ -5587,10 +5738,11 @@
     "(longest|maximum) time"
    ],
    "refs": [
+    {"ch": 1, "sec": 1, "h": "Four forces", "auto": true},
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "practiced",
-   "depth": 22
+   "depth": 55
   },
   {
    "id": "PA.IX.B.K2c",
@@ -5617,7 +5769,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "practiced",
-   "depth": 81
+   "depth": 80
   },
   {
    "id": "PA.IX.B.K3",
@@ -5639,7 +5791,7 @@
     {"ch": 5, "sec": 1, "h": "Density altitude, and why August is a different airport", "auto": true},
     {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
    ],
-   "status": "practiced",
+   "status": "independently assessed",
    "depth": 45
   },
   {
@@ -5660,9 +5812,11 @@
     "forced landing",
     "spiral down"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
+   ],
+   "status": "independently assessed",
+   "depth": 35
   },
   {
    "id": "PA.IX.B.K5",
@@ -5687,7 +5841,7 @@
     {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 45
+   "depth": 53
   },
   {
    "id": "PA.IX.B.K6",
@@ -5712,7 +5866,7 @@
     {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 100
+   "depth": 108
   },
   {
    "id": "PA.IX.C.K1",
@@ -5732,10 +5886,11 @@
     "fouled plugs?"
    ],
    "refs": [
+    {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true},
     {"ch": 11, "sec": 9, "h": "When something happens: NTSB 830", "auto": true}
    ],
-   "status": "practiced",
-   "depth": 38
+   "status": "independently assessed",
+   "depth": 88
   },
   {
    "id": "PA.IX.C.K2a",
@@ -5755,10 +5910,11 @@
     "overvoltage"
    ],
    "refs": [
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
     {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 45
+   "depth": 70
   },
   {
    "id": "PA.IX.C.K2b",
@@ -5822,9 +5978,11 @@
     "backup (instruments?|display)",
     "red X"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 18
   },
   {
    "id": "PA.IX.C.K2e",
@@ -5842,9 +6000,11 @@
     "manual (gear )?extension",
     "no[- ]flap landing"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 12
   },
   {
    "id": "PA.IX.C.K2f",
@@ -5862,9 +6022,11 @@
     "trim disconnect",
     "control forces?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 18
   },
   {
    "id": "PA.IX.C.K3",
@@ -5884,10 +6046,11 @@
     "induction fire"
    ],
    "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
     {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 53
+   "depth": 160
   },
   {
    "id": "PA.IX.C.K4",
@@ -5904,9 +6067,11 @@
     "pitot heat (failure|inop)",
     "system malfunctions?"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 18
   },
   {
    "id": "PA.IX.C.K5",
@@ -5923,9 +6088,11 @@
     "unlatched door",
     "fly the airplane"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 7, "sec": 0, "h": "What has to be true before I get out", "auto": true}
+   ],
+   "status": "practiced",
+   "depth": 27
   },
   {
    "id": "PA.IX.D.K1",
@@ -5952,7 +6119,7 @@
     {"ch": 11, "sec": 8, "h": "Inspections, records, and ADs", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 68
+   "depth": 76
   },
   {
    "id": "PA.IX.D.K2",
@@ -5970,9 +6137,11 @@
     "toxic (fumes|gas)",
     "PASS method"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 31
   },
   {
    "id": "PA.IX.D.K3a",
@@ -5990,9 +6159,11 @@
     "winter survival",
     "water (supply|bottles)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 1, "h": "What goes in the bag", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 42
   },
   {
    "id": "PA.IX.D.K3b",
@@ -6009,9 +6180,11 @@
     "signal mirror",
     "shelter"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 1, "h": "What goes in the bag", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 42
   },
   {
    "id": "PA.IX.D.K3c",
@@ -6028,9 +6201,11 @@
     "flotation",
     "ditching"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 12, "sec": 1, "h": "What goes in the bag", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 42
   },
   {
    "id": "PA.IX.D.K4",
@@ -6048,9 +6223,11 @@
     "pull the (chute|handle)",
     "Cirrus Airframe Parachute"
    ],
-   "refs": [],
-   "status": "absent",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 49
   },
   {
    "id": "PA.IX.D.K5",
@@ -6068,9 +6245,11 @@
     "Safe Return",
     "passenger (activat|briefing)"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 8
   },
   {
    "id": "PA.XI.A.K1",
@@ -6123,7 +6302,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 257
+   "depth": 280
   },
   {
    "id": "PA.XI.A.K3",
@@ -6149,7 +6328,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 104
+   "depth": 105
   },
   {
    "id": "PA.XI.A.K4",
@@ -6214,9 +6393,11 @@
     "taxi light",
     "taxi(ing)? at night"
    ],
-   "refs": [],
-   "status": "mentioned",
-   "depth": 0
+   "refs": [
+    {"ch": 10, "sec": 3, "h": "Lights on the ground", "auto": true}
+   ],
+   "status": "explained",
+   "depth": 23
   },
   {
    "id": "PA.XI.A.K7",
@@ -6240,7 +6421,7 @@
     {"ch": 10, "sec": 2, "h": "Lights on the airplane", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 152
+   "depth": 154
   },
   {
    "id": "PA.XI.A.K8",
@@ -6286,12 +6467,14 @@
     "pitot cover"
    ],
    "refs": [
+    {"ch": 2, "sec": 0, "h": "Four strokes and two magnetos", "auto": true},
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true},
     {"ch": 11, "sec": 10, "h": "After you land: postflight", "auto": true},
     {"ch": 12, "sec": 5, "h": "Postflight, with an examiner watching", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 46
+   "depth": 91
   },
   {
    "id": "PA.XII.A.K2",
@@ -6310,11 +6493,13 @@
     "report(ing)? (the )?problem"
    ],
    "refs": [
+    {"ch": 2, "sec": 2, "h": "Fuel, oil, and electrical", "auto": true},
+    {"ch": 10, "sec": 9, "h": "Asking for help", "auto": true},
     {"ch": 11, "sec": 10, "h": "After you land: postflight", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 58
+   "depth": 93
   }
  ],
- "seeded": "2026-11-08"
+ "seeded": "2026-11-09"
 }

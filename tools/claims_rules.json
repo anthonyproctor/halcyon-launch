@@ -80,6 +80,18 @@
    "ruled": "2026-11-07 Codex audit (cisa ch08)"
   },
   {
+   "course": "asep",
+   "pattern": "(aren'?t|are not|isn'?t|is not) verification of the system",
+   "why": "Verification happens at several levels and can be done during integration; qualify the split, don't make it categorical",
+   "ruled": "2026-11-07 Codex audit (asep ch10 One breaker at a time)"
+  },
+  {
+   "course": "asep",
+   "pattern": "it'?s usually the systems engineering answer|(choose|pick) (the )?answers? (that )?emphasi[sz]",
+   "why": "A whole-system heuristic can't override the precise process or definition a question asks for",
+   "ruled": "2026-11-07 Codex audit (asep ch01)"
+  },
+  {
    "course": "lsat",
    "pattern": "believe (her|him|them|the witness) about[^.]{0,60}(you'?d better|you must|you have to) believe",
    "why": "A witness's credibility can differ from one observation to the next; no categorical inference",
@@ -116,6 +128,20 @@
    "pattern": "invulnerab[^.]{0,60}\\b(antidote|countered|answered)[^.]{0,30}taking chances is foolish|taking chances is foolish[^.]{0,40}\\b(answers|counters|is the antidote (for|to))\\b[^.]{0,10}invulnerab|macho[^.]{0,60}\\b(antidote|countered|answered)[^.]{0,30}could happen to me|could happen to me[^.]{0,40}\\b(answers|counters|is the antidote (for|to))\\b[^.]{0,10}macho",
    "why": "PHAK figure 2-4 pairs invulnerability with \"It could happen to me\" and macho with \"Taking chances is foolish\"",
    "ruled": "2026-11-07 pilot form3 examcheck"
+  },
+  {
+   "course": "pilot",
+   "pattern": "short field[^.]{0,80}\\bflaps (10|ten)\\b|\\bflaps (10|ten)\\b[^.]{0,60}short field|\\b(10|ten)( degrees)?( of flaps?)? for (the |a )?short field|short field[^.]{0,60}\\b(10|ten) (degrees )?(of )?flaps?\\b",
+   "unless": "\\b(not|isn'?t|never|no longer|later 172|172P|172S)\\b",
+   "why": "The 1978 172N book flies normal and short field takeoffs flaps up; 10 degrees is for minimum ground runs or soft or rough fields, and not over an obstacle high and hot (172N 1978 Information Manual pp. 4-7, 4-8, 4-14, fig 5-4)",
+   "ruled": "2026-11-07 pilot coverage examcheck"
+  },
+  {
+   "course": "pilot",
+   "pattern": "\\b(all|every|any|each) AWOS[^.]{0,60}\\b(reads?|reports?|gives?|broadcasts?)\\b[^.]{0,60}\\b(sky|ceiling|clouds?|everything|full)\\b|\\b(ASOS and AWOS|AWOS and ASOS)\\b[^.]{0,20}\\b(both|all)\\b[^.]{0,40}\\b(read|report|give|broadcast)s?\\b[^.]{0,60}\\b(sky|ceiling|clouds?)\\b|^\\s*both (read|report|give|broadcast)s? (out )?wind[^.]{0,60}\\b(sky|ceiling|clouds?)\\b",
+   "unless": "\\b(bigger|AWOS-3|level|smallest|only|not|isn'?t|may)\\b",
+   "why": "Only ASOS and AWOS-3 and up give the full set; AWOS-A is altimeter only, AWOS-AV adds visibility, AWOS-1 and 2 have no cloud or ceiling (AIM 7-1-10)",
+   "ruled": "2026-11-07 pilot coverage examcheck"
   },
   {
    "course": "cisa",
@@ -201,18 +227,6 @@
    "pattern": "(public health|immuniz|reportable|syndromic)[^.]{0,120}\\b(required by law|law requires (it|them)|because (state )?law requires)|\\bonly (when|if) (a )?(state )?law requires\\b[^.]{0,80}public health|\\bdisclos[^.]{0,80}\\bbecause (the |state )?law requires (it|them)\\b",
    "why": "HIPAA public health (45 CFR 164.512(b)(1)(i)): disclosure is allowed to a public health authority authorized by law to collect it, whether or not the report is mandatory; required by law isn't the only basis",
    "ruled": "2026-11-08 cphims coverage examcheck"
-  },
-  {
-   "course": "asep",
-   "pattern": "(aren'?t|are not|isn'?t|is not) verification of the system",
-   "why": "Verification happens at several levels and can be done during integration; qualify the split, don't make it categorical",
-   "ruled": "2026-11-07 Codex audit (asep ch10 One breaker at a time)"
-  },
-  {
-   "course": "asep",
-   "pattern": "it'?s usually the systems engineering answer|(choose|pick) (the )?answers? (that )?emphasi[sz]",
-   "why": "A whole-system heuristic can't override the precise process or definition a question asks for",
-   "ruled": "2026-11-07 Codex audit (asep ch01)"
   }
  ]
 }
