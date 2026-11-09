@@ -31,10 +31,11 @@
    "refs": [
     {"ch": 1, "sec": 3, "h": "Words: analogies and synonyms", "auto": true},
     {"ch": 2, "sec": 1, "h": "Verbal Analogies: name the relationship", "auto": true},
-    {"ch": 4, "sec": 4, "h": "Warmups in test order", "auto": true}
+    {"ch": 4, "sec": 4, "h": "Warmups in test order", "auto": true},
+    {"ch": 10, "sec": 1, "h": "The morning of", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 152
+   "depth": 258
   },
   {
    "id": "AFOQT.VA.format",
@@ -54,10 +55,11 @@
     "state the relationship"
    ],
    "refs": [
-    {"ch": 2, "sec": 1, "h": "Verbal Analogies: name the relationship", "auto": true}
+    {"ch": 2, "sec": 1, "h": "Verbal Analogies: name the relationship", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Twelve blocks, one morning", "auto": true}
    ],
    "status": "practiced",
-   "depth": 240
+   "depth": 247
   },
   {
    "id": "AFOQT.AR.rate-time-distance",
@@ -104,10 +106,11 @@
     "parts? to"
    ],
    "refs": [
-    {"ch": 5, "sec": 7, "h": "Ratio and proportion", "auto": true}
+    {"ch": 5, "sec": 7, "h": "Ratio and proportion", "auto": true},
+    {"ch": 10, "sec": 11, "h": "Arithmetic, one more time", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 372
+   "depth": 393
   },
   {
    "id": "AFOQT.AR.percent",
@@ -130,10 +133,11 @@
    "refs": [
     {"ch": 5, "sec": 8, "h": "Percent", "auto": true},
     {"ch": 5, "sec": 9, "h": "Mixtures and working together", "auto": true},
-    {"ch": 7, "sec": 15, "h": "Earth and sky", "auto": true}
+    {"ch": 7, "sec": 15, "h": "Earth and sky", "auto": true},
+    {"ch": 10, "sec": 11, "h": "Arithmetic, one more time", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 845
+   "depth": 871
   },
   {
    "id": "AFOQT.AR.mixture-work",
@@ -236,10 +240,11 @@
     {"ch": 2, "sec": 5, "h": "Word problems with shapes", "auto": true},
     {"ch": 4, "sec": 4, "h": "Warmups in test order", "auto": true},
     {"ch": 5, "sec": 0, "h": "One sentence under every rate problem", "auto": true},
-    {"ch": 6, "sec": 0, "h": "Twenty five in twenty two", "auto": true}
+    {"ch": 6, "sec": 0, "h": "Twenty five in twenty two", "auto": true},
+    {"ch": 10, "sec": 2, "h": "The first six", "auto": true}
    ],
    "status": "practiced",
-   "depth": 260
+   "depth": 309
   },
   {
    "id": "AFOQT.WK.synonyms",
@@ -310,10 +315,11 @@
    "refs": [
     {"ch": 2, "sec": 0, "h": "Word Knowledge: take it apart", "auto": true},
     {"ch": 9, "sec": 0, "h": "Three clocks in a row", "auto": true},
-    {"ch": 9, "sec": 6, "h": "About fifty seconds a pile", "auto": true}
+    {"ch": 9, "sec": 6, "h": "About fifty seconds a pile", "auto": true},
+    {"ch": 10, "sec": 2, "h": "The first six", "auto": true}
    ],
    "status": "practiced",
-   "depth": 175
+   "depth": 243
   },
   {
    "id": "AFOQT.MK.arithmetic",
@@ -433,10 +439,11 @@
     "cube roots?"
    ],
    "refs": [
-    {"ch": 6, "sec": 5, "h": "Exponents, roots and big numbers", "auto": true}
+    {"ch": 6, "sec": 5, "h": "Exponents, roots and big numbers", "auto": true},
+    {"ch": 10, "sec": 12, "h": "Math Knowledge, one more time", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 486
+   "depth": 593
   },
   {
    "id": "AFOQT.MK.geometry",
@@ -461,10 +468,11 @@
    ],
    "refs": [
     {"ch": 6, "sec": 7, "h": "Angles and triangles", "auto": true},
-    {"ch": 6, "sec": 8, "h": "Polygons and circles", "auto": true}
+    {"ch": 6, "sec": 8, "h": "Polygons and circles", "auto": true},
+    {"ch": 10, "sec": 12, "h": "Math Knowledge, one more time", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 701
+   "depth": 771
   },
   {
    "id": "AFOQT.MK.terms",
@@ -604,10 +612,12 @@
    ],
    "refs": [
     {"ch": 3, "sec": 0, "h": "Reading Comprehension: answer from the page", "auto": true},
-    {"ch": 3, "sec": 1, "h": "The kinds of questions", "auto": true}
+    {"ch": 3, "sec": 1, "h": "The kinds of questions", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Twelve blocks, one morning", "auto": true},
+    {"ch": 10, "sec": 2, "h": "The first six", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 243
+   "depth": 387
   },
   {
    "id": "AFOQT.SJ.integrity",
@@ -655,10 +665,12 @@
    "refs": [
     {"ch": 1, "sec": 2, "h": "Situational Judgment, and why the story works the way it does", "auto": true},
     {"ch": 2, "sec": 3, "h": "Situational Judgment: who you talk to first", "auto": true},
-    {"ch": 4, "sec": 2, "h": "Communication items", "auto": true}
+    {"ch": 4, "sec": 2, "h": "Communication items", "auto": true},
+    {"ch": 10, "sec": 3, "h": "Leading", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Growing the next one", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 307
+   "depth": 522
   },
   {
    "id": "AFOQT.SJ.resource-management",
@@ -679,10 +691,11 @@
     "delegat(e|ing|ion)"
    ],
    "refs": [
-    {"ch": 4, "sec": 5, "h": "Resource management items", "auto": true}
+    {"ch": 4, "sec": 5, "h": "Resource management items", "auto": true},
+    {"ch": 10, "sec": 4, "h": "People, time and money", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 287
+   "depth": 423
   },
   {
    "id": "AFOQT.SJ.communication",
@@ -747,10 +760,11 @@
     "teach(ing)? them"
    ],
    "refs": [
-    {"ch": 4, "sec": 7, "h": "Mentoring items", "auto": true}
+    {"ch": 4, "sec": 7, "h": "Mentoring items", "auto": true},
+    {"ch": 10, "sec": 5, "h": "Growing the next one", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 216
+   "depth": 313
   },
   {
    "id": "AFOQT.SJ.format",
@@ -800,10 +814,11 @@
    ],
    "refs": [
     {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true},
-    {"ch": 5, "sec": 5, "h": "The Self-Description Inventory", "auto": true}
+    {"ch": 5, "sec": 5, "h": "The Self-Description Inventory", "auto": true},
+    {"ch": 10, "sec": 7, "h": "The inventory, honestly", "auto": true}
    ],
-   "status": "explained",
-   "depth": 109
+   "status": "practiced",
+   "depth": 169
   },
   {
    "id": "AFOQT.SDI.format",
@@ -823,10 +838,11 @@
     "5-point"
    ],
    "refs": [
-    {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true}
+    {"ch": 1, "sec": 0, "h": "The test, start to finish", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Twelve blocks, one morning", "auto": true}
    ],
    "status": "practiced",
-   "depth": 122
+   "depth": 129
   },
   {
    "id": "AFOQT.PS.mechanics",
@@ -1151,10 +1167,11 @@
     {"ch": 8, "sec": 3, "h": "Looking north", "auto": true},
     {"ch": 8, "sec": 4, "h": "Twelve seconds", "auto": true},
     {"ch": 8, "sec": 13, "h": "Gyros and the compass", "auto": true},
-    {"ch": 8, "sec": 14, "h": "Runways", "auto": true}
+    {"ch": 8, "sec": 14, "h": "Runways", "auto": true},
+    {"ch": 10, "sec": 8, "h": "The second six", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 594
+   "depth": 639
   },
   {
    "id": "AFOQT.IC.aircraft-views",
@@ -1228,10 +1245,11 @@
    ],
    "refs": [
     {"ch": 9, "sec": 0, "h": "Three clocks in a row", "auto": true},
-    {"ch": 9, "sec": 1, "h": "Face to face", "auto": true}
+    {"ch": 9, "sec": 1, "h": "Face to face", "auto": true},
+    {"ch": 10, "sec": 8, "h": "The second six", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 252
+   "depth": 312
   },
   {
    "id": "AFOQT.BC.hidden-blocks",
@@ -1443,11 +1461,13 @@
    "refs": [
     {"ch": 1, "sec": 1, "h": "Composites, minimums, and two tries", "auto": true},
     {"ch": 7, "sec": 0, "h": "Twenty in ten", "auto": true},
-    {"ch": 8, "sec": 0, "h": "Two blocks, two clocks", "auto": true}
+    {"ch": 8, "sec": 0, "h": "Two blocks, two clocks", "auto": true},
+    {"ch": 10, "sec": 0, "h": "Twelve blocks, one morning", "auto": true},
+    {"ch": 10, "sec": 8, "h": "The second six", "auto": true}
    ],
    "status": "practiced",
-   "depth": 231
+   "depth": 272
   }
  ],
- "seeded": "2026-11-08"
+ "seeded": "2026-11-09"
 }

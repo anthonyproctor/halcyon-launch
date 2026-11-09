@@ -8,7 +8,7 @@
 // Science, Instrument Comprehension and Block Counting, whose lessons came in later chapters; Block Counting rows now point at ch09, 2026-11-08).
 // Links reach ch01 to ch05. The AR and SDI items point at ch05 "Rate Problems"; rvLink shows no button for a chapter that isn't loaded, so
 // those links appear once full/ch05.js is in the afoqt scripts list. The IC and AI rows and the climbing vs. diving contrast point at ch08's lesson (2026-11-08); their buttons appear once full/ch08.js is in the scripts list. The Block Counting traps, pacing and tricks rows and the face vs. edge contrast point at ch09's lesson (secs 2, 6, 3, 1; 2026-11-08); their buttons appear once full/ch09.js is in the scripts list. The CSO and ABM composite rows link to ch01's
-// composites section, which teaches both lists (added 2026-11-07). Exam check applied 2026-11-07.
+// composites section, which teaches both lists (added 2026-11-07). Exam check applied 2026-11-07. Four day rows (morning of, answer everything, the break, a bad block) now point at ch10's lesson (secs 1, 10, 6, 9), and three SJ rows were added for ch10's leadership, resource management and mentoring sections (secs 3, 4, 5), 2026-11-08; their buttons appear once full/ch10.js is in the scripts list.
 // Sources: the lessons in courses/afoqt/full/ch01.js to ch04.js and the explanations in courses/afoqt/mock/t1_*.js and t2_*.js; the AFOQT
 // outline map, bible fact check and figure spec of 2026-11-07 (halcyon-private), which rest on Pearson's AFOQT page (updated 2026-08-06),
 // the Form T information pamphlet (updated 1 Aug 2015) and AFROTC detachment pages citing DAFMAN 36-2664. Disputed counts and times
@@ -140,7 +140,10 @@ window.HALCYON_REVIEW.afoqt={
     {r:"A signature says you did it or saw it.", why:"Signing for work you didn't see is a false record, even if the work turns out fine. Loyalty doesn't change that.", ch:4, sec:1},
     {r:"Bad news early, and from you.", why:"Carry out an order you don't like, and question it in private. Running it down in front of your people is one of the lowest picks there is.", ch:4, sec:2},
     {r:"Same message, right room.", why:"When two options say the same thing, the one that reaches the right person soonest without an audience wins.", ch:4, sec:3},
-    {r:"Least effective does the most damage.", why:"A lie, a quiet cover, or going over a head usually beats a public correction for worst. Doing nothing can be least, but don't assume it.", ch:2, sec:4}
+    {r:"Least effective does the most damage.", why:"A lie, a quiet cover, or going over a head usually beats a public correction for worst. Doing nothing can be least, but don't assume it.", ch:2, sec:4},
+    {r:"Hand over the job and the decisions with it.", why:"Tell everybody who's in charge, and name a backup in the chain who isn't you. A handover you keep checking on is usually the middle answer.", ch:10, sec:3},
+    {r:"Two tasks, one deadline? Tell your boss early.", why:"Lay out both, ask which comes first, and give the other one a real date. A quiet slip or an all nighter usually ranks low.", ch:10, sec:4},
+    {r:"Grow the next one in private.", why:"If their way is inside the rules, let them finish, then talk it over privately. Give a quiet airman one piece they can win. Taking over, or correcting in public, ranks low.", ch:10, sec:5}
   ],
   contrasts:[
     {topic:"Pearson now vs. the 2015 pamphlet", l:["Pearson","2015 pamphlet"], a:"Reading Comprehension 24 minutes. Situational Judgment 16 items. Block Counting 5 minutes.", b:"38 minutes. 50 picks, or 25 problems. 4.5 minutes. Check your own test notice.", ch:1, sec:0},
@@ -157,10 +160,10 @@ window.HALCYON_REVIEW.afoqt={
     {r:"The day before: read your test notice and confirmation.", why:"Time, address, what ID to bring and when to show up. Then write the subtest order and minutes from the current Pearson page and check what you wrote against it.", ch:4, sec:4},
     {r:"The day before: read your unit's posting once more.", why:"The minimums, any PCSM floor and the dates, each line to its period. If one still isn't clear, ask your unit, not the break room.", ch:3, sec:4},
     {r:"The day before: one short set in test order, then stop.", why:"A timed analogy block straight into a few word problems, so the switch isn't new tomorrow. No new material. Go over your word pieces instead of learning new words.", ch:4, sec:4},
-    {r:"The morning of: eat, and get there early.", why:"It's about five hours. Five minutes of analogies said out loud as sentences gets your head working before you walk in.", ch:2, sec:1},
-    {r:"In the room: answer everything.", why:"Scoring counts the number right, and nothing comes off for a wrong answer, so a blank and a wrong answer cost the same. Guess and move.", ch:1, sec:0},
+    {r:"The morning of: eat, and get there early.", why:"It's about five hours. Five analogies said out loud as sentences in the truck gets your head working before you walk in.", ch:10, sec:1},
+    {r:"In the room: answer everything.", why:"Scoring counts the number right, and nothing comes off for a wrong answer, so a blank and a wrong answer cost the same. Guess and move.", ch:10, sec:10},
     {r:"In the room: look at the clock once, at halfway.", why:"Time left over items left. Do the division once, then go back to work.", ch:2, sec:2},
-    {r:"At the break: reset for the second half.", why:"The inventory comes next. First honest answer, every statement. Then Physical Science, then the speed subtests, where accuracy comes first.", ch:5, sec:5},
-    {r:"If one subtest goes badly, keep going.", why:"Composites mix several subtests, and your best score on each counts across your tries. One bad block doesn't decide the day.", ch:1, sec:1}
+    {r:"At the break: reset for the second half.", why:"The inventory comes next. First honest answer, every statement. Then Physical Science, then the speed subtests, where accuracy comes first.", ch:10, sec:6},
+    {r:"If one subtest goes badly, keep going.", why:"Composites mix several subtests, and your best score on each counts across your tries. One bad block doesn't decide the day.", ch:10, sec:9}
   ]
 };
