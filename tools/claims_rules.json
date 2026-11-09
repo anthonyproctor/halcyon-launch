@@ -201,6 +201,18 @@
    "pattern": "(public health|immuniz|reportable|syndromic)[^.]{0,120}\\b(required by law|law requires (it|them)|because (state )?law requires)|\\bonly (when|if) (a )?(state )?law requires\\b[^.]{0,80}public health|\\bdisclos[^.]{0,80}\\bbecause (the |state )?law requires (it|them)\\b",
    "why": "HIPAA public health (45 CFR 164.512(b)(1)(i)): disclosure is allowed to a public health authority authorized by law to collect it, whether or not the report is mandatory; required by law isn't the only basis",
    "ruled": "2026-11-08 cphims coverage examcheck"
+  },
+  {
+   "course": "asep",
+   "pattern": "(aren'?t|are not|isn'?t|is not) verification of the system",
+   "why": "Verification happens at several levels and can be done during integration; qualify the split, don't make it categorical",
+   "ruled": "2026-11-07 Codex audit (asep ch10 One breaker at a time)"
+  },
+  {
+   "course": "asep",
+   "pattern": "it'?s usually the systems engineering answer|(choose|pick) (the )?answers? (that )?emphasi[sz]",
+   "why": "A whole-system heuristic can't override the precise process or definition a question asks for",
+   "ruled": "2026-11-07 Codex audit (asep ch01)"
   }
  ]
 }

@@ -39,7 +39,7 @@
     {"ch": 12, "sec": 0, "h": "Off the flatbed", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 711
+   "depth": 712
   },
   {
    "id": "ASEP.LO02",
@@ -164,7 +164,7 @@
     {"ch": 12, "sec": 4, "h": "Eleven versions", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 1170
+   "depth": 1171
   },
   {
    "id": "ASEP.LO06",
@@ -229,7 +229,7 @@
     {"ch": 11, "sec": 3, "h": "Knock it off", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 1717
+   "depth": 1720
   },
   {
    "id": "ASEP.LO08",
@@ -287,7 +287,7 @@
     {"ch": 7, "sec": 2, "h": "What you do about it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 316
+   "depth": 322
   },
   {
    "id": "ASEP.LO10",
@@ -389,7 +389,7 @@
     {"ch": 11, "sec": 0, "h": "Bench and sky", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 1188
+   "depth": 1192
   },
   {
    "id": "ASEP.LO13",
@@ -417,7 +417,7 @@
     {"ch": 4, "sec": 2, "h": "One model, many views", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 344
+   "depth": 346
   },
   {
    "id": "ASEP.LO14",
@@ -446,7 +446,7 @@
     {"ch": 8, "sec": 1, "h": "Two gates", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 342
+   "depth": 343
   },
   {
    "id": "ASEP.LO15",
@@ -476,7 +476,7 @@
     {"ch": 5, "sec": 2, "h": "How sure is sure", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 738
+   "depth": 739
   },
   {
    "id": "ASEP.LO16",
@@ -536,7 +536,7 @@
     {"ch": 11, "sec": 1, "h": "The test card", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 897
+   "depth": 898
   },
   {
    "id": "ASEP.LO18",
@@ -591,7 +591,7 @@
     {"ch": 12, "sec": 2, "h": "Safe for the floor", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 457
+   "depth": 460
   },
   {
    "id": "ASEP.LO20",
@@ -628,7 +628,7 @@
     {"ch": 12, "sec": 3, "h": "Two at the table", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 945
+   "depth": 944
   },
   {
    "id": "ASEP.LO21",
@@ -771,8 +771,8 @@
     {"ch": 12, "sec": 3, "h": "Two at the table", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 378
+   "depth": 383
   }
  ],
- "seeded": "2026-11-08"
+ "seeded": "2026-11-09"
 }
