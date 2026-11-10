@@ -639,7 +639,7 @@
     {"ch": 3, "sec": 0, "h": "Rising air cools: lapse rates, cloud bases, and stability", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 243
+   "depth": 237
   },
   {
    "id": "PA.I.C.K3b",
@@ -740,7 +740,7 @@
     {"ch": 3, "sec": 1, "h": "Air masses and fronts", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 161
+   "depth": 163
   },
   {
    "id": "PA.I.C.K3f",
@@ -843,7 +843,7 @@
     {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 58
+   "depth": 57
   },
   {
    "id": "PA.I.C.K3j",
@@ -870,7 +870,7 @@
     {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 140
+   "depth": 141
   },
   {
    "id": "PA.I.C.K3k",
@@ -892,7 +892,7 @@
     {"ch": 3, "sec": 7, "h": "Fog, frost, icing, and mountain wave", "auto": true}
    ],
    "status": "practiced",
-   "depth": 43
+   "depth": 44
   },
   {
    "id": "PA.I.C.K3l",
@@ -1051,7 +1051,7 @@
     {"ch": 11, "sec": 1, "h": "Getting in the door", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 324
+   "depth": 323
   },
   {
    "id": "PA.I.D.K3b",
@@ -1309,7 +1309,7 @@
     {"ch": 11, "sec": 7, "h": "The airplane's paperwork", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 361
+   "depth": 362
   },
   {
    "id": "PA.I.F.K2a",
@@ -1337,7 +1337,7 @@
     {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 160
+   "depth": 159
   },
   {
    "id": "PA.I.F.K2b",
@@ -1384,7 +1384,7 @@
     {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
    ],
    "status": "explained",
-   "depth": 21
+   "depth": 20
   },
   {
    "id": "PA.I.F.K2d",
@@ -1412,7 +1412,7 @@
     {"ch": 9, "sec": 12, "h": "Diverting, and November", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 117
+   "depth": 116
   },
   {
    "id": "PA.I.F.K2e",
@@ -1492,7 +1492,7 @@
     {"ch": 7, "sec": 6, "h": "What a bank costs", "auto": true}
    ],
    "status": "practiced",
-   "depth": 246
+   "depth": 244
   },
   {
    "id": "PA.I.G.K1a",
@@ -1587,7 +1587,7 @@
     {"ch": 10, "sec": 8, "h": "Fire, smoke, and electricity", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 527
+   "depth": 525
   },
   {
    "id": "PA.I.G.K1d",
@@ -1643,7 +1643,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 123
+   "depth": 124
   },
   {
    "id": "PA.I.G.K1f",
@@ -1739,7 +1739,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 232
+   "depth": 233
   },
   {
    "id": "PA.I.G.K1i",
@@ -1787,7 +1787,7 @@
     {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true}
    ],
    "status": "practiced",
-   "depth": 63
+   "depth": 62
   },
   {
    "id": "PA.I.G.K1l",
@@ -1933,7 +1933,7 @@
     {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 122
+   "depth": 123
   },
   {
    "id": "PA.I.H.K1e",
@@ -2839,7 +2839,7 @@
     {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true}
    ],
    "status": "practiced",
-   "depth": 99
+   "depth": 98
   },
   {
    "id": "PA.II.F.K1c",
@@ -3233,7 +3233,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 151
+   "depth": 150
   },
   {
    "id": "PA.IV.A.K2",
@@ -3363,7 +3363,7 @@
     {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 171
+   "depth": 172
   },
   {
    "id": "PA.IV.C.K1",
@@ -3394,7 +3394,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 151
+   "depth": 150
   },
   {
    "id": "PA.IV.C.K2",
@@ -3464,7 +3464,7 @@
     {"ch": 6, "sec": 10, "h": "Going around, and the slip", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 55
+   "depth": 54
   },
   {
    "id": "PA.IV.C.K5",
@@ -3594,7 +3594,7 @@
     {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 171
+   "depth": 172
   },
   {
    "id": "PA.IV.E.K1",
@@ -3625,7 +3625,7 @@
     {"ch": 10, "sec": 7, "h": "When the engine quits", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 151
+   "depth": 150
   },
   {
    "id": "PA.IV.E.K2",
@@ -3755,7 +3755,7 @@
     {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 171
+   "depth": 172
   },
   {
    "id": "PA.IV.M.K1",
@@ -3907,7 +3907,7 @@
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 118
+   "depth": 117
   },
   {
    "id": "PA.IV.N.K3",
@@ -3988,7 +3988,7 @@
     {"ch": 12, "sec": 3, "h": "The flight, and the numbers", "auto": true}
    ],
    "status": "practiced",
-   "depth": 166
+   "depth": 165
   },
   {
    "id": "PA.V.A.K2b",
@@ -4126,7 +4126,7 @@
     {"ch": 7, "sec": 9, "h": "Ground reference: flying a shape over the ground", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 57
+   "depth": 58
   },
   {
    "id": "PA.V.B.K3",
@@ -4427,7 +4427,7 @@
     {"ch": 11, "sec": 1, "h": "Getting in the door", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 222
+   "depth": 221
   },
   {
    "id": "PA.VI.A.K6",
@@ -4451,7 +4451,7 @@
     {"ch": 2, "sec": 1, "h": "The carburetor, carb ice, and the mixture", "auto": true}
    ],
    "status": "explained",
-   "depth": 143
+   "depth": 142
   },
   {
    "id": "PA.VI.A.K7",
@@ -4814,7 +4814,7 @@
     {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 104
+   "depth": 105
   },
   {
    "id": "PA.VII.C.K1",
@@ -4921,7 +4921,7 @@
     {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 104
+   "depth": 105
   },
   {
    "id": "PA.VII.D.K1",
@@ -4945,7 +4945,7 @@
     {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 86
+   "depth": 85
   },
   {
    "id": "PA.VII.D.K2",
@@ -4992,7 +4992,7 @@
     {"ch": 7, "sec": 7, "h": "Spins", "auto": true}
    ],
    "status": "practiced",
-   "depth": 38
+   "depth": 37
   },
   {
    "id": "PA.VIII.A.K1a",
@@ -5072,7 +5072,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 204
+   "depth": 205
   },
   {
    "id": "PA.VIII.A.K1d",
@@ -5176,7 +5176,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 204
+   "depth": 205
   },
   {
    "id": "PA.VIII.B.K1d",
@@ -5280,7 +5280,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 204
+   "depth": 205
   },
   {
    "id": "PA.VIII.C.K1d",
@@ -5384,7 +5384,7 @@
     {"ch": 10, "sec": 6, "h": "Flying it", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 204
+   "depth": 205
   },
   {
    "id": "PA.VIII.D.K1d",
@@ -5455,7 +5455,7 @@
     {"ch": 8, "sec": 8, "h": "Flying by the panel", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 39
+   "depth": 40
   },
   {
    "id": "PA.VIII.E.K3",
@@ -5792,7 +5792,7 @@
     {"ch": 5, "sec": 7, "h": "Climbing, ground effect, and the point where you quit", "auto": true}
    ],
    "status": "independently assessed",
-   "depth": 45
+   "depth": 44
   },
   {
    "id": "PA.IX.B.K4",
@@ -6501,5 +6501,5 @@
    "depth": 93
   }
  ],
- "seeded": "2026-11-09"
+ "seeded": "2026-11-10"
 }
