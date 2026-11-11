@@ -164,3 +164,31 @@ test("makeEnsureMe creates the table once and reuses it", async () => {
   assert.equal(await ensure(), true);
   assert.equal(db.calls.filter(c => /^create table/.test(c.q)).length, 1);
 });
+
+// another tab signed a different account in (lib/acct.js): a change made for the account this tab booted with, arriving with the other's session
+test("POST made for another account than the session's: 409 account changed, nothing written; no header still saves (older apps), GET unchecked", async () => {
+  const acctOf = id => "tag-" + id, logs = [], log = m => logs.push(m);
+  const h = (db, user) => makeMeHandler({ sql: db.sql, currentUser: async () => user, sameOrigin, body, send, acctOf, log });
+  const withAcct = (b, a) => { const p = post(b); p.headers["x-halcyon-account"] = a; return p; };
+  let db = fakeDB(), r = res();
+  await h(db, U2)(withAcct({ name: "Robin's Name", avatar: { kind: "card", course: "pmp" } }, "tag-u1"), r);
+  assert.equal(r.statusCode, 409, r.body);
+  assert.deepEqual(r.json(), { error: "account changed" });
+  assert.equal(db.users.u2.name, "Kit Moreau");
+  assert.deepEqual(db.profiles.u2, { kind: "card", course: "cisa" });
+  assert.ok(!db.calls.some(c => /^(update|insert)/.test(c.q)), "nothing written");
+  assert.ok(!r.body.includes("Kit") && !r.body.includes("u2"), "nothing about the session's account");
+  db = fakeDB(); r = res();
+  await h(db, U2)(withAcct({ name: "Kit M." }, "tag-u2"), r);
+  assert.equal(r.statusCode, 200, r.body);
+  assert.equal(db.users.u2.name, "Kit M.");
+  db = fakeDB(); r = res();
+  await h(db, U2)(post({ name: "Kit N." }), r);
+  assert.equal(r.statusCode, 200, r.body);
+  assert.equal(db.users.u2.name, "Kit N.");
+  assert.equal(logs.length, 1);
+  assert.match(logs[0], /^\[acct\] write with no account header: POST \/api\/me \(\d+ on this instance\)$/);
+  r = res(); const g = get(); g.headers["x-halcyon-account"] = "tag-u1";
+  await h(fakeDB(), U2)(g, r);
+  assert.equal(r.statusCode, 200, "a read is never refused");
+});

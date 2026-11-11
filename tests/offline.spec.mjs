@@ -8,12 +8,15 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SHOTS = process.env.OFFLINE_SHOTS || "";
 const TYPES = { ".txt": "text/plain", ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json", ".webmanifest": "application/manifest+json", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp" };
 // MPEG-1 Layer III, 32 kbps, 44.1 kHz: 104 byte frames of silence, 26 ms each. 300 seconds, about 1.2 MB.
 const FIXTURE = (() => { const n = 11540, b = Buffer.alloc(n * 104); for (let i = 0; i < n; i++) { b[i * 104] = 0xff; b[i * 104 + 1] = 0xfb; b[i * 104 + 2] = 0x10; b[i * 104 + 3] = 0xc4 } return b })();
+// each account's opaque id, as /api/auth?action=me hands it to the page (the real one is an HMAC of users.id, lib/server.js acctOf)
+const ACCT = email => createHash("sha256").update("acct:" + email).digest("base64url").slice(0, 22);
 let USER = { email: "reader@example.test", name: "Test Reader", admin: false, tester: false, cur: 0 };
 
 const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Expose-Headers": "Content-Length, Content-Range, Accept-Ranges", "Access-Control-Allow-Headers": "Range" };
@@ -43,11 +46,12 @@ function site(req, res) {
     if (S.meStatus !== 200) { res.writeHead(S.meStatus, { "Content-Type": "text/html" }); return res.end("<h1>busy</h1>") }
     res.writeHead(200, { "Content-Type": "application/json" });
     if (u.searchParams.get("action") === "logout") S.signedIn = false;
-    res.end(JSON.stringify(u.searchParams.get("action") === "me" ? (S.signedIn ? { user: { ...USER }, progress: S.progress } : { user: null }) : { ok: true })); return;
+    res.end(JSON.stringify(u.searchParams.get("action") === "me" ? (S.signedIn ? { user: { ...USER, acct: ACCT(USER.email) }, progress: S.progress } : { user: null }) : { ok: true })); return;
   }
   if (S.holdDoc && u.search === S.holdDoc.search && u.pathname === "/") { const h = S.holdDoc.ms; S.holdDoc = null; return setTimeout(() => site(req, res), h) } // a slow reload, like a phone's
-  // each write is booked to the account whose cookie it left with, as the real server does: a test switches the account with an "acct" cookie
-  if (u.pathname === "/api/progress") { const ck = /(?:^|;\s*)acct=([^;]+)/.exec(req.headers.cookie || ""), acct = ck ? decodeURIComponent(ck[1]) : USER.email; let d = ""; req.on("data", x => d += x); req.on("end", () => { const go = () => { const b = JSON.parse(d); S.puts.push({ ...b, acct }); if (acct === USER.email) S.progress[b.chapter] = b.state; res.writeHead(200, { "Content-Type": "application/json" }); res.end('{"ok":true}') }; if (S.holdPutMs) { const h = S.holdPutMs; S.holdPutMs = 0; setTimeout(go, h) } else go() }); return }
+  // each write is booked to the account whose cookie it left with, as the real server does: a test switches the account with an "acct" cookie.
+  // A write made for another account (X-Halcyon-Account) than the cookie's gets 409 and lands nowhere, as lib/progress.js does; no header is an older app, let through
+  if (u.pathname === "/api/progress") { const ck = /(?:^|;\s*)acct=([^;]+)/.exec(req.headers.cookie || ""), acct = ck ? decodeURIComponent(ck[1]) : USER.email, said = req.headers["x-halcyon-account"]; let d = ""; req.on("data", x => d += x); req.on("end", () => { const go = () => { const b = JSON.parse(d); if (said && said !== ACCT(acct)) { (S.refused ||= []).push({ ...b, acct, said }); res.writeHead(409, { "Content-Type": "application/json" }); return res.end('{"error":"account changed"}') } S.puts.push({ ...b, acct, said }); if (acct === USER.email) S.progress[b.chapter] = b.state; res.writeHead(200, { "Content-Type": "application/json" }); res.end('{"ok":true}') }; if (S.holdPutMs) { const h = S.holdPutMs; S.holdPutMs = 0; setTimeout(go, h) } else go() }); return }
   if (u.pathname === "/api/qa-report") { let d = ""; req.on("data", x => d += x); req.on("end", () => { S.diag = (S.diag || []).concat(JSON.parse(d).events); res.writeHead(200, { "Content-Type": "application/json" }); res.end('{"ok":true}') }); return }
   if (u.pathname.startsWith("/api/") || u.pathname.startsWith("/_vercel/")) { res.writeHead(404, { "Content-Type": "application/json" }); return res.end("{}") }
   if (/\.mp3$/i.test(u.pathname)) return mp3(req, res, S);
@@ -478,6 +482,31 @@ test("another tab switches the account while this one is sending what waited: no
   expect(W.state.puts.filter(p => p.acct === A_USER.email && p.chapter > 10 && p.chapter < 14).map(p => p.chapter), "A's first record went to A").toEqual([11]);
   expect(W.state.puts.filter(p => p.acct === B_EMAIL && hasA(p.state))).toEqual([]);
   await tab2.close();
+});
+test("a write made for A that leaves with B's cookie, before this tab has seen any sign of the switch: the server refuses it (409), it lands nowhere, and the tab leaves", async ({ page, context }) => {
+  await openApp(page);
+  await page.locator('.brow[data-b="1"]').click();
+  await playing(page);
+  await page.waitForTimeout(1200);
+  await page.evaluate(() => { window.__tab1 = true });
+  W.state.puts = []; W.state.refused = [];
+  // the narrow window: another tab's sign in has already put B's cookie in place, but this tab hasn't seen the busy mark or B's mark yet,
+  // so every check on this side still says A. Only the account id on the write can tell the server it was made for someone else
+  await context.addCookies([{ name: "acct", value: B_EMAIL, url: W.origin }]);
+  USER = { ...USER, email: B_EMAIL, name: "B Other" }; W.state.progress = {};
+  await expect.poll(() => W.state.refused.length, { timeout: 15_000 }).toBeGreaterThan(0); // the player's next five second save is that write
+  expect(W.state.refused[0].said, "it said whose it was").toBe(ACCT(A_USER.email));
+  expect(W.state.refused[0].acct).toBe(B_EMAIL);
+  await expect.poll(() => page.evaluate(() => !window.__tab1), { timeout: 20_000 }).toBe(true); // the 409 is the switch seen: the tab reloaded
+  await expect(page.locator("#page h1")).toHaveText("Audiobook");
+  await page.waitForTimeout(6500); // longer than the five second save
+  expect(W.state.puts.filter(p => p.acct === B_EMAIL && hasA(p.state)), "nothing of A's booked to B").toEqual([]);
+  expect(W.state.progress[904], "B's account has no A record").toBeUndefined();
+  const ob = (await local(page, "halcyon.outbox")) || {};
+  expect(Object.values(ob).filter(e => e && (e.a === ACCT(A_USER.email) || hasA(e.st))), "A's unsent record is not kept for B").toEqual([]);
+  expect(await listen(page)).toBeNull();
+  // and the tab, now B's, writes as B
+  expect(W.state.puts.filter(p => p.acct === B_EMAIL).every(p => p.said === ACCT(B_EMAIL))).toBe(true);
 });
 test("first open after the update, with no mark: chapter checks stay and nothing is sent; another account's mark clears them", async ({ page }) => {
   await page.goto(P("robots.txt"));

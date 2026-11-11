@@ -1,19 +1,5 @@
-import { sql, currentUser, sameOrigin, body, send } from "../lib/server.js";
+import { sql, currentUser, sameOrigin, body, send, acctOf } from "../lib/server.js";
+import { makeProgressHandler } from "../lib/progress.js";
 
-export default async function handler(req, res) {
-  if (!sameOrigin(req)) return send(res, 403, { error: "Bad origin." });
-  const u = await currentUser(req);
-  if (!u) return send(res, 401, { error: "Sign in first." });
-  if (req.method !== "PUT") return send(res, 405, { error: "Method not allowed." });
-  const b = await body(req);
-  const chapter = Number(b.chapter);
-  if (!Number.isInteger(chapter) || chapter < 1 || chapter > 99999) return send(res, 400, { error: "Bad chapter." });
-  const state = b.state;
-  const json = JSON.stringify(state || {});
-  if (json.length > 60000) return send(res, 400, { error: "Too large." });
-  await sql()`insert into progress(user_id,chapter,state,updated_at) values(${u.id},${chapter},${json}::jsonb,now())
-    on conflict(user_id,chapter) do update set state=excluded.state,updated_at=now()`;
-  // 901+ in each course block are side records (mock history, practice, listening position), not a place to resume
-  if (chapter % 10000 < 901) await sql()`update users set cur=${chapter} where id=${u.id}`;
-  return send(res, 200, { ok: true });
-}
+// PUT /api/progress {chapter, state}. Signed in, same origin, and for the session's own account (X-Halcyon-Account). The logic lives in lib/progress.js.
+export default makeProgressHandler({ sql, currentUser, sameOrigin, body, send, acctOf });

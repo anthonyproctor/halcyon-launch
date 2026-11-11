@@ -11,7 +11,7 @@ const NOAUD=()=>PMP2()&&!(window.HALCYON_V2||{}).audio; // v2 narration not swit
 /* the test profile (profile.js, QA only) moves every progress key to its own namespace; display preferences stay shared. Without profile.js it's "halcyon."+k */
 const PROF=window.HalcyonProfile||{test:false,key:k=>SP+k};
 const TESTP=!!PROF.test;
-let TAB_USER=null;let SIGNING_OUT=false; // from the moment sign out commits, nothing may write progress again: late player events and timers would put this account's data back after clearLocal
+let TAB_USER=null,TAB_ACCT=null;let SIGNING_OUT=false; // from the moment sign out commits, nothing may write progress again: late player events and timers would put this account's data back after clearLocal
 const store={get(k,d){try{const v=localStorage.getItem(PROF.key(k));return v?JSON.parse(v):d}catch(e){return d}},set(k,v){if(PROF.frozen||SIGNING_OUT)return;if(acctOff()){acctLeave();return}try{localStorage.setItem(PROF.key(k),JSON.stringify(v))}catch(e){}}};
 const clamp=v=>Math.max(0,Math.min(100,v));
 let DOMS=["People","Process","Business Environment"];
@@ -124,7 +124,7 @@ function obAdopt(n,rec){OB.sum[n]=recHash(rec);OB.t[n]=recTime(rec)}
 function obSeed(){try{Object.keys(localStorage).forEach(k=>{const m=k.match(/^halcyon\.c(\d+)$/);if(m)obAdopt(m[1],JSON.parse(localStorage.getItem(k)||"null"))})}catch(e){}}
 /* the record to send: _t moves only when the content really changed, so saving an untouched page can't make an old copy look new */
 function obHold(n,st){if(acctOff())acctLeave();const h=recHash(st),was=OB.sum[n],same=was===h,t=same?(OB.t[n]||recTime(st)):Date.now();const rec=Array.isArray(st)?st:{...obStrip(st),_t:t};if(SIGNING_OUT)return {rec,h};OB.sum[n]=h;OB.t[n]=t;
-  const q=obGet();if(!same||q[n]){q[n]={st:rec,h,base:q[n]?q[n].base:was};obSet(q)}return {rec,h}} // base: the copy this edit started from, for a server record too old to carry a time
+  const q=obGet();if(!same||q[n]){q[n]={st:rec,h,base:q[n]?q[n].base:was,a:TAB_ACCT||undefined};obSet(q)}return {rec,h}} // base: the copy this edit started from, for a server record too old to carry a time. a: the account it was written for, so it never goes up under another one
 function obDone(n,h){if(SIGNING_OUT)return;const q=obGet();if(q[n]&&(!h||q[n].h===h)){delete q[n];obSet(q)}}
 function obSend(n,rec,ka,h){if(!offNet()||acctBusy())return Promise.resolve({ok:false});
   return api("/api/progress",{method:"PUT",body:JSON.stringify({chapter:+n,state:rec}),keepalive:!!ka}).then(r=>{if(r.ok||r.status===400||r.status===413)obDone(n,h);return r}).catch(()=>({ok:false}))} // 400: the server will never take this one, don't retry it forever
@@ -144,19 +144,24 @@ function obMerge(n,mine,srv,base){if(!srv||recEmpty(srv)&&!recTime(srv))return m
   return recTime(mine)>=ts?mine:srv} // ties stay with this device
 /* one localStorage and one cookie per browser, so another tab can change the account under this one. This tab remembers whose it is (TAB_USER); the mark says
    whose the device is now. They differ: stop the player, write nothing, send nothing, and reload into the current account. Sign in sets halcyon.signingin before its
-   request goes out, because the cookie changes before that tab can write the new mark: for that moment writes wait in the outbox. */
+   request goes out, because the cookie changes before that tab can write the new mark: for that moment writes wait in the outbox.
+   The server closes what's left (lib/acct.js): every write to /api/progress and /api/me carries this tab's account (TAB_ACCT, an opaque id from
+   /api/auth?action=me, never the email) in X-Halcyon-Account, and a write whose cookie is someone else's gets 409 and lands nowhere. That covers a
+   write already on the wire when the switch happens, and one that leaves before this tab has seen the busy mark. A 409 is the switch seen: leave.
+   What of A's was still waiting is dropped, as when another account opens the app (boot): outbox entries carry their account (a) and only this
+   account's go up. */
 function acctOff(){if(TAB_USER===null||SIGNING_OUT)return false;const m=meMark();return !m||String(m.email)!==TAB_USER}
 function acctBusy(){try{const t=+localStorage.getItem("halcyon.signingin")||0;return t>0&&Date.now()-t<30000}catch(e){return false}}
 function acctLeave(){if(SIGNING_OUT)return;SIGNING_OUT=true;SYNC=()=>Promise.resolve();try{NAR.listening=false;NAR.audio.pause()}catch(e){}Object.keys(SPEND).forEach(k=>delete SPEND[k]);location.reload()}
 addEventListener("storage",e=>{if((e.key==="halcyon.signedin"||e.key===null)&&acctOff())acctLeave()});
 const meMark=()=>{try{return JSON.parse(localStorage.getItem("halcyon.signedin")||"null")}catch(e){return null}};
-function meMarkSet(u){if(SIGNING_OUT)return;try{localStorage.setItem("halcyon.signedin",JSON.stringify({email:u.email,name:u.name,admin:!!u.admin,tester:!!u.tester,cur:u.cur||0}))}catch(e){}}
+function meMarkSet(u){if(SIGNING_OUT)return;try{localStorage.setItem("halcyon.signedin",JSON.stringify({email:u.email,acct:u.acct||undefined,name:u.name,admin:!!u.admin,tester:!!u.tester,cur:u.cur||0}))}catch(e){}}
 /* back in touch: read the server first, join what's waiting, send what's newer. A first read after an offline open also takes what other devices wrote. */
 async function netBack(){if(SIGNING_OUT||!ONLINE||TESTP||!SYNC||!offNet()||OB.busy)return;const q0=obGet();if(!OFFMODE&&!Object.keys(q0).length)return listenPull();OB.busy=true;let told=false;
-  try{const me=await api("/api/auth?action=me");if(me.user===null||me.status===401){offSay("Your session ran out. Sign in again and we'll send up what's waiting.");told=true;return}if(!me.user)return;if(TAB_USER!==null&&String(me.user.email)!==TAB_USER){acctLeave();return}meMarkSet(me.user); // another account signed in elsewhere: boot sorts it out, nothing of this one goes to that one
+  try{const me=await api("/api/auth?action=me");if(me.user===null||me.status===401){offSay("Your session ran out. Sign in again and we'll send up what's waiting.");told=true;return}if(!me.user)return;if(TAB_USER!==null&&String(me.user.email)!==TAB_USER){acctLeave();return}if(TAB_ACCT===null&&me.user.acct)TAB_ACCT=String(me.user.acct);meMarkSet(me.user); // another account signed in elsewhere: boot sorts it out, nothing of this one goes to that one
     const P=me.progress||{},open=(TRACK==="full"||TRACK==="ref")&&CH&&S?String(keyOf(TRACK,CH.num)):null,q=obGet();
     if(OFFMODE){OFFMODE=false;USERNAME=me.user.name||USERNAME;Object.entries(P).forEach(([n,st])=>{if(q[n]||n===open)return;const loc=store.get("c"+n,null);const M=loc?obMerge(n,loc,st):st;if(!recSame(M,loc)){store.set("c"+n,recEmpty(M)?null:M);obAdopt(n,M||{})}});try{applyPrefs(lget().prefs);settingsPull()}catch(e){}}
-    for(const n of Object.keys(q)){const e=q[n],srv=P[n],M=obMerge(n,e.st,srv,e.base);if(obGet()[n]&&obGet()[n].h!==e.h)continue;
+    for(const n of Object.keys(q)){const e=q[n];if(e.a&&e.a!==TAB_ACCT)continue;const srv=P[n],M=obMerge(n,e.st,srv,e.base);if(obGet()[n]&&obGet()[n].h!==e.h)continue;
       if(srv&&recSame(M,srv)){if(n!==open)store.set("c"+n,recEmpty(M)?null:M);obAdopt(n,M);obDone(n,e.h);continue}
       if(n!==open&&M!==e.st)store.set("c"+n,recEmpty(M)?null:M);obAdopt(n,M);const h=recHash(M);const r=await obSend(n,{...obStrip(M),_t:recTime(M)},false,h);if(r.ok&&h!==e.h)obDone(n,e.h);if(!r.ok&&r.status!==400&&r.status!==413)break}
   }catch(e){}finally{OB.busy=false}
@@ -2464,10 +2469,12 @@ function _render(){if(TRACK==="me")return renderMe();if(TRACK==="library")return
 
 /* ===== accounts ===== */
 const ONLINE=location.protocol.startsWith("http")&&location.hostname!=="localhost";
-async function api(path,opts={}){if(/^\/api\/(progress|me)\b/.test(path)&&String(opts.method||"GET").toUpperCase()!=="GET"&&(SIGNING_OUT||acctOff()||acctBusy())){if(acctOff())acctLeave();return {ok:false,status:0,error:"another account"}} // the one door every progress write goes through. Checked as each one leaves, so a flush or timer already running when this tab saw the switch (or a sign out) sends nothing more: acctOff reads false once SIGNING_OUT is set, so that has to shut the door by itself
+async function api(path,opts={}){const acctW=/^\/api\/(progress|me)\b/.test(path)&&String(opts.method||"GET").toUpperCase()!=="GET";if(acctW&&(SIGNING_OUT||acctOff()||acctBusy())){if(acctOff())acctLeave();return {ok:false,status:0,error:"another account"}} // the one door every progress write goes through. Checked as each one leaves, so a flush or timer already running when this tab saw the switch (or a sign out) sends nothing more: acctOff reads false once SIGNING_OUT is set, so that has to shut the door by itself
   if(TESTP&&/^\/api\/progress\b/.test(path))return {ok:false,status:0,error:"test profile"}; // belt and braces: SYNC is never set in the test profile
   if(TESTP&&/^\/api\/me\b/.test(path)&&String(opts.method||"GET").toUpperCase()!=="GET")return {ok:false,status:0,error:"test profile"}; // the test profile keeps its name and picture on this device (renderMe)
-  const r=await fetch(path,{credentials:"same-origin",headers:{"Content-Type":"application/json"},...opts});let j={};try{j=await r.json()}catch(e){}return {ok:r.ok,status:r.status,...j}}
+  const r=await fetch(path,{credentials:"same-origin",...opts,headers:{"Content-Type":"application/json",...(acctW&&TAB_ACCT?{"X-Halcyon-Account":TAB_ACCT}:{}),...(opts.headers||{})}});let j={};try{j=await r.json()}catch(e){}
+  if(acctW&&r.status===409&&j.error==="account changed")acctLeave(); // the server says the cookie is another account's now (another tab signed in): this tab's write landed nowhere, and nothing more of it goes. Not retried: boot drops it with the rest of this account's outbox
+  return {ok:r.ok,status:r.status,...j}}
 async function listenPull(){if(SIGNING_OUT||TESTP||!ONLINE||!SYNC||!COURSE||!offNet())return;try{const me=await api("/api/auth?action=me");if(me.user&&TAB_USER!==null&&String(me.user.email)!==TAB_USER){acctLeave();return}
   // bookmarks: a newer record from another device replaces this one unless a write from here is still waiting (newest record wins)
   bdgPull(me.progress||{});bmCourses().forEach(c=>{const k=BMKEY(c),r=me.progress&&me.progress[k];if(r&&Array.isArray(r.list)&&(r.at||0)>(bmGet(c).at||0)&&!SPEND[k]&&!obGet()[k]){store.set("c"+k,r);bmRail();if(TRACK==="notes"&&$("bmbody")&&!$("bmbody").contains(document.activeElement)){$("bmbody").innerHTML=bmListHTML();bmNotesWire()}}});{const g=me.progress&&me.progress[ALOGKEY()];if(g&&g.days){const loc=store.get("c"+ALOGKEY(),null),M=logMerge(loc,g);if(JSON.stringify(M.days)!==JSON.stringify((loc||{}).days)){M.at=Date.now();store.set("c"+ALOGKEY(),M);if(TRACK==="dash"&&$("logbody"))$("logbody").innerHTML=logTableHTML(logRows(COURSE,LOG.range.from,LOG.range.to))}}}const r=me.progress&&me.progress[LKEY()];if(r&&(r.at||0)>(lget().at||0)&&NAR.audio.paused&&!obGet()[LKEY()]){const LM=listenMerge(lget(),r);store.set("c"+LKEY(),LM);obAdopt(LKEY(),LM);if(!recSame(LM,r))SYNC(LKEY(),LM);applyPrefs(r.prefs);if(TRACK==="book")renderBook();else handoffOffer()}else if(r&&r.prefs&&(r.prefs.at||0)>((lget().prefs||{}).at||0)){lput({prefs:r.prefs});applyPrefs(r.prefs)}}catch(e){}}
@@ -2603,8 +2610,8 @@ async function boot(){
   if(PROF.authorize&&PROF.authorize(!!(me.user.admin||me.user.tester)))return;
   /* test profile (QA): signed in so Flag still works, but the server's progress never lands in local storage and SYNC stays off, so
      nothing reaches /api/progress; the real namespace is left exactly as it was. */
-  if(!TESTP&&me.offline){TAB_USER=String(mark.email);SYNC=obSync;obSeed();applyPrefs(lget().prefs)} // offline: this device's copy stands, nothing is cleared, and writes wait in the outbox
-  else if(!TESTP){const sameUser=!!mark&&mark.email===me.user.email,keepL=sameUser?listenLocal():{},q=sameUser?obGet():{},localCur=store.get("cur",0);if(!sameUser){obSet({});if(mark)try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.bookdone.")||k==="halcyon.offwant").forEach(k=>localStorage.removeItem(k))}catch(e){}}/* no mark, or another account's: nothing on this device is known to be this user's, so nothing of it is sent (a first open after the update keeps its chapter checks) */meMarkSet(me.user);TAB_USER=String(me.user.email);try{localStorage.removeItem("halcyon.signingin")}catch(e){}clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,recEmpty(st)?null:st));
+  if(!TESTP&&me.offline){TAB_USER=String(mark.email);TAB_ACCT=mark.acct?String(mark.acct):null;SYNC=obSync;obSeed();applyPrefs(lget().prefs)} // offline: this device's copy stands, nothing is cleared, and writes wait in the outbox
+  else if(!TESTP){const sameUser=!!mark&&mark.email===me.user.email,keepL=sameUser?listenLocal():{},q=sameUser?Object.fromEntries(Object.entries(obGet()).filter(([,e])=>!(e&&e.a)||e.a===me.user.acct)):{},localCur=store.get("cur",0);if(!sameUser){obSet({});if(mark)try{Object.keys(localStorage).filter(k=>k.startsWith("halcyon.bookdone.")||k==="halcyon.offwant").forEach(k=>localStorage.removeItem(k))}catch(e){}}/* no mark, or another account's: nothing on this device is known to be this user's, so nothing of it is sent (a first open after the update keeps its chapter checks) */meMarkSet(me.user);TAB_USER=String(me.user.email);TAB_ACCT=me.user.acct?String(me.user.acct):null;try{localStorage.removeItem("halcyon.signingin")}catch(e){}clearLocal(true);Object.entries(me.progress||{}).forEach(([n,st])=>store.set("c"+n,recEmpty(st)?null:st));
     SYNC=obSync;obSeed();
     Object.entries(keepL).forEach(([n,L])=>{if(!q[n])q[n]={st:L}}); // the last spot this device heard counts even if the outbox never got it (an iPhone app closed mid-save)
     obSet(q);
