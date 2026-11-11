@@ -45,7 +45,9 @@ function site(req, res) {
     if (u.searchParams.get("action") === "logout") S.signedIn = false;
     res.end(JSON.stringify(u.searchParams.get("action") === "me" ? (S.signedIn ? { user: { ...USER }, progress: S.progress } : { user: null }) : { ok: true })); return;
   }
-  if (u.pathname === "/api/progress") { let d = ""; req.on("data", x => d += x); req.on("end", () => { const b = JSON.parse(d); S.puts.push(b); S.progress[b.chapter] = b.state; res.writeHead(200, { "Content-Type": "application/json" }); res.end('{"ok":true}') }); return }
+  if (S.holdDoc && u.search === S.holdDoc.search && u.pathname === "/") { const h = S.holdDoc.ms; S.holdDoc = null; return setTimeout(() => site(req, res), h) } // a slow reload, like a phone's
+  // each write is booked to the account whose cookie it left with, as the real server does: a test switches the account with an "acct" cookie
+  if (u.pathname === "/api/progress") { const ck = /(?:^|;\s*)acct=([^;]+)/.exec(req.headers.cookie || ""), acct = ck ? decodeURIComponent(ck[1]) : USER.email; let d = ""; req.on("data", x => d += x); req.on("end", () => { const go = () => { const b = JSON.parse(d); S.puts.push({ ...b, acct }); if (acct === USER.email) S.progress[b.chapter] = b.state; res.writeHead(200, { "Content-Type": "application/json" }); res.end('{"ok":true}') }; if (S.holdPutMs) { const h = S.holdPutMs; S.holdPutMs = 0; setTimeout(go, h) } else go() }); return }
   if (u.pathname === "/api/qa-report") { let d = ""; req.on("data", x => d += x); req.on("end", () => { S.diag = (S.diag || []).concat(JSON.parse(d).events); res.writeHead(200, { "Content-Type": "application/json" }); res.end('{"ok":true}') }); return }
   if (u.pathname.startsWith("/api/") || u.pathname.startsWith("/_vercel/")) { res.writeHead(404, { "Content-Type": "application/json" }); return res.end("{}") }
   if (/\.mp3$/i.test(u.pathname)) return mp3(req, res, S);
@@ -390,6 +392,7 @@ test("a new CACHE version leaves saved chapters alone, and they still play offli
 
 const keys = page => page.evaluate(() => Object.keys(localStorage).filter(k => k.startsWith("halcyon.")).sort());
 const hasA = st => JSON.stringify(st).includes('"book":{');
+const B_EMAIL = "other@example.test";
 test("sign out while a chapter plays: the last spot goes up, nothing comes back, and the next account gets none of it", async ({ page }) => {
   await openApp(page);
   await page.locator('.brow[data-b="1"]').click();
@@ -419,15 +422,17 @@ test("no mark on the device: local records and an outbox are never sent; the mar
   expect(W.state.puts.filter(p => hasA(p.state))).toEqual([]);
   expect(((await local(page, "halcyon.outbox")) || {})[904]).toBeUndefined(); // this account's own new records may be on their way
   expect(await listen(page)).toBeNull();
-  // another account's mark: same answer
+  // another account's mark: same answer. Each mark is planted off the app (robots.txt): planted under a live tab it is another tab's switch, and that tab reloads itself
+  await page.goto(P("robots.txt"));
   await page.evaluate(([r, m]) => { localStorage.setItem("halcyon.c904", JSON.stringify(r)); localStorage.setItem("halcyon.outbox", JSON.stringify({ 904: { st: r, h: "x" } })); localStorage.setItem("halcyon.signedin", JSON.stringify(m)) }, [rec, { email: "someone@else.test" }]);
-  await page.reload();
+  await page.goto(P("#pmp/listen"));
   await expect(page.locator("#page h1")).toHaveText("Audiobook");
   await page.waitForTimeout(1000);
   expect(W.state.puts.filter(p => hasA(p.state))).toEqual([]);
   // this account's mark: it goes up
+  await page.goto(P("robots.txt"));
   await page.evaluate(([r, m]) => { localStorage.setItem("halcyon.c904", JSON.stringify(r)); localStorage.setItem("halcyon.outbox", JSON.stringify({ 904: { st: r, h: "x" } })); localStorage.setItem("halcyon.signedin", JSON.stringify(m)) }, [rec, { email: USER.email }]);
-  await page.reload();
+  await page.goto(P("#pmp/listen"));
   await expect.poll(() => W.state.progress[904] && W.state.progress[904].book.t, { timeout: 15_000 }).toBe(99);
 });
 test("another tab switches the account: this tab stops, sends nothing of A's to B, and reloads into B", async ({ page, context }) => {
@@ -438,17 +443,40 @@ test("another tab switches the account: this tab stops, sends nothing of A's to 
   await page.evaluate(() => { window.__tab1 = true });
   const tab2 = await context.newPage(); await tab2.addInitScript(silence);
   await tab2.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
-  USER = { ...USER, email: "other@example.test", name: "B Other" }; W.state.progress = {}; W.state.puts = [];
-  await page.evaluate(() => localStorage.setItem("halcyon.signingin", String(Date.now()))); // what the sign in form does before its request
+  // the sign in, in the order the form does it: the busy mark first, then the request, and the cookie is B's from there on. A write that left
+  // before the cookie changed went to A, where it belongs, whenever it lands; one that left with B's cookie is the leak this test is for
+  await page.evaluate(() => localStorage.setItem("halcyon.signingin", String(Date.now())));
+  await context.addCookies([{ name: "acct", value: B_EMAIL, url: W.origin }]);
+  USER = { ...USER, email: B_EMAIL, name: "B Other" }; W.state.progress = {};
   await tab2.goto(P("#pmp/listen"));
   await expect(tab2.locator("#page h1")).toHaveText("Audiobook");
   await expect.poll(() => page.evaluate(() => !window.__tab1), { timeout: 20_000 }).toBe(true); // tab 1 reloaded
   await expect(page.locator("#page h1")).toHaveText("Audiobook");
   expect(await page.evaluate(() => window.__nar.audio.paused)).toBe(true);
   await page.waitForTimeout(6500); // longer than the five second save
-  expect(W.state.puts.filter(p => hasA(p.state))).toEqual([]);
+  expect(W.state.puts.filter(p => p.acct === B_EMAIL && hasA(p.state))).toEqual([]);
   expect(W.state.progress[904]).toBeUndefined();
   expect(await listen(page)).toBeNull();
+  await tab2.close();
+});
+test("another tab switches the account while this one is sending what waited: nothing more of A's goes, even before this tab reloads", async ({ page, context }) => {
+  await openApp(page, "?tab1#pmp/listen");
+  await page.waitForTimeout(1500); // boot's own writes are done
+  await page.evaluate(() => { const q = {}, now = Date.now(); [11, 12, 13].forEach(n => q[n] = { st: { book: { n }, at: now, _t: now }, h: "x" + n }); localStorage.setItem("halcyon.outbox", JSON.stringify(q)) });
+  W.state.puts = []; W.state.holdPutMs = 1500; // A's first record is on its way and slow to answer
+  await page.evaluate(() => dispatchEvent(new Event("online"))); // back in touch: the waiting records go up one at a time
+  await expect.poll(() => W.state.holdPutMs, { timeout: 10_000 }).toBe(0); // it has reached the server, which holds the answer
+  const tab2 = await context.newPage(); await tab2.addInitScript(silence);
+  await tab2.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+  await page.evaluate(() => localStorage.setItem("halcyon.signingin", String(Date.now())));
+  await context.addCookies([{ name: "acct", value: B_EMAIL, url: W.origin }]);
+  USER = { ...USER, email: B_EMAIL, name: "B Other" }; W.state.progress = {};
+  W.state.holdDoc = { search: "?tab1", ms: 3000 }; // this tab sees the switch at once, but its reload takes a while: the flush must not carry on meanwhile
+  await tab2.goto(P("#pmp/listen"));
+  await expect(tab2.locator("#page h1")).toHaveText("Audiobook");
+  await page.waitForTimeout(4500);
+  expect(W.state.puts.filter(p => p.acct === A_USER.email && p.chapter > 10 && p.chapter < 14).map(p => p.chapter), "A's first record went to A").toEqual([11]);
+  expect(W.state.puts.filter(p => p.acct === B_EMAIL && hasA(p.state))).toEqual([]);
   await tab2.close();
 });
 test("first open after the update, with no mark: chapter checks stay and nothing is sent; another account's mark clears them", async ({ page }) => {
