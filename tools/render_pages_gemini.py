@@ -157,6 +157,23 @@ if os.environ.get("GEMINI_SHORT_CTX") != "0":
                 seg["ctx"] = _last_sentence(prev["t"])
             prev = seg
 RUN_OF = {}  # (pid, seg index) -> (run request text, piece index, [piece texts])
+# ---- split said lines (on by default since 11/11; GEMINI_RUN_KEEP_SPLIT=0 turns it off). A said line broken by a tag ("Ten minutes each in the morning,"
+# / "Ana said." / "Where's the fight?") is two segments of the same character. When a run hits RUN_MAX between them, the halves
+# land in two requests and sound like two readings (The Appeal Story ch11, 2026-11-11). With the option on, a chunk never ends
+# between the halves: the first half moves to the next chunk with the second. It changes the request text of every run it moves
+# a line out of or into, so those runs record again on their next render. Off, the runs are cut exactly as before.
+KEEP_SPLIT = os.environ.get("GEMINI_RUN_KEEP_SPLIT", "1") != "0"  # on since 11/11; set 0 to turn off
+SPLIT_TAG_MAX = 12  # words in the narrator tag between the halves ("Ana said.", "she said, not looking up.")
+def split_pairs(segs):
+    """(first half index, second half index) of each said line split by a short narrator tag: the same character and cue on both
+    sides, the first half not ending a sentence (halves with different cues are two requests either way)"""
+    out, said = [], [i for i, s in enumerate(segs) if "t" in s]
+    for a, b, c in zip(said, said[1:], said[2:]):
+        A, T, C = segs[a], segs[b], segs[c]
+        if A["v"] == C["v"] and A["v"] != "narrator" and A.get("tone") == C.get("tone") and T["v"] == "narrator" and len(T["t"].split()) <= SPLIT_TAG_MAX \
+           and not re.search(r"[.!?][\"'”’)]*$", A["t"].strip()) and all("pause" not in segs[k] for k in range(a + 1, c)):
+            out.append((a, c))
+    return out
 # Toned lines (data-tone) never change the runs of the untoned lines around them: runs are cut exactly as if no line had a tone,
 # so an untoned line keeps the request text, cache entry and pinned take it always had (2026-10-12: grouping by tone instead
 # dropped the toned lines out of Garrett's and Quinn's ch2 story runs, which re-synthesized those runs and lost takes Anthony had
@@ -165,10 +182,13 @@ for pid, segs in spec["pages"].items():
     by_who = {}
     for i, seg in enumerate(segs):
         if "t" in seg and runs_on(seg["v"]) and not seg.get("ctx"): by_who.setdefault(seg["v"], []).append(i)
+    first_of = {c: a for a, c in split_pairs(segs)} if KEEP_SPLIT else {}
     for idx in by_who.values():
         chunks = [[]]
         for i in idx:
-            if chunks[-1] and len(" ".join(say(gem_text(segs[j])) for j in chunks[-1] + [i])) > RUN_MAX: chunks.append([])
+            if chunks[-1] and len(" ".join(say(gem_text(segs[j])) for j in chunks[-1] + [i])) > RUN_MAX:
+                if first_of.get(i) is not None and len(chunks[-1]) > 1 and chunks[-1][-1] == first_of[i]: chunks.append([chunks[-1].pop()])
+                else: chunks.append([])
             chunks[-1].append(i)
         for chunk in chunks:
             texts = [say(gem_text(segs[j])) for j in chunk]
@@ -190,8 +210,21 @@ for pid, segs in spec["pages"].items():
         if "t" in seg:
             v, st = cast_seg(seg); jobs[(v, st, request_text(pid, i, seg))] = None
 def run_jobs(keys):
+    for k in keys:  # takes this render makes new (a re-roll asked for before the render, or one made in the rounds below)
+        if not os.path.exists(G._cache_path(k[2], k[0], k[1], G.current_take(k[2], k[0], k[1])) + ".wav"): NEW_HERE.add(k)
     got = G.synth_many([(t, v, st) for (v, st, t) in keys], workers=int(os.environ.get("GEMINI_WORKERS", "4")), log=lambda m: print(m, file=sys.stderr, flush=True))
     for (t, v, st), a in got.items(): jobs[(v, st, t)] = G.clean(a)
+NEW_HERE = set()  # request keys whose current take was synthesized by this render
+# takes a GEMINI_PREFETCH run made are new to the render that follows it: kept in new_takes.json (base_hash -> take) until a render
+# of the same request has run its pace round
+NT_P = os.path.join(G.CACHE, "new_takes.json")
+def _nt_update(add=(), drop=()):
+    with G._lock:
+        try: d = json.load(open(NT_P))
+        except Exception: d = {}
+        for (v, st, t) in add: d[G.base_hash(t, v, st)] = G.current_take(t, v, st)
+        for (v, st, t) in drop: d.pop(G.base_hash(t, v, st), None)
+        tmpf = f"{NT_P}.{os.getpid()}.tmp"; json.dump(d, open(tmpf, "w")); os.replace(tmpf, NT_P)
 RETIME = bool(os.environ.get("RETIME"))
 ALIGN = os.environ.get("ALIGN", "ctc")
 if RETIME:  # cache only, never a Gemini call
@@ -199,8 +232,12 @@ if RETIME:  # cache only, never a Gemini call
         p = G._cache_path(t, v, st, G.current_take(t, v, st))
         jobs[(v, st, t)] = G.clean(G._wav_to_float(open(p + ".wav", "rb").read())) if os.path.exists(p + ".wav") else None
 else:
+    try: _nt = json.load(open(NT_P))
+    except Exception: _nt = {}
+    NEW_HERE.update(k for k in jobs if _nt.get(G.base_hash(k[2], k[0], k[1])) == G.current_take(k[2], k[0], k[1]))
     run_jobs(list(jobs))
-if os.environ.get("GEMINI_PREFETCH"):  # only fill the cache (e.g. submit several chapters' batches at once), write nothing
+if os.environ.get("GEMINI_PREFETCH"):  # only fill the cache (e.g. submit several chapters' batches at once), no audio or timings written
+    if NEW_HERE: _nt_update(add=NEW_HERE)
     print(G.log_usage(f"{course} {key} prefetch"), file=sys.stderr); print("prefetched", key, len(jobs), "segments"); sys.exit(0)
 
 # ---- assembly: same silence structure as render_pages.py
@@ -476,7 +513,8 @@ todo = pids
 #    ("Unhurried, matching the room." / "Keep it moving, at the pace of the room."), appended to its own tone if it has one. The
 #    hinted line becomes its own request (out of its run, like a toned line), so the take it had stays in the cache and lines
 #    that pass keep exactly the request they always had. A tone cue that asks for the pace (quick, slow) suppresses that flag.
-#    GEMINI_REROLL_SKIP speakers are reported only. Flags land in pages[pid]["pace_flags"] and gate["pace_flags_*"].
+#    GEMINI_REROLL_SKIP speakers are reported only. Flags land in pages[pid]["pace_flags"] and gate["pace_flags_*"]. A hinted
+#    take cached before the line's current base take is never reused (fresh_hint above); those land in gate["pace_old_hint"].
 # Every request that was re-rolled keeps its best take (passes whisper, then coverage, then pace, then voice similarity:
 # pace_gate.take_rank), not just its last; a hinted line goes back to its unhinted request when that take ranks higher.
 # Whatever still fails after the last round is listed in the report: pages[pid]["coverage_fail"], ["voice_flags"], and "gate".
@@ -512,6 +550,47 @@ def pace_report(flags):
         if f["pid"] in report:
             report[f["pid"]]["pace_flags"].append({"i": f["i"], "v": f["v"], "flag": f["flag"], "why": f["why"], "src": f["src"][:80],
                                                    "hinted": bool(spec["pages"][f["pid"]][f["i"]].get("pace_hint"))})
+# ---- a re-roll must stick (2026-11-11, The Appeal Study ch6 s9_v1). The line's take was bumped for a fresh read, the pace round
+# then hinted it and found a hinted take already cached from 11/10, ranked it higher and kept it, so the old take came back. Now a
+# cached hinted take is only reused when it was made for the base take the line has now. pace_base.json records, per hinted
+# request (by base_hash), the base take it goes with and its own take; the record is written for every hint still in use at the
+# end of a render. A hinted take with no record (made before 2026-11-11) is old only when its base take is new to this render:
+# no cached audio when the render started (a bump asked for before it, also through a GEMINI_PREFETCH run, see new_takes.json),
+# or re-rolled in its rounds. Judging those by file time instead would have re-made 254 hinted takes across the books on their
+# next pace flag, approved ones among them (pilot Story ch8 "And if you are?"). An old hinted take is not used: the hinted
+# request is bumped past every cached take, so the pace round makes a fresh one, and the best take of the two fresh ones is kept
+# as before. No base request changes.
+PB_P = os.path.join(G.CACHE, "pace_base.json")
+def _pb_load():
+    try: return json.load(open(PB_P))
+    except Exception: return {}
+def _pb_save(upd):
+    with G._lock:
+        d = _pb_load(); d.update(upd); tmpf = f"{PB_P}.{os.getpid()}.tmp"; json.dump(d, open(tmpf, "w")); os.replace(tmpf, PB_P)
+def _take_wav(k, take=None):
+    v, st, t = k; return G._cache_path(t, v, st, G.current_take(t, v, st) if take is None else take) + ".wav"
+def hint_is_old(rk, hk, rec=None):
+    """True when the cached take of hinted request hk was made before the current take of its base request rk"""
+    p = _take_wav(hk)
+    if not os.path.exists(p): return False
+    r = (rec if rec is not None else _pb_load()).get(G.base_hash(hk[2], hk[0], hk[1]))
+    if r and r.get("hinted") == G.current_take(hk[2], hk[0], hk[1]): return r.get("base") != G.current_take(rk[2], rk[0], rk[1])
+    return rk in NEW_HERE
+OLD_HINTS = []  # hinted requests whose cached take was passed over for a fresh one (in the report, gate["pace_old_hint"])
+def fresh_hint(rk, hk):
+    if not hint_is_old(rk, hk): return
+    v, st, t = hk; was = G.current_take(t, v, st)
+    while os.path.exists(_take_wav(hk)): G.bump_take(t, v, st)
+    OLD_HINTS.append({"style": st, "text": t[:80], "take_was": was, "take_now": G.current_take(t, v, st), "base_take": G.current_take(rk[2], rk[0], rk[1])})
+    print(f"pace: hinted take {was} of \"{t[:60]}\" predates its base take, making a fresh one", file=sys.stderr, flush=True)
+def record_hints():
+    rec = {}
+    for (pid, i), (rk0, _) in PACE_ORIG.items():
+        seg = spec["pages"][pid][i]
+        if not seg.get("pace_hint"): continue
+        v, st, t = seg_key(pid, i, seg)
+        rec[G.base_hash(t, v, st)] = {"base": G.current_take(rk0[2], rk0[0], rk0[1]), "hinted": G.current_take(t, v, st)}
+    if rec: _pb_save(rec)
 COV_MAX_MISS = float(os.environ.get("COVERAGE_MAX_MISS", "0.03"))
 BOOK = VG.Book(G.CACHE, course, spec.get("audio", "audio")) if GATE else None
 def gender_of(who): return (CMAP.get(who) or DMAP.get(who) or DMAP["woman"]).get("gender")
@@ -612,7 +691,7 @@ for rnd in range(ROUNDS):
                 seg = spec["pages"][f["pid"]][f["i"]]
                 if seg.get("pace_hint"): bump.add(f["req"]); why.setdefault(f["req"], set()).add("pace"); continue  # hinted already: re-roll it
                 new = pace_hint(f["req"], f["src"], f["hint"])
-                if new: fresh.add(new); jobs[new] = None; why.setdefault(new, set()).add("pace")
+                if new: fresh_hint(f["req"], new); fresh.add(new); jobs[new] = None; why.setdefault(new, set()).add("pace")
     if not (bump or fresh) or rnd == ROUNDS - 1: break
     print(f"round {rnd}: re-rolling {len(bump)} requests, {len(fresh)} with a pace hint ({', '.join(sorted({w for x in why.values() for w in x}))})", file=sys.stderr, flush=True)
     for (v, st, t) in bump: G.bump_take(t, v, st); jobs[(v, st, t)] = None
@@ -658,10 +737,12 @@ if pin or reverted:
                                                     "f0": round(L["f0"]) if L["f0"] else None, "src": L["src"][:80]})
 if PACE:
     flags, _ = PG.check_pages(pace_lines(built_all), {pid: sp for pid, (_, sp) in built_all.items()}, REROLL_SKIP); pace_report(flags)
+    record_hints()
+    if os.path.exists(NT_P): _nt_update(drop=[k for k in jobs if k in NEW_HERE])
 if GATE:
     BOOK.save(key, VG.book_voice(voice_lines(built_all)))  # untoned takes, each once; an all-toned character's go under "<who>#toned"
 gate = {"voice_flags_first": gate_first, "voice_flags_final": sum(len(r.get("voice_flags", [])) for r in report.values()),
-        "pace_flags_first": pace_first, "pace_flags_final": sum(len(r.get("pace_flags", [])) for r in report.values()),
+        "pace_flags_first": pace_first, "pace_flags_final": sum(len(r.get("pace_flags", [])) for r in report.values()), "pace_old_hint": OLD_HINTS,
         "coverage_fail_pages": sorted(pid for pid, r in report.items() if r.get("coverage_fail")), "characters": gate_summary,
         "gender_fail": sorted(w for w, x in gate_summary.items() if x.get("gender_fail"))}
 for pid in gate["coverage_fail_pages"]: print(f"COVERAGE FAIL {key} {pid}: " + "; ".join(f"{c['v']} missing {c['missing'] or c['cov']}" for c in report[pid]["coverage_fail"])[:400], file=sys.stderr, flush=True)

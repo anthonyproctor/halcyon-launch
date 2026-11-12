@@ -24,8 +24,19 @@ Flags
         (p >= SER_ANG_P) and A >= SER_HOT_A
   LOUD  a whisper cue (whispered, hushed, under her breath) read in full voice: periodicity z >= WHISPER_VF and tilt z >= WHISPER_TILT;
         or a quiet cue (quiet, soft, low, gentle, grave, tired, ...) read with A >= QUIET_A
-Lines shorter than MIN_VOICED voiced frames (about half a second) aren't judged: pitch and tilt on a word or two are noise."""
-import argparse, json, math, os, re, sys
+  PITCH a cued line read well above the character's base pitch when its cue doesn't ask for a raised voice (no heat word, no lift
+        word such as surprised, glad, laughing), checked on quiet cues as well as the rest. Either PITCH_ST semitones or more over
+        the base median with pitch z >= PITCH_Z (Teo, The Appeal Study ch10 o4_1 before its fix, 182 Hz on a "Low, insistent,
+        shaken." cue), or PITCH_NEAR_BASE over the base and PITCH_JUMP over the same character's line one or two lines before or
+        after it on the page (Jordan, Danny's Logbook ch8 "It's on yours too." at 205 Hz after "Fatigue's on here." at 152). The
+        course mentor isn't judged this way: mentors quote their cued lines brighter than their teaching baseline (asep, approved)
+Lines shorter than MIN_VOICED voiced frames (about half a second) aren't judged: pitch and tilt on a word or two are noise.
+
+Small baselines: a character with fewer than BASE_SOLID baseline lines in an edition borrows the other edition's baseline when
+that one has more lines (the two editions share most takes), and any baseline under BASE_SOLID lines gets the wider SMALL_FLOORS.
+On 2026-11-11 Teo's first Story baseline (10 lines, pitch range spread at its 0.8 floor) gave 7 false alarms, and Claire's
+Story pitch spread fell from 2.51 to the 1.5 floor when one outlier take was fixed, which gave 1."""
+import argparse, json, math, os, re, subprocess, sys
 import numpy as np
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -41,6 +52,10 @@ HOT_A = 2.0
 SER_ANG_P, SER_HOT_A = 0.8, 1.5   # the model calls 7% of approved character lines angry (asep, 125 of 1680); at 0.6 and 1.2 it added 4 flags, at 0.8 and 1.5 one
 WHISPER_VF, WHISPER_TILT = 0.0, 0.0
 QUIET_A = 1.2
+BASE_SOLID = 30       # baseline lines under this: borrow the other edition's baseline when it has more, and use SMALL_FLOORS
+SMALL_FLOORS = {"f0st": 2.0, "st_range": 1.5}
+PITCH_ST, PITCH_Z = 6.0, 3.0        # semitones over the base median, and pitch z, for a cued line read high
+PITCH_NEAR_BASE, PITCH_JUMP = 3.0, 4.5  # or: this far over the base and this far over the same character's neighbouring line
 
 HIGH = re.compile(r"\b(angry|anger|furious|fury|shout\w*|yell\w*|raised|sharp\w*|snap\w*|urgent\w*|panic\w*|frantic|alarm\w*|frightened|scared|afraid|"
                   r"excited|elated|thrilled|heated|fierce\w*|exasperated|loud|tense|indignant|outraged|triumphant|jubilant|desperate|pleading)\b", re.I)
@@ -48,6 +63,8 @@ FLAT_OK = re.compile(r"\b(flat|level|even|evenly|controlled|deadpan|monotone|mat
 WHISPER = re.compile(r"\b(whisper\w*|hushed|under (?:her|his|their) breath|barely audible|murmur\w*)\b", re.I)
 QUIET = re.compile(r"\b(quiet|quietly|soft|softly|low|subdued|tired|weary|gentle|gently|tender|grave|heavy|sober|somber|sombre|sad|grieving|"
                    r"resigned|defeated|faint|small|hushed|whisper\w*)\b", re.I)
+LIFT = re.compile(r"\b(surprised|glad|delighted|happy|laugh\w*|bright\w*|eager\w*|teas\w*|playful|cheer\w*|amused|excited|thrilled|giddy|"
+                  r"joking|grin\w*|smil\w*|relieved|proud)\b", re.I)
 EMO_TEXT = re.compile(r"\b(angry|furious|hate|damn|hell|god|dead|died|kill\w*|scared|afraid|terrified|love|sorry|please|no no|help)\b", re.I)
 
 _ser = {}
@@ -68,7 +85,17 @@ def ser_label(a):
 def f0st(L): return 12 * math.log2(L["f0_med"] / 100) if L.get("f0_med") else None
 def val(L, f): return f0st(L) if f == "f0st" else L.get(f)
 
-def baselines(lines):
+def baselines(lines, other=None):
+    """lines -> {who: baseline}. other: the other edition's lines; a character with fewer than BASE_SOLID baseline lines here
+    takes the other edition's baseline when that one has more ("borrowed"). A baseline under BASE_SOLID lines gets SMALL_FLOORS."""
+    B = _baselines(lines)
+    if other is None: return B
+    O = _baselines(other)
+    for who, ob in O.items():
+        if ob["lines"] > B.get(who, {}).get("lines", 0) and B.get(who, {}).get("lines", 0) < BASE_SOLID: B[who] = dict(ob, borrowed=True)
+    return B
+
+def _baselines(lines):
     by = {}
     for L in lines:
         if L["dup"] or L.get("tone") or "!" in L["text"] or not L.get("f0_med") or (L.get("n_voiced") or 0) < MIN_VOICED: continue
@@ -78,6 +105,7 @@ def baselines(lines):
         if len(ls) < BASE_MIN: continue
         B[who] = {"lines": len(ls)}
         for f, fl in FLOORS.items():
+            if len(ls) < BASE_SOLID: fl = max(fl, SMALL_FLOORS.get(f, fl))
             med, sd = N.robust([val(x, f) for x in ls]); B[who][f] = (round(med, 3), round(max(sd, fl), 3))
     return B
 
@@ -86,7 +114,23 @@ def zscores(L, b):
     if None in (z["f0st"], z["tilt_db"], z["st_range"]): return z, None
     return z, (z["f0st"] + z["tilt_db"] + 0.5 * z["st_range"]) / 3
 
-def judge(L, B, ser=None, narrator=False):
+def pitch_high(L, b, page, mentor):
+    """a cued line read well above the character's base pitch: (flag, why) or (None, None). page: the line's page, in order"""
+    tone = L.get("tone") or ""
+    if not tone or HIGH.search(tone) or LIFT.search(tone) or WHISPER.search(tone) or L["who"] == mentor or not L.get("f0_med"): return None, None
+    up = f0st(L) - b["f0st"][0]; zp = up / b["f0st"][1]
+    if up >= PITCH_ST and zp >= PITCH_Z:
+        return "PITCH", f"cue \"{tone}\" read {up:+.1f} st over the base pitch ({L['f0_med']:.0f} Hz, pitch z {zp:+.1f})"
+    if up >= PITCH_NEAR_BASE and page:
+        n = L.get("n"); near = [M for M in page if M is not L and M["who"] == L["who"] and n is not None and M.get("n") is not None
+                                and 0 < abs(M["n"] - n) <= 2 and M.get("f0_med") and (M.get("n_voiced") or 0) >= MIN_VOICED // 2]
+        if near:
+            jump = min(f0st(L) - f0st(M) for M in near)
+            if jump >= PITCH_JUMP:
+                return "PITCH", f"cue \"{tone}\" read {jump:+.1f} st over the same character's line next to it ({L['f0_med']:.0f} Hz, {up:+.1f} st over the base)"
+    return None, None
+
+def judge(L, B, ser=None, narrator=False, page=None, mentor=None):
     """-> (flag, why) or (None, None); sets L["z"], L["A"]"""
     if L["who"] == "narrator" and not narrator: return None, None
     if N.PG.skip_reason(L): return None, None  # headings, codes, one word interjections (pace_gate's list)
@@ -102,12 +146,20 @@ def judge(L, B, ser=None, narrator=False):
             return "LOUD", f"quiet cue read raised (arousal {A:+.1f}: pitch z {z['f0st']:+.1f}, effort z {z['tilt_db']:+.1f})"
         if HIGH.search(tone) and not FLAT_OK.search(tone) and A <= FLAT_A and z["st_range"] <= FLAT_RANGE:
             return "FLAT", f"cue asks for heat, read flat (arousal {A:+.1f}, pitch range z {z['st_range']:+.1f})"
-        return None, None
+        return pitch_high(L, b, page, mentor)
     if "!" in L["text"] or EMO_TEXT.search(L["text"]): return None, None
     if A >= HOT_A: return "HOT", f"untoned line read with heat (arousal {A:+.1f}: pitch z {z['f0st']:+.1f}, effort z {z['tilt_db']:+.1f}, range z {z['st_range']:+.1f})"
     if ser and ser.get("ang", 0) >= SER_ANG_P and A >= SER_HOT_A:
         return "HOT", f"untoned line heard as angry (p {ser['ang']:.2f}) with arousal {A:+.1f}"
     return None, None
+
+def mentor_of(course):
+    """the course's mentor (courses.js), whose cued lines aren't judged on pitch height"""
+    if course in ("pmp", "pmp-v2", "v2"): return "ruth"
+    js = ("global.window={};new Function('window',require('fs').readFileSync('courses.js','utf8'))(global.window);"
+          f"const c=window.HALCYON_COURSES.find(x=>x.id==={json.dumps(course)});process.stdout.write(c&&c.mentor||'')")
+    try: return subprocess.run(["node", "-e", js], cwd=N.ROOT, capture_output=True, text=True, check=True).stdout or None
+    except Exception: return None
 
 def ser_cached(course, key, pid, L, audio):
     p = os.path.join(N.FEAT_DIR, f"ser-{course}-{key}.json")
@@ -130,13 +182,16 @@ def main():
     eds = ["study", "story"] if a.edition == "both" else [a.edition]
     report = {"course": a.course, "chapters": chs, "book": book, "editions": eds, "ser": a.ser,
               "thresholds": {k: v for k, v in globals().items() if k.isupper() and isinstance(v, (int, float))}, "chapters_out": {}, "summary": {}}
-    tot_judged = tot_flags = 0; counts = {}
+    tot_judged = tot_flags = 0; counts = {}; mentor = mentor_of(a.course)
+    book_lines = {}  # both editions' baseline lines: a small baseline in one edition borrows the other's
+    for ed in ("study", "story"):
+        book_lines[ed] = [L for ch in book if (c := N.load(a.course, ch, ed == "story")) for ls in c["pages"].values() for L in ls]
     for ed in eds:
         story = ed == "story"; loaded = {}
-        for ch in sorted(set(chs) | set(book)):
-            c = N.load(a.course, ch, story, want_audio=(a.ser and ch in chs))
+        for ch in chs:
+            c = N.load(a.course, ch, story, want_audio=a.ser)
             if c: loaded[ch] = c
-        B = baselines([L for ch in book if ch in loaded for ls in loaded[ch]["pages"].values() for L in ls])
+        B = baselines(book_lines[ed], book_lines["story" if ed == "study" else "study"])
         report["baselines_" + ed] = B
         for ch in chs:
             if ch not in loaded: print(f"ch{ch} {ed}: no timings, skipped"); continue
@@ -147,7 +202,7 @@ def main():
                     ser = None
                     if a.ser and L["who"] != "narrator" and L["who"] in B and (L.get("n_voiced") or 0) >= MIN_VOICED and pid in c["audio"]:
                         ser = ser_cached(a.course, c["key"], pid, L, c["audio"][pid]); L["ser"] = ser
-                    flag, why = judge(L, B, ser, a.narrator)
+                    flag, why = judge(L, B, ser, a.narrator, ls, mentor)
                     if L.get("A") is not None: judged += 1
                     if flag:
                         counts[flag] = counts.get(flag, 0) + 1

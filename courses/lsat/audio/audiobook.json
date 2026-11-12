@@ -33,7 +33,7 @@
   "4": {
    "story": {
     "src": "audio/story/full-ch04.mp3",
-    "min": 31.2
+    "min": 31.0
    },
    "study": {
     "src": "audio/full-ch04.mp3",
@@ -53,7 +53,7 @@
   "6": {
    "story": {
     "src": "audio/story/full-ch06.mp3",
-    "min": 31.5
+    "min": 31.4
    },
    "study": {
     "src": "audio/full-ch06.mp3",
@@ -97,7 +97,7 @@
    },
    "study": {
     "src": "audio/full-ch10.mp3",
-    "min": 62.2
+    "min": 62.3
    }
   },
   "11": {

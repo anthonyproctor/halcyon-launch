@@ -132,7 +132,7 @@
       ]},
     { id:`f10s2`, storyQuiet:true, domain:`Logical Reasoning`, task:`LR18`, title:`Since supper`,
       text:(s,all,G)=>[`She told him about the curb then, because nobody ever had. A quarter past eleven. A woman across the street at her kitchen window. A man in a red jacket and a ball cap who hit Travis Hensley with something and ran off on foot, and Travis going over backward against the curb. Teo listened with his jaw set.`,
-        `<span class="said" data-who="Teo" data-tone="Low, tight, insistent.">"He was bleeding all over,"</span> he said. <span class="said" data-who="Teo" data-tone="Low, tight, insistent.">"You didn't see him. He was already going. Whoever that was, he was already going."</span>`,
+        `<span class="said" data-who="Teo" data-tone="Low, flat, insistent.">"He was bleeding all over,"</span> he said. <span class="said" data-who="Teo" data-tone="Low, flat, insistent.">"You didn't see him. He was already going. Whoever that was, he was already going."</span>`,
         `She didn't argue with him. He went on, because he'd said he would.`,
         `<span class="said" data-who="Teo" data-tone="Low, steady, getting it out.">"He goes the back way to Globeville, and in the middle of the bridge over the Platte he stops. Flashers on. He gets out with the flashlight. I'm watching him in the side mirror. Then he drops it over the rail. I didn't hear it go in. I looked it up once, how deep the Platte is there. Not very."</span>`,
         `So by ten past eleven, give or take, the flashlight was in the Platte, and at a quarter past a man at the curb hit Travis Hensley with something.`,
