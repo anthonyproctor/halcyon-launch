@@ -6,10 +6,13 @@
 #        tools/book_marks.sh --v2          (the PMP v2 preview: audio/v2/ files, full/v2/ chapters, writes audio/v2/bookmarks.json)
 cd "$(dirname "$0")/.."
 v=; [[ $1 == --v2 ]] && { v=v2/; shift }
-c=$1; root=${c:+courses/$c/}; bm=/tmp/claude-501/bm${c:+-$c}${v:+-v2}
+c=$1; root=${c:+courses/$c/}; bm=${BM_DIR:-/tmp/claude-501/bm${c:+-$c}${v:+-v2}} # BM_DIR: another transcript folder (a scratch run)
 mkdir -p $bm
 setopt null_glob
+# only the files whose page timings don't add up to the mp3 need whisper (book_marks.mjs --need-whisper); if that check fails, all of them
+need=$(node tools/book_marks.mjs ${c:+--course} $c ${v:+--v2} --need-whisper) || need=ALL
 for f in ${root}audio/${v}story/full-ch*.mp3 ${root}audio/${v}full-ch*.mp3; do
+  [[ $need == ALL || $'\n'$need$'\n' == *$'\n'$f$'\n'* ]] || continue
   id=${${f#$root}//\//_}; out=$bm/${id%.mp3}
   [ -s $out.json ] && [ $out.json -nt $f ] && continue
   ffmpeg -nostdin -loglevel error -y -i $f -ar 16000 -ac 1 $bm/tmp.$$.wav && \

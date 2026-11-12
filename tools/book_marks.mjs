@@ -7,17 +7,20 @@
 // (no timings, or audio and timings from different renders) it falls back to the whisper transcripts from book_marks.sh.
 // The whisper fallback spreads each segment's words evenly across the segment, so it can land a few seconds off.
 // Each mark sits LEAD seconds before the first word of the page. --chapters 1,4 rewrites only those chapters and keeps the rest.
+// --need-whisper: print the audiobook files the timings can't place (one path per line) and write nothing. book_marks.sh asks this
+// first and whispers only those, so a re-rendered chapter whose timings add up costs no whisper pass (2026-11-12).
 import fs from 'fs';
 import {execFileSync} from 'child_process';
 const CID=process.argv.includes('--course')?process.argv[process.argv.indexOf('--course')+1]:null; // no --course = the PMP course
 const V2=process.argv.includes('--v2')&&!CID; // --v2: the PMP v2 preview (full/v2/ chapters, audio/v2/ files, audio/v2/bookmarks.json)
-const ROOT=CID?`courses/${CID}/`:'';const BM='/tmp/claude-501/bm'+(CID?'-'+CID:'')+(V2?'-v2':'');const CDIR=ROOT+'full'+(V2?'/v2':''),ADIR=ROOT+'audio'+(V2?'/v2':''),AID='audio'+(V2?'_v2':'');
+const ROOT=CID?`courses/${CID}/`:'';const BM=process.env.BM_DIR||'/tmp/claude-501/bm'+(CID?'-'+CID:'')+(V2?'-v2':'');const CDIR=ROOT+'full'+(V2?'/v2':''),ADIR=ROOT+'audio'+(V2?'/v2':''),AID='audio'+(V2?'_v2':'');
 const st={flags:{},score:24,m:{trust:60,conf:60,health:60}};
 const W=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen'];
 const plain=s=>String(s).replace(/<prop\s+[^>]*>([\s\S]*?)<\/prop>/g,'$1').replace(/<[^>]+>/g,' ');
 const NUM=new Set([...W,'twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety','hundred','thousand']);
 const norm=s=>plain(s).toLowerCase().replace(/[^a-z0-9' ]+/g,' ').replace(/'/g,'').split(/\s+/).filter(w=>w&&!/\d/.test(w)&&!NUM.has(w)); // numbers dropped: whisper writes 31 where the text says thirty-one
 const LEAD=0.2,TOL=0.35;
+const NEED=process.argv.includes('--need-whisper'); // BM_DIR (env): the whisper transcript folder, as in book_marks.sh
 const ONLY=process.argv.includes('--chapters')?new Set(process.argv[process.argv.indexOf('--chapters')+1].split(',').map(Number)):null;
 const dur=f=>{try{return +execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','csv=p=0',f]).toString()}catch(e){return NaN}};
 const STING=[dur('audio/sting-open.mp3'),dur('audio/sting-close.mp3')]; // tools/add_stings.sh wraps every edition in these
@@ -29,7 +32,7 @@ function timed(C,ed,mp3){ // page timings -> [[word, time]] on the episode clock
   const out=[];let off=STING[0];
   for(const p of plan){for(const [w,a] of T[p].w){const x=norm(w);if(!x.length)out.push(['#',off+a]);for(const y of x)out.push([y,off+a])}off+=T[p].d+(p.startsWith('s')&&p!=='story'?4:1.2)} // pauses = render_pages*.py episode
   const want=off+STING[1],got=dur(mp3);
-  if(!(Math.abs(want-got)<=TOL)){console.log(`ch${C.num} ${ed}: timings add up to ${want.toFixed(2)} s but ${mp3} is ${got.toFixed(2)} s, using whisper`);return null}
+  if(!(Math.abs(want-got)<=TOL)){(NEED?console.error:console.log)(`ch${C.num} ${ed}: timings add up to ${want.toFixed(2)} s but ${mp3} is ${got.toFixed(2)} s, using whisper`);return null}
   return out}
 function words(file){ // whisper segments -> [[word, time]] with times spread across each segment
   const j=JSON.parse(fs.readFileSync(file,'utf8'));const out=[];
@@ -58,6 +61,7 @@ for(const f of fs.readdirSync(CDIR).filter(f=>/^ch\d+\.js$/.test(f)).sort()){
   if(ONLY&&!ONLY.has(C.num))continue;
   for(const [ed,id] of [['story',`${AID}_story_full-ch${nn}`],['study',`${AID}_full-ch${nn}`]]){
     const mp3=`${ADIR}/${ed==='story'?'story/':''}full-ch${nn}.mp3`,file=`${BM}/${id}.json`;
+    if(NEED){if(fs.existsSync(mp3)&&!timed(C,ed,mp3))console.log(mp3);continue}
     let ws=timed(C,ed,mp3);const src=ws?'timings':'whisper';if(!ws){if(!fs.existsSync(file))continue;ws=words(file)}SRC[src]++;
     const anchors=[['open',C.opening[0]]];
     if(ed==='study'&&C.lesson)anchors.push(['lesson',CID||V2?`${C.lesson.title}.`:`Ruth's whiteboard. ${C.lesson.title}.`]);
@@ -68,6 +72,7 @@ for(const f of fs.readdirSync(CDIR).filter(f=>/^ch\d+\.js$/.test(f)).sort()){
     (M.full[C.num]??={})[ed]=marks;
   }
 }
+if(NEED)process.exit(0);
 const OUT=process.argv.includes('--out')?process.argv[process.argv.indexOf('--out')+1]:ADIR+'/bookmarks.json'; // --out: write somewhere else (a dry run)
 fs.writeFileSync(OUT+'.tmp',JSON.stringify(M));fs.renameSync(OUT+'.tmp',OUT);
 console.log('chapters',Object.keys(M.full).length,'misses',miss,'editions from timings',SRC.timings,'from whisper',SRC.whisper);

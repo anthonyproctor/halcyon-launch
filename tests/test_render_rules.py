@@ -1,6 +1,6 @@
-"""Unit tests for two rules in tools/render_pages_gemini.py, run on a made-up page spec and a temp cache (no Gemini, no whisper,
-no audio rendered): a pace round never brings back a hinted take older than the line's base take, and the off-by-default option
-that keeps the halves of a split said line in one run.
+"""Unit tests for rules in tools/render_pages_gemini.py, run on a made-up page spec and a temp cache (no Gemini, no whisper,
+no audio rendered): a pace round never brings back a hinted take older than the line's base take, the option that keeps the
+halves of a split said line in one run, and the page records behind the incremental render (what is reused, what is held).
 run: python3 -m unittest tests/test_render_rules.py"""
 import contextlib, io, json, os, shutil, sys, tempfile, unittest, wave
 
@@ -136,6 +136,116 @@ class SplitLineTests(unittest.TestCase):
         for env in (None, {"GEMINI_RUN_KEEP_SPLIT": "1"}):
             a, b = self.runs(self.E.run(ana_page(), UNTIL_RUN_JOBS, env))
             self.assertEqual(a, b); self.assertTrue(a.startswith("Ten minutes each in the morning."))
+
+
+def two_pages():
+    return {"track": "full", "num": 6, "title": "t", "plan": ["s0", "o0_0"], "pages": {
+        "s0": [{"v": "narrator", "t": "Decision one. The hearing."}, {"pause": 0.5}, {"v": "narrator", "t": "The room went quiet when she stood."},
+               {"v": "Ana", "t": "We are not done here, not by a long way."}],
+        "o0_0": [{"v": "narrator", "t": "She waited for the answer."}, {"pause": 0.5}, {"v": "narrator", "t": "That was the right call to make."}]}}
+
+
+class IncrementalTests(unittest.TestCase):
+    """the page records behind the incremental render: what makes a page reusable, what is held, and the episode join"""
+    def setUp(self): self.E = Env()
+    def tearDown(self): self.E.close()
+
+    def record(self, g, pid, hints=()):
+        """write what a render of page pid leaves on disk: its mp3, timings entry, samples and record"""
+        out = os.path.join(self.E.dir, g["outdir"]); os.makedirs(out, exist_ok=True); os.makedirs(g["STATE_DIR"], exist_ok=True)
+        mp3 = f"mp3 of {pid}".encode(); open(os.path.join(out, pid + ".mp3"), "wb").write(mp3)
+        tp = os.path.join(out, "timings.json"); t = json.load(open(tp)) if os.path.exists(tp) else {}
+        t[pid] = {"d": 1.5, "w": [["word", 0.1, 0.4]]}; json.dump(t, open(tp, "w"), separators=(",", ":"))
+        pcm = bytes(range(200)) * 10; cwd = os.getcwd(); os.chdir(self.E.dir)
+        try: g["flac_write"](pcm, os.path.join(g["STATE_DIR"], pid + ".flac"))
+        finally: os.chdir(cwd)
+        keys = [list(k) + [g["_take"](k)] for _, k in g["BASE_KEYS"][pid]]
+        st = {"v": g["RENDER_VERSION"], "fp": g["page_fp"](pid), "deps": keys, "keys": keys, "mp3": g["_sha"](mp3), "tim": g["tim_sha"](t[pid]),
+              "report": {"round": 0, "bad": [], "low": [], "missing_words": 0.0, "coverage_fail": []}, "spans": [], "emb": [], "pace": [],
+              "hints": [list(h) for h in hints], "pcm": g["_sha"](pcm)}
+        json.dump(st, open(os.path.join(g["STATE_DIR"], pid + ".json"), "w"))
+
+    def first(self, spec, env=None):
+        g = self.E.run(spec, UNTIL_RUN_JOBS, env)
+        for pid in spec["pages"]: self.record(g, pid)
+        return g
+
+    def test_unchanged_pages_are_reused_and_load_nothing(self):
+        spec = two_pages(); self.first(spec)
+        g = self.E.run(spec, UNTIL_ROUNDS)
+        self.assertEqual(set(g["REUSED"]), {"s0", "o0_0"}); self.assertEqual(g["jobs"], {})
+        self.assertEqual(g["PCM"]["s0"], bytes(range(200)) * 10, "the episode gets the recorded samples back exactly")
+
+    def test_a_cue_change_renders_only_its_page(self):
+        spec = two_pages(); self.first(spec)
+        spec["pages"]["s0"][3]["tone"] = "Quiet, certain."
+        g = self.E.run(spec, UNTIL_ROUNDS)
+        self.assertEqual(set(g["REUSED"]), {"o0_0"}); self.assertIn("s0", g["WHY_NOT"])
+        self.assertTrue(all(k[2] != "She waited for the answer." for k in g["jobs"]), "the reused page's requests are not loaded")
+
+    def test_a_take_bump_renders_its_page(self):
+        spec = two_pages(); g = self.first(spec)
+        k = g["BASE_KEYS"]["o0_0"][0][1]; self.E.set_take(k, 1)
+        g = self.E.run(spec, UNTIL_ROUNDS)
+        self.assertEqual(set(g["REUSED"]), {"s0"})
+
+    def test_casting_change_changes_the_fingerprint(self):
+        spec = two_pages(); g = self.E.run(spec, UNTIL_RUN_JOBS); fp = g["page_fp"]("o0_0")
+        g["CMAP"]["narrator"] = dict(g["_cfg"]("narrator"), sim_min=0.99)
+        self.assertNotEqual(g["page_fp"]("o0_0"), fp, "a gate bar on the cast entry is part of the page")
+
+    def test_a_page_whose_files_changed_is_rendered(self):
+        spec = two_pages(); g = self.first(spec)
+        open(os.path.join(self.E.dir, g["outdir"], "s0.mp3"), "wb").write(b"rendered by something else")
+        t = os.path.join(self.E.dir, g["outdir"], "timings.json"); d = json.load(open(t)); d["o0_0"]["d"] = 9.0; json.dump(d, open(t, "w"))
+        g = self.E.run(spec, UNTIL_ROUNDS)
+        self.assertEqual(g["REUSED"], {}); self.assertIn("mp3", g["WHY_NOT"]["s0"]); self.assertIn("timings", g["WHY_NOT"]["o0_0"])
+
+    def test_full_and_gate_settings_ignore_records(self):
+        spec = two_pages(); self.first(spec)
+        self.assertEqual(self.E.run(spec, UNTIL_ROUNDS, {"FULL": "1"})["REUSED"], {})
+        self.assertEqual(self.E.run(spec, UNTIL_ROUNDS, {"GEMINI_REROLL": "0"})["REUSED"], {}, "a page gated another way is not reused")
+
+    def test_only_new_requests_may_reroll(self):
+        spec = two_pages(); self.first(spec)
+        spec["pages"]["s0"].append({"v": "narrator", "t": "A new line the fix added."})
+        g = self.E.run(spec, UNTIL_ROUNDS)
+        new = [k for k in g["jobs"] if k[2] == "A new line the fix added."][0]
+        old = [k for k in g["jobs"] if k[2] == "The room went quiet when she stood."][0]
+        self.assertTrue(g["may_reroll"]("s0", new)); self.assertFalse(g["may_reroll"]("s0", old), "an unchanged line is held")
+        self.assertFalse(g["may_reroll"]("o0_0", new), "nothing on a reused page re-rolls")
+        g = self.E.run(spec, UNTIL_ROUNDS, {"REROLL_HELD": "1"}); self.assertTrue(g["may_reroll"]("s0", old))
+
+    def test_a_changed_page_gets_its_pace_hints_back(self):
+        spec = two_pages(); g = self.E.run(spec, UNTIL_RUN_JOBS)
+        k = dict(g["BASE_KEYS"]["s0"])[2]; hint = PG.PACE_HINT["fast"]
+        for pid in spec["pages"]: self.record(g, pid, hints=[[2, hint, list(k), 0]] if pid == "s0" else ())
+        spec["pages"]["s0"][0]["t"] = "Decision one. The hearing room."
+        g = self.E.run(spec, UNTIL_ROUNDS)
+        self.assertEqual(g["spec"]["pages"]["s0"][2].get("pace_hint"), hint); self.assertIn(("s0", 2), g["PACE_ORIG"])
+        self.assertIn(g["seg_key"]("s0", 2, g["spec"]["pages"]["s0"][2]), g["jobs"], "the hinted request is what the page sends")
+        self.E.set_take(k, 1); g = self.E.run(spec, UNTIL_ROUNDS)
+        self.assertIsNone(g["spec"]["pages"]["s0"][2].get("pace_hint"), "a hint made for another take is dropped")
+
+    def test_ctc_memo_aligns_the_same_samples_once(self):
+        g = self.E.run(two_pages(), UNTIL_ROUNDS); import numpy as np, types
+        calls = []
+        fake = types.ModuleType("align_ctc"); fake.align_words = lambda a, sr, src, said: calls.append(len(a)) or [(0.1 * k, 0.1 * k + 0.08) for k in range(len(src))]
+        keep = sys.modules.get("align_ctc"); sys.modules["align_ctc"] = fake
+        try:
+            audio = np.random.default_rng(3).uniform(-0.5, 0.5, G.SR * 3).astype(np.float32)
+            sp = {"src": "The room went quiet.", "sent": "The room went quiet.", "s": 1.0, "e": 2.0}
+            w1 = g["ctc_words"](audio, [sp]); w2 = g["ctc_words"](audio, [sp])
+            self.assertEqual(w1, w2); self.assertEqual(len(calls), 1, "the same samples and words are aligned once")
+            audio[int(G.SR * 1.5)] += 0.01; g["ctc_words"](audio, [sp]); self.assertEqual(len(calls), 2, "one changed sample aligns again")
+        finally:
+            if keep is None: sys.modules.pop("align_ctc", None)
+            else: sys.modules["align_ctc"] = keep
+
+    def test_episode_join_by_samples_matches_the_float_join(self):
+        g = self.E.run(two_pages(), UNTIL_RUN_JOBS); import numpy as np
+        rng = np.random.default_rng(7); a, b = (rng.uniform(-1.2, 1.2, 4801).astype(np.float32) for _ in range(2)); z = np.zeros(2880, np.float32)
+        self.assertEqual(g["q16"](np.concatenate([a, z, b, z])), g["q16"](a) + b"\0\0" * 2880 + g["q16"](b) + b"\0\0" * 2880)
 
 
 if __name__ == "__main__":

@@ -20,6 +20,10 @@ PRICE_OUT, PRICE_IN = PRICE["standard"]
 # quota was 100 requests per model per day on 2026-10-11, far below one chapter, so live is only good for samples)
 MODE = os.environ.get("GEMINI_MODE", "batch")
 BATCH_SIZE = int(os.environ.get("GEMINI_BATCH_SIZE", "40"))
+# GEMINI_LIVE_MAX (2026-11-12): in batch mode, a call for this many new requests or fewer goes live instead. A batch job takes about
+# 3 minutes even for one request, which was most of the wall clock of a one line fix; live answers in seconds. Live is the standard
+# price (twice batch, about $0.001 for a short line) and its daily quota is small, so a used up quota falls back to batch. 0 = off.
+LIVE_MAX = int(os.environ.get("GEMINI_LIVE_MAX", "4"))
 os.makedirs(CACHE, exist_ok=True)
 _lock = threading.Lock()
 _key = None
@@ -221,6 +225,14 @@ def synth_many(items, workers=6, log=lambda m: None):
             try: at = json.load(open(p + ".json")).get("audio_tokens", 0)
             except Exception: at = 0
             with _lock: STATS["cached"] += 1; STATS["cached_audio_tokens"] += at
+    if need and MODE == "batch" and len(need) <= LIVE_MAX:
+        sent = 0
+        with _lock: queued = {r[0] for rows in _load_batches().values() for r in rows}  # an earlier run's job: let _batch_run collect it, never pay twice
+        try:
+            for it in [x for x in need if x[0] not in queued]: _live(*it); need.remove(it); sent += 1
+        except Exception as e:
+            log(f"gemini live failed ({type(e).__name__}: {str(e)[:120]}), sending {len(need)} requests by batch")
+        if sent: log(f"gemini live: {sent} new requests sent live (GEMINI_LIVE_MAX={LIVE_MAX})")
     if need and MODE == "batch":
         for attempt in range(3):
             need = _batch_run(need, log)

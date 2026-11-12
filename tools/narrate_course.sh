@@ -1,6 +1,7 @@
 #!/bin/zsh
 # Narrate a chapter of any course in courses/<id> end to end: page clips + word timings, both Audiobook editions with stings, manifest, scene map.
 # usage: tools/narrate_course.sh <course id> <chapter number>
+# TTS=gemini renders only the pages that changed since their last render (records in ~/.cache/halcyon-gemini-tts/pages/); FULL=1 renders every page
 cd "$(dirname "$0")/.."
 C=$1; n=$2; nn=$(printf %02d $n); T=/tmp/claude-501/$C; mkdir -p $T
 mkdir -p courses/$C/audio/story # a new course has no story edition folder yet (the Hearth ch1 render failed on it, 2026-10-17)

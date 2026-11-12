@@ -1,6 +1,7 @@
 #!/bin/zsh
 # Narrate a Danny's Logbook chapter end to end: page clips + word timings, both Audiobook editions with stings, manifest, scene map.
 # usage: tools/narrate_pilot.sh <chapter number>
+# TTS=gemini renders only the pages that changed since their last render (records in ~/.cache/halcyon-gemini-tts/pages/); FULL=1 renders every page
 cd "$(dirname "$0")/.."
 n=$1; nn=$(printf %02d $n); T=/tmp/claude-501/pilot; mkdir -p $T
 node tools/pages.mjs full $n $T/p$n.json --course pilot >/dev/null && node tools/pages.mjs full $n $T/p${n}s.json --course pilot --story >/dev/null || exit 1

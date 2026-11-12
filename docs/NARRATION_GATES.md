@@ -216,6 +216,51 @@ The report lists, per flag, the speaker, the pages that play the take, the line'
 | Danny's Logbook (pilot) | 3 | 1: Story ch7 (Abby) | 2 min |
 | PMP v2, CISA, GH-300, Commission | 0 | 0 | 0 |
 
+## Incremental render, 2026-11-12
+
+A one line voice fix (a cue change or a take bump) used to take 30 to 45 minutes a chapter even with 0 to 2 Gemini calls, because every page was assembled, whispered, aligned and gated again. Profile of a fully cached Commission ch4 (both editions, the render before this change):
+
+| Phase | Study (82 pages) | Story (1 page) |
+|---|---|---|
+| whisper.cpp check of every page, 3 rounds | 404 s | 216 s |
+| wav2vec2 CTC alignment | 225 s | 111 s |
+| Gemini: one batch job for 1 re-roll (about 3 min wait), the rest cache reads | 187 s | 0 s |
+| voice gate (WavLM embeddings) | 156 s | 58 s |
+| whisper of suspect segments alone | 101 s | 65 s |
+| assembly | 82 s | 21 s |
+| keep the best take (rebuild) | 25 s | 42 s |
+| mp3 encode | 32 s | 10 s |
+| **render total** | **1,214 s** | **526 s** |
+
+Then `book_marks.sh` whispered both new episode files again because their mtime changed (176 s), and the stings took 13 s: about 32 minutes in all for 1 Gemini call. The re-roll rounds re-rolled 11 and 5 requests nobody had touched.
+
+**What is reused.** Every render leaves a record per page in `~/.cache/halcyon-gemini-tts/pages/<course>-<audio>-<key>/<pid>.json`, plus `<pid>.flac` (the page's exact 16 bit samples) for pages in the episode plan. On the next render a page is reused when its fingerprint matches (RENDER_VERSION, model, gate and alignment settings, the page spec as given, every request it sends with its current take, and its speakers' casting entries), every take it ended with (pace hinted and pinned ones too) is still current, and its mp3 and timings entry on disk are the ones the record wrote, byte for byte. A reused page is not assembled, whispered, aligned or re-rolled, and its mp3 is not rewritten. Its timings entry and gate result are carried over (`"reused": true` on the page in the report). Its lines still count in the chapter's voice and pace baselines, and its voice and pace flags are judged again for the report, but they don't re-roll.
+
+**Changed pages** render and gate as before, with two limits so a fix doesn't churn the lines around it:
+
+- The pace hints a changed page ended with go back on the lines that still send the same request and take.
+- Only new requests are re-rolled: a request this edition's last render didn't send with its current take. A flag on an unchanged request is reported only. `REROLL_HELD=1` re-rolls those too (the old behaviour inside a changed page). A page that shares a re-rolled request is pulled in and rendered in full.
+
+`FULL=1` ignores the records and renders every page the old way (and writes fresh records). The first render of a chapter after this change is a full one. Bump `RENDER_VERSION` in the renderer when a change there, or in what it calls (the text clean in `gemini_tts.py`, `align_ctc.py`, `voice_gate.py`, the gaps between clips), alters a page's audio, timings or gate result for the same requests and takes.
+
+**The episode** is joined from the pages' 16 bit samples in plan order (the same bytes the old float join gave), so a reused page goes in exactly as it was rendered.
+
+**Small Gemini calls go live.** `GEMINI_LIVE_MAX` (default 4): in batch mode, a call for that many new requests or fewer goes live. A batch job took about 3 minutes even for one request. Live is the standard price (twice batch, about $0.001 a line) and has a small daily quota; a used up quota falls back to batch.
+
+**book_marks.** `book_marks.sh` now asks `book_marks.mjs --need-whisper` which audiobook files the page timings can't place, and whispers only those. When the timings add up to the mp3 (the normal case), a re-rendered chapter costs no whisper pass. `BM_DIR` points both at another transcript folder.
+
+**Measured** on a scratch copy of Commission ch4, both editions, `narrate_course.sh` steps without R2 (2026-11-12):
+
+| Run | Study | Story | Stings | book_marks | Total |
+|---|---|---|---|---|---|
+| Full render, before this change | 1,214 s | 526 s | 13 s | 176 s | about 32 min |
+| `FULL=1`, after | 1,039 s | 543 s | 13 s | 8 s | 26.7 min |
+| Incremental, nothing changed | 14 s | 7 s | 13 s | 8 s | 42 s |
+| One cue changed (Boyd, "Get in. It's cold."): 3 study pages and the story page | 40 s | 162 s | 13 s | 8 s | 3.7 min |
+| The same line changed again; the voice gate re-rolled it once in each edition | 56 s | 220 s | 14 s | 8 s | 5.0 min |
+
+Every unchanged page's mp3 and timings entry came out byte for byte the same as the full render's, and the nothing changed run gave identical episodes, before and after stings, and an identical `bookmarks.json`. With the cue change, each episode's samples differ only inside the changed page (study s5, story the 2.6 s around the line), and each episode mp3 is exactly the encode of its page samples. The story edition is one page, so a fix there still whispers the whole edition: about 71 s a round, now the largest cost.
+
 ## Caches
 
 - `~/.cache/halcyon-gemini-tts/narration/<course>-<key>.json`: per line features, keyed by mp3 size and mtime. The first pass takes about 1 to 3 minutes a chapter on a loaded machine; later passes take seconds.
@@ -223,4 +268,5 @@ The report lists, per flag, the speaker, the pages that play the take, the line'
 - `transcripts/`: pron_check clip transcripts.
 - `transcripts/script-*.json`: script_gate take transcripts (large-v3-turbo, `-mc 0`), by audio md5.
 - `pace_base.json`: the base take each hinted request was made for. `new_takes.json`: base takes a prefetch made that no render has used yet.
+- `pages/<course>-<audio>-<key>/`: the incremental render's page records and samples (about 105 MB a chapter, both editions).
 - Reports go to `~/.cache/halcyon-gemini-tts/reports/{tone,flow,pron,cue,voice-report,script}-*.json`.

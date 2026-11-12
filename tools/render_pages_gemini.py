@@ -15,9 +15,17 @@ Same-speaker runs: a character cast with "run": true has all of their lines on a
 by forced alignment, so a prebuilt voice cannot drift from line to line (details at RUN_OF below).
 Gates (details at "checks, up to ROUNDS rounds"): a coverage gate fails a page that is missing more than 3% of its words or any
 sentence, and a voice gate (tools/voice_gate.py) flags a line far from its character's book voice or pitched as the other gender;
-both re-roll, up to two times, keep the best take, and list what is left in the report under "gate" and per page. Report per run: ~/.cache/halcyon-gemini-tts/reports/<course>-<key>.json"""
-import difflib, json, os, re, subprocess, sys, tempfile, wave
+both re-roll, up to two times, keep the best take, and list what is left in the report under "gate" and per page. Report per run: ~/.cache/halcyon-gemini-tts/reports/<course>-<key>.json
+Incremental (default since 2026-11-12): only pages whose requests, takes or spec changed since their last render are rendered and
+gated; the rest keep their mp3, timings and gate result, and only new requests are re-rolled (details at "incremental render" below,
+docs/NARRATION_GATES.md). FULL=1 renders every page the old way. The last stderr line has phase_s, seconds per phase."""
+import base64, difflib, hashlib, json, os, re, subprocess, sys, tempfile, time, wave
 import numpy as np
+_T0 = time.time(); PHASE = {}  # wall clock seconds per phase, printed as phase_s on the last stderr line (the usage line)
+class ph:
+    def __init__(self, k): self.k = k
+    def __enter__(self): self.t = time.time()
+    def __exit__(self, *a): PHASE[self.k] = PHASE.get(self.k, 0.0) + time.time() - self.t
 sys.dont_write_bytecode = True; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gemini_tts as G
 import pace_gate as PG
@@ -53,6 +61,7 @@ def say(t): return SAY_RE.sub(lambda m: SAY[m.group(1)], t)
 HEARD_WRONG = {"lupe": {"loop", "loupe"}, "teo": {"theo"}, "bea": {"bia"}, "sol": {"seoul", "soul"}, "ares": {"airy", "air", "area", "areas"}, "okafor": {"okaphor", "okafo", "okufo"}, "halcyon": {"halcion"}}
 
 spec = json.load(open(sys.argv[1]))
+RAW = {pid: json.dumps(segs, sort_keys=True, ensure_ascii=False) for pid, segs in spec["pages"].items()}  # each page as given, for its fingerprint
 course = os.environ.get("GEMINI_COURSE")
 if not course:
     cwd = os.getcwd().split(os.sep)
@@ -125,8 +134,9 @@ def gem_text(seg):
         if not re.search(r"[.!?]$", text): text += "."
     return text
 
-def enc(audio, path, title=None):
-    pcm = (np.clip(audio, -1, 1) * 32767).astype("<i2").tobytes()
+def q16(audio): return (np.clip(audio, -1, 1) * 32767).astype("<i2").tobytes()  # the 16 bit samples every mp3 is encoded from
+def enc(audio, path, title=None): enc_pcm(q16(audio), path, title)
+def enc_pcm(pcm, path, title=None):
     cmd = ["ffmpeg", "-loglevel", "error", "-y", "-f", "s16le", "-ar", str(SR), "-ac", "1", "-i", "-", "-c:a", "libmp3lame", "-b:a", "80k"]
     if title: cmd += ["-metadata", "title=" + title]
     subprocess.run(cmd + [path], input=pcm, check=True)
@@ -203,12 +213,94 @@ def request_text(pid, i, seg):
     """what is sent to Gemini for this segment: its own text, or its whole run"""
     r = RUN_OF.get((pid, i)); return r[0] if r else say(gem_text(seg))
 
+# ---- incremental render (default since 2026-11-12; FULL=1 renders every page the old way). A one line fix used to cost 30 to 45
+# minutes a chapter with 0 to 2 Gemini calls: every page was assembled, whispered, aligned and gated again, and the re-roll rounds
+# churned lines nobody touched. Now each page leaves a record in <cache>/pages/<course>-<audio>-<key>/<pid>.json (+ <pid>.flac,
+# the exact 16 bit samples, for pages in the episode plan). A page is REUSED when its fingerprint (RENDER_VERSION, model, gate and
+# alignment settings, the page spec as given, every request it sends with its current take, and its speakers' casting entries)
+# matches the record, every take it ended with (pace hinted and pinned ones too) is still current, and its mp3 and timings entry on
+# disk are byte for byte the ones the record wrote. A reused page keeps its mp3 (not rewritten), timings entry, gate result and
+# voice embeddings; it is not assembled, whispered, aligned or re-rolled. Its lines still count in the chapter's voice and pace
+# baselines, and its flags are judged again in the report, but only reported ("reused": true on the page).
+# Changed pages render as before, with two limits so a fix doesn't churn its neighbours: the pace hints a page ended with last
+# time go back on the lines that still send the same request and take, and only requests that are NEW (not sent with that take
+# by this edition's last render) are re-rolled; a flag on an unchanged request is reported only. REROLL_HELD=1 re-rolls those
+# too (the old behaviour inside a changed page). A page pulled in by a re-roll of a request it shares is rendered in full.
+# Bump RENDER_VERSION when a change here, or in what it calls (gemini_tts clean, align_ctc, voice_gate, the clip gaps), alters a page's audio, timings or gate result for the same requests and takes.
+FULL = os.environ.get("FULL", "0") not in ("", "0")
+RENDER_VERSION = 1
+STATE_DIR = os.path.join(G.CACHE, "pages", f"{course}-{spec.get('audio', 'audio').replace('/', '_')}-{key}")
+_FP_ENV = ("ALIGN", "ALIGN_MODEL", "WHISPER_MODEL", "WHISPER_TS", "GEMINI_REROLL", "GEMINI_ROUNDS", "GEMINI_REROLL_SKIP", "GEMINI_PACE", "COVERAGE_MAX_MISS")
+FP_ENV = {k: v for k, v in sorted(os.environ.items()) if k in _FP_ENV or k.startswith("VOICE_GATE")}
+BASE_KEYS = {pid: [(i, cast_seg(seg) + (request_text(pid, i, seg),)) for i, seg in enumerate(segs) if "t" in seg] for pid, segs in spec["pages"].items()}
+def _take(k): return G.current_take(k[2], k[0], k[1])
+def _cfg(who): return CMAP.get(who) or DMAP.get(who) or DMAP["woman"]
+def page_fp(pid):
+    """the page's fingerprint: everything that decides its audio, timings and gate result before the gates run"""
+    who = sorted({s["v"] for s in spec["pages"][pid] if "t" in s})
+    return hashlib.sha256(json.dumps([RENDER_VERSION, G.MODEL, course, key, FP_ENV, pid, RAW[pid], [[list(k), _take(k)] for _, k in BASE_KEYS[pid]],
+                                      {w: _cfg(w) for w in who}], sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+def _sha(b): return hashlib.sha256(b).hexdigest()
+def emb_key(sp): return (sp["voice"], sp["style"], sp["req"], G.current_take(sp["req"], sp["voice"], sp["style"]), sp["src"], round(sp["e"] - sp["s"], 2))
+def tim_sha(entry): return _sha(json.dumps(json.loads(json.dumps(entry)), separators=(",", ":")).encode())
+def flac_write(pcm, path):
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "s16le", "-ar", str(SR), "-ac", "1", "-i", "-", "-c:a", "flac", path + ".tmp.flac"], input=pcm, check=True)
+    os.replace(path + ".tmp.flac", path)
+def flac_read(path):
+    return subprocess.run(["ffmpeg", "-loglevel", "error", "-i", path, "-f", "s16le", "-ac", "1", "-ar", str(SR), "-"], capture_output=True, check=True).stdout
+def state_load(pid):
+    try: return json.load(open(os.path.join(STATE_DIR, pid + ".json")))
+    except Exception: return None
+try: OLD_T = json.load(open(f"{outdir}/timings.json"))
+except Exception: OLD_T = {}
+STATE = {} if FULL or os.environ.get("RETIME") else {pid: st for pid in spec["pages"] if (st := state_load(pid)) and st.get("v") == RENDER_VERSION}
+PCM = {}  # pid -> the page's 16 bit samples (bytes) for the episode: read from the record for a reused page, made for a rendered one
+def reuse_why_not(pid, st):
+    """None when page pid can be reused as its record says, else why not"""
+    if st.get("fp") != page_fp(pid): return "spec, casting, settings or a take changed"
+    if any(G.current_take(t, v, s) != tk for v, s, t, tk in st["deps"]): return "a take it used changed"
+    mp3 = f"{outdir}/{pid}.mp3"
+    if not os.path.exists(mp3) or _sha(open(mp3, "rb").read()) != st["mp3"]: return "mp3 on disk is not the one recorded"
+    if pid not in OLD_T or tim_sha(OLD_T[pid]) != st["tim"]: return "timings entry is not the one recorded"
+    if os.environ.get("VOICE_GATE", "1") != "0":
+        import voice_gate
+        have = {tuple(k) for k, _, _, _ in st.get("emb", [])}
+        if any(sp["e"] - sp["s"] >= voice_gate.MIN_S and emb_key(sp) not in have for sp in st["spans"]): return "voice embeddings not recorded"
+    if pid in spec["plan"]:
+        f = os.path.join(STATE_DIR, pid + ".flac")
+        if not os.path.exists(f): return "no samples recorded"
+        b = flac_read(f)
+        if _sha(b) != st.get("pcm"): return "recorded samples don't match"
+        PCM[pid] = b
+    return None
+REUSED, WHY_NOT = {}, {}
+for pid, st in STATE.items():
+    w = reuse_why_not(pid, st)
+    if w is None: REUSED[pid] = st
+    else: WHY_NOT[pid] = w
+PACE_ORIG = {}   # (pid, seg index) -> (request key before the hint, its RUN_OF entry), for hinted lines
+for pid, st in STATE.items():  # a changed page gets back the pace hints it ended with, on lines whose request and take are unchanged
+    if pid in REUSED: continue
+    bk = dict(BASE_KEYS[pid])
+    for i, hint, k0, tk0 in st.get("hints", []):
+        k = bk.get(i)
+        if k is not None and list(k) == k0 and _take(k) == tk0 and not spec["pages"][pid][i].get("pace_hint"):
+            PACE_ORIG[(pid, i)] = (k, RUN_OF.pop((pid, i), None)); spec["pages"][pid][i]["pace_hint"] = hint
+KNOWN = {tuple(d) for st in STATE.values() for d in st.get("deps", []) + st.get("keys", [])}  # (voice, style, request, take) the last render sent
+
 # ---- synthesis: every distinct (voice, style, request text) once, in parallel; cached on disk
 jobs = {}
 for pid, segs in spec["pages"].items():
+    if pid in REUSED: continue
     for i, seg in enumerate(segs):
         if "t" in seg:
             v, st = cast_seg(seg); jobs[(v, st, request_text(pid, i, seg))] = None
+HELD = set() if os.environ.get("REROLL_HELD") == "1" else {k for k in jobs if k + (_take(k),) in KNOWN}  # requests that are not new: reported, never re-rolled
+def may_reroll(pid, rk): return pid not in REUSED and rk not in HELD
+if not os.environ.get("RETIME"):
+    print(f"incremental {key}: " + ("FULL=1, every page renders" if FULL else f"{len(REUSED)} of {len(spec['pages'])} pages reused, {len(spec['pages']) - len(REUSED)} to render"
+          + (f" ({', '.join(f'{p}: {w}' for p, w in list(WHY_NOT.items())[:6])}{' ...' if len(WHY_NOT) > 6 else ''})" if WHY_NOT else "")
+          + (f", {len(HELD)} unchanged requests held" if HELD else "")), file=sys.stderr, flush=True)
 def run_jobs(keys):
     for k in keys:  # takes this render makes new (a re-roll asked for before the render, or one made in the rounds below)
         if not os.path.exists(G._cache_path(k[2], k[0], k[1], G.current_take(k[2], k[0], k[1])) + ".wav"): NEW_HERE.add(k)
@@ -235,7 +327,8 @@ else:
     try: _nt = json.load(open(NT_P))
     except Exception: _nt = {}
     NEW_HERE.update(k for k in jobs if _nt.get(G.base_hash(k[2], k[0], k[1])) == G.current_take(k[2], k[0], k[1]))
-    run_jobs(list(jobs))
+    PHASE["startup"] = time.time() - _T0
+    with ph("synth"): run_jobs(list(jobs))
 if os.environ.get("GEMINI_PREFETCH"):  # only fill the cache (e.g. submit several chapters' batches at once), no audio or timings written
     if NEW_HERE: _nt_update(add=NEW_HERE)
     print(G.log_usage(f"{course} {key} prefetch"), file=sys.stderr); print("prefetched", key, len(jobs), "segments"); sys.exit(0)
@@ -452,16 +545,21 @@ def to16(audio, path):
     w = wave.open(path, "wb"); w.setnchannels(1); w.setsampwidth(2); w.setframerate(16000)
     w.writeframes((np.clip(a16, -1, 1) * 32767).astype("<i2").tobytes()); w.close()
 
+CTC_MEMO = {}  # ctc_key -> align_words result. The same samples and words always align the same; kept in the page records
+def ctc_slice(audio, sp):
+    src = [w for w in sp["src"].split() if re.search(r"\w", w)]
+    said = [w for w in sp["sent"].split() if re.search(r"\w", w)]
+    if len(said) != len(src): said = src
+    a0 = max(0, int((sp["s"] - 0.05) * SR)); a1 = min(len(audio), int((sp["e"] + 0.05) * SR))
+    return src, said, a0, audio[a0:a1], hashlib.sha256(np.ascontiguousarray(audio[a0:a1], np.float32).tobytes() + json.dumps([src, said, os.environ.get("ALIGN_MODEL", "facebook/wav2vec2-base-960h")]).encode()).hexdigest()
 def ctc_words(audio, spans):
     """forced-align each segment's source words on its own audio (align_ctc.py) -> [[word, start, end]] for the page"""
     import align_ctc
     words = []
     for sp in spans:
-        src = [w for w in sp["src"].split() if re.search(r"\w", w)]
-        said = [w for w in sp["sent"].split() if re.search(r"\w", w)]
-        if len(said) != len(src): said = src
-        a0 = max(0, int((sp["s"] - 0.05) * SR)); a1 = min(len(audio), int((sp["e"] + 0.05) * SR)); off = a0 / SR
-        r = align_ctc.align_words(audio[a0:a1], SR, src, said) if src else []
+        src, said, a0, clip, mk = ctc_slice(audio, sp); off = a0 / SR
+        if mk in CTC_MEMO: r = CTC_MEMO[mk]
+        else: r = CTC_MEMO[mk] = align_ctc.align_words(clip, SR, src, said) if src else []
         if r is None:  # more letters than audio frames: spread the words over the segment
             L = [len(w) + 1 for w in src]; tot = sum(L); acc = 0; r = []
             for x in L: r.append(((sp["s"] - off) + (sp["e"] - sp["s"]) * acc / tot, 0)); acc += x
@@ -523,7 +621,6 @@ ROUNDS = 1 if os.environ.get("GEMINI_REROLL") == "0" else int(os.environ.get("GE
 GATE = os.environ.get("VOICE_GATE", "1") != "0"
 PACE = os.environ.get("GEMINI_PACE", "1") != "0"
 PACE_LINES = {}  # pid -> (the built audio array, lines), so a page that wasn't rebuilt isn't re-measured (held, not id(): ids get reused)
-PACE_ORIG = {}   # (pid, seg index) -> (request key before the hint, its RUN_OF entry), for hinted lines
 def pace_lines(built_pages):
     out = {}
     for pid, (audio, spans) in built_pages.items():
@@ -640,23 +737,39 @@ def voice_lines(built_pages):
     for pid, (audio, spans) in built_pages.items():
         for sp in spans:
             if sp["e"] - sp["s"] < VG.MIN_S: continue
-            k = (sp["voice"], sp["style"], sp["req"], take_of(sp), sp["src"], round(sp["e"] - sp["s"], 2))
+            k = emb_key(sp)
             if k not in EMB:
                 a = audio[int(sp["s"] * SR):int(sp["e"] * SR)]; EMB[k] = (VG.embed(a, SR), VG.f0(a, SR))
             lines.append({"who": sp["v"], "gender": gender_of(sp["v"]), "emb": EMB[k][0], "f0": EMB[k][1], "pid": pid, "i": sp["i"], "src": sp["src"],
                           "req": (sp["voice"], sp["style"], sp["req"]), "take": take_of(sp), "tone": sp.get("tone")})
     return lines
 built_all = {}; gate_first = None; gate_summary = {}
-todo = pids
+for pid, st in REUSED.items():  # a reused page: its record stands in for the render
+    built_all[pid] = (None, st["spans"]); report[pid] = dict(st["report"], reused=True); timings[pid] = OLD_T[pid]
+    PACE_LINES[pid] = (None, st.get("pace") or [])
+for st in STATE.values():  # voice embeddings by take (the key voice_lines() already caches them under), from every page's record
+    for k, e, dt, f in st.get("emb", []): EMB.setdefault(tuple(k), (np.frombuffer(base64.b64decode(e), np.dtype(dt)).copy(), f))
+    CTC_MEMO.update(st.get("ctc", {}))
+def load_jobs(pages):
+    """a reused page pulled into the render (a request it shares was re-rolled): load the requests it hasn't loaded"""
+    for pid in pages: REUSED.pop(pid, None)
+    need = list(dict.fromkeys(seg_key(pid, i, seg) for pid in pages for i, seg in enumerate(spec["pages"][pid]) if "t" in seg))
+    need = [k for k in need if jobs.get(k) is None]
+    if need:
+        with ph("synth"): run_jobs(need)
+todo = [pid for pid in pids if pid not in REUSED]
 for rnd in range(ROUNDS):
-    built = {pid: assemble(spec["pages"][pid]) for pid in todo}; built_all.update(built)
+    load_jobs(todo)
+    with ph("assemble"): built = {pid: assemble(spec["pages"][pid]) for pid in todo}; built_all.update(built)
     paths = {}
-    for pid in todo: paths[pid] = f"{tmp}/{pid}.r{rnd}.wav"; to16(built[pid][0], paths[pid])
-    heard = whisper(list(paths.values()))
+    with ph("whisper"):
+        for pid in todo: paths[pid] = f"{tmp}/{pid}.r{rnd}.wav"; to16(built[pid][0], paths[pid])
+        heard = whisper(list(paths.values()))
     bump, why = set(), {}
     for pid in todo:
-        audio, spans = built[pid]; groups, checks, miss, cov_fail = check_page(pid, rnd, audio, spans, heard[paths[pid]])
-        words = ctc_words(audio, spans) if ALIGN == "ctc" else sorted((w for g in groups for w in g), key=lambda x: x[1])
+        audio, spans = built[pid]
+        with ph("check"): groups, checks, miss, cov_fail = check_page(pid, rnd, audio, spans, heard[paths[pid]])
+        with ph("ctc"): words = ctc_words(audio, spans) if ALIGN == "ctc" else sorted((w for g in groups for w in g), key=lambda x: x[1])
         clips[pid] = audio; timings[pid] = {"d": round(len(audio) / SR, 2), "w": words}
         report[pid] = {"round": rnd, "bad": [c for c in checks if c["bad"]], "low": [c for c in checks if not c["bad"] and c["cov"] < 0.85 and len(c["src"].split()) >= 4],
                        "missing_words": miss, "coverage_fail": [{"i": c["i"], "v": c["v"], "cov": c["ccov"], "missing": c["miss"], "src": c["src"], "heard": c["heard"]} for c in cov_fail]}
@@ -664,21 +777,22 @@ for rnd in range(ROUNDS):
             sp = next(s for s in spans if s["i"] == c["i"]); rk = (sp["voice"], sp["style"], sp["req"])
             h = HIST.setdefault(rk, {}).setdefault(take_of(sp), PG.new_hist())
             h[0] &= not c["bad"]; h[1] &= c not in cov_fail; h[3] = min(h[3], c["cov"])
+            if not may_reroll(pid, rk): continue  # an unchanged request (incremental): reported only
             if c in cov_fail or (c["bad"] and c["v"] not in REROLL_SKIP): bump.add(rk); why.setdefault(rk, set()).add("coverage" if c in cov_fail else "whisper")
     if GATE:
-        VL = voice_lines(built_all); flagged, gate_summary = VG.judge(VL, BOOK, key)
+        with ph("voice_gate"): VL = voice_lines(built_all); flagged, gate_summary = VG.judge(VL, BOOK, key)
         for pid in report: report[pid]["voice_flags"] = []
         for L in flagged:
             report[L["pid"]]["voice_flags"].append({"i": L["i"], "v": L["who"], "why": L["why"], "sim": round(L["sim"], 3) if L["sim"] is not None else None,
                                                     "f0": round(L["f0"]) if L["f0"] else None, "src": L["src"][:80]})
-            if L["who"] not in REROLL_SKIP: bump.add(L["req"]); why.setdefault(L["req"], set()).add("voice")
+            if L["who"] not in REROLL_SKIP and may_reroll(L["pid"], L["req"]): bump.add(L["req"]); why.setdefault(L["req"], set()).add("voice")
         for L in VL:
             h = HIST.setdefault(L["req"], {}).setdefault(L["take"], PG.new_hist())
             if L.get("sim") is not None: h[2] = min(h[2], L["sim"])
         if gate_first is None: gate_first = sum(len(r.get("voice_flags", [])) for r in report.values())
     fresh = set()  # new requests: a line's first take with a pace hint
     if PACE:
-        flags, scores = PG.check_pages(pace_lines(built_all), {pid: sp for pid, (_, sp) in built_all.items()}, REROLL_SKIP)
+        with ph("pace_gate"): flags, scores = PG.check_pages(pace_lines(built_all), {pid: sp for pid, (_, sp) in built_all.items()}, REROLL_SKIP)
         pace_report(flags)
         if pace_first is None: pace_first = len(flags)
         for pid, i, ok, d in scores:
@@ -687,7 +801,7 @@ for rnd in range(ROUNDS):
             h[4] &= ok; h[5] = max(h[5], d)
         if rnd < ROUNDS - 1:
             for f in flags:
-                if f["report_only"]: continue
+                if f["report_only"] or not may_reroll(f["pid"], f["req"]): continue
                 seg = spec["pages"][f["pid"]][f["i"]]
                 if seg.get("pace_hint"): bump.add(f["req"]); why.setdefault(f["req"], set()).add("pace"); continue  # hinted already: re-roll it
                 new = pace_hint(f["req"], f["src"], f["hint"])
@@ -695,7 +809,7 @@ for rnd in range(ROUNDS):
     if not (bump or fresh) or rnd == ROUNDS - 1: break
     print(f"round {rnd}: re-rolling {len(bump)} requests, {len(fresh)} with a pace hint ({', '.join(sorted({w for x in why.values() for w in x}))})", file=sys.stderr, flush=True)
     for (v, st, t) in bump: G.bump_take(t, v, st); jobs[(v, st, t)] = None
-    run_jobs(list(bump | fresh))
+    with ph("synth"): run_jobs(list(bump | fresh))
     todo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg
                    and seg_key(pid, i, seg) in (bump | fresh)})
 # keep each re-rolled request's best take: passes whisper, then coverage, then pace, then pace distance, then the best voice
@@ -726,21 +840,23 @@ if pin or reverted:
         p = G._cache_path(t, v, st, k); jobs[(v, st, t)] = G.clean(G._wav_to_float(open(p + ".wav", "rb").read()))
     redo = sorted({pid for pid in pids for i, seg in enumerate(spec["pages"][pid]) if "t" in seg and seg_key(pid, i, seg) in pin} | reverted)
     print(f"kept an earlier, better take for {len(pin)} requests on {len(redo)} pages", file=sys.stderr, flush=True)
-    for pid in redo:
-        audio, spans = assemble(spec["pages"][pid]); built_all[pid] = (audio, spans)
-        clips[pid] = audio; timings[pid] = {"d": round(len(audio) / SR, 2), "w": ctc_words(audio, spans)}
+    load_jobs(redo)
+    with ph("pin"):
+        for pid in redo:
+            audio, spans = assemble(spec["pages"][pid]); built_all[pid] = (audio, spans)
+            clips[pid] = audio; timings[pid] = {"d": round(len(audio) / SR, 2), "w": ctc_words(audio, spans)}
     if GATE:
-        VL = voice_lines(built_all); flagged, gate_summary = VG.judge(VL, BOOK, key)
+        with ph("voice_gate"): VL = voice_lines(built_all); flagged, gate_summary = VG.judge(VL, BOOK, key)
         for pid in report: report[pid]["voice_flags"] = []
         for L in flagged:
             report[L["pid"]]["voice_flags"].append({"i": L["i"], "v": L["who"], "why": L["why"], "sim": round(L["sim"], 3) if L["sim"] is not None else None,
                                                     "f0": round(L["f0"]) if L["f0"] else None, "src": L["src"][:80]})
 if PACE:
-    flags, _ = PG.check_pages(pace_lines(built_all), {pid: sp for pid, (_, sp) in built_all.items()}, REROLL_SKIP); pace_report(flags)
+    with ph("pace_gate"): flags, _ = PG.check_pages(pace_lines(built_all), {pid: sp for pid, (_, sp) in built_all.items()}, REROLL_SKIP); pace_report(flags)
     record_hints()
     if os.path.exists(NT_P): _nt_update(drop=[k for k in jobs if k in NEW_HERE])
 if GATE:
-    BOOK.save(key, VG.book_voice(voice_lines(built_all)))  # untoned takes, each once; an all-toned character's go under "<who>#toned"
+    with ph("voice_gate"): BOOK.save(key, VG.book_voice(voice_lines(built_all)))  # untoned takes, each once; an all-toned character's go under "<who>#toned"
 gate = {"voice_flags_first": gate_first, "voice_flags_final": sum(len(r.get("voice_flags", [])) for r in report.values()),
         "pace_flags_first": pace_first, "pace_flags_final": sum(len(r.get("pace_flags", [])) for r in report.values()), "pace_old_hint": OLD_HINTS,
         "coverage_fail_pages": sorted(pid for pid, r in report.items() if r.get("coverage_fail")), "characters": gate_summary,
@@ -748,7 +864,30 @@ gate = {"voice_flags_first": gate_first, "voice_flags_final": sum(len(r.get("voi
 for pid in gate["coverage_fail_pages"]: print(f"COVERAGE FAIL {key} {pid}: " + "; ".join(f"{c['v']} missing {c['missing'] or c['cov']}" for c in report[pid]["coverage_fail"])[:400], file=sys.stderr, flush=True)
 if gate["gender_fail"]: print(f"GENDER FAIL {key}: {gate['gender_fail']} (add \"A woman's voice.\" / \"A man's voice.\" to their style)", file=sys.stderr, flush=True)
 
-for pid in pids: enc(clips[pid], f"{outdir}/{pid}.mp3")
+with ph("encode"):
+    for pid in pids:
+        if pid in REUSED: continue  # a reused page keeps its mp3 as it is
+        if pid in spec["plan"]: PCM[pid] = q16(clips[pid])
+        enc(clips[pid], f"{outdir}/{pid}.mp3")
+timings = {pid: timings[pid] for pid in pids if pid in timings}  # page order, the order a full render writes
+def state_save(pid):
+    """the record that lets the next render reuse this page (see "incremental render" above)"""
+    audio, spans = built_all[pid]; emb = []
+    for sp in spans:
+        k = emb_key(sp)
+        if k in EMB: e = np.asarray(EMB[k][0]); emb.append([list(k), base64.b64encode(e.tobytes()).decode(), e.dtype.str, EMB[k][1]])
+    pl = PACE_LINES.get(pid)
+    st = {"v": RENDER_VERSION, "fp": page_fp(pid), "deps": sorted({(sp["voice"], sp["style"], sp["req"], take_of(sp)) for sp in spans}),
+          "keys": [list(k) + [_take(k)] for _, k in BASE_KEYS[pid]], "mp3": _sha(open(f"{outdir}/{pid}.mp3", "rb").read()), "tim": tim_sha(timings[pid]),
+          "report": report.get(pid, {}), "spans": spans, "emb": emb, "pace": pl[1] if pl and pl[0] is audio else [],
+          "ctc": {mk: CTC_MEMO[mk] for mk in (ctc_slice(audio, sp)[4] for sp in spans) if mk in CTC_MEMO},
+          "hints": [[i, spec["pages"][p][i]["pace_hint"], list(k0), _take(k0)] for (p, i), (k0, _) in PACE_ORIG.items() if p == pid and spec["pages"][p][i].get("pace_hint")]}
+    if pid in spec["plan"]: flac_write(PCM[pid], os.path.join(STATE_DIR, pid + ".flac")); st["pcm"] = _sha(PCM[pid])
+    f = os.path.join(STATE_DIR, pid + ".json"); json.dump(st, open(f + ".tmp", "w"), ensure_ascii=False); os.replace(f + ".tmp", f)
+with ph("record"):
+    os.makedirs(STATE_DIR, exist_ok=True)
+    for pid in pids:
+        if pid not in REUSED: state_save(pid)
 if os.environ.get("MERGE") and os.path.exists(f"{outdir}/timings.json"):  # MERGE=1: re-render some pages, keep the rest
     old = json.load(open(f"{outdir}/timings.json")); old.update(timings); timings = old
 json.dump(timings, open(f"{outdir}/timings.json", "w"), separators=(",", ":"))
@@ -756,12 +895,15 @@ os.makedirs(os.path.join(G.CACHE, "reports"), exist_ok=True)
 rp = os.path.join(G.CACHE, "reports", f"{course}-{spec.get('audio', 'audio').replace('/', '_')}-{key}.json")
 json.dump({"course": course, "key": key, "model": G.MODEL, "gate": gate, "pages": report}, open(rp, "w"), indent=1, ensure_ascii=False)
 nbad = sum(len(r["bad"]) for r in report.values())
-# whole-chapter episode: page clips in plan order; after each decision, a pause to pick
+# whole-chapter episode: page clips in plan order; after each decision, a pause to pick. Joined as 16 bit samples (the same bytes
+# the float join gave: the conversion is per sample), so a reused page goes in exactly as it was rendered
 ep = []
 for pid in spec["plan"]:
-    ep.append(clips[pid]); ep.append(np.zeros(int(SR * (4 if (pid.startswith("s") and pid != "story") else 1.2)), np.float32))
-whole = np.concatenate(ep)
+    ep.append(PCM[pid]); ep.append(b"\0\0" * int(SR * (4 if (pid.startswith("s") and pid != "story") else 1.2)))
+whole = b"".join(ep)
 dest = sys.argv[2] if len(sys.argv) > 2 else None
-if dest: enc(whole, dest, title=f"The Halcyon Launch: {spec['title']}")
-print(G.log_usage(f"{course} {key}") + f" flagged_segments={nbad} voice_flags={gate['voice_flags_first']}->{gate['voice_flags_final']} coverage_fail_pages={len(gate['coverage_fail_pages'])} report={rp}", file=sys.stderr)
-print("done", key, len(clips), "clips", round(len(whole) / SR / 60, 1), "min")
+with ph("encode"):
+    if dest: enc_pcm(whole, dest, title=f"The Halcyon Launch: {spec['title']}")
+PHASE["total"] = time.time() - _T0
+print(G.log_usage(f"{course} {key}") + f" phase_s={json.dumps({k: round(v, 1) for k, v in PHASE.items()}, separators=(',', ':'))} flagged_segments={nbad} voice_flags={gate['voice_flags_first']}->{gate['voice_flags_final']} coverage_fail_pages={len(gate['coverage_fail_pages'])} report={rp}", file=sys.stderr)
+print("done", key, len(pids), "clips", f"({len(REUSED)} reused)" if REUSED else "", round(len(whole) / 2 / SR / 60, 1), "min")
